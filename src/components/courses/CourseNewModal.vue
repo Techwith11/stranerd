@@ -2,7 +2,7 @@
 	<div class="modal-background">
 		<div class="modal-outside"></div>
 		<div class="modal-inner">
-			<div class="d-flex justify-content-between align-items-center">
+			<div class="d-flex justify-content-between align-items-center mb-4">
 				<h4>Create New Course</h4>
 				<span class="text-danger" @click="closeModal"><i class="fa fa-times"></i></span>
 			</div>
@@ -13,7 +13,7 @@
 						:class="{'is-invalid': $v.course.title.$error, 'is-valid': !$v.course.title.$invalid}"
 					>
 				</div>
-				<div>
+				<div class="my-3">
 					<input type="file" @change="catchVideo" class="d-none" ref="videoInput">
 					<span @click="$refs.videoInput.click()">
 						<span>{{file.name}} </span>
@@ -30,7 +30,7 @@
 					<input type="checkbox" class="custom-control-input" id="isPremium"  v-model="$v.course.premium.$model">
 					<label class="custom-control-label" for="isPremium">Is premium?</label>
 				</div>
-				<div  v-if="course.premium" class="mt-3">
+				<div  v-if="course.premium" class="my-3">
 					<input type="file" @change="catchPreview" class="d-none" ref="previewInput">
 					<span @click.prevent="$refs.previewInput.click()">
 						<span>{{preview.name}}  </span>

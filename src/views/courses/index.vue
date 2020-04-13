@@ -16,7 +16,7 @@
 	import CourseFAB from '@/components/courses/CourseFAB'
 
 	export default {
-		name: 'Videos',
+		name: 'Courses',
 		components: {
 			'course-nav': CourseNav,
 			'course-card': CourseCard,
