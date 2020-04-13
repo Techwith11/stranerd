@@ -65,9 +65,9 @@
 		}),
 		methods: {
 			closeModal(){ window.Fire.$emit('closeCourseNewModal') },
-			catchVideo(e){ e.target.files[0].type.startsWith('video/') ? this.video = e.target.files[0] : null},
-			catchImage(e){ e.target.files[0].type.startsWith('image/') ? this.image = e.target.files[0] : null},
-			catchPreview(e){ e.target.files[0].type.startsWith('video/') ? this.preview = e.target.files[0] : null},
+			catchVideo(e){ e.target.files[0].type.startsWith('video/') ? this.video = e.target.files[0] : new window.toast({ icon:'error', title: 'File is not a video'}) },
+			catchImage(e){ e.target.files[0].type.startsWith('image/') ? this.image = e.target.files[0] : new window.toast({ icon:'error', title: 'File is not an image'})},
+			catchPreview(e){ e.target.files[0].type.startsWith('video/') ? this.preview = e.target.files[0] : new window.toast({ icon:'error', title: 'File is not a video'})},
 			createCourse(){
 				if(!this.$v.$error && !this.$v.invalid){
 					// TODO: Upload video and append storage url to course object
