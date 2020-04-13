@@ -1,5 +1,5 @@
 {
-  "name": "sample",
+  "name": "StraNerd",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,8 +10,14 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.13.0",
+    "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
+    "firebase": "^7.14.0",
+    "jquery": "^3.4.1",
+    "popper.js": "^1.16.1",
     "register-service-worker": "^1.6.2",
+    "sweetalert2": "^9.10.10",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5",
     "vuex": "^3.1.2"

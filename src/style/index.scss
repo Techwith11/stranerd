@@ -1,0 +1,55 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
+
+$primary-dark: #FF8A00;
+$primary: #FFC000;
+$primary-light: #FFF7DF;
+$white: #FFFFFF;
+$text-black: #5C5C5C;
+
+$gradient: linear-gradient(to right, $primary-dark, $primary);
+$gradient-reversed: linear-gradient(to left, $primary-dark, $primary);
+
+$font-base-size: 16px;
+
+body{
+  font-size: $font-base-size;
+  font-family: Poppins, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button{
+  border-radius: 50rem!important;
+  padding: 0.75rem 2.5rem;
+  font-size: 1rem;
+  margin: 0.25rem 0.5rem;
+}
+
+.primary-button{
+  background: $gradient;
+  color: $white;
+}
+
+.white-button{
+  color: $primary;
+  background: $white;
+}
+.router-link-exact-active {
+  border-bottom: 2px solid $primary !important;
+}
+
+@media screen and (max-width: 991px){
+  nav .router-link-exact-active{
+    border: none !important;
+    background: $primary-dark;
+    color: $white !important;
+  }
+  nav li{
+    display: block;
+    text-align: center;
+    background: $primary-light;
+    color: $text-black;
+    margin: 2px 0;
+  }
+}
