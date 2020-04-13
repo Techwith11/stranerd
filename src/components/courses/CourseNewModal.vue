@@ -2,7 +2,7 @@
 	<div class="modal-background">
 		<div class="modal-outside"></div>
 		<div class="modal-inner">
-			<div class="d-flex justify-content-between align-items-center mb-4">
+			<div class="d-flex justify-content-between align-items-center mb-3">
 				<h4>Create New Course</h4>
 				<span class="text-danger" @click="closeModal"><i class="fa fa-times"></i></span>
 			</div>
@@ -33,6 +33,16 @@
 						:class="{'is-invalid': $v.course.description.$error, 'is-valid': !$v.course.description.$invalid}"
 					></textarea>
 				</div>
+				<div class="my-3">
+					<h6>Tags</h6>
+					<div class="custom-control custom-checkbox d-inline-block mx-1"  v-for="tag in tags" :key="tag">
+						<input type="checkbox" class="custom-control-input" :id="tag"  v-model="$v.course.tags.$model" :value="tag">
+						<label class="custom-control-label" :for="tag">{{ tag }}</label>
+					</div>
+					<small id="tagsHelpBlock" class="form-text" :class="$v.course.tags.$error ? 'text-danger' :  'text-muted'">
+						Please select at least one tag
+					</small>
+				</div>
 				<div class="custom-control custom-checkbox">
 					<input type="checkbox" class="custom-control-input" id="isPremium"  v-model="$v.course.premium.$model">
 					<label class="custom-control-label" for="isPremium">Is premium?</label>
@@ -58,7 +68,9 @@
 				title: '',
 				description: '',
 				premium: false,
+				tags: [],
 			},
+            tags: ['Mathematics', 'Physics','Chemistry'],
 			video: {},
 			image: {},
 			preview: {},
@@ -82,7 +94,8 @@
 			course: {
                 title: { required, minLength: minLength(3) },
                 description: { required, minLength: minLength(3) },
-                premium: { required }
+                premium: { required },
+				tags: { required, minLength: minLength(1) }
 			}
 		}
 	}
