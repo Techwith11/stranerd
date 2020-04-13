@@ -25,6 +25,7 @@
 	#fab{
 		background: $accent;
 		color: $white;
+		border-radius: 10rem;
 		position: fixed;
 		right: 10%;
 		bottom: 10%;

@@ -22,26 +22,26 @@ body{
 }
 
 button{
+
+}
+
+.primary-button{
+  background: $gradient;
+  color: $white;
   border-radius: 50rem!important;
   padding: 0.75rem 2.5rem;
   font-size: 1rem;
   margin: 0.25rem 0.5rem;
 }
 
-.primary-button{
-  background: $gradient;
-  color: $white;
-}
-
 .white-button{
   color: $primary;
   background: $white;
+  border-radius: 50rem!important;
+  padding: 0.75rem 2.5rem;
+  font-size: 1rem;
+  margin: 0.25rem 0.5rem;
 }
 .router-link-exact-active {
   border-bottom: 2px solid $primary !important;
-}
-
-input{
-  padding: 1rem;
-  margin: 1rem 0;
 }
