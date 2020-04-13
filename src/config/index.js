@@ -1,4 +1,4 @@
-import '@/registerServiceWorker'
+import '@/config/registerServiceWorker'
 import '@/style/index.scss'
 
 import 'jquery'
