@@ -1,9 +1,11 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import '@/style/modal.scss';
 
 $primary-dark: #FF8A00;
 $primary: #FFC000;
 $primary-light: #FFF7DF;
+$accent: #22dd77;
 $white: #FFFFFF;
 $text-black: #5C5C5C;
 
@@ -39,17 +41,7 @@ button{
   border-bottom: 2px solid $primary !important;
 }
 
-@media screen and (max-width: 991px){
-  nav .router-link-exact-active{
-    border: none !important;
-    background: $primary-dark;
-    color: $white !important;
-  }
-  nav li{
-    display: block;
-    text-align: center;
-    background: $primary-light;
-    color: $text-black;
-    margin: 2px 0;
-  }
+input{
+  padding: 1rem;
+  margin: 1rem 0;
 }

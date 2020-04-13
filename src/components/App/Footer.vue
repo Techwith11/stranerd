@@ -25,7 +25,7 @@
                    <a class="links" href="">Contact Address</a>
                </div>
                <div class="col-4 col-md-2">
-                   <h6>Privacy Links</h6>
+                   <h6>Others</h6>
                    <router-link class="links" to="/privacy_policy">Privacy Policy</router-link>
                    <router-link class="links" to="terms_and_conditions/">Terms And Conditions</router-link>
                    <router-link class="links" to="/faqs">Faqs</router-link>
@@ -36,7 +36,7 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '../../style/index.scss';
+    @import '../../style/index';
     #background{
         background: $text-black;
         padding: 4rem 0;

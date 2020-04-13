@@ -30,7 +30,7 @@
         font-size: 1.125rem;
         line-height: 1.2rem;
     }
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 767px){
         #headline{
             font-size: 2.0rem;
             line-height: 2.5rem;
@@ -40,7 +40,7 @@
             line-height: 1.2rem;
         }
     }
-    @media screen and (max-width: 576px){
+    @media screen and (max-width: 575px){
         #headline{
             font-size: 1.6rem;
             line-height: 2.0rem;

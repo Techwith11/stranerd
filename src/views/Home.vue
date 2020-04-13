@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <nav-bar />
     <cta />
     <why-us />
     <success />
@@ -8,25 +7,21 @@
     <stats />
     <students-says />
     <pricing />
-    <foot-bar />
   </div>
 </template>
 
 <script>
- import NavBar from '@/components/Home/HomeNavbar'
- import CTA from '@/components/Home/HomeCTA'
- import WhyUs from '@/components/Home/HomeWhyUs'
- import Success from '@/components/Home/HomeSuccess'
- import Courses from '@/components/Home/HomeCourses'
- import Stats from '@/components/Home/HomeStats'
- import StudentsSay from '@/components/Home/HomeStudentsSay'
- import Pricing from '@/components/Home/HomePricing'
- import Footer from '@/components/Home/HomeFooter'
+ import CTA from '@/components/home/HomeCTA'
+ import WhyUs from '@/components/home/HomeWhyUs'
+ import Success from '@/components/home/HomeSuccess'
+ import Courses from '@/components/home/HomeCourses'
+ import Stats from '@/components/home/HomeStats'
+ import StudentsSay from '@/components/home/HomeStudentsSay'
+ import Pricing from '@/components/home/HomePricing'
 
 export default {
   name: 'Home',
   components: {
-    'nav-bar': NavBar,
     'cta': CTA,
     'why-us': WhyUs,
     'success': Success,
@@ -34,7 +29,6 @@ export default {
     'stats': Stats,
     'students-says': StudentsSay,
     'pricing': Pricing,
-    'foot-bar': Footer,
   }
 }
 </script>

@@ -7,7 +7,7 @@
                 <button class="btn primary-button">Start Free Trial</button>
             </div>
             <div class="price-card">
-                <p class="font-weight-light">Premium</p>
+                <p class="font-weight-light">Basic</p>
                 <p>
                     <span class="display-2 price">$15</span>
                     <span>/monthly</span>
