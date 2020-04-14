@@ -20,7 +20,7 @@
 					:class="{'is-invalid': $v.user.password.$error, 'is-valid': !$v.user.password.$invalid}">
 				<small id="passwordHelpBlock" class="form-text small" aria-describedby="passwordHelpBlock"
 					:class="$v.user.password.$error ? 'text-danger' : 'text-muted'">
-					Your password must be 8-16 characters long.
+					Your password must be 6-16 characters long.
 				</small>
 			</div>
 			<div class="d-flex flex-column">
@@ -50,7 +50,7 @@
 			user: {
 				name: { required, minLength: minLength(3) },
 				email: { required, email },
-				password: { required, minLength: minLength(8), maxLength: maxLength(16) }
+				password: { required, minLength: minLength(6), maxLength: maxLength(16) }
 			}
 		}
 	}
