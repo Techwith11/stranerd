@@ -5,7 +5,7 @@
 $primary-dark: #FF8A00;
 $primary: #FFC000;
 $primary-light: #FFF7DF;
-$accent: #22dd77;
+$accent: #22DD77;
 $white: #FFFFFF;
 $text-black: #5C5C5C;
 
@@ -21,10 +21,6 @@ body{
   -moz-osx-font-smoothing: grayscale;
 }
 
-button{
-
-}
-
 .primary-button{
   background: $gradient;
   color: $white;
@@ -38,7 +34,7 @@ button{
   color: $primary;
   background: $white;
   border-radius: 50rem!important;
-  padding: 0.75rem 2.5rem;
+  padding: 0.25rem 2.5rem;
   font-size: 1rem;
   margin: 0.25rem 0.5rem;
 }

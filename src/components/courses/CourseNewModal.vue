@@ -1,6 +1,5 @@
 <template>
 	<div class="modal-background">
-		<div class="modal-outside"></div>
 		<div class="modal-inner">
 			<div class="d-flex justify-content-between align-items-center mb-3">
 				<h4>Create New Course</h4>
@@ -55,7 +54,9 @@
 						<span class="text-info">Upload preview</span>
 					</span>
 				</div>
-				<button type="submit" class="btn" id="submit" @click.prevent="createCourse" :disabled="$v.$invalid || $v.$error">Submit</button>
+				<div class="d-flex justify-content-end">
+					<button type="submit" class="btn" id="submit" @click.prevent="createCourse" :disabled="$v.$invalid || $v.$error">Submit</button>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -105,9 +106,7 @@
 <style lang="scss" scoped>
 	@import '../../style/index';
 	#submit{
-		border-radius: 0;
 		background: $accent !important;
 		color: $white;
-		float: right;
 	}
 </style>

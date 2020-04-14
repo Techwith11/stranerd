@@ -14,20 +14,13 @@ export default [
     {
         path: '/courses',
         name: 'Courses',
-        component: () => import(/* webpackChunkName: "courses" */ '@/views/courses/index.vue')
+        component: () => import(/* webpackChunkName: "courses" */ '@/views/courses/index.vue'),
+        meta: { requiresAuth: true }
     },
     {
         path: '/courses/:id',
         name: 'Course',
-        component: () => import(/* webpackChunkName: "course" */ '@/views/courses/single-course.vue')
+        component: () => import(/* webpackChunkName: "course" */ '@/views/courses/single-course.vue'),
+        meta: { requiresAuth: true }
     }
-    ,{
-        path: '/login',
-        name: 'Login',
-        component: () => import(/* webpackChunkName: "login" */ '@/views/auth/login.vue')
-    },{
-        path: '/register',
-        name: 'Register',
-        component: () => import(/* webpackChunkName: "register" */ '@/views/auth/register.vue')
-    },
 ]

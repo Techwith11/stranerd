@@ -1,0 +1,34 @@
+const state = {
+    modal: 'overview',
+    open: false
+}
+
+const getters = {
+    isModalOpen: state => state.open,
+    isModalOverview: state => state.modal === 'overview',
+    isModalLogin: state => state.modal === 'login',
+    isModalRegisterStudent: state => state.modal === 'register-student',
+    isModalRegisterTutor: state => state.modal === 'register-tutor',
+}
+
+const mutations = {
+    setModal(state, mode){
+        state.modal = mode
+        state.open = true
+    },
+    setOpen(state, mode){
+        state.open = mode
+        state.modal = 'overview'
+    }
+}
+
+const actions = {
+    setModalOverview: ({ commit }) => commit('setModal', 'overview'),
+    setModalLogin: ({ commit }) => commit('setModal', 'login'),
+    setModalRegisterStudent: ({ commit }) => commit('setModal', 'register-student'),
+    setModalRegisterTutor: ({ commit }) => commit('setModal', 'register-tutor'),
+    closeModal: ({ commit }) => commit('setOpen', false),
+    openModal: ({ commit }) => commit('setOpen', true),
+}
+
+export default { state, getters, mutations, actions }

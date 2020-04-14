@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <header class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
             <a class="navbar-brand" href="#">STRANERD</a>
             <button class="navbar-toggler" id="toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,17 +23,13 @@
                         <router-link class="nav-link" to="/contact">Contact Us</router-link>
                     </li>
                     <li class="nav-item">
-                        <button class="btn primary-button d-none d-lg-inline">Be a contributor</button>
-                        <router-link class="nav-link d-lg-none" to="/be_a_contributor">Be a contributor</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn primary-button d-none d-lg-inline">Login</button>
-                        <router-link class="nav-link d-lg-none" to="/login">Login</router-link>
+                        <button class="btn primary-button d-none d-lg-inline" @click="openModal">Get Started</button>
+                        <a class="nav-link d-lg-none" @click.prevent="openModal">Get Started</a>
                     </li>
                 </ul>
             </div>
         </nav>
-    </div>
+    </header>
 </template>
 
 <style lang="scss">
@@ -44,14 +40,20 @@
             color: $primary;
             font-size: 0.875rem;
         }
-        button{
-            border-radius: 50rem!important;
-            padding: 0.75rem 2.5rem !important;
-            font-size: 1rem;
-            margin: 0.25rem 0.5rem !important;
+        button a{
+            color: $white;
+            padding: 0;
+            border: none !important;
         }
     }
     #toggler{
         border: none;
     }
 </style>
+
+<script>
+    import { mapActions } from 'vuex'
+    export default {
+        methods: mapActions(['openModal'])
+    }
+</script>
