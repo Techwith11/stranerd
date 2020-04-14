@@ -39,12 +39,13 @@
 						<input type="checkbox" class="custom-control-input" :id="tag"  v-model="$v.course.tags.$model" :value="tag">
 						<label class="custom-control-label" :for="tag">{{ tag }}</label>
 					</div>
-					<small id="tagsHelpBlock" class="form-text" :class="$v.course.tags.$error ? 'text-danger' :  'text-muted'">
+					<small id="tagsHelpBlock" class="form-text" :class="$v.course.tags.$error ? 'text-danger' : 'text-muted'">
 						Please select at least one tag
 					</small>
 				</div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="isPremium"  v-model="$v.course.premium.$model">
+					<input type="checkbox" class="custom-control-input" id="isPremium"  v-model="$v.course.premium.$model"
+						:class="$v.course.premium.$error ? 'text-danger' : 'text-muted'">
 					<label class="custom-control-label" for="isPremium">Is premium?</label>
 				</div>
 				<div  v-if="course.premium" class="my-3">
