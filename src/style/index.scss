@@ -21,12 +21,24 @@ body{
   -moz-osx-font-smoothing: grayscale;
 }
 
+button{
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  padding: 0.5rem 2.5rem;
+  border: 1px solid transparent;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+}
+
 .primary-button{
   background: $gradient;
   color: $white;
   border-radius: 50rem!important;
-  padding: 0.75rem 2.5rem;
-  font-size: 1rem;
   margin: 0.25rem 0.5rem;
 }
 
@@ -34,8 +46,6 @@ body{
   color: $primary;
   background: $white;
   border-radius: 50rem!important;
-  padding: 0.25rem 2.5rem;
-  font-size: 1rem;
   margin: 0.25rem 0.5rem;
 }
 .router-link-exact-active {

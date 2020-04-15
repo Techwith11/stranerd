@@ -69,7 +69,6 @@
 	}
 	button{
 		margin: 0.5rem 0;
-		padding: 0.5rem 1.5rem;
 		background: $gradient-reversed;
 		color: $white;
 		border: 1px solid #333333;

@@ -1,7 +1,7 @@
 <template>
 	<div class="modal-background">
 		<div class="modal-inner">
-			<div class="d-flex justify-content-between align-items-center mb-3">
+			<div class="d-flex justify-content-between align-items-baseline mb-3">
 				<h4>Create New Course</h4>
 				<span class="text-danger" @click="closeModal"><i class="fa fa-times"></i></span>
 			</div>
@@ -55,7 +55,7 @@
 					</span>
 				</div>
 				<div class="d-flex justify-content-end">
-					<button type="submit" class="btn" id="submit" @click.prevent="createCourse" :disabled="$v.$invalid || $v.$error">Submit</button>
+					<button type="submit" id="submit" @click.prevent="createCourse" :disabled="$v.$invalid || $v.$error">Submit</button>
 				</div>
 			</form>
 		</div>

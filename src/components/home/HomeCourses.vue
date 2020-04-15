@@ -8,7 +8,7 @@
                     <course-card :course="{'.key':1,tags: ['maths','chemistry']}" />
                 </div>
             </div>
-            <button class="btn primary-button" @click="$router.push('/courses')">Discover</button>
+            <button class="primary-button" @click="$router.push('/courses')">Discover</button>
         </div>
     </div>
 </template>

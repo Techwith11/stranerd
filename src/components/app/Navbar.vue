@@ -23,7 +23,7 @@
                         <router-link class="nav-link" to="/contact">Contact Us</router-link>
                     </li>
                     <li class="nav-item">
-                        <button class="btn primary-button d-none d-lg-inline" @click="openModal">Get Started</button>
+                        <button class="primary-button d-none d-lg-inline" @click="openModal">Get Started</button>
                         <a class="nav-link d-lg-none" @click.prevent="openModal">Get Started</a>
                     </li>
                 </ul>
@@ -48,6 +48,7 @@
     }
     #toggler{
         border: none;
+        border-radius: 0;
     }
 </style>
 

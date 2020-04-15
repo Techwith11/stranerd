@@ -4,7 +4,7 @@
             <div>
                 <h2 class="font-weight-bold">Our Pricing Plans</h2>
                 <p class="small">StraNerd is an online education platform that delivers video courses, programs and resources for</p>
-                <button class="btn primary-button">Start Free Trial</button>
+                <button class="primary-button">Start Free Trial</button>
             </div>
             <div class="price-card">
                 <p class="font-weight-light">Basic</p>

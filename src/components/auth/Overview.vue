@@ -5,7 +5,7 @@
 		</div>
 		<h4 class="my-3">Stranerd</h4>
 		<p class="small my-4">Sign in to allow us serve you personalized content, course recommendations, track tutors you like, your sessions and your payments.</p>
-		<div class="d-flex flex-column mx-2 align-items-center btn-group">
+		<div class="d-flex flex-column mx-2 align-items-center">
 			<button class="btn">
 				<i class="fab fa-google"></i>
 				Login with Google
@@ -39,9 +39,8 @@
 
 <style lang="scss" scoped>
 	@import '../../style/index';
-	.btn-group button{
+	button{
 		margin: 0.5rem 0;
-		padding: 0.5rem 1.5rem;
 		color: $text-black;
 		border: 1px solid #333333;
 		display: block;
