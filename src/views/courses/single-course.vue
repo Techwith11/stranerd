@@ -46,6 +46,13 @@
 					{ name: 'Quantum Mechanics 101 by Timmy Salami.pdf', link: '#' },
 					{ name: 'Example questions.pdf', link: '#' },
 					{ name: 'Past Questions.pdf', link: '#' },
+				],
+				discussions: [
+					{ id:1, body: 'At what point does mechanics get classfied as quantum?', user: 1 },
+					{ id:2, body: 'Prof Salami, nice work on this content', user: 2 },
+					{ id:3, body: 'Contact me on whatsapp +2349016478642 for your iTunes cards', user: 3 },
+					{ id:4, body: 'Can someone kick this guy out of here please?', user: 4 },
+					{ id:5, body: 'Can we all just focus on the content?', user: 5 }
 				]
 			}
 		}),
