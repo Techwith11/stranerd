@@ -9,7 +9,7 @@
 	align-items: center;
 	padding: 3rem;
 	z-index: 4;
-	background: #000000dd;
+	background: #777777DD;
 }
 
 .modal-background .modal-inner{
@@ -18,7 +18,7 @@
 	padding: 1.5rem;
 	border-radius: 10px;
 	background: #ffffff;
-	box-shadow: 0 0 8px rgba(0,0,0,0.1);
+	box-shadow: 0 4px 8px #000000;
 	z-index: 4;
 	overflow-y: auto;
 }

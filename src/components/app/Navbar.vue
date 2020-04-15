@@ -49,6 +49,7 @@
     #toggler{
         border: none;
         border-radius: 0;
+        box-shadow: none;
     }
 </style>
 

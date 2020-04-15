@@ -32,20 +32,19 @@ button{
   font-size: 1rem;
   line-height: 1.5;
   border-radius: 0.25rem;
+  box-shadow: 0 2px 4px #444444;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
 }
 
 .primary-button{
   background: $gradient;
   color: $white;
-  border-radius: 50rem!important;
   margin: 0.25rem 0.5rem;
 }
 
 .white-button{
   color: $primary;
   background: $white;
-  border-radius: 50rem!important;
   margin: 0.25rem 0.5rem;
 }
 .router-link-exact-active {

@@ -10,18 +10,20 @@
 			<div class="form-group">
 				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="$v.user.email.$model"
 					:class="{'is-invalid': $v.user.email.$error, 'is-valid': !$v.user.email.$invalid}">
+				<span class="small" v-if="$v.user.email.$error">Must be a valid email address</span>
 			</div>
 			<div class="form-group">
 				<input type="password" id="password" class="form-control" placeholder="Password" v-model.trim="$v.user.password.$model"
 					:class="{'is-invalid': $v.user.password.$error, 'is-valid': !$v.user.password.$invalid}">
-				<small id="passwordHelpBlock" class="form-text small" aria-describedby="passwordHelpBlock"
-					:class="$v.user.password.$error ? 'text-danger' : 'text-muted'">
-					Your password must be 6-16 characters long.
-				</small>
+				<span class="small" v-if="$v.user.password.$error">Must be 6-16 characters long</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button class="btn" @click.prevent="loginUser" :disabled="$v.$invalid || $v.$error">Sign In</button>
+				<button @click.prevent="loginUser" :disabled="$v.$invalid || $v.$error">Sign In</button>
 			</div>
+			<span class="small my-3">
+				Forgot Password?
+				<span class="text-info" @click="setModalForgotPassword">Retrieve Now</span>
+			</span>
 		</form>
 	</div>
 </template>
@@ -38,7 +40,7 @@
 			}
 		}),
 		methods:{
-			...mapActions(['setModalOverview']),
+			...mapActions(['setModalOverview','setModalForgotPassword']),
 			loginUser(){ alert('Logged In')}
 		},
 		validations:{
@@ -52,20 +54,12 @@
 
 <style lang="scss" scoped>
 	@import '../../style/index';
-	#body{
-		width: 90%;
-		max-width: 800px;
-		margin: 2rem auto;
-		padding: 20px;
-		border-radius: 10px;
-		background: $primary-light;
-		box-shadow: 0 0 8px rgba(0,0,0,0.1);
-		color: $text-black;
-	}
 	input{
 		padding: 1rem;
-		margin: 1rem 0;
 		max-width: 700px;
+	}
+	.form-group{
+		margin: 1rem 0;
 	}
 	button{
 		margin: 0.5rem 0;

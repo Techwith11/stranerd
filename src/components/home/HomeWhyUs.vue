@@ -47,7 +47,7 @@
         }
     }
     .icons{
-        width: 100px;
+        height: 100px;
     }
     .icon-title{
         margin: 1rem 0 0.5rem;

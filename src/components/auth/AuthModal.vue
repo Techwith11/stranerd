@@ -3,6 +3,7 @@
 		<div class="modal-inner">
 			<overview v-if="isModalOverview" />
 			<login v-if="isModalLogin" />
+			<forgot-password v-if="isModalForgotPassword" />
 			<register-student v-if="isModalRegisterStudent" />
 			<register-tutor v-if="isModalRegisterTutor" />
 		</div>
@@ -13,17 +14,19 @@
 	import { mapGetters } from 'vuex'
 	import Overview from '@/components/auth/Overview'
 	import Login from '@/components/auth/Login'
+	import ForgotPassword from '@/components/auth/ForgotPassword'
 	import RegisterStudent from '@/components/auth/RegisterStudent'
 	import RegisterTutor from '@/components/auth/RegisterTutor'
 	export default {
 		components: {
 			'overview': Overview,
 			'login': Login,
+			'forgot-password': ForgotPassword,
 			'register-student': RegisterStudent,
 			'register-tutor': RegisterTutor,
 		},
 		computed: {
-			...mapGetters(['isModalOverview','isModalLogin','isModalRegisterStudent','isModalRegisterTutor'])
+			...mapGetters(['isModalOverview','isModalLogin','isModalRegisterStudent','isModalRegisterTutor','isModalForgotPassword'])
 		}
 	}
 </script>

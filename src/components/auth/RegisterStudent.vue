@@ -10,21 +10,25 @@
 			<div class="form-group">
 				<input type="text" id="name" class="form-control" placeholder="Full name" v-model.trim="$v.user.name.$model"
 					:class="{'is-invalid': $v.user.name.$error, 'is-valid': !$v.user.name.$invalid}">
+				<span class="small" v-if="$v.user.name.$error">Must be at least 3 characters</span>
 			</div>
 			<div class="form-group">
 				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="$v.user.email.$model"
 					:class="{'is-invalid': $v.user.email.$error, 'is-valid': !$v.user.email.$invalid}">
+				<span class="small" v-if="$v.user.email.$error">Must be a valid email address</span>
 			</div>
 			<div class="form-group">
 				<input type="password" id="password" class="form-control" placeholder="Password" v-model.trim="$v.user.password.$model"
 					:class="{'is-invalid': $v.user.password.$error, 'is-valid': !$v.user.password.$invalid}">
-				<small id="passwordHelpBlock" class="form-text small" aria-describedby="passwordHelpBlock"
-					:class="$v.user.password.$error ? 'text-danger' : 'text-muted'">
-					Your password must be 6-16 characters long.
-				</small>
+				<span class="small" v-if="$v.user.password.$error">Must be 6-16 characters long</span>
+			</div>
+			<div class="form-group">
+				<input type="password" id="c_password" class="form-control" placeholder="Confirm Password" v-model.trim="$v.user.c_password.$model"
+					:class="{'is-invalid': $v.user.c_password.$error, 'is-valid': !$v.user.c_password.$invalid}">
+				<span class="small" v-if="$v.user.c_password.$error">Passwords must match</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button class="btn" @click.prevent="registerUser" :disabled="$v.$invalid || $v.$error">Sign Up</button>
+				<button @click.prevent="registerUser" :disabled="$v.$invalid || $v.$error">Sign Up</button>
 			</div>
 		</form>
 	</div>
@@ -32,14 +36,15 @@
 
 <script>
 	import { mapActions } from 'vuex'
-	import { required, minLength, email, maxLength } from 'vuelidate/lib/validators'
+	import { required, minLength, email, maxLength, sameAs } from 'vuelidate/lib/validators'
 	export default {
 		name: 'RegisterStudent',
 		data: () => ({
 			user: {
 				name: '',
 				email: '',
-				password: ''
+				password: '',
+				c_password: '',
 			}
 		}),
 		methods:{
@@ -50,7 +55,8 @@
 			user: {
 				name: { required, minLength: minLength(3) },
 				email: { required, email },
-				password: { required, minLength: minLength(6), maxLength: maxLength(16) }
+				password: { required, minLength: minLength(6), maxLength: maxLength(16) },
+				c_password: { required, sameAs: sameAs('password') },
 			}
 		}
 	}
@@ -58,20 +64,12 @@
 
 <style lang="scss" scoped>
 	@import '../../style/index';
-	#body{
-		width: 90%;
-		max-width: 800px;
-		margin: 2rem auto;
-		padding: 20px;
-		border-radius: 10px;
-		background: $primary-light;
-		box-shadow: 0 0 8px rgba(0,0,0,0.1);
-		color: $text-black;
-	}
 	input{
 		padding: 1rem;
-		margin: 1rem 0;
 		max-width: 700px;
+	}
+	.form-group{
+		margin: 1rem 0;
 	}
 	button{
 		margin: 0.5rem 0;
