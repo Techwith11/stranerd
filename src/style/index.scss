@@ -16,7 +16,7 @@ $font-base-size: 16px;
 
 body{
   font-size: $font-base-size;
-  font-family: Poppins, Helvetica, Arial, sans-serif;
+  font-family: Raleway, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -38,6 +38,11 @@ button{
 
 .primary-button{
   background: $gradient;
+  color: $white;
+  margin: 0.25rem 0.5rem;
+}
+.accent-button{
+  background: $accent;
   color: $white;
   margin: 0.25rem 0.5rem;
 }

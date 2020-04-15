@@ -18,19 +18,19 @@
 <style lang="scss" scoped>
 	@import '../../style/index';
 	ul{
-		padding: 1.5rem 0 0;
+		padding: 0.5rem 0;
+		background: $primary;
 	}
 	.nav-link{
-		color: $text-black !important;
+		color: $text-black;
 	}
 	.router-link-exact-active{
-		background: $primary;
-		color: $white !important;
+		color: $white;
 	}
 	@media screen and (max-width: 767px){
 		ul{
 			font-size: 0.9rem;
-			padding: 1.25rem 0 0;
+			padding: 0.5rem 0;
 		}
 		a{
 			padding: 0.75rem;
@@ -39,7 +39,7 @@
 	@media screen and (max-width: 575px){
 		ul{
 			font-size: 0.8rem;
-			padding: 1rem 0 0;
+			padding: 0.5rem 0;
 		}
 		a{
 			padding: 0.5rem;

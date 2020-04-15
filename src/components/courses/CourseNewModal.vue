@@ -55,7 +55,7 @@
 					</span>
 				</div>
 				<div class="d-flex justify-content-end">
-					<button type="submit" id="submit" @click.prevent="createCourse" :disabled="$v.$invalid || $v.$error">Submit</button>
+					<button type="submit" class="accent-button" @click.prevent="createCourse" :disabled="$v.$invalid || $v.$error">Submit</button>
 				</div>
 			</form>
 		</div>
@@ -71,6 +71,7 @@
 				description: '',
 				premium: false,
 				tags: [],
+				user: 1
 			},
             tags: ['Mathematics', 'Physics','Chemistry'],
 			video: {},
@@ -102,11 +103,3 @@
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
-	@import '../../style/index';
-	#submit{
-		background: $accent !important;
-		color: $white;
-	}
-</style>
