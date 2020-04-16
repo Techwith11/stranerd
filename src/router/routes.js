@@ -22,5 +22,17 @@ export default [
         name: 'Course',
         component: () => import(/* webpackChunkName: "course" */ '@/views/courses/single-course.vue'),
         meta: { requiresAuth: true }
+    },
+    {
+        path: '/tutors',
+        name: 'Tutors',
+        component: () => import(/* webpackChunkName: "tutors" */ '@/views/tutors/index.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/tutors/:id',
+        name: 'Tutor',
+        component: () => import(/* webpackChunkName: "tutor" */ '@/views/tutors/single-tutor.vue'),
+        meta: { requiresAuth: true }
     }
 ]
