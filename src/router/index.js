@@ -23,4 +23,10 @@ router.beforeEach((to, from, next) => {
   return next()
 })
 
+router.afterEach(() => {
+  let togglers = document.getElementsByClassName('navbar-toggler')
+  let navbarOpen = document.getElementsByClassName('navbar-collapse collapse show')
+  if(togglers.length > 0 && navbarOpen.length > 0) togglers[0].click()
+})
+
 export default router

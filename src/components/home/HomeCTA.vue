@@ -1,7 +1,7 @@
 <template>
     <div id="background">
-        <div class="container d-flex flex-md-row-reverse align-items-center" id="contain">
-            <div class="text-left" id="ctaText">
+        <div class="container" id="contain">
+            <div class="text-left">
                 <h1 class="font-weight-bold" id="headline">Get Access to Unlimited Educational Resources. Everywhere, Everytime!</h1>
                 <p id="subtitle">Premium access to more than 10,000 resources ranging from courses, events e.t.c.</p>
                 <button class="primary-button" id="ctaButton">Get Access</button>
@@ -31,6 +31,9 @@
         line-height: 1.2rem;
     }
     @media screen and (max-width: 767px){
+        #background{
+            padding: 7rem 0;
+        }
         #headline{
             font-size: 2.0rem;
             line-height: 2.5rem;
@@ -41,6 +44,9 @@
         }
     }
     @media screen and (max-width: 575px){
+        #background{
+            padding: 5rem 0;
+        }
         #headline{
             font-size: 1.6rem;
             line-height: 2.0rem;
