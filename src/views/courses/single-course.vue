@@ -1,17 +1,15 @@
 <template>
 	<div>
-		<div class="container">
-			<video src="@/assets/videos/test.mp4" controls></video>
-			<h5 class="text-center">{{ course.title }}</h5>
-		</div>
+		<single-video :course="course" />
 		<single-nav />
-		<single-overview class="container" v-if="isOverview" :course="course" />
-		<single-discussions class="container" v-if="isDiscussions" :course="course" />
-		<single-documents class="container" v-if="isDocuments" :course="course" />
+		<single-overview v-if="isOverview" :course="course" />
+		<single-discussions v-if="isDiscussions" :course="course" />
+		<single-documents v-if="isDocuments" :course="course" />
 	</div>
 </template>
 
 <script>
+	import SingleVideo from '@/components/courses/single/SingleVideo'
 	import SingleNav from '@/components/courses/single/SingleNav'
 	import SingleOverview from '@/components/courses/single/SingleOverview'
 	import SingleDiscussions from '@/components/courses/single/SingleDiscussions'
@@ -57,6 +55,7 @@
 			}
 		}),
 		components: {
+			'single-video': SingleVideo,
 			'single-nav': SingleNav,
 			'single-overview': SingleOverview,
 			'single-discussions': SingleDiscussions,
@@ -69,10 +68,3 @@
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
-	@import '../../style/index.scss';
-	video{
-		width: 100%;
-	}
-</style>
