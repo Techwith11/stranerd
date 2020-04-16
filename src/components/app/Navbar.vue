@@ -5,8 +5,8 @@
             <button class="navbar-toggler" id="toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbar">
-                <ul class="navbar-nav ml-auto align-items-center">
+            <div class="collapse navbar-collapse text-center" id="navbar">
+                <ul class="navbar-nav ml-auto align-items-md-center">
                     <li class="nav-item">
                         <router-link class="nav-link" to="/">Home</router-link>
                     </li>

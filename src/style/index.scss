@@ -53,5 +53,13 @@ button{
   margin: 0.25rem 0.5rem;
 }
 .router-link-exact-active {
-  border-bottom: 2px solid $primary !important;
+  border-bottom: 2px solid $primary;
+}
+
+@media screen and (max-width: 767px){
+  .router-link-exact-active{
+    border: none;
+    background: $primary;
+    color: $white !important;
+  }
 }
