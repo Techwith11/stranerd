@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div>
     <cta />
     <why-us />
     <success />
@@ -18,7 +18,6 @@
  import Stats from '@/components/home/HomeStats'
  import StudentsSay from '@/components/home/HomeStudentsSay'
  import Pricing from '@/components/home/HomePricing'
-
 export default {
   name: 'Home',
   components: {

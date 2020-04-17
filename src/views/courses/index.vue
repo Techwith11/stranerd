@@ -16,7 +16,6 @@
 	import CourseNav from '@/components/courses/list/CourseNav'
 	import CourseCard from '@/components/courses/list/CourseCard'
 	import CourseFAB from '@/components/courses/list/CourseFAB'
-
 	export default {
 		name: 'Courses',
 		components: {

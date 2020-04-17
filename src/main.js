@@ -1,10 +1,10 @@
 import Vue from 'vue'
-import App from './App.vue'
-import '@/config/index.js'
-import router from './router'
-import store from './store'
+import App from './App'
+import '@/config/'
+import router from './router/'
+import store from './store/'
 
-Vue.config.productionTip = true;
+Vue.config.productionTip = true
 
 new Vue({
   router,
