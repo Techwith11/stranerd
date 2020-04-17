@@ -11,6 +11,9 @@
                         <router-link class="nav-link" to="/">Home</router-link>
                     </li>
                     <li class="nav-item">
+                        <router-link class="nav-link" to="/chats">Chats</router-link>
+                    </li>
+                    <li class="nav-item">
                         <router-link class="nav-link" to="/courses">Courses</router-link>
                     </li>
                     <li class="nav-item">
@@ -18,9 +21,6 @@
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" to="/blog">Blog</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/contact">Contact Us</router-link>
                     </li>
                     <li class="nav-item">
                         <button class="primary-button d-none d-md-inline" @click="openModal">Get Started</button>

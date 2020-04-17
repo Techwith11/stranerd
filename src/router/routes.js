@@ -34,5 +34,17 @@ export default [
         name: 'Tutor',
         component: () => import(/* webpackChunkName: "tutor" */ '@/views/tutors/single-tutor.vue'),
         meta: { requiresAuth: true }
+    },
+    {
+        path: '/chats',
+        name: 'Chats',
+        component: () => import(/* webpackChunkName: "chats" */ '@/views/chats/index.vue'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/chats/:id',
+        name: 'Chat',
+        component: () => import(/* webpackChunkName: "chat" */ '@/views/chats/single-chat.vue'),
+        meta: { requiresAuth: true }
     }
 ]
