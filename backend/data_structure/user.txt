@@ -1,0 +1,38 @@
+user: {
+    .key: String,
+    name: String,
+    email: String,
+    bio: String,
+    active: Boolean,
+    role: Int,
+    premium: Boolean,
+    registeredAt: DateTime,
+    deletedAt: DateTime,
+    deactivatedAt: DateTime,
+
+    image: Object{
+        name: String,
+        link: String(Bucket url of uploaded preview image),
+        type: String(Type of image)
+    },
+
+    chattedWith: [String(Id of users)],
+    cart: [String(Id of courses)],
+    courses: [String(Id of premium courses either bought or explicitly saved if premium user)],
+    sessions: [String(Id of sessions)],
+}
+
+tutor:{
+    ...user,
+    sessionsTaught: Array[String(Ids of sessions taught)]
+    tested: Boolean,
+    course: String,
+    qualification: String,
+    level: Int,
+    ratings: Array[Int],
+    price: Float(Per hour)
+}
+
+student: {
+    ...user,
+}

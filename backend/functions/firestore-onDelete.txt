@@ -1,0 +1,18 @@
+chat: [
+    Check chats array for chats between from and to, if this chat is the last, delete their ids from each other's chattedWith
+    If chat's session_id is set, delete chats id from session's chats array
+    Delete media file from firebase storage if chat isMedia is true
+]
+
+course: [
+    Delete course id from all its savedBy's courses arrays
+    Delete video, image, preview and documents from firebase storage
+]
+
+discussion: []
+
+session: [
+    Delete session id from its student's sessions array and the tutor's sessionsTaught array
+]
+
+user: []

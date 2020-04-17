@@ -1,0 +1,8 @@
+discussion: {
+    .key: String,
+    body: String,
+    courseId: String,
+    userId: String,
+    createdAt: DateTime,
+    updatedAt: DateTime,
+}

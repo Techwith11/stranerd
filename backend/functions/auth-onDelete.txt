@@ -1,0 +1,3 @@
+auth: [
+    Set auth id user's deletedAt
+]

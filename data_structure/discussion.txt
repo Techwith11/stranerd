@@ -1,7 +1,0 @@
-discussion: {
-    .key: String,
-    body: String,
-    course_id: String,
-    user_id: String,
-    created_at: DateTime
-}

@@ -1,0 +1,26 @@
+chat: [
+    Check from's and to's chattedWith array and append their ids to each other if not in the array already
+    Initialize fields (sentAt, readAt, read) in the created chat
+    If chat's session_id is set, append chats id to session's chats array and set chat's isSession to true, or false if not set
+    If chat's media is set, set chat's isMedia to true, or false if not set
+]
+
+course: [
+    Append authorized user's id to userId field
+    Initialize fields (createdAt, updatedAt, discussions, savedBy) in the created course
+]
+
+discussion: [
+    Append authorized user's id to userId field
+    Initialize fields (createdAt, updatedAt) in the created discussion
+]
+
+session: [
+    Append session's id to students sessions array and tutor's sessionsTaught array
+    Initialize fields (createdAt, chats) in the created session
+]
+
+user: [
+    If role is not present, initialize as student and add claim to the user's auth
+    Initialize fields (registeredAt, deletedAt, deactivatedAt, active, premium, image, chattedWith, cart, sessions, courses )
+]

@@ -1,0 +1,17 @@
+chat: {
+    .key: String,
+    content: String
+    from: String(Id of sender),
+    to: String(Id of receiver),
+    sentAt: DateTime,
+    readAt: DateTime,
+    read: Boolean,
+    isSession: Boolean,
+    sessionId: String(Id of session if chat is part of a session),
+    isMedia: Boolean,
+    media: Object{
+        name: String,
+        link: String,
+        type: String
+    }
+}

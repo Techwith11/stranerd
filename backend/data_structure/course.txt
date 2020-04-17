@@ -4,8 +4,9 @@ course: {
     description: String,
     premium: Boolean,
     tags: Array[String],
-    created_at: DateTime,
-    user_id: String(),
+    createdAt: DateTime,
+    updatedAt: DateTime,
+    userId: String(),
     video: Object{
         name: String,
         link: String(Bucket url of uploaded video),
@@ -30,5 +31,6 @@ course: {
     ],
     discussions: Array[
         String(id of each discussion where course_id equals this.id)
-    ]
+    ],
+    savedBy: Array[String(Id of students who saved it or bought it)]
 }

@@ -1,0 +1,3 @@
+auth: [
+    Create user using auth id, email, and image if present
+]

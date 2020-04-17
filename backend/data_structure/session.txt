@@ -10,4 +10,5 @@ session: {
     created_at: DateTime,
     student_ready: Boolean,
     tutor_ready: Boolean,
+    chats: Array[String(Ids of chats)]
 }
