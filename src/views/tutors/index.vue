@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="container">
 		<p>Tutors List</p>
 	</div>
 </template>

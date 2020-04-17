@@ -28,7 +28,7 @@
 				<span class="small" v-if="$v.user.c_password.$error">Passwords must match</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button @click.prevent="registerUser" :disabled="$v.$invalid || $v.$error">Sign Up</button>
+				<button @click.prevent="registerUser" :disabled="$v.$invalid || $v.$error" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">Sign Up</button>
 			</div>
 		</form>
 	</div>
@@ -74,11 +74,10 @@
 	button{
 		margin: 0.5rem 0;
 		padding: 0.5rem 1.5rem;
-		background: $gradient-reversed;
 		color: $white;
-		border: 1px solid #333333;
 		display: block;
 		min-width: 256px;
 		max-width: 700px;
+		box-shadow: none;
 	}
 </style>

@@ -10,10 +10,10 @@
 			<div class="form-group">
 				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="$v.user.email.$model"
 					:class="{'is-invalid': $v.user.email.$error, 'is-valid': !$v.user.email.$invalid}">
-				<span class="small" v-if="$v.email.$error">Must be a valid email address</span>
+				<span class="small" v-if="$v.user.email.$error">Must be a valid email address</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button @click.prevent="retrievePassword" :disabled="$v.$invalid || $v.$error">Retrieve Password</button>
+				<button @click.prevent="retrievePassword" :disabled="$v.$invalid || $v.$error" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">Retrieve Password</button>
 			</div>
 		</form>
 	</div>
@@ -45,16 +45,15 @@
 	@import '../../style/index';
 	input{
 		padding: 1rem;
-		margin: 1rem 0;
 		max-width: 700px;
 	}
 	button{
 		margin: 0.5rem 0;
-		background: $gradient-reversed;
+		padding: 0.5rem 1.5rem;
 		color: $white;
-		border: 1px solid #333333;
 		display: block;
 		min-width: 256px;
 		max-width: 700px;
+		box-shadow: none;
 	}
 </style>

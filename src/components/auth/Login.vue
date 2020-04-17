@@ -18,7 +18,7 @@
 				<span class="small" v-if="$v.user.password.$error">Must be 6-16 characters long</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button @click.prevent="loginUser" :disabled="$v.$invalid || $v.$error">Sign In</button>
+				<button @click.prevent="loginUser" :disabled="$v.$invalid || $v.$error" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">Sign In</button>
 			</div>
 			<span class="small my-3">
 				Forgot Password?
@@ -63,11 +63,11 @@
 	}
 	button{
 		margin: 0.5rem 0;
-		background: $gradient-reversed;
+		padding: 0.5rem 1.5rem;
 		color: $white;
-		border: 1px solid #333333;
 		display: block;
 		min-width: 256px;
 		max-width: 700px;
+		box-shadow: none;
 	}
 </style>

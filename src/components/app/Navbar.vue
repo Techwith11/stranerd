@@ -37,7 +37,7 @@
     #navbar {
         background: $white;
         a {
-            color: $primary;
+            color: $text-black;
             font-size: 0.875rem;
         }
         button a{
