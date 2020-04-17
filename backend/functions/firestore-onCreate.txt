@@ -1,5 +1,6 @@
 chat: [
-    Check from's and to's chattedWith array and append their ids to each other if not in the array already
+    Check from's and to's chats object and append their ids to each other if not in the object already
+    Push chat id to each of the array in each chats object where the key is from and to
     Initialize fields (sentAt, readAt, read) in the created chat
     If chat's session_id is set, append chats id to session's chats array and set chat's isSession to true, or false if not set
     If chat's media is set, set chat's isMedia to true, or false if not set

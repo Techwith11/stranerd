@@ -15,8 +15,9 @@ user: {
         link: String(Bucket url of uploaded preview image),
         type: String(Type of image)
     },
-
-    chattedWith: [String(Id of users)],
+    chats: Object[
+        String('user_id'): Array[String(Ids of chats between each other)]
+    ]
     cart: [String(Id of courses)],
     courses: [String(Id of premium courses either bought or explicitly saved if premium user)],
     sessions: [String(Id of sessions)],
