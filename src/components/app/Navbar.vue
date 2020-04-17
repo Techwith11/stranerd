@@ -14,10 +14,10 @@
                         <router-link class="nav-link" to="/courses">Courses</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/blog">Blog</router-link>
+                        <router-link class="nav-link" to="/tutors">Tutors</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/about">About Us</router-link>
+                        <router-link class="nav-link" to="/blog">Blog</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" to="/contact">Contact Us</router-link>

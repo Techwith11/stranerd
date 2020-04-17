@@ -1,0 +1,12 @@
+tutor: {
+    .key: String
+    name: String,
+    email: String,
+    bio: String,
+    active: Boolean,
+    tested: Boolean,
+    course: String,
+    qualification: String,
+    ratings: Array[Int],
+    price: Float(Per hour)
+}

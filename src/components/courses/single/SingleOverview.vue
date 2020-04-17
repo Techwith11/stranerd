@@ -4,7 +4,7 @@
 			<div class="col-lg-3 mr-lg-4 p-2 p-lg-4 rounded-lg my-2 my-lg-4 text-center body">
 				<p class="title font-weight-bold">Instructor</p>
 				<p class="lead font-weight-bold">{{ course.author.name }}</p>
-				<p>{{ course.author.description }}</p>
+				<p>{{ course.author.bio }}</p>
 				<button class="accent-button" @click="$router.push(`/tutors/${course.author.id}`)">Visit profile</button>
 			</div>
 			<div class="p-2 p-lg-4 rounded-lg my-2 my-lg-4 body">

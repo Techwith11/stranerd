@@ -14,8 +14,8 @@
 </template>
 
 <script>
-    import CourseNav from '@/components/courses/CourseNav'
-    import CourseCard from '@/components/courses/CourseCard'
+    import CourseNav from '@/components/courses/list/CourseNav'
+    import CourseCard from '@/components/courses/list/CourseCard'
     export default {
         components: {
             'course-nav': CourseNav,

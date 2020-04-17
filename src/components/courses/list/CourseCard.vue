@@ -21,7 +21,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../style/index';
+	@import '../../../style/index';
 	.router-link-exact-active{
 		background: $primary;
 		color: $white;

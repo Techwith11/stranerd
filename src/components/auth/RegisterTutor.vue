@@ -93,7 +93,7 @@
 		}),
 		methods:{
 			...mapActions(['setModalOverview']),
-			registerUser(){ alert('Registered')},
+			registerUser(){ alert('Registered') }, // TODO: Remenber to bring up form for tutors price after he passes the test after reg.
 			goToNext(){this.page = 2 },
 			goToPrevious(){this.page = 1 },
 		},

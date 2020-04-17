@@ -1,19 +1,21 @@
 <template>
-	<div class="container">
+	<div>
 		<course-nav />
 		<course-fab />
-		<div class="row">
-			<div class="col-md-6 col-lg-4" v-for="course in coursesByTag" :key="course['.key']">
-				<course-card :course="course" />
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-lg-4" v-for="course in coursesByTag" :key="course['.key']">
+					<course-card :course="course" />
+				</div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
-	import CourseNav from '@/components/courses/CourseNav'
-	import CourseCard from '@/components/courses/CourseCard'
-	import CourseFAB from '@/components/courses/CourseFAB'
+	import CourseNav from '@/components/courses/list/CourseNav'
+	import CourseCard from '@/components/courses/list/CourseCard'
+	import CourseFAB from '@/components/courses/list/CourseFAB'
 
 	export default {
 		name: 'Courses',

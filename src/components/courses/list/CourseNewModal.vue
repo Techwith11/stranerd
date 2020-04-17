@@ -151,7 +151,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../style/index';
+	@import '../../../style/index';
 	button{
 		margin: 0.5rem 0;
 		padding: 0.5rem 1.5rem;

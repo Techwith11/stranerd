@@ -6,7 +6,7 @@
 </template>
 
 <script>
-	import CourseNewModal from '@/components/courses/CourseNewModal'
+	import CourseNewModal from '@/components/courses/list/CourseNewModal'
 	export default {
 		data: () => ({
 			visible: false,
@@ -21,7 +21,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../style/index';
+	@import '../../../style/index';
 	#fab{
 		background: $accent;
 		color: $white;

@@ -1,0 +1,13 @@
+session: {
+    .key: String,
+    student_id: String,
+    tutor_id: String,
+    duration: Int(value in hours),
+    student_comment: String,
+    tutor_comment: String,
+    student_rating: String,
+    tutor_rating: String,
+    created_at: DateTime,
+    student_ready: Boolean,
+    tutor_ready: Boolean,
+}
