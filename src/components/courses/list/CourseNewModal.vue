@@ -108,17 +108,17 @@
 			goToPrevious(){ this.page = 1},
 			catchVideo(e){
 				if (e.target.files[0]){
-					e.target.files[0].type.startsWith('video/') ? this.course.video = e.target.files[0] : new window.toast({ icon:'error', title: 'File is not a video'})
+					e.target.files[0].type.startsWith('video/') ? this.course.video = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})
 				}
 			},
 			catchImage(e){
 				if(e.target.files[0]){
-					e.target.files[0].type.startsWith('image/') ? this.course.image = e.target.files[0] : new window.toast({ icon:'error', title: 'File is not an image'})
+					e.target.files[0].type.startsWith('image/') ? this.course.image = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not an image'})
 				}
 			},
 			catchPreview(e){
 				if(e.target.files[0]){
-					e.target.files[0].type.startsWith('video/') ? this.course.preview = e.target.files[0] : new window.toast({ icon:'error', title: 'File is not a video'})
+					e.target.files[0].type.startsWith('video/') ? this.course.preview = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})
 				}
 			},
 			catchDocuments(e){

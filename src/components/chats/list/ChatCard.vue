@@ -1,11 +1,16 @@
 <template>
-	<router-link class="text-decoration-none text-black" :to="`/chats/${getOtherId}`">
-		<div class="alert border-secondary" role="alert" :class="{ 'alert-success': isByMe && chat.read,'alert-info' : isByMe && !chat.read, 'alert-danger': !isByMe }">
+	<router-link class="text-decoration-none" :to="`/chats/${getOtherId}`">
+		<div class="alert alert-light border-secondary text-dark" role="alert">
 			<div class="font-weight-bold d-flex justify-content-between align-items-center">
 				<span>{{ isByMe ? chat.to : chat.from}}</span>
-				<span class="small">{{ chat.sentAt.toTimeString().slice(0,9) }}</span>
+				<span class="small">{{ chat.sentAt.toTimeString().slice(0,5) }}</span>
 			</div>
-			<span class="d-block small text-truncate">{{ chat.content }}</span>
+			<div class="d-flex justify-content-between">
+				<span class="d-block small text-truncate">{{ chat.content }}</span>
+				<span :class="{ 'd-flex text-success': isByMe && chat.read,'d-flex text-primary' : isByMe && !chat.read, 'd-none': !isByMe }">
+					<i class="fas fa-check"></i><i class="fas fa-check ml-n2"></i>
+				</span>
+			</div>
 		</div>
 	</router-link>
 </template>

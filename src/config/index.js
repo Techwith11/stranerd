@@ -10,7 +10,8 @@ import SweetAlert from 'sweetalert2'
 Vue.use(Vuelidate)
 window.Fire = new Vue({})
 
-window.toast = SweetAlert.mixin({
+window.SweetAlert = SweetAlert
+window.Toast = SweetAlert.mixin({
     toast: true,
     position: "top-end",
     showConfirmButton: false,

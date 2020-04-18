@@ -16,7 +16,7 @@ router.beforeEach((to, from, next) => {
   /*const requiresAuth = to.matched.some(route => route.meta.requiresAuth)
   const isLoggedIn = store.getters.isLoggedIn
   if (requiresAuth && !isLoggedIn) {
-    new window.toast({ icon: 'error', 'title': 'Login to continue' })
+    new window.Toast({ icon: 'error', 'title': 'Login to continue' })
     store.dispatch('setModalLogin')
     return next(from.fullPath)
   }*/
