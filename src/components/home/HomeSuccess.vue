@@ -6,7 +6,7 @@
                 <p class="small">Semaj Africa is an online education platform that delivers video courses, programs and resources for Individual, Advertising & Media Specialist, Online Marketing Professionals,
                     Freelancers and anyone looking to pursue a career in digital marketing, Accounting, Web development, Programming. Multimedia and CAD design.
                 </p>
-                <button class="white-button">Discover</button>
+                <button class="white-button" @click="$router.push('/tutors')">Discover</button>
             </div>
         </div>
     </div>

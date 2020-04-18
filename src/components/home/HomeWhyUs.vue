@@ -25,7 +25,7 @@
                     <h2 class="font-weight-light">Build your portfolio.</h2>
                     <h2 class="font-weight-bold">Get Hired.</h2>
                     <p class="small">StraNerd is an online education platform that delivers video courses, programs and resources for Individual, Advertising & Media Specialist, Online Marketing Professionals, Freelancers and anyone looking to pursue a career in digital marketing, Accounting, Web development, Programming. Multimedia and CAD design.</p>
-                    <button class="btn primary-button mt-1">Discover</button>
+                    <button class="btn primary-button mt-1" @click="$router.push('/courses')">Discover</button>
                 </div>
             </div>
         </div>

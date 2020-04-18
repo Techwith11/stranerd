@@ -1,10 +1,10 @@
 <template>
     <div id="background">
-        <div class="container" id="contain">
+        <div class="container">
             <div class="text-left">
                 <h1 class="font-weight-bold" id="headline">Get Access to Unlimited Educational Resources. Everywhere, Everytime!</h1>
                 <p id="subtitle">Premium access to more than 10,000 resources ranging from courses, events e.t.c.</p>
-                <button class="primary-button" id="ctaButton">Get Access</button>
+                <button class="primary-button" id="ctaButton" @click="$router.push('/courses')">Get Access</button>
             </div>
         </div>
     </div>

@@ -32,7 +32,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	.alert{
 		max-width: 75%;
 	}
