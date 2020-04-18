@@ -10,6 +10,11 @@ export default [
         component: () => import(/* webpackChunkName: "about" */ '@/views/about')
     },
     {
+        path: '/blog',
+        name: 'Blog',
+        component: () => import(/* webpackChunkName: "blog" */ '@/views/blog/index')
+    },
+    {
         path: '/courses',
         name: 'Courses',
         component: () => import(/* webpackChunkName: "courses" */ '@/views/courses/index'),
@@ -44,5 +49,10 @@ export default [
         name: 'Chat',
         component: () => import(/* webpackChunkName: "chat" */ '@/views/chats/single-chat'),
         meta: { requiresAuth: true }
+    },
+    {
+        path: '*',
+        name: 'NotFound',
+        component: () => import(/* webpackChunkName: "notfound" */ '@/views/errors/not-found')
     }
 ]
