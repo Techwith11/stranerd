@@ -1,8 +1,12 @@
 chat: []
 
-course: []
+course: [
+    Update updatedAt date
+]
 
 discussion: []
+
+question: []
 
 session: []
 

@@ -1,14 +1,13 @@
 session: {
-    .key: String,
-    student_id: String,
-    tutor_id: String,
-    duration: Int(value in hours),
-    student_comment: String,
-    tutor_comment: String,
-    student_rating: String,
-    tutor_rating: String,
+    .key: String, *
+    studentId: String, *
+    tutorId: String, *
+    duration: Int(value in hours), *
+    studentComment: String,
+    tutorComment: String,
+    studentRating: String,
+    tutorRating: String,
     created_at: DateTime,
-    student_ready: Boolean,
-    tutor_ready: Boolean,
-    chats: Array[String(Ids of chats)]
+    studentReady: Boolean,
+    tutorReady: Boolean,
 }

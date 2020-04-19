@@ -1,8 +1,6 @@
 discussion: {
-    .key: String,
-    body: String,
-    courseId: String,
-    userId: String,
+    .key: String, *
+    body: String, *
+    userId: String, *
     createdAt: DateTime,
-    updatedAt: DateTime,
 }

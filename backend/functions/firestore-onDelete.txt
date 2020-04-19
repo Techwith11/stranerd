@@ -1,18 +1,18 @@
 chat: [
-    Delete chat from array of from and to chats
-    If chat's session_id is set, delete chats id from session's chats array
     Delete media file from firebase storage if chat isMedia is true
 ]
 
 course: [
-    Delete course id from all its savedBy's courses arrays
     Delete video, image, preview and documents from firebase storage
+    Delete all discussions in sub collection
 ]
 
 discussion: []
 
-session: [
-    Delete session id from its student's sessions array and the tutor's sessionsTaught array
-]
+question: []
 
-user: []
+session: []
+
+user: [
+    Delete user image from storage
+]
