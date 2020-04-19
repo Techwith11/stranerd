@@ -7,12 +7,12 @@
                 <button class="primary-button">Start Free Trial</button>
             </div>
             <div class="price-card">
-                <p class="font-weight-light">Basic</p>
-                <p>
-                    <span class="display-2 price">$15</span>
+                <span class="font-weight-light">Basic</span>
+                <span>
+                    <span class="price">$15</span>
                     <span>/monthly</span>
-                </p>
-                <p class="price-subtitle w-50">StraNerd is an online education platform that delivers video courses, programs and resources for</p>
+                </span>
+                <span class="price-subtitle w-50">StraNerd is an online education platform that delivers video courses, programs and resources for</span>
                 <ul>
                     <li>
                         <i class="fas fa-check-circle"></i>
@@ -78,7 +78,10 @@
         color: $text-black;
     }
     .price-card{
-        //border: 2px solid $text-black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 1rem 0;
     }
     h2{
         font-size: 2.5rem;
@@ -97,6 +100,7 @@
     }
     .price{
         color: $primary-dark;
+        font-size: 2.5rem;
     }
     .price-subtitle{
         font-size: 0.625rem;
