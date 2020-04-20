@@ -4,5 +4,59 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if false;
     }
+
+    match /chats/{id} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin(request.auth.id);
+    }
+
+    match /chats/{id} {
+      allow read: if resource.data.between.includes(request.auth.uid);
+      allow create: if request.resource.data.between.includes(request.auth.uid);
+      allow update, delete: if resource.data.fromId == request.auth.uid;
+    }
+
+    match /courses/{id} {
+      allow read: if resource.data.savedBy.includes(request.auth.uid);
+      allow create, delete: if isAdmin(request.auth.id);
+      allow update: if isAuthenticated();
+    }
+
+    match /courses/{course}/discussions/{id} {
+      allow read: if resource.data.savedBy.includes(request.auth.uid);
+      allow create: if request.resource.data.savedBy.includes(request.auth.uid);
+      allow update: if resource.data.userId == request.auth.uid;
+      allow delete: if isAdmin(request.auth.id);
+    }
+
+    match /questions/{id} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin(request.auth.id);
+    }
+
+    match /sessions/{id} {
+      allow read: if resource.data.studentId == request.auth.uid || resource.data.tutorId == request.auth.uid;
+      allow create: if isTutor(request.resource.data.tutorId);
+      allow update: if resource.data.studentId == request.auth.uid || resource.data.tutorId == request.auth.uid;
+      allow delete: if isAdmin(request.auth.id);
+    }
+
+    match /users/{id} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update, delete: if request.auth.uid == userId;
+    }
+
+    function isAuthenticated(id) {
+      return request.auth != null
+    }
+
+    function isAdmin(id) {
+      return get(/databases/$(database)/documents/users/$(id)).data.roles.isAdmin
+    }
+
+    function isTutor(id) {
+      return get(/databases/$(database)/documents/users/$(id)).data.roles.isTutor
+    }
   }
 }

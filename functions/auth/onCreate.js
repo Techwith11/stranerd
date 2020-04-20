@@ -1,7 +1,7 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 
-module.exports = functions.auth.user().onCreate(user => {
+module.exports = functions.auth.user().onCreate((user) => {
 	return admin
 		.firestore()
 		.collection('users')
@@ -10,9 +10,7 @@ module.exports = functions.auth.user().onCreate(user => {
 			email: user.email,
 			name: user.displayName,
 			image: {
-				link: user.photoURL
+				link: user.photoURL,
 			},
-			phone: user.phoneNumber
 		})
-	}
-)
+})
