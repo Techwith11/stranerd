@@ -22,7 +22,26 @@
                     <li class="nav-item">
                         <router-link class="nav-link" to="/blog">Blog</router-link>
                     </li>
-                    <li class="nav-item">
+                    <template v-if="isLoggedIn">
+                        <li class="nav-item dropdown d-none d-md-inline">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                My account
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <router-link class="dropdown-item" to="/my-account">My Account</router-link>
+                                <router-link class="dropdown-item" to="/cart">My cart</router-link>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item"  @click.prevent="logout">Logout</a>
+                            </div>
+                        </li>
+                        <li class="nav-item d-md-none">
+                            <router-link class="nav-link" to="/my-account">My Account</router-link>
+                        </li>
+                        <li class="nav-item d-md-none">
+                            <a class="nav-link" @click.prevent="logout">Logout</a>
+                        </li>
+                    </template>
+                    <li class="nav-item" v-else>
                         <button class="primary-button d-none d-md-inline" @click="openModal">Get Started</button>
                         <a class="nav-link d-md-none" @click.prevent="openModal">Get Started</a>
                     </li>
@@ -54,8 +73,9 @@
 </style>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapGetters, mapActions } from 'vuex'
     export default {
-        methods: mapActions(['openModal'])
+        methods: mapActions(['openModal','logout']),
+        computed: mapGetters(['isLoggedIn'])
     }
 </script>

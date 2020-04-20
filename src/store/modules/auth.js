@@ -12,7 +12,13 @@ const mutations = {
 }
 
 const actions = {
-    setUser:({ commit }, user) => commit('setUser', user)
+    setUser:({ commit }, user) => commit('setUser', user),
+    logout:({ commit }) => {
+        commit('setUser', null)
+        let togglers = document.getElementsByClassName('navbar-toggler')
+        let navbarOpen = document.getElementsByClassName('navbar-collapse collapse show')
+        if(togglers.length > 0 && navbarOpen.length > 0) togglers[0].click()
+    },
 }
 
 export default { state, getters, mutations, actions }
