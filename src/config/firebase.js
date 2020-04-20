@@ -28,5 +28,13 @@ export const auth = firebase.auth()
 export const functions = firebase.functions()
 export const storage = firebase.storage()
 
-// TODO: Remember to replace user here with user from users collection
-auth.onAuthStateChanged((user) => store.dispatch('setUser', user ? user : null))
+auth.onAuthStateChanged(async (user) => {
+    console.log(user)
+    if (user && user.uid){
+        let id = user.uid
+        let userData = await firestore.collection('users').doc(id).get()
+        store.dispatch('setUser', { id, ...userData.data() })
+    }else{
+        store.dispatch('setUser', null)
+    }
+})

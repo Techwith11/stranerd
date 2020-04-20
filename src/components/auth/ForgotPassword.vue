@@ -13,7 +13,10 @@
 				<span class="small" v-if="$v.user.email.$error">Must be a valid email address</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button @click.prevent="retrievePassword" :disabled="$v.$invalid || $v.$error" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">Retrieve Password</button>
+				<button @click.prevent="retrievePassword" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
+					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
+					<span v-else>Retrieve Password</span>
+				</button>
 			</div>
 		</form>
 	</div>
@@ -21,17 +24,31 @@
 
 <script>
 	import { mapActions } from 'vuex'
+	import { auth } from '@/config/firebase'
 	import { required, email } from 'vuelidate/lib/validators'
 	export default {
 		name: 'ForgotPassword',
 		data: () => ({
 			user: {
 				email: ''
-			}
+			},
+			isLoading: false
 		}),
 		methods:{
-			...mapActions(['setModalLogin']),
-			retrievePassword(){ alert('Retrieved')}
+			...mapActions(['setModalLogin','closeModal']),
+			retrievePassword(){
+				this.isLoading = true
+				auth.sendPasswordResetEmail(this.user.email)
+					.then(async () => {
+						this.isLoading = false
+						new window.Toast({ icon: 'success', title: 'Proceed to email to continue' })
+						this.closeModal()
+					})
+					.catch(error => {
+						new window.Toast({ icon: 'error', title: error.message })
+						this.isLoading = false;
+					})
+			}
 		},
 		validations:{
 			user: {

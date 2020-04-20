@@ -28,7 +28,10 @@
 				<span class="small" v-if="$v.user.c_password.$error">Passwords must match</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button @click.prevent="registerUser" :disabled="$v.$invalid || $v.$error" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">Sign Up</button>
+				<button @click.prevent="registerUser" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
+					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
+					<span v-else>Sign Up</span>
+				</button>
 			</div>
 		</form>
 	</div>
@@ -36,6 +39,7 @@
 
 <script>
 	import { mapActions } from 'vuex'
+	import { auth, firestore } from '@/config/firebase.js'
 	import { required, minLength, email, maxLength, sameAs } from 'vuelidate/lib/validators'
 	export default {
 		name: 'RegisterStudent',
@@ -45,11 +49,24 @@
 				email: '',
 				password: '',
 				c_password: '',
-			}
+			},
+			isLoading: false
 		}),
 		methods:{
-			...mapActions(['setModalOverview']),
-			registerUser(){ alert('Registered')}
+			...mapActions(['setModalOverview','closeModal']),
+			registerUser(){
+				this.isLoading = true
+				auth.createUserWithEmailAndPassword(this.user.email, this.user.password)
+					.then(async result => {
+						await firestore.collection('users').doc(result.user.uid).set({ bio: { name: this.user.name }},{ merge: true })
+						this.isLoading = false
+						this.closeModal()
+					})
+					.catch(error => {
+						new window.Toast({ icon: 'error', title: error.message })
+						this.isLoading = false;
+					});
+			}
 		},
 		validations:{
 			user: {

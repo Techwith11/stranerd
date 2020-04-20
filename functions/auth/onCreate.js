@@ -7,10 +7,21 @@ module.exports = functions.auth.user().onCreate((user) => {
 		.collection('users')
 		.doc(user.uid)
 		.set({
-			email: user.email,
-			name: user.displayName,
-			image: {
-				link: user.photoURL,
+			bio: {
+				email: user.email,
+				name: user.displayName,
+				image: {
+					link: user.photoURL,
+				},
+				roles: { isStudent: true }
 			},
-		})
+			dates:{
+				registeredAt: Date.now()
+			},
+			status: {
+				active: true,
+				lastSeen: null
+			},
+			premium: false,
+		}, { merge: true })
 })

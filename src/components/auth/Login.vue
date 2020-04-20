@@ -18,7 +18,10 @@
 				<span class="small" v-if="$v.user.password.$error">Must be 6-16 characters long</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button @click.prevent="loginUser" :disabled="$v.$invalid || $v.$error" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">Sign In</button>
+				<button @click.prevent="loginUser" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
+					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
+					<span v-else>Sign In </span>
+				</button>
 			</div>
 			<span class="small my-3">
 				Forgot Password?
@@ -30,6 +33,7 @@
 
 <script>
 	import { mapActions } from 'vuex'
+	import { auth } from '@/config/firebase'
 	import { required, minLength, email, maxLength } from 'vuelidate/lib/validators'
 	export default {
 		name: 'Login',
@@ -37,11 +41,23 @@
 			user: {
 				email: '',
 				password: ''
-			}
+			},
+			isLoading: false
 		}),
 		methods:{
-			...mapActions(['setModalOverview','setModalForgotPassword']),
-			loginUser(){ alert('Logged In')}
+			...mapActions(['setModalOverview','setModalForgotPassword', 'closeModal']),
+			loginUser(){
+				this.isLoading = true
+				auth.signInWithEmailAndPassword(this.user.email, this.user.password)
+					.then(async () => {
+						this.isLoading = false
+						this.closeModal()
+					})
+					.catch(error => {
+						new window.Toast({ icon: 'error', title: error.message })
+						this.isLoading = false;
+					})
+			}
 		},
 		validations:{
 			user: {

@@ -29,9 +29,9 @@
 					<span class="small" v-if="$v.user.c_password.$error">Passwords must match</span>
 				</div>
 				<div class="d-flex justify-content-end">
-					<button @click.prevent="goToNext" :class="cannotGoToNext ? 'opacity-25' : 'bg-info'" :disabled="cannotGoToNext">
+					<button @click.prevent="registerUser" :class="cannotGoToNext ? 'opacity-25' : 'bg-info'" :disabled="cannotGoToNext || isLoading">
 						<span>Next</span>
-						<i class="fas fa-angle-right ml-2"></i>
+						<i class="fas ml-2" :class="isLoading ? 'fa-spinner fa-spin' : 'fa-angle-right'"></i>
 					</button>
 				</div>
 			</div>
@@ -48,7 +48,7 @@
 					<select id="qualification" class="form-control" v-model="$v.user.qualification.$model"
 						:class="{'is-invalid': $v.user.qualification.$error, 'is-valid': !$v.user.qualification.$invalid}">
 						<option :value="null" disabled>Select your highest level of qualification</option>
-						<option :value="qualification" v-for="qualification in qualifications" :key="qualification">{{ qualification }}</option>
+						<option :value="qualification.value" v-for="qualification in qualifications" :key="qualification.value">{{ qualification.name }}</option>
 					</select>
 				</div>
 				<div class="form-group">
@@ -56,12 +56,8 @@
 						:class="{'is-invalid': $v.user.bio.$error, 'is-valid': !$v.user.bio.$invalid}">
 					</textarea>
 				</div>
-				<div class="d-flex justify-content-between align-items-center">
-					<button class="bg-info" @click.prevent="goToPrevious">
-						<i class="fas fa-angle-left mr-2"></i>
-						<span>Previous</span>
-					</button>
-					<button @click.prevent="registerUser" :class="{'opacity-25':$v.$invalid, 'primary-button': !$v.$invalid}" :disabled="$v.$invalid">Submit</button>
+				<div class="d-flex justify-content-end align-items-center">
+					<button @click.prevent="makeUserTutor" :class="{'opacity-25':$v.$invalid, 'primary-button': !$v.$invalid}" :disabled="$v.$invalid">Submit</button>
 				</div>
 			</div>
 		</form>
@@ -70,6 +66,7 @@
 
 <script>
 	import { mapActions } from 'vuex'
+	import { auth, firestore } from '@/config/firebase'
 	import { required, minLength, email, maxLength, sameAs } from 'vuelidate/lib/validators'
 	export default {
 		name: 'RegisterTutor',
@@ -81,21 +78,52 @@
 				c_password: '',
 				subject: null,
 				qualification: null,
-				bio: ''
+				bio: '',
+				uid: null,
 			},
 			page: 1,
 			subjects: [
 				'Mathematics', 'Physics', 'Chemistry'
 			],
 			qualifications: [
-				'High school graduate', 'Diploma Certificate','Bachelors Degree', 'Masters Degree'
-			]
+				{ name:'High school graduate', value: 0}, { name: 'Diploma Certificate', value: 1 },
+				{ name: 'Bachelors Degree', value: 2 }, { name: 'Masters Degree', value: 3 }
+			],
+			isLoading: false
 		}),
 		methods:{
-			...mapActions(['setModalOverview']),
-			registerUser(){ alert('Registered') }, // TODO: Remenber to bring up form for tutors price after he passes the test after reg.
-			goToNext(){this.page = 2 },
-			goToPrevious(){this.page = 1 },
+			...mapActions(['setModalOverview','closeModal']),
+			registerUser(){
+				this.isLoading = true
+				auth.createUserWithEmailAndPassword(this.user.email, this.user.password)
+					.then(result => {
+						this.uid = result.user.uid
+						this.isLoading = false
+						this.page = 2
+					})
+					.catch(error => {
+						this.isLoading = false
+						new window.Toast({ icon: 'error', title: error.message })
+					})
+			},
+			async makeUserTutor(){
+				this.isLoading = true
+				await firestore.collection('users').doc(this.uid).set({
+					bio: {
+						name: this.user.name,
+						bio: this.user.bio,
+						roles: { isTutor: true }
+					},
+					tutor: {
+						course: this.user.course,
+						qualification: this.user.qualification,
+						level: 1
+					}
+				}, { merge: true })
+				this.isLoading = false
+				//this.closeModal()
+				//TODO: Take to test page
+			}// TODO: Remember to bring up form for tutors price after he passes the test after reg.
 		},
 		computed: {
 			cannotGoToNext(){ return this.$v.user.name.$invalid || this.$v.user.email.$invalid || this.$v.user.password.$invalid ||this.$v.user.c_password.$invalid }
