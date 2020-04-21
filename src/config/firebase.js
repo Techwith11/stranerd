@@ -29,7 +29,6 @@ export const functions = firebase.functions()
 export const storage = firebase.storage()
 
 auth.onAuthStateChanged(async (user) => {
-    console.log(user)
     if (user && user.uid){
         let id = user.uid
         let userData = await firestore.collection('users').doc(id).get()

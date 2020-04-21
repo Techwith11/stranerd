@@ -1,22 +1,19 @@
 <template>
 	<div>
-		<button id="fab" @click="visible = true">+</button>
-		<course-new-modal v-if="visible" />
+		<button id="fab" @click="openCreateModal">+</button>
+		<create-new-modal v-if="isCreateModalOpen" />
 	</div>
 </template>
 
 <script>
-	import CourseNewModal from '@/components/courses/list/CourseNewModal'
+	import CreateNewModal from '@/components/courses/list/CreateNewModal'
+	import { mapGetters, mapActions } from 'vuex'
 	export default {
-		data: () => ({
-			visible: false,
-		}),
 		components: {
-			'course-new-modal': CourseNewModal
+			'create-new-modal': CreateNewModal
 		},
-		mounted() {
-			window.Fire.$on('closeCourseNewModal',() => this.visible = false)
-        }
+		methods: mapActions(['openCreateModal']),
+		computed: mapGetters(['isCreateModalOpen'])
     }
 </script>
 

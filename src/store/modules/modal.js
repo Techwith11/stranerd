@@ -1,6 +1,8 @@
 const state = {
     modal: 'overview',
-    open: false
+    open: false,
+    createOpen: false,
+    createModal: 'create-overview'
 }
 
 const getters = {
@@ -10,6 +12,10 @@ const getters = {
     isModalForgotPassword: state => state.modal === 'forgot-password',
     isModalRegisterStudent: state => state.modal === 'register-student',
     isModalRegisterTutor: state => state.modal === 'register-tutor',
+    isCreateModalOpen: state => state.createOpen,
+    isCreateModalOverview: state => state.createModal === 'create-overview',
+    isCreateModalCourse: state => state.createModal === 'create-course',
+    isCreateModalQuestion: state => state.createModal === 'create-question',
 }
 
 const mutations = {
@@ -23,6 +29,14 @@ const mutations = {
         if(togglers.length > 0 && navbarOpen.length > 0) togglers[0].click()
         state.open = mode
         state.modal = 'overview'
+    },
+    setCreateOpen(state, mode){
+        state.createOpen = mode
+        state.createModal = 'create-overview'
+    },
+    setCreateModal(state,mode){
+        state.createModal = mode
+        state.createOpen = true
     }
 }
 
@@ -34,6 +48,11 @@ const actions = {
     setModalRegisterTutor: ({ commit }) => commit('setModal', 'register-tutor'),
     closeModal: ({ commit }) => commit('setOpen', false),
     openModal: ({ commit }) => commit('setOpen', true),
+    closeCreateModal: ({ commit }) => commit('setCreateOpen', false),
+    openCreateModal: ({ commit }) => commit('setCreateOpen', true),
+    setCreateModalOverview: ({ commit }) => commit('setCreateModal', 'create-overview'),
+    setCreateModalCourse: ({ commit }) => commit('setCreateModal', 'create-course'),
+    setCreateModalQuestion: ({ commit }) => commit('setCreateModal', 'create-question'),
 }
 
 export default { state, getters, mutations, actions }
