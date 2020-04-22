@@ -6,6 +6,11 @@ exports.authUserCreated = require('./auth/onCreate')
 exports.authUserDeleted = require('./auth/onDelete')
 
 
+// On Call Triggers
+exports.makeUserTutor = require('./onCall/makeTutor')
+exports.makeUserAdmin = require('./onCall/makeAdmin')
+
+
 // Firestore Triggers
 // On Create
 //exports.firestoreChatCreated = require('./firestore/onCreate/chats')
