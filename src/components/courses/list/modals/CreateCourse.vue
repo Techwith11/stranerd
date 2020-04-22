@@ -37,14 +37,14 @@
 				<div class="form-group my-3">
 					<input type="file" @change="catchVideo" class="d-none" ref="videoInput" accept="video/*">
 					<span @click="$refs.videoInput.click()">
-						<span>{{course.video.name}} </span>
+						<span>{{video.name}} </span>
 						<span class="text-info">Upload video</span>
 					</span>
 				</div>
 				<div class="form-group my-3">
 					<input type="file" @change="catchImage" class="d-none" ref="imageInput" accept="image/*">
 					<span @click="$refs.imageInput.click()">
-						<span>{{course.image.name}} </span>
+						<span>{{image.name}} </span>
 						<span class="text-info">Upload image preview</span>
 					</span>
 				</div>
@@ -56,14 +56,14 @@
 				<div v-if="course.premium" class="form-group my-3">
 					<input type="file" @change="catchPreview" class="d-none" ref="previewInput" accept="video/*">
 					<span @click="$refs.previewInput.click()">
-						<span>{{course.preview.name}}  </span>
+						<span>{{preview.name}}  </span>
 						<span class="text-info">Upload video preview</span>
 					</span>
 				</div>
 				<div class="form-group my-3">
 					<input type="file" @change="catchDocuments" class="d-none" ref="documentInput" multiple>
 					<span>
-						<span class="small">{{ course.documents.map(doc => doc.name).join(', ') }} </span>
+						<span class="small">{{ documents.map(doc => doc.name).join(', ') }} </span>
 						<span class="text-info" @click.prevent="$refs.documentInput.click()">Upload attachment files</span>
 					</span>
 				</div>
@@ -72,7 +72,10 @@
 						<i class="fas fa-angle-left mr-2"></i>
 						<span>Previous</span>
 					</button>
-					<button @click.prevent="createCourse" :class="{'opacity-25':$v.$invalid, 'primary-button': !$v.$invalid}" :disabled="$v.$invalid">Submit</button>
+					<button @click.prevent="createCourse" :class="{'opacity-25':$v.$invalid, 'primary-button': !$v.$invalid}" :disabled="$v.$invalid || isLoading">
+						<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
+						<span v-else>Submit</span>
+					</button>
 				</div>
 			</div>
 		</form>
@@ -131,64 +134,50 @@
 				this.documents = []
 				this.documents.push(...e.target.files)
 			},
-			uploadVideo(){
+			async uploadVideo(){
 				new window.Toast({ icon: 'success', title: 'Video uploading' })
 				let name = `courses/videos/${Date.now()}_${this.video.name}}`
-				let task = storage.ref(name).put(this.video)
-				task.on('state_changed', async snapshot => {
-					if(snapshot.bytesTransferred === snapshot.totalBytes){
-						let link = await storage.ref(name).getDownloadURL()
-						this.course.video = { name, link }
-						new window.Toast({ icon: 'success', title: 'Video uploaded' })
-					}
-				})
+				await storage.ref(name).put(this.video)
+				let link = await storage.ref(name).getDownloadURL()
+				this.course.video = { name, link, type: this.video.type }
+				return new window.Toast({ icon: 'success', title: 'Video uploaded' })
 			},
-			uploadImage(){
+			async uploadImage(){
 				new window.Toast({ icon: 'success', title: 'Image uploading' })
 				let name = `courses/images/${Date.now()}_${this.image.name}}`
-				let task = storage.ref(name).put(this.image)
-				task.on('state_changed', async snapshot => {
-					if(snapshot.bytesTransferred === snapshot.totalBytes){
-						let link = await storage.ref(name).getDownloadURL()
-						this.course.image = { name, link }
-						new window.Toast({ icon: 'success', title: 'Image uploaded' })
-					}
-				})
+				await storage.ref(name).put(this.image)
+				let link = await storage.ref(name).getDownloadURL()
+				this.course.image = { name, link, type: this.image.type }
+				return new window.Toast({ icon: 'success', title: 'Image uploaded' })
 			},
-			uploadPreview(){
+			async uploadPreview(){
 				new window.Toast({ icon: 'success', title: 'Preview uploading' })
 				let name = `courses/previews/${Date.now()}_${this.preview.name}}`
-				let task = storage.ref(name).put(this.preview)
-				task.on('state_changed', async snapshot => {
-					if(snapshot.bytesTransferred === snapshot.totalBytes){
-						let link = await storage.ref(name).getDownloadURL()
-						this.course.preview = { name, link }
-						new window.Toast({ icon: 'success', title: 'Preview uploaded' })
-					}
-				})
+				await storage.ref(name).put(this.preview)
+				let link = await storage.ref(name).getDownloadURL()
+				this.course.preview = { name, link, type: this.preview.type }
+				return new window.Toast({ icon: 'success', title: 'Preview uploaded' })
 			},
 			uploadDocuments(){
 				new window.Toast({ icon: 'success', title: 'Documents uploading' })
-				this.documents.forEach(document => {
-					let name = `courses/documents/${Date.now()}_${document.name}}`
-					let task = storage.ref(name).put(document)
-					task.on('state_changed', async snapshot => {
-						if(snapshot.bytesTransferred === snapshot.totalBytes){
-							let link = await storage.ref(name).getDownloadURL()
-							this.course.documents.push({ name, link })
-						}
-					})
+				let promises = this.documents.map(async (document) => {
+					let name = `courses/documents/${Date.now()}_${document.name}`
+					await storage.ref(name).put(document)
+					let link = await storage.ref(name).getDownloadURL()
+					return this.course.documents.push({ name, link, type: document.type })
 				})
-				new window.Toast({ icon: 'success', title: 'Documents uploaded' })
+				return Promise.all(promises).then(() => {
+					new window.Toast({ icon: 'success', title: 'Documents uploaded' })
+				})
 			},
-			createCourse(){
+			async createCourse(){
 				this.isLoading = true
-				this.uploadVideo()
-				this.uploadImage()
+				await this.uploadVideo()
+				await this.uploadImage()
 				if(this.course.premium){
-					this.uploadPreview()
+					await this.uploadPreview()
 				}
-				this.uploadDocuments()
+				await this.uploadDocuments()
 				firestore.collection('courses').add(this.course).then(() => {
 					this.isLoading = false
 					this.closeCreateModal()
