@@ -7,12 +7,12 @@ module.exports = functions.https.onRequest(async (request, response) => {
 		await admin.auth().setCustomUserClaims(user.uid, { isAdmin: true })
 		await admin.firestore()
 			.collection('users')
-			.doc(data.id)
-			.update({
+			.doc(user.uid)
+			.set({
 				bio: {
 					roles: { isAdmin: true }
 				},
-			})
+			}, { merge: true })
 		return response.status(200).json({ message: 'User upgraded to admin' })
 	}else{
 		return response.status(400).json({ message: 'User doesnt exist' })

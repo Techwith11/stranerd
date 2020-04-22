@@ -1,13 +1,9 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if false;
-    }
-
     match /chats/{id} {
       allow read: if isAuthenticated();
-      allow write: if isAdmin(request.auth.id);
+      allow write: if isAdmin();
     }
 
     match /chats/{id} {
@@ -18,7 +14,7 @@ service cloud.firestore {
 
     match /courses/{id} {
       allow read: if hasAccessToCourse(id, request.auth.uid);
-      allow create, delete: if isAdmin(request.auth.id);
+      allow create, delete: if isAdmin();
       allow update: if isAuthenticated();
     }
 
@@ -26,19 +22,19 @@ service cloud.firestore {
       allow read: if hasAccessToCourse(course, request.auth.uid);
       allow create: if hasAccessToCourse(course, request.auth.uid);
       allow update: if resource.data.userId == request.auth.uid;
-      allow delete: if isAdmin(request.auth.id);
+      allow delete: if isAdmin();
     }
 
     match /questions/{id} {
       allow read: if isAuthenticated();
-      allow write: if isAdmin(request.auth.id);
+      allow write: if isAdmin();
     }
 
     match /sessions/{id} {
       allow read: if resource.data.studentId == request.auth.uid || resource.data.tutorId == request.auth.uid;
-      allow create: if isTutor(request.resource.data.tutorId);
+      allow create: if isAuthenticated();
       allow update: if resource.data.studentId == request.auth.uid || resource.data.tutorId == request.auth.uid;
-      allow delete: if isAdmin(request.auth.id);
+      allow delete: if isAdmin();
     }
 
     match /users/{id} {
@@ -47,16 +43,20 @@ service cloud.firestore {
       allow update, delete: if request.auth.uid == id;
     }
 
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
     function isAuthenticated() {
       return request.auth != null
     }
 
-    function isAdmin(id) {
-      return get(/databases/$(database)/documents/users/$(id)).data.bio.roles.isAdmin
+    function isAdmin() {
+      return request.auth.token.isAdmin == true;
     }
 
-    function isTutor(id) {
-      return get(/databases/$(database)/documents/users/$(id)).data.bio.roles.isTutor
+    function isTutor() {
+      return request.auth.token.isTutor == true;
     }
 
     function hasAccessToCourse(course, user) {

@@ -6,9 +6,9 @@ module.exports = functions.auth.user().onDelete((user) => {
 		.firestore()
 		.collection('users')
 		.doc(user.uid)
-		.update({
+		.set({
 			dates: {
 				deletedAt: new Date(),
 			},
-		})
+		},{ merge: true })
 })
