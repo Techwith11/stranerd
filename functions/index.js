@@ -18,6 +18,7 @@ exports.makeUserAdmin = require('./onCall/makeAdmin')
 // Firestore Triggers
 // On Create
 //exports.firestoreChatCreated = require('./firestore/onCreate/chats')
+exports.firestoreCourseCreated = require('./firestore/onCreate/courses')
 //exports.firestoreSessionCreated = require('./firestore/onCreate/sessions')
 
 // On Update
