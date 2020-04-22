@@ -6,6 +6,10 @@ exports.authUserCreated = require('./auth/onCreate')
 exports.authUserDeleted = require('./auth/onDelete')
 
 
+// Request Triggers
+exports.requestMakeUserAdmin = require('./requests/makeAdmin')
+
+
 // On Call Triggers
 exports.makeUserTutor = require('./onCall/makeTutor')
 exports.makeUserAdmin = require('./onCall/makeAdmin')
