@@ -112,7 +112,6 @@
 					bio: {
 						name: this.user.name,
 						bio: this.user.bio,
-						roles: { isTutor: true }
 					},
 					tutor: {
 						course: this.user.course,
@@ -123,7 +122,7 @@
 				this.isLoading = false
 				//this.closeModal()
 				//TODO: Take to test page
-			}// TODO: Remember to bring up form for tutors price after he passes the test after reg.
+			}// TODO: Remember to bring up form for tutors price after he passes the test after reg. And set user claim and user role
 		},
 		computed: {
 			cannotGoToNext(){ return this.$v.user.name.$invalid || this.$v.user.email.$invalid || this.$v.user.password.$invalid ||this.$v.user.c_password.$invalid }

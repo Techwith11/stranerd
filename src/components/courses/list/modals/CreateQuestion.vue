@@ -81,7 +81,7 @@
 			...mapActions(['setCreateModalOverview', 'closeCreateModal']),
 			createQuestion(){
 				this.isLoading = true
-				this.question.createdAt = Date.now()
+				this.question.createdAt = new Date()
 				firestore.collection('questions').add(this.question).then(() => {
 					this.isLoading = false
 					this.closeCreateModal()

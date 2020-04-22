@@ -8,7 +8,7 @@ module.exports = functions.auth.user().onDelete((user) => {
 		.doc(user.uid)
 		.update({
 			dates: {
-				deletedAt: Date.now(),
+				deletedAt: new Date(),
 			},
 		})
 })

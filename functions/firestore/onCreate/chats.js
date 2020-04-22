@@ -2,7 +2,7 @@ const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 
 let chatDefaults = {
-	sentAt: Date.now(), readAt: null
+	sentAt: new Date(), readAt: null
 }
 
 module.exports = functions.firestore.document('/{chats}/{id}').onCreate(async (snap, context) => {
