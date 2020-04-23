@@ -120,9 +120,9 @@
 					}
 				}, { merge: true })
 				this.isLoading = false
-				//this.closeModal()
-				//TODO: Take to test page
-			}// TODO: Remember to bring up form for tutors price after he passes the test after reg. And set user claim and user role
+				this.closeModal()
+				await this.$router.push('/tests/tutors')
+			}
 		},
 		computed: {
 			cannotGoToNext(){ return this.$v.user.name.$invalid || this.$v.user.email.$invalid || this.$v.user.password.$invalid ||this.$v.user.c_password.$invalid }

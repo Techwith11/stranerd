@@ -57,8 +57,20 @@ export default [
         meta: { requiresAuth: true }
     },
     {
+        path: '/tests/tutors',
+        name: 'Tests Tutors',
+        component: () => import(/* webpackChunkName: "tests_tutors" */ '@/views/tests/tutors'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/tests/students',
+        name: 'Tests Students',
+        component: () => import(/* webpackChunkName: "tests_students" */ '@/views/tests/students'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '*',
-        name: 'NotFound',
-        component: () => import(/* webpackChunkName: "notfound" */ '@/views/errors/not-found')
+        name: 'Not Found',
+        component: () => import(/* webpackChunkName: "not_found" */ '@/views/errors/not_found')
     }
 ]

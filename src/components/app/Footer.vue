@@ -47,15 +47,15 @@
         border: 1px solid transparent;
         padding: 0.5rem;
         margin-right: 0.5rem;
-    }
-    i.fa-facebook-f{
-        background: #272EAE;
-    }
-    i.fa-twitter{
-        background: #1590D8;
-    }
-    i.fa-youtube{
-        background: #D0021B;
+        &.fa-facebook-f{
+            background: #272EAE;
+        }
+        &.fa-twitter{
+            background: #1590D8;
+        }
+        &.fa-youtube{
+            background: #D0021B;
+        }
     }
     .section{
         padding: 0 1rem;
