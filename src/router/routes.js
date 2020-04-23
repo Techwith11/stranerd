@@ -51,6 +51,12 @@ export default [
         meta: { requiresAuth: true }
     },
     {
+        path: '/my_account',
+        name: 'My Account',
+        component: () => import(/* webpackChunkName: "my_account" */ '@/views/account/index'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '*',
         name: 'NotFound',
         component: () => import(/* webpackChunkName: "notfound" */ '@/views/errors/not-found')

@@ -28,14 +28,14 @@
                                 My account
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <router-link class="dropdown-item" to="/my-account">My Account</router-link>
+                                <router-link class="dropdown-item" to="/my_account">My Account</router-link>
                                 <router-link class="dropdown-item" to="/cart">My cart</router-link>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item"  @click.prevent="logout">Logout</a>
                             </div>
                         </li>
                         <li class="nav-item d-md-none">
-                            <router-link class="nav-link" to="/my-account">My Account</router-link>
+                            <router-link class="nav-link" to="/my_account">My Account</router-link>
                         </li>
                         <li class="nav-item d-md-none">
                             <a class="nav-link" @click.prevent="logout">Logout</a>
