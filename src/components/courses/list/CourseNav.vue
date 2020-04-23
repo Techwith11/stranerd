@@ -22,7 +22,7 @@
 <style lang="scss" scoped>
 	@import '../../../style/index';
 	#bg{
-		background: $primary;
+		background: $accent;
 	}
 	ul{
 		padding: 0.5rem 0;
@@ -32,6 +32,8 @@
 	}
 	.router-link-exact-active{
 		color: $white;
+		background: $accent;
+		border: none;
 	}
 	@media screen and (max-width: 767px){
 		ul{
