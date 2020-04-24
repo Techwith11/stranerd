@@ -8,7 +8,7 @@ module.exports = functions.auth.user().onDelete((user) => {
 		.doc(user.uid)
 		.set({
 			dates: {
-				deletedAt: new Date(),
+				deletedAt: admin.firestore.FieldValue.serverTimestamp()
 			},
 		},{ merge: true })
 })

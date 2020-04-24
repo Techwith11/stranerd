@@ -19,7 +19,7 @@ module.exports = functions.auth.user().onCreate(async (user) => {
 				roles: { isStudent: true }
 			},
 			dates:{
-				registeredAt: new Date()
+				registeredAt: admin.firestore.FieldValue.serverTimestamp()
 			},
 			status: {
 				active: true,

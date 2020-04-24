@@ -4,7 +4,7 @@ const admin = require('firebase-admin')
 module.exports = functions.firestore.document('/courses/{id}').onCreate(async (snap, context) => {
 	let courseDefaults = {
 		dates: {
-			createdAt: new Date(),
+			createdAt: admin.firestore.FieldValue.serverTimestamp(),
 			updatedAt: null
 		},
 		savedBy: []

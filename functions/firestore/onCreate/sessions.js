@@ -1,9 +1,8 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 
-let sessionDefaults = { createdAt: new Date() }
-
 module.exports = functions.firestore.document('/sessions/{id}').onCreate(async (snap, context) => {
+	let sessionDefaults = { createdAt: admin.firestore.FieldValue.serverTimestamp() }
 	let id = context.params.id
 	let sessionRef = admin.firestore().collection('sessions').doc(id)
 

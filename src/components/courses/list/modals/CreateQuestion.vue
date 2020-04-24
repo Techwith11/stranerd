@@ -58,7 +58,7 @@
 
 <script>
 	import { mapActions } from 'vuex'
-	import { firestore } from '@/config/firebase'
+	import firebase, { firestore } from '@/config/firebase'
 	import { required, minLength, minValue } from 'vuelidate/lib/validators'
 	export default {
 		name: 'CreateQuestion',
@@ -81,7 +81,7 @@
 			...mapActions(['setCreateModalOverview', 'closeCreateModal']),
 			createQuestion(){
 				this.isLoading = true
-				this.question.createdAt = new Date()
+				this.question.createdAt = firebase.firestore.FieldValue.serverTimestamp()
 				firestore.collection('questions').add(this.question).then(() => {
 					this.isLoading = false
 					this.closeCreateModal()

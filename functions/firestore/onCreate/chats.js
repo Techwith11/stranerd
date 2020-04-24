@@ -1,11 +1,10 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 
-let chatDefaults = {
-	sentAt: new Date(), readAt: null
-}
-
 module.exports = functions.firestore.document('/{chats}/{id}').onCreate(async (snap, context) => {
+	let chatDefaults = {
+		sentAt: admin.firestore.FieldValue.serverTimestamp(), readAt: null
+	}
 	let id = context.params.id
 	let chatRef = admin.firestore().collection('chats').doc(id)
 	let fromId = context.auth.uid
