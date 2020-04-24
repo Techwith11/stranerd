@@ -116,7 +116,7 @@
 					tutor: {
 						course: this.user.course,
 						qualification: this.user.qualification,
-						level: 1
+						level: 0
 					}
 				}, { merge: true })
 				this.isLoading = false
