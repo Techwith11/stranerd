@@ -10,16 +10,21 @@ const getters = {
 }
 
 const mutations = {
-    setUser: (state, user) => state.user = user
+    setUser: (state, user) => state.user = user,
+    makeTutor(state, tutor){
+        state.user.bio.roles.isTutor = true
+        state.user.tutor = tutor
+    }
 }
 
 const actions = {
     setUser:({ commit }, user) => commit('setUser', user),
+    makeTutor: ({ commit }, tutor) => commit('makeTutor', tutor),
     logout: async () => {
         await auth.signOut()
         let togglers = document.getElementsByClassName('navbar-toggler')
         let navbarOpen = document.getElementsByClassName('navbar-collapse collapse show')
-        if(togglers.length > 0 && navbarOpen.length > 0) togglers[0].click()
+        if(togglers.length > 0 && navbarOpen.length > 0){ togglers[0].click() }
     },
 }
 

@@ -92,7 +92,7 @@
 			isLoading: false
 		}),
 		methods:{
-			...mapActions(['setModalOverview','closeModal']),
+			...mapActions(['setModalOverview','closeModal', 'makeTutor']),
 			registerUser(){
 				this.isLoading = true
 				auth.createUserWithEmailAndPassword(this.user.email, this.user.password)
@@ -119,6 +119,11 @@
 						level: 0
 					}
 				}, { merge: true })
+				this.makeTutor({
+					course: this.user.course,
+					qualification: this.user.qualification,
+					level: 0
+				})
 				this.isLoading = false
 				this.closeModal()
 				await this.$router.push('/tests/tutors')
