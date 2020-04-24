@@ -1,9 +1,17 @@
 <template>
 	<div class="container">
-		<h3 class="text-center">{{ getTime }}</h3>
-		<question v-for="(question, index) in questions" :question="question" :key="index"
-			:onSelect="onAnswerSelected" :index="index"
-		/>
+		<h3 class="text-center" :class="{'text-danger': timer <= 120}">{{ getTime }}</h3>
+		<div v-if="isTestRunning">
+			<question v-for="(question, index) in questions" :question="question" :key="index"
+				:onSelect="onAnswerSelected" :index="index"
+			/>
+		</div>
+		<div v-if="isTestMarking">
+			<div class="jumbotron text-center">
+				<h3>Marking questions</h3>
+				<p class="text-primary"><i class="fas fa-2x fa-spinner fa-spin"></i></p>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -11,22 +19,10 @@
 	import Question from '@/components/tests/tutors/Question'
 	export default {
 		data: () => ({
-			questions: [
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' }
-			],
-			tests: [],
+			timer: 3600,
+			interval: null,
 			answers: [],
-			timer: 30,
-			interval: null
+			isMarking: false
 		}),
 		computed: {
 			getTime(){
@@ -37,40 +33,39 @@
 				minutes > 9 ? `${minutes}` : minutes = `0${minutes}`
 				seconds > 9 ? `${seconds}` : seconds = `0${seconds}`
 				return `${hours} : ${minutes} : ${seconds}`
-			}
+			},
+			isTestRunning(){ return this.timer > 0},
+			isTestMarking(){ return this.timer === 0 && this.isMarking },
 		},
 		components: {
 			'question': Question,
 		},
 		methods: {
-			getRandomQuestion(){
-				if(this.questions.length === this.tests.length){
-					return new window.Toast({ icon: 'warning', title: 'No more questions' })
-				}
-				let random = Math.floor(Math.random() * this.questions.length)
-				while(this.tests.find(test => test.random === random)){
-					random = Math.floor(Math.random() * this.questions.length)
-				}
-				return this.tests.push(this.questions[random])
-			},
 			onAnswerSelected(index, answer){ this.answers[index] = answer },
-			startInterval(){
-				this.interval = setInterval(() => {
-					if(this.timer > 0){
-						this.timer--
-					}
-				}, 1000)
+			startTest(){ this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000) },
+			endTest(){
+				new window.Toast({ icon: 'info', title: 'Time up' })
+				this.isMarking = true
+				// TODO: Use on call function to mark questions and create tests records
+				/// TODO: Remember to bring up form for tutors price after he passes the test after reg.
+				// TODO: And set user claim and user role
 			}
 		},
 		mounted(){
-			this.startInterval()
+			this.startTest()
 		},
 		watch:{
 			timer(){
 				if(this.timer === 0){
 					clearInterval(this.interval)
-					alert('Time up')
+					this.endTest()
 				}
+			}
+		},
+		props: {
+			questions: {
+				required: true,
+				type: Array[Object]
 			}
 		}
 	}

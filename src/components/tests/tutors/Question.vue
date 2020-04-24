@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="alert alert-primary" role="alert">
-			<p>{{ question.title }}</p>
+			<p>{{ index + 1 }}. {{ question.title }}</p>
 			<form>
 				<div class="form-check">
 					<input class="form-check-input" type="radio" value="a" id="a" v-model="answer">

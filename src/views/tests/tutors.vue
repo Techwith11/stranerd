@@ -14,27 +14,60 @@
 			</p>
 			<p>Please wait before you can retake the test.</p>
 		</div>
+		<test :questions="tests" />
 	</div>
 </template>
 
 <script>
-	//import Question from '@/components/tests/tutors/Question'
+	import Test from '@/components/tests/tutors/Test'
 	export default {
 		name: 'TestsTutors',
 		data: () => ({
-
+			started: false,
+			failed: false,
+			questions: [
+				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
+				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
+				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
+				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
+				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
+				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
+				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
+				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
+				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
+				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' }
+			],
+			tests: [],
 		}),
-		computed: {
-			getUser(){
-				return {
-					tutor: {
-						course: 'Mathematics',
-						level: 0,
+		methods: {
+			getRandomQuestions(){
+				for(let i = 0; i < 10; i++){
+					if(this.questions.length === this.tests.length){
+						new window.Toast({ icon: 'warning', title: 'No more questions' })
+						break
 					}
+					let random = Math.floor(Math.random() * this.questions.length)
+					while(this.tests.find(test => test.random === random)){
+						random = Math.floor(Math.random() * this.questions.length)
+					}
+					this.tests.push(this.questions[random])
 				}
 			},
 		},
-		// TODO: Remember to bring up form for tutors price after he passes the test after reg.
-		// TODO: And set user claim and user role
+		computed: {
+			getUser:() => ({ tutor: { course: 'Mathematics', level: 0 } })
+		},
+		components: {
+			'test': Test
+		},
+		firestore(){
+			return {
+				// fetch auth user's test records and check that last failed was not less than 2 hours ago
+				// Use auth user level and course to fetch questions related to course and a level up
+			}
+		},
+		mounted(){
+			this.getRandomQuestions()
+		}
 	}
 </script>
