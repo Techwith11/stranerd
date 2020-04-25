@@ -13,6 +13,7 @@
 </template>
 
 <script>
+	import { firestore } from '@/config/firebase'
 	import CourseNav from '@/components/courses/list/CourseNav'
 	import CourseCard from '@/components/courses/list/CourseCard'
 	import CourseFAB from '@/components/courses/list/CourseFAB'
@@ -23,16 +24,11 @@
 			'course-card': CourseCard,
 			'course-fab': CourseFAB,
 		},
-		data: () => ({
-			courses: [
-				{'.key':1,tags: ['Mathematics','Chemistry']},
-				{'.key':2,tags: ['Mathematics','Physics']},
-				{'.key':3,tags: ['Physics','Chemistry']},
-				{'.key':4,tags: ['Chemistry']},
-				{'.key':5,tags: ['Mathematics']},
-				{'.key':6,tags: ['Physics']},
-			]
-		}),
+		firestore(){
+			return {
+				courses: firestore.collection('courses').orderBy('dates.updatedAt','desc')
+			}
+		},
 		computed: {
 			filteredCourses(){
 				let tag = this.$route.query.tab

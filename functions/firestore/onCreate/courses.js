@@ -5,7 +5,7 @@ module.exports = functions.firestore.document('/courses/{id}').onCreate(async (s
 	let courseDefaults = {
 		dates: {
 			createdAt: admin.firestore.FieldValue.serverTimestamp(),
-			updatedAt: null
+			updatedAt: admin.firestore.FieldValue.serverTimestamp(),
 		},
 		savedBy: []
 	}
