@@ -26,7 +26,7 @@
 		name: 'Questions',
 		computed: {
 			getCourses() {
-				return this.$route.query.tab ? [this.$route.query.tab] : ['Mathematics', 'Physics', 'Chemistry']
+				return this.$route.query.tab ? [this.$route.query.tab] : this.subjects.map(subject => subject.name)
 			},
 			filteredQuestions() {
 				return this.questions.filter(question => this.getCourses.includes(question.course))
@@ -34,7 +34,8 @@
 		},
 		firestore() {
 			return {
-				questions: firestore.collection('questions')
+				questions: firestore.collection('questions'),
+				subjects: firestore.collection('subjects'),
 			}
 		},
 		components: {

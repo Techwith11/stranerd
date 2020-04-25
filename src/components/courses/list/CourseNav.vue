@@ -5,19 +5,25 @@
 				<li class="nav-item">
 					<router-link class="nav-link" to="/courses">All</router-link>
 				</li>
-				<li class="nav-item">
-					<router-link class="nav-link" to="/courses?tab=maths">Maths</router-link>
-				</li>
-				<li class="nav-item">
-					<router-link class="nav-link" to="/courses?tab=physics">Physics</router-link>
-				</li>
-				<li class="nav-item">
-					<router-link class="nav-link" to="/courses?tab=chemistry">Chemistry</router-link>
+				<li class="nav-item" v-for="subject in subjects" :key="subject['.key']">
+					<router-link class="nav-link" :to="`/courses?tab=${subject.name}`">{{ subject.name }}</router-link>
 				</li>
 			</ul>
 		</div>
 	</div>
 </template>
+
+<script>
+	import { firestore } from "@/config/firebase";
+
+	export default {
+		firestore(){
+			return {
+				subjects: firestore.collection('subjects')
+			}
+		}
+	}
+</script>
 
 <style lang="scss" scoped>
 	@import '../../../style/index';
@@ -54,4 +60,3 @@
 		}
 	}
 </style>
-
