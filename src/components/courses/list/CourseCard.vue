@@ -4,7 +4,13 @@
 		<div class="card-body">
 			<h6 class="card-title">{{ course.title }}</h6>
 			<p class="small">{{ course.description }}</p>
-			<p>{{ course.tags }}</p>
+			<p class="small">
+				<span class="mr-2" v-for="tag in course.tags" :key="tag">
+					<i class="fas fa-circle" :class="getColorClass(tag)"></i>
+					{{ tag }}
+				</span>
+			</p>
+			<p class="small">Updated: {{ course.dates.updatedAt | getDate }}</p>
 		</div>
 	</router-link>
 </template>
@@ -16,7 +22,22 @@
                 type: Object,
                 required: true
             }
-        }
+        },
+		filters: {
+			getDate(date){
+				return new Date(date.seconds * 1000).toDateString()
+			}
+		},
+		methods:{
+			getColorClass(tag){
+				let classes = {
+					'Physics': 'text-danger',
+					'Mathematics': 'text-success',
+					'Chemistry': 'text-primary',
+				}
+				return classes[tag]
+			}
+		}
     }
 </script>
 
