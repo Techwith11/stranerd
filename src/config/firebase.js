@@ -22,6 +22,13 @@ const config = {
 Vue.use(VueFirestore)
 firebase.initializeApp(config)
 
+if(window.location.hostname === 'localhost'){
+	firebase.firestore().settings({
+		host: 'localhost:8080',
+		ssl: false
+	})
+}
+
 export default firebase
 export const firestore = firebase.firestore()
 export const auth = firebase.auth()
