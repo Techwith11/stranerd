@@ -12,7 +12,9 @@ module.exports = functions.firestore.document('/courses/{id}').onCreate(async (s
 	let id = context.params.id
 	let courseRef = admin.firestore().collection('courses').doc(id)
 
-	courseDefaults.userId = context.auth.uid
+	if(context.auth){
+		courseDefaults.userId = context.auth.uid
+	}
 
 	await courseRef.set(courseDefaults, { merge: true })
 })
