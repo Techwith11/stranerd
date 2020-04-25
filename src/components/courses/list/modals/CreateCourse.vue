@@ -18,9 +18,9 @@
 				</div>
 				<div class="form-group my-3">
 					<h6>Tags</h6>
-					<div class="custom-control custom-checkbox d-inline-block mx-1"  v-for="tag in tags" :key="tag">
-						<input type="checkbox" class="custom-control-input" :id="tag"  v-model="$v.course.tags.$model" :value="tag">
-						<label class="custom-control-label" :for="tag">{{ tag }}</label>
+					<div class="custom-control custom-checkbox d-inline-block mx-1"  v-for="tag in tags" :key="tag.name">
+						<input type="checkbox" class="custom-control-input" :id="tag.name"  v-model="$v.course.tags.$model" :value="tag.name">
+						<label class="custom-control-label" :for="tag.name">{{ tag.name }}</label>
 					</div>
 					<small id="tagsHelpBlock" class="form-text" :class="$v.course.tags.$error ? 'text-danger' : 'text-muted'">
 						Please select at least one tag
@@ -104,10 +104,11 @@
 			image: {},
 			preview: {},
 			documents: [],
-			tags: ['Mathematics', 'Physics','Chemistry'],
 			isLoading: false,
 			page: 1
-		}),computed: {
+		}),
+		firestore(){ return { tags: firestore.collection('subjects') } },
+		computed: {
 			cannotGoToNext(){ return this.$v.course.title.$invalid || this.$v.course.description.$invalid || this.$v.course.tags.$invalid }
 		},
 		methods: {

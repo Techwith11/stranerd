@@ -13,7 +13,8 @@
 					<span class="mr-3">C. {{ question.c }}</span>
 					<span class="mr-3">D. {{ question.d }}</span>
 				</p>
-				<span>Level {{ question.level }} {{ question.course }}</span>
+				<span class="d-block">Answer: {{ question.answer }}</span>
+				<span class="d-block">Level {{ question.level }} {{ question.subject }}</span>
 			</div>
 		</div>
 	</div>
@@ -29,7 +30,7 @@
 				return this.$route.query.tab ? [this.$route.query.tab] : this.subjects.map(subject => subject.name)
 			},
 			filteredQuestions() {
-				return this.questions.filter(question => this.getCourses.includes(question.course))
+				return this.questions.filter(question => this.getCourses.includes(question.subject))
 			}
 		},
 		firestore() {

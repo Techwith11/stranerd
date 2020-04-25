@@ -13,10 +13,10 @@
 				<span class="small" v-if="$v.question.title.$error">Must be at least 3 characters long</span>
 			</div>
 			<div class="form-group">
-				<select class="form-control" v-model="$v.question.course.$model"
-					:class="{'is-invalid': $v.question.course.$error, 'is-valid': !$v.question.course.$invalid}">
-					<option :value="null" disabled>Under what course</option>
-					<option :value="course" v-for="course in courses" :key="course">{{ course }}</option>
+				<select class="form-control" v-model="$v.question.subject.$model"
+					:class="{'is-invalid': $v.question.subject.$error, 'is-valid': !$v.question.subject.$invalid}">
+					<option :value="null" disabled>Under what subject</option>
+					<option :value="subject.name" v-for="subject in subjects" :key="subject.name">{{ subject.name }}</option>
 				</select>
 			</div>
 			<div class="form-group">
@@ -36,10 +36,10 @@
 					:class="{'is-invalid': $v.question.d.$error, 'is-valid': !$v.question.d.$invalid}">
 			</div>
 			<div class="form-group">
-				<select class="form-control" v-model="$v.question.correct.$model"
-					:class="{'is-invalid': $v.question.correct.$error, 'is-valid': !$v.question.correct.$invalid}">
+				<select class="form-control" v-model="$v.question.answer.$model"
+					:class="{'is-invalid': $v.question.answer.$error, 'is-valid': !$v.question.answer.$invalid}">
 					<option :value="null" disabled>Select the right answer</option>
-					<option :value="answer" v-for="answer in answers" :key="answer">{{ answer }}</option>
+					<option :value="answer" v-for="answer in answers" :key="answer">{{ answer.toUpperCase() }}</option>
 				</select>
 			</div>
 			<div class="form-group">
@@ -65,18 +65,23 @@
 		data: () => ({
 			question: {
 				title: '',
-				course: null,
+				subject: null,
 				a: '',
 				b: '',
 				c: '',
 				d: '',
-				correct: null,
+				answer: null,
 				level: 1
 			},
 			isLoading: false,
 			courses: ['Mathematics','Physics', 'Chemistry'],
 			answers: ['a','b','c','d']
 		}),
+		firestore(){
+			return {
+				subjects: firestore.collection('subjects')
+			}
+		},
 		methods:{
 			...mapActions(['setCreateModalOverview', 'closeCreateModal']),
 			createQuestion(){
@@ -95,12 +100,12 @@
 		validations:{
 			question: {
 				title: { required, minLength: minLength(3)},
-				course: { required, minLength: minLength(1) },
+				subject: { required, minLength: minLength(1) },
 				a: { required, minLength: minLength(1) },
 				b: { required, minLength: minLength(1) },
 				c: { required, minLength: minLength(1) },
 				d: { required, minLength: minLength(1) },
-				correct: { required },
+				answer: { required },
 				level: { required, minValue: minValue(1) }
 			}
 		}
