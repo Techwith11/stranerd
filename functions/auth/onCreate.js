@@ -15,9 +15,9 @@ module.exports = functions.auth.user().onCreate(async (user) => {
 				name: user.displayName,
 				image: {
 					link: user.photoURL,
-				},
-				roles: { isStudent: true }
+				}
 			},
+			roles: { isStudent: true },
 			dates:{
 				registeredAt: admin.firestore.FieldValue.serverTimestamp()
 			},
@@ -25,6 +25,8 @@ module.exports = functions.auth.user().onCreate(async (user) => {
 				active: true,
 				lastSeen: null
 			},
-			premium: false,
+			account: {
+				premium: false,
+			}
 		}, { merge: true })
 })

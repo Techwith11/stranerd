@@ -48,6 +48,12 @@ service cloud.firestore {
       allow update, delete: if request.auth.uid == id;
     }
 
+    match /users/{user}/tests/{id} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if true;
+    }
+
     match /{document=**} {
       allow read, write: if false;
     }

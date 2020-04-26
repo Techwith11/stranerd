@@ -1,72 +1,112 @@
 <template>
 	<div class="container">
-		<div class="jumbotron">
-			<h1 class="display-4">Level 1 for Tutors</h1>
-			<p class="lead">This is a simple 30 minutes test for {{ getUser.tutor.course }}.</p>
-			<hr class="my-4">
-			<p>Make sure you have 30 minutes to spare before starting the test as once started, cannot be paused.</p>
-			<p>You must pass at least 70% of the test before you can become a tutor.</p>
-			<button class="accent-button">Start Test</button>
+		<div class="d-flex justify-content-center my-5 py-5" v-if="isLoading">
+			<i class="fas fa-spinner fa-spin text-info fa-2x"></i>
 		</div>
-		<div class="jumbotron">
-			<p class="text-danger lead">
-				You took this test less than 2 hours ago and failed to meet the 70% pass mark.
-			</p>
-			<p>Please wait before you can retake the test.</p>
+		<div v-else>
+			<div class="jumbotron" v-if="failed">
+				<p class="text-danger lead">
+					You took this test less than 2 hours ago and failed to meet the 70% pass mark.
+				</p>
+				<p>You can retake the test on {{ getRetakeTime[0] }} by {{ getRetakeTime[1] }}.</p>
+			</div>
+			<div v-else>
+				<div v-if="started">
+					<test :questions="tests" />
+				</div>
+				<div class="jumbotron" v-else>
+					<h2>Level {{ tutor.level + 1 }} for Tutors</h2>
+					<p class="lead">This is a simple 30 minutes test for {{ tutor.course }}.</p>
+					<hr class="my-4">
+					<p>Make sure you have 30 minutes to spare before starting the test as once started, cannot be paused.</p>
+					<p>You must pass at least 70% of the test before you can become a tutor.</p>
+					<button class="accent-button" @click="startTest">Start Test</button>
+				</div>
+			</div>
 		</div>
-		<test :questions="tests" />
 	</div>
 </template>
 
 <script>
 	import Test from '@/components/tests/tutors/Test'
+	import { firestore } from '@/config/firebase'
 	export default {
 		name: 'TestsTutors',
 		data: () => ({
 			started: false,
 			failed: false,
-			questions: [
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' },
-				{ title: 'If x is 2 and y is 6, what is 2x -y?', a: '-2', b: '2', c: '0', d: 'None of the above', correct: 'a' }
-			],
+			isLoading: false,
+			tutor: {},
+			questions: [],
 			tests: [],
 		}),
 		methods: {
+			async getUserDetails(){
+				this.isLoading = true
+				//TODO: Fetch auth id from vuex
+				let ref = firestore.collection('users').doc('kevin11')
+				this.tutor = (await ref.get()).data().tutor
+				let upgrade = this.tutor.upgrade[this.tutor.level + 1]
+				if(upgrade.passed){
+					//TODO: Replace > with <
+					let twoHoursToMs = 7200000
+					if((new Date() - upgrade.canRetakeAt) < twoHoursToMs){
+						this.failed = true
+					}
+					this.isLoading = false
+					return null
+				}
+				this.isLoading = false
+				return null
+			},
+			async getAllQuestions(){
+				this.questions = []
+				let docs = await firestore.collection('questions')
+					.where('subject','==', this.tutor.course)
+					.where('level','==', this.tutor.level + 1)
+					.orderBy('createdAt','desc')
+					.limit(100)
+					.get()
+				docs.forEach(doc => this.questions.push({ ...doc.data(), id: doc.id }))
+			},
 			getRandomQuestions(){
-				for(let i = 0; i < 10; i++){
+				//TODO: Adjust test length to number required for testing
+				let testLength = 5
+				this.tests = []
+				for(let i = 0; i < testLength; i++){
 					if(this.questions.length === this.tests.length){
 						new window.Toast({ icon: 'warning', title: 'No more questions' })
 						break
 					}
 					let random = Math.floor(Math.random() * this.questions.length)
-					while(this.tests.find(test => test.random === random)){
+					let question = this.questions[random]
+					while(this.tests.find(test => test.id === question.id)){
 						random = Math.floor(Math.random() * this.questions.length)
+						question = this.questions[random]
 					}
-					this.tests.push(this.questions[random])
+					this.tests.push(question)
 				}
 			},
+			startTest(){
+				this.started = true
+			}
 		},
 		computed: {
-			getUser:() => ({ tutor: { course: 'Mathematics', level: 0 } })
+			getRetakeTime(){
+				let d = this.tutor.upgrade[this.tutor.level + 1].canRetakeAt
+				let date = new Date(d.seconds * 1000)
+				let hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()
+				let minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes()
+				let time = `${hours}:${minutes}`
+				return [date.toDateString(),time]
+			}
 		},
 		components: {
 			'test': Test
 		},
-		firestore(){
-			return {
-				// fetch auth user's test records and check that last failed was not less than 2 hours ago
-				// Use auth user level and course to fetch questions related to course and a level up
-			}
-		},
-		mounted(){
+		async mounted(){
+			await this.getUserDetails()
+			await this.getAllQuestions()
 			this.getRandomQuestions()
 		}
 	}

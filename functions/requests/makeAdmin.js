@@ -9,9 +9,7 @@ module.exports = functions.https.onRequest(async (request, response) => {
 			.collection('users')
 			.doc(user.uid)
 			.set({
-				bio: {
-					roles: { isAdmin: true }
-				},
+				roles: { isAdmin: true }
 			}, { merge: true })
 		return response.status(200).json({ message: 'User upgraded to admin' })
 	}else{

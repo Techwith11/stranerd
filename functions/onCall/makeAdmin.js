@@ -10,10 +10,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 		.firestore()
 		.collection('users')
 		.doc(data.id)
-		.update({
-			...data.user,
-			bio: {
-				roles: { isAdmin: true }
-			},
-		})
+		.set({
+			roles: { isAdmin: true }
+		}, { merge: true })
 })
