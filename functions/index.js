@@ -13,11 +13,11 @@ exports.requestMakeUserAdmin = require('./requests/makeAdmin')
 // On Call Triggers
 exports.makeUserTutor = require('./onCall/makeTutor')
 exports.makeUserAdmin = require('./onCall/makeAdmin')
+exports.sendChat = require('./onCall/sendChat')
 
 
 // Firestore Triggers
 // On Create
-//exports.firestoreChatCreated = require('./firestore/onCreate/chats')
 exports.firestoreCourseCreated = require('./firestore/onCreate/courses')
 exports.firestoreDiscussionCreated = require('./firestore/onCreate/discussions')
 //exports.firestoreSessionCreated = require('./firestore/onCreate/sessions')
