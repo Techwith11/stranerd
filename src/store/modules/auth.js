@@ -1,7 +1,39 @@
 import { auth } from '@/config/firebase'
 
 const state = {
-    user: null
+    user: {
+        "id": "Kevin11",
+        "roles":{"isAdmin":true,"isTutor":true,"isStudent":true},
+        "bio":{
+            "bio":"I am a very dedicated student, ever eager to learn. I am an engineering student, trying to find the world's next best solution",
+            "name":"Kevin Izuchukwu",
+            "email":"kevinfizu@gmail.com"
+        },
+        "dates": {
+            "registeredAt":{"seconds":1587769200,"nanoseconds":0}
+        },
+        "tutor":{
+            "upgrade":{
+                "1":{
+                    "canRetakeAt":{"seconds":1590447600,"nanoseconds":0},
+                    "passed":true
+                }
+            },
+            "level":0,
+            "qualification":"Diploma certificate",
+            "ratings":[],
+            "price":2500,
+            "course":"Mathematics"
+        },
+        "account":{
+            "premium":false
+        },
+        "status":{
+            "lastSeen":{"seconds":1587769200,"nanoseconds":0},
+            "online":true
+        },
+        "chattedWith":["frank","max"]
+    }
 }
 
 const getters = {
