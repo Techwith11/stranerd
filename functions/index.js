@@ -8,6 +8,7 @@ exports.authUserDeleted = require('./auth/onDelete')
 
 // Request Triggers
 exports.requestMakeUserAdmin = require('./requests/makeAdmin')
+exports.requestGetChatIndex = require('./requests/getChatIndex')
 
 
 // On Call Triggers
