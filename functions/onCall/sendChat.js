@@ -3,7 +3,7 @@ const admin = require('firebase-admin')
 
 module.exports = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
-		/*TODO: Remove comment */ throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can send messages')
+		/*TODO: Remove comment */ //throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can send messages')
 	}
 	let chatDefaults = {
 		dates: {
@@ -16,13 +16,14 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 	chatDefaults.from = from
 	chatDefaults.between = [ from, to ]
+	let path = chatDefaults.between.sort().join('_')
 
-	await admin.firestore().collection('chats').add({ ...data, ...chatDefaults})
+	await admin.firestore().collection('chats').doc('singles').collection(path).add({ ...data, ...chatDefaults})
 
-	await admin.firestore.collection('users').doc(from).update({
+	await admin.firestore().collection('users').doc(from).update({
 		chattedWith: admin.firestore.FieldValue.arrayUnion(to)
 	})
-	await admin.firestore.collection('users').doc(to).update({
+	await admin.firestore().collection('users').doc(to).update({
 		chattedWith: admin.firestore.FieldValue.arrayUnion(from)
 	})
 

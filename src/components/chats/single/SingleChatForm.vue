@@ -8,23 +8,24 @@
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
+	import { functions } from '@/config/firebase'
 	import { required } from 'vuelidate/lib/validators'
 	export default {
 		data: () => ({
 			message: '',
-			media: []
+			media: [],
+			sendChat: functions.httpsCallable('sendChat')
 		}),
 		validations: {
 			message: { required }
 		},
 		methods:{
 			async sendMessage(){
+				let message = this.message
 				this.message = ''
 				this.$v.$reset()
-				/* TODO: Create new chat instance */
-				let users = await firestore.doc('chats/singles').get()
-				users.forEach(doc => console.log(doc.data()))
+				this.sendChat({ to: this.$route.params.id, content: message })
+					.catch(error => new window.Toast({ icon: 'error', title: error.message }))
 			},
 			captureFiles(e){
 				this.media = e.target.files
