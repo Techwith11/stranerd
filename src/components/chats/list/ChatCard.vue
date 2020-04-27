@@ -1,13 +1,13 @@
 <template>
-	<router-link class="text-decoration-none" :to="`/chats/${getOtherId}`">
-		<div class="alert alert-light border-secondary text-dark" role="alert">
+	<router-link class="text-decoration-none" :to="`/chats/${getUserId}`">
+		<div class="alert alert-light border-secondary text-dark" role="alert" v-if="chat && chat.id">
 			<div class="font-weight-bold d-flex justify-content-between align-items-center">
-				<span>{{ isByMe ? chat.to : chat.from }}</span>
-				<span class="small">{{ chat.sentAt.toTimeString().slice(0,5) }}</span>
+				<span>{{ getUserName }}</span>
+				<span class="small">{{ getChatTime }}</span>
 			</div>
 			<div class="d-flex justify-content-between">
-				<span class="d-block small text-truncate" :class="{'font-weight-bold': !isByMe && !chat.read}">{{ chat.content }}</span>
-				<span :class="{ 'd-flex text-success': isByMe && chat.read,'d-flex text-primary' : isByMe && !chat.read, 'd-none': !isByMe }">
+				<span class="d-block small text-truncate" :class="{'font-weight-bold': !isByMe && !getChatRead}">{{ getChatContent }}</span>
+				<span :class="{ 'd-flex text-success': isByMe && getChatRead,'d-flex text-primary' : isByMe && !getChatRead, 'd-none': !isByMe }">
 					<i class="fas fa-check"></i><i class="fas fa-check ml-n2"></i>
 				</span>
 			</div>
@@ -20,12 +20,18 @@
 		props: {
 			chat: {
 				required: true,
-				type: Object
+			},
+			user: {
+				required: true,
 			}
 		},
 		computed: {
-			getOtherId(){ return this.chat.from === '1' /* TODO:  Replace 1 with auth id */ ? this.chat.to : this.chat.from },
-			isByMe(){ return this.chat.from === '1' /* TODO:  Replace 1 with auth id */ }
+			isByMe(){ return this.chat.from === 'kevin11' /* TODO:  Replace 1 with auth id */ },
+			getUserId(){ return this.user.id },
+			getUserName(){ return this.user.bio ? this.user.bio.name : '' },
+			getChatContent(){ return this.chat.content },
+			getChatTime(){ return this.chat.dates ? new Date(this.chat.dates.sentAt.seconds * 1000).toTimeString().slice(0,5) : '' },
+			getChatRead(){ return this.chat.dates.readAt != null },
 		}
 	}
 </script>

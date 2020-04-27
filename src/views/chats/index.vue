@@ -1,30 +1,56 @@
 <template>
 	<div class="container py-4">
-		<chat-card v-for="chat in chats" :key="chat['.key']" :chat="chat" />
+		<chat-card v-for="chat in getSortedChats" :key="chat[0]" :chat="chat[1].chat" :user="chat[1].user" />
 	</div>
 </template>
 
 <script>
 	import ChatCard from '@/components/chats/list/ChatCard'
+	import { firestore } from '@/config/firebase'
+
 	export default {
 		name: 'Chats',
 		data: () => ({
-			chats: [
-				{ '.key': 1 , from:'1', to: 'fghjj', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: true, sentAt: new Date(2020,2,3,18,14,11) },
-				{ '.key': 2 , from:'1', to: 'dgfhj', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: true, sentAt: new Date(2020,2,2,19,25,38) },
-				{ '.key': 3 , from:'1', to: 'gfhjy', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: false, sentAt: new Date(2020,2,1,11,21,31) },
-				{ '.key': 4 , from:'wyieh', to: '1', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: true, sentAt: new Date(2020,1,30,22,11,59) },
-				{ '.key': 5 , from:'1', to: 'bhiu', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: false, sentAt: new Date(2020,1,29,18,16,29) },
-				{ '.key': 6 , from:'1', to: 'trygh', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: false, sentAt: new Date(2020,1,29,8,0,11) },
-				{ '.key': 7 , from:'1', to: '9oilk', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: true, sentAt: new Date(2020,1,27,2,34,22) },
-				{ '.key': 8 , from:'tfygu', to: '1', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: false, sentAt: new Date(2020,1,13,12,54,41) },
-			]
+			chats: {}
 		}),
 		components: {
 			'chat-card': ChatCard
 		},
-		mounted(){
-			/* TODO: get all the keys from the chats object in the auth user account and fetch all users that their ids fall in the list */
+		computed: {
+			getSortedChats(){
+				return Object.entries(this.chats).sort((a,b) => {
+					if(a[1].chat.dates && b[1].chat.dates){
+						return b[1].chat.dates.sentAt.seconds - a[1].chat.dates.sentAt.seconds
+					}
+					return 0
+				})
+			}
+		},
+		async mounted(){
+			let me = await firestore.collection('users').doc('kevin11').get()
+			let chattedWith = me.data().chattedWith
+			this.chats = Object.fromEntries(chattedWith.map(id => [id,{ chat: {}, user:{} }]))
+			chattedWith.map(id => {
+				return firestore.doc('chats/singles')
+					.collection([id, 'kevin11'].sort().join('_'))
+					.orderBy('dates.sentAt','desc')
+					.limit(1).onSnapshot(chats => {
+						if(chats.empty){ return null }
+						this.chats[id].chat = {
+							id: chats.docs[0].id,
+							...chats.docs[0].data()
+						}
+					})
+			})
+			chattedWith.map(async id => {
+				return firestore.collection('users').doc(id).onSnapshot(user => {
+					this.chats[id].user = {
+						id,
+						bio: user.data().bio,
+						status: user.data().status,
+					}
+				})
+			})
 		}
 	}
 </script>
