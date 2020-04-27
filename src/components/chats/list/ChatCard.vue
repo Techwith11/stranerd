@@ -16,6 +16,7 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
 	export default {
 		props: {
 			chat: {
@@ -26,7 +27,8 @@
 			}
 		},
 		computed: {
-			isByMe(){ return this.chat.from === 'kevin11' /* TODO:  Replace 1 with auth id */ },
+			...mapGetters(['getId']),
+			isByMe(){ return this.chat.from === this.getId  },
 			getUserId(){ return this.user.id },
 			getUserName(){ return this.user.bio ? this.user.bio.name : '' },
 			getChatContent(){ return this.chat.content },

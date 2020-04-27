@@ -38,6 +38,7 @@ const state = {
 
 const getters = {
     getUser: state => state.user,
+    getId: state => state.user.id,
     isLoggedIn: state => state.user != null
 }
 

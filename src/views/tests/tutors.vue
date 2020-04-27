@@ -30,6 +30,7 @@
 <script>
 	import Test from '@/components/tests/tutors/Test'
 	import { firestore } from '@/config/firebase'
+	import { mapGetters } from 'vuex'
 	export default {
 		name: 'TestsTutors',
 		data: () => ({
@@ -43,8 +44,7 @@
 		methods: {
 			async getUserDetails(){
 				this.isLoading = true
-				//TODO: Fetch auth id from vuex
-				let ref = firestore.collection('users').doc('kevin11')
+				let ref = firestore.collection('users').doc(this.getId)
 				this.tutor = (await ref.get()).data().tutor
 				let upgrade = this.tutor.upgrade[this.tutor.level + 1]
 				if(upgrade.passed){
@@ -92,6 +92,7 @@
 			}
 		},
 		computed: {
+			...mapGetters(['getId']),
 			getRetakeTime(){
 				let d = this.tutor.upgrade[this.tutor.level + 1].canRetakeAt
 				let date = new Date(d.seconds * 1000)

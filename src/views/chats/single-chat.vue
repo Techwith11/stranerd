@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<single-chat-nav :user="user" />
-		<!-- TODO: Remember to scroll to bottom of chats list -->
 		<div class="container py-3">
 			<ul class="list-group position-relative" v-chat-scroll="{ notSmoothOnInit:false, always:true, smooth:true }" @v-chat-scroll-top-reached="doSomething">
 				<single-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
@@ -16,10 +15,12 @@
 	import SingleChatMessage from '@/components/chats/single/SingleChatMessage'
 	import SingleChatForm from '@/components/chats/single/SingleChatForm'
 	import { firestore } from '@/config/firebase'
+	import { mapGetters } from 'vuex'
 	export default {
 		name: 'Chat',
 		computed: {
-			getChatPath(){ return [this.$route.params.id, 'kevin11'].sort().join('_') } //TODO: Replace with auth id
+			...mapGetters(['getId']),
+			getChatPath(){ return [this.$route.params.id, this.getId].sort().join('_') }
 		},
 		firestore(){
 			return {

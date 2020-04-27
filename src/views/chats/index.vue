@@ -7,7 +7,7 @@
 <script>
 	import ChatCard from '@/components/chats/list/ChatCard'
 	import { firestore } from '@/config/firebase'
-
+	import { mapGetters } from 'vuex'
 	export default {
 		name: 'Chats',
 		data: () => ({
@@ -17,6 +17,7 @@
 			'chat-card': ChatCard
 		},
 		computed: {
+			...mapGetters(['getId']),
 			getSortedChats(){
 				return Object.entries(this.chats).sort((a,b) => {
 					if(a[1].chat.dates && b[1].chat.dates){
@@ -27,12 +28,12 @@
 			}
 		},
 		async mounted(){
-			let me = await firestore.collection('users').doc('kevin11').get()
+			let me = await firestore.collection('users').doc(this.getId).get()
 			let chattedWith = me.data().chattedWith
 			this.chats = Object.fromEntries(chattedWith.map(id => [id,{ chat: {}, user:{} }]))
 			chattedWith.map(id => {
 				return firestore.doc('chats/singles')
-					.collection([id, 'kevin11'].sort().join('_'))
+					.collection([id, this.getId].sort().join('_'))
 					.orderBy('dates.sentAt','desc')
 					.limit(1).onSnapshot(chats => {
 						if(chats.empty){ return null }

@@ -19,6 +19,7 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
 	import firebase, { firestore } from '@/config/firebase'
 	export default {
 		props: {
@@ -28,7 +29,8 @@
 			}
 		},
 		computed: {
-			isByMe(){ return this.chat.from === 'kevin11' /* TODO: Replace with auth id */ },
+			...mapGetters(['getId']),
+			isByMe(){ return this.chat.from === this.getId },
 			isChatRead(){ return this.chat.dates.readAt !== null },
 			getChatTime(){ return new Date(this.chat.dates.sentAt.seconds * 1000).toTimeString().slice(0,5) }
 		},
