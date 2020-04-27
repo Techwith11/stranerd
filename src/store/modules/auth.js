@@ -1,8 +1,8 @@
 import { auth } from '@/config/firebase'
 
 const state = {
+    id: "kevin11",
     user: {
-        "id": "Kevin11",
         "roles":{"isAdmin":true,"isTutor":true,"isStudent":true},
         "bio":{
             "bio":"I am a very dedicated student, ever eager to learn. I am an engineering student, trying to find the world's next best solution",
@@ -38,7 +38,7 @@ const state = {
 
 const getters = {
     getUser: state => state.user,
-    getId: state => state.user.id,
+    getId: state => state.id,
     isLoggedIn: state => state.user != null
 }
 

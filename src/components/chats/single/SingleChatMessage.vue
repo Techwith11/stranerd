@@ -35,7 +35,7 @@
 			getChatTime(){ return new Date(this.chat.dates.sentAt.seconds * 1000).toTimeString().slice(0,5) }
 		},
 		async mounted(){
-			if(!this.isByMe && this.isChatRead){
+			if(!this.isByMe && !this.isChatRead){
 				await firestore.doc('chats/singles').collection(this.chat.between.sort().join('_')).doc(this.chat['.key']).set({
 					dates: {
 						readAt: firebase.firestore.FieldValue.serverTimestamp()
