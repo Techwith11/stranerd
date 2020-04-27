@@ -1,9 +1,11 @@
 <template>
 	<div>
-		<single-chat-nav />
+		<single-chat-nav :user="user" />
 		<!-- TODO: Remember to scroll to bottom of chats list -->
 		<div class="container py-3">
-			<single-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
+			<ul class="list-group position-relative" v-chat-scroll="{ notSmoothOnInit:false, always:true, smooth:true }" @v-chat-scroll-top-reached="doSomething">
+				<single-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
+			</ul>
 			<single-chat-form />
 		</div>
 	</div>
@@ -13,26 +15,36 @@
 	import SingleChatNav from '@/components/chats/single/SingleChatNav'
 	import SingleChatMessage from '@/components/chats/single/SingleChatMessage'
 	import SingleChatForm from '@/components/chats/single/SingleChatForm'
+	import { firestore } from '@/config/firebase'
 	export default {
 		name: 'Chat',
-		data: () => ({
-			chats: [
-				{ '.key': 1 , from:'1', to: 'dgfhj', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: true, sentAt: new Date(2020,2,3,18,14,11) },
-				{ '.key': 2 , from:'dgfhj', to: '1', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: true, sentAt: new Date(2020,2,2,19,25,38) },
-				{ '.key': 3 , from:'1', to: 'dgfhj', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: false, sentAt: new Date(2020,2,1,11,21,31) },
-				{ '.key': 4 , from:'dgfhj', to: '1', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: true, sentAt: new Date(2020,1,30,22,11,59) },
-				{ '.key': 5 , from:'1', to: 'dgfhj', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: false, sentAt: new Date(2020,1,29,18,16,29) },
-				{ '.key': 6 , from:'dgfhj', to: '1', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: false, sentAt: new Date(2020,1,29,8,0,11) },
-				{ '.key': 7 , from:'1', to: 'dgfhj', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: true, sentAt: new Date(2020,1,27,2,34,22) },
-				{ '.key': 8 , from:'dgfhj', to: '1', content: 'Hello, my name is Kevin. I would like you to take me on Probability and Statistics. I have an exam coming up.', read: false, sentAt: new Date(2020,1,13,12,54,41) },
-				{ '.key': 9 , from:'1', to: 'dgfhj', content: '', read: false, sentAt: new Date(2020,1,11,9,58,43), isMedia: true, media: { name: 'Extreme Kinetics.pdf', link: '#' } },
-			]
-		}),
+		computed: {
+			getChatPath(){ return [this.$route.params.id, 'kevin11'].sort().join('_') } //TODO: Replace with auth id
+		},
+		firestore(){
+			return {
+				chats: firestore.doc('chats/singles').collection(this.getChatPath).orderBy('dates.sentAt'),
+				user: firestore.collection('users').doc(this.$route.params.id)
+			}
+		},
+		methods: {
+			doSomething(){ console.log('Top')}
+		},
 		components: {
 			'single-chat-nav': SingleChatNav,
 			'single-chat-message': SingleChatMessage,
 			'single-chat-form': SingleChatForm,
-
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	ul{
+		max-height: 70vh;
+		overflow: auto;
+		-ms-overflow-style: none;
+		&::-webkit-scrollbar{
+			display: none;
+		}
+	}
+</style>
