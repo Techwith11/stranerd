@@ -14,6 +14,6 @@ module.exports = functions.https.onCall(async (data, context) => {
 		.set({
 			bio: data.bio,
 			roles: { isTutor: true },
-			tutor: { upgrade: {}, ...data.tutor }
+			tutor: { upgrade: {}, ratings: [], ...data.tutor }
 		}, { merge: true })
 })

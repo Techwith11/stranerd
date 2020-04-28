@@ -33,9 +33,15 @@ export default [
         meta: { requiresAuth: true }
     },
     {
-        path: '/tutors/:id',
-        name: 'Tutor',
-        component: () => import(/* webpackChunkName: "tutor" */ '@/views/tutors/single-tutor'),
+        path: '/users',
+        name: 'Users',
+        component: () => import(/* webpackChunkName: "users" */ '@/views/users/index'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/users/:id',
+        name: 'User',
+        component: () => import(/* webpackChunkName: "user" */ '@/views/users/single-user'),
         meta: { requiresAuth: true }
     },
     {
