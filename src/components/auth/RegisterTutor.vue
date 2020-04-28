@@ -66,7 +66,7 @@
 
 <script>
 	import { mapActions } from 'vuex'
-	import { auth, firestore } from '@/config/firebase'
+	import { auth } from '@/config/firebase'
 	import { required, minLength, email, maxLength, sameAs } from 'vuelidate/lib/validators'
 	export default {
 		name: 'RegisterTutor',
@@ -106,9 +106,10 @@
 						new window.Toast({ icon: 'error', title: error.message })
 					})
 			},
-			async makeUserTutor(){
+			makeUserTutor(){
 				this.isLoading = true
-				await firestore.collection('users').doc(this.uid).set({
+				// TODO: Add price field
+				this.makeTutor({
 					bio: {
 						name: this.user.name,
 						bio: this.user.bio,
@@ -118,15 +119,14 @@
 						qualification: this.user.qualification,
 						level: 0
 					}
-				}, { merge: true })
-				this.makeTutor({
-					course: this.user.course,
-					qualification: this.user.qualification,
-					level: 0
+				}).then(async () => {
+					this.isLoading = false
+					this.closeModal()
+					await this.$router.push('/tests/tutors')
+				}).catch(error => {
+					this.isLoading = false
+					new window.Toast({ icon: 'error', title: error.message })
 				})
-				this.isLoading = false
-				this.closeModal()
-				await this.$router.push('/tests/tutors')
 			}
 		},
 		computed: {

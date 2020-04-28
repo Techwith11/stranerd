@@ -1,28 +1,34 @@
 <template>
 	<div class="container">
-		<div class="d-flex justify-content-center my-5 py-5" v-if="isLoading">
-			<i class="fas fa-spinner fa-spin text-info fa-2x"></i>
-		</div>
-		<div v-else>
-			<div class="jumbotron" v-if="failed">
-				<p class="text-danger lead">
-					You took this test less than 2 hours ago and failed to meet the 70% pass mark.
-				</p>
-				<p>You can retake the test on {{ getRetakeTime[0] }} by {{ getRetakeTime[1] }}.</p>
+		<div v-if="isTutor">
+			<div class="d-flex justify-content-center my-5 py-5" v-if="isLoading">
+				<i class="fas fa-spinner fa-spin text-info fa-2x"></i>
 			</div>
 			<div v-else>
-				<div v-if="started">
-					<test :questions="tests" />
+				<div class="jumbotron" v-if="failed">
+					<p class="text-danger lead">
+						You took this test less than 2 hours ago and failed to meet the 70% pass mark.
+					</p>
+					<p>You can retake the test on {{ getRetakeTime[0] }} by {{ getRetakeTime[1] }}.</p>
 				</div>
-				<div class="jumbotron" v-else>
-					<h2>Level {{ tutor.level + 1 }} for Tutors</h2>
-					<p class="lead">This is a simple 30 minutes test for {{ tutor.course }}.</p>
-					<hr class="my-4">
-					<p>Make sure you have 30 minutes to spare before starting the test as once started, cannot be paused.</p>
-					<p>You must pass at least 70% of the test before you can become a tutor.</p>
-					<button class="accent-button" @click="startTest">Start Test</button>
+				<div v-else>
+					<div v-if="started">
+						<test :questions="tests" />
+					</div>
+					<div class="jumbotron" v-else>
+						<h2>Level {{ tutor.level + 1 }} for Tutors</h2>
+						<p class="lead">This is a simple 30 minutes test for {{ tutor.course }}.</p>
+						<hr class="my-4">
+						<p>Make sure you have 30 minutes to spare before starting the test as once started, cannot be paused.</p>
+						<p>You must pass at least 70% of the test before you can become a tutor.</p>
+						<button class="accent-button" @click="startTest">Start Test</button>
+					</div>
 				</div>
 			</div>
+		</div>
+		<div class="d-flex align-items-center flex-column py-5 my-5"  v-else>
+			<p class="mt-5 mb-2 lead text-center">This account is not recognized as a tutor's account</p>
+			<p class="mt-2 mb-5 small">Visit your profile settings to upgrade</p>
 		</div>
 	</div>
 </template>
@@ -40,20 +46,24 @@
 			tutor: {},
 			questions: [],
 			tests: [],
+			isTutor: false
 		}),
 		methods: {
 			async getUserDetails(){
 				this.isLoading = true
 				let ref = firestore.collection('users').doc(this.getId)
-				this.tutor = (await ref.get()).data().tutor
-				let upgrade = this.tutor.upgrade[this.tutor.level + 1]
-				if(upgrade.passed){
-					//TODO: Replace > with <
-					let twoHoursToMs = 7200000
-					if((new Date() - upgrade.canRetakeAt) < twoHoursToMs){
-						this.failed = true
+				this.isTutor = (await ref.get()).data().roles.isTutor
+				if(this.isTutor){
+					this.tutor = (await ref.get()).data().tutor
+					let upgrade = this.tutor.upgrade[this.tutor.level + 1]
+					if(!upgrade.passed){
+						let twoHoursToMs = 7200000
+						if((new Date() - upgrade.canRetakeAt) < twoHoursToMs){
+							this.failed = true
+						}
+						this.isLoading = false
+						return null
 					}
-					this.isLoading = false
 					return null
 				}
 				this.isLoading = false
@@ -70,7 +80,7 @@
 				docs.forEach(doc => this.questions.push({ ...doc.data(), id: doc.id }))
 			},
 			getRandomQuestions(){
-				//TODO: Adjust test length to number required for testing
+				// TODO: Adjust test length to number required for testing
 				let testLength = 5
 				this.tests = []
 				for(let i = 0; i < testLength; i++){
@@ -107,8 +117,10 @@
 		},
 		async mounted(){
 			await this.getUserDetails()
-			await this.getAllQuestions()
-			this.getRandomQuestions()
+			if(this.isTutor){
+				await this.getAllQuestions()
+				this.getRandomQuestions()
+			}
 		}
 	}
 </script>

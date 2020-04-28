@@ -46,9 +46,7 @@
 			endTest(){
 				new window.Toast({ icon: 'info', title: 'Time up' })
 				this.isMarking = true
-				// TODO: Use on call function to mark questions and create tests records
-				/// TODO: Remember to bring up form for tutors price after he passes the test after reg.
-				// TODO: And set user claim and user role
+				// TODO: Use on call function to mark questions, create tests records and user upgrade tutor level
 			}
 		},
 		mounted(){
