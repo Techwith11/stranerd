@@ -10,7 +10,7 @@
 			<div v-else>
 				<single-chat-nav :user="user" />
 				<div class="container py-3">
-					<p class="text-center" v-if="chats.length < 1">No chats. Send a message now</p>
+					<p class="text-center my-5 py-5" v-if="chats.length < 1">No chats. Send a message now</p>
 					<ul class="list-group position-relative" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
 						<li class="d-block text-center small text-muted" v-if="!hasNoMore">
 							<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
@@ -72,16 +72,18 @@
 			},
 			setListener(){
 				let lastItem = this.chats[this.chats.length - 1]
-				this.chatsListeners = firestore.doc('chats/singles').collection(this.getChatPath).orderBy('dates.sentAt')
-					.where('dates.sentAt','>',lastItem.dates.sentAt)
-					.onSnapshot(snapshot => {
-						this.newChats = []
-						snapshot.docs.forEach(doc => this.newChats.push({ '.key': doc.id, ...doc.data() }))
-					})
+				let query = firestore.doc('chats/singles').collection(this.getChatPath).orderBy('dates.sentAt')
+				if(lastItem){
+					query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
+				}
+				this.chatsListeners = query.onSnapshot(snapshot => {
+					this.newChats = []
+					snapshot.docs.forEach(doc => this.newChats.push({ '.key': doc.id, ...doc.data() }))
+				})
 			},
 			async fetchOlderMessages(){
 				this.isOlderChatsLoading = true
-				this.getChats()
+				await this.getChats()
 				this.isOlderChatsLoading = false
 			}
 		},

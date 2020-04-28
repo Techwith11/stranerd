@@ -25,6 +25,10 @@
 	import QuestionNav from '@/components/questions/list/QuestionNav'
 	export default {
 		name: 'Questions',
+		data: () => ({
+			questions: [],
+			subjects: []
+		}),
 		computed: {
 			getCourses() {
 				return this.$route.query.tab ? [this.$route.query.tab] : this.subjects.map(subject => subject.name)
@@ -33,11 +37,12 @@
 				return this.questions.filter(question => this.getCourses.includes(question.subject))
 			}
 		},
-		firestore() {
-			return {
-				questions: firestore.collection('questions'),
-				subjects: firestore.collection('subjects'),
-			}
+		async mounted() {
+			//TODO: Implement Pagination
+			let subDocs = await firestore.collection('subjects').get()
+			subDocs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
+			let quesDocs = await firestore.collection('questions').get()
+			quesDocs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
 		},
 		components: {
 			'question-nav': QuestionNav
