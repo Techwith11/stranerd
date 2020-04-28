@@ -24,9 +24,9 @@ const mutations = {
         state.open = true
     },
     setOpen(state, mode){
-        let togglers = document.getElementsByClassName('navbar-toggler')
-        let navbarOpen = document.getElementsByClassName('navbar-collapse collapse show')
-        if(togglers.length > 0 && navbarOpen.length > 0) togglers[0].click()
+        let collapse = document.getElementsByClassName('navbar-collapse')[0]
+        collapse.classList.add('collapse')
+        collapse.classList.add('in')
         state.open = mode
         state.modal = 'overview'
     },

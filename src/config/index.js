@@ -5,7 +5,6 @@ import VueChatScroll from "vue-chat-scroll"
 import '@/config/registerServiceWorker'
 import '@/style/index.scss'
 
-import 'bootstrap'
 import SweetAlert from 'sweetalert2'
 
 Vue.use(Vuelidate)

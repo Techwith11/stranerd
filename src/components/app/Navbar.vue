@@ -2,7 +2,7 @@
     <header class="container">
         <nav class="navbar navbar-expand-md navbar-light">
             <a class="navbar-brand" href="#">STRANERD</a>
-            <button class="navbar-toggler" id="toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" @click="toggleNavbar" id="toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse text-center" id="navbar">
@@ -75,7 +75,14 @@
 <script>
     import { mapGetters, mapActions } from 'vuex'
     export default {
-        methods: mapActions(['openModal','logout']),
+        methods: {
+            ...mapActions(['openModal', 'logout']),
+            toggleNavbar(){
+                let collapse = document.getElementsByClassName('navbar-collapse')[0]
+                collapse.classList.toggle('collapse')
+                collapse.classList.toggle('in')
+            }
+        },
         computed: mapGetters(['isLoggedIn'])
     }
 </script>
