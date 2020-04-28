@@ -4,8 +4,8 @@
 			<div class="container text-white py-3">
 				<div class="d-flex align-items-center">
 					<i class="fas fa-arrow-left mr-3" @click="$router.push('/chats')"></i>
-					<img src="@/assets/images/icons/Cassette.svg" class="mr-3" width="50px" alt="" />
-					<span class="d-block text-truncate">{{ user.bio.name }}</span>
+					<img :src="getImageLink" class="mr-3" width="50px" alt="" @click="$router.push(`/tutors/${user['.key']}`)" />
+					<router-link class="d-block text-truncate text-white text-decoration-none" :to="`/tutors/${user['.key']}`">{{ user.bio.name }}</router-link>
 					<button class="ml-auto d-none d-md-inline shadow-none white-button" v-if="user.roles.isTutor" @click="startSession">Start session</button>
 				</div>
 			</div>
@@ -25,9 +25,12 @@
 				required: true
 			}
 		},
+		computed: {
+			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : '/users/images/Cassette.svg' }
+		},
 		methods:{
-			startSession(){
-				alert('Session started')
+			async startSession(){
+				console.log('Start session')
 			}
 		}
 	}
