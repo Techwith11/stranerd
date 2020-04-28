@@ -40,7 +40,7 @@
 					<select id="course" class="form-control" v-model="$v.user.subject.$model"
 						:class="{'is-invalid': $v.user.subject.$error, 'is-valid': !$v.user.subject.$invalid}">
 						<option :value="null" disabled>Select a course you can tutor</option>
-						<option :value="subject" v-for="subject in subjects" :key="subject">{{ subject }}</option>
+						<option :value="subject.name" v-for="subject in subjects" :key="subject.name">{{ subject.name }}</option>
 					</select>
 					<small class="small text-muted">Note: You will be tested on selected course</small>
 				</div>
