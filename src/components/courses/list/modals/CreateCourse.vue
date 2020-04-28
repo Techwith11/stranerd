@@ -144,23 +144,23 @@
 				let name = `courses/videos/${Date.now()}_${this.video.name}}`
 				await storage.ref(name).put(this.video)
 				let link = await storage.ref(name).getDownloadURL()
-				this.course.video = { name, link, type: this.video.type }
+				this.course.video = { name: this.video.name, link, type: this.video.type }
 				return new window.Toast({ icon: 'success', title: 'Video uploaded' })
 			},
 			async uploadImage(){
 				new window.Toast({ icon: 'success', title: 'Image uploading' })
-				let name = `courses/images/${Date.now()}_${this.image.name}}`
+				let name = `courses/images/${Date.now()}_${this.image.name}`
 				await storage.ref(name).put(this.image)
 				let link = await storage.ref(name).getDownloadURL()
-				this.course.image = { name, link, type: this.image.type }
+				this.course.image = { name: this.image.name, link, type: this.image.type }
 				return new window.Toast({ icon: 'success', title: 'Image uploaded' })
 			},
 			async uploadPreview(){
 				new window.Toast({ icon: 'success', title: 'Preview uploading' })
-				let name = `courses/previews/${Date.now()}_${this.preview.name}}`
+				let name = `courses/previews/${Date.now()}_${this.preview.name}`
 				await storage.ref(name).put(this.preview)
 				let link = await storage.ref(name).getDownloadURL()
-				this.course.preview = { name, link, type: this.preview.type }
+				this.course.preview = { name: this.preview.name, link, type: this.preview.type }
 				return new window.Toast({ icon: 'success', title: 'Preview uploaded' })
 			},
 			uploadDocuments(){
@@ -169,7 +169,7 @@
 					let name = `courses/documents/${Date.now()}_${document.name}`
 					await storage.ref(name).put(document)
 					let link = await storage.ref(name).getDownloadURL()
-					return this.course.documents.push({ name, link, type: document.type })
+					return this.course.documents.push({ name: document.name, link, type: document.type })
 				})
 				return Promise.all(promises).then(() => {
 					new window.Toast({ icon: 'success', title: 'Documents uploaded' })

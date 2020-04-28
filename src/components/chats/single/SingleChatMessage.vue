@@ -3,7 +3,7 @@
 		<div class="alert alert-warning" role="alert">
 			<p class="m-0" v-if="!chat.media">{{ chat.content }}</p>
 			<div class="d-flex justify-content-between align-items-center" v-if="chat.media">
-				<span class="mr-3">{{ chat.media.name }}</span>
+				<span class="mr-3 d-block text-truncate">{{ chat.media.name }}</span>
 				<a :href="chat.media.link" download>
 					<i class="fas fa-download text-info"></i>
 				</a>

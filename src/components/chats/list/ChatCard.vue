@@ -31,7 +31,7 @@
 			isByMe(){ return this.chat.from === this.getId  },
 			getUserId(){ return this.user.id },
 			getUserName(){ return this.user.bio ? this.user.bio.name : '' },
-			getChatContent(){ return this.chat.content },
+			getChatContent(){ return this.chat.media ? this.chat.media.name : this.chat.content },
 			getChatTime(){ return this.chat.dates ? new Date(this.chat.dates.sentAt.seconds * 1000).toTimeString().slice(0,5) : '' },
 			getChatRead(){ return this.chat.dates.readAt != null },
 		}

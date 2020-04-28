@@ -104,6 +104,7 @@
 
 <style lang="scss" scoped>
 	ul{
+		min-height: 50vh;
 		max-height: 70vh;
 		overflow: auto;
 		-ms-overflow-style: none;

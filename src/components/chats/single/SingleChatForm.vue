@@ -8,7 +8,7 @@
 </template>
 
 <script>
-	import { functions } from '@/config/firebase'
+	import { functions, storage } from '@/config/firebase'
 	import { mapGetters } from 'vuex'
 	import { required } from 'vuelidate/lib/validators'
 	export default {
@@ -21,7 +21,8 @@
 			message: { required }
 		},
 		computed: {
-			...mapGetters(['getId'])
+			...mapGetters(['getId']),
+			getChatPath(){ return [this.getId, this.$route.params.id].sort().join('_') }
 		},
 		methods:{
 			async sendMessage(){
@@ -44,10 +45,21 @@
 					confirmButtonColor: '#3085d6',
 					cancelButtonColor: '#d33',
 					confirmButtonText: 'Send'
-				}).then((result) => {
+				}).then(result => {
 					if (result.value) {
-						alert('Uploaded')
-						// TODO:  Upload files and create new media chat instance for each file
+						this.media.forEach(async file => {
+							let link = `chats/singles/${this.getChatPath}/${Date.now()}_${file.name}`
+							let chat = { to: this.$route.params.id, from: this.getId }
+							if(window.location.hostname === 'localhost'){
+								chat.media = { name: file.name, type: file.type, link: `/${link}` }
+							}else{
+								await storage.ref(link).put(this.video)
+								link = await storage.ref(link).getDownloadURL()
+								chat.media = { name: file.name, link, type: file.type }
+							}
+							this.sendChat(chat)
+								.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+						})
 					}
 				})
 			}
