@@ -9,6 +9,7 @@
 
 <script>
 	import { functions } from '@/config/firebase'
+	import { mapGetters } from 'vuex'
 	import { required } from 'vuelidate/lib/validators'
 	export default {
 		data: () => ({
@@ -19,12 +20,15 @@
 		validations: {
 			message: { required }
 		},
+		computed: {
+			...mapGetters(['getId'])
+		},
 		methods:{
 			async sendMessage(){
 				let message = this.message
 				this.message = ''
 				this.$v.$reset()
-				this.sendChat({ to: this.$route.params.id, content: message })
+				this.sendChat({ to: this.$route.params.id, content: message, from: this.getId })
 					.catch(error => new window.Toast({ icon: 'error', title: error.message }))
 			},
 			captureFiles(e){
