@@ -11,7 +11,9 @@
 	export default {
 		name: 'Chats',
 		data: () => ({
-			chats: {}
+			chats: {},
+			chatsListeners: [],
+			usersListeners: []
 		}),
 		components: {
 			'chat-card': ChatCard
@@ -31,7 +33,7 @@
 			let me = await firestore.collection('users').doc(this.getId).get()
 			let chattedWith = me.data().chattedWith
 			this.chats = Object.fromEntries(chattedWith.map(id => [id,{ chat: {}, user:{} }]))
-			chattedWith.map(id => {
+			let chatsListenersPromises = chattedWith.map(id => {
 				return firestore.doc('chats/singles')
 					.collection([id, this.getId].sort().join('_'))
 					.orderBy('dates.sentAt','desc')
@@ -43,7 +45,7 @@
 						}
 					})
 			})
-			chattedWith.map(async id => {
+			let usersListenersPromises = chattedWith.map(async id => {
 				return firestore.collection('users').doc(id).onSnapshot(user => {
 					this.chats[id].user = {
 						id,
@@ -52,6 +54,12 @@
 					}
 				})
 			})
+			this.chatsListeners = await Promise.all(chatsListenersPromises)
+			this.usersListeners = await Promise.all(usersListenersPromises)
+		},
+		beforeDestroy() {
+			this.chatsListeners.forEach(listener => listener())
+			this.usersListeners.forEach(listener => listener())
 		}
 	}
 </script>
