@@ -7,12 +7,12 @@ exports.authUserDeleted = require('./auth/onDelete')
 
 
 // Request Triggers
-exports.requestMakeUserAdmin = require('./requests/makeAdmin')
+exports.requestMakeAdmin = require('./requests/makeAdmin')
 
 
 // On Call Triggers
-exports.makeUserTutor = require('./onCall/makeTutor')
-exports.makeUserAdmin = require('./onCall/makeAdmin')
+exports.makeTutor = require('./onCall/makeTutor')
+exports.makeAdmin = require('./onCall/makeAdmin')
 exports.sendChat = require('./onCall/sendChat')
 
 

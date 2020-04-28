@@ -45,6 +45,11 @@
 					<small class="small text-muted">Note: You will be tested on selected course</small>
 				</div>
 				<div class="form-group">
+					<input type="number" id="rate" class="form-control" placeholder="Charge per hour in $" v-model.trim="$v.user.rate.$model"
+						:class="{'is-invalid': $v.user.rate.$error, 'is-valid': !$v.user.rate.$invalid}">
+					<span class="small" v-if="$v.user.password.$error">Must be a valid number</span>
+				</div>
+				<div class="form-group">
 					<select id="qualification" class="form-control" v-model="$v.user.qualification.$model"
 						:class="{'is-invalid': $v.user.qualification.$error, 'is-valid': !$v.user.qualification.$invalid}">
 						<option :value="null" disabled>Select your highest level of qualification</option>
@@ -66,7 +71,7 @@
 
 <script>
 	import { mapActions } from 'vuex'
-	import { auth } from '@/config/firebase'
+	import { auth, firestore } from '@/config/firebase'
 	import { required, minLength, email, maxLength, sameAs } from 'vuelidate/lib/validators'
 	export default {
 		name: 'RegisterTutor',
@@ -79,12 +84,11 @@
 				subject: null,
 				qualification: null,
 				bio: '',
-				uid: null,
+				rate: null,
 			},
+			uid: null,
 			page: 1,
-			subjects: [
-				'Mathematics', 'Physics', 'Chemistry'
-			],
+			subjects: [],
 			qualifications: [
 				{ name:'High school graduate', value: 0}, { name: 'Diploma Certificate', value: 1 },
 				{ name: 'Bachelors Degree', value: 2 }, { name: 'Masters Degree', value: 3 }
@@ -108,8 +112,8 @@
 			},
 			makeUserTutor(){
 				this.isLoading = true
-				// TODO: Add price field
 				this.makeTutor({
+					id: this.uid,
 					bio: {
 						name: this.user.name,
 						bio: this.user.bio,
@@ -117,6 +121,7 @@
 					tutor: {
 						course: this.user.course,
 						qualification: this.user.qualification,
+						rate: this.user.rate,
 						level: 0
 					}
 				}).then(async () => {
@@ -132,6 +137,10 @@
 		computed: {
 			cannotGoToNext(){ return this.$v.user.name.$invalid || this.$v.user.email.$invalid || this.$v.user.password.$invalid ||this.$v.user.c_password.$invalid }
 		},
+		async mounted(){
+			let docs = await firestore.collection('subjects').get()
+			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
+		},
 		validations:{
 			user: {
 				name: { required, minLength: minLength(3) },
@@ -140,6 +149,7 @@
 				c_password: { required, sameAs: sameAs('password') },
 				subject: { required },
 				qualification: { required },
+				rate: { required },
 				bio: { required, minLength: minLength(3) }
 			}
 		}
