@@ -8,6 +8,7 @@ const state = {
 const getters = {
     getUser: state => state.user,
     getId: state => state.id,
+    getChattedWith: state => state.user.chattedWith || [],
     isLoggedIn: state => !!state.id
 }
 

@@ -19,7 +19,7 @@
 			'chat-card': ChatCard
 		},
 		computed: {
-			...mapGetters(['getId']),
+			...mapGetters(['getId','getChattedWith']),
 			getSortedChats(){
 				return Object.entries(this.chats).sort((a,b) => {
 					if(a[1].chat.dates && b[1].chat.dates){
@@ -29,12 +29,9 @@
 				})
 			}
 		},
-		async mounted(){
-			let me = await firestore.collection('users').doc(this.getId).get()
-			let chattedWith = me.data().chattedWith
-			this.chats = Object.fromEntries(chattedWith.map(id => [id,{ chat: {}, user:{} }]))
-			this.chatsListeners = chattedWith.map(id => {
-				return firestore.doc('chats/singles')
+		methods:{
+			getChats(){
+				this.chatsListeners = this.getChattedWith.map(id => firestore.doc('chats/singles')
 					.collection([id, this.getId].sort().join('_'))
 					.orderBy('dates.sentAt','desc')
 					.limit(1).onSnapshot(chats => {
@@ -44,20 +41,30 @@
 							...chats.docs[0].data()
 						}
 					})
-			})
-			this.usersListeners = chattedWith.map(id => {
-				return firestore.collection('users').doc(id).onSnapshot(user => {
-					this.chats[id].user = {
-						id,
-						bio: user.data().bio,
-						status: user.data().status,
-					}
+				)
+			},
+			getUsers(){
+				this.usersListeners = this.getChattedWith.map(id => {
+					return firestore.collection('users').doc(id).onSnapshot(user => {
+						this.chats[id].user = {
+							id,
+							bio: user.data().bio,
+							status: user.data().status,
+						}
+					})
 				})
-			})
+			}
 		},
 		beforeDestroy() {
 			this.chatsListeners.forEach(listener => listener())
 			this.usersListeners.forEach(listener => listener())
+		},
+		watch: {
+			getChattedWith(){
+				this.chats = Object.fromEntries(this.getChattedWith.map(id => [id,{ chat: {}, user:{} }]))
+				this.getChats()
+				this.getUsers()
+			}
 		}
 	}
 </script>
