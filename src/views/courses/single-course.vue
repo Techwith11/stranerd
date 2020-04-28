@@ -1,14 +1,19 @@
 <template>
 	<div>
-		<div v-if="courseExists">
-			<single-video :course="course" />
-			<single-nav />
-			<single-overview v-if="isOverview" :course="course" />
-			<single-discussions v-if="isDiscussions" :course="course" />
-			<single-documents v-if="isDocuments" :course="course" />
+		<div class="container text-center my-5 py-5" v-if="isLoading">
+			<i class="fas fa-2x fa-spinner fa-spin text-info"></i>
 		</div>
-		<div v-else class="container d-flex justify-content-center py-5 my-5">
-			<span class="lead">No course with such id exists</span>
+		<div v-else>
+			<div v-if="courseExists">
+				<single-video :course="course" />
+				<single-nav />
+				<single-overview v-if="isOverview" :course="course" />
+				<single-discussions v-if="isDiscussions" :course="course" />
+				<single-documents v-if="isDocuments" :course="course" />
+			</div>
+			<div v-else class="container d-flex justify-content-center py-5 my-5">
+				<span class="lead">No course with such id exists</span>
+			</div>
 		</div>
 	</div>
 </template>
@@ -22,8 +27,14 @@
 	import SingleDocuments from '@/components/courses/single/SingleDocuments'
 	export default {
 		name: 'Course',
-		firestore(){
-			return { course: firestore.collection('courses').doc(this.$route.params.id) }
+		data: () => ({
+			course: {},
+			isLoading: true
+		}),
+		async mounted(){
+			let doc = await firestore.collection('courses').doc(this.$route.params.id).get()
+			if(doc.exists){ this.course = doc.data() }
+			this.isLoading = false
 		},
 		components: {
 			'single-video': SingleVideo,

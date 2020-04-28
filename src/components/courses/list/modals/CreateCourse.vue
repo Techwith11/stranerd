@@ -104,10 +104,14 @@
 			image: {},
 			preview: {},
 			documents: [],
+			tags: [],
 			isLoading: false,
 			page: 1
 		}),
-		firestore(){ return { tags: firestore.collection('subjects') } },
+		async mounted(){
+			let docs = await firestore.collection('subjects').get()
+			docs.forEach(doc => this.tags.push({ '.key': doc.id, ...doc.data() }))
+		},
 		computed: {
 			cannotGoToNext(){ return this.$v.course.title.$invalid || this.$v.course.description.$invalid || this.$v.course.tags.$invalid }
 		},

@@ -17,10 +17,12 @@
 	import { firestore } from "@/config/firebase";
 
 	export default {
-		firestore(){
-			return {
-				subjects: firestore.collection('subjects')
-			}
+		data: () => ({
+			subjects: []
+		}),
+		async mounted(){
+			let docs = await firestore.collection('subjects').get()
+			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 		}
 	}
 </script>

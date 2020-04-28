@@ -1,5 +1,3 @@
-import Vue from 'vue'
-import VueFirestore from 'vue-firestore'
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
@@ -19,7 +17,6 @@ const config = {
 	measurementId: 'G-GGEXBNQ0KK',
 }
 
-Vue.use(VueFirestore)
 firebase.initializeApp(config)
 
 if(window.location.hostname === 'localhost'){

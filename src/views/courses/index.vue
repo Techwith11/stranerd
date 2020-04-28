@@ -13,21 +13,24 @@
 </template>
 
 <script>
+	//TODO: Implement pagination
 	import { firestore } from '@/config/firebase'
 	import CourseNav from '@/components/courses/list/CourseNav'
 	import CourseCard from '@/components/courses/list/CourseCard'
 	import CourseFAB from '@/components/courses/list/CourseFAB'
 	export default {
 		name: 'Courses',
+		data: () => ({
+			courses: []
+		}),
 		components: {
 			'course-nav': CourseNav,
 			'course-card': CourseCard,
 			'course-fab': CourseFAB,
 		},
-		firestore(){
-			return {
-				courses: firestore.collection('courses').orderBy('dates.updatedAt','desc')
-			}
+		async mounted(){
+			let docs = await firestore.collection('courses').orderBy('dates.updatedAt','desc').get()
+			docs.forEach(doc => this.courses.push({ '.key': doc.id, ...doc.data() }))
 		},
 		computed: {
 			filteredCourses(){

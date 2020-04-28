@@ -16,13 +16,16 @@
 </template>
 
 <script>
+	//TODO: Implement pagination here
 	//TODO: Replace view if user doesnt have access to this course.
 	import { firestore } from '@/config/firebase'
 	import { required, minLength } from 'vuelidate/lib/validators'
 	export default {
 		data: () => ({
 			content: '',
-			isLoading: false
+			isLoading: false,
+			discussions: [],
+			listener: false
 		}),
 		validations:{
 			content: { required, minLength: minLength(3) }
@@ -33,10 +36,12 @@
 				type: Object
 			}
 		},
-		firestore(){
-			return {
-				discussions: firestore.collection('courses').doc(this.course['.key']).collection('discussions').orderBy('dates.createdAt','desc')
-			}
+		mounted(){
+			this.listener = firestore.collection('courses').doc(this.course['.key']).collection('discussions')
+				.orderBy('dates.createdAt','desc').onSnapshot(snapshot => {
+					this.discussions = []
+					snapshot.docs.forEach(doc => this.discussions.push({ '.key': doc.id, ...doc.data()}))
+				})
 		},
 		methods:{
 			async sendDiscussion(){
@@ -48,6 +53,9 @@
 				this.$v.$reset()
 				this.isLoading = false
 			}
+		},
+		beforeDestroy(){
+			this.listener()
 		}
 	}
 </script>

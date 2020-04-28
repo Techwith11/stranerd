@@ -75,12 +75,12 @@
 			},
 			isLoading: false,
 			courses: ['Mathematics','Physics', 'Chemistry'],
-			answers: ['a','b','c','d']
+			answers: ['a','b','c','d'],
+			subjects: []
 		}),
-		firestore(){
-			return {
-				subjects: firestore.collection('subjects')
-			}
+		async mounted(){
+			let docs = await firestore.collection('subjects').get()
+			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 		},
 		methods:{
 			...mapActions(['setCreateModalOverview', 'closeCreateModal']),

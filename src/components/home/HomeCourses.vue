@@ -20,14 +20,16 @@
     import CourseNav from '@/components/courses/list/CourseNav'
     import CourseCard from '@/components/courses/list/CourseCard'
     export default {
+        data: () => ({
+            courses: []
+        }),
         components: {
             'course-nav': CourseNav,
             'course-card': CourseCard
         },
-        firestore(){
-            return {
-                courses: firestore.collection('courses').orderBy('dates.updatedAt','desc').limit(6)
-            }
+        async mounted(){
+            let docs = await firestore.collection('courses').orderBy('dates.updatedAt','desc').limit(6).get()
+            docs.forEach(doc => this.courses.push({ '.key': doc.id, ...doc.data() }))
         },
     }
 </script>
