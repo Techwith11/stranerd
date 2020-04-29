@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
-import 'firebase/firestore'
 import 'firebase/auth'
+import 'firebase/database'
+import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/storage'
 
@@ -21,15 +22,16 @@ firebase.initializeApp(config)
 
 if(window.location.hostname === 'localhost'){
 	firebase.firestore().settings({
-		host: 'localhost:8080',
+		host: 'localhost:5002',
 		ssl: false
 	})
 	firebase.functions().useFunctionsEmulator('http://localhost:5001')
 }
 
 export default firebase
-export const firestore = firebase.firestore()
 export const auth = firebase.auth()
+export const database = firebase.database()
+export const firestore = firebase.firestore()
 export const functions = firebase.functions()
 export const storage = firebase.storage()
 
