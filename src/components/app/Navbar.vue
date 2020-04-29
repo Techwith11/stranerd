@@ -65,6 +65,9 @@
             border: none !important;
         }
     }
+    header{
+        height: 56px;
+    }
     #toggler{
         border: none;
         border-radius: 0;
