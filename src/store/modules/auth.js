@@ -1,7 +1,7 @@
 import { auth, firestore, functions } from '@/config/firebase'
 
 const state = {
-    id: "kevin11",
+    id: "kevin11", //TODO: Remove this hardcoded id before pushing to prod
     user: {},
     listener: () => {}
 }
