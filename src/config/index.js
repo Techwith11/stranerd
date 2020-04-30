@@ -9,7 +9,7 @@ import SweetAlert from 'sweetalert2'
 
 Vue.use(Vuelidate)
 Vue.use(VueChatScroll)
-window.Fire = new Vue({})
+window.Fire = new Vue()
 
 window.SweetAlert = SweetAlert
 window.Toast = SweetAlert.mixin({

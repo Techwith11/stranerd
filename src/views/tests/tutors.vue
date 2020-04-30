@@ -4,7 +4,7 @@
 		<div v-else>
 			<div v-if="isTutor">
 				<div v-if="started">
-					<test :questions="tests" :level="tutor['levels'][tutor.courses[0]] + 1" :course="tutor.course" />
+					<test :questions="tests" :level="tutor['levels'][tutor.courses[0]] + 1" :course="tutor.courses[0]" :shouldSubmit="shouldSubmit" />
 				</div>
 				<div class="jumbotron" v-else>
 					<h2 class="text-center">Level {{ tutor['levels'][tutor.courses[0]] + 1 }} for Tutors</h2>
@@ -38,12 +38,13 @@
 			started: false,
 			failed: false,
 			questions: [],
-			tests: []
+			tests: [],
+			shouldSubmit: null
 		}),
 		methods: {
 			checkIfFailed(){
-				let courseUpgrade = this.tutor.upgrade[this.tutor.course]
-				let upgrade = courseUpgrade[this.tutor.level + 1]
+				let courseUpgrade = this.tutor.upgrade[this.tutor.courses[0]]
+				let upgrade = courseUpgrade[this.tutor['levels'][this.tutor.courses[0]] + 1]
 				if(upgrade && upgrade['passed'] === false){
 					let twoHoursToMs = 7200000
 					let failedTime = new Date(upgrade['takenAt']['seconds'] * 1000)
@@ -85,7 +86,7 @@
 					showCancelButton: true,
 					confirmButtonColor: '#3085d6',
 					cancelButtonColor: '#d33',
-					confirmButtonText: 'Submit'
+					confirmButtonText: 'Start'
 				})
 				if(result.value){
 					this.isLoading = true
@@ -113,6 +114,14 @@
 			'helper-spinner': HelperSpinner,
 		},
 		mounted(){
+			let data = localStorage.getItem('test-data')
+			if(data){
+				data = JSON.parse(data)
+				this.tests = data.questions
+				this.started = true
+				this.shouldSubmit = data
+				localStorage.removeItem('test-data')
+			}
 			if(this.isTutor){
 				this.checkIfFailed()
 			}

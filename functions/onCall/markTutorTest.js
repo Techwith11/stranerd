@@ -19,6 +19,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 	let course = data.course
 	let id = data.id
 	let upgrade = {}
+	upgrade[course] = {}
 	let test = {
 		questions, answers, level, course,
 		user: id, score: percentage,
