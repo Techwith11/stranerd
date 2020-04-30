@@ -1,7 +1,9 @@
 <template>
 	<div id="app" class="d-flex flex-column">
 		<app-nav-bar />
-		<router-view/>
+		<div id="content">
+			<router-view/>
+		</div>
 		<app-footer />
 		<auth-modal v-if="isModalOpen"/>
 	</div>
@@ -26,8 +28,11 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	#app{
 		min-height: 100vh;
+		#content{
+			min-height:80vh;
+		}
 	}
 </style>

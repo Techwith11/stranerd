@@ -1,25 +1,23 @@
 <template>
 	<div>
-		<div class="container text-center my-5 py-5" v-if="isLoading">
-			<i class="fas fa-2x fa-spinner fa-spin text-info"></i>
-		</div>
+		<helper-spinner v-if="isLoading"/>
 		<div v-else>
-			<div v-if="courseExists">
+			<div v-if="doesExist">
 				<single-video :course="course" />
 				<single-nav />
 				<single-overview v-if="isOverview" :course="course" />
 				<single-discussions v-if="isDiscussions" :course="course" />
 				<single-documents v-if="isDocuments" :course="course" />
 			</div>
-			<div v-else class="container d-flex justify-content-center py-5 my-5">
-				<span class="lead">No course with such id exists</span>
-			</div>
+			<helper-message v-else message="No course with such id exists" />
 		</div>
 	</div>
 </template>
 
 <script>
 	import { firestore } from '@/config/firebase'
+	import HelperSpinner from '@/components/helpers/Spinner'
+	import HelperMessage from '@/components/helpers/Message'
 	import SingleVideo from '@/components/courses/single/SingleVideo'
 	import SingleNav from '@/components/courses/single/SingleNav'
 	import SingleOverview from '@/components/courses/single/SingleOverview'
@@ -29,11 +27,13 @@
 		name: 'Course',
 		data: () => ({
 			course: {},
-			isLoading: true
+			isLoading: true,
+			doesExist: false
 		}),
 		async mounted(){
 			let doc = await firestore.collection('courses').doc(this.$route.params.id).get()
-			if(doc.exists){ this.course = doc.data() }
+			this.doesExist = doc.exists
+			this.course = { '.key': doc.id, ...doc.data() }
 			this.isLoading = false
 		},
 		components: {
@@ -42,12 +42,13 @@
 			'single-overview': SingleOverview,
 			'single-discussions': SingleDiscussions,
 			'single-documents': SingleDocuments,
+			'helper-spinner': HelperSpinner,
+			'helper-message': HelperMessage,
 		},
 		computed:{
 			isOverview(){ return !this.$route.query.tab || this.$route.query.tab === 'overview'},
 			isDiscussions(){ return this.$route.query.tab && this.$route.query.tab === 'discussions'},
 			isDocuments(){ return this.$route.query.tab && this.$route.query.tab === 'documents'},
-			courseExists(){ return Object.entries(this.course).length > 0 }
 		}
 	}
 </script>

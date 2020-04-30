@@ -1,16 +1,11 @@
 <template>
 	<div>
-		<div class="d-flex justify-content-center my-5 py-5" v-if="isLoading">
-			<i class="fas fa-2x text-info fa-spinner fa-spin"></i>
-		</div>
+		<helper-spinner v-if="isLoading" />
 		<div v-else>
-			<div v-if="doesNotExist" class="container">
-				<p>No user with such id exists</p>
-			</div>
-			<div v-else>
+			<div v-if="doesExist">
 				<single-chat-nav :user="user" />
 				<div class="container py-3">
-					<p class="text-center my-5 py-5" v-if="chats.length < 1">No chats. Send a message now</p>
+					<helper-message v-if="chats.length < 1" message="No chats. Send a message now" />
 					<ul class="list-group position-relative" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
 						<li class="d-block text-center small text-muted" v-if="!hasNoMore">
 							<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
@@ -22,6 +17,7 @@
 					<single-chat-form />
 				</div>
 			</div>
+			<helper-message v-else message="No user with such id exists" />
 		</div>
 	</div>
 </template>
@@ -30,12 +26,14 @@
 	import SingleChatNav from '@/components/chats/single/SingleChatNav'
 	import SingleChatMessage from '@/components/chats/single/SingleChatMessage'
 	import SingleChatForm from '@/components/chats/single/SingleChatForm'
+	import HelperSpinner from '@/components/helpers/Spinner'
+	import HelperMessage from '@/components/helpers/Message'
 	import { firestore } from '@/config/firebase'
 	import { mapGetters } from 'vuex'
 	export default {
 		name: 'Chat',
 		data: () => ({
-			doesNotExist: false,
+			doesExist: false,
 			user: {},
 			chats: [],
 			newChats: [],
@@ -52,12 +50,9 @@
 		methods: {
 			async getUser(){
 				let doc = await firestore.collection('users').doc(this.$route.params.id).get()
-				if(doc.exists){
-					this.user = { '.key': doc.id, ...doc.data() }
-				}else{
-					this.doesNotExist = true
-					this.isLoading = false
-				}
+				this.user = { '.key': doc.id, ...doc.data() }
+				this.doesExist = doc.exists
+				this.isLoading = false
 			},
 			async getChats(){
 				let docs = firestore.doc('chats/singles').collection(this.getChatPath).orderBy('dates.sentAt','desc')
@@ -91,6 +86,8 @@
 			'single-chat-nav': SingleChatNav,
 			'single-chat-message': SingleChatMessage,
 			'single-chat-form': SingleChatForm,
+			'helper-spinner': HelperSpinner,
+			'helper-message': HelperMessage,
 		},
 		async mounted() {
 			await this.getUser()

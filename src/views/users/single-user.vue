@@ -1,16 +1,17 @@
 <template>
 	<div class="container">
-		<div v-if="isLoading" class="my-5 py-5 d-flex justify-content-center">
-			<i class="fas fa-2x fa-spinner fa-spin text-info"></i>
-		</div>
+		<helper-spinner v-if="isLoading"/>
 		<div v-else>
-			<user-info :user="user" />
-			<h6 class="text-center font-weight-bold">Recent Sessions</h6>
-			<div class="row">
-				<div class="col-md-6 col-lg-4" v-for="session in sessions" :key="session['.key']">
-					<user-session-card  :session="session" />
+			<div v-if="userExists">
+				<user-info :user="user" />
+				<h6 class="text-center font-weight-bold">Recent Sessions</h6>
+				<div class="row">
+					<div class="col-md-6 col-lg-4" v-for="session in sessions" :key="session['.key']">
+						<user-session-card  :session="session" />
+					</div>
 				</div>
 			</div>
+			<helper-message v-else message="No user with such id exists"/>
 		</div>
 	</div>
 </template>
@@ -19,24 +20,34 @@
 	import { firestore } from '@/config/firebase'
 	import UserInfo from '@/components/users/single/UserInfo'
 	import UserSessionCard from '@/components/users/single/UserSessionCard'
+	import HelperSpinner from '@/components/helpers/Spinner'
+	import HelperMessage from '@/components/helpers/Message'
 	export default {
 		name: 'Tutor',
 		data: () => ({
 			listener: null,
 			sessions: [],
 			isLoading: true,
+			userExists: false,
 			user: {}
 		}),
 		components: {
 			'user-session-card': UserSessionCard,
 			'user-info': UserInfo,
+			'helper-spinner': HelperSpinner,
+			'helper-message': HelperMessage,
 		},
-		mounted() {
-			// TODO: Fetch sessions
+		async mounted() {
 			this.listener = firestore.collection('users').doc(this.$route.params.id).onSnapshot(snapshot => {
+				this.userExists = snapshot.exists
 				this.user = { '.key': snapshot.id, ...snapshot.data() }
 				this.isLoading = false
 			})
+			let docs = await firestore.collection('sessions').where('tutor','==',this.$route.params.id)
+				.orderBy('dates.createdAt','desc')
+				.limit(12)
+				.get()
+			docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
 		},
 		beforeDestroy(){
 			this.listener()

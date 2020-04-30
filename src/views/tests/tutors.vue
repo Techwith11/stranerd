@@ -1,9 +1,7 @@
 <template>
 	<div class="container">
 		<div v-if="isTutor">
-			<div class="d-flex justify-content-center my-5 py-5" v-if="isLoading">
-				<i class="fas fa-spinner fa-spin text-info fa-2x"></i>
-			</div>
+			<helper-spinner v-if="isLoading"/>
 			<div v-else>
 				<div class="jumbotron" v-if="failed">
 					<p class="text-danger lead">
@@ -26,15 +24,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="d-flex align-items-center flex-column py-5 my-5"  v-else>
-			<p class="mt-5 mb-2 lead text-center">This account is not recognized as a tutor's account</p>
-			<p class="mt-2 mb-5 small">Visit your profile settings to upgrade</p>
-		</div>
+		<helper-message  v-else
+			message="This account is not recognized as a tutor's account"
+			optional="Visit your profile settings to upgrade" />
 	</div>
 </template>
 
 <script>
 	import Test from '@/components/tests/tutors/Test'
+	import HelperSpinner from '@/components/helpers/Spinner'
+	import HelperMessage from '@/components/helpers/Message'
 	import { firestore } from '@/config/firebase'
 	import { mapGetters } from 'vuex'
 	export default {
@@ -113,7 +112,9 @@
 			}
 		},
 		components: {
-			'test': Test
+			'test': Test,
+			'helper-spinner': HelperSpinner,
+			'helper-message': HelperMessage,
 		},
 		async mounted(){
 			await this.getUserDetails()
