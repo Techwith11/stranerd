@@ -27,9 +27,9 @@ module.exports = functions.https.onCall(async (data, context) => {
 	let tutor = { tutor: {  upgrade } }
 	if(percentage >= 70){
 		tutor.tutor.level = level
-		tutor.tutor.upgrade[level] = { passed: true, score: percentage, takenAt: admin.firestore.FieldValue.serverTimestamp() }
+		tutor.tutor.upgrade[course][level] = { passed: true, score: percentage, takenAt: admin.firestore.FieldValue.serverTimestamp() }
 	}else{
-		tutor.tutor.upgrade[level] = { passed: false, score: percentage, takenAt: admin.firestore.FieldValue.serverTimestamp() }
+		tutor.tutor.upgrade[course][level] = { passed: false, score: percentage, takenAt: admin.firestore.FieldValue.serverTimestamp() }
 	}
 	await admin.firestore().collection('tests/tutors/tests').add(test)
 	await admin.firestore().collection('users').doc(id).set(tutor , { merge: true })

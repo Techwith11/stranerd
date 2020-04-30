@@ -7,6 +7,9 @@ module.exports = functions.https.onCall(async (data, context) => {
 	}
 	await admin.auth().setCustomUserClaims(data.id, { isTutor: true })
 
+	let upgrade = {}
+	upgrade[data.tutor.course] = {}
+
 	return admin
 		.firestore()
 		.collection('users')
@@ -14,6 +17,12 @@ module.exports = functions.https.onCall(async (data, context) => {
 		.set({
 			bio: data.bio,
 			roles: { isTutor: true },
-			tutor: { upgrade: {}, ratings: [], ...data.tutor }
+			tutor: {
+				upgrade,
+				ratings: [],
+				level: 0,
+				courses: [data.tutor.course],
+				qualification: data.tutor.qualification
+			}
 		}, { merge: true })
 })

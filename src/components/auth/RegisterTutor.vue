@@ -114,8 +114,7 @@
 					},
 					tutor: {
 						course: this.user.subject,
-						qualification: this.user.qualification,
-						level: 0
+						qualification: this.user.qualification
 					}
 				}).then(async () => {
 					this.isLoading = false

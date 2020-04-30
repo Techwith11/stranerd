@@ -32,10 +32,16 @@
 		</div>
 		<div v-if="getUser.roles.isTutor">
 			<h4>Tutor details</h4>
-			<p>Level {{ getUser.tutor.level }} {{ getUser.tutor.course }}</p>
+			<div v-for="course in getUser.tutor.courses" :key="'upgrade/'+course">
+				<p>Level {{ getUser.tutor['levels'][course] }} {{ course }}</p>
+				<ul v-for="upgrade in Object.entries(getUser.tutor.upgrade[course]).sort((a,b) => a[0] - b[0])" :key="upgrade[0]">
+					<li class="font-weight-bold">Level {{ upgrade[0] }}</li>
+					<li>Score: {{ upgrade[1].score }}</li>
+					<li class="mb-3">On: {{ new Date(upgrade[1].takenAt.seconds * 1000) }}</li>
+				</ul>
+			</div>
 			<p>Qualification: {{ getUser.tutor.qualification }}</p>
 			<p>Ratings: {{ getUser.tutor.ratings }}</p>
-			<p>{{ getUser.tutor.upgrade }}</p>
 			<hr>
 		</div>
 		<div>

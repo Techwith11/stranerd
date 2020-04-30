@@ -4,11 +4,11 @@
 		<div v-else>
 			<div v-if="isTutor">
 				<div v-if="started">
-					<test :questions="tests" :level="tutor.level + 1" :course="tutor.course" />
+					<test :questions="tests" :level="tutor['levels'][tutor.courses[0]] + 1" :course="tutor.course" />
 				</div>
 				<div class="jumbotron" v-else>
-					<h2 class="text-center">Level {{ tutor.level + 1 }} for Tutors</h2>
-					<p class="lead">This is a simple {{ tutor.course }} test designed to figure out how comfortable you are with {{ tutor.course }} before pairing you with students.</p>
+					<h2 class="text-center">Level {{ tutor['levels'][tutor.courses[0]] + 1 }} for Tutors</h2>
+					<p class="lead">This is a simple {{ tutor.courses[0] }} test designed to figure out how comfortable you are with {{ tutor.courses[0] }} before pairing you with students.</p>
 					<hr class="my-4">
 					<p>Make sure you have at least an hour to spare before starting the test as once started, cannot be paused.</p>
 					<p>You must pass at least 70% of the test before you can become a tutor.</p>
@@ -42,7 +42,7 @@
 		}),
 		methods: {
 			checkIfFailed(){
-				let upgrade = this.tutor.upgrade[this.tutor.level + 1]
+				let upgrade = this.tutor.upgrade[this.tutor.course][this.tutor.level + 1]
 				if(upgrade && upgrade['passed'] === false){
 					let twoHoursToMs = 7200000
 					let failedTime = new Date(upgrade['takenAt']['seconds'] * 1000)
@@ -51,8 +51,8 @@
 			},
 			async getAllQuestions(){
 				let docs = await firestore.collection('questions')
-					.where('subject','==', this.tutor.course)
-					.where('level','==', this.tutor.level + 1)
+					.where('subject','==', this.tutor.courses[0])
+					.where('level','==', this.tutor['levels'][this.tutor.courses[0]] + 1)
 					.orderBy('createdAt','desc')
 					.limit(100)
 					.get()
@@ -89,7 +89,7 @@
 			tutor(){ return this.getUser.tutor || {} },
 			isTutor(){ return this.getUser.roles && this.getUser.roles.isTutor },
 			getRetakeTime(){
-				let d = this.tutor.upgrade[this.tutor.level + 1]['takenAt']
+				let d = this.tutor.upgrade[this.tutor.course][this.tutor.level + 1]['takenAt']
 				d = new Date(d.seconds * 1000)
 				d.setHours(d.getHours() + 2)
 				return d.toTimeString().slice(0,5)
