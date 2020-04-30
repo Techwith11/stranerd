@@ -74,6 +74,11 @@
         border-radius: 0;
         box-shadow: none;
     }
+    @media screen and (max-width: 767px){
+        li.nav-item{
+            box-shadow: 0 1px 2px #777777;
+        }
+    }
 </style>
 
 <script>
