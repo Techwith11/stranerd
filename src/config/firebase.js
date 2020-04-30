@@ -35,4 +35,6 @@ export const firestore = firebase.firestore()
 export const functions = firebase.functions()
 export const storage = firebase.storage()
 
-auth.onAuthStateChanged(async user => user ? store.dispatch('setId', user.uid) : null)
+if(window.location.hostname !== 'localhost'){
+	auth.onAuthStateChanged(async user => user ? store.dispatch('setId', user.uid) : null)
+}
