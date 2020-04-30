@@ -10,7 +10,7 @@
 					<h2 class="text-center">Level {{ tutor['levels'][tutor.courses[0]] + 1 }} for Tutors</h2>
 					<p class="lead">This is a simple {{ tutor.courses[0] }} test designed to figure out how comfortable you are with {{ tutor.courses[0] }} before pairing you with students.</p>
 					<hr class="my-4">
-					<p>Make sure you have at least an hour to spare before starting the test as once started, cannot be paused.</p>
+					<p>Make sure you have at least an hour to spare before starting the test.</p>
 					<p>You must pass at least 70% of the test before you can become a tutor.</p>
 					<button class="shadow-none" :class="failed ? 'opacity-25' : 'accent-button'" @click="startTest" :disabled="failed">Start Test</button>
 					<p class="text-danger" v-if="failed">
@@ -42,7 +42,8 @@
 		}),
 		methods: {
 			checkIfFailed(){
-				let upgrade = this.tutor.upgrade[this.tutor.course][this.tutor.level + 1]
+				let courseUpgrade = this.tutor.upgrade[this.tutor.course]
+				let upgrade = courseUpgrade[this.tutor.level + 1]
 				if(upgrade && upgrade['passed'] === false){
 					let twoHoursToMs = 7200000
 					let failedTime = new Date(upgrade['takenAt']['seconds'] * 1000)
@@ -77,11 +78,22 @@
 				}
 			},
 			async startTest(){
-				this.isLoading = true
-				await this.getAllQuestions()
-				this.getRandomQuestions()
-				this.isLoading = false
-				this.started = true
+				let result = await  new window.SweetAlert({
+					title: 'Start test',
+					text: 'Are you sure you are ready to start? This test cannot be paused when started',
+					icon: 'info',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Submit'
+				})
+				if(result.value){
+					this.isLoading = true
+					await this.getAllQuestions()
+					this.getRandomQuestions()
+					this.isLoading = false
+					this.started = true
+				}
 			}
 		},
 		computed: {

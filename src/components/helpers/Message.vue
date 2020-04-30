@@ -1,5 +1,5 @@
 <template>
-	<div class="center">
+	<div class="center container">
 		<p>{{ message }}</p>
 		<p class="mt-3 small">{{ optional ? optional : '' }}</p>
 	</div>
