@@ -31,9 +31,9 @@ service cloud.firestore {
     }
 
     match /sessions/{id} {
-      allow read: if resource.data.studentId == request.auth.uid || resource.data.tutorId == request.auth.uid;
+      allow read: if isAuthenticated();
       allow create: if isAuthenticated();
-      allow update: if resource.data.studentId == request.auth.uid || resource.data.tutorId == request.auth.uid;
+      allow update: if resource.data.student == request.auth.uid || resource.data.tutor == request.auth.uid;
       allow delete: if isAdmin();
     }
 

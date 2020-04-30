@@ -1,7 +1,9 @@
 import { auth, firestore, functions } from '@/config/firebase'
 
+let id = window.location.hostname === 'localhost' ? 'kevin11' : ''
+
 const state = {
-    id: "kevin11", //TODO: Remove this hardcoded id before pushing to prod
+    id,
     user: {},
     listener: () => {}
 }

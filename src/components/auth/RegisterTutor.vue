@@ -45,11 +45,6 @@
 					<small class="small text-muted">Note: You will be tested on selected course</small>
 				</div>
 				<div class="form-group">
-					<input type="number" id="rate" class="form-control" placeholder="Charge per hour in $" v-model.trim="$v.user.rate.$model"
-						:class="{'is-invalid': $v.user.rate.$error, 'is-valid': !$v.user.rate.$invalid}">
-					<span class="small" v-if="$v.user.password.$error">Must be a valid number</span>
-				</div>
-				<div class="form-group">
 					<select id="qualification" class="form-control" v-model="$v.user.qualification.$model"
 						:class="{'is-invalid': $v.user.qualification.$error, 'is-valid': !$v.user.qualification.$invalid}">
 						<option :value="null" disabled>Select your highest level of qualification</option>
@@ -83,8 +78,7 @@
 				c_password: '',
 				subject: null,
 				qualification: null,
-				bio: '',
-				rate: null,
+				bio: ''
 			},
 			uid: null,
 			page: 1,
@@ -119,9 +113,8 @@
 						bio: this.user.bio,
 					},
 					tutor: {
-						course: this.user.course,
+						course: this.user.subject,
 						qualification: this.user.qualification,
-						rate: this.user.rate,
 						level: 0
 					}
 				}).then(async () => {
@@ -149,7 +142,6 @@
 				c_password: { required, sameAs: sameAs('password') },
 				subject: { required },
 				qualification: { required },
-				rate: { required },
 				bio: { required, minLength: minLength(3) }
 			}
 		}

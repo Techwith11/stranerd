@@ -4,10 +4,12 @@
 		<div v-else>
 			<div v-if="userExists">
 				<user-info :user="user" />
-				<h6 class="text-center font-weight-bold">Recent Sessions</h6>
-				<div class="row">
-					<div class="col-md-6 col-lg-4" v-for="session in sessions" :key="session['.key']">
-						<user-session-card  :session="session" />
+				<div v-if="user.roles.isTutor">
+					<h6 class="text-center font-weight-bold" v-if="sessions.length > 0">Recent Sessions</h6>
+					<div class="row">
+						<div class="col-md-6 col-lg-4" v-for="session in sessions" :key="session['.key']">
+							<user-session-card  :session="session" />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -23,7 +25,7 @@
 	import HelperSpinner from '@/components/helpers/Spinner'
 	import HelperMessage from '@/components/helpers/Message'
 	export default {
-		name: 'Tutor',
+		name: 'User',
 		data: () => ({
 			listener: null,
 			sessions: [],

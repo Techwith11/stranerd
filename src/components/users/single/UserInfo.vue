@@ -9,7 +9,6 @@
 		<p class="text-center">{{ user.bio.bio }}</p>
 		<div v-if="user.roles.isTutor">
 			<p>Course: {{ user.tutor.course }}</p>
-			<p>Charge: ${{ user.tutor.price | getPrice }}</p>
 			<p>Overall Ratings: {{ user.tutor.ratings | getRatings }} of {{ user.tutor.ratings.length }} reviews</p>
 		</div>
 		<button class="accent-button" @click="$router.push(`/chats/${user['.key']}`)">Chat with {{ user.bio.name }}</button>
@@ -25,7 +24,6 @@
 			}
 		},
 		filters: {
-			getPrice: price => Number(price).toFixed(2),
 			getRatings: ratings => ratings.length ? ratings.reduce((a,b) => a+b) / ratings.length : 0
 		},
 		computed: {
