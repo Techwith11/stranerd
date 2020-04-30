@@ -18,3 +18,15 @@ window.Toast = SweetAlert.mixin({
     showConfirmButton: false,
     timer: 3000
 });
+
+window.toggleNavbar = () => {
+    let collapse = document.getElementsByClassName('navbar-collapse')[0]
+    collapse.classList.toggle('collapse')
+    collapse.classList.toggle('in')
+}
+
+window.closeNavbar = () => {
+    let collapse = document.getElementsByClassName('navbar-collapse')[0]
+    collapse.classList.add('collapse')
+    collapse.classList.add('in')
+}

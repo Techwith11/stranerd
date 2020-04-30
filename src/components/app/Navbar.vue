@@ -81,11 +81,7 @@
     export default {
         methods: {
             ...mapActions(['openModal', 'logout']),
-            toggleNavbar(){
-                let collapse = document.getElementsByClassName('navbar-collapse')[0]
-                collapse.classList.toggle('collapse')
-                collapse.classList.toggle('in')
-            }
+            toggleNavbar: () => window.toggleNavbar()
         },
         computed: mapGetters(['isLoggedIn'])
     }

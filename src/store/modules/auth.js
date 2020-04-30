@@ -1,13 +1,14 @@
 import { auth, firestore, functions } from '@/config/firebase'
 
 const state = {
-    id: "frank",
-    user: {}
+    id: "kevin11",
+    user: {},
+    listener: () => {}
 }
 
 const getters = {
-    getUser: state => state.user,
     getId: state => state.id,
+    getUser: state => state.user,
     getChattedWith: state => state.user.chattedWith || [],
     isLoggedIn: state => !!state.id
 }
@@ -36,9 +37,7 @@ const actions = {
     logout: async ({commit}) => {
         await auth.signOut()
         commit('setId',null)
-        let collapse = document.getElementsByClassName('navbar-collapse')[0]
-        collapse.classList.toggle('collapse')
-        collapse.classList.toggle('in')
+        window.closeNavbar()
     },
 }
 

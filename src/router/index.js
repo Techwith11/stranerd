@@ -23,10 +23,6 @@ router.beforeEach((to, from, next) => {
 	return next()
 })
 
-router.afterEach(() => {
-	let collapse = document.getElementsByClassName('navbar-collapse')[0]
-	collapse.classList.add('collapse')
-	collapse.classList.add('in')
-})
+router.afterEach(() => window.closeNavbar())
 
 export default router

@@ -24,9 +24,7 @@ const mutations = {
         state.open = true
     },
     setOpen(state, mode){
-        let collapse = document.getElementsByClassName('navbar-collapse')[0]
-        collapse.classList.add('collapse')
-        collapse.classList.add('in')
+        window.closeNavbar()
         state.open = mode
         state.modal = 'overview'
     },
