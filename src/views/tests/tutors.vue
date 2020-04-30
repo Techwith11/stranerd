@@ -4,7 +4,7 @@
 		<div v-else>
 			<div v-if="isTutor">
 				<div v-if="started">
-					<test :questions="tests" />
+					<test :questions="tests" :level="tutor.level + 1" :course="tutor.course" />
 				</div>
 				<div class="jumbotron" v-else>
 					<h2 class="text-center">Level {{ tutor.level + 1 }} for Tutors</h2>

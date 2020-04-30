@@ -6,19 +6,26 @@
 				:onSelect="onAnswerSelected" :index="index" :disabled="isMarked" />
 		</div>
 		<div class="d-flex justify-content-end mb-5">
-			<button class="accent-button shadow-none" @click="submitTest">Submit</button>
+			<button class="accent-button shadow-none" @click="submitTest" :disabled="isLoading || isMarked">
+				<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
+				<span>Submit</span>
+			</button>
 		</div>
 	</div>
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
+	import { functions } from '@/config/firebase'
 	import Question from '@/components/tests/tutors/Question'
 	export default {
 		data: () => ({
 			timer: 120,
 			interval: null,
 			answers: [],
-			isMarked: false
+			isMarked: false,
+			isLoading: false,
+			markTest: functions.httpsCallable('markTutorTest')
 		}),
 		computed: {
 			getTime(){
@@ -30,6 +37,7 @@
 				seconds > 9 ? `${seconds}` : seconds = `0${seconds}`
 				return `${hours} : ${minutes} : ${seconds}`
 			},
+			...mapGetters(['getId'])
 		},
 		components: {
 			'question': Question,
@@ -39,19 +47,29 @@
 				if (!this.isMarked) { this.answers[index] = answer }
 			},
 			setInterval(){ this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000) },
-			async endTest(){
+			endTest(){
 				clearInterval(this.interval)
 				this.isLoading = true
 				new window.Toast({ icon: 'info', title: 'Submitting test' })
+				this.markTest({
+					questions: this.questions,
+					answers: this.answers,
+					level: this.level,
+					course: this.course,
+					id: this.getId
+				}).then(data => new window.Toast({ icon: 'info', title: `You scored ${data.data}%` }))
+					.catch(error => new window.Toast({ icon: 'error', title: error.message }))
 				this.isMarked = true
 				this.isLoading = false
-				// TODO: Use on call function to upload questions and answers, mark, create tests records and upgrade tutor level
+				// TODO: Redirect to another page
 			},
 			submitTest(){
+				// TODO: Add a confirmation modal before ending the test
 				this.endTest()
 			}
 		},
 		mounted(){
+			this.answers = this.questions.map(() => null)
 			this.timer = this.questions.length * 120
 			this.setInterval()
 		},
@@ -64,7 +82,15 @@
 			questions: {
 				required: true,
 				type: Array[Object]
-			}
+			},
+			level: {
+				required: true,
+				type: Number
+			},
+			course: {
+				required: true,
+				type: String
+			},
 		},
 		async beforeDestroy(){
 			if(!this.isMarked){
