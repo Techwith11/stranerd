@@ -9,7 +9,7 @@
 				</a>
 			</div>
 			<div class="d-flex justify-content-between">
-				<span class="mr-5">{{ getChatTime }}</span>
+				<span class="mr-5">{{ getChatTime | getDateOrTime }}</span>
 				<span :class="{'d-none':!isByMe, 'text-primary': !isChatRead, 'text-success': isChatRead }">
 					<i class="fas fa-check"></i><i class="fas fa-check ml-n2"></i>
 				</span>
@@ -32,7 +32,7 @@
 			...mapGetters(['getId']),
 			isByMe(){ return this.chat.from === this.getId },
 			isChatRead(){ return this.chat.dates.readAt !== null },
-			getChatTime(){ return new Date(this.chat.dates.sentAt.seconds * 1000).toTimeString().slice(0,5) }
+			getChatTime(){ return new Date(this.chat.dates.sentAt.seconds * 1000) }
 		},
 		async mounted(){
 			if(!this.isByMe && !this.isChatRead){
@@ -41,6 +41,21 @@
 						readAt: firebase.firestore.FieldValue.serverTimestamp()
 					}
 				}, { merge: true})
+			}
+		},
+		filters: {
+			getDateOrTime(date){
+				if(typeof(date) === 'string') { return date }
+				let now = new Date()
+				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+				if(date > today){
+					return date.toTimeString().slice(0,5)
+				}else if(date > yesterday){
+					return 'Yesterday'
+				}else{
+					return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
+				}
 			}
 		}
 	}
