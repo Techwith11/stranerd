@@ -12,23 +12,27 @@ module.exports = functions.https.onCall(async (data, context) => {
 	}
 	let score = 0
 	for(let i = 0; i < questions.length; i++){
-		if(questions[i].answer === answers[i]){
-			score++
-		}
+		if(questions[i].answer === answers[i]){ score++ }
 	}
 	let percentage = Number(Number((score * 100) / questions.length).toFixed(0))
 	let level = data.level
+	let course = data.course
 	let id = data.id
-	let upgrade = { score: percentage }
-	upgrade[level] = percentage >= 70 ? { passed: true } : { passed: false, canRetakeAt: admin.firestore.FieldValue.serverTimestamp() }
-	console.log(upgrade)
-	// TODO: Create new test instance
-	/*await admin.firestore().collection('users').doc(id).set({
-		tutor: {
-			level,
-			upgrade
-		}
-	}, { merge: true })*/
+	let upgrade = {}
+	let test = {
+		questions, answers, level, course,
+		user: id, score: percentage,
+		dates: { takenAt: admin.firestore.FieldValue.serverTimestamp() }
+	}
+	let tutor = { tutor: {  upgrade } }
+	if(percentage >= 70){
+		tutor.tutor.level = level
+		tutor.tutor.upgrade[level] = { passed: true, score: percentage, takenAt: admin.firestore.FieldValue.serverTimestamp() }
+	}else{
+		tutor.tutor.upgrade[level] = { passed: false, score: percentage, takenAt: admin.firestore.FieldValue.serverTimestamp() }
+	}
+	await admin.firestore().collection('tests/tutors/tests').add(test)
+	await admin.firestore().collection('users').doc(id).set(tutor , { merge: true })
 
-	return percentage
+	return { score: percentage }
 })

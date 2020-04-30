@@ -36,8 +36,8 @@
 				this.media = e.target.files
 				this.uploadFiles()
 			},
-			uploadFiles(){
-				new window.SweetAlert({
+			async uploadFiles(){
+				let result = await new window.SweetAlert({
 					title: 'Send Files',
 					text: 'Are you sure you want to send these files',
 					icon: 'info',
@@ -45,23 +45,22 @@
 					confirmButtonColor: '#3085d6',
 					cancelButtonColor: '#d33',
 					confirmButtonText: 'Send'
-				}).then(result => {
-					if (result.value) {
-						this.media.forEach(async file => {
-							let link = `chats/singles/${this.getChatPath}/${Date.now()}_${file.name}`
-							let chat = { to: this.$route.params.id, from: this.getId }
-							if(window.location.hostname === 'localhost'){
-								chat.media = { name: file.name, type: file.type, link: `/${link}` }
-							}else{
-								await storage.ref(link).put(this.video)
-								link = await storage.ref(link).getDownloadURL()
-								chat.media = { name: file.name, link, type: file.type }
-							}
-							this.sendChat(chat)
-								.catch(error => new window.Toast({ icon: 'error', title: error.message }))
-						})
-					}
 				})
+				if (result.value) {
+					for (const file of this.media) {
+						let link = `chats/singles/${this.getChatPath}/${Date.now()}_${file.name}`
+						let chat = { to: this.$route.params.id, from: this.getId }
+						if(window.location.hostname === 'localhost'){
+							chat.media = { name: file.name, type: file.type, link: `/${link}` }
+						}else{
+							await storage.ref(link).put(this.video)
+							link = await storage.ref(link).getDownloadURL()
+							chat.media = { name: file.name, link, type: file.type }
+						}
+						this.sendChat(chat)
+							.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+					}
+				}
 			}
 		}
 	}

@@ -27,7 +27,7 @@ const actions = {
     setUser:({ commit }, user) => commit('setUser', user),
     setListener: ({ getters, commit }) => {
         let listener = firestore.collection('users').doc(getters.getId)
-            .onSnapshot(snapshot => { commit('setUser', snapshot.data())})
+            .onSnapshot(snapshot => commit('setUser', snapshot.data()))
         commit('setListener', listener)
     },
     closeListener: ({ commit }) => commit('closeListener'),

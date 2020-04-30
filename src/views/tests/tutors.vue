@@ -45,7 +45,8 @@
 				let upgrade = this.tutor.upgrade[this.tutor.level + 1]
 				if(upgrade && upgrade['passed'] === false){
 					let twoHoursToMs = 7200000
-					this.failed = (new Date() - upgrade['canRetakeAt']) < twoHoursToMs
+					let failedTime = new Date(upgrade['takenAt']['seconds'] * 1000)
+					this.failed = (new Date() - failedTime) < twoHoursToMs
 				}
 			},
 			async getAllQuestions(){
@@ -88,8 +89,10 @@
 			tutor(){ return this.getUser.tutor || {} },
 			isTutor(){ return this.getUser.roles && this.getUser.roles.isTutor },
 			getRetakeTime(){
-				let d = this.tutor.upgrade[this.tutor.level + 1]['canRetakeAt']
-				return new Date(d.seconds * 1000).toTimeString().slice(0,5)
+				let d = this.tutor.upgrade[this.tutor.level + 1]['takenAt']
+				d = new Date(d.seconds * 1000)
+				d.setHours(d.getHours() + 2)
+				return d.toTimeString().slice(0,5)
 			}
 		},
 		components: {

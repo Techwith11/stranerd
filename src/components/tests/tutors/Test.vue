@@ -7,7 +7,7 @@
 		</div>
 		<div class="d-flex justify-content-end mb-5">
 			<button class="accent-button shadow-none" @click="submitTest" :disabled="isLoading || isMarked">
-				<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
+				<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
 				<span>Submit</span>
 			</button>
 		</div>
@@ -48,6 +48,7 @@
 			},
 			setInterval(){ this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000) },
 			endTest(){
+				this.isMarked = true
 				clearInterval(this.interval)
 				this.isLoading = true
 				new window.Toast({ icon: 'info', title: 'Submitting test' })
@@ -57,15 +58,27 @@
 					level: this.level,
 					course: this.course,
 					id: this.getId
-				}).then(data => new window.Toast({ icon: 'info', title: `You scored ${data.data}%` }))
-					.catch(error => new window.Toast({ icon: 'error', title: error.message }))
-				this.isMarked = true
-				this.isLoading = false
-				// TODO: Redirect to another page
+				}).then(res => {
+					new window.Toast({ icon: 'info', title: `You scored ${res.data.score}%` })
+					this.isLoading = false
+					this.$router.push('/my_account')
+				})
+					.catch(error => {
+						new window.Toast({ icon: 'error', title: error.message })
+						this.isLoading = false
+					})
 			},
-			submitTest(){
-				// TODO: Add a confirmation modal before ending the test
-				this.endTest()
+			async submitTest(){
+				let result = await  new window.SweetAlert({
+					title: 'Submit test',
+					text: 'Are you sure you want to submit now? This cannot be undone',
+					icon: 'info',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Submit'
+				})
+				return result.value ? this.endTest() : null
 			}
 		},
 		mounted(){
