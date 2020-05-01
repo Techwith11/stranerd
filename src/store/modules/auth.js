@@ -5,7 +5,7 @@ let id = window.location.hostname === 'localhost' ? 'kevin11' : ''
 const state = {
     id,
     user: {},
-    listener: () => {}
+    profileListener: () => {}
 }
 
 const getters = {
@@ -18,19 +18,21 @@ const getters = {
 const mutations = {
     setId: (state, id) => state.id = id,
     setUser: (state, user) => state.user = user,
-    setListener: (state, listener) => state.listener = listener,
-    closeListener: (state) => state.listener()
+    setProfileListener: (state, listener) => {
+        state.profileListener()
+        state.profileListener = listener
+    }
 }
 
 const actions = {
     setId:({ commit }, id) => commit('setId', id),
     setUser:({ commit }, user) => commit('setUser', user),
-    setListener: ({ getters, commit }) => {
-        let listener = firestore.collection('users').doc(getters.getId)
-            .onSnapshot(snapshot => commit('setUser', snapshot.data()))
-        commit('setListener', listener)
+    setProfileListener: ({ getters, commit }) => {
+        let listener = getters.getId ? firestore.collection('users').doc(getters.getId)
+            .onSnapshot(snapshot => commit('setUser', snapshot.data())) : () => {}
+        commit('setProfileListener', listener)
     },
-    closeListener: ({ commit }) => commit('closeListener'),
+    closeProfileListener: ({ commit }) => commit('setListener', () => {}),
     makeTutor: (store, tutor) => {
         let makeTutor = functions.httpsCallable('makeTutor')
         return makeTutor(tutor)
@@ -38,7 +40,7 @@ const actions = {
     },
     logout: async ({commit}) => {
         await auth.signOut()
-        commit('setId',null)
+        commit('setId','')
         window.closeNavbar()
     },
 }

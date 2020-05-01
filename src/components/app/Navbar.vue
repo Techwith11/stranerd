@@ -75,7 +75,7 @@
         box-shadow: none;
     }
     @media screen and (max-width: 767px){
-        li.nav-item{
+        .navbar-nav li.nav-item{
             box-shadow: 0 1px 2px #777777;
         }
     }

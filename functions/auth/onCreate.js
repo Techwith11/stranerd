@@ -22,7 +22,7 @@ module.exports = functions.auth.user().onCreate(async (user) => {
 				registeredAt: admin.firestore.FieldValue.serverTimestamp()
 			},
 			status: {
-				active: true,
+				online: true,
 				lastSeen: null
 			},
 			account: {

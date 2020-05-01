@@ -21,10 +21,13 @@
 			'app-footer': Footer,
 			'auth-modal': AuthModal,
 		},
-		computed: mapGetters(['isModalOpen']),
-		methods: mapActions(['setListener','closeListener']),
-		mounted(){ this.setListener() },
-		beforeDestroy(){ this.closeListener() }
+		computed: mapGetters(['isModalOpen', 'getId']),
+		methods: mapActions(['setProfileListener','closeProfileListener']),
+		mounted(){ this.setProfileListener() },
+		beforeDestroy(){ this.closeProfileListener() },
+		watch: {
+			getId(){ return this.setProfileListener() }
+		}
 	}
 </script>
 
