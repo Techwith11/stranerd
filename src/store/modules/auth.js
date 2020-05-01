@@ -12,7 +12,9 @@ const getters = {
     getId: state => state.id,
     getUser: state => state.user,
     getChattedWith: state => state.user.chattedWith || [],
-    isLoggedIn: state => !!state.id
+    isLoggedIn: state => !!state.id,
+    isAdmin: state => state.user.roles.isAdmin,
+    isTutor: state => state.user.roles.isTutor
 }
 
 const mutations = {

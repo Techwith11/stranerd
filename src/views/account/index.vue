@@ -1,5 +1,12 @@
 <template>
 	<div class="container" v-if="Object.keys(getUser).length > 0">
+		<div class="btn-group mb-3" role="group">
+			<button type="button" class="btn btn-primary mr-3" @click="setId('kevin11')">Login as Kevin11</button>
+			<button type="button" class="btn btn-primary mr-3" @click="setId('frank')">Login as Frank</button>
+			<button type="button" class="btn btn-primary mr-3" @click="setId('max')">Login as Max</button>
+			<button type="button" class="btn btn-primary mr-3" @click="setId('joe')">Login as Joe</button>
+		</div>
+		<hr>
 		<div>
 			<h4>Bio</h4>
 			<p>Name: {{ getUser.bio.name }}</p>
@@ -25,9 +32,9 @@
 		</div>
 		<div>
 			<h4>Roles</h4>
-			<span class="mr-3" v-if="getUser.roles.isStudent">Student: {{ getUser.roles.isStudent }}</span>
-			<span class="mr-3" v-if="getUser.roles.isTutor">Tutor: {{ getUser.roles.isTutor }}</span>
-			<span class="mr-3" v-if="getUser.roles.isAdmin">Admin: {{ getUser.roles.isAdmin }}</span>
+			<span class="mr-3">Student: {{ !!getUser.roles.isStudent }}</span>
+			<span class="mr-3">Tutor: {{ !!getUser.roles.isTutor }}</span>
+			<span class="mr-3">Admin: {{ !!getUser.roles.isAdmin }}</span>
 			<hr>
 		</div>
 		<div v-if="getUser.roles.isTutor">
@@ -52,11 +59,14 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
+	import { mapGetters, mapActions } from 'vuex'
 	export default {
 		name: 'MyAccount',
 		computed: {
 			...mapGetters(['getUser'])
+		},
+		methods:{
+			...mapActions(['setId'])
 		}
 	}
 </script>
