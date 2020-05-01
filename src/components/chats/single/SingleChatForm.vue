@@ -1,5 +1,5 @@
 <template>
-	<div class="my-3 d-flex align-items-center">
+	<div class="mt-auto mb-3 d-flex align-items-center">
 		<textarea rows="1" class="form-control" placeholder="Enter message" v-model.trim="$v.message.$model"></textarea>
 		<i class="fas fa-paper-plane ml-3 text-success" v-if="!$v.$invalid" @click="sendMessage"></i>
 		<i class="fas fa-upload ml-3 text-success" v-else @click="$refs.mediaInput.click()"></i>

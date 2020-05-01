@@ -2,11 +2,11 @@
 	<div>
 		<helper-spinner v-if="isLoading" />
 		<div v-else>
-			<div v-if="doesExist">
+			<div v-if="doesExist" id="messageContainer">
 				<single-chat-nav :user="user" />
-				<div class="container py-3">
+				<div class="container py-3" :id="canHaveSession ? 'smaller-height' : 'longer-height'">
 					<helper-message v-if="chats.length < 1" message="No chats. Send a message now" />
-					<ul class="list-group position-relative" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
+					<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
 						<li class="d-block text-center small text-muted" v-if="!hasNoMore">
 							<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
 							<span @click="fetchOlderMessages">Fetch Older</span>
@@ -45,6 +45,7 @@
 		}),
 		computed: {
 			...mapGetters(['getId']),
+            canHaveSession(){ return this.user.roles.isTutor && this.user['.key'] !== this.getId },
 			getChatPath(){ return [this.$route.params.id, this.getId].sort().join('_') }
 		},
 		methods: {
@@ -103,12 +104,17 @@
 
 <style lang="scss" scoped>
 	ul{
-		min-height: 50vh;
-		max-height: 70vh;
+		height: calc(100% - 38px);
 		overflow: auto;
 		-ms-overflow-style: none;
 		&::-webkit-scrollbar{
 			display: none;
 		}
+	}
+	#smaller-height{
+		height: calc(100vh - 218px);
+	}
+	#longer-height{
+		height: calc(100vh - 168px);
 	}
 </style>

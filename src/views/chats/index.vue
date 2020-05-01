@@ -55,6 +55,11 @@
 				})
 			}
 		},
+		mounted(){
+			this.chats = Object.fromEntries(this.getChattedWith.map(id => [id,{ chat: {}, user:{} }]))
+			this.getChats()
+			this.getUsers()
+		},
 		beforeDestroy() {
 			this.chatsListeners.forEach(listener => listener())
 			this.usersListeners.forEach(listener => listener())

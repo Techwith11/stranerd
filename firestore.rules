@@ -20,11 +20,6 @@ service cloud.firestore {
       allow delete: if isAdmin();
     }
 
-    match /subjects/{id} {
-      allow read: if true;
-      allow write: if isAdmin();
-    }
-
     match /questions/{id} {
       allow read: if isAuthenticated();
       allow write: if isAdmin();
@@ -35,6 +30,11 @@ service cloud.firestore {
       allow create: if isAuthenticated();
       allow update: if resource.data.student == request.auth.uid || resource.data.tutor == request.auth.uid;
       allow delete: if isAdmin();
+    }
+
+    match /subjects/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
     }
 
     match /tests/tutors/tests/{id} {

@@ -1,7 +1,7 @@
 <template>
-	<div id="app" class="d-flex flex-column">
-		<app-nav-bar />
+	<div>
 		<div id="content">
+			<app-nav-bar />
 			<router-view/>
 		</div>
 		<app-footer />
@@ -32,10 +32,7 @@
 </script>
 
 <style lang="scss" scoped>
-	#app{
-		min-height: 100vh;
-		#content{
-			min-height:80vh;
-		}
+	#content{
+		min-height: 95vh;
 	}
 </style>

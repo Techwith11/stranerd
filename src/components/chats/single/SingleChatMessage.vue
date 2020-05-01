@@ -8,8 +8,8 @@
 					<i class="fas fa-download text-info"></i>
 				</a>
 			</div>
-			<div class="d-flex justify-content-between">
-				<span class="mr-5">{{ getChatTime | getDateOrTime }}</span>
+			<div class="d-flex justify-content-between small">
+				<span class="mr-5 text-black-50">{{ getChatTime | getDateOrTime }}</span>
 				<span :class="{'d-none':!isByMe, 'text-primary': !isChatRead, 'text-success': isChatRead }">
 					<i class="fas fa-check"></i><i class="fas fa-check ml-n2"></i>
 				</span>
