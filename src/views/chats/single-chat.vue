@@ -6,8 +6,8 @@
 				<single-chat-nav :user="user" />
 				<div class="container py-3" :id="canHaveSession ? 'smaller-height' : 'longer-height'">
 					<helper-message v-if="chats.length < 1" message="No chats. Send a message now" />
-					<ul class="list-group position-relative" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: true}">
-						<li class="d-block text-center small text-muted" v-if="!hasNoMore">
+					<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
+						<li class="d-block text-center small text-muted mb-2" v-if="!hasNoMore">
 							<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
 							<span @click="fetchOlderMessages">Fetch Older</span>
 						</li>
@@ -40,7 +40,7 @@
 			isLoading: true,
 			isOlderChatsLoading: false,
 			chatsListeners: null,
-			paginationLimit: 20,
+			paginationLimit: 10,
 			hasNoMore: false
 		}),
 		computed: {
