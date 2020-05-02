@@ -30,9 +30,10 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 	let upgrade = {}
 	upgrade[course] = {}
-	let tutor = { tutor: {  upgrade } }
+	let tutor = { tutor: { upgrade } }
 	if(score >= 70){
-		tutor.tutor.level = level
+		tutor.tutor.levels = {}
+		tutor.tutor.levels[course] = level
 		tutor.tutor.upgrade[course][level] = { passed: true, score, takenAt: admin.firestore.FieldValue.serverTimestamp() }
 	}else{
 		tutor.tutor.upgrade[course][level] = { passed: false, score, takenAt: admin.firestore.FieldValue.serverTimestamp() }
