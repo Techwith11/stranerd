@@ -43,7 +43,7 @@
 		watch:{
 			answer(){
 				if(!this.disabled){
-					this.onSelect(this.index, this.answer)
+					this.onSelect(this.question['.key'], this.answer)
 				}
 			}
 		}

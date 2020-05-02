@@ -39,7 +39,7 @@ const mutations = {
         studentCancelsSessionState(state,session,id) ? state.sessionModalState = 'student-cancelled' : null
         studentWaitsAndTutorCancelsSessionState(state,session,id) ? state.sessionModalState = 'tutor-cancelled' : null
         if(studentWaitsAndTutorAcceptsSessionState(state,session,id)){
-            await router.push(`/sessions/${session['.key']}`)
+            await router.push(`/sessions/${session['.key']}`).catch(error => error)
             state.sessionModalState = null
             state.newSessionData = {}
             state.sessionListener()
@@ -84,7 +84,7 @@ const actions = {
     async acceptSession({ commit, getters }){
         if(getters.getCurrentSession && getters.getCurrentSession['.key']){
             await firestore.collection('sessions').doc(getters.getCurrentSession['.key']).set({ accepted: true}, { merge: true })
-            await router.push(`/sessions/${getters.getCurrentSession['.key']}`)
+            await router.push(`/sessions/${getters.getCurrentSession['.key']}`).catch(error => error)
             commit('closeSessionModal')
             commit('setSessionListener', () => {})
             commit('setSession', [null, null])

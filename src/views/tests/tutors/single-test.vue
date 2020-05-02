@@ -1,0 +1,107 @@
+<template>
+	<div class="container">
+		<helper-spinner v-if="isLoading"/>
+		<div v-else>
+			<h3 class="position-sticky sticky-top text-right" :class="{'text-danger': timer <= 120}" v-if="!isMarked">{{ getTime }}</h3>
+			<small class="small my-3">Any attempt to leave or refresh the page will submit the test</small>
+			<div>
+				<question v-for="(question,index) in test.questions" :question="question" :key="question['.key']"
+					:onSelect="onAnswerSelected" :index="index" :disabled="isMarked" />
+			</div>
+			<div class="d-flex justify-content-end mb-5">
+				<button class="accent-button shadow-none" @click="submit" :disabled="isMarked">
+					<i class="fas fa-spinner fa-spin mr-2" v-if="isMarked"></i>
+					<span>Submit</span>
+				</button>
+			</div>
+		</div>
+	</div>
+</template>
+
+<script>
+    import HelperSpinner from '@/components/helpers/Spinner'
+    import Question from '@/components/tests/tutors/Question'
+	import { firestore } from '@/config/firebase'
+	import { mapGetters, mapActions } from 'vuex'
+	export default {
+		name: 'SingleTutorTest',
+		data: () => ({
+			isLoading: true,
+			isMarked: false,
+			test: {},
+			timer: 600,
+			answers: {},
+			interval: null
+		}),
+		computed: {
+			...mapGetters(['getId']),
+            getTime(){
+                let hours = Math.floor(this.timer / 3600).toFixed(0)
+                let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
+                let seconds = Math.floor(this.timer % 60).toFixed(0)
+                hours > 9 ? `${hours}` : hours = `0${hours}`
+                minutes > 9 ? `${minutes}` : minutes = `0${minutes}`
+                seconds > 9 ? `${seconds}` : seconds = `0${seconds}`
+                return `${hours} : ${minutes} : ${seconds}`
+            },
+		},
+        methods: {
+			...mapActions(['submitTest']),
+			async fetchTest(){
+                let doc = await firestore.collection('tests/tutors/tests').doc(this.$route.params.id).get()
+                if(doc.exists){
+                    this.test = { '.key': doc.id, ...doc.data() }
+                    if(this.test.user !== this.getId){ await this.$router.push('/tests/tutors') }
+                    if(this.test.marked){
+                        new window.Toast({ icon: 'error', title: 'Test has been submitted already' })
+                        await this.$router.push('/tests/tutors')
+                    }
+                    let endsAt = new Date(this.test.dates.endedAt.seconds * 1000)
+                    if(endsAt < new Date()){
+                        new window.Toast({ icon: 'error', title: 'Test has ended already' })
+                        await this.$router.push('/tests/tutors')
+                    }else{
+                        this.timer = (endsAt - new Date()) / 1000
+                        this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
+                    }
+                    this.isLoading = false
+                }else{
+                    await this.$router.push('/tests/tutors')
+                }
+			},
+			onAnswerSelected(key, answer){
+				this.answers[key] = answer
+			},
+            async submit(){
+                let result = await new window.SweetAlert({
+                    title: 'Submit test',
+                    text: 'Are you sure you want to submit now? This cannot be undone',
+                    icon: 'info',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Submit'
+                })
+                return result.value ? this.endTest(this.getTestData) : null
+            },
+            endTest(){
+                this.isMarked = true
+                clearInterval(this.interval)
+                new window.Toast({ icon: 'info', title: 'Submitting answers' })
+                this.submitTest({ id: this.$route.params.id, answers: this.answers })
+            },
+		},
+        async mounted(){
+            await this.fetchTest()
+        },
+        components: {
+            'helper-spinner': HelperSpinner,
+            'question': Question,
+		},
+        watch:{
+            timer(){
+                if(this.timer === 0){ this.endTest() }
+            }
+        },
+	}
+</script>

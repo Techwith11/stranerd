@@ -71,7 +71,13 @@ export default [
     {
         path: '/tests/tutors',
         name: 'Tests Tutors',
-        component: () => import(/* webpackChunkName: "tests_tutors" */ '@/views/tests/tutors'),
+        component: () => import(/* webpackChunkName: "tests_tutors" */ '@/views/tests/tutors/index'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/tests/tutors/:id',
+        name: 'Tests Tutor',
+        component: () => import(/* webpackChunkName: "tests_tutor" */ '@/views/tests/tutors/single-test'),
         meta: { requiresAuth: true }
     },
     {
