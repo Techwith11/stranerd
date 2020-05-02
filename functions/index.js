@@ -14,6 +14,7 @@ exports.requestMakeAdmin = require('./requests/makeAdmin')
 exports.makeTutor = require('./onCall/makeTutor')
 exports.makeAdmin = require('./onCall/makeAdmin')
 exports.sendChat = require('./onCall/sendChat')
+exports.startTutorTest = require('./onCall/startTutorTest')
 exports.markTutorTest = require('./onCall/markTutorTest')
 exports.startSession = require('./onCall/startSession')
 
