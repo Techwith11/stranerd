@@ -3,29 +3,26 @@ const admin = require('firebase-admin')
 
 module.exports = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
-		/*TODO: Delete comment */ //throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can send messages')
+		/*TODO: Delete comment */ //throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can start sessions')
 	}
-	let chatDefaults = {
+	let sessionDefaults = {
+		done: false,
 		dates: {
-			sentAt: admin.firestore.FieldValue.serverTimestamp(),
-			readAt: null
+			createdAt: admin.firestore.FieldValue.serverTimestamp(),
 		}
 	}
-	let from = context.auth ? context.auth.uid : data.from //TODO: Delete this data.from before deploying
-	let to = data.to
+	let docs = await admin.firestore().collection('sessions')
+		.where('tutor','==', data.tutor)
+		.where('done','==',false)
+		.limit(1)
+		.get()
+	if(!docs.empty){
+		throw new functions.https.HttpsError('failed-precondition','Tutor is currently in a session')
+	}
 
-	chatDefaults.from = from
-	chatDefaults.between = [ from, to ]
-	let path = chatDefaults.between.sort().join('_')
+	sessionDefaults = { duration: data.duration, student: data.student, tutor: data.tutor, ...sessionDefaults }
 
-	await admin.firestore().collection('chats').doc('singles').collection(path).add({ ...data, ...chatDefaults})
+	let doc = await admin.firestore().collection('sessions').add(sessionDefaults)
 
-	await admin.firestore().collection('users').doc(from).update({
-		chattedWith: admin.firestore.FieldValue.arrayUnion(to)
-	})
-	await admin.firestore().collection('users').doc(to).update({
-		chattedWith: admin.firestore.FieldValue.arrayUnion(from)
-	})
-
-	return true
+	return doc.id
 })

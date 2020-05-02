@@ -15,6 +15,7 @@ exports.makeTutor = require('./onCall/makeTutor')
 exports.makeAdmin = require('./onCall/makeAdmin')
 exports.sendChat = require('./onCall/sendChat')
 exports.markTutorTest = require('./onCall/markTutorTest')
+exports.startSession = require('./onCall/startSession')
 
 
 // Firestore Triggers

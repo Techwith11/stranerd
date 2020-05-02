@@ -6,6 +6,7 @@
 		</div>
 		<app-footer />
 		<auth-modal v-if="isModalOpen"/>
+		<session-modal v-if="isSessionModalOpen"/>
 	</div>
 </template>
 
@@ -14,19 +15,32 @@
 	import Navbar from '@/components/app/Navbar'
 	import Footer from '@/components/app/Footer'
 	import AuthModal from '@/components/auth/AuthModal'
+	import SessionModal from '@/components/sessions/SessionModal'
 	export default {
 		name: 'App',
 		components: {
 			'app-nav-bar': Navbar,
 			'app-footer': Footer,
 			'auth-modal': AuthModal,
+			'session-modal': SessionModal,
 		},
-		computed: mapGetters(['isModalOpen', 'getId']),
-		methods: mapActions(['setProfileListener','closeProfileListener']),
-		mounted(){ this.setProfileListener() },
-		beforeDestroy(){ this.closeProfileListener() },
+		computed: mapGetters(['isModalOpen', 'getId', 'isTutor', 'isSessionModalOpen']),
+		methods: {
+			...mapActions(['setProfileListener','closeProfileListener', 'initializeTutorSessionsListener','closeTutorSessionsListener']),
+			closeAllListeners(){
+				this.closeProfileListener()
+				this.closeTutorSessionsListener()
+			}
+        },
+		mounted(){
+            this.getId ? this.setProfileListener() : null
+            this.isTutor ? this.initializeTutorSessionsListener() : null
+			window.addEventListener('beforeunload', this.closeAllListeners)
+		},
+		beforeDestroy(){ this.closeAllListeners() },
 		watch: {
-			getId(){ return this.setProfileListener() }
+			getId(){ return this.getId ? this.setProfileListener() : null },
+			isTutor(){ return this.isTutor ? this.initializeTutorSessionsListener() : null }
 		}
 	}
 </script>
