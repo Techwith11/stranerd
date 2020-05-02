@@ -2,8 +2,8 @@ rules_version = '2';
 service cloud.firestore {
 	match /databases/{database}/documents {
 		match /chats/singles/{path}/{id} {
-			allow read, update: if true; //request.auth.uid in resource.data.between;
-			allow create: if true; //request.auth.uid in request.resource.data.between;
+			allow read, update: if true; //request.auth.uid == resource.data.to || request.auth.uid == resource.data.to;
+			allow create: if true;//request.auth.uid == request.resource.data.from;
 			allow delete: if resource.data.from == request.auth.uid;
 		}
 
@@ -14,8 +14,8 @@ service cloud.firestore {
 		}
 
 		match /courses/{course}/discussions/{id} {
-			allow read: if hasAccessToCourse(course, request.auth.uid);
-			allow create: if hasAccessToCourse(course, request.auth.uid);
+			allow read: if hasAccessToCourse(course);
+			allow create: if hasAccessToCourse(course);
 			allow update: if resource.data.userId == request.auth.uid;
 			allow delete: if isAdmin();
 		}
@@ -69,8 +69,8 @@ service cloud.firestore {
 			return true; //request.auth.token.isAdmin == true;
 		}
 
-		function hasAccessToCourse(course, user) {
-			return true; //user in get(/databases/$(database)/documents/courses/$(course)).data.savedBy
+		function hasAccessToCourse(course) {
+			return true; //request.auth.uid in get(/databases/$(database)/documents/courses/$(course)).data.savedBy
 		}
 
 		function hasAccessToSession(session) {

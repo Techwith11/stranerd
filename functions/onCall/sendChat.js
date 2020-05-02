@@ -15,8 +15,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 	let to = data.to
 
 	chatDefaults.from = from
-	chatDefaults.between = [ from, to ]
-	let path = chatDefaults.between.sort().join('_')
+	let path = [from, to].sort().join('_')
 
 	await admin.firestore().collection('chats').doc('singles').collection(path).add({ ...data, ...chatDefaults})
 

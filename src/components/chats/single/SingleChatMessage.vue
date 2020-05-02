@@ -36,7 +36,7 @@
 		},
 		async mounted(){
 			if(!this.isByMe && !this.isChatRead){
-				await firestore.doc('chats/singles').collection(this.chat.between.sort().join('_')).doc(this.chat['.key']).set({
+				await firestore.doc('chats/singles').collection([this.chat.from, this.chat.to].sort().join('_')).doc(this.chat['.key']).set({
 					dates: {
 						readAt: firebase.firestore.FieldValue.serverTimestamp()
 					}
