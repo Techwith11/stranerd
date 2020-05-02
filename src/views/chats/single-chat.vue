@@ -6,7 +6,7 @@
 				<single-chat-nav :user="user" />
 				<div class="container py-3" :id="canHaveSession ? 'smaller-height' : 'longer-height'">
 					<helper-message v-if="chats.length < 1" message="No chats. Send a message now" />
-					<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
+					<ul class="list-group position-relative" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: true}">
 						<li class="d-block text-center small text-muted" v-if="!hasNoMore">
 							<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
 							<span @click="fetchOlderMessages">Fetch Older</span>
@@ -104,7 +104,6 @@
 
 <style lang="scss" scoped>
 	ul{
-		height: calc(100% - 38px);
 		overflow: auto;
 		-ms-overflow-style: none;
 		&::-webkit-scrollbar{
@@ -112,9 +111,15 @@
 		}
 	}
 	#smaller-height{
-		height: calc(100vh - 218px);
+		height: calc(100vh - 218px + 32px);
+		ul{
+			height: calc(100vh - 256px);
+		}
 	}
 	#longer-height{
-		height: calc(100vh - 168px);
+		height: calc(100vh - 168px + 32px);
+		ul{
+			height: calc(100vh - 206px);
+		}
 	}
 </style>
