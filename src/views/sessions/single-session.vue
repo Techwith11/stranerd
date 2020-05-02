@@ -4,9 +4,17 @@
 		<div v-else>
 			<div v-if="doesExist">
 				<session-nav :user="otherPerson" :timer="timer" />
-				<div class="container">
-					<p>{{ session }}</p>
-					<p>{{ otherPerson }}</p>
+				<div class="container py-3" :id="timer > 0 ? 'smaller-height' : 'longer-height'">
+					<helper-message v-if="chats.length < 1 && newChats.length < 1" message="No chats. Send a message now" />
+					<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
+						<li class="d-block text-center small text-muted mb-2" v-if="!hasNoMore">
+							<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
+							<span @click="fetchOlderMessages">Fetch Older</span>
+						</li>
+						<session-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
+						<session-chat-message :chat="chat" v-for="chat in newChats" :key="chat['.key']" />
+					</ul>
+					<session-chat-form v-if="timer > 0" />
 				</div>
 			</div>
 			<helper-message v-else message="No session with such id or you cannot access the session" />
@@ -19,11 +27,14 @@
 	import { firestore } from '@/config/firebase'
     import HelperSpinner from '@/components/helpers/Spinner'
     import HelperMessage from '@/components/helpers/Message'
+    import SessionChatForm from "@/components/sessions/single/SessionChatForm"
+    import SessionChatMessage from "@/components/sessions/single/SessionChatMessage"
     import SessionNav from "@/components/sessions/single/SessionNav"
 	export default {
 		name: "SingleSession",
 		data: () => ({
 			isLoading: true,
+			isOlderChatsLoading: false,
 			doesExist: false,
 			timer: 600,
 			interval: null,
@@ -41,7 +52,9 @@
 		components: {
             'helper-spinner': HelperSpinner,
             'helper-message': HelperMessage,
-			'session-nav': SessionNav
+			'session-nav': SessionNav,
+			'session-chat-form': SessionChatForm,
+			'session-chat-message': SessionChatMessage,
         },
 		async mounted(){
 			await this.getSessionInfo()
@@ -57,7 +70,7 @@
                             this.session = { '.key': doc.id, ...doc.data() }
                             this.setTutorListener()
                             this.setStudentListener()
-                            this.getChats()
+                            await this.getChats()
                             if (this.session.done === false){
                                 this.setChatListener()
                             }
@@ -107,6 +120,11 @@
                 this.studentListener = firestore.collection('users').doc(this.session.student)
 					.onSnapshot(snapshot => this.student = { '.key': snapshot.id, ...snapshot.data() })
             },
+            async fetchOlderMessages(){
+                this.isOlderChatsLoading = true
+                await this.getChats()
+                this.isOlderChatsLoading = false
+            },
             cleanUp(){
                 this.tutorListener()
                 this.studentListener()
@@ -117,7 +135,7 @@
         watch:{
             timer(){
                 if(this.timer === 0){ window.clearInterval(this.interval) }
-                if(this.timer === 1){ window.setTimeout(() => new window.Toast({ icon: 'warning', title: 'The session has ended.' }), 1000)}
+                if(this.timer === 1){ window.setTimeout(() => new window.Toast({ icon: 'info', title: 'The session has ended.' }), 1000)}
                 if(this.timer === 10){ new window.Toast({ icon: 'warning', title: 'This session will be ending in 10 seconds.' }) }
             }
         },
@@ -135,3 +153,24 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	ul{
+		overflow: auto;
+		-ms-overflow-style: none;
+		&::-webkit-scrollbar{
+			display: none;
+		}
+	}
+	#smaller-height{
+		height: calc(100vh - 168px + 32px);
+		ul{
+			height: calc(100vh - 206px);
+		}
+	}
+	#longer-height{
+		ul{
+			height: calc(100vh - 206px + 32px);
+		}
+	}
+</style>
