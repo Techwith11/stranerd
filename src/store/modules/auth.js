@@ -1,6 +1,6 @@
 import { auth, firestore, functions } from '@/config/firebase'
 
-let id = window.location.hostname === 'localhost' ? 'kevin11' : ''
+let id = window.location.hostname === 'localhost' ? 'frank' : ''
 
 const state = {
     id,
@@ -13,8 +13,8 @@ const getters = {
     getUser: state => state.user,
     getChattedWith: state => state.user.chattedWith || [],
     isLoggedIn: state => !!state.id,
-    isAdmin: state => state.user.roles.isAdmin,
-    isTutor: state => state.user.roles.isTutor
+    isAdmin: state => state.user && state.user.roles && state.user.roles.isAdmin,
+    isTutor: state => state.user && state.user.roles && state.user.roles.isTutor
 }
 
 const mutations = {
@@ -34,7 +34,7 @@ const actions = {
             .onSnapshot(snapshot => commit('setUser', snapshot.data())) : () => {}
         commit('setProfileListener', listener)
     },
-    closeProfileListener: ({ commit }) => commit('setListener', () => {}),
+    closeProfileListener: ({ commit }) => commit('setProfileListener', () => {}),
     makeTutor: (store, tutor) => {
         let makeTutor = functions.httpsCallable('makeTutor')
         return makeTutor(tutor)
