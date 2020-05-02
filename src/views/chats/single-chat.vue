@@ -40,7 +40,7 @@
 			isLoading: true,
 			isOlderChatsLoading: false,
 			chatsListeners: null,
-			paginationLimit: 10,
+			paginationLimit: 20,
 			hasNoMore: false
 		}),
 		computed: {
