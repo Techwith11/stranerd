@@ -38,10 +38,7 @@
                 let hours = Math.floor(this.timer / 3600).toFixed(0)
                 let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
                 let seconds = Math.floor(this.timer % 60).toFixed(0)
-                hours > 9 ? `${hours}` : hours = `0${hours}`
-                minutes > 9 ? `${minutes}` : minutes = `0${minutes}`
-                seconds > 9 ? `${seconds}` : seconds = `0${seconds}`
-                return `${hours} : ${minutes} : ${seconds}`
+                return `${hours < 10 ? '0' + hours : hours} : ${minutes < 10 ? '0' + minutes : minutes} : ${seconds < 10 ? '0' + seconds : seconds}`
             },
 		},
         methods: {

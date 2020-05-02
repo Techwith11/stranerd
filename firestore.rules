@@ -2,7 +2,7 @@ rules_version = '2';
 service cloud.firestore {
 	match /databases/{database}/documents {
 		match /chats/singles/{path}/{id} {
-			allow read, update: if true; //request.auth.uid == resource.data.to || request.auth.uid == resource.data.to;
+			allow read, update: if true; //request.auth.uid in path.split('_');
 			allow create: if true;//request.auth.uid == request.resource.data.from;
 			allow delete: if resource.data.from == request.auth.uid;
 		}
