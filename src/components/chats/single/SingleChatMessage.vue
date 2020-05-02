@@ -19,8 +19,7 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	import firebase, { firestore } from '@/config/firebase'
+	import { mapActions, mapGetters } from 'vuex'
 	export default {
 		props: {
 			chat: {
@@ -36,13 +35,10 @@
 		},
 		async mounted(){
 			if(!this.isByMe && !this.isChatRead){
-				await firestore.doc('chats/singles').collection([this.chat.from, this.chat.to].sort().join('_')).doc(this.chat['.key']).set({
-					dates: {
-						readAt: firebase.firestore.FieldValue.serverTimestamp()
-					}
-				}, { merge: true})
+				await this.readChat({ id: this.chat['.key'], path: [this.chat.from, this.$route.params.id].sort().join('_') })
 			}
 		},
+        methods: mapActions(['readChat']),
 		filters: {
 			getDateOrTime(date){
 				if(typeof(date) === 'string') { return date }
