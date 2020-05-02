@@ -55,7 +55,7 @@
     @import '../../style/index';
     #navbar {
         background: $white;
-        z-index: 100;
+        z-index: 3;
         a {
             color: $text-black;
             font-size: 0.875rem;
