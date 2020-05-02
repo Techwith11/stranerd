@@ -1,18 +1,17 @@
 <template>
-	<div class="m-md-5" id="waiting">
-		<i class="fas fa-spinner fa-spin fa-2x"></i>
-		<p class="my-3">Waiting for tutor</p>
-		<button class="bg-danger text-white shadow-none w-100 my-2 rounded" @click="cancelSessionAndCloseModal">
-			Cancel Session
+	<div class="m-md-5 text-center">
+		<p class="my-3 lead text-danger">Tutor declined session</p>
+		<button class="bg-info text-white shadow-none ml-auto my-2 rounded" @click="cancelSessionAndCloseModal">
+			Close Modal
 		</button>
 	</div>
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		methods: {
-			...mapActions(['cancelSessionAndCloseModal'])
-		}
-	}
+    import { mapActions } from 'vuex'
+    export default {
+        methods: {
+            ...mapActions(['cancelSessionAndCloseModal'])
+        }
+    }
 </script>

@@ -1,9 +1,9 @@
 <template>
-	<div class="m-md-5" id="waiting">
-		<i class="fas fa-spinner fa-spin fa-2x"></i>
+	<div class="m-md-5 text-center" id="waiting">
+		<i class="fas fa-spinner fa-spin text-info fa-3x"></i>
 		<p class="my-3">Waiting for tutor</p>
 		<button class="bg-danger text-white shadow-none w-100 my-2 rounded" @click="cancelSessionAndCloseModal">
-			Reject
+			Cancel Session
 		</button>
 	</div>
 </template>

@@ -1,19 +1,17 @@
 <template>
-	<div class="m-md-5" id="waiting">
-		<div class="d-flex align-items-baseline justify-content-between my-3">
-			<i></i>
-			<i></i>
-			<i class="fas fa-times" @click="cancelSessionAndCloseModal"></i>
-		</div>
-		<p class="my-3 lead text-danger">Tutor declined</p>
+	<div class="m-md-5 text-center">
+		<p class="my-3 lead text-danger">Student cancelled session</p>
+		<button class="bg-info text-white shadow-none ml-auto my-2 rounded" @click="cancelSessionAndCloseModal">
+			Close Modal
+		</button>
 	</div>
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		methods: {
-			...mapActions(['cancelSessionAndCloseModal'])
-		}
-	}
+    import { mapActions } from 'vuex'
+    export default {
+        methods: {
+            ...mapActions(['cancelSessionAndCloseModal'])
+        }
+    }
 </script>
