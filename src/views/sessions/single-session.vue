@@ -73,7 +73,7 @@
                 if(lastItem){
                     query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
                 }
-                this.chatsListeners = query.onSnapshot(snapshot => {
+                this.chatsListener = query.onSnapshot(snapshot => {
                     this.newChats = []
                     snapshot.docs.forEach(doc => this.newChats.push({ '.key': doc.id, ...doc.data() }))
                 })
@@ -90,7 +90,7 @@
 		beforeDestroy(){
 			this.tutorListener()
 			this.studentListener()
-			this.chatsListeners()
+			this.chatsListener()
 		}
 	}
 </script>

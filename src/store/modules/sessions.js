@@ -1,9 +1,10 @@
-import { firestore, functions } from '@/config/firebase'
+import {firestore, functions} from '@/config/firebase'
 import router from "@/router/index"
 
 let setSessionListener = (id, commit, userId) => {
     let listener = firestore.collection('sessions').doc(id).onSnapshot(snapshot => {
         commit('setSession',[ { '.key': snapshot.id, ...snapshot.data() }, userId ])
+        commit('setOtherPersonListener', userId)
     })
     commit('setSessionListener', listener)
 }
@@ -17,13 +18,16 @@ const state = {
     tutorListener: () => {},
     sessionListener: () => {},
     sessionModalState: null,
-    newSessionData: {}
+    newSessionData: {},
+    otherPerson: null,
+    otherPersonListener: () => {}
 }
 
 const getters = {
     getCurrentSession: state => state.session,
     isSessionModalOpen: state => !!state.sessionModalState,
     getNewSessionData: state => state.newSessionData,
+    getOtherPersonOnSession: state => state.otherPerson,
     isSessionModalStateStudentDuration: state => state.sessionModalState === 'student-duration',
     isSessionModalStateTutorAccept: state => state.sessionModalState === 'tutor-accept',
     isSessionModalStateStudentWaiting: state => state.sessionModalState === 'student-waiting',
@@ -45,11 +49,27 @@ const mutations = {
             state.sessionListener()
             state.sessionListener = () => {}
             state.session = null
+            state.otherPerson = null
+            state.otherPersonListener()
+            state.otherPersonListener = () => {}
         }
     },
     setSessionListener: (state, listener) => {
         state.sessionListener()
         state.sessionListener = listener
+    },
+    setOtherPersonListener: (state, auth) => {
+        if(!state.otherPerson){
+            let other = state.session.tutor === auth ? state.session.student : state.session.tutor
+            state.otherPersonListener = firestore.collection('users').doc(other).onSnapshot(snapshot => {
+                state.otherPerson = snapshot.data()
+            })
+        }
+    },
+    closeOtherPersonListener: (state) => {
+        state.otherPerson = null
+        state.otherPersonListener()
+        state.otherPersonListener = () => {}
     },
     setTutorSessionsListener: (state, listener) => {
         state.tutorListener()
@@ -69,25 +89,26 @@ const mutations = {
 const actions = {
     async startSession({ getters, commit }, data){
         // TODO: After implementing active users, show toast if tutor is not online
-        commit('setSessionModalStateStudentWaiting')
         functions.httpsCallable('startSession')(data).then(res => {
             setSessionListener(res.data, commit, getters.getId)
+            commit('setSessionModalStateStudentWaiting')
         }).catch(error => {
             new window.Toast({ icon: 'error', title: error.message })
         })
     },
     closeSessionListener({ commit }){
-        commit('setSession', [null, null])
         commit('setSessionListener', () => {})
+        commit('setSession', [null, null])
     },
 
     async acceptSession({ commit, getters }){
         if(getters.getCurrentSession && getters.getCurrentSession['.key']){
             await firestore.collection('sessions').doc(getters.getCurrentSession['.key']).set({ accepted: true}, { merge: true })
             await router.push(`/sessions/${getters.getCurrentSession['.key']}`).catch(error => error)
-            commit('closeSessionModal')
             commit('setSessionListener', () => {})
             commit('setSession', [null, null])
+            commit('closeOtherPersonListener')
+            commit('closeSessionModal')
         }
     },
 
@@ -118,6 +139,7 @@ const actions = {
         }
         commit('setSessionListener', () => {})
         commit('setSession', [null, null])
+        commit('closeOtherPersonListener')
         commit('closeSessionModal')
     }
 }
