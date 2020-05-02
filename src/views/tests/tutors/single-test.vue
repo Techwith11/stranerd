@@ -3,7 +3,6 @@
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<h3 class="position-sticky sticky-top text-right" :class="{'text-danger': timer <= 120}" v-if="!isMarked">{{ getTime }}</h3>
-			<small class="small my-3">Any attempt to leave or refresh the page will submit the test</small>
 			<div>
 				<question v-for="(question,index) in test.questions" :question="question" :key="question['.key']"
 					:onSelect="onAnswerSelected" :index="index" :disabled="isMarked" />
@@ -55,15 +54,16 @@
                     if(this.test.marked){
                         new window.Toast({ icon: 'error', title: 'Test has been submitted already' })
                         await this.$router.push('/tests/tutors')
-                    }
-                    let endsAt = new Date(this.test.dates.endedAt.seconds * 1000)
-                    if(endsAt < new Date()){
-                        new window.Toast({ icon: 'error', title: 'Test has ended already' })
-                        await this.$router.push('/tests/tutors')
                     }else{
-                        this.timer = (endsAt - new Date()) / 1000
-                        this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
-                    }
+                        let endsAt = new Date(this.test.dates.endedAt.seconds * 1000)
+                        if(endsAt < new Date()){
+                            new window.Toast({ icon: 'error', title: 'This test was closed without submitting. Submitting now..' })
+							this.submitTest({ id: this.$route.params.id, answers: this.answers })
+                        }else{
+                            this.timer = (endsAt - new Date()) / 1000
+                            this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
+                        }
+					}
                     this.isLoading = false
                 }else{
                     await this.$router.push('/tests/tutors')
@@ -87,12 +87,16 @@
             endTest(){
                 this.isMarked = true
                 clearInterval(this.interval)
+				if(document.visibilityState !== 'visible'){
+					return this.$router.push('/my_account')
+				}
                 new window.Toast({ icon: 'info', title: 'Submitting answers' })
                 this.submitTest({ id: this.$route.params.id, answers: this.answers })
             },
 		},
         async mounted(){
             await this.fetchTest()
+			window.addEventListener('beforeunload', () => window.clearInterval(this.interval))
         },
         components: {
             'helper-spinner': HelperSpinner,
@@ -103,5 +107,6 @@
                 if(this.timer === 0){ this.endTest() }
             }
         },
+		beforeDestroy(){ window.clearInterval(this.interval) }
 	}
 </script>

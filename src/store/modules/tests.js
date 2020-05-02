@@ -37,7 +37,7 @@ const actions = {
         data = { id: data.id, answers: data.answers }
         return functions.httpsCallable('markTutorTest')(data).then(async res => {
             new window.Toast({ icon: 'info', title: `You scored ${res.data.score}%` })
-            await router.push('/my_account').catch(error => error)
+            await router.push('/tests/tutors').catch(error => error)
         }).catch(error => new window.Toast({ icon: 'error', title: error.message }))
     }
 }
