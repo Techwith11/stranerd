@@ -31,11 +31,11 @@
 			...mapGetters(['getId']),
 			isByMe(){ return this.chat.from === this.getId },
 			isChatRead(){ return this.chat.dates.readAt !== null },
-			getChatTime(){ return new Date(this.chat.dates.sentAt.seconds * 1000) }
+			getChatTime(){ return this.chat.dates && this.chat.dates.sentAt ? new Date(this.chat.dates.sentAt.seconds * 1000) : '' }
 		},
 		async mounted(){
 			if(!this.isByMe && !this.isChatRead){
-				await this.readChat({ id: this.chat['.key'], path: [this.chat.from, this.$route.params.id].sort().join('_') })
+				await this.readChat({ id: this.chat['.key'], path: [this.getId, this.$route.params.id].sort().join('_') })
 			}
 		},
         methods: mapActions(['readChat']),

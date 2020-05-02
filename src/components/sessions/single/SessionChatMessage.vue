@@ -31,7 +31,7 @@
 			...mapGetters(['getId']),
 			isByMe(){ return this.chat.from === this.getId },
 			isChatRead(){ return this.chat.dates.readAt !== null },
-			getChatTime(){ return new Date(this.chat.dates.sentAt.seconds * 1000) }
+			getChatTime(){ return this.chat.dates && this.chat.dates.sentAt ? new Date(this.chat.dates.sentAt.seconds * 1000) : '' }
 		},
 		async mounted(){
 			if(!this.isByMe && !this.isChatRead){
