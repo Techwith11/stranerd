@@ -5,35 +5,39 @@ module.exports = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
 		/*TODO: Delete comment */ //throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can get their tests marked')
 	}
-	let questions = data.questions
+
+	let test = await admin.firestore().collection('tests/tutors/tests').doc(data.id).get()
+	test = test.data()
+	let questions = test.questions
 	let answers = data.answers
-	if(questions.length !== answers.length){
-		throw new functions.https.HttpsError('invalid-argument', 'Questions length doesnt match that of answers')
-	}
+
 	let score = 0
-	for(let i = 0; i < questions.length; i++){
-		if(questions[i].answer === answers[i]){ score++ }
-	}
-	let percentage = Number(Number((score * 100) / questions.length).toFixed(0))
-	let level = data.level
-	let course = data.course
-	let id = data.id
+	questions.forEach(question => {
+		let answer = answers[question['.key']]
+		if(answer === question.answer){ score++ }
+	})
+	score = Number(Number((score * 100) / questions.length).toFixed(0))
+
+	let level = test.level
+	let course = test.course
+	let user = test.user
+
+	await admin.firestore().collection('tests/tutors/tests').doc(data.id).set({
+		marked: true, score, answers
+	}, { merge: true })
+
+	let doc = await admin.firestore().collection('tests/tutors/tests').doc(data.id).get()
+
 	let upgrade = {}
 	upgrade[course] = {}
-	let test = {
-		questions, answers, level, course,
-		user: id, score: percentage,
-		dates: { takenAt: admin.firestore.FieldValue.serverTimestamp() }
-	}
 	let tutor = { tutor: {  upgrade } }
-	if(percentage >= 70){
+	if(score >= 70){
 		tutor.tutor.level = level
-		tutor.tutor.upgrade[course][level] = { passed: true, score: percentage, takenAt: admin.firestore.FieldValue.serverTimestamp() }
+		tutor.tutor.upgrade[course][level] = { passed: true, score, takenAt: admin.firestore.FieldValue.serverTimestamp() }
 	}else{
-		tutor.tutor.upgrade[course][level] = { passed: false, score: percentage, takenAt: admin.firestore.FieldValue.serverTimestamp() }
+		tutor.tutor.upgrade[course][level] = { passed: false, score, takenAt: admin.firestore.FieldValue.serverTimestamp() }
 	}
-	await admin.firestore().collection('tests/tutors/tests').add(test)
-	await admin.firestore().collection('users').doc(id).set(tutor , { merge: true })
+	await admin.firestore().collection('users').doc(user).set(tutor , { merge: true })
 
-	return { score: percentage }
+	return { score }
 })

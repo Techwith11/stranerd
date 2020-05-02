@@ -18,7 +18,7 @@ let getQuestions = async (course, level) => {
 		}
 		randoms.push(random)
 	}
-	return randoms.map(x => questions.docs[x].data())
+	return randoms.map(x => ({  '.key': questions.docs[x].id, ...questions.docs[x].data() }))
 }
 
 module.exports = functions.https.onCall(async (data, context) => {
@@ -37,7 +37,8 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 	let test = {
 		questions, level, course, user,
-		dates: { startedAt, endedAt }
+		dates: { startedAt, endedAt },
+		marked: false
 	}
 
 	let doc = await admin.firestore().collection('tests/tutors/tests').add(test)
