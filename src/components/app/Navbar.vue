@@ -24,7 +24,7 @@
                     </li>
                     <template v-if="isLoggedIn">
                         <li class="nav-item dropdown d-none d-md-inline">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" @click="toggleDropDown" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 My account
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -86,7 +86,13 @@
     export default {
         methods: {
             ...mapActions(['openModal', 'logout']),
-            toggleNavbar: () => window.toggleNavbar()
+            toggleNavbar: () => window.toggleNavbar(),
+            toggleDropDown: () => {
+                let dropdown = document.getElementsByClassName('dropdown-menu')[0]
+                dropdown.classList.toggle('show')
+                let dropdownToggle = document.getElementsByClassName('dropdown-toggle')[0]
+                dropdownToggle.classList.toggle('show')
+            }
         },
         computed: mapGetters(['isLoggedIn'])
     }
