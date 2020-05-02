@@ -40,6 +40,15 @@ let readChat = async (path) => {
     }, { merge: true})
 }
 
+let sendDiscussion = async (userId, id, body) => {
+    return await firestore.collection(`courses/${id}/discussions`).add({
+        body, userId,
+        dates: {
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        }
+    })
+}
+
 let actions = {
     async sendChat({ getters }, data){
         let chat = [getters.getId, data.id].sort().join('_')
@@ -66,6 +75,9 @@ let actions = {
     async sendSessionMedia({ getters }, data){
         let path = `sessions/${data.id}/chats`
         return await sendMediaChat(getters.getId, path, data)
+    },
+    async sendDiscussion({ getters }, data){
+        return await sendDiscussion(getters.getId, data.id, data.body)
     }
 }
 

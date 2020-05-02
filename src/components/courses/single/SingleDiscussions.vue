@@ -4,7 +4,7 @@
 			<textarea rows="3" class="form-control my-2 mr-lg-4" placeholder="Comment ..." v-model.trim="$v.content.$model"
 				:class="{'is-invalid': $v.content.$error, 'is-valid': !$v.content.$invalid}"
 			></textarea>
-			<button class="accent-button" :disabled="$v.$error || $v.$invalid || isLoading" @click="sendDiscussion">
+			<button class="accent-button" :disabled="$v.$error || $v.$invalid || isLoading" @click="submit">
 				<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
 				<span v-else>Submit</span>
 			</button>
@@ -20,6 +20,7 @@
 	//TODO: Replace view if user doesnt have access to this course.
 	import { firestore } from '@/config/firebase'
 	import { required, minLength } from 'vuelidate/lib/validators'
+    import { mapActions } from 'vuex'
 	export default {
 		data: () => ({
 			content: '',
@@ -44,14 +45,13 @@
 				})
 		},
 		methods:{
-			async sendDiscussion(){
+			...mapActions(['sendDiscussion']),
+			async submit(){
 				this.isLoading = true
-				await firestore.collection('courses').doc(this.course['.key']).collection('discussions').add({
-					body: this.content
-				})
-				this.content = ''
-				this.$v.$reset()
-				this.isLoading = false
+                await this.sendDiscussion({ id: this.course['.key'], body: this.content })
+                this.content = ''
+                this.$v.$reset()
+                this.isLoading = false
 			}
 		},
 		beforeDestroy(){
