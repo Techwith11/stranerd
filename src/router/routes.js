@@ -57,6 +57,12 @@ export default [
         meta: { requiresAuth: true }
     },
     {
+        path: '/sessions/:id',
+        name: 'Session',
+        component: () => import(/* webpackChunkName: "session" */ '@/views/sessions/single-session'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/my_account',
         name: 'My Account',
         component: () => import(/* webpackChunkName: "my_account" */ '@/views/account/index'),
