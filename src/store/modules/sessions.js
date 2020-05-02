@@ -43,6 +43,8 @@ const mutations = {
         studentCancelsSessionState(state,session,id) ? state.sessionModalState = 'student-cancelled' : null
         studentWaitsAndTutorCancelsSessionState(state,session,id) ? state.sessionModalState = 'tutor-cancelled' : null
         if(studentWaitsAndTutorAcceptsSessionState(state,session,id)){
+            let name = state.otherPerson ? state.otherPerson.bio.name : 'Tutor'
+            new window.Toast({ icon: 'success', title: `${name} accepted the session` })
             await router.push(`/sessions/${session['.key']}`).catch(error => error)
             state.sessionModalState = null
             state.newSessionData = {}
