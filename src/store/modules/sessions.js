@@ -107,7 +107,6 @@ const actions = {
 
     setSessionModalStateStudentDuration({ commit }, data = {}){ commit('setSessionModalStateStudentDuration', data) },
     async cancelSessionAndCloseModal({ getters, commit }){
-        commit('closeSessionModal')
         if(getters.getCurrentSession && getters.getCurrentSession.cancelled === undefined){
             let canceller = getters.getId === getters.getCurrentSession.student ? 'student' : 'tutor'
             let cancelled = {}
@@ -119,6 +118,7 @@ const actions = {
         }
         commit('setSessionListener', () => {})
         commit('setSession', [null, null])
+        commit('closeSessionModal')
     }
 }
 

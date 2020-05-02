@@ -5,12 +5,10 @@ module.exports = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
 		/*TODO: Delete comment */ //throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can start sessions')
 	}
-	let sessionDefaults = {
-		done: false,
-		dates: {
-			createdAt: admin.firestore.FieldValue.serverTimestamp(),
-		}
-	}
+	let now = admin.firestore.Timestamp.now()
+	let createdAt = now.toDate(), endedAt = now.toDate()
+	endedAt.setMinutes(endedAt.getMinutes() + 60 * data.duration)
+
 	let docs = await admin.firestore().collection('sessions')
 		.where('tutor','==', data.tutor)
 		.where('done','==',false)
@@ -20,9 +18,13 @@ module.exports = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('failed-precondition','Tutor is currently in a session')
 	}
 
-	sessionDefaults = { duration: data.duration, student: data.student, tutor: data.tutor, ...sessionDefaults }
+	let session = { done: false, duration: data.duration, student: data.student, tutor: data.tutor,
+		dates: {
+			createdAt, endedAt
+		}
+	}
 
-	let doc = await admin.firestore().collection('sessions').add(sessionDefaults)
+	let doc = await admin.firestore().collection('sessions').add(session)
 
 	return doc.id
 })
