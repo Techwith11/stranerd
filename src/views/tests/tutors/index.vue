@@ -4,7 +4,7 @@
 		<div v-else>
 			<div v-if="isTutor">
 				<div class="jumbotron">
-					<h2 class="text-center">Level {{ getNewLevel }} for Tutors</h2>
+					<h3 class="text-center">Level {{ getNewLevel }} {{ getCourse }}</h3>
 					<p class="lead">This is a simple {{ getCourse }} test designed to figure out how comfortable you are with {{ getCourse }} before pairing you with students.</p>
 					<div class="text-danger" v-if="failed">
 						<hr class="my-4">

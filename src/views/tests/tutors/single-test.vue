@@ -82,16 +82,18 @@
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Submit'
                 })
-                return result.value ? this.endTest(this.getTestData) : null
+                return result.value ? this.endTest() : null
             },
-            endTest(){
+            async endTest(){
                 this.isMarked = true
                 clearInterval(this.interval)
 				if(document.visibilityState !== 'visible'){
-					return this.$router.push('/my_account')
+					return this.$router.push('/tests/tutors')
 				}
                 new window.Toast({ icon: 'info', title: 'Submitting answers' })
-                this.submitTest({ id: this.$route.params.id, answers: this.answers })
+                let score = await this.submitTest({ id: this.$route.params.id, answers: this.answers })
+                new window.Toast({ icon: 'info', title: `You scored ${score}%` })
+                await this.$router.push('/tests/tutors')
             },
 		},
         async mounted(){
