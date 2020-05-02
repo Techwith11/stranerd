@@ -13,7 +13,6 @@ exports.requestMakeAdmin = require('./requests/makeAdmin')
 // On Call Triggers
 exports.makeTutor = require('./onCall/makeTutor')
 exports.makeAdmin = require('./onCall/makeAdmin')
-exports.sendChat = require('./onCall/sendChat')
 exports.startTutorTest = require('./onCall/startTutorTest')
 exports.markTutorTest = require('./onCall/markTutorTest')
 exports.startSession = require('./onCall/startSession')
@@ -21,6 +20,7 @@ exports.startSession = require('./onCall/startSession')
 
 // Firestore Triggers
 // On Create
+exports.firestoreChatCreated = require('./firestore/onCreate/chats')
 exports.firestoreCourseCreated = require('./firestore/onCreate/courses')
 exports.firestoreDiscussionCreated = require('./firestore/onCreate/discussions')
 
