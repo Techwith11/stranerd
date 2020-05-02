@@ -1,11 +1,11 @@
 <template>
 	<div class="bg-dark">
 		<div class="container text-white py-3">
-			<div class="d-flex justify-content-between align-items-center">
+			<div class="d-flex align-items-center">
 				<img :src="getImageLink" class="mr-3" width="50px" alt="" />
 				<span class="d-block text-truncate text-white mr-2">{{ user.bio ? user.bio.name : '' }}</span>
 				<!--<i class="fas fa-circle text-success mr-3"></i>-->
-				<h4 class="my-0 ml-auto text-nowrap" v-if="timer" :class="timer < 600 ? 'text-danger' : 'text-white'">{{ getTime }}</h4>
+				<h4 class="my-0 ml-auto text-nowrap" v-if="timer > 0" :class="timer < 600 ? 'text-danger' : 'text-white'">{{ getTime }}</h4>
 			</div>
 		</div>
 	</div>

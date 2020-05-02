@@ -8,14 +8,12 @@
 </template>
 
 <script>
-	import { functions, storage } from '@/config/firebase'
-	import { mapGetters } from 'vuex'
+    import { mapActions, mapGetters} from 'vuex'
 	import { required } from 'vuelidate/lib/validators'
 	export default {
 		data: () => ({
 			message: '',
-			media: [],
-			sendChat: functions.httpsCallable('sendChat')
+			media: []
 		}),
 		validations: {
 			message: { required }
@@ -25,11 +23,12 @@
 			getChatPath(){ return [this.getId, this.$route.params.id].sort().join('_') }
 		},
 		methods:{
+			...mapActions(['sendSessionChat','sendSessionMedia']),
 			async sendMessage(){
 				let message = this.message
 				this.message = ''
 				this.$v.$reset()
-				this.sendChat({ to: this.$route.params.id, content: message, from: this.getId })
+				return this.sendSessionChat({ id: this.$route.params.id, content: message })
 					.catch(error => new window.Toast({ icon: 'error', title: error.message }))
 			},
 			captureFiles(e){
@@ -48,17 +47,8 @@
 				})
 				if (result.value) {
 					for (const file of this.media) {
-						let link = `chats/singles/${this.getChatPath}/${Date.now()}_${file.name}`
-						let chat = { to: this.$route.params.id, from: this.getId }
-						if(window.location.hostname === 'localhost'){
-							chat.media = { name: file.name, type: file.type, link: `/${link}` }
-						}else{
-							await storage.ref(link).put(this.video)
-							link = await storage.ref(link).getDownloadURL()
-							chat.media = { name: file.name, link, type: file.type }
-						}
-						this.sendChat(chat)
-							.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+                        this.sendSessionMedia({ id: this.$route.params.id, media: file })
+                            .catch(error => new window.Toast({ icon: 'error', title: error.message }))
 					}
 				}
 			}
