@@ -23,7 +23,6 @@ exports.startSession = require('./onCall/startSession')
 // On Create
 exports.firestoreCourseCreated = require('./firestore/onCreate/courses')
 exports.firestoreDiscussionCreated = require('./firestore/onCreate/discussions')
-//exports.firestoreSessionCreated = require('./firestore/onCreate/sessions')
 
 // On Update
 //exports.firestoreCourseUpdated = require('./firestore/onUpdate/courses')
