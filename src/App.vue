@@ -26,7 +26,7 @@
 		},
 		computed: mapGetters(['isModalOpen', 'getId', 'isTutor', 'isSessionModalOpen']),
 		methods: {
-			...mapActions(['setProfileListener','closeProfileListener', 'initializeTutorSessionsListener','closeTutorSessionsListener']),
+			...mapActions(['setProfileListener','closeProfileListener', 'initializeTutorSessionsListener','closeTutorSessionsListener','checkForUnfinishedTests']),
 			closeAllListeners(){
 				this.closeProfileListener()
 				this.closeTutorSessionsListener()
@@ -34,6 +34,7 @@
         },
 		mounted(){
             this.getId ? this.setProfileListener() : null
+            this.checkForUnfinishedTests()
             this.isTutor ? this.initializeTutorSessionsListener() : null
 			window.addEventListener('beforeunload', this.closeAllListeners)
 		},
