@@ -1,0 +1,39 @@
+<template>
+	<div class="d-flex justify-content-around">
+		<router-link class="text-center py-2 text-decoration-none" to="/sessions"
+			:id="isRouteMyTaughtSessions && isTutor ? 'not-active' : 'active'">
+			My Sessions
+		</router-link>
+		<router-link class="text-center py-2 text-decoration-none" to="/sessions?tab=byMe" v-if="isTutor"
+			:id="isRouteMyTaughtSessions ? 'active' : 'not-active'">
+			Sessions Taught
+		</router-link>
+	</div>
+</template>
+
+<script>
+	import { mapGetters } from 'vuex'
+	export default {
+		computed: {
+			...mapGetters(['isTutor']),
+			isRouteMyTaughtSessions(){ return this.$route.query.tab === 'byMe'  }
+		}
+	}
+</script>
+
+<style lang="scss" scoped>
+	@import '../../../style/index';
+	a{
+		width: 100%;
+		min-width: 50%;
+		border: none !important;
+	}
+	#not-active{
+		background: $white;
+		color: $text-black !important;
+	}
+	#active{
+		background: $accent;
+		color: $white !important;
+	}
+</style>

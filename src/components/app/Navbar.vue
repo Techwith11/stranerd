@@ -14,13 +14,13 @@
                         <router-link class="nav-link" to="/chats">Chats</router-link>
                     </li>
                     <li class="nav-item">
+                        <router-link class="nav-link" to="/sessions">Sessions</router-link>
+                    </li>
+                    <li class="nav-item">
                         <router-link class="nav-link" to="/courses">Courses</router-link>
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" to="/tutors">Tutors</router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" to="/blog">Blog</router-link>
                     </li>
                     <template v-if="isLoggedIn">
                         <li class="nav-item dropdown d-none d-md-inline">
