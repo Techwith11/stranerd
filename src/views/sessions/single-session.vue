@@ -2,22 +2,19 @@
 	<div>
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
-			<div v-if="doesExist">
-				<session-nav :user="otherPerson" :timer="timer" />
-				<div class="container py-3" :id="timer > 0 ? 'smaller-height' : 'longer-height'">
-					<helper-message v-if="chats.length < 1 && newChats.length < 1" message="No chats. Send a message now" />
-					<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
-						<li class="d-block text-center small text-muted mb-2" v-if="!hasNoMore">
-							<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
-							<span @click="fetchOlderMessages">Fetch Older</span>
-						</li>
-						<session-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
-						<session-chat-message :chat="chat" v-for="chat in newChats" :key="chat['.key']" />
-					</ul>
-					<session-chat-form v-if="timer > 0" />
-				</div>
+			<session-nav :user="otherPerson" :timer="timer" />
+			<div class="container py-3" :id="timer > 0 ? 'smaller-height' : 'longer-height'">
+				<helper-message v-if="chats.length < 1 && newChats.length < 1" message="No messages. Send a message now" />
+				<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
+					<li class="d-block text-center small text-muted mb-2" v-if="!hasNoMore">
+						<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
+						<span @click="fetchOlderMessages">Fetch Older</span>
+					</li>
+					<session-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
+					<session-chat-message :chat="chat" v-for="chat in newChats" :key="chat['.key']" />
+				</ul>
+				<session-chat-form v-if="timer > 0" />
 			</div>
-			<helper-message v-else message="No session with such id or you cannot access the session" />
 		</div>
 	</div>
 </template>
@@ -35,18 +32,15 @@
 		data: () => ({
 			isLoading: true,
 			isOlderChatsLoading: false,
-			doesExist: false,
 			timer: 600,
-			interval: null,
+			interval: () => {},
 			session: {},
-			tutor: {},
-            student: {},
+			otherPerson: {},
 			chats: [],
 			newChats: [],
 			paginationLimit: 20,
 			hasNoMore: false,
-            tutorListener: () => {},
-            studentListener: () => {},
+            otherPersonListener: () => {},
 			chatsListener: () => {}
 		}),
 		components: {
@@ -59,23 +53,24 @@
 		async mounted(){
 			await this.getSessionInfo()
 			this.initTimer()
+			await this.getChats()
+			this.setChatListener()
+			this.setOtherPersonListener()
             this.isLoading = false
 		},
 		methods:{
 			async getSessionInfo(){
                 return firestore.collection('sessions').doc(this.$route.params.id).get()
                     .then(async doc => {
-                        this.doesExist = doc.exists
-                        if(this.doesExist){
-                            this.session = { '.key': doc.id, ...doc.data() }
-                            this.setTutorListener()
-                            this.setStudentListener()
-                            await this.getChats()
-                        }
-                    }).catch(() => {
-                    this.doesExist = false
-                    this.isLoading = false
-                })
+                        if(doc.exists){
+							let session = { '.key': doc.id, ...doc.data() }
+							if(this.getId !== session.tutor && this.getId !== session.student){ await this.$router.replace('/sessions') }
+                            if(session.cancelled.tutor || session.cancelled.student){ await this.$router.replace('/sessions') }
+                            this.session = session
+                        }else{
+							await this.$router.replace('/sessions')
+						}
+                    }).catch(() => this.$router.replace('/sessions'))
 			},
             initTimer(){
                 let endsAt = new Date(this.session.dates.endedAt.seconds * 1000)
@@ -84,7 +79,6 @@
                 }else{
                     this.timer = (endsAt - new Date()) / 1000
                     this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
-                    this.setChatListener()
                 }
                 window.addEventListener('beforeunload',() => { this.cleanUp() })
 			},
@@ -110,13 +104,10 @@
                     snapshot.docs.forEach(doc => this.newChats.push({ '.key': doc.id, ...doc.data() }))
                 })
             },
-			setTutorListener(){
-                this.tutorListener = firestore.collection('users').doc(this.session.tutor)
-					.onSnapshot(snapshot => this.tutor = { '.key': snapshot.id, ...snapshot.data() })
-            },
-            setStudentListener(){
-                this.studentListener = firestore.collection('users').doc(this.session.student)
-					.onSnapshot(snapshot => this.student = { '.key': snapshot.id, ...snapshot.data() })
+			setOtherPersonListener(){
+				let otherPerson = this.session.tutor === this.getId ? this.session.student : this.session.tutor
+                this.otherPersonListener = firestore.collection('users').doc(otherPerson)
+					.onSnapshot(snapshot => this.otherPerson = { '.key': snapshot.id, ...snapshot.data() })
             },
             async fetchOlderMessages(){
                 this.isOlderChatsLoading = true
@@ -124,24 +115,24 @@
                 this.isOlderChatsLoading = false
             },
             cleanUp(){
-                this.tutorListener()
-                this.studentListener()
+                this.otherPersonListener()
                 this.chatsListener()
                 window.clearInterval(this.interval)
 			}
 		},
         watch:{
             timer(){
-                if(this.timer === 0){ window.clearInterval(this.interval) }
-                if(this.timer === 1){ window.setTimeout(() => new window.Toast({ icon: 'info', title: 'The session has ended.' }), 1000)}
+                if(this.timer === 0){
+					window.clearInterval(this.interval)
+					new window.Toast({ icon: 'info', title: 'The session has ended.' })
+					this.chatsListener()
+                }
                 if(this.timer === 10){ new window.Toast({ icon: 'warning', title: 'This session will be ending in 10 seconds.' }) }
             }
         },
         beforeDestroy(){ this.cleanUp() },
 		computed: {
 			...mapGetters(['getId']),
-			otherPerson(){ return this.getId === this.session.tutor ? this.student : this.tutor },
-            getOtherImageLink(){ return this.otherPerson.bio && this.otherPerson.bio.image && this.otherPerson.bio.image.link ? this.otherPerson.bio.image.link : '/users/images/Cassette.svg' },
             getTime(){
                 let hours = Math.floor(this.timer / 3600).toFixed(0)
                 let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
