@@ -21,7 +21,7 @@
 		computed: {
 			...mapGetters(['getId','getChattedWith']),
 			getSortedChats(){
-				return Object.entries(this.chats).sort((a,b) => {
+				return Object.entries(this.chats).filter(x => x[1].chat && x[1].chat.from).sort((a,b) => {
 					if(a[1].chat.dates && b[1].chat.dates){
 						return b[1].chat.dates.sentAt.seconds - a[1].chat.dates.sentAt.seconds
 					}
