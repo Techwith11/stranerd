@@ -18,10 +18,13 @@ module.exports = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('failed-precondition','Tutor is currently in a session')
 	}
 
-	let session = { done: false, duration: data.duration, student: data.student, tutor: data.tutor,
-		dates: {
-			createdAt, endedAt
-		}
+	let session = {
+		duration: data.duration,
+		student: data.student,
+		tutor: data.tutor,
+		accepted: false,
+		cancelled: { student: false, tutor: false },
+		dates: { createdAt, endedAt }
 	}
 
 	let doc = await admin.firestore().collection('sessions').add(session)

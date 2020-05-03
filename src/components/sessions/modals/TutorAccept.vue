@@ -22,7 +22,7 @@
 			isLoading: false
 		}),
 		methods: {
-			...mapActions(['cancelSessionAndCloseModal', 'acceptSession']),
+			...mapActions(['rejectSession', 'acceptSession']),
             async requestSession(){
 				this.isLoading = true
 				this.mode = 'accept'
@@ -31,7 +31,7 @@
 			async cancelSession(){
                 this.isLoading = true
                 this.mode = 'reject'
-                await this.cancelSessionAndCloseModal()
+                await this.rejectSession()
 			}
 		},
 		computed: {

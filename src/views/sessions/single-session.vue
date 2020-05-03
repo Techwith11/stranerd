@@ -71,9 +71,6 @@
                             this.setTutorListener()
                             this.setStudentListener()
                             await this.getChats()
-                            if (this.session.done === false){
-                                this.setChatListener()
-                            }
                         }
                     }).catch(() => {
                     this.doesExist = false
@@ -87,6 +84,7 @@
                 }else{
                     this.timer = (endsAt - new Date()) / 1000
                     this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
+                    this.setChatListener()
                 }
                 window.addEventListener('beforeunload',() => { this.cleanUp() })
 			},

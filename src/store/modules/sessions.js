@@ -8,10 +8,10 @@ let setSessionListener = (id, commit, userId) => {
     })
     commit('setSessionListener', listener)
 }
-let tutorAcceptsSessionState = (state, session, id) => session && session.tutor === id && !session.accepted
-let studentCancelsSessionState = (state, session, id) => session && session.tutor === id && session.cancelled && session.cancelled.student
-let studentWaitsAndTutorCancelsSessionState = (state, session, id) => session && session.student === id && session.cancelled && session.cancelled.tutor
-let studentWaitsAndTutorAcceptsSessionState = (state, session, id) => session && session.student === id && session.accepted
+let tutorSelectSessionState = (session, id) => session.tutor === id && session.accepted === false && session.cancelled.tutor === false && session.cancelled.student === false
+let studentCancelsSessionState = (session, id) => session.tutor === id && session.accepted === false && session.cancelled.tutor === false && session.cancelled.student === true
+let tutorRejectsSessionState = (session, id) => session.student === id && session.accepted === false && session.cancelled.tutor === true && session.cancelled.student === false
+let tutorAcceptsSessionState = (session, id) => session.student === id && session.accepted === true && session.cancelled.tutor === false && session.cancelled.student === false
 
 const state = {
     session: null,
@@ -39,21 +39,23 @@ const getters = {
 const mutations = {
     async setSession(state, [session, id]){
         state.session = session
-        tutorAcceptsSessionState(state,session,id) ? state.sessionModalState = 'tutor-accept' : null
-        studentCancelsSessionState(state,session,id) ? state.sessionModalState = 'student-cancelled' : null
-        studentWaitsAndTutorCancelsSessionState(state,session,id) ? state.sessionModalState = 'tutor-cancelled' : null
-        if(studentWaitsAndTutorAcceptsSessionState(state,session,id)){
-            let name = state.otherPerson ? state.otherPerson.bio.name : 'Tutor'
-            new window.Toast({ icon: 'success', title: `${name} accepted the session` })
-            await router.push(`/sessions/${session['.key']}`).catch(error => error)
-            state.sessionModalState = null
-            state.newSessionData = {}
-            state.sessionListener()
-            state.sessionListener = () => {}
-            state.session = null
-            state.otherPerson = null
-            state.otherPersonListener()
-            state.otherPersonListener = () => {}
+        if(session){
+            if(tutorSelectSessionState(session,id)){ state.sessionModalState = 'tutor-accept' }
+            else if (studentCancelsSessionState(session,id)){ state.sessionModalState = 'student-cancelled' }
+            else if(tutorRejectsSessionState(session,id)){ state.sessionModalState = 'tutor-cancelled' }
+            else if(tutorAcceptsSessionState(session,id)){
+                let name = state.otherPerson ? state.otherPerson.bio.name : 'Tutor'
+                new window.Toast({ icon: 'success', title: `${name} accepted the session` })
+                await router.push(`/sessions/${session['.key']}`).catch(error => error)
+                state.sessionModalState = null
+                state.newSessionData = {}
+                state.sessionListener()
+                state.sessionListener = () => {}
+                state.session = null
+                state.otherPerson = null
+                state.otherPersonListener()
+                state.otherPersonListener = () => {}
+            }
         }
     },
     setSessionListener: (state, listener) => {
@@ -104,9 +106,20 @@ const actions = {
     },
 
     async acceptSession({ commit, getters }){
-        if(getters.getCurrentSession && getters.getCurrentSession['.key']){
-            await firestore.collection('sessions').doc(getters.getCurrentSession['.key']).set({ accepted: true}, { merge: true })
-            await router.push(`/sessions/${getters.getCurrentSession['.key']}`).catch(error => error)
+        let session = getters.getCurrentSession
+        if(session && session['.key']){
+            await firestore.collection('sessions').doc(session['.key']).update('accepted', true)
+            await router.push(`/sessions/${session['.key']}`).catch(error => error)
+            commit('setSessionListener', () => {})
+            commit('setSession', [null, null])
+            commit('closeOtherPersonListener')
+            commit('closeSessionModal')
+        }
+    },
+    async rejectSession({ commit, getters}){
+        let session = getters.getCurrentSession
+        if(session && session['.key']){
+            await firestore.collection('sessions').doc(session['.key']).update('cancelled.tutor', true)
             commit('setSessionListener', () => {})
             commit('setSession', [null, null])
             commit('closeOtherPersonListener')
@@ -117,7 +130,8 @@ const actions = {
     initializeTutorSessionsListener({ getters, commit }){
         let listener = firestore.collection('sessions')
             .where('tutor','==', getters.getId)
-            .where('done','==',false)
+            .where('cancelled.tutor','==', false)
+            .where('accepted','==',false)
             .limit(1)
             .onSnapshot(snapshot => {
                 if(!snapshot.empty){
@@ -130,14 +144,11 @@ const actions = {
 
     setSessionModalStateStudentDuration({ commit }, data = {}){ commit('setSessionModalStateStudentDuration', data) },
     async cancelSessionAndCloseModal({ getters, commit }){
-        if(getters.getCurrentSession && getters.getCurrentSession.cancelled === undefined){
-            let canceller = getters.getId === getters.getCurrentSession.student ? 'student' : 'tutor'
-            let cancelled = {}
-            cancelled[canceller] = true
-            await firestore.collection('sessions').doc(getters.getCurrentSession['.key']).set({
-                cancelled,
-                done: true
-            },{ merge: true })
+        let session = getters.getCurrentSession
+        let other = getters.getId === session.student ? 'tutor' : 'student'
+        if(session && session.cancelled[other] === false){
+            let canceller = getters.getId === session.student ? 'student' : 'tutor'
+            await firestore.collection('sessions').doc(session['.key']).update(`cancelled.${canceller}`,true)
         }
         commit('setSessionListener', () => {})
         commit('setSession', [null, null])

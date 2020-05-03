@@ -39,7 +39,7 @@
 			newChats: [],
 			isLoading: true,
 			isOlderChatsLoading: false,
-			chatsListeners: null,
+			chatsListeners: () => {},
 			paginationLimit: 10,
 			hasNoMore: false
 		}),
