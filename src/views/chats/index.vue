@@ -1,10 +1,14 @@
 <template>
 	<div class="container py-4">
-		<chat-card v-for="chat in getSortedChats" :key="chat[0]" :chat="chat[1].chat" :user="chat[1].user" />
+		<helper-message message="No chats yet. Explore our world of users and start a conversation" v-if="getSortedChats.length === 0" />
+		<div v-else>
+			<chat-card v-for="chat in getSortedChats" :key="chat[0]" :chat="chat[1].chat" :user="chat[1].user" />
+		</div>
 	</div>
 </template>
 
 <script>
+	import  HelperMessage  from '@/components/helpers/Message'
 	import ChatCard from '@/components/chats/list/ChatCard'
 	import { firestore } from '@/config/firebase'
 	import { mapGetters } from 'vuex'
@@ -16,7 +20,8 @@
 			usersListeners: []
 		}),
 		components: {
-			'chat-card': ChatCard
+			'chat-card': ChatCard,
+			'helper-message': HelperMessage
 		},
 		computed: {
 			...mapGetters(['getId','getChattedWith']),
