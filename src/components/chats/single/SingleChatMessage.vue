@@ -35,7 +35,15 @@
 		},
 		async mounted(){
 			if(!this.isByMe && !this.isChatRead){
-				await this.readChat({ id: this.chat['.key'], path: [this.getId, this.$route.params.id].sort().join('_') })
+				if(document.visibilityState === 'visible'){
+					await this.readChat({ id: this.chat['.key'], path: [this.getId, this.$route.params.id].sort().join('_') })
+				}else{
+					document.onvisibilitychange = async () => {
+						if(document.visibilityState === 'visible'){
+							await this.readChat({ id: this.chat['.key'], path: [this.getId, this.$route.params.id].sort().join('_') })
+						}
+					}
+				}
 			}
 		},
         methods: mapActions(['readChat']),
@@ -53,7 +61,8 @@
 					return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
 				}
 			}
-		}
+		},
+		beforeDestroy(){ document.onvisibilitychange = undefined  }
 	}
 </script>
 

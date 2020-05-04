@@ -37,6 +37,17 @@
 			if(!this.isByMe && !this.isChatRead){
 				await this.readSessionChat({ id: this.chat['.key'], path: this.$route.params.id })
 			}
+			if(!this.isByMe && !this.isChatRead){
+				if(document.visibilityState === 'visible'){
+					await this.readSessionChat({ id: this.chat['.key'], path: this.$route.params.id })
+				}else{
+					document.onvisibilitychange = async () => {
+						if(document.visibilityState === 'visible'){
+							await this.readSessionChat({ id: this.chat['.key'], path: this.$route.params.id })
+						}
+					}
+				}
+			}
 		},
 		methods: mapActions(['readSessionChat']),
 		filters: {
@@ -53,7 +64,8 @@
 					return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
 				}
 			}
-		}
+		},
+		beforeDestroy(){ document.onvisibilitychange = undefined }
 	}
 </script>
 
