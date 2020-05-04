@@ -15,7 +15,7 @@
 	import Navbar from '@/components/app/Navbar'
 	import Footer from '@/components/app/Footer'
 	import AuthModal from '@/components/auth/AuthModal'
-	import SessionModal from '@/components/sessions/SessionModal'
+	import SessionModal from '@/components/sessions/modals/SessionModal'
 	export default {
 		name: 'App',
 		components: {

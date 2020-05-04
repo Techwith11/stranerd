@@ -20,7 +20,7 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
+	import { mapGetters, mapActions } from 'vuex'
 	import { firestore } from '@/config/firebase'
     import HelperSpinner from '@/components/helpers/Spinner'
     import HelperMessage from '@/components/helpers/Message'
@@ -59,6 +59,7 @@
             this.isLoading = false
 		},
 		methods:{
+			...mapActions(['showSessionRatingsForm']),
 			async getSessionInfo(){
                 return firestore.collection('sessions').doc(this.$route.params.id).get()
                     .then(async doc => {
@@ -126,6 +127,11 @@
 					new window.Toast({ icon: 'info', title: 'The session has ended.' })
 					this.cleanUp()
                 }
+                if(this.timer === 1){
+					window.setTimeout(() => {
+						this.showSessionRatingsForm(this.session)
+					},1000)
+				}
                 if(this.timer === 10){ new window.Toast({ icon: 'warning', title: 'This session will be ending in 10 seconds.' }) }
             }
         },

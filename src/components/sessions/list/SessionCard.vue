@@ -11,6 +11,7 @@
 				<span class="small" v-if="session.cancelled.student">Cancelled by {{ session.student === this.getId ? 'me' : 'student' }}</span>
 			</div>
 		</div>
+		<p>{{ session.reviews }}</p>
 	</router-link>
 </template>
 

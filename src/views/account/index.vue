@@ -49,6 +49,7 @@
 			</div>
 			<p>Qualification: {{ getUser.tutor.qualification }}</p>
 			<p>Ratings: {{ getUser.tutor.ratings }}</p>
+			<p>Reviews: {{ Object.values(getUser.tutor.reviews).map(r => r.rating).reduce((a,b,c) => a + b) }}</p>
 			<hr>
 		</div>
 		<div>
