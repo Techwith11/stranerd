@@ -1,23 +1,20 @@
 <template>
 	<div>
 		<helper-spinner v-if="isLoading" />
-		<div v-else>
-			<div v-if="doesExist" id="messageContainer">
-				<single-chat-nav :user="user" />
-				<div class="container py-3" :id="canHaveSession ? 'smaller-height' : 'longer-height'">
-					<helper-message v-if="chats.length < 1 && newChats.length < 1" message="No chats. Send a message now" />
-					<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
-						<li class="d-block text-center small text-muted mb-2" v-if="!hasNoMore">
-							<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
-							<span @click="fetchOlderMessages">Fetch Older</span>
-						</li>
-						<single-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
-						<single-chat-message :chat="chat" v-for="chat in newChats" :key="chat['.key']" />
-					</ul>
-					<single-chat-form />
-				</div>
+		<div v-else id="messageContainer">
+			<single-chat-nav :user="user" />
+			<div class="container py-3" :id="canHaveSession ? 'smaller-height' : 'longer-height'">
+				<helper-message v-if="chats.length < 1 && newChats.length < 1" message="No chats. Send a message now" />
+				<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
+					<li class="d-block text-center small text-muted mb-2" v-if="!hasNoMore">
+						<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
+						<span @click="fetchOlderMessages">Fetch Older</span>
+					</li>
+					<single-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
+					<single-chat-message :chat="chat" v-for="chat in newChats" :key="chat['.key']" />
+				</ul>
+				<single-chat-form />
 			</div>
-			<helper-message v-else message="No user with such id exists" />
 		</div>
 	</div>
 </template>
@@ -51,6 +48,7 @@
 		methods: {
 			async getUser(){
 				let doc = await firestore.collection('users').doc(this.$route.params.id).get()
+				if(!doc.exists){ return this.$router.replace('/chats') }
 				this.user = { '.key': doc.id, ...doc.data() }
 				this.doesExist = doc.exists
 				this.isLoading = false

@@ -2,14 +2,11 @@
 	<div>
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
-			<div v-if="doesExist">
-				<single-video :course="course" />
-				<single-nav />
-				<single-overview v-if="isOverview" :course="course" />
-				<single-discussions v-if="isDiscussions" :course="course" />
-				<single-documents v-if="isDocuments" :course="course" />
-			</div>
-			<helper-message v-else message="No course with such id exists" />
+			<single-video :course="course" />
+			<single-nav />
+			<single-overview v-if="isOverview" :course="course" />
+			<single-discussions v-if="isDiscussions" :course="course" />
+			<single-documents v-if="isDocuments" :course="course" />
 		</div>
 	</div>
 </template>
@@ -17,7 +14,6 @@
 <script>
 	import { firestore } from '@/config/firebase'
 	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	import SingleVideo from '@/components/courses/single/SingleVideo'
 	import SingleNav from '@/components/courses/single/SingleNav'
 	import SingleOverview from '@/components/courses/single/SingleOverview'
@@ -27,12 +23,11 @@
 		name: 'Course',
 		data: () => ({
 			course: {},
-			isLoading: true,
-			doesExist: false
+			isLoading: true
 		}),
 		async mounted(){
 			let doc = await firestore.collection('courses').doc(this.$route.params.id).get()
-			this.doesExist = doc.exists
+			if(!doc.exists){ return this.$router.replace('/courses') }
 			this.course = { '.key': doc.id, ...doc.data() }
 			this.isLoading = false
 		},
@@ -42,8 +37,7 @@
 			'single-overview': SingleOverview,
 			'single-discussions': SingleDiscussions,
 			'single-documents': SingleDocuments,
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage,
+			'helper-spinner': HelperSpinner
 		},
 		computed:{
 			isOverview(){ return !this.$route.query.tab || this.$route.query.tab === 'overview'},
