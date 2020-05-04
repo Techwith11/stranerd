@@ -4,7 +4,10 @@
 			<p class="mb-0">{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}</p>
 			<div v-if="!wasCancelled">
 				<span class="small" v-if="isStillInSession">{{ getTime }}</span>
-				<span class="small" v-else>Ended {{ session.dates.endedAt.seconds * 1000 | getDateOrTime }}</span>
+				<div class="small d-flex justify-content-between" v-else>
+					<span>Ended {{ session.dates.endedAt.seconds * 1000 | getDateOrTime }}</span>
+					<span v-if="getReview">You rated: {{ getReview.rating | toOneDP }}/5.0</span>
+				</div>
 			</div>
 			<div v-else>
 				<span class="small" v-if="session.cancelled.tutor">Cancelled by {{ session.tutor === this.getId ? 'me' : 'tutor' }}</span>
@@ -31,6 +34,9 @@
 		},
 		computed: {
 			...mapGetters(['getId']),
+			getReview(){
+				return this.session.reviews ? this.getId === this.session.tutor ? this.session.reviews.tutor : this.session.reviews.student : null
+			},
 			getOtherPerson(){ return this.getId === this.session.tutor ? this.session.student : this.session.tutor },
 			getLength(){
 				if(this.session.duration >= 1){
@@ -48,15 +54,16 @@
 				let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
 				let seconds = Math.floor(this.timer % 60).toFixed(0)
 				if(hours > 0){
-					return `Ends in ${hours} hours ${minutes < 10 ? '0' + minutes : minutes} minutes`
+					return `return \`Ends in ${hours} hours ${minutes < 10 ? '0' + minutes : minutes} ${minutes > 1 ? 'minutes' : 'minute'}\``
 				}else if(minutes > 0){
-					return `Ends in ${minutes} minutes ${seconds < 10 ? '0' + seconds : seconds} seconds`
+					return `Ends in ${minutes} ${minutes > 1 ? 'minutes' : 'minute'} ${seconds < 10 ? '0' + seconds : seconds} ${seconds > 1 ? 'seconds' : 'second'}`
 				}else{
-					return `Ends in ${seconds} seconds`
+					return `Ends in ${seconds} ${seconds > 1 ? 'seconds' : 'second'}`
 				}
 			},
 		},
 		filters: {
+			toOneDP(number){ return Number(number).toFixed(1) },
 			getDateOrTime(date){
 				if(typeof(date) !== 'object'){
 					date = new Date(date)
@@ -65,7 +72,7 @@
 				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
 				if(date > today){
-					return `by ${date.toTimeString().slice(0,5)}`
+					return `${date.toTimeString().slice(0,5)}`
 				}else if(date > yesterday){
 					return 'yesterday'
 				}else{
@@ -77,7 +84,7 @@
 			if(!this.wasCancelled){
 				let endsAt = new Date(this.session.dates.endedAt.seconds * 1000)
 				if(endsAt > new Date()){
-					this.timer = (endsAt - new Date()) / 1000
+					this.timer = Math.floor((endsAt - new Date()) / 1000)
 					this.interval = window.setInterval(() => this.timer > 1 ? this.timer-- : null, 1000)
 				}
 			}
@@ -86,7 +93,7 @@
 		},
 		watch: {
 			timer(){
-				if(this.timer === 0){
+				if(Math.floor(this.timer) === 0){
 					window.clearInterval(this.interval)
 				}
 			}
