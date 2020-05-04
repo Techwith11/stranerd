@@ -1,7 +1,7 @@
 <template>
 	<router-link :to="`/sessions/${session['.key']}`" class="text-decoration-none">
 		<div class="alert my-2" role="alert" :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
-			<p class="mb-0">{{ session.duration }} {{ session.duration > 1 ? 'hours' : 'hour' }} {{ user.bio ? `with ${user.bio.name}` : '' }}</p>
+			<p class="mb-0">{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}</p>
 			<div v-if="!wasCancelled">
 				<span class="small" v-if="isStillInSession">{{ getTime }}</span>
 				<span class="small" v-else>Ended {{ session.dates.endedAt.seconds * 1000 | getDateOrTime }}</span>
@@ -11,7 +11,6 @@
 				<span class="small" v-if="session.cancelled.student">Cancelled by {{ session.student === this.getId ? 'me' : 'student' }}</span>
 			</div>
 		</div>
-		<p>{{ session.reviews }}</p>
 	</router-link>
 </template>
 
@@ -33,6 +32,15 @@
 		computed: {
 			...mapGetters(['getId']),
 			getOtherPerson(){ return this.getId === this.session.tutor ? this.session.student : this.session.tutor },
+			getLength(){
+				if(this.session.duration >= 1){
+					return this.session.duration === 1 ? `${this.session.duration} hour` : `${this.session.duration} hours`
+				}
+				else{
+					let minutes = Math.floor(this.session.duration * 60)
+					return minutes === 1 ? `${minutes} minute` : `${minutes} minutes`
+				}
+			},
 			wasCancelled(){ return this.session.cancelled.student || this.session.cancelled.tutor },
 			isStillInSession(){ return this.timer > 0 },
 			getTime(){

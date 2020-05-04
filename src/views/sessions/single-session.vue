@@ -78,7 +78,7 @@
                 if(endsAt < new Date()){
                     this.timer = 0
                 }else{
-                    this.timer = (endsAt - new Date()) / 1000
+                    this.timer = Math.floor((endsAt - new Date()) / 1000)
                     this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
                 }
                 window.addEventListener('beforeunload',() => { this.cleanUp() })
@@ -123,16 +123,16 @@
 		},
         watch:{
             timer(){
-                if(this.timer === 0){
-					new window.Toast({ icon: 'info', title: 'The session has ended.' })
+                if(Math.floor(this.timer) === 0){
 					this.cleanUp()
                 }
-                if(this.timer === 1){
+                if(Math.floor(this.timer) === 1){
 					window.setTimeout(() => {
+						new window.Toast({ icon: 'info', title: 'The session has ended.' })
 						this.showSessionRatingsForm(this.session)
 					},1000)
 				}
-                if(this.timer === 10){ new window.Toast({ icon: 'warning', title: 'This session will be ending in 10 seconds.' }) }
+                if(Math.floor(this.timer) === 10){ new window.Toast({ icon: 'warning', title: 'This session will end in 10 seconds.' }) }
             }
         },
         beforeDestroy(){ this.cleanUp() },

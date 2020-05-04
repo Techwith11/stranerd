@@ -7,10 +7,15 @@
 		</div>
 		<p class="small text-center my-4">Please the select the length in hours you would like for the session</p>
 		<div class="mx-2">
+			<button class="shadow-none w-100 my-2 rounded" @click="requestSession(0.25)" :disabled="isLoading"
+				:class="{'bg-info text-white': isLoading && mode === 0.25}">
+				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading && mode === 0.25"></i>
+				<span>15 minutes</span>
+			</button>
 			<button class="shadow-none w-100 my-2 rounded" @click="requestSession(0.5)" :disabled="isLoading"
 				:class="{'bg-info text-white': isLoading && mode === 0.5}">
 				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading && mode === 0.5"></i>
-				<span>0.5 hours</span>
+				<span>30 minutes</span>
 			</button>
 			<button class="shadow-none w-100 my-2 rounded" @click="requestSession(1.0)" :disabled="isLoading"
 				:class="{'bg-info text-white': isLoading && mode === 1.0}">

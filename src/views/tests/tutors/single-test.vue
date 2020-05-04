@@ -57,7 +57,7 @@
                             new window.Toast({ icon: 'error', title: 'This test was closed without submitting. Submitting now..' })
 							this.submitTest({ id: this.$route.params.id, answers: this.answers })
                         }else{
-                            this.timer = (endsAt - new Date()) / 1000
+                            this.timer = Math.floor((endsAt - new Date()) / 1000)
                             this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
                         }
 					}
@@ -103,7 +103,7 @@
 		},
         watch:{
             timer(){
-                if(this.timer === 0){ this.endTest() }
+                if(Math.floor(this.timer) === 0){ this.endTest() }
             }
         },
 		beforeDestroy(){ window.clearInterval(this.interval) }

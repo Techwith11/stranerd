@@ -183,10 +183,12 @@ const actions = {
 	setSessionModalStateStudentDuration({ commit }, data = {}){ commit('setSessionModalStateStudentDuration', data) },
 	async cancelSessionAndCloseModal({ getters, commit }){
 		let session = getters.getCurrentSession
-		let other = getters.getId === session.student ? 'tutor' : 'student'
-		if(session && session.cancelled && session.cancelled[other] === false){
-			let canceller = getters.getId === session.student ? 'student' : 'tutor'
-			await firestore.collection('sessions').doc(session['.key']).update(`cancelled.${canceller}`,true)
+		if(session && session.cancelled){
+			let other = session && getters.getId === session.student ? 'tutor' : 'student'
+			if(session.cancelled[other] === false){
+				let canceller = getters.getId === session.student ? 'student' : 'tutor'
+				await firestore.collection('sessions').doc(session['.key']).update(`cancelled.${canceller}`,true)
+			}
 		}
 		commit('setSessionListener', () => {})
 		commit('setSession', [null, null])
