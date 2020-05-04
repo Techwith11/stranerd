@@ -14,7 +14,9 @@ module.exports = functions.https.onCall(async (data, context) => {
 		.limit(1)
 		.get()
 	if(!docs.empty){
-		throw new functions.https.HttpsError('failed-precondition','Tutor is currently in a session')
+		let session = docs.docs[0].data()
+		let time = session.duration > 1 ? `${session.duration} hours` : `${session.duration} hour`
+		throw new functions.https.HttpsError('failed-precondition',`Tutor is currently in a ${time} session. Try again later.`)
 	}
 
 	let session = {
