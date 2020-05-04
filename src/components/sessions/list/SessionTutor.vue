@@ -42,7 +42,6 @@
 			async getSessions(){
 				let lastItem = this.sessions[this.sessions.length - 1]
 				let query = firestore.collection('sessions')
-					.where('accepted','==',true)
 					.where('tutor','==', this.getId)
 					.orderBy('dates.createdAt','desc')
 					.limit(this.paginationLimit)

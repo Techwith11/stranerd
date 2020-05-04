@@ -136,6 +136,7 @@ const actions = {
         let listener = firestore.collection('sessions')
             .where('tutor','==', getters.getId)
             .where('cancelled.tutor','==', false)
+            .where('cancelled.student','==', false)
             .where('accepted','==',false)
             .limit(1)
             .onSnapshot(snapshot => {
