@@ -16,6 +16,7 @@ exports.makeAdmin = require('./onCall/makeAdmin')
 exports.startTutorTest = require('./onCall/startTutorTest')
 exports.markTutorTest = require('./onCall/markTutorTest')
 exports.startSession = require('./onCall/startSession')
+exports.acceptSession = require('./onCall/acceptSession')
 exports.createNewSingleChatCollection = require('./onCall/createNewSingleChatCollection')
 
 

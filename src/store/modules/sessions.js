@@ -1,4 +1,4 @@
-import {firestore, functions} from '@/config/firebase'
+import { firestore, functions } from '@/config/firebase'
 import router from "@/router/index"
 
 let setSessionListener = (id, commit, userId) => {
@@ -33,7 +33,6 @@ const getters = {
     isSessionModalStateStudentWaiting: state => state.sessionModalState === 'student-waiting',
     isSessionModalStateTutorCancelled: state => state.sessionModalState === 'tutor-cancelled',
     isSessionModalStateStudentCancelled: state => state.sessionModalState === 'student-cancelled',
-    isSessionModalStateTutorWaiting: state => state.sessionModalState === 'tutor-waiting',
 }
 
 const mutations = {
@@ -108,12 +107,14 @@ const actions = {
     async acceptSession({ commit, getters }){
         let session = getters.getCurrentSession
         if(session && session['.key']){
-            await firestore.collection('sessions').doc(session['.key']).update('accepted', true)
-            await router.push(`/sessions/${session['.key']}`).catch(error => error)
-            commit('setSessionListener', () => {})
-            commit('setSession', [null, null])
-            commit('closeOtherPersonListener')
-            commit('closeSessionModal')
+            functions.httpsCallable('acceptSession')(session['.key'])
+            .then(async () => {
+                await router.push(`/sessions/${session['.key']}`).catch(error => error)
+                commit('setSessionListener', () => {})
+                commit('setSession', [null, null])
+                commit('closeOtherPersonListener')
+                commit('closeSessionModal')
+            }).catch(error => new window.Toast({ icon: 'error', title: error.message }))
         }
     },
     async rejectSession({ commit, getters}){
