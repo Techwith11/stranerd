@@ -97,6 +97,10 @@ const actions = {
             commit('setSessionModalStateStudentWaiting')
         }).catch(error => {
             new window.Toast({ icon: 'error', title: error.message })
+            commit('setSessionListener', () => {})
+            commit('setSession', [null, null])
+            commit('closeOtherPersonListener')
+            commit('closeSessionModal')
         })
     },
     closeSessionListener({ commit }){
@@ -147,7 +151,7 @@ const actions = {
     async cancelSessionAndCloseModal({ getters, commit }){
         let session = getters.getCurrentSession
         let other = getters.getId === session.student ? 'tutor' : 'student'
-        if(session && session.cancelled[other] === false){
+        if(session && session.cancelled && session.cancelled[other] === false){
             let canceller = getters.getId === session.student ? 'student' : 'tutor'
             await firestore.collection('sessions').doc(session['.key']).update(`cancelled.${canceller}`,true)
         }

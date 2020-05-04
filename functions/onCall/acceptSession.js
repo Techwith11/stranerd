@@ -17,8 +17,8 @@ module.exports = functions.https.onCall(async (data, context) => {
 	let endedAt = admin.firestore.Timestamp.now().toDate()
 	endedAt.setMinutes(endedAt.getMinutes() + 60 * session.duration)
 
-	return await admin.firestore().collection('sessions').doc(data).set({
+	return await ref.set({
 		accepted: true,
 		dates: { endedAt }
-	}, { merge: true})
+	}, { merge: true })
 })

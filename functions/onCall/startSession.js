@@ -6,9 +6,11 @@ module.exports = functions.https.onCall(async (data, context) => {
 		/*TODO: Delete comment */ //throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can start sessions')
 	}
 
+	let createdAt = admin.firestore.Timestamp.now()
+
 	let docs = await admin.firestore().collection('sessions')
 		.where('tutor','==', data.tutor)
-		.where('done','==',false)
+		.where('dates.endedAt','>', createdAt)
 		.limit(1)
 		.get()
 	if(!docs.empty){
@@ -21,7 +23,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 		tutor: data.tutor,
 		accepted: false,
 		cancelled: { student: false, tutor: false },
-		dates: { createdAt: admin.firestore.FieldValue.serverTimestamp() }
+		dates: { createdAt }
 	}
 
 	let doc = await admin.firestore().collection('sessions').add(session)
