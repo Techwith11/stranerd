@@ -12,6 +12,7 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
 	export default {
 		props: {
 			timer: {
@@ -24,7 +25,8 @@
 			}
 		},
         computed: {
-			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : '/users/images/Cassette.svg' },
+			...mapGetters(['getDefaultImage']),
+			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
             getTime(){
                 let hours = Math.floor(this.timer / 3600).toFixed(0)
                 let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)

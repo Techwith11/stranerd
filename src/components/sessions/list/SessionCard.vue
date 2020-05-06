@@ -1,17 +1,20 @@
 <template>
 	<router-link :to="`/sessions/${session['.key']}`" class="text-decoration-none">
-		<div class="alert my-2" role="alert" :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
-			<p class="mb-0">{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}</p>
-			<div v-if="!wasCancelled">
-				<span class="small" v-if="isStillInSession">{{ getTime }}</span>
-				<div class="small d-flex justify-content-between" v-else>
-					<span>Ended {{ session.dates.endedAt.seconds * 1000 | getDateOrTime }}</span>
-					<span v-if="getReview">You rated: {{ getReview.rating | toOneDP }}/5.0</span>
+		<div class="alert d-flex align-content-start my-2" role="alert" :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
+			<img :src="getImageLink" class="mr-3" width="50px" alt="">
+			<div class="w-100">
+				<p class="mb-0">{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}</p>
+				<div v-if="!wasCancelled">
+					<span class="small" v-if="isStillInSession">{{ getTime }}</span>
+					<div class="small d-flex justify-content-between align-items-center" v-else>
+						<span>Ended {{ session.dates.endedAt.seconds * 1000 | getDateOrTime }}</span>
+						<rating-stars :rating="getRating" />
+					</div>
 				</div>
-			</div>
-			<div v-else>
-				<span class="small" v-if="session.cancelled.tutor">Cancelled by {{ session.tutor === this.getId ? 'me' : 'tutor' }}</span>
-				<span class="small" v-if="session.cancelled.student">Cancelled by {{ session.student === this.getId ? 'me' : 'student' }}</span>
+				<div v-else>
+					<span class="small" v-if="session.cancelled.tutor">Cancelled by {{ session.tutor === this.getId ? 'me' : 'tutor' }}</span>
+					<span class="small" v-if="session.cancelled.student">Cancelled by {{ session.student === this.getId ? 'me' : 'student' }}</span>
+				</div>
 			</div>
 		</div>
 	</router-link>
@@ -19,6 +22,7 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
+	import RatingStars from '@/components/helpers/RatingStars'
 	import { mapGetters } from 'vuex'
 	export default {
 		data: () => ({
@@ -32,10 +36,14 @@
 				type: Object
 			}
 		},
+		components: {
+			'rating-stars': RatingStars
+		},
 		computed: {
-			...mapGetters(['getId']),
-			getReview(){
-				return this.session.reviews ? this.getId === this.session.tutor ? this.session.reviews.tutor : this.session.reviews.student : null
+			...mapGetters(['getId','getDefaultImage']),
+			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
+			getRating(){
+				return this.session.reviews ? this.getId === this.session.tutor ? this.session.reviews.tutor.rating : this.session.reviews.student.rating : 0
 			},
 			getOtherPerson(){ return this.getId === this.session.tutor ? this.session.student : this.session.tutor },
 			getLength(){
@@ -63,7 +71,6 @@
 			},
 		},
 		filters: {
-			toOneDP(number){ return Number(number).toFixed(1) },
 			getDateOrTime(date){
 				if(typeof(date) !== 'object'){
 					date = new Date(date)

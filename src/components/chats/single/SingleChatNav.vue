@@ -27,9 +27,9 @@
 			}
 		},
 		computed: {
-			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : '/users/images/Cassette.svg' },
+			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
 			canHaveSession(){ return this.user.roles.isTutor && this.user['.key'] !== this.getId },
-			...mapGetters(['getId']),
+			...mapGetters(['getId','getDefaultImage']),
 		},
 		methods:{
 			...mapActions(['setSessionModalStateStudentDuration']),
