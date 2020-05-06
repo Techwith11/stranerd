@@ -3,7 +3,7 @@
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<user-info :user="user" />
-			<div v-if="user.roles.isTutor">
+			<div v-if="user.roles.isTutor" class="mt-5">
 				<h6 class="text-center font-weight-bold" v-if="sessions.length > 0">Recent Sessions</h6>
 				<div class="row">
 					<div class="col-md-6 col-lg-4" v-for="session in sessions" :key="session['.key']">
@@ -23,7 +23,7 @@
 	export default {
 		name: 'User',
 		data: () => ({
-			listener: null,
+			listener: () => {},
 			sessions: [],
 			isLoading: true,
 			user: {}
@@ -40,6 +40,8 @@
 				this.isLoading = false
 			})
 			let docs = await firestore.collection('sessions').where('tutor','==',this.$route.params.id)
+				.where('cancelled.student','==',false)
+				.where('cancelled.tutor','==',false)
 				.orderBy('dates.createdAt','desc')
 				.limit(12)
 				.get()

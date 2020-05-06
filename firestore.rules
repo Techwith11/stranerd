@@ -26,7 +26,7 @@ service cloud.firestore {
 		}
 
 		match /sessions/{id} {
-			allow read: if hasAccessToSession(id);
+			allow read: if isAuthenticated();
 			allow create: if isAuthenticated();
 			allow update: if hasAccessToSession(id);
 			allow delete: if isAdmin();

@@ -6,6 +6,7 @@ import chats from './modules/chats'
 import modal from './modules/modal'
 import sessions from './modules/sessions'
 import tests from './modules/tests'
+import users from './modules/users'
 
 Vue.use(Vuex)
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
 		chats,
 		modal,
 		sessions,
-		tests
+		tests,
+		users
 	}
 })

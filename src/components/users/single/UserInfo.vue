@@ -6,16 +6,17 @@
 			<i class="ml-2 rounded-pill fas fa-circle" :class="user.status.online ? 'text-success' : 'text-danger'"></i>
 		</p>
 		<p class="lead font-weight-bold">{{ user.bio.name }}</p>
-		<p class="text-center">{{ user.bio.bio }}</p>
+		<p class="text-center w-75">{{ user.bio.bio }}</p>
 		<div v-if="user.roles.isTutor">
-			<p>Course: {{ user.tutor.course }}</p>
-			<p>Overall Ratings: {{ user.tutor.ratings | getRatings }} of {{ user.tutor.ratings.length }} reviews</p>
+			<p>Course: {{ user.tutor.courses[0] }}</p>
+			<p>Overall Ratings: {{ getReviews }} of {{ Object.values(user.tutor.reviews).length }} reviews</p>
 		</div>
 		<button class="accent-button" @click="$router.push(`/chats/${user['.key']}`)">Chat with {{ user.bio.name }}</button>
 	</div>
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
 	export default {
 		props: {
 			user: {
@@ -23,11 +24,13 @@
 				type: Object
 			}
 		},
-		filters: {
-			getRatings: ratings => ratings.length ? ratings.reduce((a,b) => a+b) / ratings.length : 0
-		},
 		computed: {
-			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : '/users/images/Cassette.svg' }
+			...mapGetters(['getDefaultImage']),
+			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
+			getReviews(){
+				let reviews = Object.values(this.user.tutor.reviews)
+				return reviews.length ? Number(reviews.map(r => r.rating).reduce((a,b) => a + b) / reviews.length).toFixed(2) : 0
+			}
 		}
 	}
 </script>
