@@ -1,11 +1,11 @@
 <template>
-    <header class="container">
-        <nav class="navbar navbar-expand-md navbar-light">
+    <header class="bg-dark">
+        <nav class="container navbar navbar-expand-md navbar-dark bg-dark">
             <a class="navbar-brand" href="#">STRANERD</a>
-            <button class="navbar-toggler" @click="toggleNavbar" id="toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler shadow-none rounded-0" @click="toggleNavbar" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse text-center" id="navbar">
+            <div class="collapse navbar-collapse text-center">
                 <ul class="navbar-nav ml-auto align-items-md-center">
                     <li class="nav-item">
                         <router-link class="nav-link" to="/">Home</router-link>
@@ -51,34 +51,12 @@
     </header>
 </template>
 
-<style lang="scss">
-    @import '../../style/index';
-    #navbar {
-        background: $white;
-        z-index: 3;
-        a {
-            color: $text-black;
-            font-size: 0.875rem;
-        }
-        button a{
-            color: $white;
-            padding: 0;
-            border: none !important;
-        }
-    }
-    header{
-        height: 56px;
-    }
-    #toggler{
-        border: none;
-        border-radius: 0;
-        box-shadow: none;
-    }
-    @media screen and (max-width: 767px){
-        .navbar-nav li.nav-item{
-            box-shadow: 0 1px 2px #777777;
-        }
-    }
+<style>
+	header{
+        position: relative;
+		z-index: 3;
+		height: 60px;
+	}
 </style>
 
 <script>
