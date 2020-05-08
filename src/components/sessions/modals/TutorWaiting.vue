@@ -1,28 +1,16 @@
 <template>
 	<div class="m-md-5 text-center" id="waiting">
-		<i class="fas fa-spinner fa-spin text-info fa-3x" v-if="!isLoading"></i>
-		<p class="my-3" v-if="!isLoading">Waiting for {{ getOtherPersonOnSession ? getOtherPersonOnSession.bio.name : 'tutor' }} to accept</p>
-		<p class="my-3" v-if="isLoading">You are attempting to cancel the session</p>
-		<button class="bg-danger text-white shadow-none my-2 rounded" @click="closeModal" :disabled="isLoading">
-			<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading"></i>
-			Cancel Session
-		</button>
+		<i class="fas fa-spinner fa-spin text-info fa-3x"></i>
+		<p class="my-3">Waiting for {{ getOtherPersonOnSession ? getOtherPersonOnSession.bio.name : 'student' }} to complete payment</p>
 	</div>
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
+	import { mapGetters } from 'vuex'
 	export default {
         data: () => ({
             isLoading: false,
         }),
-		methods: {
-			...mapActions(['cancelSessionAndCloseModal']),
-            async closeModal(){
-                this.isLoading = true
-                await this.cancelSessionAndCloseModal()
-            }
-		},
         computed: {
             ...mapGetters(['getOtherPersonOnSession'])
         }
