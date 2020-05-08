@@ -1,6 +1,6 @@
 import { auth, firestore, functions } from '@/config/firebase'
 
-let id = window.location.hostname === 'localhost' ? 'kevin11' : ''
+let id = window.location.hostname === 'localhost' ? 'frank' : ''
 
 const state = {
     id,

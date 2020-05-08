@@ -8,6 +8,12 @@ let setSessionListener = (id, commit, userId) => {
 	})
 	commit('setSessionListener', listener)
 }
+let acceptSession = async id => {
+	return await firestore.collection('sessions').doc(id).update('accepted', true)
+}
+let rejectSession = async id => {
+	return await firestore.collection('sessions').doc(id).update('cancelled.tutor', true)
+}
 let submitRating = async (id, session, review) => {
 	if(session.tutor === id){
 		await firestore.collection('sessions').doc(session['.key']).set({
@@ -22,10 +28,12 @@ let submitRating = async (id, session, review) => {
 		})
 	}
 }
-let tutorSelectSessionState = (session, id) => session.tutor === id && session.accepted === false && session.cancelled.tutor === false && session.cancelled.student === false
-let studentCancelsSessionState = (session, id) => session.tutor === id && session.accepted === false && session.cancelled.tutor === false && session.cancelled.student === true
-let tutorRejectsSessionState = (session, id) => session.student === id && session.accepted === false && session.cancelled.tutor === true && session.cancelled.student === false
-let tutorAcceptsSessionState = (session, id) => session.student === id && session.accepted === true && session.cancelled.tutor === false && session.cancelled.student === false
+let tutorSelectSessionState = (session, id) => session.tutor === id && session.accepted === false && session.cancelled.tutor === false && session.cancelled.student === false && session.paid === false
+let studentCancelsSessionState = (session, id) => session.tutor === id && session.cancelled.tutor === false && session.cancelled.student === true && session.paid === false
+let tutorRejectsSessionState = (session, id) => session.student === id && session.accepted === false && session.cancelled.tutor === true && session.cancelled.student === false && session.paid === false
+let tutorAcceptsSessionState = (session, id) => session.student === id && session.accepted === true && session.cancelled.tutor === false && session.cancelled.student === false && session.paid === false
+let tutorAcceptedSessionState = (session, id) => session.tutor === id && session.accepted === true && session.cancelled.tutor === false && session.cancelled.student === false && session.paid === false
+let studentPaidSessionState = (session, id) => session.tutor === id && session.accepted === true && session.cancelled.tutor === false && session.cancelled.student === false && session.paid === true
 
 const state = {
 	session: null,
@@ -49,6 +57,8 @@ const getters = {
 	isSessionModalStateStudentWaiting: state => state.sessionModalState === 'student-waiting',
 	isSessionModalStateTutorCancelled: state => state.sessionModalState === 'tutor-cancelled',
 	isSessionModalStateStudentCancelled: state => state.sessionModalState === 'student-cancelled',
+	isSessionModalStateStudentPays: state => state.sessionModalState === 'student-pays',
+	isSessionModalStateTutorWaiting: state => state.sessionModalState === 'tutor-waiting',
 	isSessionModalStateSessionRatings: state => state.sessionModalState === 'session-ratings',
 }
 
@@ -59,9 +69,11 @@ const mutations = {
 			if(tutorSelectSessionState(session,id)){ state.sessionModalState = 'tutor-accept' }
 			else if (studentCancelsSessionState(session,id)){ state.sessionModalState = 'student-cancelled' }
 			else if(tutorRejectsSessionState(session,id)){ state.sessionModalState = 'tutor-cancelled' }
-			else if(tutorAcceptsSessionState(session,id)){
-				let name = state.otherPerson ? state.otherPerson.bio.name : 'Tutor'
-				new window.Toast({ icon: 'success', title: `${name} accepted the session` })
+			else if(tutorAcceptsSessionState(session,id)){ state.sessionModalState = 'student-pays' }
+			else if(tutorAcceptedSessionState(session,id)){ state.sessionModalState = 'tutor-waiting' }
+			else if(studentPaidSessionState(session,id)){
+				let name = state.otherPerson ? state.otherPerson.bio.name : 'Student'
+				new window.Toast({ icon: 'success', title: `${name} has paid for the session` })
 				await router.push(`/sessions/${session['.key']}`).catch(error => error)
 				state.sessionModalState = null
 				state.newSessionData = {}
@@ -130,28 +142,37 @@ const actions = {
 		commit('setSession', [null, null])
 	},
 
-	async acceptSession({ commit, getters }){
+	async acceptSession({ getters }){
 		let session = getters.getCurrentSession
 		if(session && session['.key']){
-			functions.httpsCallable('acceptSession')(session['.key'])
-				.then(async () => {
-					await router.push(`/sessions/${session['.key']}`).catch(error => error)
-					commit('setSessionListener', () => {})
-					commit('setSession', [null, null])
-					commit('closeOtherPersonListener')
-					commit('closeSessionModal')
-				}).catch(error => new window.Toast({ icon: 'error', title: error.message }))
+			acceptSession(session['.key'])
+				.catch(error => new window.Toast({ icon: 'error', title: error.message }))
 		}
 	},
 	async rejectSession({ commit, getters}){
 		let session = getters.getCurrentSession
 		if(session && session['.key']){
-			await firestore.collection('sessions').doc(session['.key']).update('cancelled.tutor', true)
+			rejectSession(session['.key'])
+				.catch(error => new window.Toast({ icon: 'error', title: error.message }))
 			commit('setSessionListener', () => {})
 			commit('setSession', [null, null])
 			commit('closeOtherPersonListener')
 			commit('closeSessionModal')
 		}
+	},
+
+	async payForSession({ commit, getters }, charge){
+		let session = getters.getCurrentSession
+		let data = { id: session['.key'], charge }
+		functions.httpsCallable('payForSession')(data).then(async () => {
+			await router.push(`/sessions/${session['.key']}`).catch(error => error)
+			commit('setSessionListener', () => {})
+			commit('setSession', [null, null])
+			commit('closeOtherPersonListener')
+			commit('closeSessionModal')
+		}).catch(error => {
+			new window.Toast({ icon: 'error', title: error.message })
+		})
 	},
 
 	initializeTutorSessionsListener({ getters, commit }){
@@ -160,6 +181,8 @@ const actions = {
 			.where('cancelled.tutor','==', false)
 			.where('cancelled.student','==', false)
 			.where('accepted','==',false)
+			.where('paid','==',false)
+			.orderBy('dates.createdAt','desc')
 			.limit(1)
 			.onSnapshot(snapshot => {
 				if(!snapshot.empty){

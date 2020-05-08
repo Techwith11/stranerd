@@ -61,13 +61,13 @@ const actions = {
 						nonce: payload.nonce,
 						amount: data.amount,
 					})
-					if(result){
+					if(result.success){
 						new window.Toast({ icon: 'success', title: 'Transaction successful.' })
+						commit('setHostedFieldsInstance',null)
 					}else{
 						new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
 					}
-					commit('setHostedFieldsInstance',null)
-					data.onPaypalSuccessful()
+					data.onPaypalSuccessful(result)
 				},
 				onCancel: () => new window.Toast({ icon: 'warning', title: 'Transaction cancelled.' }),
 				onError: error => new window.Toast({ icon: 'error', title: error.message })
@@ -84,12 +84,12 @@ const actions = {
 				nonce: payload.nonce,
 				amount,
 			})
-			if(result){
+			if(result.success){
 				new window.Toast({ icon: 'success', title: 'Transaction successful.' })
+				commit('setHostedFieldsInstance',null)
 			}else{
 				new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
 			}
-			commit('setHostedFieldsInstance',null)
 			return result
 		}catch(error){
 			new window.Toast({ icon: 'error', title: error.message })
