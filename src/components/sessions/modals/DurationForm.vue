@@ -10,28 +10,29 @@
 			<button class="shadow-none w-100 my-2 rounded" @click="requestSession(0.25)" :disabled="isLoading"
 				:class="{'bg-info text-white': isLoading && mode === 0.25}">
 				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading && mode === 0.25"></i>
-				<span>15 minutes</span>
+				<span>15 minutes - &dollar;10</span>
 			</button>
 			<button class="shadow-none w-100 my-2 rounded" @click="requestSession(0.5)" :disabled="isLoading"
 				:class="{'bg-info text-white': isLoading && mode === 0.5}">
 				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading && mode === 0.5"></i>
-				<span>30 minutes</span>
+				<span>30 minutes - &dollar;15</span>
 			</button>
 			<button class="shadow-none w-100 my-2 rounded" @click="requestSession(1.0)" :disabled="isLoading"
 				:class="{'bg-info text-white': isLoading && mode === 1.0}">
 				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading && mode === 1.0"></i>
-				<span>1.0 hours</span>
-			</button>
-			<button class="shadow-none w-100 my-2 rounded" @click="requestSession(1.5)" :disabled="isLoading"
-				:class="{'bg-info text-white': isLoading && mode === 1.5}">
-				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading && mode === 1.5"></i>
-				<span>1.5 hours</span>
+				<span>1.0 hours - &dollar;30</span>
 			</button>
 			<button class="shadow-none w-100 my-2 rounded" @click="requestSession(2.0)" :disabled="isLoading"
 				:class="{'bg-info text-white': isLoading && mode === 2.0}">
 				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading && mode === 2.0"></i>
-				<span>2.0 hours</span>
+				<span>2.0 hours - &dollar;60</span>
 			</button>
+			<button class="shadow-none w-100 my-2 rounded" @click="requestSession(3.0)" :disabled="isLoading"
+				:class="{'bg-info text-white': isLoading && mode === 3.0}">
+				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading && mode === 3.0"></i>
+				<span>3.0 hours - &dollar;90</span>
+			</button>
+			<small class="small text-muted">You will be directed to pay if the tutor accepts the session. Note that you can cancel the session at any point until you have made payment.</small>
 		</div>
 	</div>
 </template>
@@ -41,6 +42,13 @@
 	export default {
 		data: () => ({
 			mode: null,
+			prices: {
+				0.25: 10,
+				0.5: 15,
+				1: 30,
+				2: 60,
+				3: 90
+			},
 			isLoading: false
 		}),
 		computed: {
@@ -51,7 +59,8 @@
 			async requestSession(duration){
 				this.isLoading = true
 				this.mode = duration
-				await this.startSession({ duration, ...this.getNewSessionData })
+				let price = this.prices[duration]
+				await this.startSession({ duration, price, ...this.getNewSessionData })
 			}
 		}
 	}
