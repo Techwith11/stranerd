@@ -13,6 +13,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
     "bootstrap": "^4.4.1",
+    "braintree": "^2.22.0",
     "core-js": "^3.6.4",
     "firebase": "^7.14.0",
     "jquery": "^3.4.1",
