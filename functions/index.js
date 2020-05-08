@@ -19,6 +19,7 @@ exports.startSession = require('./onCall/startSession')
 exports.acceptSession = require('./onCall/acceptSession')
 exports.addRatingToTutor = require('./onCall/addRatingToTutor')
 exports.createNewSingleChatCollection = require('./onCall/createNewSingleChatCollection')
+exports.getBraintreeClientToken = require('./onCall/payments/getBraintreeClientToken')
 
 
 // Firestore Triggers
