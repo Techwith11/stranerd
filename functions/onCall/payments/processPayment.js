@@ -13,12 +13,10 @@ module.exports = functions.https.onCall(async (data, context) => {
 			publicKey: 'c57yb9sm9fc79c9x',
 			privateKey: 'bb26a3a051b5d1da5f430872c820f616',
 		})
-		let result = await gateway.transaction.sale({
+		return await gateway.transaction.sale({
 			amount: data.amount,
 			paymentMethodNonce: data.nonce,
 		})
-		/* TODO: Save result to auth user charges history */
-		return result.success
 	}catch(error){
 		throw new functions.https.HttpsError('unknown', error.message)
 	}
