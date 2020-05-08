@@ -15,10 +15,12 @@ exports.makeTutor = require('./onCall/makeTutor')
 exports.makeAdmin = require('./onCall/makeAdmin')
 exports.startTutorTest = require('./onCall/startTutorTest')
 exports.markTutorTest = require('./onCall/markTutorTest')
-exports.startSession = require('./onCall/startSession')
-exports.acceptSession = require('./onCall/acceptSession')
-exports.addRatingToTutor = require('./onCall/addRatingToTutor')
 exports.createNewSingleChatCollection = require('./onCall/createNewSingleChatCollection')
+
+exports.startSession = require('./onCall/sessions/startSession')
+exports.payForSession = require('./onCall/sessions/payForSession')
+exports.addRatingToTutor = require('./onCall/sessions/addRatingToTutor')
+
 exports.getBraintreeClientToken = require('./onCall/payments/getBraintreeClientToken')
 exports.processPayment = require('./onCall/payments/processPayment')
 

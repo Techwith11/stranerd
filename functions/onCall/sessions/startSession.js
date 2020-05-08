@@ -23,9 +23,15 @@ module.exports = functions.https.onCall(async (data, context) => {
 		duration: data.duration,
 		student: data.student,
 		tutor: data.tutor,
+		price: data.price,
 		accepted: false,
+		paid: false,
 		cancelled: { student: false, tutor: false },
-		dates: { createdAt }
+		dates: { createdAt },
+		reviews: {
+			student: {},
+			tutor: {}
+		}
 	}
 
 	let doc = await admin.firestore().collection('sessions').add(session)
