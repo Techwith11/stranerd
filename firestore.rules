@@ -53,7 +53,14 @@ service cloud.firestore {
 		match /users/{id} {
 			allow read: if true;
 			allow create: if isAuthenticated();
-			allow update: if request.auth.uid == id;
+			allow update: if isMine(id);
+			allow delete: if isAdmin()
+		}
+
+		match /users/{user}/charges/{id} {
+			allow read: if isMine(id);
+			allow create: if isMine(id);
+			allow update: if isMine(id);
 			allow delete: if isAdmin()
 		}
 
@@ -67,6 +74,10 @@ service cloud.firestore {
 
 		function isAdmin() {
 			return true; //request.auth.token.isAdmin == true;
+		}
+
+		function isMine(id) {
+			return true; //request.auth.id == id;
 		}
 
 		function hasAccessToCourse(course) {
