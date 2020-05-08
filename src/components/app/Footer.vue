@@ -1,5 +1,5 @@
 <template>
-    <footer id="background" class="mt-auto">
+    <footer class="bg-dark py-5 text-white mt-auto">
        <div class="container">
            <div class="row">
                <div class="col-12 col-md-6">
@@ -37,12 +37,7 @@
 
 <style lang="scss" scoped>
     @import '../../style/index';
-    #background{
-        background: $text-black;
-        padding: 4rem 0;
-        color: $white;
-    }
-    i{
+   i{
         border-radius: 50rem;
         border: 1px solid transparent;
         padding: 0.5rem;
