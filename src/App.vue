@@ -40,7 +40,12 @@
 		},
 		beforeDestroy(){ this.closeAllListeners() },
 		watch: {
-			getId(){ return this.getId ? this.setProfileListener() : null },
+			getId(){
+				if(this.getId){
+					this.setProfileListener()
+					this.checkForUnfinishedTests()
+				}
+			},
 			isTutor(){ return this.isTutor ? this.initializeTutorSessionsListener() : null }
 		}
 	}

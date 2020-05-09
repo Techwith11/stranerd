@@ -36,10 +36,10 @@
 	export default {
 		name: 'TestsTutors',
 		data: () => ({
-			isLoading: false
+			isLoading: true
 		}),
 		methods: {
-			...mapActions(['startTest']),
+			...mapActions(['startTest','checkForUnfinishedTests']),
 			async beginTest(){
 				let result = await new window.SweetAlert({
 					title: 'Start test',
@@ -77,6 +77,10 @@
                 }
                 return false
 			}
+		},
+		async mounted(){
+			await this.checkForUnfinishedTests()
+			this.isLoading = false
 		},
 		components: {
 			'helper-message': HelperMessage,

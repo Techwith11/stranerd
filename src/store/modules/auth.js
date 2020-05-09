@@ -1,9 +1,7 @@
-import { auth, firestore, functions } from '@/config/firebase'
-
-let id = window.location.hostname === 'localhost' ? 'frank' : ''
+import {auth, firestore, functions} from '@/config/firebase'
 
 const state = {
-    id,
+    id: window.localStorage.getItem('user_id'),
     user: {},
     profileListener: () => {}
 }
@@ -18,7 +16,10 @@ const getters = {
 }
 
 const mutations = {
-    setId: (state, id) => state.id = id,
+    setId: (state, id) => {
+        state.id = id
+        id ? window.localStorage.setItem('user_id', id) : window.localStorage.removeItem('user_id')
+    },
     setUser: (state, user) => state.user = user,
     setProfileListener: (state, listener) => {
         state.profileListener()
@@ -42,7 +43,7 @@ const actions = {
     },
     logout: async ({commit}) => {
         await auth.signOut()
-        commit('setId','')
+        commit('setId',null)
         window.closeNavbar()
     },
 }
