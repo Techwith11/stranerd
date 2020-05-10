@@ -1,7 +1,8 @@
 <template>
 	<div class="bg-dark">
-		<div class="container text-white py-3">
+		<div class="container text-white pb-3">
 			<div class="d-flex align-items-center">
+				<i class="fas fa-arrow-left mr-3" @click="$router.push('/sessions')"></i>
 				<img :src="getImageLink" class="mr-3" width="50px" alt="" />
 				<span class="d-block text-truncate text-white mr-2">{{ user.bio ? user.bio.name : '' }}</span>
 				<!--<i class="fas fa-circle text-success mr-3"></i>-->

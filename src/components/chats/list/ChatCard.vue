@@ -1,8 +1,8 @@
 <template>
 	<router-link class="text-decoration-none" :to="`/chats/${getUserId}`">
-		<div class="alert alert-light border-secondary text-dark d-flex align-items-start" role="alert" v-if="chat && chat.id">
+		<div class="alert alert-light px-2 border-secondary text-dark d-flex align-items-start" role="alert" v-if="chat && chat.id">
 			<img :src="getImageLink" class="mr-3" width="50px" alt="">
-			<div class="w-100">
+			<div class="flex-grow-1 w-25">
 				<div class="font-weight-bold d-flex justify-content-between align-items-baseline">
 					<span>{{ getUserName }}</span>
 					<span class="small">{{ getChatTime | getDateOrTime }}</span>

@@ -1,5 +1,5 @@
 <template>
-	<div class="container mb-5">
+	<div class="container mt-3 mb-5">
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<div v-if="isTutor">
@@ -23,8 +23,7 @@
 					<button class="shadow-none my-3" :class="failed ? 'opacity-25' : 'accent-button'" @click="beginTest" :disabled="failed">Start Test</button>
 				</div>
 			</div>
-			<helper-message v-else message="This account is not recognized as a tutor's account"
-				optional="Visit your profile settings to upgrade" />
+			<helper-message v-else message="This account is not recognized as a tutor's account" />
 		</div>
 	</div>
 </template>

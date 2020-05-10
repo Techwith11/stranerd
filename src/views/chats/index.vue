@@ -1,5 +1,5 @@
 <template>
-	<div class="container py-4">
+	<div class="container py-3">
 		<helper-message message="No chats yet. Explore our world of users and start a conversation" v-if="getSortedChats.length === 0" />
 		<div v-else>
 			<chat-card v-for="chat in getSortedChats" :key="chat[0]" :chat="chat[1].chat" :user="chat[1].user" />

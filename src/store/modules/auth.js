@@ -1,4 +1,5 @@
 import {auth, firestore, functions} from '@/config/firebase'
+import router from "@/router/index"
 
 const state = {
     id: window.localStorage.getItem('user_id'),
@@ -44,6 +45,7 @@ const actions = {
     logout: async ({commit}) => {
         await auth.signOut()
         commit('setId',null)
+        await router.push('/').catch(error => error)
         window.closeNavbar()
     },
 }
