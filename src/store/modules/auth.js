@@ -33,7 +33,7 @@ const actions = {
     setUser:({ commit }, user) => commit('setUser', user),
     setProfileListener: ({ getters, commit }) => {
         let listener = getters.getId ? firestore.collection('users').doc(getters.getId)
-            .onSnapshot(snapshot => commit('setUser', snapshot.data())) : () => {}
+            .onSnapshot(snapshot => snapshot.exists ? commit('setUser', snapshot.data()) : commit('setId',null)) : () => {}
         commit('setProfileListener', listener)
     },
     closeProfileListener: ({ commit }) => commit('setProfileListener', () => {}),
