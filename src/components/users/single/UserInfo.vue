@@ -11,12 +11,12 @@
 			<p>Course: {{ user.tutor.courses[0] }}</p>
 			<p>Overall Ratings: {{ getReviews }} of {{ Object.values(user.tutor.reviews).length }} reviews</p>
 		</div>
-		<button class="accent-button" @click="$router.push(`/chats/${user['.key']}`)">Chat with {{ user.bio.name }}</button>
+		<button class="accent-button" @click="bringUpSessionForm" v-if="canHaveSession">Request session with {{ user.bio.name.split(' ')[0] }}</button>
 	</div>
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
+	import { mapGetters, mapActions} from 'vuex'
 	export default {
 		props: {
 			user: {
@@ -25,11 +25,18 @@
 			}
 		},
 		computed: {
-			...mapGetters(['getDefaultImage']),
+			...mapGetters(['getDefaultImage','getId']),
 			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
+			canHaveSession(){ return this.user.roles.isTutor && this.user['.key'] !== this.getId },
 			getReviews(){
 				let reviews = Object.values(this.user.tutor.reviews)
 				return reviews.length ? Number(reviews.map(r => r.rating).reduce((a,b) => a + b) / reviews.length).toFixed(2) : 0
+			}
+		},
+		methods:{
+			...mapActions(['setSessionModalStateStudentDuration']),
+			bringUpSessionForm(){
+				this.setSessionModalStateStudentDuration({ student: this.getId, tutor: this.user['.key'] })
 			}
 		}
 	}

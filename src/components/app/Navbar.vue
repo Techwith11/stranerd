@@ -8,9 +8,6 @@
             <div class="collapse navbar-collapse text-center">
                 <ul class="navbar-nav ml-auto align-items-md-center" v-if="isLoggedIn">
                     <li class="nav-item">
-                        <router-link class="nav-link" to="/chats">Chats</router-link>
-                    </li>
-                    <li class="nav-item">
                         <router-link class="nav-link" to="/sessions">Sessions</router-link>
                     </li>
                     <li class="nav-item">

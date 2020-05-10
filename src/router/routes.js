@@ -45,18 +45,6 @@ export default [
         meta: { requiresAuth: true }
     },
     {
-        path: '/chats',
-        name: 'Chats',
-        component: () => import(/* webpackChunkName: "chats" */ '@/views/chats/index'),
-        meta: { requiresAuth: true }
-    },
-    {
-        path: '/chats/:id',
-        name: 'Chat',
-        component: () => import(/* webpackChunkName: "chat" */ '@/views/chats/single-chat'),
-        meta: { requiresAuth: true }
-    },
-    {
         path: '/sessions',
         name: 'Sessions',
         component: () => import(/* webpackChunkName: "sessions" */ '@/views/sessions/index'),
