@@ -25,7 +25,7 @@
 			</div>
 			<span class="small my-3">
 				Forgot Password?
-				<span class="text-info" @click="setModalForgotPassword">Retrieve Now</span>
+				<a class="text-info" @click.prevent="setModalForgotPassword">Retrieve Now</a>
 			</span>
 		</form>
 	</div>

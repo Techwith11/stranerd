@@ -53,7 +53,7 @@
 	header{
         position: relative;
 		z-index: 3;
-		height: 68px;
+		height: 60px;
 	}
 </style>
 

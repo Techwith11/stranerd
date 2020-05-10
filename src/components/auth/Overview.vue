@@ -22,14 +22,10 @@
 			</button>
 			<span class="my-2">
 				No account?
-				<span class="text-info" @click="setModalRegisterStudent">Sign up as a student</span>
-			</span>
-			<span class="my-2">
-				Or
-				<span class="text-info" @click="setModalRegisterTutor">sign up as a tutor</span>
+				<a class="text-info" @click.prevent="setModalRegisterStudent">Sign up with email</a>
 			</span>
 		</div>
-		<p class="small text-muted my-4">To make Stranerd work, we log user data and share it with service providers. Click "Sign In" above to accept Stranerd's Terms of Service & Privacy Policy.</p>
+		<p class="small text-muted my-4">To make Stranerd work, we might log user data and share it with service providers. Click "Sign In" above to accept Stranerd's Terms of Service & Privacy Policy.</p>
 	</div>
 </template>
 
