@@ -28,7 +28,7 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '../../style/index.scss';
+    @import '../../../style/index.scss';
     #background{
         background: $gradient-reversed;
         padding: 4rem 0;

@@ -13,10 +13,9 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '../../style/index.scss';
+    @import '../../../style/index.scss';
     #background{
-        background: url("../../assets/images/apple-black-box-business-416343.jpg");
-        background-color: $gradient-reversed;
+        background: url("../../../assets/images/apple-black-box-business-416343.jpg"), $gradient-reversed, none;
         padding: 5rem 0;
         color: $white;
     }

@@ -11,12 +11,12 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '../../style/index.scss';
+    @import '../../../style/index.scss';
     #background{
         padding: 10rem 0;
         color: $text-black;
         background-size: cover;
-        background: url("../../assets/images/photo-of-three-people-smiling-while-having-a-meeting-3184338.jpg"), $gradient, none;
+        background: url("../../../assets/images/photo-of-three-people-smiling-while-having-a-meeting-3184338.jpg"), $gradient, none;
     }
     #ctaButton{
         background: $primary-dark;
