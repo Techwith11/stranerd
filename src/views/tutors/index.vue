@@ -1,38 +1,57 @@
 <template>
 	<div class="container">
-		<div class="alert border border-primary" v-for="tutor in filteredTutors" :key="tutor['.key']">
-			<p>{{ tutor.bio.name }}</p>
-			<p>{{ tutor.tutor.courses }}</p>
+		<helper-spinner v-if="isLoading" />
+		<div v-else>
+			<div class="row my-2">
+				<div class="col-7 pr-2">
+					<input type="text" class="form-control" placeholder="Search by name" v-model="name">
+				</div>
+				<div class="col-5 pl-0">
+					<select class="form-control" v-model="course">
+						<option value="All">All</option>
+						<option :value="subject.name" v-for="subject in subjects" :key="subject['.key']">{{ subject.name }}</option>
+					</select>
+				</div>
+			</div>
+			<tutor-card class="my-2" :user="tutor" v-for="tutor in filteredTutors" :key="tutor['.key']" />
+			<helper-message message="No tutors available" v-if="filteredTutors.length === 0" />
 		</div>
 	</div>
 </template>
 
 <script>
 	import { firestore } from '@/config/firebase'
+	import HelperSpinner from '@/components/helpers/Spinner'
+	import HelperMessage from '@/components/helpers/Message'
+	import TutorCard from '@/components/users/list/TutorCard'
 	export default {
 		name: 'Tutors',
 		data: () => ({
+			isLoading: true,
 			tutors: [],
-			listener: null
+			subjects: [],
+			course: 'All',
+			name: ''
 		}),
 		computed: {
 			filteredTutors(){
-				return this.tutors
+				let filtered = this.tutors
+				if(this.course !== 'All'){ filtered = filtered.filter(tutor => tutor.tutor.courses.includes(this.course)) }
+				filtered = filtered.filter(tutor => tutor.bio.name.toLowerCase().includes(this.name.toLowerCase()))
+				return filtered
 			}
 		},
 		async mounted(){
-			// TODO: Try adding transitions for all pages with listeners
-			this.listener = await firestore.collection('users').where('roles.isTutor','==',true).onSnapshot(snapshot => {
-				snapshot.docs.forEach(doc => {
-					let tutor = this.tutors.find(tutor => tutor['.key'] === doc.id)
-					if(tutor){
-						tutor = { '.key': doc.id, ...doc.data() }
-					}else{
-						this.tutors.push({ '.key': doc.id, ...doc.data() })
-					}
-				})
-			})
+			let docs = await firestore.collection('users').where('roles.isTutor','==',true).orderBy('tutor.rating','desc').get()
+			docs.forEach(doc => this.tutors.push({ '.key': doc.id, ...doc.data() }))
+			docs = await firestore.collection('subjects').get()
+			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
+			this.isLoading = false
 		},
-		beforeDestroy(){ return this.listener ? this.listener() : null }
+		components: {
+			'tutor-card': TutorCard,
+			'helper-spinner': HelperSpinner,
+			'helper-message': HelperMessage,
+		}
 	}
 </script>

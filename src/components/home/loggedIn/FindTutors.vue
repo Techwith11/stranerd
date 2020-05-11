@@ -12,7 +12,7 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
-	import TutorCard from '@/components/home/loggedIn/TutorCard'
+	import TutorCard from '@/components/users/list/TutorCard'
 	export default {
 		data: () => ({
 			tutors: []

@@ -4,12 +4,14 @@
 			<div class="col-sm-3 d-flex justify-content-center">
 				<img :src="getImageLink" alt="">
 			</div>
-			<div class="col-sm-9 card-body">
-				<h5 class="card-title">{{ user.bio.name }}</h5>
-				<p class="card-text mb-1">{{ user.bio.bio }}</p>
-				<p class="card-text mb-1">Course: {{ user.tutor.courses.join('  ') }}</p>
-				<rating-stars class="small" :rating="user.tutor.rating"/>
-				<router-link :to="`/users/${user['.key']}`" class="card-link">Visit Profile</router-link>
+			<div class="col-sm-9 pl-sm-0">
+				<div class="card-body pl-sm-0">
+					<h5 class="card-title">{{ user.bio.name }}</h5>
+					<p class="card-text mb-1">{{ user.bio.bio }}</p>
+					<p class="card-text mb-1">Course: {{ user.tutor.courses.join('  ') }}</p>
+					<rating-stars class="small" :rating="user.tutor.rating"/>
+					<router-link :to="`/users/${user['.key']}`" class="card-link">Visit Profile</router-link>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -38,7 +40,7 @@
 <style lang="scss" scoped>
 	img{
 		width: 100%;
-		max-width: 180px;
+		max-width: 150px;
 	}
 	@media screen and (max-width: 575px){
 		img{
