@@ -1,6 +1,6 @@
 <template>
     <header class="bg-dark">
-        <nav class="container navbar navbar-dark bg-dark" :class="isLoggedIn ? 'navbar-expand-md' : 'navbar-expand-sm'">
+        <nav class="container navbar navbar-dark bg-dark" :class="isLoggedIn ? 'navbar-expand-md' : 'navbar-expand-sm fixed-top'">
             <router-link class="navbar-brand" to="/">STRANERD</router-link>
             <button class="navbar-toggler shadow-none rounded-0" @click="toggleNavbar" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
