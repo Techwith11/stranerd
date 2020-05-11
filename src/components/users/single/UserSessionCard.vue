@@ -4,7 +4,7 @@
 		<div class="">
 			<span class="card-title font-weight-bold">{{ getLength }} {{ student.bio ? `with ${student.bio.name}` : '' }}</span>
 			<div class="text-muted small">
-				<p>Ended {{ session.dates.createdAt.seconds * 1000 | getDateOrTime }}</p>
+				<p class="mb-1">Ended {{ session.dates.createdAt.seconds * 1000 | getDateOrTime }}</p>
 				<rating-stars :rating="getRating" />
 				<span>Student Remarks: {{ getComment }}</span>
 			</div>

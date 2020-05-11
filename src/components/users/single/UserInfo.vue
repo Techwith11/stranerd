@@ -9,14 +9,18 @@
 		<p class="text-center w-75">{{ user.bio.bio }}</p>
 		<div v-if="user.roles.isTutor">
 			<p>Course: {{ user.tutor.courses[0] }}</p>
-			<p>Overall Ratings: {{ getReviews }} of {{ Object.values(user.tutor.reviews).length }} reviews</p>
+			<p>
+				<span>Ratings: {{ user.tutor.rating }}</span>
+				<rating-stars class="d-inline ml-1" :rating="user.tutor.rating"/>
+			</p>
 		</div>
-		<button class="accent-button" @click="bringUpSessionForm" v-if="canHaveSession">Request session with {{ user.bio.name.split(' ')[0] }}</button>
+		<button class="accent-button" @click="bringUpSessionForm" v-if="canHaveSession">Request session</button>
 	</div>
 </template>
 
 <script>
 	import { mapGetters, mapActions} from 'vuex'
+	import RatingStars from '@/components/helpers/RatingStars'
 	export default {
 		props: {
 			user: {
@@ -27,17 +31,16 @@
 		computed: {
 			...mapGetters(['getDefaultImage','getId']),
 			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
-			canHaveSession(){ return this.user.roles.isTutor && this.user['.key'] !== this.getId },
-			getReviews(){
-				let reviews = Object.values(this.user.tutor.reviews)
-				return reviews.length ? Number(reviews.map(r => r.rating).reduce((a,b) => a + b) / reviews.length).toFixed(2) : 0
-			}
+			canHaveSession(){ return this.user.roles.isTutor && this.user['.key'] !== this.getId }
 		},
 		methods:{
 			...mapActions(['setSessionModalStateStudentDuration']),
 			bringUpSessionForm(){
 				this.setSessionModalStateStudentDuration({ student: this.getId, tutor: this.user['.key'] })
 			}
+		},
+		components: {
+			'rating-stars': RatingStars
 		}
 	}
 </script>

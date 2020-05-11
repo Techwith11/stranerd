@@ -12,7 +12,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 	let rating = tutor.rating
 	let length = Object.keys(tutor.reviews).length
 
-	let overall = (rating * length + data.review.rating) / (length + 1)
+	let overall = Number(Number((rating * length + data.review.rating) / (length + 1)).toFixed(2))
 
 	let reviews = {}
 	reviews[data.session] = data.review
