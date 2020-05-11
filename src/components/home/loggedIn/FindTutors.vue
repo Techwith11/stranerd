@@ -1,39 +1,28 @@
 <template>
-	<div class="my-4">
-		<p class="text-muted">Recent Sessions</p>
-		<div v-if="sessions.length > 0">
-			<session-card v-for="session in sessions" :key="session['.key']" :session="session" />
-			<div class="d-flex justify-content-end my-3">
-				<button class="accent-button shadow-none">
-					<router-link class="text-decoration-none text-white" to="/sessions">See More</router-link>
-				</button>
-			</div>
-		</div>
-		<div v-else>
-			<p class="small text-muted">No sessions yet</p>
+	<div class="my-4" v-if="tutors.length > 0">
+		<p class="text-muted">Top Tutors</p>
+		<tutor-card class="my-2" v-for="tutor in tutors" :user="tutor" :key="tutor['.key']" />
+		<div class="d-flex justify-content-end my-3">
+			<button class="accent-button shadow-none">
+				<router-link class="text-decoration-none text-white" to="/tutors">See More</router-link>
+			</button>
 		</div>
 	</div>
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
 	import { firestore } from '@/config/firebase'
-	import SessionCard from '@/components/sessions/list/SessionCard'
+	import TutorCard from '@/components/home/loggedIn/TutorCard'
 	export default {
 		data: () => ({
-			sessions: [],
+			tutors: []
 		}),
-		computed: {
-			...mapGetters(['getId','isTutor']),
-		},
-		async mounted(){
-			let docs = await firestore.collection('sessions').orderBy('dates.createdAt','desc')
-				.where(this.isTutor ? 'tutor' : 'student', '==', this.getId)
-				.limit(5).get()
-			docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
+		async mounted() {
+			let docs = await firestore.collection('users').where('roles.isTutor','==',true).orderBy('tutor.rating','desc').limit(5).get()
+			docs.forEach(doc => this.tutors.push({ '.key': doc.id, ...doc.data() }))
 		},
 		components: {
-			'session-card': SessionCard
+			'tutor-card': TutorCard
 		}
 	}
 </script>
