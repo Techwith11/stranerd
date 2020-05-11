@@ -8,10 +8,16 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 	let ref = admin.firestore().collection('users').doc(data.tutor)
 
+	let tutor = (await ref.get()).data().tutor
+	let rating = tutor.rating
+	let length = Object.keys(tutor.reviews).length
+
+	let overall = (rating * length + data.review.rating) / (length + 1)
+
 	let reviews = {}
-	reviews[data.session] = data['review']
+	reviews[data.session] = data.review
 
 	return await ref.set({
-		tutor: { reviews }
+		tutor: { reviews, rating: overall },
 	}, { merge: true })
 })

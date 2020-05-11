@@ -19,7 +19,8 @@ module.exports = functions.https.onCall(async (data, context) => {
 			roles: { isTutor: true },
 			tutor: {
 				upgrade,
-				ratings: {},
+				reviews: {},
+				rating: 0,
 				level: 0,
 				courses: [data.tutor.course],
 				qualification: data.tutor.qualification
