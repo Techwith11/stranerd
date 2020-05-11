@@ -23,6 +23,9 @@ router.beforeEach((to, from, next) => {
 	return next()
 })
 
-router.afterEach(() => window.closeNavbar())
+router.afterEach(() => {
+	document.getElementsByTagName('body')[0].scrollIntoView()
+	window.closeNavbar()
+})
 
 export default router

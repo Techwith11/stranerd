@@ -1,7 +1,7 @@
 <template>
 	<div class="my-4">
 		<p class="text-muted">Recent Sessions</p>
-		<div v-if="sessions.length > 0">
+		<div v-if="sessions.length < 0">
 			<session-card v-for="session in sessions" :key="session['.key']" :session="session" />
 			<div class="d-flex justify-content-end my-3">
 				<button class="accent-button shadow-none">
@@ -10,7 +10,10 @@
 			</div>
 		</div>
 		<div v-else>
-			<p class="small text-muted">No sessions yet</p>
+			<p class="small text-muted">
+				<span>No sessions yet. </span>
+				<router-link to="/tutors">Find a tutor now</router-link>
+			</p>
 		</div>
 	</div>
 </template>
