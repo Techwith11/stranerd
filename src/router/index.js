@@ -17,8 +17,8 @@ router.beforeEach((to, from, next) => {
 	const isLoggedIn = store.getters.isLoggedIn
 	if (requiresAuth && !isLoggedIn) {
 		new window.Toast({ icon: 'error', 'title': 'Login to continue' })
-		store.dispatch('setModalLogin')
-		return next(from.fullPath)
+		store.dispatch('setModalOverview')
+		return next('/')
 	}
 	return next()
 })
@@ -26,6 +26,7 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
 	document.getElementsByTagName('body')[0].scrollIntoView()
 	window.closeNavbar()
+	window.closeDropdown()
 })
 
 export default router

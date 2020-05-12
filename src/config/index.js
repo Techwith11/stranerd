@@ -30,3 +30,17 @@ window.closeNavbar = () => {
     collapse.classList.add('collapse')
     collapse.classList.add('in')
 }
+
+window.toggleDropDown = () => {
+    let dropdown = document.getElementsByClassName('dropdown-menu')[0]
+    dropdown.classList.toggle('show')
+    let dropdownToggle = document.getElementsByClassName('dropdown-toggle')[0]
+    dropdownToggle.classList.toggle('show')
+}
+
+window.closeDropdown = () => {
+    let dropdown = document.getElementsByClassName('dropdown-menu')[0]
+    dropdown ? dropdown.classList.remove('show') : null
+    let dropdownToggle = document.getElementsByClassName('dropdown-toggle')[0]
+    dropdownToggle ? dropdownToggle.classList.remove('show') : null
+}

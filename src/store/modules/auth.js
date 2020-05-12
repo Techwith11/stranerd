@@ -47,6 +47,7 @@ const actions = {
         commit('setId',null)
         await router.push('/').catch(error => error)
         window.closeNavbar()
+        window.closeDropdown()
     },
 }
 

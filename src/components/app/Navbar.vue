@@ -1,6 +1,6 @@
 <template>
     <header class="bg-dark">
-        <nav class="container navbar navbar-dark bg-dark" :class="isLoggedIn ? 'navbar-expand-md' : 'navbar-expand-sm fixed-top'">
+        <nav class="container navbar navbar-dark bg-dark" :class="isLoggedIn ? 'navbar-expand-md' : 'navbar-expand-sm'">
             <router-link class="navbar-brand" to="/">STRANERD</router-link>
             <button class="navbar-toggler rounded-0" @click="toggleNavbar" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -60,12 +60,7 @@
         methods: {
             ...mapActions(['openModal', 'logout']),
             toggleNavbar: () => window.toggleNavbar(),
-            toggleDropDown: () => {
-                let dropdown = document.getElementsByClassName('dropdown-menu')[0]
-                dropdown.classList.toggle('show')
-                let dropdownToggle = document.getElementsByClassName('dropdown-toggle')[0]
-                dropdownToggle.classList.toggle('show')
-            }
+            toggleDropDown: () => window.toggleDropDown()
         },
         computed: mapGetters(['isLoggedIn'])
     }
