@@ -2,11 +2,11 @@
 	<div class="m-md-5">
 		<p class="text-center my-4">{{ getOtherPersonOnSession ? getOtherPersonOnSession.bio.name : 'Someone' }} is requesting to start a {{ getCurrentSession.duration }} hour session with you</p>
 		<div class="mx-2">
-			<button class="bg-success text-white shadow-none w-100 my-2 rounded" @click="requestSession" :disabled="isLoading">
+			<button class="bg-success text-white w-100 my-2 rounded" @click="requestSession" :disabled="isLoading">
 				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading && mode === 'accept'"></i>
 				<span>Accept</span>
 			</button>
-			<button class="bg-danger text-white shadow-none w-100 my-2 rounded" @click="cancelSession" :disabled="isLoading">
+			<button class="bg-danger text-white w-100 my-2 rounded" @click="cancelSession" :disabled="isLoading">
 				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading && mode === 'reject'"></i>
 				<span>Reject</span>
 			</button>

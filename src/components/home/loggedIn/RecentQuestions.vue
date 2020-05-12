@@ -1,7 +1,7 @@
 <template>
 	<div class="my-4">
 		<div class="d-flex justify-content-end my-3">
-			<button class="accent-button shadow-none" @click="setPostModalCreate">Ask Question</button>
+			<button class="accent-button" @click="setPostModalCreate">Ask Question</button>
 		</div>
 		<div v-if="questions.length < 0">
 			<p class="text-muted">Recent Questions</p>
@@ -14,7 +14,7 @@
 				</div>
 			</div>
 			<div class="d-flex justify-content-end my-3">
-				<button class="accent-button shadow-none">
+				<button class="accent-button">
 					<router-link class="text-decoration-none text-white" to="/posts">See More</router-link>
 				</button>
 			</div>

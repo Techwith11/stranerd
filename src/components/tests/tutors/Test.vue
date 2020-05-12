@@ -7,7 +7,7 @@
 				:onSelect="onAnswerSelected" :index="index" :disabled="isMarked" />
 		</div>
 		<div class="d-flex justify-content-end mb-5">
-			<button class="accent-button shadow-none" @click="submitTest" :disabled="isLoading || isMarked">
+			<button class="accent-button" @click="submitTest" :disabled="isLoading || isMarked">
 				<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
 				<span>Submit</span>
 			</button>

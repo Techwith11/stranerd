@@ -4,7 +4,7 @@
 		<div v-if="sessions.length < 0">
 			<session-card v-for="session in sessions" :key="session['.key']" :session="session" />
 			<div class="d-flex justify-content-end my-3">
-				<button class="accent-button shadow-none">
+				<button class="accent-button">
 					<router-link class="text-decoration-none text-white" to="/sessions">See More</router-link>
 				</button>
 			</div>

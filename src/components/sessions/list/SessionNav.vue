@@ -1,5 +1,5 @@
 <template>
-	<div class="d-flex justify-content-around">
+	<div class="d-flex justify-content-around my-2" v-if="isTutor">
 		<router-link class="text-center py-2 text-decoration-none" to="/sessions"
 			:id="isRouteMyTaughtSessions && isTutor ? 'not-active' : 'active'">
 			My Sessions

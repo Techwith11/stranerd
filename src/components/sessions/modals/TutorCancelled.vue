@@ -1,7 +1,7 @@
 <template>
 	<div class="m-md-5 text-center">
 		<p class="my-3 lead text-danger">{{ getOtherPersonOnSession ? getOtherPersonOnSession.bio.name : 'Someone' }} declined to start a session. You can try asking again later.</p>
-		<button class="bg-info text-white shadow-none my-2 rounded" @click="closeModal" :disabled="isLoading">
+		<button class="bg-info text-white my-2 rounded" @click="closeModal" :disabled="isLoading">
 			<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading"></i>
 			Close Session
 		</button>
