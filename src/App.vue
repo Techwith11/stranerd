@@ -7,6 +7,7 @@
 		<app-footer />
 		<auth-modal v-if="isModalOpen"/>
 		<session-modal v-if="isSessionModalOpen"/>
+		<post-modal v-if="isPostModalOpen" />
 	</div>
 </template>
 
@@ -16,6 +17,7 @@
 	import Footer from '@/components/app/Footer'
 	import AuthModal from '@/components/auth/AuthModal'
 	import SessionModal from '@/components/sessions/modals/SessionModal'
+	import PostModal from '@/components/posts/PostModal'
 	export default {
 		name: 'App',
 		components: {
@@ -23,8 +25,9 @@
 			'app-footer': Footer,
 			'auth-modal': AuthModal,
 			'session-modal': SessionModal,
+			'post-modal': PostModal
 		},
-		computed: mapGetters(['isModalOpen', 'getId', 'isTutor', 'isSessionModalOpen']),
+		computed: mapGetters(['isModalOpen', 'getId', 'isTutor', 'isSessionModalOpen','isPostModalOpen']),
 		methods: {
 			...mapActions(['setProfileListener','closeProfileListener', 'initializeTutorSessionsListener','closeTutorSessionsListener','checkForUnfinishedTests']),
 			closeAllListeners(){

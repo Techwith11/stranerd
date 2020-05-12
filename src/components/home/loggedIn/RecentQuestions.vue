@@ -1,7 +1,7 @@
 <template>
 	<div class="my-4">
 		<div class="d-flex justify-content-end my-3">
-			<button class="accent-button shadow-none">Ask Question</button>
+			<button class="accent-button shadow-none" @click="setPostModalCreate">Ask Question</button>
 		</div>
 		<div v-if="questions.length < 0">
 			<p class="text-muted">Recent Questions</p>
@@ -24,6 +24,7 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
+	import { mapActions } from 'vuex'
 	export default {
 		data: () => ({
 			questions: [],
@@ -31,6 +32,7 @@
 		async mounted(){
 			let docs = await firestore.collection('questions').orderBy('dates.createdAt','desc').limit(5).get()
 			docs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
-		}
+		},
+		methods: mapActions(['setPostModalCreate'])
 	}
 </script>
