@@ -13,10 +13,15 @@ module.exports = functions.https.onCall(async (data, context) => {
 			publicKey: 'c57yb9sm9fc79c9x',
 			privateKey: 'bb26a3a051b5d1da5f430872c820f616',
 		})
-		return await gateway.transaction.sale({
+		let result = await gateway.transaction.sale({
 			amount: data.amount,
-			paymentMethodNonce: data.nonce,
+			paymentMethodToken: data.token,
 		})
+		if(result.success) {
+			let transaction = JSON.parse(JSON.stringify(result.transaction))
+			await admin.firestore().collection(`users/${data.id}/transactions`).add(transaction)
+		}
+		return result.success
 	}catch(error){
 		throw new functions.https.HttpsError('unknown', error.message)
 	}
