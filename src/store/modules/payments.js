@@ -13,6 +13,21 @@ let processPayment = async (data) => {
 		.then(res => res.data)
 		.catch(error => new window.Toast({ icon: 'error', title: error.message }))
 }
+let createPaymentMethod = async (data) => {
+	return functions.httpsCallable('createPaymentMethod')(data)
+		.then(res => res.data)
+		.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+}
+let makePayment = async (data) => {
+	return functions.httpsCallable('makePayment')(data)
+		.then(res => res.data)
+		.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+}
+let subscribeToPlan = async (data) => {
+	return functions.httpsCallable('subscribeToPlan')(data)
+		.then(res => res.data)
+		.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+}
 
 const state = {
 	hostedFieldsInstance: null
@@ -20,7 +35,8 @@ const state = {
 
 const getters = {
 	getHoistedFieldsInstance: state => state.hostedFieldsInstance,
-	canPay: state => state.hostedFieldsInstance !== null
+	canPay: state => state.hostedFieldsInstance !== null,
+	isThereAHoistedFieldInstance: state => state.hostedFieldsInstance !== null
 }
 
 const mutations = {
@@ -38,9 +54,9 @@ const actions = {
 				client: clientInstance,
 				styles: { input: { 'font-size': '14px' }},
 				fields: {
-					number: { selector: data['ids'].creditCard, placeholder: 'Enter Credit Card' },
-					cvv: { selector: data['ids'].cvv, placeholder: 'Enter CVV' },
-					expirationDate: { selector: data['ids'].expire, placeholder: `${month}/${year}` }
+					number: { selector: '#creditCardNumber', placeholder: 'Enter Credit Card' },
+					cvv: { selector: '#cvv', placeholder: 'Enter CVV' },
+					expirationDate: { selector: '#expireDate', placeholder: `${month}/${year}` }
 				}
 			}
 			commit('setHostedFieldsInstance',await hostedFields.create(options))
@@ -71,7 +87,43 @@ const actions = {
 				},
 				onCancel: () => new window.Toast({ icon: 'warning', title: 'Transaction cancelled.' }),
 				onError: error => new window.Toast({ icon: 'error', title: error.message })
-			}, data['ids'].paypal)
+			}, '#paypalButton')
+		}catch(error){
+			new window.Toast({ icon: 'error', title: error.message })
+		}
+	},
+	async initPaymentFields({ commit }){
+		try{
+			let authorization = await getBraintreeClientToken()
+			let clientInstance = await client.create({ authorization })
+			let month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
+			let year = new Date().getFullYear()
+			let options = {
+				client: clientInstance,
+				styles: { input: { 'font-size': '14px' }},
+				fields: {
+					number: { selector: '#creditCardNumber', placeholder: 'Enter Credit Card' },
+					cvv: { selector: '#cvv', placeholder: 'Enter CVV' },
+					expirationDate: { selector: '#expireDate', placeholder: `${month}/${year}` }
+				}
+			}
+			commit('setHostedFieldsInstance',await hostedFields.create(options))
+		}catch(error){
+			new window.Toast({ icon: 'error', title: error.message })
+		}
+	},
+	async createPaymentMethod({ getters }){
+		try {
+			let payload = await getters.getHoistedFieldsInstance.tokenize()
+			let result = await createPaymentMethod({
+				id: getters.getId,
+				nonce: payload.nonce
+			})
+			if(result === true){
+				new window.Toast({ icon: 'success', title: 'Card added successfully' })
+			}else{
+				new window.Toast({ icon: 'error', title: 'Error adding card' })
+			}
 		}catch(error){
 			new window.Toast({ icon: 'error', title: error.message })
 		}
@@ -95,6 +147,33 @@ const actions = {
 			new window.Toast({ icon: 'error', title: error.message })
 		}
 	},
+	async makePayment({ getters }, data){
+		if(data.amount < 1){ return new window.Toast({ icon: 'error', title: 'Invalid amount' }) }
+		try{
+			let result = await makePayment({ ...data, id: getters.getId })
+			if(result === true){
+				new window.Toast({ icon: 'success', title: 'Transaction successful.' })
+			}else{
+				new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
+			}
+			return result
+		}catch(error){
+			new window.Toast({ icon: 'error', title: error.message })
+		}
+	},
+	async subscribeToPlan({ getters }, data){
+		try{
+			let result = await subscribeToPlan({ ...data, id: getters.getId })
+			if(result === true){
+				new window.Toast({ icon: 'success', title: 'Subscription successful.' })
+			}else{
+				new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
+			}
+			return result
+		}catch(error){
+			new window.Toast({ icon: 'error', title: error.message })
+		}
+	}
 }
 
 export default { actions, mutations, state, getters }
