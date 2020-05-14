@@ -58,9 +58,23 @@ service cloud.firestore {
 		}
 
 		match /users/{user}/charges/{id} {
-			allow read: if isMine(id);
-			allow create: if isMine(id);
-			allow update: if isMine(id);
+			allow read: if isMine(user);
+			allow create: if isMine(user);
+			allow update: if isMine(user);
+			allow delete: if isAdmin()
+		}
+
+		match /users/{user}/transactions/{id} {
+			allow read: if isMine(user);
+			allow create: if isMine(user);
+			allow update: if isMine(user);
+			allow delete: if isAdmin()
+		}
+
+		match /users/{user}/paymentMethods/{id} {
+			allow read: if isMine(user);
+			allow create: if isMine(user);
+			allow update: if isMine(user);
 			allow delete: if isAdmin()
 		}
 

@@ -23,6 +23,9 @@ exports.addRatingToTutor = require('./onCall/sessions/addRatingToTutor')
 
 exports.getBraintreeClientToken = require('./onCall/payments/getBraintreeClientToken')
 exports.processPayment = require('./onCall/payments/processPayment')
+exports.createPaymentMethod = require('./onCall/payments/createPaymentMethod')
+exports.makePayment = require('./onCall/payments/makePayment')
+exports.subscribeToPlan = require('./onCall/payments/subscribeToPlan')
 
 
 // Firestore Triggers
