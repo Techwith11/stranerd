@@ -3,9 +3,9 @@ const admin = require('firebase-admin')
 const braintree = require('braintree')
 
 module.exports = functions.https.onCall(async (data, context) => {
-	/*if (!context.auth) {
+	if (!context.auth) {
 		/!*TODO: Delete comment *!/ //throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can invoke payments')
-	}*/
+	}
 	let gateway = new braintree.BraintreeGateway({
 		environment: braintree.Environment.Sandbox,
 		merchantId: '6f9mkyr3h4k9gvjk',
