@@ -4,7 +4,7 @@ import paypal from 'paypal-checkout'
 
 let paypalClientId = 'Ac-WzTkiNB9FEinROuMlVUfmCqLVQHRSjQooTDrVYBWHJBmIqtb_17u2zQ4SibWWNg8L02JUhkSSY7n_'
 let getBraintreeClientToken = async () => {
-	return functions.httpsCallable('getBraintreeClientToken')()
+	return functions.httpsCallable('getClientToken')()
 		.then(res => res.data)
 		.catch(error => new window.Toast({ icon: 'error', title: error.message }))
 }
