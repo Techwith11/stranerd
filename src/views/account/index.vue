@@ -74,7 +74,10 @@
 			<h4>Account Type</h4>
 			<p>Premium: {{ getUser.account.premium }}</p>
 			<p>Customer_ID: {{ getUser.account.customer_id }}</p>
-			<p>{{ getUser.account.subscription }}</p>
+			<div v-if="getUser.account.subscription">
+				<p>Subscription ID: {{ getUser.account.subscription.id }}</p>
+				<p>Subscription Plan: {{ getUser.account.subscription.planId }}</p>
+			</div>
 			<hr>
 		</div>
 		<div>

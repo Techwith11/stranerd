@@ -10,14 +10,11 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 	let tutor = (await ref.get()).data().tutor
 	let rating = tutor.rating
-	let length = Object.keys(tutor.reviews).length
+	let length = tutor.reviews
 
 	let overall = Number(Number((rating * length + data.review.rating) / (length + 1)).toFixed(2))
 
-	let reviews = {}
-	reviews[data.session] = data.review
-
 	return await ref.set({
-		tutor: { reviews, rating: overall },
+		tutor: { reviews: length + 1, rating: overall },
 	}, { merge: true })
 })
