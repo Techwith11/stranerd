@@ -86,6 +86,7 @@
 		</div>
 		<div v-if="getUser.roles.isTutor">
 			<h4>Tutor details</h4>
+			<p>CanTeach: {{ getUser.tutor.canTeach }}</p>
 			<div v-for="course in getUser.tutor.courses" :key="'upgrade/'+course">
 				<p>Level {{ getUser.tutor['levels'][course] }} {{ course }}</p>
 				<ul v-for="upgrade in Object.entries(getUser.tutor.upgrade[course]).sort((a,b) => a[0] - b[0])" :key="upgrade[0]">

@@ -42,7 +42,11 @@
 			}
 		},
 		async mounted(){
-			let docs = await firestore.collection('users').where('roles.isTutor','==',true).orderBy('tutor.rating','desc').get()
+			let docs = await firestore.collection('users')
+				.where('roles.isTutor','==',true)
+				.where('tutor.canTeach','==',true)
+				.orderBy('tutor.rating','desc')
+				.get()
 			docs.forEach(doc => this.tutors.push({ '.key': doc.id, ...doc.data() }))
 			docs = await firestore.collection('subjects').get()
 			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))

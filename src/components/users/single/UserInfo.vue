@@ -31,7 +31,7 @@
 		computed: {
 			...mapGetters(['getDefaultImage','getId']),
 			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
-			canHaveSession(){ return this.user.roles.isTutor && this.user['.key'] !== this.getId }
+			canHaveSession(){ return this.user.roles.isTutor && this.user['.key'] !== this.getId && this.user.tutor.levels[this.user.tutor.courses[0]] > 0 }
 		},
 		methods:{
 			...mapActions(['setSessionModalStateStudentDuration']),

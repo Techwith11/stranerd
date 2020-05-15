@@ -18,7 +18,11 @@
 			tutors: []
 		}),
 		async mounted() {
-			let docs = await firestore.collection('users').where('roles.isTutor','==',true).orderBy('tutor.rating','desc').limit(5).get()
+			let docs = await firestore.collection('users')
+				.where('roles.isTutor','==',true)
+				.where('tutor.canTeach','==',true)
+				.orderBy('tutor.rating','desc')
+				.limit(5).get()
 			docs.forEach(doc => this.tutors.push({ '.key': doc.id, ...doc.data() }))
 		},
 		components: {

@@ -9,6 +9,8 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 	let upgrade = {}
 	upgrade[data.tutor.course] = {}
+	let levels = {}
+	levels[data.tutor.course] = 0
 
 	return admin
 		.firestore()
@@ -19,9 +21,10 @@ module.exports = functions.https.onCall(async (data, context) => {
 			roles: { isTutor: true },
 			tutor: {
 				upgrade,
-				reviews: {},
+				levels,
+				reviews: 0,
 				rating: 0,
-				level: 0,
+				canTeach: false,
 				courses: [data.tutor.course],
 				qualification: data.tutor.qualification
 			}
