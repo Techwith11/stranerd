@@ -20,7 +20,7 @@ const config = {
 
 firebase.initializeApp(config)
 
-if(window.location.hostname === 'localhost'){
+if(process.env.NODE_ENV === 'development'){
 	firebase.firestore().settings({
 		host: 'localhost:5002',
 		ssl: false
@@ -35,6 +35,6 @@ export const firestore = firebase.firestore()
 export const functions = firebase.functions()
 export const storage = firebase.storage()
 
-if(window.location.hostname !== 'localhost'){
-	auth.onAuthStateChanged(async user => user ? store.dispatch('setId', user.uid) : null)
+if(process.env.NODE_ENV === 'production'){
+	auth.onAuthStateChanged(async user => user && user.uid ? store.dispatch('setId', user.uid) : null)
 }

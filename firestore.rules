@@ -91,7 +91,7 @@ service cloud.firestore {
 		}
 
 		function isMine(id) {
-			return true; //request.auth.id == id;
+			return true; //request.auth.uid == id;
 		}
 
 		function hasAccessToCourse(course) {
