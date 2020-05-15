@@ -1,0 +1,23 @@
+{
+  "paypal": {
+    "live": {
+      "client_id": ""
+    },
+    "sandbox": {
+      "client_id": "Ac-WzTkiNB9FEinROuMlVUfmCqLVQHRSjQooTDrVYBWHJBmIqtb_17u2zQ4SibWWNg8L02JUhkSSY7n_"
+    }
+  },
+  "braintree": {
+    "environment": "sandbox",
+    "live": {
+      "private_key": "",
+      "merchant_id": "",
+      "public_key": ""
+    },
+    "sandbox": {
+      "private_key": "bb26a3a051b5d1da5f430872c820f616",
+      "merchant_id": "6f9mkyr3h4k9gvjk",
+      "public_key": "c57yb9sm9fc79c9x"
+    }
+  }
+}

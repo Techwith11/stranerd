@@ -7,6 +7,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 	}
 	try{
 		let gateway = null
+		let paypalToken = null
 		if(functions.config().braintree.environment === 'live'){
 			gateway = braintree.connect({
 				environment: braintree.Environment.Production,
@@ -14,6 +15,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 				publicKey: functions.config().braintree.live.public_key,
 				privateKey: functions.config().braintree.live.private_key
 			})
+			paypalToken = functions.config().paypal.live.client_id
 		}else{
 			gateway = braintree.connect({
 				environment: braintree.Environment.Sandbox,
@@ -21,9 +23,13 @@ module.exports = functions.https.onCall(async (data, context) => {
 				publicKey: functions.config().braintree.sandbox.public_key,
 				privateKey: functions.config().braintree.sandbox.private_key
 			})
+			paypalToken = functions.config().paypal.sandbox.client_id
 		}
 		let token = await gateway.clientToken.generate()
-		return token.clientToken
+		return {
+			braintree: token.clientToken,
+			paypal: paypalToken
+		}
 	}catch(error){
 		throw new functions.https.HttpsError('unknown', error.message)
 	}

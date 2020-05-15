@@ -2,7 +2,6 @@ import { functions } from '@/config/firebase'
 import { client, hostedFields, paypalCheckout } from 'braintree-web'
 import paypal from 'paypal-checkout'
 
-let paypalClientId = 'Ac-WzTkiNB9FEinROuMlVUfmCqLVQHRSjQooTDrVYBWHJBmIqtb_17u2zQ4SibWWNg8L02JUhkSSY7n_'
 let getBraintreeClientToken = async () => {
 	return functions.httpsCallable('getClientToken')()
 		.then(res => res.data)
@@ -46,8 +45,8 @@ const mutations = {
 const actions = {
 	async initializePaymentFields({ commit }, data){
 		try{
-			let authorization = await getBraintreeClientToken()
-			let clientInstance = await client.create({ authorization })
+			let tokens = await getBraintreeClientToken()
+			let clientInstance = await client.create({ authorization: tokens.braintree })
 			let month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
 			let year = new Date().getFullYear()
 			let options = {
@@ -60,7 +59,7 @@ const actions = {
 				}
 			}
 			commit('setHostedFieldsInstance',await hostedFields.create(options))
-			let paypalInstance = await paypalCheckout.create({ client: clientInstance, client_id: paypalClientId })
+			let paypalInstance = await paypalCheckout.create({ client: clientInstance, client_id: tokens.paypal })
 			paypal.Button.render({
 				env: 'sandbox',
 				style: { label: 'paypal', size: 'large', shape: 'rect' },
@@ -94,8 +93,8 @@ const actions = {
 	},
 	async initPaymentFields({ getters, commit }){
 		try{
-			let authorization = await getBraintreeClientToken()
-			let clientInstance = await client.create({ authorization })
+			let tokens = await getBraintreeClientToken()
+			let clientInstance = await client.create({ authorization: tokens.braintree })
 			let month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
 			let year = new Date().getFullYear()
 			let options = {
@@ -108,7 +107,7 @@ const actions = {
 				}
 			}
 			commit('setHostedFieldsInstance',await hostedFields.create(options))
-			let paypalInstance = await paypalCheckout.create({ client: clientInstance, client_id: paypalClientId })
+			let paypalInstance = await paypalCheckout.create({ client: clientInstance, client_id: tokens.paypal })
 			paypal.Button.render({
 				env: 'sandbox',
 				style: { label: 'paypal', size: 'large', shape: 'rect' },
