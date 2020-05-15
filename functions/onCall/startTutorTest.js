@@ -1,6 +1,8 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 
+let noOfQuestionsForTest = 20 //TODO: Adjust for number of questions required for test
+
 let getQuestions = async (course, level) => {
 	let questions = await admin.firestore().collection('questions')
 		.where('subject','==', course)
@@ -8,10 +10,9 @@ let getQuestions = async (course, level) => {
 		.orderBy('createdAt','desc')
 		.limit(100)
 		.get()
-
-	let testLength = Math.min(5, questions.size) // TODO: Adjust test length to number required for testing
+	if(questions.size < noOfQuestionsForTest){ throw new functions.https.HttpsError('failed-precondition', 'Number of questions in database are not enough for a test') }
 	let randoms = []
-	for(let i = 0; i < testLength; i++){
+	for(let i = 0; i < noOfQuestionsForTest; i++){
 		let random = Math.floor(Math.random() * questions.size)
 		while(randoms.includes(random)){
 			random = Math.floor(Math.random() * questions.size)

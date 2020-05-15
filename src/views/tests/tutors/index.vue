@@ -52,6 +52,7 @@
 				if(result.value){
 					this.isLoading = true
 					await this.startTest()
+					this.isLoading = false
 				}
 			}
 		},
