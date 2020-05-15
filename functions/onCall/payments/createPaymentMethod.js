@@ -3,8 +3,8 @@ const admin = require('firebase-admin')
 const braintree = require('braintree')
 
 module.exports = functions.https.onCall(async (data, context) => {
-	if (!context.auth) {
-		/!*TODO: Delete comment *!/ //throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can create payment methods')
+	if (process.env.NODE_ENV === 'production' && !context.auth) {
+		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can create payment methods')
 	}
 	let ref = await admin.firestore().collection('users').doc(data.id).get()
 	if(!ref.exists){ throw new functions.https.HttpsError('invalid-argument', 'User doesn\'t exist') }
