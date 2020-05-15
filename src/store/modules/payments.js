@@ -92,7 +92,7 @@ const actions = {
 			new window.Toast({ icon: 'error', title: error.message })
 		}
 	},
-	async initPaymentFields({ commit }){
+	async initPaymentFields({ getters, commit }){
 		try{
 			let authorization = await getBraintreeClientToken()
 			let clientInstance = await client.create({ authorization })
@@ -108,6 +108,30 @@ const actions = {
 				}
 			}
 			commit('setHostedFieldsInstance',await hostedFields.create(options))
+			let paypalInstance = await paypalCheckout.create({ client: clientInstance, client_id: paypalClientId })
+			paypal.Button.render({
+				env: 'sandbox',
+				style: { label: 'paypal', size: 'large', shape: 'rect' },
+				payment: () => paypalInstance.createPayment({
+					flow: 'vault',
+					displayName: 'Stranerd',
+					currency: 'USD'
+				}),
+				onAuthorize: async (info, options) => {
+					let payload = await paypalInstance.tokenizePayment(options)
+					let result = await createPaymentMethod({
+						id: getters.getId,
+						nonce: payload.nonce
+					})
+					if(result === true){
+						new window.Toast({ icon: 'success', title: 'Paypal account added successfully' })
+					}else {
+						new window.Toast({icon: 'error', title: 'Error adding paypal account'})
+					}
+				},
+				onCancel: () => new window.Toast({ icon: 'warning', title: 'Account addition cancelled.' }),
+				onError: error => new window.Toast({ icon: 'error', title: error.message })
+			}, '#paypalButton')
 		}catch(error){
 			new window.Toast({ icon: 'error', title: error.message })
 		}

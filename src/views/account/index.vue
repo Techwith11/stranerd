@@ -102,7 +102,7 @@
 			<p>Rating: {{ getUser.tutor.rating }}</p>
 			<hr>
 		</div>
-		<div>
+		<div v-if="getUser.chattedWith">
 			<h4>Chatted With</h4>
 			<p>{{ getUser.chattedWith.join(', ') }}</p>
 		</div>
