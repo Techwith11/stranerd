@@ -9,10 +9,7 @@ module.exports = functions.auth.user().onCreate(async (user) => {
 	let data = {
 		bio: {
 			email: user.email,
-			name: user.displayName,
-			image: {
-				link: user.photoURL,
-			}
+			image: {}
 		},
 		roles: { isStudent: true },
 		dates:{
@@ -26,12 +23,15 @@ module.exports = functions.auth.user().onCreate(async (user) => {
 			type: 'free'
 		}
 	}
+	if(user.displayName){ data.bio.name = user.displayName }
+	if(user.photoURL){ data.bio.image.link = user.photoURL }
 	try {
-		let gateway = new braintree.BraintreeGateway({
-			environment: braintree.Environment.Sandbox,
-			merchantId: '6f9mkyr3h4k9gvjk',
-			publicKey: 'c57yb9sm9fc79c9x',
-			privateKey: 'bb26a3a051b5d1da5f430872c820f616',
+		let environment = functions.config().braintree.environment
+		let gateway = braintree.connect({
+			environment: braintree.Environment[environment === 'live' ? 'Production' : 'Sandbox'],
+			merchantId: functions.config().braintree[environment]['merchant_id'],
+			publicKey: functions.config().braintree[environment]['public_key'],
+			privateKey: functions.config().braintree[environment]['private_key']
 		})
 		let result = await gateway.customer.create({
 			firstName: user.displayName,
