@@ -32,7 +32,7 @@
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
+	import { mapGetters, mapActions } from 'vuex'
 	import { auth } from '@/config/firebase'
 	import { required, minLength, email, maxLength } from 'vuelidate/lib/validators'
 	export default {
@@ -44,14 +44,17 @@
 			},
 			isLoading: false
 		}),
+		computed: mapGetters(['getIntendedRoute']),
 		methods:{
-			...mapActions(['setModalOverview','setModalForgotPassword', 'closeModal']),
+			...mapActions(['setModalOverview','setModalForgotPassword', 'closeModal','clearIntendedRoute']),
 			loginUser(){
 				this.isLoading = true
 				auth.signInWithEmailAndPassword(this.user.email, this.user.password)
 					.then(async () => {
 						this.isLoading = false
 						this.closeModal()
+						this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
+						this.clearIntendedRoute()
 					})
 					.catch(error => {
 						new window.Toast({ icon: 'error', title: error.message })

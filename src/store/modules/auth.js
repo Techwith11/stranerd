@@ -4,7 +4,8 @@ import router from "@/router/index"
 const state = {
     id: window.localStorage.getItem('user_id'),
     user: {},
-    profileListener: () => {}
+    profileListener: () => {},
+    intendedRoute: null,
 }
 
 const getters = {
@@ -13,7 +14,8 @@ const getters = {
     getChattedWith: state => state.user.chattedWith || [],
     isLoggedIn: state => !!state.id,
     isAdmin: state => state.user && state.user.roles && state.user.roles.isAdmin,
-    isTutor: state => state.user && state.user.roles && state.user.roles.isTutor
+    isTutor: state => state.user && state.user.roles && state.user.roles.isTutor,
+    getIntendedRoute: state => state.intendedRoute
 }
 
 const mutations = {
@@ -25,7 +27,8 @@ const mutations = {
     setProfileListener: (state, listener) => {
         state.profileListener()
         state.profileListener = listener
-    }
+    },
+    setIntendedRoute: (state, route) => state.intendedRoute = route
 }
 
 const actions = {
@@ -62,6 +65,8 @@ const actions = {
         window.closeNavbar()
         window.closeDropdown()
     },
+    setIntendedRoute: ({ commit }, route) => commit('setIntendedRoute', route),
+    clearIntendedRoute: ({ commit }) => commit('setIntendedRoute', null),
 }
 
 export default { state, getters, mutations, actions }

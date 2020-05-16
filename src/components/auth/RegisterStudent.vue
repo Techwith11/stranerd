@@ -38,7 +38,7 @@
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
+	import { mapGetters, mapActions } from 'vuex'
 	import { auth, firestore } from '@/config/firebase.js'
 	import { required, minLength, email, maxLength, sameAs } from 'vuelidate/lib/validators'
 	export default {
@@ -52,6 +52,7 @@
 			},
 			isLoading: false
 		}),
+		computed: mapGetters(['getIntendedRoute']),
 		methods:{
 			...mapActions(['setModalOverview','closeModal']),
 			registerUser(){
@@ -59,13 +60,15 @@
 				auth.createUserWithEmailAndPassword(this.user.email, this.user.password)
 					.then(async result => {
 						await firestore.collection('users').doc(result.user.uid).set({ bio: { name: this.user.name }},{ merge: true })
-						this.isLoading = false
 						this.closeModal()
+						this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
+						this.clearIntendedRoute()
+						this.isLoading = false
 					})
 					.catch(error => {
 						new window.Toast({ icon: 'error', title: error.message })
 						this.isLoading = false;
-					});
+					})
 			}
 		},
 		validations:{

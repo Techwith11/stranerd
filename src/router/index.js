@@ -20,6 +20,7 @@ router.beforeEach((to, from, next) => {
 	if (requiresAuth && !isLoggedIn) {
 		new window.Toast({ icon: 'error', 'title': 'Login to continue' })
 		store.dispatch('setModalOverview')
+		store.dispatch('setIntendedRoute', to.fullPath)
 		return next('/')
 	}
 	if(requiresAdmin && !isAdmin){
