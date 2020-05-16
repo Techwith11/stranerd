@@ -3,13 +3,14 @@
 		<h4 class="text-muted mb-3">Upgrade User to Admin</h4>
 		<div class="d-flex align-items-center">
 			<input type="email" class="form-control flex-grow-1" placeholder="Enter user's email address" v-model="email">
-			<i class="fas fa-trash mx-3 text-danger" @click="clearAll"></i>
+			<a @click="clearAll"><i class="fas fa-trash mx-3 text-danger"></i></a>
 		</div>
 		<button class="btn btn-primary my-3" @click="getUsersByEmail" :disabled="!email">
 			<i class="fas fa-spinner fa-spin mr-2" v-if="fetchingUsers"></i>
 			<span>Find User</span>
 		</button>
-		<div class="mt-4" >
+		<div class="mt-2" v-if="fetched && !fetchingUsers">
+			<p class="text-danger opacity-75" v-if="users.length === 0">No user with such email exists</p>
 			<div class="my-3 d-flex justify-content-between align-items-center" v-for="user in users" :key="user['.key']">
 				<div class="text-truncate">
 					<p class="lead mb-1 text-wrap">{{ user.bio.name }}</p>

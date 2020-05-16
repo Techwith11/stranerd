@@ -41,19 +41,19 @@ const actions = {
         let makeTutor = functions.httpsCallable('makeTutor')
         return makeTutor(tutor)
             .then(res => res.data)
-            .catch(error => error)
+            .catch(error => new window.Toast({ icon: 'error', title: error.message }))
     },
     makeAdmin: (store, data) => {
         let makeAdmin = functions.httpsCallable('makeAdmin')
         return makeAdmin(data)
             .then(res => res.data)
-            .catch(error => error)
+            .catch(error => new window.Toast({ icon: 'error', title: error.message }))
     },
     removeAdmin: (store, data) => {
         let removeAdmin = functions.httpsCallable('removeAdmin')
         return removeAdmin(data)
             .then(res => res.data)
-            .catch(error => error)
+            .catch(error => new window.Toast({ icon: 'error', title: error.message }))
     },
     logout: async ({commit}) => {
         await auth.signOut()

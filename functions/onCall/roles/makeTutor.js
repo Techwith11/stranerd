@@ -13,28 +13,27 @@ module.exports = functions.https.onCall(async (data, context) => {
 			await admin.auth().setCustomUserClaims(data.id, { isTutor: true })
 		}
 
-		let upgrade = {}
-		upgrade[data.tutor.course] = {}
-		let levels = {}
-		levels[data.tutor.course] = 0
+		let ref = admin.firestore().collection('users').doc(data.id)
 
-		await admin
-			.firestore()
-			.collection('users')
-			.doc(data.id)
-			.set({
-				bio: data.bio,
-				roles: { isTutor: true },
-				tutor: {
-					upgrade,
-					levels,
-					reviews: 0,
-					rating: 0,
-					canTeach: false,
-					courses: [data.tutor.course],
-					qualification: data.tutor.qualification
-				}
-			}, { merge: true })
+		let user = (await ref.get()).data()
+
+		let upgrade = {}
+		upgrade[data.course] = {}
+		let levels = {}
+		levels[data.course] = 0
+		let qualifications = {}
+		qualifications[data.course] = data.qualification
+		let rating = user.roles.isTutor ? user.tutor.rating : 0
+		let reviews = user.roles.isTutor ? user.tutor.reviews : 0
+		let canTeach = user.roles.isTutor ? user.tutor.canTeach : false
+		let courses = user.roles.isTutor ? [...user.tutor.courses, data.course] : [data.course]
+
+		await ref.set({
+			bio: { bio: data.bio },
+			roles: { isTutor: true },
+			tutor: { upgrade, levels, reviews, rating, canTeach, qualifications, courses }
+		}, { merge: true })
+
 		return true
 	}catch(error){
 		throw new functions.https.HttpsError('unknown', error.message)
