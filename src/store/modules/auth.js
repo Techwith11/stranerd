@@ -40,6 +40,19 @@ const actions = {
     makeTutor: (store, tutor) => {
         let makeTutor = functions.httpsCallable('makeTutor')
         return makeTutor(tutor)
+            .then(res => res.data)
+            .catch(error => error)
+    },
+    makeAdmin: (store, data) => {
+        let makeAdmin = functions.httpsCallable('makeAdmin')
+        return makeAdmin(data)
+            .then(res => res.data)
+            .catch(error => error)
+    },
+    removeAdmin: (store, data) => {
+        let removeAdmin = functions.httpsCallable('removeAdmin')
+        return removeAdmin(data)
+            .then(res => res.data)
             .catch(error => error)
     },
     logout: async ({commit}) => {

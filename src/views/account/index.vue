@@ -1,6 +1,7 @@
 <template>
 	<div class="container py-3" v-if="Object.keys(getUser).length > 0">
-		<div class="btn-group mb-3" role="group">
+		<helper-spinner v-if="isLoading" />
+		<div class="btn-group mb-3" role="group" v-if="isDev">
 			<button type="button" class="btn btn-primary mr-3" @click="setId('kevin11')">Login as Kevin11</button>
 			<button type="button" class="btn btn-primary mr-3" @click="setId('frank')">Login as Frank</button>
 			<button type="button" class="btn btn-primary mr-3" @click="setId('max')">Login as Max</button>
@@ -23,34 +24,6 @@
 			<button class="d-block btn btn-info my-2" @click="subscribe('stranerd_yearly_intermediate_plan')">Stranerd intermediate subscription 16% off $150/year</button>
 			<button class="d-block btn btn-info my-2" @click="subscribe('stranerd_monthly_master_plan')">Stranerd master subscription $19.99/month</button>
 			<button class="d-block btn btn-info my-2" @click="subscribe('stranerd_yearly_master_plan')">Stranerd master subscription 16% off $200/year</button>
-		</div>
-		<div>
-			<helper-spinner v-if="isLoading" />
-			<form>
-				<div class="form-group">
-					<label>Credit Card Number</label>
-					<div id="creditCardNumber" class="form-control"></div>
-				</div>
-				<div class="form-group">
-					<div class="row">
-						<div class="col-6">
-							<label>Expire Date</label>
-							<div id="expireDate" class="form-control"></div>
-						</div>
-						<div class="col-6">
-							<label>CVV</label>
-							<div id="cvv" class="form-control"></div>
-						</div>
-					</div>
-				</div>
-				<div class="text-center">
-					<button class="btn btn-primary btn-block" :disabled="!isThereAHoistedFieldInstance" @click.prevent="addCard">Add Credit Card</button>
-				</div>
-				<hr />
-				<div class="form-group text-center">
-					<div id="paypalButton"></div>
-				</div>
-			</form>
 		</div>
 		<div>
 			<h4>Bio</h4>
@@ -121,10 +94,11 @@
 			token: ''
 		}),
 		computed: {
-			...mapGetters(['getUser','isThereAHoistedFieldInstance','getId'])
+			...mapGetters(['getUser','isThereAHoistedFieldInstance','getId']),
+			isDev(){ return process.env.NODE_ENV === 'development' }
 		},
 		methods:{
-			...mapActions(['setId','initPaymentFields','createPaymentMethod','makePayment','subscribeToPlan']),
+			...mapActions(['setId','createPaymentMethod','makePayment','subscribeToPlan']),
 			async addCard(){
 				this.isLoading = true
 				await this.createPaymentMethod()
@@ -145,7 +119,6 @@
 		async mounted(){
 			let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).get()
 			docs.forEach(doc => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
-			await this.initPaymentFields()
 			this.isLoading = false
 		},
 		components: {

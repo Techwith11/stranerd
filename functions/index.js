@@ -11,11 +11,10 @@ exports.requestMakeAdmin = require('./requests/makeAdmin')
 
 
 // On Call Triggers
-exports.makeTutor = require('./onCall/makeTutor')
-exports.makeAdmin = require('./onCall/makeAdmin')
-exports.startTutorTest = require('./onCall/startTutorTest')
-exports.markTutorTest = require('./onCall/markTutorTest')
 exports.createNewSingleChatCollection = require('./onCall/createNewSingleChatCollection')
+
+exports.startTutorTest = require('./onCall/tests/startTutorTest')
+exports.markTutorTest = require('./onCall/tests/markTutorTest')
 
 exports.startSession = require('./onCall/sessions/startSession')
 exports.payForSession = require('./onCall/sessions/payForSession')
@@ -27,6 +26,9 @@ exports.createPaymentMethod = require('./onCall/payments/createPaymentMethod')
 exports.makePayment = require('./onCall/payments/makePayment')
 exports.subscribeToPlan = require('./onCall/payments/subscribeToPlan')
 
+exports.makeTutor = require('./onCall/roles/makeTutor')
+exports.makeAdmin = require('./onCall/roles/makeAdmin')
+exports.removeAdmin = require('./onCall/roles/removeAdmin')
 
 // Firestore Triggers
 // On Create

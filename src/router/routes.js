@@ -87,6 +87,12 @@ export default [
         meta: { requiresAuth: true }
     },
     {
+        path: '/admins',
+        name: 'Admins',
+        component: () => import(/* webpackChunkName: "questions" */ '@/views/admin/index'),
+        meta: { requiresAuth: true, requiresAdmin: true }
+    },
+    {
         path: '*',
         name: 'Not Found',
         component: () => import(/* webpackChunkName: "not_found" */ '@/views/errors/not_found')

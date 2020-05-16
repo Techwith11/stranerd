@@ -14,10 +14,15 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
 	const requiresAuth = to.matched.some(route => route.meta.requiresAuth)
+	const requiresAdmin = to.matched.some(route => route.meta.requiresAdmin)
 	const isLoggedIn = store.getters.isLoggedIn
+	const isAdmin = store.getters.isAdmin
 	if (requiresAuth && !isLoggedIn) {
 		new window.Toast({ icon: 'error', 'title': 'Login to continue' })
 		store.dispatch('setModalOverview')
+		return next('/')
+	}
+	if(requiresAdmin && !isAdmin){
 		return next('/')
 	}
 	return next()
