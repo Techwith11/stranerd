@@ -161,9 +161,9 @@ const actions = {
 		}
 	},
 
-	async payForSession({ commit, getters }, charge){
+	async payForSession({ commit, getters }){
 		let session = getters.getCurrentSession
-		let data = { id: session['.key'], charge }
+		let data = { id: session['.key'] }
 		functions.httpsCallable('payForSession')(data).then(async () => {
 			await router.push(`/sessions/${session['.key']}`).catch(error => error)
 			commit('setSessionListener', () => {})

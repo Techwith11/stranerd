@@ -2,31 +2,18 @@ import { functions } from '@/config/firebase'
 import { client, hostedFields, paypalCheckout } from 'braintree-web'
 import paypal from 'paypal-checkout'
 
-let getBraintreeClientToken = async () => {
-	return functions.httpsCallable('getClientToken')()
-		.then(res => res.data)
-		.catch(error => new window.Toast({ icon: 'error', title: error.message }))
-}
-let processPayment = async (data) => {
-	return functions.httpsCallable('processPayment')(data)
-		.then(res => res.data)
-		.catch(error => new window.Toast({ icon: 'error', title: error.message }))
-}
-let createPaymentMethod = async (data) => {
-	return functions.httpsCallable('createPaymentMethod')(data)
-		.then(res => res.data)
-		.catch(error => new window.Toast({ icon: 'error', title: error.message }))
-}
-let makePayment = async (data) => {
-	return functions.httpsCallable('makePayment')(data)
-		.then(res => res.data)
-		.catch(error => new window.Toast({ icon: 'error', title: error.message }))
-}
-let subscribeToPlan = async (data) => {
-	return functions.httpsCallable('subscribeToPlan')(data)
-		.then(res => res.data)
-		.catch(error => new window.Toast({ icon: 'error', title: error.message }))
-}
+let getBraintreeClientToken = async () => functions.httpsCallable('getClientToken')()
+	.then(res => res.data)
+	.catch(error => new window.Toast({icon: 'error', title: error.message}))
+let createPaymentMethod = async (data) => functions.httpsCallable('createPaymentMethod')(data)
+	.then(res => res.data)
+	.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+let makePayment = async (data) => functions.httpsCallable('makePayment')(data)
+	.then(res => res.data)
+	.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+let subscribeToPlan = async (data) => functions.httpsCallable('subscribeToPlan')(data)
+	.then(res => res.data)
+	.catch(error => new window.Toast({ icon: 'error', title: error.message }))
 
 const state = {
 	hostedFieldsInstance: null
@@ -34,7 +21,6 @@ const state = {
 
 const getters = {
 	getHoistedFieldsInstance: state => state.hostedFieldsInstance,
-	canPay: state => state.hostedFieldsInstance !== null,
 	isThereAHoistedFieldInstance: state => state.hostedFieldsInstance !== null
 }
 
@@ -43,55 +29,7 @@ const mutations = {
 }
 
 const actions = {
-	async initializePaymentFields({ commit }, data){
-		try{
-			let tokens = await getBraintreeClientToken()
-			let clientInstance = await client.create({ authorization: tokens.braintree })
-			let month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
-			let year = new Date().getFullYear()
-			let options = {
-				client: clientInstance,
-				styles: { input: { 'font-size': '14px' }},
-				fields: {
-					number: { selector: '#creditCardNumber', placeholder: 'Enter Credit Card' },
-					cvv: { selector: '#cvv', placeholder: 'Enter CVV' },
-					expirationDate: { selector: '#expireDate', placeholder: `${month}/${year}` }
-				}
-			}
-			commit('setHostedFieldsInstance',await hostedFields.create(options))
-			let paypalInstance = await paypalCheckout.create({ client: clientInstance, client_id: tokens.paypal })
-			paypal.Button.render({
-				env: 'sandbox',
-				style: { label: 'paypal', size: 'large', shape: 'rect' },
-				payment: () => paypalInstance.createPayment({
-					flow: 'checkout',
-					intent: 'sale',
-					amount: data.amount,
-					displayName: 'Stranerd',
-					currency: 'USD'
-				}),
-				onAuthorize: async (info, options) => {
-					let payload = await paypalInstance.tokenizePayment(options)
-					let result = await processPayment({
-						nonce: payload.nonce,
-						amount: data.amount,
-					})
-					if(result.success){
-						new window.Toast({ icon: 'success', title: 'Transaction successful.' })
-						commit('setHostedFieldsInstance',null)
-					}else{
-						new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
-					}
-					data.onPaypalSuccessful(result)
-				},
-				onCancel: () => new window.Toast({ icon: 'warning', title: 'Transaction cancelled.' }),
-				onError: error => new window.Toast({ icon: 'error', title: error.message })
-			}, '#paypalButton')
-		}catch(error){
-			new window.Toast({ icon: 'error', title: error.message })
-		}
-	},
-	async initPaymentFields({ getters, commit }){
+	async initPaymentFields({ getters, commit }, data){
 		try{
 			let tokens = await getBraintreeClientToken()
 			let clientInstance = await client.create({ authorization: tokens.braintree })
@@ -124,9 +62,11 @@ const actions = {
 					})
 					if(result === true){
 						new window.Toast({ icon: 'success', title: 'Paypal account added successfully' })
+						data.onPayPalAuthorization(result)
 					}else {
 						new window.Toast({icon: 'error', title: 'Error adding paypal account'})
 					}
+					data.onPayPalAuthorization(result)
 				},
 				onCancel: () => new window.Toast({ icon: 'warning', title: 'Account addition cancelled.' }),
 				onError: error => new window.Toast({ icon: 'error', title: error.message })
@@ -146,24 +86,6 @@ const actions = {
 				new window.Toast({ icon: 'success', title: 'Card added successfully' })
 			}else{
 				new window.Toast({ icon: 'error', title: 'Error adding card' })
-			}
-		}catch(error){
-			new window.Toast({ icon: 'error', title: error.message })
-		}
-	},
-	async pay({ commit, getters }, amount) {
-		if(amount < 1){ return new window.Toast({ icon: 'error', title: 'Invalid amount' }) }
-		try{
-			let payload = await getters.getHoistedFieldsInstance.tokenize()
-			let result = await processPayment({
-				nonce: payload.nonce,
-				amount,
-			})
-			if(result.success){
-				new window.Toast({ icon: 'success', title: 'Transaction successful.' })
-				commit('setHostedFieldsInstance',null)
-			}else{
-				new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
 			}
 			return result
 		}catch(error){

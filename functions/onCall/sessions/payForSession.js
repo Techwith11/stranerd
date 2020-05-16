@@ -10,22 +10,12 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 	let session = (await ref.get()).data()
 
-	if (context.auth && context.auth.uid !== session.student) {
-		/*TODO: Delete comment */ //throw new functions.https.HttpsError('unauthenticated', 'Only the student of the session can pay for it')
+	if (process.env.NODE_ENV === 'production' && context.auth && context.auth.uid !== session.student) {
+		throw new functions.https.HttpsError('failed-precondition', 'Only the student of the session can pay for it')
 	}
 
 	let endedAt = admin.firestore.Timestamp.now().toDate()
 	endedAt.setMinutes(endedAt.getMinutes() + 60 * session.duration)
 
-	let charge = data.charge
-	charge.dates = { createdAt: admin.firestore.FieldValue.serverTimestamp() }
-
-	await admin.firestore().collection(`users/${session.student}/charges`).add(charge)
-
-	let update = {
-		dates: { endedAt }
-	}
-	if(charge.success){ update.paid = true }
-
-	return await ref.set(update, { merge: true })
+	return await ref.set({ dates: { endedAt }, paid: true }, { merge: true })
 })
