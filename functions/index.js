@@ -21,7 +21,6 @@ exports.payForSession = require('./onCall/sessions/payForSession')
 exports.addRatingToTutor = require('./onCall/sessions/addRatingToTutor')
 
 exports.getClientToken = require('./onCall/payments/getClientToken')
-exports.processPayment = require('./onCall/payments/processPayment')
 exports.createPaymentMethod = require('./onCall/payments/createPaymentMethod')
 exports.makePayment = require('./onCall/payments/makePayment')
 exports.subscribeToPlan = require('./onCall/payments/subscribeToPlan')
