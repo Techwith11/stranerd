@@ -19,9 +19,7 @@ module.exports = functions.auth.user().onCreate(async (user) => {
 			online: true,
 			lastSeen: admin.firestore.FieldValue.serverTimestamp()
 		},
-		account: {
-			type: 'free'
-		}
+		account: {}
 	}
 	if(user.displayName){ data.bio.name = user.displayName }
 	if(user.photoURL){ data.bio.image.link = user.photoURL }
