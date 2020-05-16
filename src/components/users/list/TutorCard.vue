@@ -8,7 +8,7 @@
 				<div class="card-body pl-sm-0">
 					<h5 class="card-title">{{ user.bio.name }}</h5>
 					<p class="card-text mb-1">{{ user.bio.bio }}</p>
-					<p class="card-text mb-1">Course: {{ user.tutor.courses.join('  ') }}</p>
+					<p class="card-text mb-1">Courses: {{ getCourses }}</p>
 					<rating-stars class="small" :rating="user.tutor.rating"/>
 					<router-link :to="`/users/${user['.key']}`" class="card-link">Visit Profile</router-link>
 				</div>
@@ -29,7 +29,12 @@
 		},
 		computed: {
 			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
-			...mapGetters(['getDefaultImage'])
+			...mapGetters(['getDefaultImage']),
+			getCourses(){
+				return this.user.tutor.courses.filter(course => {
+					return this.user.tutor.levels[course] > 0
+				}).join(',')
+			}
 		},
 		components: {
 			'rating-stars': RatingStars

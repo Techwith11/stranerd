@@ -36,7 +36,7 @@
 		computed: {
 			filteredTutors(){
 				let filtered = this.tutors
-				if(this.course !== 'All'){ filtered = filtered.filter(tutor => tutor.tutor.courses.includes(this.course)) }
+				if(this.course !== 'All'){ filtered = filtered.filter(tutor => tutor.tutor.courses.includes(this.course) && tutor.tutor.levels[this.course] > 0) }
 				filtered = filtered.filter(tutor => tutor.bio.name.toLowerCase().includes(this.name.toLowerCase()))
 				return filtered
 			}
