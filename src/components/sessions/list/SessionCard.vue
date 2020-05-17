@@ -43,7 +43,12 @@
 			...mapGetters(['getId','getDefaultImage']),
 			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
 			getRating(){
-				return this.session.reviews ? this.getId === this.session.tutor ? this.session.reviews.tutor.rating : this.session.reviews.student.rating : 0
+				if(!this.session.reviews){ return 0 }
+				if(this.getId === this.session.tutor){
+					return this.session.reviews.tutor ? this.session.reviews.tutor.rating : 0
+				}else{
+					return this.session.reviews.student ? this.session.reviews.student.rating : 0
+				}
 			},
 			getOtherPerson(){ return this.getId === this.session.tutor ? this.session.student : this.session.tutor },
 			getLength(){
