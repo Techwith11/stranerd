@@ -3,7 +3,7 @@
 		<div class="bg-dark">
 			<div class="container text-white pb-3">
 				<div class="d-flex align-items-center">
-					<i class="fas fa-arrow-left mr-3" @click="$router.push('/chats')"></i>
+					<a @click.prevent="$router.push('/chats')"><i class="fas fa-arrow-left mr-3"></i></a>
 					<img :src="getImageLink" class="mr-3" width="50px" alt="" @click="$router.push(`/users/${user['.key']}`)" />
 					<router-link class="d-block text-truncate text-white text-decoration-none" :to="`/users/${user['.key']}`">{{ user.bio.name }}</router-link>
 					<button class="ml-auto d-none d-md-inline white-button" v-if="canHaveSession" @click="bringUpSessionForm">Start session</button>

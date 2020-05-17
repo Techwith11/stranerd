@@ -3,7 +3,7 @@
 		<div class="d-flex align-items-center justify-content-between my-3">
 			<i></i>
 			<h4 class="mb-0">Select Session Length</h4>
-			<i class="fas fa-times text-danger" @click="cancelSessionAndCloseModal"></i>
+			<a @click.prevent="cancelSessionAndCloseModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
 		<p class="small text-center my-4">Please the select the length in hours you would like for the session</p>
 		<div class="mx-2">

@@ -3,7 +3,7 @@
 		<h4 class="text-muted mb-3">Upgrade User to Admin</h4>
 		<div class="d-flex align-items-center">
 			<input type="email" class="form-control flex-grow-1" placeholder="Enter user's email address" v-model="email">
-			<a @click="clearAll"><i class="fas fa-trash mx-3 text-danger"></i></a>
+			<a @click.prevent="clearAll"><i class="fas fa-trash mx-3 text-danger"></i></a>
 		</div>
 		<button class="btn btn-primary my-3" @click="getUsersByEmail" :disabled="!email">
 			<i class="fas fa-spinner fa-spin mr-2" v-if="fetchingUsers"></i>

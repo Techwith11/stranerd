@@ -5,7 +5,7 @@
 			<div class="d-flex align-items-center justify-content-between my-3">
 				<i></i>
 				<h4 class="mb-0">Pay for Session</h4>
-				<i class="fas fa-times text-danger" @click="this.cancelSessionAndCloseModal"></i>
+				<a @click.prevent="this.cancelSessionAndCloseModal"><i class="fas fa-times text-danger"></i></a>
 			</div>
 			<form v-if="showForm">
 				<div class="form-group">

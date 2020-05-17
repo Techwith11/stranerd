@@ -3,7 +3,7 @@
 		<div class="d-flex justify-content-between align-items-center my-3">
 			<i></i>
 			<h3 class="mb-0">Create Content</h3>
-			<i class="fas fa-times fa-2x text-danger" @click="closeCreateModal"></i>
+			<a @click.prevent="closeCreateModal"><i class="fas fa-times fa-2x text-danger"></i></a>
 		</div>
 		<div class="d-flex flex-column mx-2 align-items-center">
 			<button @click="setCreateModalCourse">Create Course</button>

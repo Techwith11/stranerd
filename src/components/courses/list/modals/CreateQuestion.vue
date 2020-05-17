@@ -1,7 +1,7 @@
 <template>
 	<div class="m-md-5">
 		<div class="d-flex align-items-baseline justify-content-between my-3">
-			<i class="fas fa-arrow-left" @click="setCreateModalOverview"></i>
+			<a @click.prevent="setCreateModalOverview"><i class="fas fa-arrow-left"></i></a>
 			<h4>Create Question</h4>
 			<i></i>
 		</div>

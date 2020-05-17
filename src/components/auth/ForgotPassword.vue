@@ -1,7 +1,7 @@
 <template>
 	<div class="m-md-5">
 		<div class="d-flex align-items-baseline justify-content-between my-3">
-			<i class="fas fa-arrow-left" @click="setModalLogin"></i>
+			<a @click.prevent="setModalLogin"><i class="fas fa-arrow-left"></i></a>
 			<h4>Forgot Password</h4>
 			<i></i>
 		</div>

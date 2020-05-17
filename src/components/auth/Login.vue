@@ -1,7 +1,7 @@
 <template>
 	<div class="m-md-5">
 		<div class="d-flex align-items-baseline justify-content-between my-3">
-			<i class="fas fa-arrow-left" @click="setModalOverview"></i>
+			<a @click.prevent="setModalOverview"><i class="fas fa-arrow-left"></i></a>
 			<h4>Sign in with Email</h4>
 			<i></i>
 		</div>

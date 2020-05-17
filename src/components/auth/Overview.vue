@@ -1,7 +1,7 @@
 <template>
 	<div class="text-center m-md-5">
 		<div class="d-flex justify-content-end">
-			<i class="fas fa-times text-danger lead" @click="closeModal"></i>
+			<a @click.prevent="closeModal"><i class="fas fa-times text-danger lead"></i></a>
 		</div>
 		<h4 class="my-3">Stranerd</h4>
 		<p class="small my-4">Sign in to allow us serve you personalized content, course recommendations, track tutors you like, your sessions and your payments.</p>
@@ -22,7 +22,7 @@
 			</button>
 			<span class="my-2">
 				No account?
-				<a class="text-info" @click.prevent="setModalRegisterStudent">Sign up with email</a>
+				<a class="text-info" @click="setModalRegisterStudent">Sign up with email</a>
 			</span>
 		</div>
 		<p class="small text-muted my-4">To make Stranerd work, we might log user data and share it with service providers. Click "Sign In" above to accept Stranerd's Terms of Service & Privacy Policy.</p>

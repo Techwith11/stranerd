@@ -3,7 +3,7 @@
 		<div class="d-flex align-items-center justify-content-between my-3">
 			<i></i>
 			<h4 class="mb-0">Post New Question</h4>
-			<i class="fas fa-times text-danger" @click="this.closePostModal"></i>
+			<a @click.prevent="closePostModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
 		<div class="form-group my-3">
 			<input type="text" class="form-control" placeholder="Question Topic" v-model.trim="$v.post.title.$model"
