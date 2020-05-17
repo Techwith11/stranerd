@@ -26,11 +26,11 @@ let helpers = {
         }
         let file = data.media
         let link = `${path}/${Date.now()}_${file.name}`
-        if(window.location.hostname === 'localhost'){
+        if(process.env.NODE_ENV === 'production'){
+            await storage.ref(link).put(file)
+            link = await storage.ref(link).getDownloadURL()
             chat.media = { name: file.name, type: file.type, link }
         }else{
-            await storage.ref(link).put(this.video)
-            link = await storage.ref(link).getDownloadURL()
             chat.media = { name: file.name, type: file.type, link }
         }
         return await firestore.collection(path).add(chat)

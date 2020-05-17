@@ -141,7 +141,7 @@
 			},
 			async uploadVideo(){
 				new window.Toast({ icon: 'success', title: 'Video uploading' })
-				let name = `courses/videos/${Date.now()}_${this.video.name}}`
+				let name = `courses/videos/${Date.now()}_${this.video.name}`
 				await storage.ref(name).put(this.video)
 				let link = await storage.ref(name).getDownloadURL()
 				this.course.video = { name: this.video.name, link, type: this.video.type }

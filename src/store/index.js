@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 
 import auth from './modules/auth'
 import chats from './modules/chats'
+import contents from './modules/contents'
 import modal from './modules/modal'
 import payments from './modules/payments'
 import posts from './modules/posts'
@@ -16,6 +17,7 @@ export default new Vuex.Store({
 	modules: {
 		auth,
 		chats,
+		contents,
 		modal,
 		payments,
 		posts,

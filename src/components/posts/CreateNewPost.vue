@@ -23,7 +23,7 @@
 			<div class="small mt-1" v-if="post.tags.length > 0">
 				<span v-for="tag in post.tags" :key="tag">
 					{{ tag }}
-					<i class="fas fa-times text-danger mr-1" @click="removeTag(tag)"></i>
+					<a @click.prevent="removeTag(tag)"><i class="fas fa-times text-danger mr-1"></i></a>
 				</span>
 			</div>
 			<small class="small text-muted" v-else>Use comma separated tags to attach keywords related to your questions. This can include related subjects, topics, formulas etc. At least one tag is required</small>
@@ -34,13 +34,13 @@
 			<div class="small mt-1" v-if="media.length > 0">
 				<span v-for="file in media" :key="file.name">
 					{{ file.name }}
-					<i class="fas fa-times text-danger mr-1" @click="removeFile(file)"></i>
+					<a @click.prevent="removeFile(file)"><i class="fas fa-times text-danger mr-1"></i></a>
 				</span>
 			</div>
 			<small class="small text-muted" v-else>Upload any relevant images such as diagrams associated with the question</small>
 		</div>
 		<div class="d-flex justify-content-end">
-			<button class="accent-button" :disabled="isLoading || $v.$invalid" @click="createPost">
+			<button class="accent-button" :disabled="isLoading || $v.$invalid" @click="submitPost">
 				<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
 				<span>Post question</span>
 			</button>
@@ -56,14 +56,15 @@
 			post: {
 				title: '',
 				body: '',
-				tags: []
+				tags: [],
+				media: []
 			},
 			tag: '',
 			media: [],
 			isLoading: false
 		}),
 		methods: {
-			...mapActions(['closePostModal']),
+			...mapActions(['closePostModal','createPost']),
 			splitTag(){
 				let tag = this.tag.trim().split(',')[0].toLowerCase()
 				this.tag = ''
@@ -82,11 +83,13 @@
 					}
 				})
 			},
-			async createPost(){
+			async submitPost(){
 				this.isLoading = true
-				//TODO: Upload media
-				//TODO: Create new post
-				//TODO: Redirect to new post page
+				try{
+					let id = await this.createPost({ post: this.post, media: this.media })
+					console.log(id)
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+				this.isLoading = false
 			}
 		},
 		validations:{

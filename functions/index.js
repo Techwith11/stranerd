@@ -29,6 +29,8 @@ exports.makeTutor = require('./onCall/roles/makeTutor')
 exports.makeAdmin = require('./onCall/roles/makeAdmin')
 exports.removeAdmin = require('./onCall/roles/removeAdmin')
 
+exports.createPost = require('./onCall/contents/createPost')
+
 // Firestore Triggers
 // On Create
 exports.firestoreCourseCreated = require('./firestore/onCreate/courses')
