@@ -1,5 +1,18 @@
 import firebase,{ firestore, functions, storage } from '@/config/firebase'
 
+let uploadFile = async (path, file) => {
+    try{
+        let link = `${path}/${Date.now()}_${file.name}`
+        if(process.env.NODE_ENV === 'production'){
+            await storage.ref(link).put(file)
+            link = await storage.ref(path).getDownloadURL()
+        }else{
+            link = `http://localhost:5000/${link}`
+        }
+        return { name: file.name, link, type: file.type }
+    }catch{ throw new Error(`Error uploading ${file.name}`) }
+}
+
 let helpers = {
     createNewChatCollection: async (from, to) => {
         let createNewSingleChatCollection = functions.httpsCallable('createNewSingleChatCollection')
@@ -25,14 +38,7 @@ let helpers = {
             from: auth,
         }
         let file = data.media
-        let link = `${path}/${Date.now()}_${file.name}`
-        if(process.env.NODE_ENV === 'production'){
-            await storage.ref(link).put(file)
-            link = await storage.ref(link).getDownloadURL()
-            chat.media = { name: file.name, type: file.type, link }
-        }else{
-            chat.media = { name: file.name, type: file.type, link }
-        }
+        chat.media = await uploadFile(path, file)
         return await firestore.collection(path).add(chat)
     },
     readChat: async (path) => {

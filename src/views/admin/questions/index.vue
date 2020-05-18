@@ -35,7 +35,6 @@
 			}
 		},
 		async mounted() {
-			//TODO: Implement Pagination
 			let subDocs = await firestore.collection('subjects').get()
 			subDocs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 			//TODO: Implement pagination for questions

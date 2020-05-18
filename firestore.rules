@@ -2,9 +2,9 @@ rules_version = '2';
 service cloud.firestore {
 	match /databases/{database}/documents {
 		match /chats/singles/{path}/{id} {
-			allow read, update: if true; //request.auth.uid in path.split('_');
-			allow create: if true;//request.auth.uid == request.resource.data.from;
-			allow delete: if resource.data.from == request.auth.uid;
+			allow read, update: if hasAccessToChat(path);
+			allow create: if isMine(request.resource.data.from);
+			allow delete: if isMine(resource.data.from);
 		}
 
 		match /courses/{id} {
@@ -16,7 +16,7 @@ service cloud.firestore {
 		match /courses/{course}/discussions/{id} {
 			allow read: if hasAccessToCourse(course);
 			allow create: if hasAccessToCourse(course);
-			allow update: if resource.data.userId == request.auth.uid;
+			allow update: if isMine(resource.data.userId);
 			allow delete: if isAdmin();
 		}
 
@@ -45,7 +45,7 @@ service cloud.firestore {
 		}
 
 		match /subjects/{id} {
-			allow read: if true;
+			allow read: if isAuthenticated();
 			allow write: if isAdmin();
 		}
 
@@ -56,31 +56,24 @@ service cloud.firestore {
 		}
 
 		match /users/{id} {
-			allow read: if true;
-			allow create: if true;//isAuthenticated();
-			allow update: if true;//isMine(id);
-			allow delete: if true;//isAdmin();
-		}
-
-		match /users/{user}/charges/{id} {
-			allow read: if isMine(user);
-			allow create: if isMine(user);
-			allow update: if isMine(user);
-			allow delete: if isAdmin()
+			allow read: if isAuthenticated();
+			allow create: if isAuthenticated();
+			allow update: if isMine(id);
+			allow delete: if isAdmin();
 		}
 
 		match /users/{user}/transactions/{id} {
 			allow read: if isMine(user);
 			allow create: if isMine(user);
 			allow update: if isMine(user);
-			allow delete: if isAdmin()
+			allow delete: if isAdmin();
 		}
 
 		match /users/{user}/paymentMethods/{id} {
 			allow read: if isMine(user);
 			allow create: if isMine(user);
 			allow update: if isMine(user);
-			allow delete: if isAdmin()
+			allow delete: if isAdmin();
 		}
 
 		match /{document=**} {
@@ -100,12 +93,16 @@ service cloud.firestore {
 		}
 
 		function hasAccessToCourse(course) {
-			return true; //request.auth.uid in get(/databases/$(database)/documents/courses/$(course)).data.savedBy
+			return true; //request.auth.uid in get(/databases/$(database)/documents/courses/$(course)).data.savedBy;
 		}
 
 		function hasAccessToSession(session) {
 			let sessionData = get(/databases/$(database)/documents/sessions/$(session)).data;
-			return true; //request.auth.uid == sessionData.tutor || request.auth.uid == sessionData.student
+			return true; //request.auth.uid == sessionData.tutor || request.auth.uid == sessionData.student;
+		}
+
+		function hasAccessToChat(path) {
+			return true; //request.auth.uid in path.split('_');
 		}
 	}
 }
