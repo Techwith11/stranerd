@@ -127,6 +127,5 @@
 		display: block;
 		min-width: 256px;
 		max-width: 700px;
-		box-shadow: none;
 	}
 </style>

@@ -56,8 +56,7 @@
 			post: {
 				title: '',
 				body: '',
-				tags: [],
-				media: []
+				tags: []
 			},
 			tag: '',
 			media: [],

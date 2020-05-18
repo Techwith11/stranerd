@@ -36,17 +36,17 @@
 			<div v-if="page === 2">
 				<div class="form-group my-3">
 					<input type="file" @change="catchVideo" class="d-none" ref="videoInput" accept="video/*">
-					<span @click="$refs.videoInput.click()">
-						<span>{{video.name}} </span>
+					<a @click.prevent="$refs.videoInput.click()">
+						<span v-if="video">{{video.name}} </span>
 						<span class="text-info">Upload video</span>
-					</span>
+					</a>
 				</div>
 				<div class="form-group my-3">
 					<input type="file" @change="catchImage" class="d-none" ref="imageInput" accept="image/*">
-					<span @click="$refs.imageInput.click()">
-						<span>{{image.name}} </span>
+					<a @click.prevent="$refs.imageInput.click()">
+						<span v-if="image">{{image.name}} </span>
 						<span class="text-info">Upload image preview</span>
-					</span>
+					</a>
 				</div>
 				<div class="custom-control custom-checkbox my-3">
 					<input type="checkbox" class="custom-control-input" id="isPremium"  v-model="$v.course.premium.$model"
@@ -55,24 +55,22 @@
 				</div>
 				<div v-if="course.premium" class="form-group my-3">
 					<input type="file" @change="catchPreview" class="d-none" ref="previewInput" accept="video/*">
-					<span @click="$refs.previewInput.click()">
-						<span>{{preview.name}}  </span>
+					<a @click.prevent="$refs.previewInput.click()">
+						<span v-if="preview">{{preview.name}}  </span>
 						<span class="text-info">Upload video preview</span>
-					</span>
+					</a>
 				</div>
 				<div class="form-group my-3">
 					<input type="file" @change="catchDocuments" class="d-none" ref="documentInput" multiple>
-					<span>
-						<span class="small">{{ documents.map(doc => doc.name).join(', ') }} </span>
-						<span class="text-info" @click.prevent="$refs.documentInput.click()">Upload attachment files</span>
-					</span>
+					<span>{{ documents.map(doc => doc.name).join(', ') }} </span>
+					<a class="text-info" @click.prevent="$refs.documentInput.click()">Upload attachment files</a>
 				</div>
 				<div class="d-flex justify-content-between align-items-center my-3">
 					<button class="bg-info" @click.prevent="goToPrevious">
 						<i class="fas fa-angle-left mr-2"></i>
 						<span>Previous</span>
 					</button>
-					<button @click.prevent="createCourse" :class="{'opacity-25':$v.$invalid, 'primary-button': !$v.$invalid}" :disabled="$v.$invalid || isLoading">
+					<button @click.prevent="submitCourse" :class="{'opacity-25':$v.$invalid || needsPreview, 'primary-button': !$v.$invalid && !needsPreview}" :disabled="cannotSubmit">
 						<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
 						<span v-else>Submit</span>
 					</button>
@@ -85,7 +83,7 @@
 
 <script>
 	import { mapActions } from 'vuex'
-	import { firestore, storage } from '@/config/firebase'
+	import { firestore } from '@/config/firebase'
 	import { required, minLength, requiredIf } from 'vuelidate/lib/validators'
 	export default {
 		name: 'CreateCourse',
@@ -94,15 +92,11 @@
 				title: '',
 				description: '',
 				premium: false,
-				tags: [],
-				video: {},
-				image: {},
-				preview: {},
-				documents: [],
+				tags: []
 			},
-			video: {},
-			image: {},
-			preview: {},
+			video: null,
+			image: null,
+			preview: null,
 			documents: [],
 			tags: [],
 			isLoading: false,
@@ -113,84 +107,28 @@
 			docs.forEach(doc => this.tags.push({ '.key': doc.id, ...doc.data() }))
 		},
 		computed: {
-			cannotGoToNext(){ return this.$v.course.title.$invalid || this.$v.course.description.$invalid || this.$v.course.tags.$invalid }
+			cannotGoToNext(){ return this.$v.course.title.$invalid || this.$v.course.description.$invalid || this.$v.course.tags.$invalid },
+			needsPreview(){ return this.course.premium === true && !this.preview },
+			cannotSubmit(){ return this.$v.$invalid || this.isLoading || this.needsPreview }
 		},
 		methods: {
-			...mapActions(['setCreateModalOverview', 'closeCreateModal']),
-			closeModal(){ window.Fire.$emit('closeCourseNewModal') },
+			...mapActions(['setCreateModalOverview', 'closeCreateModal','createCourse']),
 			goToNext(){ this.page = 2},
 			goToPrevious(){ this.page = 1},
-			catchVideo(e){
-				if (e.target.files[0]){
-					e.target.files[0].type.startsWith('video/') ? this.video = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})
-				}
-			},
-			catchImage(e){
-				if(e.target.files[0]){
-					e.target.files[0].type.startsWith('image/') ? this.image = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not an image'})
-				}
-			},
-			catchPreview(e){
-				if(e.target.files[0]){
-					e.target.files[0].type.startsWith('video/') ? this.preview = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})
-				}
-			},
-			catchDocuments(e){
-				this.documents = []
-				this.documents.push(...e.target.files)
-			},
-			async uploadVideo(){
-				new window.Toast({ icon: 'success', title: 'Video uploading' })
-				let name = `courses/videos/${Date.now()}_${this.video.name}`
-				await storage.ref(name).put(this.video)
-				let link = await storage.ref(name).getDownloadURL()
-				this.course.video = { name: this.video.name, link, type: this.video.type }
-				return new window.Toast({ icon: 'success', title: 'Video uploaded' })
-			},
-			async uploadImage(){
-				new window.Toast({ icon: 'success', title: 'Image uploading' })
-				let name = `courses/images/${Date.now()}_${this.image.name}`
-				await storage.ref(name).put(this.image)
-				let link = await storage.ref(name).getDownloadURL()
-				this.course.image = { name: this.image.name, link, type: this.image.type }
-				return new window.Toast({ icon: 'success', title: 'Image uploaded' })
-			},
-			async uploadPreview(){
-				new window.Toast({ icon: 'success', title: 'Preview uploading' })
-				let name = `courses/previews/${Date.now()}_${this.preview.name}`
-				await storage.ref(name).put(this.preview)
-				let link = await storage.ref(name).getDownloadURL()
-				this.course.preview = { name: this.preview.name, link, type: this.preview.type }
-				return new window.Toast({ icon: 'success', title: 'Preview uploaded' })
-			},
-			uploadDocuments(){
-				new window.Toast({ icon: 'success', title: 'Documents uploading' })
-				let promises = this.documents.map(async (document) => {
-					let name = `courses/documents/${Date.now()}_${document.name}`
-					await storage.ref(name).put(document)
-					let link = await storage.ref(name).getDownloadURL()
-					return this.course.documents.push({ name: document.name, link, type: document.type })
-				})
-				return Promise.all(promises).then(() => {
-					new window.Toast({ icon: 'success', title: 'Documents uploaded' })
-				})
-			},
-			async createCourse(){
+			catchVideo(e){ e.target.files[0] && e.target.files[0].type.startsWith('video/') ? this.video = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})},
+			catchImage(e){ e.target.files[0] &&e.target.files[0].type.startsWith('image/') ? this.image = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not an image'})},
+			catchPreview(e){ e.target.files[0] && e.target.files[0].type.startsWith('video/') ? this.preview = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})},
+			catchDocuments(e){ this.documents = [...e.target.files] },
+			async submitCourse(){
 				this.isLoading = true
-				await this.uploadVideo()
-				await this.uploadImage()
-				if(this.course.premium){
-					await this.uploadPreview()
-				}
-				await this.uploadDocuments()
-				firestore.collection('courses').add(this.course).then(() => {
-					this.isLoading = false
+				try{
+					await this.createCourse({
+						video: this.video, image: this.image, documents: this.documents, course: this.course, preview: this.preview
+					})
 					this.closeCreateModal()
 					new window.Toast({ icon: 'success', title: 'Course created successfully' })
-				}).catch(error => {
-					this.isLoading = false
-					new window.Toast({ icon: 'error', title: error.message })
-				})
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+				this.isLoading = false
 			}
 		},
 		validations: {
@@ -202,7 +140,7 @@
 			},
 			video: { required },
 			image: { required },
-			preview: { requiredIf: requiredIf('premium') },
+			preview: { requiredIf: requiredIf('course.premium') },
 			documents: { required, minLength: minLength(1) }
 		}
 	}
@@ -224,6 +162,5 @@
 		display: block;
 		min-width: 256px;
 		max-width: 700px;
-		box-shadow: none;
 	}
 </style>

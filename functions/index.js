@@ -32,9 +32,6 @@ exports.removeAdmin = require('./onCall/roles/removeAdmin')
 exports.createPost = require('./onCall/contents/createPost')
 
 // Firestore Triggers
-// On Create
-exports.firestoreCourseCreated = require('./firestore/onCreate/courses')
-
 // On Update
 //exports.firestoreCourseUpdated = require('./firestore/onUpdate/courses')
 
