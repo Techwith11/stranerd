@@ -160,7 +160,6 @@
 		padding: 0.5rem 1.5rem;
 		color: $white;
 		display: block;
-		min-width: 256px;
-		max-width: 700px;
+		min-width: 150px;
 	}
 </style>

@@ -29,6 +29,6 @@
 		color: $text-black;
 		border: 1px solid #333333;
 		display: block;
-		min-width: 300px;
+		min-width: 150px;
 	}
 </style>
