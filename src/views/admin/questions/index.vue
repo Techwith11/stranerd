@@ -1,8 +1,5 @@
 <template>
 	<div>
-		<div class="container">
-			<h3 class="text-center">Questions</h3>
-		</div>
 		<question-nav class="mb-3" />
 		<div class="container">
 			<div class="alert alert-warning" role="alert" v-for="question in filteredQuestions" :key="question.title">

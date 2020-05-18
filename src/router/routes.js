@@ -81,15 +81,21 @@ export default [
         meta: { requiresAuth: true }
     },
     {
-        path: '/questions',
-        name: 'Questions',
-        component: () => import(/* webpackChunkName: "questions" */ '@/views/questions/index'),
-        meta: { requiresAuth: true }
-    },
-    {
         path: '/admins',
         name: 'Admins',
-        component: () => import(/* webpackChunkName: "questions" */ '@/views/admin/index'),
+        component: () => import(/* webpackChunkName: "admins" */ '@/views/admin/index'),
+        children: [
+            {
+                path: '/admins/upgrades',
+                name: 'Upgrades',
+                component: () => import(/* webpackChunkName: "upgrades" */ '@/views/admin/upgrades/index'),
+            },
+            {
+                path: '/admins/questions',
+                name: 'Questions',
+                component: () => import(/* webpackChunkName: "questions" */ '@/views/admin/questions/index'),
+            }
+        ],
         meta: { requiresAuth: true, requiresAdmin: true }
     },
     {

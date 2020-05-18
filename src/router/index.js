@@ -32,7 +32,8 @@ router.beforeEach((to, from, next) => {
 router.afterEach(() => {
 	document.getElementsByTagName('body')[0].scrollIntoView()
 	window.closeNavbar()
-	window.closeDropdown()
+	window.closeAccountDropdown()
+	window.closeAdminDropdown()
 })
 
 export default router

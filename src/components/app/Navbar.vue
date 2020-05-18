@@ -1,12 +1,12 @@
 <template>
     <header class="bg-dark">
-        <nav class="container navbar navbar-dark bg-dark" :class="isLoggedIn ? 'navbar-expand-md' : 'navbar-expand-sm'">
+        <nav class="container navbar navbar-dark bg-dark" :class="isLoggedIn ? 'navbar-expand-lg' : 'navbar-expand'">
             <router-link class="navbar-brand" to="/">STRANERD</router-link>
             <button class="navbar-toggler rounded-0" @click="toggleNavbar" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse text-center">
-                <ul class="navbar-nav ml-auto align-items-md-center" v-if="isLoggedIn">
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto" v-if="isLoggedIn">
                     <li class="nav-item">
                         <router-link class="nav-link" to="/">Dashboard</router-link>
                     </li>
@@ -19,33 +19,32 @@
                     <li class="nav-item">
                         <router-link class="nav-link" to="/tutors">Tutors</router-link>
                     </li>
-                    <li class="nav-item dropdown d-none d-md-inline">
-                        <a class="nav-link dropdown-toggle" href="#" @click="toggleDropDown" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            My account
+                    <li class="nav-item dropdown" v-if="isAdmin">
+                        <a class="nav-link dropdown-toggle" @click.prevent="toggleAdminDropDown" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin Pages
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <router-link class="dropdown-item" to="/my_account">My Account</router-link>
-                            <router-link class="dropdown-item" to="/admins" v-if="isAdmin">Admin Panel</router-link>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item"  @click.prevent="logout">Logout</a>
+                        <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="adminDropdown">
+                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/questions">Tests Questions</router-link>
+                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/upgrades">Upgrade Users</router-link>
                         </div>
                     </li>
-                    <li class="nav-item d-md-none">
-                        <router-link class="nav-link" to="/my_account">My Account</router-link>
-                    </li>
-                    <li class="nav-item d-md-none">
-                        <router-link class="nav-link" to="/admins" v-if="isAdmin">Admin Panel</router-link>
-                    </li>
-                    <li class="nav-item d-md-none">
-                        <a class="nav-link" @click.prevent="logout">Logout</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" @click.prevent="toggleAccountDropDown" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            My account
+                        </a>
+                        <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="accountDropdown">
+                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/my_account">My Account</router-link>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item nav-link py-1 py-lg-2"  @click.prevent="logout">Logout</a>
+                        </div>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto align-items-md-center" v-else>
                     <li class="nav-item d-inline">
-                        <a href="#" class="nav-link" @click.prevent="openModal">Sign Up</a>
+                        <a class="nav-link" @click.prevent="openModal">Sign Up</a>
                     </li>
                     <li class="nav-item d-inline">
-                        <a href="#" class="nav-link" @click.prevent="openModal">Login</a>
+                        <a class="nav-link" @click.prevent="openModal">Login</a>
                     </li>
                 </ul>
             </div>
@@ -53,12 +52,23 @@
     </header>
 </template>
 
-<style>
+<style lang="scss" scoped>
 	header{
         position: relative;
 		z-index: 3;
 		height: 60px;
 	}
+    .dropdown-menu{
+        border: none !important;
+        margin-left: 1rem !important;
+        .nav-link{
+            display: inline-block;
+        }
+        .nav-link:hover {
+            color: green;
+            background: initial !important;
+        }
+    }
 </style>
 
 <script>
@@ -67,7 +77,8 @@
         methods: {
             ...mapActions(['openModal', 'logout']),
             toggleNavbar: () => window.toggleNavbar(),
-            toggleDropDown: () => window.toggleDropDown()
+            toggleAccountDropDown: () => window.toggleAccountDropDown(),
+            toggleAdminDropDown: () => window.toggleAdminDropDown()
         },
         computed: mapGetters(['isLoggedIn','isAdmin'])
     }
