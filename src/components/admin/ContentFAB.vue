@@ -6,7 +6,7 @@
 </template>
 
 <script>
-	import CreateNewModal from '@/components/courses/list/CreateNewModal'
+	import CreateNewModal from '@/components/admin/ContentModal'
 	import { mapGetters, mapActions } from 'vuex'
 	export default {
 		components: {
@@ -18,7 +18,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../../style/index';
+	@import '../../style/index';
 	#fab{
 		background: $accent;
 		color: $white;

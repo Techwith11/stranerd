@@ -10,9 +10,9 @@
 
 <script>
 	import { mapGetters } from 'vuex'
-	import CreateOverview from '@/components/courses/list/modals/CreateOverview'
-	import CreateCourse from '@/components/courses/list/modals/CreateCourse'
-	import CreateQuestion from '@/components/courses/list/modals/CreateQuestion'
+	import CreateOverview from '@/components/admin/modals/CreateOverview'
+	import CreateCourse from '@/components/admin/modals/CreateCourse'
+	import CreateQuestion from '@/components/admin/modals/CreateQuestion'
 	export default {
 		computed: mapGetters(['isCreateModalOverview','isCreateModalCourse','isCreateModalQuestion']),
 		components: {
@@ -22,7 +22,3 @@
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
-	@import '../../../style/index';
-</style>

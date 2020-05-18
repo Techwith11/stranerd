@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<course-nav />
-		<course-fab v-if="isAdmin" />
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6 col-lg-4" v-for="course in filteredCourses" :key="course['.key']">
@@ -13,12 +12,10 @@
 </template>
 
 <script>
-	//TODO: Implement pagination
+	//TODO: Implement pagination && loading screen
 	import { firestore } from '@/config/firebase'
 	import CourseNav from '@/components/courses/list/CourseNav'
 	import CourseCard from '@/components/courses/list/CourseCard'
-	import CourseFAB from '@/components/courses/list/CourseFAB'
-	import { mapGetters } from 'vuex'
 	export default {
 		name: 'Courses',
 		data: () => ({
@@ -26,8 +23,7 @@
 		}),
 		components: {
 			'course-nav': CourseNav,
-			'course-card': CourseCard,
-			'course-fab': CourseFAB,
+			'course-card': CourseCard
 		},
 		async mounted(){
 			let docs = await firestore.collection('courses').orderBy('dates.updatedAt','desc').get()
@@ -37,8 +33,7 @@
 			filteredCourses(){
 				let tag = this.$route.query.tab
 				return tag ? this.courses.filter(video => video.tags.includes(tag)) : this.courses
-			},
-			...mapGetters(['isAdmin'])
+			}
 		}
 	}
 </script>

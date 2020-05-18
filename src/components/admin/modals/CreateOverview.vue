@@ -23,7 +23,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../../../style/index';
+	@import '../../../style/index';
 	button{
 		margin: 0.5rem 0;
 		color: $text-black;
