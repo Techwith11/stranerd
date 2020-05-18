@@ -47,7 +47,7 @@
 					:class="{'is-invalid': $v.question.level.$error, 'is-valid': !$v.question.level.$invalid}">
 			</div>
 			<div class="d-flex flex-column">
-				<button @click.prevent="createQuestion" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
+				<button @click.prevent="submitQuestion" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
 					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
 					<span v-else>Create Question</span>
 				</button>
@@ -58,7 +58,7 @@
 
 <script>
 	import { mapActions } from 'vuex'
-	import firebase, { firestore } from '@/config/firebase'
+	import { firestore } from '@/config/firebase'
 	import { required, minLength, minValue } from 'vuelidate/lib/validators'
 	export default {
 		name: 'CreateQuestion',
@@ -83,18 +83,17 @@
 			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 		},
 		methods:{
-			...mapActions(['setCreateModalOverview', 'closeCreateModal']),
-			createQuestion(){
+			...mapActions(['setCreateModalOverview', 'closeCreateModal', 'createQuestion']),
+			async submitQuestion() {
 				this.isLoading = true
-				this.question.createdAt = firebase.firestore.FieldValue.serverTimestamp()
-				firestore.collection('questions').add(this.question).then(() => {
-					this.isLoading = false
+				try {
+					await this.createQuestion(this.question)
 					this.closeCreateModal()
-					new window.Toast({ icon: 'success', title: 'Question created successfully' })
-				}).catch(error => {
-					this.isLoading = false
-					new window.Toast({ icon: 'error', title: error.message })
-				})
+					new window.Toast({icon: 'success', title: 'Question created successfully'})
+				} catch (error) {
+					new window.Toast({icon: 'error', title: error.message})
+				}
+				this.isLoading = false
 			}
 		},
 		validations:{

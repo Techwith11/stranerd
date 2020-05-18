@@ -20,6 +20,11 @@ service cloud.firestore {
 			allow delete: if isAdmin();
 		}
 
+		match /posts/{id} {
+			allow read: if isAuthenticated();
+			allow write: if isAdmin();
+		}
+
 		match /questions/{id} {
 			allow read: if isAuthenticated();
 			allow write: if isAdmin();

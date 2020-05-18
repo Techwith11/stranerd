@@ -3,10 +3,10 @@
 		<div class="container">
 			<ul class="nav justify-content-center">
 				<li class="nav-item">
-					<router-link class="nav-link" to="/questions">All</router-link>
+					<router-link class="nav-link" to="/admins/questions">All</router-link>
 				</li>
 				<li class="nav-item" v-for="subject in subjects" :key="subject['.key']">
-					<router-link class="nav-link" :to="`/questions?tab=${subject.name}`">{{ subject.name }}</router-link>
+					<router-link class="nav-link" :to="`/admins/questions?tab=${subject.name}`">{{ subject.name }}</router-link>
 				</li>
 			</ul>
 		</div>
@@ -28,7 +28,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../../style/index';
+	@import '../../../../style/index';
 	#bg{
 		background: $accent;
 	}

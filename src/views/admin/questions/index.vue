@@ -19,7 +19,7 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
-	import QuestionNav from '@/components/questions/list/QuestionNav'
+	import QuestionNav from '@/components/admin/questions/list/QuestionNav'
 	export default {
 		name: 'Questions',
 		data: () => ({
@@ -38,7 +38,8 @@
 			//TODO: Implement Pagination
 			let subDocs = await firestore.collection('subjects').get()
 			subDocs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
-			let quesDocs = await firestore.collection('questions').get()
+			//TODO: Implement pagination for questions
+			let quesDocs = await firestore.collection('questions').orderBy('createdAt','desc').get()
 			quesDocs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
 		},
 		components: {

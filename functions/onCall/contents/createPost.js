@@ -10,15 +10,16 @@ module.exports = functions.https.onCall(async (data, context) => {
 	let user = doc.data()
 	if(user.account.questions && user.account.questions > 1){
 		let questions = user.account.questions
-		let newQuestions = questions--
+		questions--
 		let post = data.post
 		post.userId = id
+		post.dates.createdAt = admin.firestore.FieldValue.serverTimestamp()
 		try{
 			let batch = admin.firestore().batch()
 			let postRef = admin.firestore().collection('posts').doc()
 			batch.set(postRef, post)
 			let userRef = admin.firestore().collection('users').doc(id)
-			batch.update(userRef, 'account.questions', newQuestions)
+			batch.update(userRef, 'account.questions', questions)
 			await batch.commit()
 			return postRef.id
 		}catch(error){

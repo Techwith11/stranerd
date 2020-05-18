@@ -1,4 +1,4 @@
-import { functions, storage } from '@/config/firebase'
+import  firebase, { firestore, functions, storage } from '@/config/firebase'
 
 let uploadFile = async (path, file) => {
 	try{
@@ -18,6 +18,11 @@ let createPost = async (post, id) => {
 	return result.data
 }
 
+let createQuestion = async question => {
+	question.createdAt = firebase.firestore.FieldValue.serverTimestamp()
+	return await firestore.collection('questions').add(question)
+}
+
 const actions = {
 	async createPost({ getters }, data){
 		let post = data.post
@@ -27,6 +32,9 @@ const actions = {
 			post.media.push(media)
 		}
 		return await createPost(post, getters.getId)
+	},
+	async createQuestion(store, data){
+		return await createQuestion(data)
 	}
 }
 
