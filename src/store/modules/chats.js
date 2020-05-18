@@ -7,7 +7,9 @@ let uploadFile = async (path, file) => {
             await storage.ref(link).put(file)
             link = await storage.ref(path).getDownloadURL()
         }else{
-            link = `http://localhost:5000/${link}`
+            link = `stranerd/${link}`
+            await window.uploadToMockServer(link, file)
+            link = `http://localhost:3000/${link}`
         }
         return { name: file.name, link, type: file.type }
     }catch{ throw new Error(`Error uploading ${file.name}`) }

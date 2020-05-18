@@ -1,5 +1,5 @@
 const state = {
-	defaultImage: 'http://localhost:5000/users/images/Cassette.svg'
+	defaultImage: 'http://localhost:3000/stranerd/users/images/Cassette.svg'
 }
 
 const getters = {
