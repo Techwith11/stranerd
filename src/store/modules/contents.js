@@ -1,36 +1,26 @@
-import firebase, { firestore, functions, storage } from '@/config/firebase'
+import firebase, { firestore, functions } from '@/config/firebase'
 
-let uploadFile = async (path, file) => {
-	try{
-		let link = `${path}/${Date.now()}_${file.name}`
-		if(process.env.NODE_ENV === 'production'){
-			await storage.ref(link).put(file)
-			link = await storage.ref(path).getDownloadURL()
-		}else{
-			link = `stranerd/${link}`
-			await window.uploadToMockServer(link, file)
-			link = `http://localhost:3000/${link}`
-		}
-		new window.Toast({ icon: 'success', title: `${file.name} uploaded successfully` })
-		return { name: file.name, link, type: file.type }
-	}catch{ throw new Error(`Error uploading ${file.name}`) }
-}
-
-let createPost = async (post, id) => {
-	let result = await functions.httpsCallable('createPost')({ post, id })
-	return result.data
-}
-let createQuestion = async question => {
-	question.createdAt = firebase.firestore.FieldValue.serverTimestamp()
-	return await firestore.collection('questions').add(question)
-}
-let createCourse = async (course, id) => {
-	course.dates = {}
-	course.dates.createdAt = firebase.firestore.FieldValue.serverTimestamp()
-	course.dates.updatedAt = firebase.firestore.FieldValue.serverTimestamp()
-	course.savedBy = []
-	course.userId = id
-	return await firestore.collection('courses').add(course)
+let helpers = {
+	createPost: async (post, id) => {
+		let result = await functions.httpsCallable('createPost')({ post, id })
+		return result.data
+	},
+	createQuestion: async (question, id) => {
+		question.dates = { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
+		question.userId = id
+		return await firestore.collection('questions').add(question)
+	},
+	createCourse: async (course, id) => {
+		course.dates = { createdAt: firebase.firestore.FieldValue.serverTimestamp(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }
+		course.savedBy = []
+		course.userId = id
+		return await firestore.collection('courses').add(course)
+	},
+	createNote: async (note, id) => {
+		note.dates = { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
+		note.userId = id
+		return await firestore.collection('notes').add(note)
+	}
 }
 
 const actions = {
@@ -38,25 +28,30 @@ const actions = {
 		let post = data.post
 		post.media = []
 		for (const file of data.media) {
-			let media = await uploadFile('post/images', file)
+			let media = await window.uploadFile('post/images', file)
 			post.media.push(media)
 		}
-		return await createPost(post, getters.getId)
+		return await helpers.createPost(post, getters.getId)
 	},
-	async createQuestion(store, data){
-		return await createQuestion(data)
+	async createQuestion({ getters }, data){
+		return await helpers.createQuestion(data, getters.getId)
 	},
 	async createCourse({ getters }, data){
 		let course = data.course
-		course.video = await uploadFile('courses/videos', data.video)
-		course.image = await uploadFile('courses/images', data.image)
-		course.premium ? course.preview = await uploadFile('courses/previews', data.preview) : null
+		course.video = await window.uploadFile('courses/videos', data.video)
+		course.image = await window.uploadFile('courses/images', data.image)
+		course.premium ? course.preview = await window.uploadFile('courses/previews', data.preview) : null
 		course.documents = []
 		for (const file of data.documents) {
-			let media = await uploadFile('courses/documents', file)
+			let media = await window.uploadFile('courses/documents', file)
 			course.documents.push(media)
 		}
-		return await createCourse(course, getters.getId)
+		return await helpers.createCourse(course, getters.getId)
+	},
+	async createNote({ getters }, data){
+		let note = data.note
+		note.document = await window.uploadFile('notes', data.document)
+		return await helpers.createNote(note, getters.getId)
 	}
 }
 

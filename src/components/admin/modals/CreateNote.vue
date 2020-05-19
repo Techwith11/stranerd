@@ -59,7 +59,7 @@
 			async submitNote() {
 				this.isLoading = true
 				try {
-					await this.createNote(this.note, this.document)
+					await this.createNote({ note: this.note, document: this.document })
 					this.closeCreateModal()
 					new window.Toast({icon: 'success', title: 'Note uploaded successfully'})
 				} catch (error) {

@@ -1,19 +1,4 @@
-import firebase,{ firestore, functions, storage } from '@/config/firebase'
-
-let uploadFile = async (path, file) => {
-    try{
-        let link = `${path}/${Date.now()}_${file.name}`
-        if(process.env.NODE_ENV === 'production'){
-            await storage.ref(link).put(file)
-            link = await storage.ref(path).getDownloadURL()
-        }else{
-            link = `stranerd/${link}`
-            await window.uploadToMockServer(link, file)
-            link = `http://localhost:3000/${link}`
-        }
-        return { name: file.name, link, type: file.type }
-    }catch{ throw new Error(`Error uploading ${file.name}`) }
-}
+import firebase,{ firestore, functions } from '@/config/firebase'
 
 let helpers = {
     createNewChatCollection: async (from, to) => {
@@ -40,7 +25,7 @@ let helpers = {
             from: auth,
         }
         let file = data.media
-        chat.media = await uploadFile(path, file)
+        chat.media = await window.uploadFile(path, file)
         return await firestore.collection(path).add(chat)
     },
     readChat: async (path) => {

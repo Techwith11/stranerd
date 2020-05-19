@@ -38,3 +38,30 @@ export const storage = firebase.storage()
 if(process.env.NODE_ENV === 'production'){
 	auth.onAuthStateChanged(async user => user && user.uid ? store.dispatch('setId', user.uid) : null)
 }
+
+if(process.env.NODE_ENV === 'development'){
+	let uploadToMockServer = async (path, file) => {
+		let data = new FormData()
+		data.set('path', path)
+		data.set('file', file)
+		let res = await fetch('http://localhost:3000/file', {
+			method: 'POST',
+			body: data,
+		})
+		return res.json()
+	}
+	window.uploadFile = async (path, file) => {
+		try{
+			let link = `${path}/${Date.now()}_${file.name}`
+			if(process.env.NODE_ENV === 'production'){
+				await storage.ref(link).put(file)
+				link = await storage.ref(path).getDownloadURL()
+			}else{
+				link = `stranerd/${link}`
+				await uploadToMockServer(link, file)
+				link = `http://localhost:3000/${link}`
+			}
+			return { name: file.name, link, type: file.type }
+		}catch{ throw new Error(`Error uploading ${file.name}`) }
+	}
+}

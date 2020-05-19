@@ -60,16 +60,3 @@ window.closeAdminDropdown = () => {
     let dropdownToggle = document.getElementsByClassName('dropdown-toggle')[0]
     dropdownToggle ? dropdownToggle.classList.remove('show') : null
 }
-
-if(process.env.NODE_ENV === 'development'){
-    window.uploadToMockServer = async (path, file) => {
-        let data = new FormData()
-        data.set('path', path)
-        data.set('file', file)
-        let res = await fetch('http://localhost:3000/file', {
-            method: 'POST',
-            body: data,
-        })
-        return res.json()
-    }
-}
