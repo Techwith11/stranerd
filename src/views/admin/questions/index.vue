@@ -38,7 +38,7 @@
 			let subDocs = await firestore.collection('subjects').get()
 			subDocs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 			//TODO: Implement pagination for questions
-			let quesDocs = await firestore.collection('questions').orderBy('createdAt','desc').get()
+			let quesDocs = await firestore.collection('tests/tutors/questions').orderBy('dates.createdAt','desc').get()
 			quesDocs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
 		},
 		components: {

@@ -4,10 +4,10 @@ const admin = require('firebase-admin')
 let noOfQuestionsForTest = 20 //TODO: Adjust for number of questions required for test
 
 let getQuestions = async (course, level) => {
-	let questions = await admin.firestore().collection('questions')
+	let questions = await admin.firestore().collection('tests/tutors/questions')
 		.where('subject','==', course)
 		.where('level','==', Number(level))
-		.orderBy('createdAt','desc')
+		.orderBy('dates.createdAt','desc')
 		.limit(100)
 		.get()
 	if(questions.size < noOfQuestionsForTest){ throw new functions.https.HttpsError('failed-precondition', 'Number of questions in database are not enough for a test') }
@@ -34,7 +34,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 	let now = admin.firestore.Timestamp.now()
 	let startedAt = now.toDate(), endedAt = now.toDate()
-	endedAt.setMinutes(endedAt.getMinutes() + 2 * questions.length)
+	endedAt.setMinutes(endedAt.getMinutes() + questions.length)
 
 	let test = {
 		questions, level, course, user,

@@ -25,11 +25,6 @@ service cloud.firestore {
 			allow write: if isAdmin();
 		}
 
-		match /questions/{id} {
-			allow read: if isAuthenticated();
-			allow write: if isAdmin();
-		}
-
 		match /sessions/{id} {
 			allow read: if isAuthenticated();
 			allow create: if isAuthenticated();
@@ -48,6 +43,11 @@ service cloud.firestore {
 			allow read: if isAuthenticated();
 			allow write: if isAdmin();
 		}
+
+		match /tests/tutors/questions/{id} {
+            allow read: if isAuthenticated();
+            allow write: if isAdmin();
+        }
 
 		match /tests/tutors/tests/{id} {
 			allow read: if isAdmin();
