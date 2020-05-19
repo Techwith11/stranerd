@@ -1,7 +1,7 @@
 <template>
 	<div class="my-4">
 		<div class="d-flex justify-content-end my-3">
-			<button class="accent-button" @click="setPostModalCreate">Ask Question</button>
+			<button class="accent-button" @click="openPostCreateModal">Ask Question</button>
 		</div>
 		<div v-if="questions.length < 0">
 			<p class="text-muted">Recent Questions</p>
@@ -24,7 +24,7 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
-	import { mapActions } from 'vuex'
+	import { mapGetters, mapActions } from 'vuex'
 	export default {
 		data: () => ({
 			questions: [],
@@ -33,6 +33,22 @@
 			let docs = await firestore.collection('questions').orderBy('dates.createdAt','desc').limit(5).get()
 			docs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
 		},
-		methods: mapActions(['setPostModalCreate'])
+		computed: mapGetters(['questionsLeft','isSubscribed']),
+		methods: {
+			...mapActions(['setPostModalCreate']),
+			openPostCreateModal(){
+				if(this.questionsLeft){
+					this.setPostModalCreate()
+				}else{
+					let title = ''
+					if(this.isSubscribed){
+						title = 'You have no questions left for the month. Consider purchasing extra questions from the shop'
+					}else{
+						title = 'You have no free questions left. Consider upgrading to a paid subscription to ask more'
+					}
+					new window.Toast({ icon: 'warning', title })
+				}
+			}
+		}
 	}
 </script>
