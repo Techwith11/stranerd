@@ -17,7 +17,7 @@
 	import Footer from '@/components/app/Footer'
 	import AuthModal from '@/components/auth/AuthModal'
 	import SessionModal from '@/components/sessions/modals/SessionModal'
-	import PostModal from '@/components/posts/PostModal'
+	import PostModal from '@/components/posts/modals/PostModal'
 	export default {
 		name: 'App',
 		components: {

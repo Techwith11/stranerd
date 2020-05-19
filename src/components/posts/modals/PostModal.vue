@@ -8,7 +8,7 @@
 
 <script>
 	import { mapGetters } from 'vuex'
-	import CreateNewPost from '@/components/posts/CreateNewPost'
+	import CreateNewPost from '@/components/posts/modals/CreateNewPost'
 	export default {
 		components: {
 			'create-new-post': CreateNewPost
