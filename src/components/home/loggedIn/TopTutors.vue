@@ -22,7 +22,7 @@
 				.where('roles.isTutor','==',true)
 				.where('tutor.canTeach','==',true)
 				.orderBy('tutor.rating','desc')
-				.limit(5).get()
+				.limit(3).get()
 			docs.forEach(doc => this.tutors.push({ '.key': doc.id, ...doc.data() }))
 		},
 		components: {

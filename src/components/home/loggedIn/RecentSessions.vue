@@ -1,7 +1,7 @@
 <template>
 	<div class="my-4">
 		<p class="text-muted">Recent Sessions</p>
-		<div v-if="sessions.length < 0">
+		<div v-if="sessions.length > 0">
 			<session-card v-for="session in sessions" :key="session['.key']" :session="session" />
 			<div class="d-flex justify-content-end my-3">
 				<button class="accent-button">

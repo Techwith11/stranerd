@@ -24,7 +24,7 @@
 			posts: [],
 		}),
 		async mounted(){
-			let docs = await firestore.collection('posts').orderBy('dates.createdAt','desc').limit(5).get()
+			let docs = await firestore.collection('posts').orderBy('dates.createdAt','desc').limit(3).get()
 			docs.forEach(doc => this.posts.push({ '.key': doc.id, ...doc.data() }))
 		},
 		components: {

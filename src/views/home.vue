@@ -2,7 +2,7 @@
 	<div>
 		<div class="container" v-if="isLoggedIn">
 			<recent-posts />
-			<find-tutors />
+			<top-tutors />
 			<recent-sessions />
 		</div>
 		<div v-else>
@@ -26,7 +26,7 @@
 	import Stats from '@/components/home/notLoggedIn/HomeStats'
 	import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay'
 	import Pricing from '@/components/home/notLoggedIn/HomePricing'
-	import FindTutors from '@/components/home/loggedIn/FindTutors'
+	import TopTutors from '@/components/home/loggedIn/TopTutors'
 	import RecentSessions from '@/components/home/loggedIn/RecentSessions'
 	import RecentPosts from '@/components/home/loggedIn/RecentPosts'
 	export default {
@@ -39,7 +39,7 @@
 			'stats': Stats,
 			'students-says': StudentsSay,
 			'pricing': Pricing,
-			'find-tutors': FindTutors,
+			'top-tutors': TopTutors,
 			'recent-posts': RecentPosts,
 			'recent-sessions': RecentSessions,
 		},
