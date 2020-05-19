@@ -6,8 +6,9 @@
 			<a @click.prevent="closeCreateModal"><i class="fas fa-times fa-2x text-danger"></i></a>
 		</div>
 		<div class="d-flex flex-column mx-2 align-items-center">
-			<button @click="setCreateModalCourse">Create Course</button>
-			<button @click="setCreateModalQuestion">Create Question</button>
+			<button class="accent-button" @click="setCreateModalCourse">Create Course</button>
+			<button class="accent-button" @click="setCreateModalQuestion">Create Question</button>
+			<button class="accent-button" @click="setCreateModalNote">Upload Note to Shop</button>
 		</div>
 	</div>
 </template>
@@ -17,18 +18,16 @@
 	export default {
 		name: "CreateOverview",
 		methods: {
-			...mapActions(['setCreateModalQuestion','setCreateModalCourse','closeCreateModal']),
+			...mapActions(['setCreateModalQuestion','setCreateModalCourse','setCreateModalNote','closeCreateModal']),
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	@import '../../../style/index';
 	button{
 		margin: 0.5rem 0;
-		color: $text-black;
 		border: 1px solid #333333;
 		display: block;
-		min-width: 150px;
+		min-width: 300px;
 	}
 </style>

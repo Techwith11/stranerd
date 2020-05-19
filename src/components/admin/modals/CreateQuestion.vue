@@ -6,48 +6,48 @@
 			<i></i>
 		</div>
 		<form class="mx-2">
-			<div class="form-group">
+			<div class="form-group my-3">
 				<textarea class="form-control" placeholder="Question..." v-model.trim="$v.question.title.$model" rows="2"
 					:class="{'is-invalid': $v.question.title.$error, 'is-valid': !$v.question.title.$invalid}"
 				></textarea>
 				<span class="small" v-if="$v.question.title.$error">Must be at least 3 characters long</span>
 			</div>
-			<div class="form-group">
+			<div class="form-group my-3">
 				<select class="form-control" v-model="$v.question.subject.$model"
 					:class="{'is-invalid': $v.question.subject.$error, 'is-valid': !$v.question.subject.$invalid}">
 					<option :value="null" disabled>Under what subject</option>
 					<option :value="subject.name" v-for="subject in subjects" :key="subject.name">{{ subject.name }}</option>
 				</select>
 			</div>
-			<div class="form-group">
+			<div class="form-group my-3">
 				<input type="text" class="form-control" v-model="$v.question.a.$model" placeholder="Option A"
 					:class="{'is-invalid': $v.question.a.$error, 'is-valid': !$v.question.a.$invalid}">
 			</div>
-			<div class="form-group">
+			<div class="form-group my-3">
 				<input type="text" class="form-control" v-model="$v.question.b.$model" placeholder="Option B"
 					:class="{'is-invalid': $v.question.b.$error, 'is-valid': !$v.question.b.$invalid}">
 			</div>
-			<div class="form-group">
+			<div class="form-group my-3">
 				<input type="text" class="form-control" v-model="$v.question.c.$model" placeholder="Option C"
 					:class="{'is-invalid': $v.question.c.$error, 'is-valid': !$v.question.c.$invalid}">
 			</div>
-			<div class="form-group">
+			<div class="form-group my-3">
 				<input type="text" class="form-control" v-model="$v.question.d.$model" placeholder="Option D"
 					:class="{'is-invalid': $v.question.d.$error, 'is-valid': !$v.question.d.$invalid}">
 			</div>
-			<div class="form-group">
+			<div class="form-group my-3">
 				<select class="form-control" v-model="$v.question.answer.$model"
 					:class="{'is-invalid': $v.question.answer.$error, 'is-valid': !$v.question.answer.$invalid}">
 					<option :value="null" disabled>Select the right answer</option>
 					<option :value="answer" v-for="answer in answers" :key="answer">{{ answer.toUpperCase() }}</option>
 				</select>
 			</div>
-			<div class="form-group">
+			<div class="form-group my-3">
 				<input type="number" min="1" class="form-control" v-model="$v.question.level.$model" placeholder="Level"
 					:class="{'is-invalid': $v.question.level.$error, 'is-valid': !$v.question.level.$invalid}">
 			</div>
 			<div class="d-flex flex-column">
-				<button @click.prevent="submitQuestion" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
+				<button class="text-white my-2 py-2 px-4" @click.prevent="submitQuestion" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
 					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
 					<span v-else>Create Question</span>
 				</button>
@@ -110,22 +110,3 @@
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
-	@import '../../../style/index';
-	input{
-		padding: 1rem;
-		max-width: 700px;
-	}
-	.form-group{
-		margin: 1rem 0;
-	}
-	button{
-		margin: 0.5rem 0;
-		padding: 0.5rem 1.5rem;
-		color: $white;
-		display: block;
-		min-width: 256px;
-		max-width: 700px;
-	}
-</style>

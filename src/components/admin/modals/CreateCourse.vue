@@ -27,7 +27,7 @@
 					</small>
 				</div>
 				<div class="d-flex justify-content-end my-3">
-					<button @click.prevent="goToNext" :class="cannotGoToNext ? 'opacity-25' : 'bg-info'" :disabled="cannotGoToNext">
+					<button class="text-white my-2 py-2 px-4" @click.prevent="goToNext" :class="cannotGoToNext ? 'opacity-25' : 'bg-info'" :disabled="cannotGoToNext">
 						<span>Next</span>
 						<i class="fas fa-angle-right ml-2"></i>
 					</button>
@@ -66,11 +66,11 @@
 					<a class="text-info" @click.prevent="$refs.documentInput.click()">Upload attachment files</a>
 				</div>
 				<div class="d-flex justify-content-between align-items-center my-3">
-					<button class="bg-info" @click.prevent="goToPrevious">
+					<button class="bg-info text-white my-2 py-2 px-4" @click.prevent="goToPrevious">
 						<i class="fas fa-angle-left mr-2"></i>
 						<span>Previous</span>
 					</button>
-					<button @click.prevent="submitCourse" :class="{'opacity-25':$v.$invalid || needsPreview, 'primary-button': !$v.$invalid && !needsPreview}" :disabled="cannotSubmit">
+					<button class="text-white my-2 py-2 px-4" @click.prevent="submitCourse" :class="{'opacity-25':$v.$invalid || needsPreview, 'primary-button': !$v.$invalid && !needsPreview}" :disabled="cannotSubmit">
 						<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
 						<span v-else>Submit</span>
 					</button>
@@ -147,19 +147,7 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../../style/index';
-	input{
-		padding: 1rem;
-		max-width: 700px;
-	}
-	.form-group{
-		margin: 1rem 0;
-	}
 	button{
-		margin: 0.5rem 0;
-		padding: 0.5rem 1.5rem;
-		color: $white;
-		display: block;
 		min-width: 150px;
 	}
 </style>

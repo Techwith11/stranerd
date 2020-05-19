@@ -16,6 +16,7 @@ const getters = {
     isCreateModalOverview: state => state.createModal === 'create-overview',
     isCreateModalCourse: state => state.createModal === 'create-course',
     isCreateModalQuestion: state => state.createModal === 'create-question',
+    isCreateModalNote: state => state.createModal === 'create-note',
 }
 
 const mutations = {
@@ -51,6 +52,7 @@ const actions = {
     setCreateModalOverview: ({ commit }) => commit('setCreateModal', 'create-overview'),
     setCreateModalCourse: ({ commit }) => commit('setCreateModal', 'create-course'),
     setCreateModalQuestion: ({ commit }) => commit('setCreateModal', 'create-question'),
+    setCreateModalNote: ({ commit }) => commit('setCreateModal', 'create-note'),
 }
 
 export default { state, getters, mutations, actions }
