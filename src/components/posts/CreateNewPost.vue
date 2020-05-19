@@ -86,7 +86,8 @@
 				this.isLoading = true
 				try{
 					let id = await this.createPost({ post: this.post, media: this.media })
-					console.log(id)
+					this.closePostModal()
+					await this.$router.push(`/posts/${id}`)
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
 			}

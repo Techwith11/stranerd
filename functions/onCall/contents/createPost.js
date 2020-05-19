@@ -13,7 +13,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 		questions--
 		let post = data.post
 		post.userId = id
-		post.dates.createdAt = admin.firestore.FieldValue.serverTimestamp()
+		post.dates = { createdAt: admin.firestore.FieldValue.serverTimestamp() }
 		try{
 			let batch = admin.firestore().batch()
 			let postRef = admin.firestore().collection('posts').doc()

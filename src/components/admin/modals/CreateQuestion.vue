@@ -86,13 +86,11 @@
 			...mapActions(['setCreateModalOverview', 'closeCreateModal', 'createQuestion']),
 			async submitQuestion() {
 				this.isLoading = true
-				try {
+				try{
 					await this.createQuestion(this.question)
 					this.closeCreateModal()
 					new window.Toast({icon: 'success', title: 'Question created successfully'})
-				} catch (error) {
-					new window.Toast({icon: 'error', title: error.message})
-				}
+				}catch(error){ new window.Toast({icon: 'error', title: error.message}) }
 				this.isLoading = false
 			}
 		},
