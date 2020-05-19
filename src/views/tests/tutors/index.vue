@@ -23,14 +23,12 @@
 					<button class="my-3" :class="failed ? 'opacity-25' : 'accent-button'" @click="beginTest" :disabled="failed">Start Test</button>
 				</div>
 			</div>
-			<helper-message v-else message="This account is not recognized as a tutor's account" />
 		</div>
 	</div>
 </template>
 
 <script>
 	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	import { mapGetters, mapActions } from 'vuex'
 	export default {
 		name: 'TestsTutors',
@@ -79,11 +77,11 @@
 			}
 		},
 		async mounted(){
+			if(!this.isTutor){ await this.$router.push('/') }
 			await this.checkForUnfinishedTests()
 			this.isLoading = false
 		},
 		components: {
-			'helper-message': HelperMessage,
 			'helper-spinner': HelperSpinner,
 		}
 	}

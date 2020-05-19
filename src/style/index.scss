@@ -55,12 +55,3 @@ button{
 .router-link-exact-active.nav-link {
   color: $primary !important;
 }
-
-.center{
-  position: absolute;
-  left: 50vw;
-  top: 50vh;
-  width: 100%;
-  text-align: center;
-  transform: translate(-50%,-50%);
-}

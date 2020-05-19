@@ -32,7 +32,7 @@
 					.catch(error => new window.Toast({ icon: 'error', title: error.message }))
 			},
 			captureFiles(e){
-				this.media = e.target.files
+				this.media = [ ...e.target.files]
 				this.uploadFiles()
 			},
 			async uploadFiles(){

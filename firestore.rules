@@ -30,6 +30,11 @@ service cloud.firestore {
 			allow write: if isAdmin();
 		}
 
+		match /posts/{post}/replies/{id} {
+            allow read: if isAuthenticated();
+            allow write: if isAdmin();
+        }
+
 		match /sessions/{id} {
 			allow read: if isAuthenticated();
 			allow create: if isAuthenticated();
