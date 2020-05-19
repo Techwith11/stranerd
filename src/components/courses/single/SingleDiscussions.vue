@@ -2,7 +2,7 @@
 	<div class="container small p-2 p-lg-4">
 		<ul class="list-group list-unstyled" id="scroller" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
 			<li class="d-block text-center small text-muted mb-2" v-if="!hasNoMore">
-				<i class="fas text-info fa-spinner fa-spin" v-if="isOlderDiscussionsLoading"></i>
+				<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderDiscussionsLoading"></i>
 				<span @click="fetchOlderDiscussions">Fetch Older</span>
 			</li>
 			<li class="alert alert-warning py-1 border my-1" v-for="discussion in discussions" :key="discussion['.key']"
