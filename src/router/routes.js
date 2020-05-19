@@ -33,12 +33,6 @@ export default [
         meta: { requiresAuth: true }
     },
     {
-        path: '/users',
-        name: 'Users',
-        component: () => import(/* webpackChunkName: "users" */ '@/views/users/index'),
-        meta: { requiresAuth: true }
-    },
-    {
         path: '/users/:id',
         name: 'User',
         component: () => import(/* webpackChunkName: "user" */ '@/views/users/single-user'),
@@ -63,6 +57,18 @@ export default [
         meta: { requiresAuth: true }
     },
     {
+        path: '/posts',
+        name: 'Posts',
+        component: () => import(/* webpackChunkName: "posts" */ '@/views/posts/index'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/posts/:id',
+        name: 'Post',
+        component: () => import(/* webpackChunkName: "my_account" */ '@/views/posts/single-post'),
+        meta: { requiresAuth: true }
+    },
+    {
         path: '/tests/tutors',
         name: 'Tests Tutors',
         component: () => import(/* webpackChunkName: "tests_tutors" */ '@/views/tests/tutors/index'),
@@ -72,12 +78,6 @@ export default [
         path: '/tests/tutors/:id',
         name: 'Tests Tutor',
         component: () => import(/* webpackChunkName: "tests_tutor" */ '@/views/tests/tutors/single-test'),
-        meta: { requiresAuth: true }
-    },
-    {
-        path: '/tests/students',
-        name: 'Tests Students',
-        component: () => import(/* webpackChunkName: "tests_students" */ '@/views/tests/students'),
         meta: { requiresAuth: true }
     },
     {

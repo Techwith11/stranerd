@@ -7,7 +7,7 @@
 				<helper-message v-if="chats.length < 1 && newChats.length < 1" message="No chats. Send a message now" />
 				<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
 					<li class="d-block text-center small text-muted mb-2" v-if="!hasNoMore">
-						<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
+						<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderChatsLoading"></i>
 						<span @click="fetchOlderMessages">Fetch Older</span>
 					</li>
 					<single-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />

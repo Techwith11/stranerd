@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div class="container" v-if="isLoggedIn">
-			<recent-questions />
+			<recent-posts />
 			<find-tutors />
 			<recent-sessions />
 		</div>
@@ -28,7 +28,7 @@
 	import Pricing from '@/components/home/notLoggedIn/HomePricing'
 	import FindTutors from '@/components/home/loggedIn/FindTutors'
 	import RecentSessions from '@/components/home/loggedIn/RecentSessions'
-	import RecentQuestions from '@/components/home/loggedIn/RecentQuestions'
+	import RecentPosts from '@/components/home/loggedIn/RecentPosts'
 	export default {
 		name: 'Home',
 		components: {
@@ -40,7 +40,7 @@
 			'students-says': StudentsSay,
 			'pricing': Pricing,
 			'find-tutors': FindTutors,
-			'recent-questions': RecentQuestions,
+			'recent-posts': RecentPosts,
 			'recent-sessions': RecentSessions,
 		},
 		computed: mapGetters(['isLoggedIn'])

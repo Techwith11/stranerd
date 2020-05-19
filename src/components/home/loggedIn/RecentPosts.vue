@@ -5,14 +5,7 @@
 		</div>
 		<div v-if="posts.length > 0">
 			<p class="text-muted">Recent Posts</p>
-			<div class="card my-2" v-for="i in 3" :key="i">
-				<div class="card-body">
-					<h5 class="card-title">Post Topic</h5>
-					<p class="card-text">Post body in full length. This is a non truncated view of the post</p>
-					<h6 class="card-subtitle mb-2 text-muted">Some meta data for the post which will definitely include tags</h6>
-					<a href="#" class="card-link">See Answers</a>
-				</div>
-			</div>
+			<post-card v-for="post in posts" :key="post['.key']" :post="post" />
 			<div class="d-flex justify-content-end my-3">
 				<button class="accent-button">
 					<router-link class="text-decoration-none text-white" to="/posts">See More</router-link>
@@ -25,6 +18,7 @@
 <script>
 	import { firestore } from '@/config/firebase'
 	import { mapGetters, mapActions } from 'vuex'
+	import PostCard from '@/components/posts/list/PostCard'
 	export default {
 		data: () => ({
 			posts: [],
@@ -32,6 +26,9 @@
 		async mounted(){
 			let docs = await firestore.collection('posts').orderBy('dates.createdAt','desc').limit(5).get()
 			docs.forEach(doc => this.posts.push({ '.key': doc.id, ...doc.data() }))
+		},
+		components: {
+			'post-card': PostCard
 		},
 		computed: mapGetters(['questionsLeft','isSubscribed']),
 		methods: {

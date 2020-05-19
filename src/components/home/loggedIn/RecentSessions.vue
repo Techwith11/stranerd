@@ -11,8 +11,8 @@
 		</div>
 		<div v-else>
 			<p class="small text-muted">
-				<span>No sessions yet. </span>
-				<router-link to="/tutors">Find a tutor now</router-link>
+				<span>No sessions {{ isTutor ? 'taught' : 'attended' }} yet. </span>
+				<router-link to="/tutors" v-if="!isTutor">Find a tutor now</router-link>
 			</p>
 		</div>
 	</div>

@@ -11,6 +11,9 @@
                         <router-link class="nav-link" to="/">Dashboard</router-link>
                     </li>
                     <li class="nav-item">
+                        <router-link class="nav-link" to="/posts">Posts</router-link>
+                    </li>
+                    <li class="nav-item">
                         <router-link class="nav-link" to="/sessions">Sessions</router-link>
                     </li>
                     <li class="nav-item">
