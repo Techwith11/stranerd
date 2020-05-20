@@ -21,7 +21,7 @@
 				<input type="file" @change="catchDocument" class="d-none" ref="documentInput" accept="*/*">
 				<a @click.prevent="() => { $refs.documentInput.value= ''; $refs.documentInput.click() }">
 					<span v-if="document">{{document.name}} </span>
-					<span class="text-info">Upload image preview</span>
+					<span class="text-info">Upload document</span>
 				</a>
 			</div>
 			<div class="form-group my-3">
