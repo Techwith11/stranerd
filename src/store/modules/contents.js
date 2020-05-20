@@ -29,13 +29,7 @@ let helpers = {
 }
 
 const actions = {
-	async createPost({ getters }, data){
-		let post = data.post
-		post.media = []
-		for (const file of data.media) {
-			let media = await window.uploadFile('post/images', file)
-			post.media.push(media)
-		}
+	async createPost({ getters }, post){
 		return await helpers.createPost(post, getters.getId)
 	},
 	async createQuestion({ getters }, data){

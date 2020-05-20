@@ -29,17 +29,6 @@
 			</div>
 			<small class="small text-muted" v-else>Use comma separated tags to attach keywords related to your questions. This can include related subjects, topics, formulas etc. At least one tag is required</small>
 		</div>
-		<div class="form-group my-3">
-			<input type="file" class="d-none" ref="attachments" accept="image/*" @change="catchImages" multiple>
-			<a class="text-info d-block" @click.prevent="$refs.attachments.click()">Upload file attachments</a>
-			<div class="small mt-1" v-if="media.length > 0">
-				<span v-for="file in media" :key="file.name">
-					{{ file.name }}
-					<a @click.prevent="removeFile(file)"><i class="fas fa-times text-danger mr-1"></i></a>
-				</span>
-			</div>
-			<small class="small text-muted" v-else>Upload any relevant images such as diagrams associated with the question</small>
-		</div>
 		<div class="d-flex justify-content-end">
 			<button class="accent-button" :disabled="isLoading || $v.$invalid" @click="submitPost">
 				<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
@@ -60,7 +49,6 @@
 				tags: []
 			},
 			tag: '',
-			media: [],
 			isLoading: false
 		}),
 		methods: {
@@ -71,18 +59,6 @@
 				tag && !this.post.tags.includes(tag) ? this.post.tags.push(tag) : null
 			},
 			removeTag(tag){ this.post.tags = this.post.tags.filter(item => tag !== item) },
-			removeFile(file){ this.media = this.media.filter(item => file.name !== item.name) },
-			catchImages(e){
-				e.target.files.forEach(file => {
-					if(this.media.length > 2){
-						return new window.Toast({ icon: 'warning', title: 'You can only add a maximum of 3 images' })
-					}
-					if(file.type.startsWith('image/')){
-						let isThere = this.media.find(item => file.name === item.name)
-						!isThere ? this.media.push(file) : null
-					}
-				})
-			},
 			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
 				try{
 					await this.uploadFromEditor({
@@ -95,7 +71,7 @@
 			async submitPost(){
 				this.isLoading = true
 				try{
-					let id = await this.createPost({ post: this.post, media: this.media })
+					let id = await this.createPost(this.post)
 					this.closePostModal()
 					await this.$router.push(`/posts/${id}`)
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
