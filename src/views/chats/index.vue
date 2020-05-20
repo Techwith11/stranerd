@@ -36,8 +36,8 @@
 		},
 		methods:{
 			getChats(){
-				this.chatsListeners = this.getChattedWith.map(id => firestore.doc('chats/singles')
-					.collection([id, this.getId].sort().join('_'))
+				this.chatsListeners = this.getChattedWith.map(id => firestore
+					.collection(`chats/${[id, this.getId].sort().join('_')}/chats`)
 					.orderBy('dates.sentAt','desc')
 					.limit(1).onSnapshot(chats => {
 						if(chats.empty){ return null }

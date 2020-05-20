@@ -1,8 +1,5 @@
 <template>
 	<div class="mt-auto mb-3 d-flex align-items-center">
-		<vue-editor class="rounded border" v-model.trim="$v.message.$model" useCustomImageHandler @image-added="handleImageAdded"
-			placeholder="Enter message"
-		/>
 		<textarea rows="1" class="form-control" placeholder="Enter message" v-model.trim="$v.message.$model"></textarea>
 		<a v-if="!$v.$invalid" @click.prevent="sendMessage"><i class="fas fa-paper-plane ml-3 text-success"></i></a>
 		<a v-else @click.prevent="$refs.mediaInput.click()"><i class="fas fa-upload ml-3 text-success"></i></a>

@@ -41,7 +41,7 @@ let helpers = {
 let actions = {
     async sendChat({ getters }, data){
         let chat = [getters.getId, data.id].sort().join('_')
-        let path = `chats/singles/${chat}`
+        let path = `chats/${chat}/chats`
         await helpers.sendChat(getters.getId, path, data.content)
         if(!getters.getChattedWith.includes(data.id)){
             await helpers.createNewChatCollection(getters.getId, data.id)
@@ -49,14 +49,14 @@ let actions = {
     },
     async sendMedia({ getters }, data) {
         let chat = [getters.getId, data.id].sort().join('_')
-        let path = `chats/singles/${chat}`
+        let path = `chats/${chat}/chats`
         await helpers.sendMediaChat(getters.getId, path, data.media)
         if(!getters.getChattedWith.includes(data.id)){
             await helpers.createNewChatCollection(getters.getId, data.id)
         }
     },
     async readChat(store, data){
-        let path = `chats/singles/${data.path}/${data.id}`
+        let path = `chats/${data.path}/chats/${data.id}`
         return await helpers.readChat(path)
     },
     async readSessionChat(store, data){

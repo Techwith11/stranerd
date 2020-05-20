@@ -65,7 +65,7 @@ export default [
     {
         path: '/posts/:id',
         name: 'Post',
-        component: () => import(/* webpackChunkName: "my_account" */ '@/views/posts/single-post'),
+        component: () => import(/* webpackChunkName: "post" */ '@/views/posts/single-post'),
         meta: { requiresAuth: true }
     },
     {

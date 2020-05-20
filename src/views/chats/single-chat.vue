@@ -54,7 +54,7 @@
 				this.isLoading = false
 			},
 			async getChats(){
-				let docs = firestore.doc('chats/singles').collection(this.getChatPath).orderBy('dates.sentAt','desc')
+				let docs = firestore.collection(`chats/${this.getChatPath}/chats`).orderBy('dates.sentAt','desc')
 					.limit(this.paginationLimit)
 				if(this.chats.length > 0){
 					let lastItem = this.chats[0]
@@ -66,7 +66,7 @@
 			},
 			setListener(){
 				let lastItem = this.chats[this.chats.length - 1]
-				let query = firestore.doc('chats/singles').collection(this.getChatPath).orderBy('dates.sentAt')
+				let query = firestore.collection(`chats/${this.getChatPath}/chats`).orderBy('dates.sentAt')
 				if(lastItem){
 					query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
 				}

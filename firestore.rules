@@ -1,7 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
 	match /databases/{database}/documents {
-		match /chats/singles/{path}/{id} {
+		match /chats/{path}/chats/{id} {
 			allow read, update: if hasAccessToChat(path);
 			allow create: if isMine(request.resource.data.from);
 			allow delete: if isMine(resource.data.from);
