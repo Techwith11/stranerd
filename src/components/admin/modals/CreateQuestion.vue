@@ -7,9 +7,9 @@
 		</div>
 		<form class="mx-2">
 			<div class="form-group my-3">
-				<textarea class="form-control" placeholder="Question..." v-model.trim="$v.question.title.$model" rows="2"
-					:class="{'is-invalid': $v.question.title.$error, 'is-valid': !$v.question.title.$invalid}"
-				></textarea>
+				<vue-editor class="rounded border" v-model.trim="$v.question.title.$model" useCustomImageHandler @image-added="handleImageAdded"
+					:class="{'border-danger': $v.question.title.$error, 'border-success': !$v.question.title.$invalid}" placeholder="Question..."
+				/>
 				<span class="small" v-if="$v.question.title.$error">Must be at least 3 characters long</span>
 			</div>
 			<div class="form-group my-3">
@@ -83,7 +83,16 @@
 			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 		},
 		methods:{
-			...mapActions(['setCreateModalOverview', 'closeCreateModal', 'createQuestion']),
+			...mapActions(['setCreateModalOverview', 'closeCreateModal', 'uploadFromEditor', 'createQuestion']),
+			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
+				try{
+					await this.uploadFromEditor({
+						file, editor, cursorLocation, resetUploader,
+						path: 'editor/questions/title'
+					})
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+
+			},
 			async submitQuestion() {
 				this.isLoading = true
 				try{

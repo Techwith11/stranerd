@@ -8,7 +8,7 @@ let helpers = {
 	createQuestion: async (question, id) => {
 		question.dates = { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
 		question.userId = id
-		return await firestore.collection('questions').add(question)
+		return await firestore.collection('tests/tutors/questions').add(question)
 	},
 	createCourse: async (course, id) => {
 		course.dates = { createdAt: firebase.firestore.FieldValue.serverTimestamp(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }
@@ -20,6 +20,11 @@ let helpers = {
 		note.dates = { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
 		note.userId = id
 		return await firestore.collection('notes').add(note)
+	},
+	uploadFromEditor: async data => {
+		let res = await window.uploadFile(data.path, data.file)
+		data.editor.insertEmbed(data.cursorLocation, "image", res.link)
+		data.resetUploader()
 	}
 }
 
@@ -52,6 +57,9 @@ const actions = {
 		let note = data.note
 		note.document = await window.uploadFile('notes', data.document)
 		return await helpers.createNote(note, getters.getId)
+	},
+	async uploadFromEditor(store, data){
+		return await helpers.uploadFromEditor(data)
 	}
 }
 

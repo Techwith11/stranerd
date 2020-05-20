@@ -12,9 +12,9 @@
 						:class="{'is-invalid': $v.course.title.$error, 'is-valid': !$v.course.title.$invalid}">
 				</div>
 				<div class="form-group my-3">
-					<textarea id="description" class="form-control" placeholder="Course Description" rows="4" v-model.trim="$v.course.description.$model"
-                        :class="{'is-invalid': $v.course.description.$error, 'is-valid': !$v.course.description.$invalid}"
-					></textarea>
+					<vue-editor class="rounded border" v-model.trim="$v.course.description.$model" useCustomImageHandler @image-added="handleImageAdded"
+						:class="{'border-danger': $v.course.description.$error, 'border-success': !$v.course.description.$invalid}" placeholder="Course description..."
+					/>
 				</div>
 				<div class="form-group my-3">
 					<h6>Tags</h6>
@@ -112,13 +112,22 @@
 			cannotSubmit(){ return this.$v.$invalid || this.isLoading || this.needsPreview }
 		},
 		methods: {
-			...mapActions(['setCreateModalOverview', 'closeCreateModal','createCourse']),
+			...mapActions(['setCreateModalOverview','closeCreateModal','uploadFromEditor','createCourse']),
 			goToNext(){ this.page = 2},
 			goToPrevious(){ this.page = 1},
 			catchVideo(e){ e.target.files[0] && e.target.files[0].type.startsWith('video/') ? this.video = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})},
 			catchImage(e){ e.target.files[0] &&e.target.files[0].type.startsWith('image/') ? this.image = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not an image'})},
 			catchPreview(e){ e.target.files[0] && e.target.files[0].type.startsWith('video/') ? this.preview = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})},
 			catchDocuments(e){ this.documents = [...e.target.files] },
+			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
+				try{
+					await this.uploadFromEditor({
+						file, editor, cursorLocation, resetUploader,
+						path: 'editor/courses/description'
+					})
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+
+			},
 			async submitCourse(){
 				this.isLoading = true
 				try{

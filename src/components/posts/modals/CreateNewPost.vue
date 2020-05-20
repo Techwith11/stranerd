@@ -12,8 +12,9 @@
 			<small class="small text-muted" v-if="post.title.length === 0">One quick sentence summary of your question</small>
 		</div>
 		<div class="form-group my-3">
-			<textarea rows="4" class="form-control" placeholder="Question content" v-model.trim="$v.post.body.$model"
-				:class="{'is-invalid': $v.post.body.$error,'is-valid': !$v.post.body.$invalid}"></textarea>
+			<vue-editor class="rounded border" v-model.trim="$v.post.body.$model" useCustomImageHandler @image-added="handleImageAdded"
+				:class="{'border-danger': $v.post.body.$error, 'border-success': !$v.post.body.$invalid}" placeholder="Question content"
+			/>
 			<small class="small text-danger d-block" v-if="$v.post.body.$error">Question body must be at least 3 characters</small>
 			<small class="small text-muted" v-if="post.body.length === 0">Describe your question in full length to give us a clear picture of what it is about</small>
 		</div>
@@ -63,7 +64,7 @@
 			isLoading: false
 		}),
 		methods: {
-			...mapActions(['closePostModal','createPost']),
+			...mapActions(['closePostModal','createPost','uploadFromEditor']),
 			splitTag(){
 				let tag = this.tag.trim().split(',')[0].toLowerCase()
 				this.tag = ''
@@ -81,6 +82,15 @@
 						!isThere ? this.media.push(file) : null
 					}
 				})
+			},
+			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
+				try{
+					await this.uploadFromEditor({
+						file, editor, cursorLocation, resetUploader,
+						path: 'editor/posts/body'
+					})
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+
 			},
 			async submitPost(){
 				this.isLoading = true

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuelidate from 'vuelidate'
-import VueChatScroll from "vue-chat-scroll"
-
+import VueChatScroll from 'vue-chat-scroll'
+import { VueEditor } from 'vue2-editor'
 import '@/config/registerServiceWorker'
 import '@/style/index.scss'
 
@@ -9,6 +9,7 @@ import SweetAlert from 'sweetalert2'
 
 Vue.use(Vuelidate)
 Vue.use(VueChatScroll)
+Vue.component('vue-editor', VueEditor)
 window.Fire = new Vue()
 
 window.SweetAlert = SweetAlert
