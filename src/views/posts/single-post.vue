@@ -4,16 +4,18 @@
 		<div v-else>
 			<div id="content">
 				<post-info :post="post" :user="user" />
-				<div class="p-2 my-3">
+				<div class="my-3">
 					<p class="text-muted" v-if="replies.length === 0">No replies yet. Consider leaving one</p>
 					<div v-else>
 						<div class="text-center small text-muted my-2" v-if="!hasNoMore">
 							<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderRepliesLoading"></i>
 							<span @click="fetchOlderReplies">Fetch Older Replies</span>
 						</div>
+						<ul class="">
+							<reply-card v-for="reply in replies" :key="reply['.key']" :reply="reply"/>
+							<reply-card v-for="reply in newReplies" :key="reply['.key']" :reply="reply"/>
+						</ul>
 					</div>
-					{{ replies }}
-					{{ newReplies }}
 				</div>
 			</div>
 			<reply-form />
@@ -26,6 +28,7 @@
 	import HelperSpinner from '@/components/helpers/Spinner'
 	import PostInfo from '@/components/posts/single/PostInfo'
 	import ReplyForm from '@/components/posts/single/ReplyForm'
+	import ReplyCard from '@/components/posts/single/ReplyCard'
 	export default {
 		name: "Post",
 		data: () => ({
@@ -89,6 +92,7 @@
 			'helper-spinner': HelperSpinner,
 			'post-info': PostInfo,
 			'reply-form': ReplyForm,
+			'reply-card': ReplyCard,
 		},
 		beforeDestroy(){
 			this.listener()
