@@ -12,7 +12,7 @@
 						:class="{'is-invalid': $v.course.title.$error, 'is-valid': !$v.course.title.$invalid}">
 				</div>
 				<div class="form-group my-3">
-					<vue-editor class="rounded border" v-model.trim="$v.course.description.$model" useCustomImageHandler @image-added="handleImageAdded"
+					<vue-editor class="rounded border" v-model.trim="$v.course.description.$model" :editor-toolbar="customToolBar"
 						:class="{'border-danger': $v.course.description.$error, 'border-success': !$v.course.description.$invalid}" placeholder="Course description..."
 					/>
 				</div>
@@ -100,7 +100,13 @@
 			documents: [],
 			tags: [],
 			isLoading: false,
-			page: 1
+			page: 1,
+			customToolBar: [
+				[{header: [false,1,2,3,4,5,6]}], ['bold','italic','underline','strikethrough'],
+				[{align:''},{align:'center'},{align:'right'},{align:'justify'}],
+				['blockquote','code-block'], [{list:'ordered'},{list:'bullet'},{list:'check'}],
+				[{color:[]},{background:[]}], ['link'/*,'image','video'*/],['clean']
+			]
 		}),
 		async mounted(){
 			let docs = await firestore.collection('subjects').get()
@@ -112,22 +118,13 @@
 			cannotSubmit(){ return this.$v.$invalid || this.isLoading || this.needsPreview }
 		},
 		methods: {
-			...mapActions(['setCreateModalOverview','closeCreateModal','uploadFromEditor','createCourse']),
+			...mapActions(['setCreateModalOverview','closeCreateModal','createCourse']),
 			goToNext(){ this.page = 2},
 			goToPrevious(){ this.page = 1},
 			catchVideo(e){ e.target.files[0] && e.target.files[0].type.startsWith('video/') ? this.video = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})},
 			catchImage(e){ e.target.files[0] &&e.target.files[0].type.startsWith('image/') ? this.image = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not an image'})},
 			catchPreview(e){ e.target.files[0] && e.target.files[0].type.startsWith('video/') ? this.preview = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})},
 			catchDocuments(e){ this.documents = [...e.target.files] },
-			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
-				try{
-					await this.uploadFromEditor({
-						file, editor, cursorLocation, resetUploader,
-						path: 'editor/courses/description'
-					})
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-
-			},
 			async submitCourse(){
 				this.isLoading = true
 				try{

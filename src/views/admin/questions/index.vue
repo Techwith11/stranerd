@@ -2,17 +2,7 @@
 	<div>
 		<question-nav class="mb-3" />
 		<div class="container">
-			<div class="alert alert-warning" role="alert" v-for="question in filteredQuestions" :key="question.title">
-				<p>{{ question.title }}</p>
-				<p>
-					<span class="mr-3">A. {{ question.a }}</span>
-					<span class="mr-3">B. {{ question.b }}</span>
-					<span class="mr-3">C. {{ question.c }}</span>
-					<span class="mr-3">D. {{ question.d }}</span>
-				</p>
-				<span class="d-block">Answer: {{ question.answer }}</span>
-				<span class="d-block">Level {{ question.level }} {{ question.subject }}</span>
-			</div>
+			<question-card :question="question" v-for="question in filteredQuestions" :key="question['.key']" />
 		</div>
 	</div>
 </template>
@@ -20,6 +10,7 @@
 <script>
 	import { firestore } from '@/config/firebase'
 	import QuestionNav from '@/components/admin/questions/list/QuestionNav'
+	import QuestionCard from '@/components/admin/questions/list/QuestionCard'
 	export default {
 		name: 'Questions',
 		data: () => ({
@@ -42,7 +33,8 @@
 			quesDocs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
 		},
 		components: {
-			'question-nav': QuestionNav
+			'question-nav': QuestionNav,
+			'question-card': QuestionCard
 		}
 	}
 </script>

@@ -3,7 +3,7 @@
 		<img :src="course.image.link" class="card-img-top" alt="">
 		<div class="card-body">
 			<h6 class="card-title">{{ course.title }}</h6>
-			<p class="small">{{ course.description }}</p>
+			<div class="small" v-html="course.description"></div>
 			<p class="small">
 				<span class="mr-2" v-for="tag in course.tags" :key="tag">
 					<i class="fas fa-circle" :class="getColorClass(tag)"></i>
