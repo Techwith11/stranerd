@@ -28,8 +28,9 @@
 				let message = this.message
 				this.message = ''
 				this.$v.$reset()
-				return this.sendSessionChat({ id: this.$route.params.id, content: message })
-					.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+				try{
+					this.sendSessionChat({ id: this.$route.params.id, content: message })
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 			},
 			captureFiles(e){
 				this.media = [ ...e.target.files ]
@@ -47,8 +48,9 @@
 				})
 				if (result.value) {
 					for (const file of this.media) {
-                        this.sendSessionMedia({ id: this.$route.params.id, media: file })
-                            .catch(error => new window.Toast({ icon: 'error', title: error.message }))
+						try{
+							this.sendSessionMedia({ id: this.$route.params.id, media: file })
+						}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 					}
 				}
 			}

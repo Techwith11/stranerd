@@ -89,16 +89,20 @@
 			},
 			async addCard(){
 				this.isLoading = true
-				let successful = await this.createPaymentMethod()
+				try{
+					let successful = await this.createPaymentMethod()
+					if(successful){ this.refreshMethods() }
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
-				if(successful){ this.refreshMethods() }
 			},
 			async pay(){
 				this.isLoading = true
-				let successful = await this.makePayment({ token: this.token, amount: this.getCurrentSession.price })
-				if(successful){
-					await this.payForSession()
-				}
+				try{
+					let successful = await this.makePayment({ token: this.token, amount: this.getCurrentSession.price })
+					if(successful){
+						await this.payForSession()
+					}
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
 			},
 		},

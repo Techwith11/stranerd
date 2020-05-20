@@ -2,18 +2,12 @@ import { functions } from '@/config/firebase'
 import { client, hostedFields, paypalCheckout } from 'braintree-web'
 import paypal from 'paypal-checkout'
 
-let getBraintreeClientToken = async () => functions.httpsCallable('getClientToken')()
-	.then(res => res.data)
-	.catch(error => new window.Toast({icon: 'error', title: error.message}))
-let createPaymentMethod = async (data) => functions.httpsCallable('createPaymentMethod')(data)
-	.then(res => res.data)
-	.catch(error => new window.Toast({ icon: 'error', title: error.message }))
-let makePayment = async (data) => functions.httpsCallable('makePayment')(data)
-	.then(res => res.data)
-	.catch(error => new window.Toast({ icon: 'error', title: error.message }))
-let subscribeToPlan = async (data) => functions.httpsCallable('subscribeToPlan')(data)
-	.then(res => res.data)
-	.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+let helpers = {
+	getBraintreeClientToken: async () => (await functions.httpsCallable('getClientToken')()).data,
+	createPaymentMethod: async (data) => (await functions.httpsCallable('createPaymentMethod')(data)).data,
+	makePayment: async (data) => (await functions.httpsCallable('makePayment')(data)).data,
+	subscribeToPlan: async (data) => (await functions.httpsCallable('subscribeToPlan')(data)).data,
+}
 
 const state = {
 	hostedFieldsInstance: null
@@ -31,7 +25,7 @@ const mutations = {
 const actions = {
 	async initPaymentFields({ getters, commit }, data){
 		try{
-			let tokens = await getBraintreeClientToken()
+			let tokens = await helpers.getBraintreeClientToken()
 			let clientInstance = await client.create({ authorization: tokens.braintree })
 			let month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
 			let year = new Date().getFullYear()
@@ -56,7 +50,7 @@ const actions = {
 				}),
 				onAuthorize: async (info, options) => {
 					let payload = await paypalInstance.tokenizePayment(options)
-					let result = await createPaymentMethod({
+					let result = await helpers.createPaymentMethod({
 						id: getters.getId,
 						nonce: payload.nonce
 					})
@@ -71,53 +65,27 @@ const actions = {
 				onCancel: () => new window.Toast({ icon: 'warning', title: 'Account addition cancelled.' }),
 				onError: error => new window.Toast({ icon: 'error', title: error.message })
 			}, '#paypalButton')
-		}catch(error){
-			new window.Toast({ icon: 'error', title: error.message })
-		}
+		}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 	},
 	async createPaymentMethod({ getters }){
-		try {
-			let payload = await getters.getHoistedFieldsInstance.tokenize()
-			let result = await createPaymentMethod({
-				id: getters.getId,
-				nonce: payload.nonce
-			})
-			if(result === true){
-				new window.Toast({ icon: 'success', title: 'Card added successfully' })
-			}else{
-				new window.Toast({ icon: 'error', title: 'Error adding card' })
-			}
-			return result
-		}catch(error){
-			new window.Toast({ icon: 'error', title: error.message })
-		}
+		let payload = await getters.getHoistedFieldsInstance.tokenize()
+		let result = await helpers.createPaymentMethod({
+			id: getters.getId,
+			nonce: payload.nonce
+		})
+		result ? new window.Toast({ icon: 'success', title: 'Card added successfully' }) : new window.Toast({ icon: 'error', title: 'Error adding card' })
+		return result
 	},
 	async makePayment({ getters }, data){
 		if(data.amount < 1){ return new window.Toast({ icon: 'error', title: 'Invalid amount' }) }
-		try{
-			let result = await makePayment({ ...data, id: getters.getId })
-			if(result === true){
-				new window.Toast({ icon: 'success', title: 'Transaction successful.' })
-			}else{
-				new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
-			}
-			return result
-		}catch(error){
-			new window.Toast({ icon: 'error', title: error.message })
-		}
+		let result = await helpers.makePayment({ ...data, id: getters.getId })
+		result ? new window.Toast({ icon: 'success', title: 'Transaction successful.' }) : new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
+		return result
 	},
 	async subscribeToPlan({ getters }, data){
-		try{
-			let result = await subscribeToPlan({ ...data, id: getters.getId })
-			if(result === true){
-				new window.Toast({ icon: 'success', title: 'Subscription successful.' })
-			}else{
-				new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
-			}
-			return result
-		}catch(error){
-			new window.Toast({ icon: 'error', title: error.message })
-		}
+		let result = await helpers.subscribeToPlan({ ...data, id: getters.getId })
+		result ? new window.Toast({ icon: 'success', title: 'Subscription successful.' }) : new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
+		return result
 	}
 }
 

@@ -58,22 +58,18 @@
 				if (!this.isMarked) { this.answers[index] = answer }
 			},
 			setInterval(){ this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000) },
-			endTest(testData){
+			async endTest(testData){
 				this.isMarked = true
 				clearInterval(this.interval)
 				this.isLoading = true
 				new window.Toast({ icon: 'info', title: 'Submitting test' })
-				this.markTest(testData).then(res => {
+				try{
+					let res = await this.markTest(testData)
 					new window.Toast({ icon: 'info', title: `You scored ${res.data.score}%` })
-					this.isLoading = false
-					this.$router.push('/my_account')
-				})
-				.catch(error => {
-					new window.Toast({ icon: 'error', title: error.message })
-					this.isLoading = false
-					this.$router.push('/my_account')
-				})
-				window.removeEventListener('beforeunload',this.onReloadListener)
+					window.removeEventListener('beforeunload',this.onReloadListener)
+					await this.$router.push('/my_account')
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+				this.isLoading = false
 			},
 			async submitTest(){
 				let result = await new window.SweetAlert({

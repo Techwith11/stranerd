@@ -85,7 +85,9 @@
 			},
 			async submit(){
 				this.isLoading = true
-                await this.sendDiscussion({ id: this.course['.key'], body: this.content })
+				try{
+					await this.sendDiscussion({ id: this.course['.key'], body: this.content })
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
                 this.content = ''
                 this.$v.$reset()
                 this.isLoading = false

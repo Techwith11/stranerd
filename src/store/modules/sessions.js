@@ -145,15 +145,13 @@ const actions = {
 	async acceptSession({ getters }){
 		let session = getters.getCurrentSession
 		if(session && session['.key']){
-			acceptSession(session['.key'])
-				.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+			await acceptSession(session['.key'])
 		}
 	},
 	async rejectSession({ commit, getters}){
 		let session = getters.getCurrentSession
 		if(session && session['.key']){
-			rejectSession(session['.key'])
-				.catch(error => new window.Toast({ icon: 'error', title: error.message }))
+			await rejectSession(session['.key'])
 			commit('setSessionListener', () => {})
 			commit('setSession', [null, null])
 			commit('closeOtherPersonListener')
@@ -170,8 +168,6 @@ const actions = {
 			commit('setSession', [null, null])
 			commit('closeOtherPersonListener')
 			commit('closeSessionModal')
-		}).catch(error => {
-			new window.Toast({ icon: 'error', title: error.message })
 		})
 	},
 
@@ -205,14 +201,16 @@ const actions = {
 
 	setSessionModalStateStudentDuration({ commit }, data = {}){ commit('setSessionModalStateStudentDuration', data) },
 	async cancelSessionAndCloseModal({ getters, commit }){
-		let session = getters.getCurrentSession
-		if(session && session.cancelled){
-			let other = session && getters.getId === session.student ? 'tutor' : 'student'
-			if(session.cancelled[other] === false){
+		try{
+			let session = getters.getCurrentSession
+			if(session && session.cancelled){
 				let canceller = getters.getId === session.student ? 'student' : 'tutor'
-				await firestore.collection('sessions').doc(session['.key']).update(`cancelled.${canceller}`,true)
+				let other = session && getters.getId === session.student ? 'tutor' : 'student'
+				if(session.cancelled[other] === false){
+					await firestore.collection('sessions').doc(session['.key']).update(`cancelled.${canceller}`,true)
+				}
 			}
-		}
+		}catch(error){ new window.Toast({ icon: 'error', title: error.message}) }
 		commit('setSessionListener', () => {})
 		commit('setSession', [null, null])
 		commit('closeOtherPersonListener')

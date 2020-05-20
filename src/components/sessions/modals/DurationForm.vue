@@ -60,7 +60,9 @@
 				this.isLoading = true
 				this.mode = duration
 				let price = this.prices[duration]
-				await this.startSession({ duration, price, ...this.getNewSessionData })
+				try{
+					await this.startSession({ duration, price, ...this.getNewSessionData })
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 <template>
 	<div class="mt-auto mb-3 d-flex align-items-center">
-		<textarea rows="2" class="form-control" placeholder="Leave a reply" v-model.trim="$v.message.$model"></textarea>
-		<a @click.prevent="sendMessage" :class="$v.$invalid ? 'text-secondary' : 'text-success'"><i class="fas fa-paper-plane ml-3"></i></a>
+		<textarea rows="2" class="form-control" placeholder="Leave a reply" v-model.trim="$v.body.$model"></textarea>
+		<a @click.prevent="sendReply" :class="$v.$invalid ? 'text-secondary' : 'text-success'"><i class="fas fa-paper-plane ml-3"></i></a>
 	</div>
 </template>
 
@@ -10,19 +10,21 @@
 	import { required } from 'vuelidate/lib/validators'
 	export default {
 		data: () => ({
-			message: ''
+			body: ''
 		}),
 		validations: {
-			message: { required }
+			body: { required }
 		},
 		methods:{
-            ...mapActions([]),
-			async sendMessage(){
+            ...mapActions(['sendPostReply']),
+			async sendReply(){
 				if(this.$v.$invalid){ return }
-				let message = this.message
-				this.message = ''
+				let body = this.body
+				this.body = ''
 				this.$v.$reset()
-				console.log(message)
+				try{
+					await this.sendPostReply({ body, id: this.$route.params.id })
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message })}
 			}
 		}
 	}

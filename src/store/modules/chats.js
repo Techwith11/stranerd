@@ -2,45 +2,38 @@ import firebase,{ firestore, functions } from '@/config/firebase'
 
 let helpers = {
     createNewChatCollection: async (from, to) => {
-        let createNewSingleChatCollection = functions.httpsCallable('createNewSingleChatCollection')
-        return createNewSingleChatCollection({ from, to })
+        return functions.httpsCallable('createNewSingleChatCollection')({ from, to })
     },
-    sendChat: async (auth, path, data) => {
+    sendChat: async (from, path, content) => {
         let chat = {
-            dates: {
-                sentAt: firebase.firestore.FieldValue.serverTimestamp(),
-                readAt: null
-            },
-            from: auth,
-            content: data.content
+            from, content,
+            dates: { sentAt: firebase.firestore.FieldValue.serverTimestamp(), readAt: null },
         }
         return await firestore.collection(path).add(chat)
     },
-    sendMediaChat: async (auth, path, data) => {
+    sendMediaChat: async (from, path, media) => {
         let chat = {
-            dates: {
-                sentAt: firebase.firestore.FieldValue.serverTimestamp(),
-                readAt: null
-            },
-            from: auth,
+            from,
+            dates: { sentAt: firebase.firestore.FieldValue.serverTimestamp(), readAt: null },
         }
-        let file = data.media
-        chat.media = await window.uploadFile(path, file)
+        chat.media = await window.uploadFile(path, media)
         return await firestore.collection(path).add(chat)
     },
     readChat: async (path) => {
         return await firestore.doc(path).set({
-            dates: {
-                readAt: firebase.firestore.FieldValue.serverTimestamp()
-            }
-        }, { merge: true})
+            dates: { readAt: firebase.firestore.FieldValue.serverTimestamp() }
+        }, { merge: true })
     },
     sendDiscussion: async (userId, id, body) => {
         return await firestore.collection(`courses/${id}/discussions`).add({
             body, userId,
-            dates: {
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            }
+            dates: { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
+        })
+    },
+    sendPostReply: async (userId, id, body) => {
+        return await firestore.collection(`posts/${id}/replies`).add({
+            body, userId,
+            dates: { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
         })
     }
 }
@@ -49,7 +42,7 @@ let actions = {
     async sendChat({ getters }, data){
         let chat = [getters.getId, data.id].sort().join('_')
         let path = `chats/singles/${chat}`
-        await helpers.sendChat(getters.getId, path, data)
+        await helpers.sendChat(getters.getId, path, data.content)
         if(!getters.getChattedWith.includes(data.id)){
             await helpers.createNewChatCollection(getters.getId, data.id)
         }
@@ -57,7 +50,7 @@ let actions = {
     async sendMedia({ getters }, data) {
         let chat = [getters.getId, data.id].sort().join('_')
         let path = `chats/singles/${chat}`
-        await helpers.sendMediaChat(getters.getId, path, data)
+        await helpers.sendMediaChat(getters.getId, path, data.media)
         if(!getters.getChattedWith.includes(data.id)){
             await helpers.createNewChatCollection(getters.getId, data.id)
         }
@@ -72,14 +65,17 @@ let actions = {
     },
     async sendSessionChat({ getters }, data){
         let path = `sessions/${data.id}/chats`
-        return await helpers.sendChat(getters.getId, path, data)
+        return await helpers.sendChat(getters.getId, path, data.content)
     },
     async sendSessionMedia({ getters }, data){
         let path = `sessions/${data.id}/chats`
-        return await helpers.sendMediaChat(getters.getId, path, data)
+        return await helpers.sendMediaChat(getters.getId, path, data.media)
     },
     async sendDiscussion({ getters }, data){
         return await helpers.sendDiscussion(getters.getId, data.id, data.body)
+    },
+    async sendPostReply({ getters }, data){
+        return await helpers.sendPostReply(getters.getId, data.id, data.body)
     }
 }
 

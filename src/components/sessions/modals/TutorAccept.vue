@@ -26,12 +26,16 @@
             async requestSession(){
 				this.isLoading = true
 				this.mode = 'accept'
-				await this.acceptSession()
+				try{
+					await this.acceptSession()
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 			},
 			async cancelSession(){
                 this.isLoading = true
                 this.mode = 'reject'
-                await this.rejectSession()
+				try{
+					await this.rejectSession()
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 			}
 		},
 		computed: {

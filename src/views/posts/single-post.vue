@@ -12,6 +12,8 @@
 							<span @click="fetchOlderReplies">Fetch Older Replies</span>
 						</div>
 					</div>
+					{{ replies }}
+					{{ newReplies }}
 				</div>
 			</div>
 			<reply-form />
@@ -61,9 +63,9 @@
 			},
 			async setRepliesListeners(){
 				let lastItem = this.replies[this.replies.length - 1]
-				let query = firestore.collection(`posts/${this.$route.params.id}/replies`).orderBy('dates.sentAt')
+				let query = firestore.collection(`posts/${this.$route.params.id}/replies`).orderBy('dates.createdAt')
 				if(lastItem){
-					query = query.where('dates.sentAt','>',lastItem.dates.createdAt)
+					query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
 				}
 				this.listener = query.onSnapshot(snapshot => {
 					this.newReplies = []

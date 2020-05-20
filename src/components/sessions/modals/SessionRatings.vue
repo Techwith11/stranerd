@@ -37,7 +37,9 @@
 			setRatingFor5(){ this.rating === 4.5 ? this.rating = 5 : this.rating = 4.5  },
 			async submitRating(){
 				this.isLoading = true
-				await this.submitSessionRating({ rating: this.rating, comment: this.comment })
+				try{
+					await this.submitSessionRating({ rating: this.rating, comment: this.comment })
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
 			}
 		}
