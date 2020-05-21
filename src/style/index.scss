@@ -15,79 +15,68 @@ $gradient-reversed: linear-gradient(to left, $primary-dark, $primary);
 $font-base-size: 16px;
 
 body{
-  font-size: $font-base-size;
-  font-family: Poppins, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	font-size: $font-base-size;
+	font-family: Poppins, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 button{
-  display: inline-block;
-  font-weight: 400;
-  text-align: center;
-  vertical-align: middle;
-  cursor: pointer;
-  padding: 0.5rem 2.5rem;
-  border: 1px solid transparent;
-  font-size: 1rem;
-  line-height: 1.5;
-  border-radius: 0.5rem;
-  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+	display: inline-block;
+	font-weight: 400;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	padding: 0.5rem 2.5rem;
+	border: 1px solid transparent;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: 0.5rem;
+	transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
 
 .primary-button{
-  background: $gradient;
-  color: $white;
-  margin: 0.25rem 0.5rem;
+	background: $gradient;
+	color: $white;
+	margin: 0.25rem 0.5rem;
 }
 .accent-button{
-  background: $accent;
-  color: $white;
-  margin: 0.25rem 0.5rem;
+	background: $accent;
+	color: $white;
+	margin: 0.25rem 0.5rem;
 }
 
 .white-button{
-  color: $primary;
-  background: $white;
-  margin: 0.25rem 0.5rem;
+	color: $primary;
+	background: $white;
+	margin: 0.25rem 0.5rem;
 }
 
 .router-link-exact-active.nav-link {
-  color: $primary !important;
+	color: $primary !important;
 }
 
 .editor-container{
-  margin-bottom: 0.5rem;
-  *{
-    max-width: 100%;
-  }
+	margin-bottom: 0.5rem;
+	*{
+		max-width: 100%;
+	}
 }
 
 // FAB
 .floating-button{
-  background: $accent;
-  color: $white;
-  border-radius: 10rem;
-  position: fixed;
-  right: 10%;
-  bottom: 10%;
-  padding: 0.5rem !important;
-  margin: 0;
-  width: 5rem;
-  height: 5rem;
-  box-sizing: border-box;
-  z-index: 2;
-  font-size: 2rem;
-}
-@media screen and (max-width: 767px){
-  .floating-button{
-    width: 4.5rem;
-    height: 4.5rem;
-  }
-}
-@media screen and (max-width: 575px){
-  .floating-button{
-    width: 4rem;
-    height: 4rem;
-  }
+	padding: 0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: $accent;
+	color: $white;
+	border-radius: 10rem;
+	position: fixed;
+	right: 2.5rem;
+	bottom: 2.5rem;
+	z-index: 2;
+	font-size: 1.5rem;
+	height: 4rem;
+	width: 4rem;
 }

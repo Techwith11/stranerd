@@ -40,9 +40,9 @@
                         </a>
                         <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="accountDropdown">
                             <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/account">My Account</router-link>
-                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/cart">My Cart
+                            <a class="dropdown-item nav-link py-1 py-lg-2" @click.prevent="showCartModal">My Cart
                                 <span class="badge badge-pill badge-primary" v-if="getCartLength">{{ getCartLength }}</span>
-                            </router-link>
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item nav-link py-1 py-lg-2"  @click.prevent="logout">Logout</a>
                         </div>
@@ -84,10 +84,14 @@
     import { mapGetters, mapActions } from 'vuex'
     export default {
         methods: {
-            ...mapActions(['openModal', 'logout']),
+            ...mapActions(['openModal', 'logout','openCartModal']),
             toggleNavbar: () => window.toggleNavbar(),
             toggleAccountDropDown: () => window.toggleAccountDropDown(),
-            toggleAdminDropDown: () => window.toggleAdminDropDown()
+            toggleAdminDropDown: () => window.toggleAdminDropDown(),
+            showCartModal(){
+                window.closeNavbar()
+                this.openCartModal()
+            }
         },
         computed: mapGetters(['isLoggedIn','isAdmin','getCartLength'])
     }

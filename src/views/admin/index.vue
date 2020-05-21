@@ -1,16 +1,20 @@
 <template>
 	<div>
 		<router-view />
-		<content-fab />
+		<button class="floating-button" @click="openCreateModal"><i class="fas fa-plus"></i></button>
+		<create-new-modal v-if="isCreateModalOpen" />
 	</div>
 </template>
 
 <script>
-	import ContentFAB from '@/components/admin/ContentFAB'
+	import CreateNewModal from '@/components/admin/modals/ContentModal'
+	import { mapGetters, mapActions } from 'vuex'
 	export default {
 		name: "Admins",
 		components: {
-			'content-fab': ContentFAB,
+			'create-new-modal': CreateNewModal
 		},
+		methods: mapActions(['openCreateModal']),
+		computed: mapGetters(['isCreateModalOpen'])
 	}
 </script>
