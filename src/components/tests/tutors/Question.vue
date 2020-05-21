@@ -3,7 +3,7 @@
 		'border-danger': disabled && question.answer !== answer,
 		'border-success': disabled && question.answer === answer}"
 	>
-		<div v-html="question.title"></div>
+		<div v-html="question.title" class="editor-container"></div>
 		<div class="form-check py-1 pl-3 my-1 rounded" v-for="letter in letters" :key="letter" @click="disabled ? null : answer = letter"
 			:class="{ 'bg-info text-white': !disabled && answer === letter,
 				'bg-danger text-white': disabled && question.answer !== letter && answer === letter,

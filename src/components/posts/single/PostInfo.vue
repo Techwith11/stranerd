@@ -1,7 +1,7 @@
 <template>
 	<div class="my-3">
 		<h4>{{ post.title }}</h4>
-		<div class="lead" v-html="post.body"></div>
+		<div v-html="post.body" class="lead editor-container"></div>
 		<div class="small d-flex">
 			<img :src="getImageLink" class="mr-2" width="40px" alt="">
 			<div>

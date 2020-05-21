@@ -1,6 +1,6 @@
 <template>
 	<div class="alert alert-warning" role="alert">
-		<div v-html="question.title"></div>
+		<div v-html="question.title" class="editor-container"></div>
 		<p>
 			<span class="mr-3">A. {{ question.a }}</span>
 			<span class="mr-3">B. {{ question.b }}</span>
@@ -22,4 +22,3 @@
 		}
 	}
 </script>
-

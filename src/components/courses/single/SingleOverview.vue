@@ -3,7 +3,7 @@
 		<div class="d-flex flex-column">
 			<div class="p-2 p-lg-4 rounded-lg my-2 my-lg-4">
 				<p class="title font-weight-bold">Description</p>
-				<div class="mb-4" v-html="course.description"></div>
+				<div v-html="course.description" class="mb-4 editor-container"></div>
 				<p class="small">
 					<span class="font-weight-bold mr-4">Released Date: </span>
 					<span>{{ course.dates.createdAt | formatDate }}</span>

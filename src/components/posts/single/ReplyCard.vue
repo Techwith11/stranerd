@@ -1,6 +1,6 @@
 <template>
 	<div class="my-3 border border-secondary py-1 px-2 rounded">
-		<p class="mb-1">{{ reply.body }}</p>
+		<div v-html="reply.body" class="editor-container"></div>
 		<div class="d-flex" v-if="user && user['.key']">
 			<img :src="getImageLink" class="mr-2" width="30px" alt="">
 			<div class="small">

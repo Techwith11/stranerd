@@ -1,7 +1,12 @@
 <template>
-	<div class="mt-auto mb-3 d-flex align-items-center">
-		<textarea rows="2" class="form-control" placeholder="Leave a reply" v-model.trim="$v.body.$model"></textarea>
-		<a @click.prevent="sendReply" :class="$v.$invalid ? 'text-secondary' : 'text-success'"><i class="fas fa-paper-plane ml-3"></i></a>
+	<div class="mt-auto mb-3 d-flex flex-column align-items-end">
+		<vue-editor class="rounded border w-100" v-model.trim="$v.body.$model" useCustomImageHandler @image-added="handleImageAdded"
+			placeholder="Leave a reply"
+		/>
+		<button @click.prevent="sendReply" class="mt-3" :class="$v.$invalid ? 'bg-gray' : 'accent-button'" :disabled="isLoading || $v.$invalid">
+			<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
+			<span>Submit</span>
+		</button>
 	</div>
 </template>
 
@@ -10,13 +15,24 @@
 	import { required } from 'vuelidate/lib/validators'
 	export default {
 		data: () => ({
-			body: ''
+			body: '',
+			isLoading: false
 		}),
 		validations: {
 			body: { required }
 		},
 		methods:{
-            ...mapActions(['sendPostReply']),
+            ...mapActions(['uploadFromEditor','sendPostReply']),
+			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
+				this.isLoading = true
+				try{
+					await this.uploadFromEditor({
+						file, editor, cursorLocation, resetUploader,
+						path: `editor/posts/${this.$route.params.id}/replies/body`
+					})
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+				this.isLoading = false
+			},
 			async sendReply(){
 				if(this.$v.$invalid){ return }
 				let body = this.body
