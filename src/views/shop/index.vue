@@ -1,9 +1,9 @@
 <template>
-	<div class="container">
+	<div>
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<helper-message message="No notes currently in the shop. Check again later" v-if="notes.length === 0" />
-			<div v-else>
+			<div class="container" v-else>
 				<note-card v-for="note in notes" :key="note['.key']" :note="note" />
 				<div class="d-flex justify-content-end my-3" v-if="hasMore">
 					<button class="accent-button" @click="fetchOlderNotes">
@@ -11,15 +11,15 @@
 						<span>Fetch More</span>
 					</button>
 				</div>
-				<button class="floating-button" @click="openCartModal"><i class="fas fa-shopping-basket"></i></button>
 			</div>
+			<button class="floating-button" @click="openCartModal" v-if="getCartLength"><i class="fas fa-shopping-basket"></i></button>
 		</div>
 	</div>
 </template>
 
 <script>
 	import { firestore } from '@/config/firebase'
-	import { mapActions } from 'vuex'
+	import { mapActions, mapGetters } from 'vuex'
 	import NoteCard from '@/components/shop/list/NoteCard'
 	import HelperSpinner from '@/components/helpers/Spinner'
 	import HelperMessage from '@/components/helpers/Message'
@@ -32,6 +32,7 @@
 			paginationLimit: 24,
 			hasMore: true
 		}),
+		computed: mapGetters(['getCartLength']),
 		methods: {
 			...mapActions(['openCartModal']),
 			async getNotes(){

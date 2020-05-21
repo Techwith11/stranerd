@@ -40,10 +40,10 @@
 		},
 		computed: mapGetters(['isInCart']),
 		methods: {
-			...mapActions(['addToCart', 'checkout', 'removeFromCart']),
+			...mapActions(['addToCart', 'proceedToPay', 'removeFromCart']),
 			checkoutItem(note){
 				this.addToCart(note)
-				this.checkout()
+				this.proceedToPay()
 			}
 		}
 	}

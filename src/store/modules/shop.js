@@ -1,3 +1,9 @@
+import { functions } from '@/config/firebase'
+
+const helpers = {
+	checkout: async cart => (await functions.httpsCallable('checkout')(cart)).data
+}
+
 const state = {
 	cart: window.localStorage.getItem('user_cart') ? JSON.parse(window.localStorage.getItem('user_cart')) : [],
 	cartModalOpen: false,
@@ -6,10 +12,12 @@ const state = {
 
 const getters = {
 	getCart: state => state.cart,
+	getCartPrice: state => state.cart.map(item => item.price).reduce((a,b) => a + b),
 	getCartLength: state => state.cart.length,
 	isInCart: state => item => state.cart.some(x => x['.key'] === item['.key']),
 	isCartModalOpen: state => state.cartModalOpen,
-	isCartModalOverview: state => state.cartModalState === 'cart-overview'
+	isCartModalOverview: state => state.cartModalState === 'cart-overview',
+	isCartModalSelectPayment: state => state.cartModalState === 'select-payment-method',
 }
 
 const mutations = {
@@ -18,11 +26,15 @@ const mutations = {
 		window.localStorage.setItem('user_cart', JSON.stringify(state.cart))
 	},
 	checkout: (state) => {
+		state.cartModalOpen = false
 		state.cart = []
 		window.localStorage.setItem('user_cart', JSON.stringify(state.cart))
 	},
 	removeFromCart: (state, item) => {
 		state.cart = state.cart.filter(x => x['.key'] !== item['.key'])
+		if(state.cart.length === 0){
+			state.cartModalOpen = false
+		}
 		window.localStorage.setItem('user_cart', JSON.stringify(state.cart))
 	},
 	setCartModalState: (state, mode) => {
@@ -36,19 +48,18 @@ const mutations = {
 }
 
 const actions = {
-	addToCart({ commit  }, note){
-		commit('addToCart', note)
-	},
-	async checkout({ commit }){
-		console.log(commit)
-		//TODO: commit checkout after everything
-		// commit('checkout')
-	},
-	removeFromCart({ commit }, note){
-		commit('removeFromCart', note)
-	},
 	openCartModal({ commit }){ commit('setCartModalOpen', true) },
 	closeCartModal({ commit }){ commit('setCartModalOpen', false) },
+	addToCart({ commit  }, note){ commit('addToCart', note) },
+	removeFromCart({ commit }, note){ commit('removeFromCart', note) },
+	proceedToPay({ commit }){ commit('setCartModalState', 'select-payment-method') },
+	async checkout({ getters, commit }){
+		try{
+			console.log(helpers.checkout,getters.getCart)
+			commit('checkout')
+			new window.Toast({ icon: 'success', title: 'Checked out successfully. Check your registered email for links to download the purchased items' })
+		}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+	},
 }
 
 export default { state, getters, mutations, actions }

@@ -63,7 +63,6 @@ button{
 	}
 }
 
-// FAB
 .floating-button{
 	padding: 0;
 	display: flex;
@@ -73,10 +72,10 @@ button{
 	color: $white;
 	border-radius: 10rem;
 	position: fixed;
-	right: 2.5rem;
-	bottom: 2.5rem;
+	right: 2rem;
+	bottom: 2rem;
 	z-index: 2;
-	font-size: 1.5rem;
-	height: 4rem;
-	width: 4rem;
+	font-size: 1.25rem;
+	height: 3.5rem;
+	width: 3.5rem;
 }
