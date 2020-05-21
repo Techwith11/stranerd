@@ -7,7 +7,7 @@
 				<div class="my-3">
 					<p class="text-muted" v-if="replies.length === 0">No replies yet. Consider leaving one</p>
 					<div v-else>
-						<div class="text-center small text-muted my-2" v-if="!hasNoMore">
+						<div class="text-center small text-muted my-2" v-if="hasMore">
 							<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderRepliesLoading"></i>
 							<span @click="fetchOlderReplies">Fetch Older Replies</span>
 						</div>
@@ -40,7 +40,7 @@
 			isLoading: true,
 			isOlderRepliesLoading: false,
 			paginationLimit: 20,
-			hasNoMore: false
+			hasMore: true
 		}),
 		methods: {
 			async getPost(){
@@ -61,7 +61,7 @@
 					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
 				}
 				docs = await docs.get()
-				if(docs.size < this.paginationLimit){ this.hasNoMore = true }
+				this.hasMore = docs.size >= this.paginationLimit
 				docs.forEach(doc => this.replies.unshift({ '.key': doc.id, ...doc.data() }))
 			},
 			async setRepliesListeners(){

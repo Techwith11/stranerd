@@ -5,7 +5,7 @@
 			<helper-message message="No posts at the moment. Check again later" v-if="posts.length === 0" />
 			<div v-else>
 				<post-card v-for="post in posts" :key="post['.key']" :post="post" />
-				<div class="text-center small text-muted mb-2" v-if="!hasNoMore">
+				<div class="text-center small text-muted mb-2" v-if="hasMore">
 					<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderPostsLoading"></i>
 					<span @click="fetchOlderPosts">Fetch Older</span>
 				</div>
@@ -26,7 +26,7 @@
 			isLoading: true,
 			isOlderPostsLoading: false,
 			paginationLimit: 50,
-			hasNoMore: false
+			hasMore: true
 		}),
 		components: {
 			'helper-spinner': HelperSpinner,
@@ -46,7 +46,7 @@
 					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
 				}
 				docs = await docs.get()
-				if(docs.size < this.paginationLimit){ this.hasNoMore = true }
+				this.hasMore = docs.size >= this.paginationLimit
 				docs.forEach(doc => this.posts.unshift({ '.key': doc.id, ...doc.data() }))
 			},
 			async fetchOlderPosts(){

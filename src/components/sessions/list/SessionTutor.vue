@@ -5,7 +5,7 @@
 			<helper-message message="No sessions taught yet." v-if="sessions.length === 0" />
 			<div v-else>
 				<session-card :session="session" v-for="session in sessions" :key="session['.key']" />
-				<div class="text-center small my-3" v-if="!hasNoMore">
+				<div class="text-center small my-3" v-if="hasMore">
 					<i class="fas fa-spin fa-spinner mr-2 text-info" v-if="isOlderSessionsLoading"></i>
 					<span @click="isOlderSessionsLoading ? () => {} : fetchOlderSessions()">Fetch More</span>
 				</div>
@@ -25,7 +25,7 @@
 			sessions: [],
 			isLoading: true,
 			paginationLimit: 20,
-			hasNoMore: false,
+			hasMore: true,
 			isOlderSessionsLoading: false
 		}),
 		computed: mapGetters(['getId']),
@@ -49,7 +49,7 @@
 					query = query.where('dates.createdAt','<',lastItem.dates.createdAt)
 				}
 				let docs = await query.get()
-				if(docs.size < this.paginationLimit){ this.hasNoMore = true }
+				this.hasMore = docs.size >= this.paginationLimit
 				docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
 			},
 			async fetchOlderSessions(){

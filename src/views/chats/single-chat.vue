@@ -6,7 +6,7 @@
 			<div class="container py-3" :id="canHaveSession ? 'smaller-height' : 'longer-height'">
 				<helper-message v-if="chats.length < 1 && newChats.length < 1" message="No chats. Send a message now" />
 				<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
-					<li class="d-block text-center small text-muted mb-2" v-if="!hasNoMore">
+					<li class="d-block text-center small text-muted mb-2" v-if="hasMore">
 						<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderChatsLoading"></i>
 						<span @click="fetchOlderMessages">Fetch Older</span>
 					</li>
@@ -38,7 +38,7 @@
 			isOlderChatsLoading: false,
 			chatsListeners: () => {},
 			paginationLimit: 10,
-			hasNoMore: false
+			hasMore: false
 		}),
 		computed: {
 			...mapGetters(['getId']),
@@ -61,7 +61,7 @@
 					docs = docs.where('dates.sentAt','<',lastItem.dates.sentAt)
 				}
 				docs = await docs.get()
-				if(docs.size < this.paginationLimit){ this.hasNoMore = true }
+				this.hasMore = docs.size >= this.paginationLimit
 				docs.forEach(doc => this.chats.unshift({ '.key': doc.id, ...doc.data() }))
 			},
 			setListener(){

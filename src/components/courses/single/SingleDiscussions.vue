@@ -1,7 +1,7 @@
 <template>
 	<div class="container small p-2 p-lg-4">
 		<ul class="list-group list-unstyled" id="scroller" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
-			<li class="d-block text-center small text-muted mb-2" v-if="!hasNoMore">
+			<li class="d-block text-center small text-muted mb-2" v-if="hasMore">
 				<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderDiscussionsLoading"></i>
 				<span @click="fetchOlderDiscussions">Fetch Older</span>
 			</li>
@@ -40,7 +40,7 @@
 			newDiscussions: [],
 			listener: false,
 			paginationLimit: 20,
-            hasNoMore: false
+            hasMore: true
 		}),
 		validations:{ content: { required, minLength: minLength(1) } },
 		props: {
@@ -64,7 +64,7 @@
                     docs = docs.where('dates.createdAt','<', lastItem.dates.createdAt)
                 }
                 docs = await docs.get()
-                if(docs.size < this.paginationLimit){ this.hasNoMore = true }
+                this.hasMore = docs.size >= this.paginationLimit
                 docs.forEach(doc => this.discussions.unshift({ '.key': doc.id, ...doc.data() }))
             },
             setListener(){
