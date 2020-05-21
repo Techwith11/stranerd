@@ -5,7 +5,7 @@
             <button class="navbar-toggler rounded-0" @click="toggleNavbar" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse">
+            <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ml-auto" v-if="isLoggedIn">
                     <li class="nav-item">
                         <router-link class="nav-link" to="/">Dashboard</router-link>
@@ -21,6 +21,9 @@
                     </li>
                     <li class="nav-item">
                         <router-link class="nav-link" to="/tutors">Tutors</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" to="/shop">Shop</router-link>
                     </li>
                     <li class="nav-item dropdown" v-if="isAdmin">
                         <a class="nav-link dropdown-toggle" @click.prevent="toggleAdminDropDown" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

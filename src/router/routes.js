@@ -15,6 +15,11 @@ export default [
         component: () => import(/* webpackChunkName: "blog" */ '@/views/blog/index')
     },
     {
+        path: '/shop',
+        name: 'Shop',
+        component: () => import(/* webpackChunkName: "shop" */ '@/views/shop/index')
+    },
+    {
         path: '/courses',
         name: 'Courses',
         component: () => import(/* webpackChunkName: "courses" */ '@/views/courses/index'),
