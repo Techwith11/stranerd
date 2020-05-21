@@ -17,7 +17,8 @@ export default [
     {
         path: '/shop',
         name: 'Shop',
-        component: () => import(/* webpackChunkName: "shop" */ '@/views/shop/index')
+        component: () => import(/* webpackChunkName: "shop" */ '@/views/shop/index'),
+        meta: { requiresAuth: true }
     },
     {
         path: '/courses',
@@ -56,9 +57,9 @@ export default [
         meta: { requiresAuth: true }
     },
     {
-        path: '/my_account',
-        name: 'My Account',
-        component: () => import(/* webpackChunkName: "my_account" */ '@/views/account/index'),
+        path: '/account',
+        name: 'Account',
+        component: () => import(/* webpackChunkName: "account" */ '@/views/account/index'),
         meta: { requiresAuth: true }
     },
     {

@@ -39,7 +39,10 @@
                             My account
                         </a>
                         <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="accountDropdown">
-                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/my_account">My Account</router-link>
+                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/account">My Account</router-link>
+                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/cart">My Cart
+                                <span class="badge badge-pill badge-primary" v-if="getCartLength">{{ getCartLength }}</span>
+                            </router-link>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item nav-link py-1 py-lg-2"  @click.prevent="logout">Logout</a>
                         </div>
@@ -86,6 +89,6 @@
             toggleAccountDropDown: () => window.toggleAccountDropDown(),
             toggleAdminDropDown: () => window.toggleAdminDropDown()
         },
-        computed: mapGetters(['isLoggedIn','isAdmin'])
+        computed: mapGetters(['isLoggedIn','isAdmin','getCartLength'])
     }
 </script>

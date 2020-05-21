@@ -8,6 +8,7 @@ import modal from './modules/modal'
 import payments from './modules/payments'
 import posts from './modules/posts'
 import sessions from './modules/sessions'
+import shop from './modules/shop'
 import tests from './modules/tests'
 import users from './modules/users'
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
 		payments,
 		posts,
 		sessions,
+		shop,
 		tests,
 		users
 	}

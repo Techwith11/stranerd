@@ -62,3 +62,32 @@ button{
     max-width: 100%;
   }
 }
+
+// FAB
+.floating-button{
+  background: $accent;
+  color: $white;
+  border-radius: 10rem;
+  position: fixed;
+  right: 10%;
+  bottom: 10%;
+  padding: 0.5rem !important;
+  margin: 0;
+  width: 5rem;
+  height: 5rem;
+  box-sizing: border-box;
+  z-index: 2;
+  font-size: 2rem;
+}
+@media screen and (max-width: 767px){
+  .floating-button{
+    width: 4.5rem;
+    height: 4.5rem;
+  }
+}
+@media screen and (max-width: 575px){
+  .floating-button{
+    width: 4rem;
+    height: 4rem;
+  }
+}
