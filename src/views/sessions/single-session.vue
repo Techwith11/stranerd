@@ -38,7 +38,7 @@
 			otherPerson: {},
 			chats: [],
 			newChats: [],
-			paginationLimit: 20,
+			paginationLimit: 10,
 			hasMore: true,
             otherPersonListener: () => {},
 			chatsListener: () => {}

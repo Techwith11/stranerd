@@ -39,7 +39,7 @@
 			listener: () => {},
 			isLoading: true,
 			isOlderRepliesLoading: false,
-			paginationLimit: 20,
+			paginationLimit: 24,
 			hasMore: true
 		}),
 		methods: {

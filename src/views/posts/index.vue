@@ -25,7 +25,7 @@
 			posts: [],
 			isLoading: true,
 			isOlderPostsLoading: false,
-			paginationLimit: 50,
+			paginationLimit: 24,
 			hasMore: true
 		}),
 		components: {

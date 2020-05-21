@@ -7,7 +7,7 @@
 				<div v-for="note in notes" :key="note['.key']">
 					{{note}}
 				</div>
-				<div class="d-flex justify-content-end" v-if="hasMore">
+				<div class="d-flex justify-content-end my-3" v-if="hasMore">
 					<button class="accent-button" @click="fetchOlderNotes">
 						<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderNotesLoading"></i>
 						<span>Fetch More</span>
@@ -28,7 +28,7 @@
 			isLoading: true,
 			isOlderNotesLoading: false,
 			notes: [],
-			paginationLimit: 50,
+			paginationLimit: 24,
 			hasMore: true
 		}),
 		methods: {

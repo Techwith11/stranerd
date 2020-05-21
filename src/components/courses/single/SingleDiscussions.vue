@@ -39,7 +39,7 @@
 			discussions: [],
 			newDiscussions: [],
 			listener: false,
-			paginationLimit: 20,
+			paginationLimit: 24,
             hasMore: true
 		}),
 		validations:{ content: { required, minLength: minLength(1) } },

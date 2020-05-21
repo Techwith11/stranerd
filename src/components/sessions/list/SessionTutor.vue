@@ -24,7 +24,7 @@
 		data: () => ({
 			sessions: [],
 			isLoading: true,
-			paginationLimit: 20,
+			paginationLimit: 24,
 			hasMore: true,
 			isOlderSessionsLoading: false
 		}),

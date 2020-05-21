@@ -14,15 +14,12 @@
 </template>
 
 <script>
-	import { firestore } from "@/config/firebase";
-
 	export default {
-		data: () => ({
-			subjects: []
-		}),
-		async mounted(){
-			let docs = await firestore.collection('subjects').get()
-			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
+		props: {
+			subjects: {
+				required: true,
+				type: Array
+			}
 		}
 	}
 </script>
