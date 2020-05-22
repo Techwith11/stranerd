@@ -162,13 +162,14 @@ const actions = {
 	async payForSession({ commit, getters }){
 		let session = getters.getCurrentSession
 		let data = { id: session['.key'] }
-		functions.httpsCallable('payForSession')(data).then(async () => {
-			await router.push(`/sessions/${session['.key']}`).catch(error => error)
+		try{
+			await functions.httpsCallable('payForSession')(data)
+			await router.push(`/sessions/${session['.key']}`)
 			commit('setSessionListener', () => {})
 			commit('setSession', [null, null])
 			commit('closeOtherPersonListener')
 			commit('closeSessionModal')
-		})
+		}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 	},
 
 	initializeTutorSessionsListener({ getters, commit }){

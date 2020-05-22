@@ -5,18 +5,28 @@
 			<h4 class="mb-0">Select Payment Method</h4>
 			<i></i>
 		</div>
-		<p>You are about to pay &dollar;{{ getCartPrice }} for {{ getCartLength }} {{ getCartLength > 1 ? 'items' : 'item' }}.</p>
+		<p>You are about to pay &dollar;{{ getCartPrice }} for {{ getCartLength }} {{ getCartLength > 1 ? 'items' : 'item' }}. Select payment method to use</p>
+		<helper-make-payment :amount="getAmount" :onPaymentSuccessful="onPaymentSuccessful" buttonTitle="Checkout" />
 	</div>
 </template>
 
 <script>
 	import { mapActions, mapGetters } from 'vuex'
+	import MakePayment from '@/components/helpers/MakePayment'
 	export default {
-		methods: {
-			...mapActions(['openCartModal'])
-		},
 		computed: {
-			...mapGetters(['getCartPrice','getCartLength'])
+			...mapGetters(['getId','getCartPrice','getCartLength']),
+			getAmount(){ return parseFloat(this.getCartPrice) }
+		},
+		methods: {
+			...mapActions(['openCartModal','checkout']),
+			async onPaymentSuccessful(){
+				new window.Toast({ icon: 'success', title: 'Purchase successful' })
+				await this.checkout()
+			}
+		},
+		components: {
+			'helper-make-payment': MakePayment
 		}
 	}
 </script>

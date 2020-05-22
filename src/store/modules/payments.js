@@ -1,5 +1,5 @@
-import { functions } from '@/config/firebase'
-import { client, hostedFields, paypalCheckout } from 'braintree-web'
+import {functions} from '@/config/firebase'
+import {client, hostedFields, paypalCheckout} from 'braintree-web'
 import paypal from 'paypal-checkout'
 
 let helpers = {
@@ -73,13 +73,17 @@ const actions = {
 			id: getters.getId,
 			nonce: payload.nonce
 		})
-		result ? new window.Toast({ icon: 'success', title: 'Card added successfully' }) : new window.Toast({ icon: 'error', title: 'Error adding card' })
+		if(result === false){
+			throw new Error('Error adding card')
+		}
 		return result
 	},
 	async makePayment({ getters }, data){
-		if(data.amount < 1){ return new window.Toast({ icon: 'error', title: 'Invalid amount' }) }
+		if(Math.ceil(data.amount) < 1){ return new window.Toast({ icon: 'error', title: 'Invalid amount' }) }
 		let result = await helpers.makePayment({ ...data, id: getters.getId })
-		result ? new window.Toast({ icon: 'success', title: 'Transaction successful.' }) : new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
+		if(result === false){
+			throw new Error('An error occurred charging your account')
+		}
 		return result
 	},
 	async subscribeToPlan({ getters }, data){

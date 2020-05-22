@@ -32,7 +32,7 @@
 				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading && mode === 3.0"></i>
 				<span>3.0 hours - &dollar;90</span>
 			</button>
-			<small class="small text-muted">You will be directed to pay if the tutor accepts the session. Note that you can cancel the session at any point until you have made payment.</small>
+			<small class="small text-muted">You will be directed to pay if the tutor accepts the session. Note that you can cancel the session at any point before you complete payment.</small>
 		</div>
 	</div>
 </template>

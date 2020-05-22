@@ -25,15 +25,6 @@
                     <li class="nav-item">
                         <router-link class="nav-link" to="/shop">Shop</router-link>
                     </li>
-                    <li class="nav-item dropdown" v-if="isAdmin">
-                        <a class="nav-link dropdown-toggle" @click.prevent="toggleAdminDropDown" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Admin Pages
-                        </a>
-                        <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="adminDropdown">
-                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/questions">Tests Questions</router-link>
-                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/upgrades">Upgrade Users</router-link>
-                        </div>
-                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" @click.prevent="toggleAccountDropDown" id="accountDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             My account
@@ -45,6 +36,15 @@
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item nav-link py-1 py-lg-2"  @click.prevent="logout">Logout</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown" v-if="isAdmin">
+                        <a class="nav-link dropdown-toggle" @click.prevent="toggleAdminDropDown" id="adminDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Admin Pages
+                        </a>
+                        <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="adminDropdown">
+                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/questions">Tests Questions</router-link>
+                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/upgrades">Upgrade Users</router-link>
                         </div>
                     </li>
                 </ul>

@@ -5,7 +5,7 @@
 			<div class="d-flex align-items-center justify-content-between my-3">
 				<i></i>
 				<h4 class="mb-0">Pay for Session</h4>
-				<a @click.prevent="this.cancelSessionAndCloseModal"><i class="fas fa-times text-danger"></i></a>
+				<a @click.prevent="cancelSessionAndCloseModal"><i class="fas fa-times text-danger"></i></a>
 			</div>
 			<form v-if="showForm">
 				<div class="form-group">
@@ -33,7 +33,7 @@
 				</div>
 			</form>
 			<div v-else>
-				<p class="text-center text-muted">Select payment method to use</p>
+				<p class="text-muted">You are about to pay &dollar;{{ getCurrentSession.price }} for a {{ getLength }} session. Select payment method to use</p>
 				<div v-if="paymentMethods.length === 0">
 					<p class="lead">No payment method saved. Click below to add a new payment method</p>
 					<a class="text-info mt-4" @click.prevent="showFormFields">Another new payment method(Credit cards, Paypal accounts)</a>
@@ -66,7 +66,16 @@
 		}),
 		computed: {
 			...mapGetters(['getId','getCurrentSession','isThereAHoistedFieldInstance']),
-			cannotPay(){ return this.isLoading === true || this.token === null }
+			cannotPay(){ return this.isLoading === true || this.token === null },
+			getLength(){
+				if(this.getCurrentSession.duration >= 1){
+					return this.getCurrentSession.duration === 1 ? `${this.getCurrentSession.duration} hour` : `${this.getCurrentSession.duration} hours`
+				}
+				else{
+					let minutes = Math.floor(this.getCurrentSession.duration * 60)
+					return minutes === 1 ? `${minutes} minute` : `${minutes} minutes`
+				}
+			},
 		},
 		methods: {
 			...mapActions(['cancelSessionAndCloseModal','initPaymentFields','createPaymentMethod','payForSession','makePayment']),

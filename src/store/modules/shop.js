@@ -57,7 +57,6 @@ const actions = {
 		try{
 			console.log(helpers.checkout,getters.getCart)
 			commit('checkout')
-			new window.Toast({ icon: 'success', title: 'Checked out successfully. Check your registered email for links to download the purchased items' })
 		}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 	},
 }
