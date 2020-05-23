@@ -45,9 +45,9 @@
 			getRating(){
 				if(!this.session.reviews){ return 0 }
 				if(this.getId === this.session.tutor){
-					return this.session.reviews.tutor ? this.session.reviews.tutor.rating : 0
+					return this.session.reviews.tutor && this.session.reviews.tutor.rating ? this.session.reviews.tutor.rating : 0
 				}else{
-					return this.session.reviews.student ? this.session.reviews.student.rating : 0
+					return this.session.reviews.student && this.session.reviews.student.rating ? this.session.reviews.student.rating : 0
 				}
 			},
 			getOtherPerson(){ return this.getId === this.session.tutor ? this.session.student : this.session.tutor },

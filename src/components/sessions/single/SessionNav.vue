@@ -1,12 +1,12 @@
 <template>
 	<div class="bg-dark">
-		<div class="container text-white pb-3">
+		<div class="container text-white py-3">
 			<div class="d-flex align-items-center">
 				<a @click="$router.push('/sessions')"><i class="fas fa-arrow-left mr-3"></i></a>
 				<img :src="getImageLink" class="mr-3" width="50px" alt="" />
 				<span class="d-block text-truncate text-white mr-2">{{ user.bio ? user.bio.name : '' }}</span>
 				<!--<i class="fas fa-circle text-success mr-3"></i>-->
-				<h4 class="my-0 ml-auto text-nowrap" v-if="timer > 0" :class="timer < 600 ? 'text-danger' : 'text-white'">{{ getTime }}</h4>
+				<h4 class="my-0 ml-auto text-nowrap" v-if="timer > 0" :class="timer < 300 ? 'text-danger' : 'text-white'">{{ getTime }}</h4>
 			</div>
 		</div>
 	</div>
