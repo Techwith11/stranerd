@@ -5,7 +5,7 @@ const helpers = {
 }
 
 const state = {
-	cart: window.localStorage.getItem('user_cart') ? JSON.parse(window.localStorage.getItem('user_cart')) : [],
+	cart: [],
 	cartModalOpen: false,
 	cartModalState: null
 }
@@ -23,19 +23,16 @@ const getters = {
 const mutations = {
 	addToCart: (state, item) => {
 		state.cart.push(item)
-		window.localStorage.setItem('user_cart', JSON.stringify(state.cart))
 	},
 	checkout: (state) => {
 		state.cartModalOpen = false
 		state.cart = []
-		window.localStorage.setItem('user_cart', JSON.stringify(state.cart))
 	},
 	removeFromCart: (state, item) => {
 		state.cart = state.cart.filter(x => x['.key'] !== item['.key'])
 		if(state.cart.length === 0){
 			state.cartModalOpen = false
 		}
-		window.localStorage.setItem('user_cart', JSON.stringify(state.cart))
 	},
 	setCartModalState: (state, mode) => {
 		state.cartModalState = mode
