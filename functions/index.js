@@ -1,4 +1,4 @@
-const admin = require('firebase-admin');
+const admin = require('firebase-admin')
 admin.initializeApp()
 
 // Auth Triggers
@@ -35,6 +35,9 @@ exports.sendEmailAfterPurchase = require('./onCall/shop/sendEmailAfterPurchase')
 
 
 // Firestore Triggers
+// On Create
+exports.firestoreErrorEmail = require('./firestore/onCreate/errors_emails')
+
 // On Update
 //exports.firestoreCourseUpdated = require('./firestore/onUpdate/courses')
 
