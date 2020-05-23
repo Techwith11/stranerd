@@ -1,36 +1,38 @@
 {
-  "paypal": {
-    "live": {
-      "client_id": ""
+  "environment": {
+    "mode": "development"
+  },
+  "braintree": {
+    "development": {
+      "merchant_id": "6f9mkyr3h4k9gvjk",
+      "public_key": "c57yb9sm9fc79c9x",
+      "private_key": "bb26a3a051b5d1da5f430872c820f616"
     },
-    "sandbox": {
-      "client_id": "Ac-WzTkiNB9FEinROuMlVUfmCqLVQHRSjQooTDrVYBWHJBmIqtb_17u2zQ4SibWWNg8L02JUhkSSY7n_"
+    "production": {
+      "public_key": "",
+      "merchant_id": "",
+      "private_key": ""
     }
   },
   "admin": {
     "development": {
+      "email": {
+        "pass": "masked222",
+        "email": "kevinfizu@gmail.com"
+      },
       "meta": {
         "domain": "http://localhost:8080",
-        "color": "#22DD77",
-        "storage": "http://localhost:3000/stranerd"
-      },
-      "email": {
-        "email": "kevinfizu@gmail.com",
-        "pass": "masked222"
+        "storage": "http://localhost:3000/stranerd",
+        "color": "#22DD77"
       }
     }
   },
-  "braintree": {
-    "environment": "sandbox",
-    "live": {
-      "private_key": "",
-      "merchant_id": "",
-      "public_key": ""
+  "paypal": {
+    "development": {
+      "client_id": "Ac-WzTkiNB9FEinROuMlVUfmCqLVQHRSjQooTDrVYBWHJBmIqtb_17u2zQ4SibWWNg8L02JUhkSSY7n_"
     },
-    "sandbox": {
-      "private_key": "bb26a3a051b5d1da5f430872c820f616",
-      "merchant_id": "6f9mkyr3h4k9gvjk",
-      "public_key": "c57yb9sm9fc79c9x"
+    "production": {
+      "client_id": ""
     }
   }
 }

@@ -3,7 +3,7 @@ const admin = require('firebase-admin')
 const braintree = require('braintree')
 
 module.exports = functions.https.onCall(async (data, context) => {
-	if (process.env.NODE_ENV === 'production' && !context.auth) {
+	if (functions.config().environment.mode === 'production' && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can create payment methods')
 	}
 	let ref = await admin.firestore().collection('users').doc(data.id).get()
@@ -11,9 +11,9 @@ module.exports = functions.https.onCall(async (data, context) => {
 	let customerId = ref.data().account.customer_id
 	if(!customerId){ throw new functions.https.HttpsError('invalid-argument', 'User doesn\'t have a valid customer id') }
 	try{
-		let environment = functions.config().braintree.environment
+		let environment = functions.config().environment.mode
 		let gateway = braintree.connect({
-			environment: braintree.Environment[environment === 'live' ? 'Production' : 'Sandbox'],
+			environment: braintree.Environment[environment === 'production' ? 'Production' : 'Sandbox'],
 			merchantId: functions.config().braintree[environment]['merchant_id'],
 			publicKey: functions.config().braintree[environment]['public_key'],
 			privateKey: functions.config().braintree[environment]['private_key']

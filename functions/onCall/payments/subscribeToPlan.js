@@ -8,14 +8,14 @@ let planIds = [
 ]
 
 module.exports = functions.https.onCall(async (data, context) => {
-	if (process.env.NODE_ENV === 'production' && !context.auth) {
+	if (functions.config().environment.mode === 'production' && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can invoke payments')
 	}
 	if(!planIds.includes(data.planId)){ throw new functions.https.HttpsError('invalid-argument', 'Invalid plan id') }
 	try{
-		let environment = functions.config().braintree.environment
+		let environment = functions.config().environment.mode
 		let gateway = braintree.connect({
-			environment: braintree.Environment[environment === 'live' ? 'Production' : 'Sandbox'],
+			environment: braintree.Environment[environment === 'production' ? 'Production' : 'Sandbox'],
 			merchantId: functions.config().braintree[environment]['merchant_id'],
 			publicKey: functions.config().braintree[environment]['public_key'],
 			privateKey: functions.config().braintree[environment]['private_key']

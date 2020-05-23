@@ -24,9 +24,9 @@ module.exports = functions.auth.user().onCreate(async (user) => {
 	if(user.displayName){ data.bio.name = user.displayName }
 	if(user.photoURL){ data.bio.image.link = user.photoURL }
 	try {
-		let environment = functions.config().braintree.environment
+		let environment = functions.config().environment.mode
 		let gateway = braintree.connect({
-			environment: braintree.Environment[environment === 'live' ? 'Production' : 'Sandbox'],
+			environment: braintree.Environment[environment === 'production' ? 'Production' : 'Sandbox'],
 			merchantId: functions.config().braintree[environment]['merchant_id'],
 			publicKey: functions.config().braintree[environment]['public_key'],
 			privateKey: functions.config().braintree[environment]['private_key']

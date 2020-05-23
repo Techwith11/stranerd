@@ -2,7 +2,7 @@ const functions = require('firebase-functions')
 const nodemailer = require('nodemailer')
 const Email = require('email-templates')
 
-let environment = process.env.NODE_ENV === 'production' ? 'production' : 'development'
+let environment = functions.config().environment.mode
 let admin = functions.config().admin[environment]
 let email = admin.email.email
 let pass = admin.email.pass

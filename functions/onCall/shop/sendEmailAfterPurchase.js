@@ -3,11 +3,11 @@ const admin = require('firebase-admin')
 const mailer = require('../../emails/index')
 
 module.exports = functions.https.onCall(async (data, context) => {
-	if (process.env.NODE_ENV === 'production' && !context.auth) {
+	if (functions.config().environment.mode === 'production' && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can receive purchase emails')
 	}
 	try{
-		let id = process.env.NODE_ENV === 'production' ? context.auth.uid : data.id
+		let id = functions.config().environment.mode === 'production' ? context.auth.uid : data.id
 		let user = (await admin.firestore().collection('users').doc(id).get()).data()
 		let email = user.bio.email
 		let cart = data.cart
