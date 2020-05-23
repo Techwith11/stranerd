@@ -31,6 +31,9 @@ exports.removeAdmin = require('./onCall/roles/removeAdmin')
 
 exports.createPost = require('./onCall/contents/createPost')
 
+exports.sendEmailAfterPurchase = require('./onCall/shop/sendEmailAfterPurchase')
+
+
 // Firestore Triggers
 // On Update
 //exports.firestoreCourseUpdated = require('./firestore/onUpdate/courses')

@@ -7,6 +7,19 @@
       "client_id": "Ac-WzTkiNB9FEinROuMlVUfmCqLVQHRSjQooTDrVYBWHJBmIqtb_17u2zQ4SibWWNg8L02JUhkSSY7n_"
     }
   },
+  "admin": {
+    "development": {
+      "meta": {
+        "domain": "http://localhost:8080",
+        "color": "#22DD77",
+        "storage": "http://localhost:3000/stranerd"
+      },
+      "email": {
+        "email": "kevinfizu@gmail.com",
+        "pass": "masked222"
+      }
+    }
+  },
   "braintree": {
     "environment": "sandbox",
     "live": {
