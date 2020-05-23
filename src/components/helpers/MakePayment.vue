@@ -2,6 +2,7 @@
 	<div>
 		<helper-spinner v-if="isLoading"/>
 		<form v-if="showForm">
+			<a class="text-info d-block my-3" @click.prevent="backToPaymentMethods">Back to payment methods</a>
 			<div class="form-group">
 				<label>Credit Card Number</label>
 				<div id="creditCardNumber" class="form-control"></div>
@@ -28,8 +29,8 @@
 		</form>
 		<div v-else>
 			<div v-if="paymentMethods.length === 0">
-				<p class="lead">No payment method saved. Click below to add a new payment method</p>
-				<a class="text-info mt-4" @click.prevent="showFormFields">Another new payment method(Credit cards, Paypal accounts)</a>
+				<p class="">No payment method saved. Click below to add a new payment method</p>
+				<a class="text-info my-3 d-block" @click.prevent="showFormFields">Add a new payment method(Credit cards, Paypal accounts)</a>
 			</div>
 			<div v-else>
 				<div class="py-2 my-2 rounded px-4 d-flex" v-for="method in paymentMethods" :key="method['.key']" @click="token = method.token"
@@ -38,9 +39,9 @@
 					<span class="ml-3">{{ method.maskedNumber }}</span>
 					<span class="ml-auto">Expires {{ method.expirationDate }}</span>
 				</div>
-				<a class="text-info mt-4" @click.prevent="showFormFields">Add another card or payment method</a>
+				<a class="text-info d-block my-3" @click.prevent="showFormFields">Add another card or payment method</a>
 			</div>
-			<button class="mt-4 w-100 accent-button" :disabled="cannotPay" @click="pay">{{ buttonTitle }}</button>
+			<button class="w-100" :class="cannotPay ? 'btn-light' : 'accent-button'" :disabled="cannotPay" @click="pay">{{ buttonTitle }}</button>
 		</div>
 	</div>
 </template>
@@ -78,7 +79,12 @@
 			...mapActions(['initPaymentFields','createPaymentMethod','makePayment']),
 			refreshPaymentMethods(){
 				this.showForm = false
+				this.token = null
 				this.fetchPaymentMethods()
+			},
+			backToPaymentMethods(){
+				this.showForm = this.isLoading
+				this.token = null
 			},
 			async showFormFields(){
 				this.isLoading = true

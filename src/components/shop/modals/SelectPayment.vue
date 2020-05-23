@@ -6,7 +6,7 @@
 			<i></i>
 		</div>
 		<p>You are about to pay &dollar;{{ getCartPrice }} for {{ getCartLength }} {{ getCartLength > 1 ? 'items' : 'item' }}. Select payment method to use</p>
-		<helper-make-payment :amount="getAmount" :onPaymentSuccessful="onPaymentSuccessful" buttonTitle="Checkout" />
+		<helper-make-payment :amount="getCartPrice" :onPaymentSuccessful="onPaymentSuccessful" buttonTitle="Checkout" />
 	</div>
 </template>
 
@@ -14,10 +14,7 @@
 	import { mapActions, mapGetters } from 'vuex'
 	import MakePayment from '@/components/helpers/MakePayment'
 	export default {
-		computed: {
-			...mapGetters(['getId','getCartPrice','getCartLength']),
-			getAmount(){ return parseFloat(this.getCartPrice) }
-		},
+		computed: mapGetters(['getId','getCartPrice','getCartLength']),
 		methods: {
 			...mapActions(['openCartModal','checkout']),
 			async onPaymentSuccessful(){
