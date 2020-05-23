@@ -1,7 +1,7 @@
 <template>
 	<div id="bg">
 		<div class="container">
-			<ul class="nav justify-content-center">
+			<ul class="nav scrolling-nav">
 				<li class="nav-item">
 					<router-link class="nav-link" to="/admins/questions">All</router-link>
 				</li>
