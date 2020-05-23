@@ -4,6 +4,7 @@
 			<recent-posts />
 			<top-tutors />
 			<recent-sessions />
+			<button class="floating-button" @click="setPostModalNotify"><i class="fas fa-plus"></i></button>
 		</div>
 		<div v-else>
 			<cta />
@@ -18,7 +19,7 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
+	import { mapGetters, mapActions } from 'vuex'
 	import CTA from '@/components/home/notLoggedIn/HomeCTA'
 	import WhyUs from '@/components/home/notLoggedIn/HomeWhyUs'
 	import Success from '@/components/home/notLoggedIn/HomeSuccess'
@@ -43,6 +44,7 @@
 			'recent-posts': RecentPosts,
 			'recent-sessions': RecentSessions,
 		},
-		computed: mapGetters(['isLoggedIn'])
+		computed: mapGetters(['isLoggedIn']),
+		methods: mapActions(['setPostModalNotify'])
 	}
 </script>

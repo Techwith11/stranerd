@@ -5,7 +5,8 @@ const state = {
 
 const getters = {
 	isPostModalOpen: state => state.postModalOpen,
-	isPostModalCreate: state => state.postModalMode === 'create'
+	isPostModalNotify: state => state.postModalMode === 'post-notify',
+	isPostModalCreate: state => state.postModalMode === 'post-create',
 }
 
 const mutations = {
@@ -20,9 +21,8 @@ const mutations = {
 }
 
 const actions = {
-	setPostModalCreate({ commit }){
-		commit('setPostModalMode','create')
-	},
+	setPostModalCreate({ commit }){ commit('setPostModalMode','post-create')},
+	setPostModalNotify({ commit }){ commit('setPostModalMode','post-notify')},
 	closePostModal({ commit }){ commit('closePostModal') }
 }
 
