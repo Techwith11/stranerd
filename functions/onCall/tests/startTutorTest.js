@@ -1,7 +1,7 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 
-let noOfQuestionsForTest = 20 //TODO: Adjust for number of questions required for test
+let noOfQuestionsForTest = 30
 
 let getQuestions = async (course, level) => {
 	let questions = await admin.firestore().collection('tests/tutors/questions')
