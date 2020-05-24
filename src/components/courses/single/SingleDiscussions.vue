@@ -18,7 +18,7 @@
 		</ul>
 		<div class="d-flex flex-column flex-lg-row align-items-lg-center">
 			<textarea rows="3" class="form-control my-2 mr-lg-4" placeholder="Comment ..." v-model.trim="$v.content.$model"></textarea>
-			<button class="accent-button" :disabled="$v.$invalid || isLoading" @click="submit">
+			<button class="btn-success" :disabled="$v.$invalid || isLoading" @click="submit">
 				<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
 				<span v-else>Submit</span>
 			</button>

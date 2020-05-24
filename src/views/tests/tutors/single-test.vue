@@ -8,7 +8,7 @@
 					:onSelect="onAnswerSelected" :index="index" :disabled="isMarked" />
 			</div>
 			<div class="d-flex justify-content-end mb-5">
-				<button class="accent-button" @click="submit" :disabled="isMarked">
+				<button class="btn-success" @click="submit" :disabled="isMarked">
 					<i class="fas fa-spinner fa-spin mr-2" v-if="isMarked"></i>
 					<span>Submit</span>
 				</button>

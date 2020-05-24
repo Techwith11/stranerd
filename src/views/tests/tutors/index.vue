@@ -20,7 +20,7 @@
 					<li class="list-group-item">If for whatsoever reason you have to open a new tab, ensure to close the old one. We will attempt to reconnect you back to the test</li>
 				</ul>
 				<div class="d-flex justify-content-end">
-					<button class="my-3" :class="failed ? 'opacity-25' : 'accent-button'" @click="beginTest" :disabled="failed">Start Test</button>
+					<button class="my-3" :class="failed ? 'opacity-25' : 'btn-success'" @click="beginTest" :disabled="failed">Start Test</button>
 				</div>
 			</div>
 		</div>

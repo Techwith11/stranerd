@@ -41,7 +41,7 @@
 				</div>
 				<a class="text-info d-block my-3" @click.prevent="showFormFields">Add another card or payment method</a>
 			</div>
-			<button class="w-100" :class="cannotPay ? 'btn-light' : 'accent-button'" :disabled="cannotPay" @click="pay">{{ buttonTitle }}</button>
+			<button class="w-100" :class="cannotPay ? 'btn-light' : 'btn-success'" :disabled="cannotPay" @click="pay">{{ buttonTitle }}</button>
 		</div>
 	</div>
 </template>

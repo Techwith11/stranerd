@@ -13,9 +13,9 @@
 			</p>
 			<div class="d-flex justify-content-between">
 				<button class="bg-info white-button text-white" @click="closePostModal">Close</button>
-				<button class="accent-button" @click="setPostModalCreate" v-if="questionsLeft">Continue</button>
-				<button class="accent-button" @click="buyMoreFromShop" v-if="!questionsLeft && isSubscribed">Buy more</button>
-				<button class="accent-button" @click="upgradeAccount" v-if="!questionsLeft && !isSubscribed">Upgrade</button>
+				<button class="btn-success" @click="setPostModalCreate" v-if="questionsLeft">Continue</button>
+				<button class="btn-success" @click="buyMoreFromShop" v-if="!questionsLeft && isSubscribed">Buy more</button>
+				<button class="btn-success" @click="upgradeAccount" v-if="!questionsLeft && !isSubscribed">Upgrade</button>
 			</div>
 		</div>
 	</div>

@@ -22,7 +22,7 @@
 			</tbody>
 		</table>
 		<div class="d-flex justify-content-end">
-			<button class="accent-button" @click.prevent="proceedToPay">Checkout Now</button>
+			<button class="btn-success" @click.prevent="proceedToPay">Checkout Now</button>
 		</div>
 	</div>
 </template>

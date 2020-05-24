@@ -27,6 +27,7 @@ button{
 	text-align: center;
 	vertical-align: middle;
 	cursor: pointer;
+	margin: 0.25rem 0.5rem;
 	padding: 0.5rem 2.5rem;
 	border: 1px solid transparent;
 	font-size: 1rem;
@@ -38,18 +39,11 @@ button{
 .primary-button{
 	background: $gradient;
 	color: $white;
-	margin: 0.25rem 0.5rem;
-}
-.accent-button{
-	background: $accent;
-	color: $white;
-	margin: 0.25rem 0.5rem;
 }
 
 .white-button{
 	color: $primary;
 	background: $white;
-	margin: 0.25rem 0.5rem;
 }
 
 .router-link-exact-active.nav-link {
@@ -65,6 +59,7 @@ button{
 
 .floating-button{
 	padding: 0;
+	margin: 0;
 	display: flex;
 	align-items: center;
 	justify-content: center;

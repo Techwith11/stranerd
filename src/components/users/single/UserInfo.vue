@@ -14,7 +14,7 @@
 				<rating-stars class="d-inline ml-1" :rating="user.tutor.rating"/>
 			</p>
 		</div>
-		<button class="accent-button" @click="bringUpSessionForm" v-if="canHaveSession">Request session</button>
+		<button class="btn-success" @click="bringUpSessionForm" v-if="canHaveSession">Request session</button>
 	</div>
 </template>
 

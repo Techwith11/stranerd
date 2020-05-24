@@ -30,7 +30,7 @@
 			<small class="small text-muted" v-else>Use comma separated tags to attach keywords related to your questions. This can include related subjects, topics, formulas etc. At least one tag is required</small>
 		</div>
 		<div class="d-flex justify-content-end">
-			<button class="accent-button" :disabled="isLoading || $v.$invalid" @click="submitPost">
+			<button class="btn-success" :disabled="isLoading || $v.$invalid" @click="submitPost">
 				<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
 				<span>Post question</span>
 			</button>

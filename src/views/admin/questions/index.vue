@@ -8,7 +8,7 @@
 				<div class="container">
 					<question-card :question="question" v-for="question in filteredQuestions" :key="question['.key']" />
 					<div class="d-flex justify-content-end mb-3" v-if="hasMore">
-						<button class="accent-button" @click="fetchOlderQuestions">
+						<button class="btn-success" @click="fetchOlderQuestions">
 							<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderQuestionsLoading"></i>
 							<span>Fetch More</span>
 						</button>

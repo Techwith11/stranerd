@@ -6,9 +6,9 @@
 			<a @click.prevent="closeCreateModal"><i class="fas fa-times fa-2x text-danger"></i></a>
 		</div>
 		<div class="d-flex flex-column mx-2 align-items-center">
-			<button class="accent-button" @click="setCreateModalCourse">Create Course</button>
-			<button class="accent-button" @click="setCreateModalQuestion">Create Question</button>
-			<button class="accent-button" @click="setCreateModalNote">Upload Note to Shop</button>
+			<button class="btn-success" @click="setCreateModalCourse">Create Course</button>
+			<button class="btn-success" @click="setCreateModalQuestion">Create Question</button>
+			<button class="btn-success" @click="setCreateModalNote">Upload Note to Shop</button>
 		</div>
 	</div>
 </template>

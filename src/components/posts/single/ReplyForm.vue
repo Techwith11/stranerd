@@ -3,7 +3,7 @@
 		<vue-editor class="rounded border w-100" v-model.trim="$v.body.$model" useCustomImageHandler @image-added="handleImageAdded"
 			placeholder="Leave a reply"
 		/>
-		<button @click.prevent="sendReply" class="mt-3" :class="$v.$invalid ? 'bg-gray' : 'accent-button'" :disabled="isLoading || $v.$invalid">
+		<button @click.prevent="sendReply" class="mt-3" :class="$v.$invalid ? 'bg-gray' : 'btn-success'" :disabled="isLoading || $v.$invalid">
 			<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
 			<span>Submit</span>
 		</button>

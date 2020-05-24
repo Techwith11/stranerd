@@ -12,7 +12,7 @@
 			<textarea rows="5" class="form-control" placeholder="Please leave a comment ..." v-model.trim="comment"></textarea>
 		</div>
 		<div class="d-flex justify-content-end my-3">
-			<button class="accent-button" :disabled="isLoading" @click="submitRating">
+			<button class="btn-success" :disabled="isLoading" @click="submitRating">
 				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading"></i>
 				<span>Continue</span>
 			</button>

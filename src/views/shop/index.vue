@@ -6,7 +6,7 @@
 			<div class="container" v-else>
 				<note-card v-for="note in notes" :key="note['.key']" :note="note" />
 				<div class="d-flex justify-content-end my-3" v-if="hasMore">
-					<button class="accent-button" @click="fetchOlderNotes">
+					<button class="btn-success" @click="fetchOlderNotes">
 						<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderNotesLoading"></i>
 						<span>Fetch More</span>
 					</button>
