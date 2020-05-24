@@ -83,9 +83,22 @@ button{
 .scrolling-nav{
 	display: flex;
 	flex-wrap: nowrap !important;
+	padding: 0.5rem 0;
 	overflow-x: auto;
 	-ms-overflow-style: none;
+	font-size: 0.95rem;
 	&::-webkit-scrollbar{
 		display: none;
 	}
+	.router-link-exact-active{
+		color: $white;
+	}
+	.nav-link{
+		padding: 0.5rem;
+		color: $text-black;
+	}
+}
+
+.accent-background{
+	background: $accent;
 }

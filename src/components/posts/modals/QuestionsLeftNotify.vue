@@ -1,6 +1,8 @@
 <template>
 	<div class="m-md-5">
-		<div class="d-flex align-items-center justify-content-end my-3">
+		<div class="d-flex align-items-center justify-content-between my-3">
+			<i></i>
+			<h4 class="mb-0">Questions Left</h4>
 			<a @click.prevent="closePostModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
 		<div>
