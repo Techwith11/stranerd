@@ -11,8 +11,13 @@ export default [
     },
     {
         path: '/blog',
-        name: 'Blog',
-        component: () => import(/* webpackChunkName: "blog" */ '@/views/blog/index')
+        name: 'Blog Posts',
+        component: () => import(/* webpackChunkName: "blog_posts" */ '@/views/blog/index')
+    },
+    {
+        path: '/blog/:id',
+        name: 'Blog Post',
+        component: () => import(/* webpackChunkName: "blog_post" */ '@/views/blog/single_blog')
     },
     {
         path: '/shop',

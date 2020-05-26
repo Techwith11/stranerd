@@ -66,7 +66,6 @@
 						path: 'editor/posts/body'
 					})
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-
 			},
 			async submitPost(){
 				this.isLoading = true

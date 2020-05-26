@@ -25,7 +25,12 @@ let helpers = {
 		let res = await window.uploadFile(data.path, data.file)
 		data.editor.insertEmbed(data.cursorLocation, "image", res.link)
 		data.resetUploader()
-	}
+	},
+	createBlogPost: async (post, id) => {
+		post.dates = { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
+		post.userId = id
+		return await firestore.collection('blog').add(post)
+	},
 }
 
 const actions = {
@@ -51,6 +56,11 @@ const actions = {
 		let note = data.note
 		note.document = await window.uploadFile('notes', data.document)
 		return await helpers.createNote(note, getters.getId)
+	},
+	async createBlogPost({ getters }, data){
+		let post = data.post
+		post.image = await window.uploadFile('blog', data.image)
+		return await helpers.createBlogPost(post, getters.getId)
 	},
 	async uploadFromEditor(store, data){
 		return await helpers.uploadFromEditor(data)

@@ -1,6 +1,11 @@
 rules_version = '2';
 service cloud.firestore {
 	match /databases/{database}/documents {
+		match /blog/{id} {
+            allow read: if true;
+            allow write: if isAdmin();
+        }
+
 		match /chats/{path}/chats/{id} {
 			allow read, update: if hasAccessToChat(path);
 			allow create: if isMine(request.resource.data.from);

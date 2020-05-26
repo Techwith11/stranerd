@@ -9,6 +9,7 @@
 			<button class="btn-success" @click="setCreateModalCourse">Create Course</button>
 			<button class="btn-success" @click="setCreateModalQuestion">Create Question</button>
 			<button class="btn-success" @click="setCreateModalNote">Upload Note to Shop</button>
+			<button class="btn-success" @click="setCreateModalBlog">Create Blog Post</button>
 		</div>
 	</div>
 </template>
@@ -18,7 +19,7 @@
 	export default {
 		name: "CreateOverview",
 		methods: {
-			...mapActions(['setCreateModalQuestion','setCreateModalCourse','setCreateModalNote','closeCreateModal']),
+			...mapActions(['setCreateModalQuestion','setCreateModalCourse','setCreateModalNote','setCreateModalBlog','closeCreateModal']),
 		}
 	}
 </script>
