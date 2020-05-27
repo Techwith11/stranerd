@@ -8,7 +8,7 @@
 		<p class="lead font-weight-bold">{{ user.bio.name }}</p>
 		<p class="text-center w-75">{{ user.bio.bio }}</p>
 		<div v-if="user.roles.isTutor">
-			<p>Course: {{ user.tutor.courses[0] }}</p>
+			<p>Courses: {{ user.tutor.courses.join(', ') }}</p>
 			<p>
 				<span>Ratings: {{ user.tutor.rating }}</span>
 				<rating-stars class="d-inline ml-1" :rating="user.tutor.rating"/>
@@ -47,7 +47,7 @@
 
 <style lang="scss" scoped>
 	#profileImage{
-		width: 40%;
+		width: 50%;
 		min-width: 50px;
 		max-width: 150px;
 	}

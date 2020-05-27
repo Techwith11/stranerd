@@ -52,26 +52,25 @@
         },
 		async mounted(){
 			await this.getSessionInfo()
-			this.initTimer()
-			await this.getChats()
-			this.setChatListener()
-			this.setOtherPersonListener()
+			if(this.session['.key']){
+				this.initTimer()
+				await this.getChats()
+				this.setChatListener()
+				this.setOtherPersonListener()
+			}
             this.isLoading = false
 		},
 		methods:{
 			...mapActions(['showSessionRatingsForm']),
 			async getSessionInfo(){
-                return firestore.collection('sessions').doc(this.$route.params.id).get()
-                    .then(async doc => {
-                        if(doc.exists){
-							let session = { '.key': doc.id, ...doc.data() }
-							if(this.getId !== session.tutor && this.getId !== session.student){ await this.$router.replace('/sessions') }
-                            if(session.cancelled.tutor || session.cancelled.student){ await this.$router.replace('/sessions') }
-                            this.session = session
-                        }else{
-							await this.$router.replace('/sessions')
-						}
-                    }).catch(() => this.$router.replace('/sessions'))
+				try{
+					let doc = await firestore.collection('sessions').doc(this.$route.params.id).get()
+					if(!doc.exists){ return await this.$router.replace('/sessions') }
+					let session = { '.key': doc.id, ...doc.data() }
+					if(this.getId !== session.tutor && this.getId !== session.student){ return await this.$router.replace('/sessions') }
+					if(session.cancelled.tutor || session.cancelled.student){ return await this.$router.replace('/sessions') }
+					this.session = session
+				}catch(error){ return await this.$router.replace('/sessions') }
 			},
             initTimer(){
                 let endsAt = new Date(this.session.dates.endedAt.seconds * 1000)

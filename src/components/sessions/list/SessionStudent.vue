@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div>
 		<helper-spinner v-if="isLoading" />
 		<div v-else>
 			<helper-message message="No sessions attended yet." v-if="sessions.length === 0" />

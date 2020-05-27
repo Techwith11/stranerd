@@ -2,7 +2,7 @@
 	<div class="card px-sm-3">
 		<div class="row">
 			<div class="col-sm-3 d-flex justify-content-center">
-				<img :src="getImageLink" alt="">
+				<img :src="getImageLink" alt="" class="w-100">
 			</div>
 			<div class="col-sm-9 px-sm-0">
 				<div class="card-body px-sm-0">
@@ -43,16 +43,3 @@
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
-	img{
-		width: 100%;
-		max-width: 150px;
-	}
-	@media screen and (max-width: 575px){
-		img{
-			width: 40% !important;
-			margin: 1rem auto;
-		}
-	}
-</style>
