@@ -14,9 +14,8 @@
                <div class="col-4 col-md-2">
                    <h6>Quick Links</h6>
                    <router-link class="links" to="/">Home</router-link>
-                   <router-link class="links" to="/courses">Courses</router-link>
+                   <router-link class="links" to="/blog">Blog</router-link>
                    <router-link class="links" to="/about">About Us</router-link>
-                   <router-link class="links" to="/contact">Contact Us</router-link>
                </div>
                <div class="col-4 col-md-2">
                    <h6>Contact Us</h6>
