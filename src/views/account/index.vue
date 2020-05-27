@@ -1,26 +1,8 @@
 <template>
 	<div class="container py-3" v-if="Object.keys(getUser).length > 0">
+		<account-nav />
 		<helper-spinner v-if="isLoading" />
-		<div class="row">
-			<div class="col-sm-3">
-				<img :src="getUserImageLink" alt="" class="w-100">
-			</div>
-			<div class="col-sm-9">
-				<h4>{{ getUser.bio.name }}</h4>
-				<h6>{{ getUser.bio.email }}</h6>
-				<p>{{ getUser.bio.bio }}</p>
-			</div>
-			<div class="col-12 d-flex justify-content-between">
-				<button class="btn btn-warning text-white" @click="setAccountModalStateUpdatePassword">
-					<i class="fas fa-eye mr-2"></i>
-					<span>Update Password</span>
-				</button>
-				<button class="btn btn-warning text-white" @click="setAccountModalStateEditProfile">
-					<i class="fas fa-pen mr-2"></i>
-					<span>Edit profile</span>
-				</button>
-			</div>
-		</div>
+		<account-overview v-if="isTabOverview" />
 		<!--<div class="d-none">
 			<div class="btn-group mb-3" role="group" v-if="isDev">
 				<button type="button" class="btn btn-primary mr-3" @click="setId('kevin11')">Login as Kevin11</button>
@@ -107,6 +89,8 @@
 	//import { firestore } from '@/config/firebase'
 	import { mapGetters, mapActions } from 'vuex'
 	import HelperSpinner from '@/components/helpers/Spinner'
+	import AccountNav from '@/components/account/single/AccountNav'
+	import AccountOverview from '@/components/account/single/AccountOverview'
 	export default {
 		name: 'Account',
 		data: () => ({
@@ -117,7 +101,9 @@
 		computed: {
 			...mapGetters(['getUser','getId']),
 			isDev(){ return process.env.NODE_ENV === 'development' },
-			getUserImageLink(){ return this.getUser && this.getUser.bio.image ? this.getUser.bio.image.link : '' }
+			isTabOverview(){ return !this.$route.query.tab },
+			isTabPaymentMethods(){ return this.$route.query.tab && this.$route.query.tab === 'paymentMethods' },
+			isTabTransactions(){ return this.$route.query.tab && this.$route.query.tab === 'transactions' },
 		},
 		methods:{
 			...mapActions(['setId','setAccountModalStateEditProfile','subscribeToPlan','setAccountModalStateUpdatePassword']),
@@ -134,7 +120,9 @@
 			this.isLoading = false
 		},
 		components: {
-			'helper-spinner': HelperSpinner
+			'helper-spinner': HelperSpinner,
+			'account-nav': AccountNav,
+			'account-overview': AccountOverview
 		}
 	}
 </script>
