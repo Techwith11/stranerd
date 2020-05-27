@@ -16,6 +16,7 @@ const getters = {
 	getIntendedRoute: (state) => state.intendedRoute,
 	isAccountModalOpen: state => state.accountModalOpen,
 	isAccountModalEditProfile: state => state.accountModalState === 'edit-profile',
+	isAccountModalUpdatePassword: state => state.accountModalState === 'update-password',
 }
 
 const mutations = {
@@ -31,6 +32,7 @@ const actions = {
 	setIntendedRoute: ({ commit }, route) => commit('setIntendedRoute', route),
 	clearIntendedRoute: ({ commit }) => commit('setIntendedRoute', null),
 	setAccountModalStateEditProfile: ({ commit }) => commit('setAccountModalState', 'edit-profile'),
+	setAccountModalStateUpdatePassword: ({ commit }) => commit('setAccountModalState', 'update-password'),
 	closeAccountModal: ({ commit }) => commit('setAccountModalState', null),
 	async updateProfile({ getters }, data){
 		let bio = data.bio

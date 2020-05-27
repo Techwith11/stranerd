@@ -10,7 +10,11 @@
 				<h6>{{ getUser.bio.email }}</h6>
 				<p>{{ getUser.bio.bio }}</p>
 			</div>
-			<div class="col-12 d-flex justify-content-end">
+			<div class="col-12 d-flex justify-content-between">
+				<button class="btn btn-warning text-white" @click="setAccountModalStateUpdatePassword">
+					<i class="fas fa-eye mr-2"></i>
+					<span>Update Password</span>
+				</button>
 				<button class="btn btn-warning text-white" @click="setAccountModalStateEditProfile">
 					<i class="fas fa-pen mr-2"></i>
 					<span>Edit profile</span>
@@ -116,7 +120,7 @@
 			getUserImageLink(){ return this.getUser && this.getUser.bio.image ? this.getUser.bio.image.link : '' }
 		},
 		methods:{
-			...mapActions(['setId','setAccountModalStateEditProfile','subscribeToPlan']),
+			...mapActions(['setId','setAccountModalStateEditProfile','subscribeToPlan','setAccountModalStateUpdatePassword']),
 			/*async subscribe(planId){
 				if(!this.token){ return new window.Toast({ icon:'error', title: 'No card chosen' }) }
 				this.isLoading = true

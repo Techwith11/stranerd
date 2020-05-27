@@ -19,13 +19,12 @@
 		</div>
 		<div class="form-group my-3">
 			<textarea class="form-control" placeholder="Tell us a little about yourself" v-model.trim="$v.bio.bio.$model"
-				:class="{'is-invalid': $v.bio.bio.$error,'is-valid': !$v.bio.bio.$invalid}">
+				:class="{'is-invalid': $v.bio.bio.$error,'is-valid': !$v.bio.bio.$invalid}" rows="5">
 			</textarea>
 			<small class="small text-danger d-block" v-if="$v.bio.bio.$error">Bio must be at least 3 characters</small>
 		</div>
-		<div class="d-flex justify-content-between">
-			<button class="btn-danger" @click="closeAccountModal">Cancel</button>
-			<button class="btn-success" :disabled="isLoading || $v.$invalid" @click="update">
+		<div class="d-flex justify-content-end">
+			<button :class="isLoading || $v.$invalid ? 'btn-secondary opacity-25' : 'btn-success'" :disabled="isLoading || $v.$invalid" @click="update">
 				<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
 				<span>Update</span>
 			</button>
@@ -63,6 +62,7 @@
 				try{
 					await this.updateProfile({ bio: this.bio, image: this.image })
 					this.closeAccountModal()
+					new window.Toast({ icon: 'success', title: 'Profile updated successfully' })
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
 			}
