@@ -7,9 +7,9 @@
 		<p class="mb-1">{{ note.description }}</p>
 		<p class="mb-1 small">Uploaded {{ note.dates.createdAt | getDateOrTime }}</p>
 		<div class="d-flex" id="checkoutOptions">
-			<button class="px-3 btn-sm rounded mr-3 btn-danger" @click.prevent="removeFromCart(note)" v-if="isInCart(note)">Remove</button>
-			<button class="px-3 btn-sm rounded mr-3 btn-info" @click.prevent="addToCart(note)" v-else><i class="fas fa-shopping-basket mr-2"></i>Add to cart</button>
-			<button class="px-3 btn-sm rounded btn-success" @click.prevent="checkoutItem(note)"><i class="fas fa-money-bill mr-2"></i>Checkout now</button>
+			<button class="px-3 ml-0 btn-sm rounded mr-2 btn-danger" @click.prevent="removeFromCart(note)" v-if="isInCart(note)">Remove</button>
+			<button class="px-3 ml-0 btn-sm rounded mr-2 btn-info" @click.prevent="addToCart(note)" v-else><i class="fas fa-shopping-basket mr-2"></i>Add to cart</button>
+			<button class="px-3 ml-0 btn-sm rounded btn-success" @click.prevent="checkoutItem(note)"><i class="fas fa-money-bill mr-2"></i>Checkout now</button>
 		</div>
 	</div>
 </template>
@@ -52,32 +52,32 @@
 <style lang="scss" scoped>
 	@media (max-width: 435px){
 		button{
-			font-size: 0.85rem;
+			font-size: 0.80rem;
 		}
 	}
 	@media (max-width: 394px){
 		button{
-			font-size: 0.80rem;
+			font-size: 0.75rem;
 		}
 	}
 	@media (max-width: 382px){
 		button{
-			font-size: 0.75rem;
+			font-size: 0.70rem;
 		}
 	}
 	@media (max-width: 370px){
 		button{
-			font-size: 0.70rem;
+			font-size: 0.65rem;
 		}
 	}
 	@media (max-width: 358px){
 		button{
-			font-size: 0.65rem;
+			font-size: 0.60rem;
 		}
 	}
-	@media (max-width: 346px){
+	@media (max-width: 350px){
 		button{
-			font-size: 0.70rem;
+			font-size: 0.65rem;
 		}
 		i{
 			display: none;
