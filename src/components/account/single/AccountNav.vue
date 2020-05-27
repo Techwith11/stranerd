@@ -1,5 +1,5 @@
 <template>
-	<ul class="bg-dark nav small justify-content-between mb-5">
+	<ul class="bg-dark nav small justify-content-between mb-4">
 		<li class="nav-item flex-grow-1 text-center">
 			<router-link class="nav-link" to="/account">Profile</router-link>
 		</li>

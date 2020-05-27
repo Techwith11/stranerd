@@ -20,7 +20,10 @@ module.exports = functions.https.onCall(async (data, context) => {
 		})
 		if(result.success) {
 			let transaction = JSON.parse(JSON.stringify(result.transaction))
-			await admin.firestore().collection(`users/${data.id}/transactions`).add(transaction)
+			await admin.firestore().collection(`users/${data.id}/transactions`).add({
+				...transaction,
+				dates: { createdAt: admin.firestore.FieldValue.serverTimestamp() }
+			})
 		}
 		return result.success
 	}catch(error){

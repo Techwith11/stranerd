@@ -3,22 +3,9 @@
 		<account-nav />
 		<helper-spinner v-if="isLoading" />
 		<account-overview v-if="isTabOverview" />
+		<account-payment-methods v-if="isTabPaymentMethods" />
+		<account-transactions v-if="isTabTransactions" />
 		<!--<div class="d-none">
-			<div class="btn-group mb-3" role="group" v-if="isDev">
-				<button type="button" class="btn btn-primary mr-3" @click="setId('kevin11')">Login as Kevin11</button>
-				<button type="button" class="btn btn-primary mr-3" @click="setId('frank')">Login as Frank</button>
-				<button type="button" class="btn btn-primary mr-3" @click="setId('max')">Login as Max</button>
-				<button type="button" class="btn btn-primary mr-3" @click="setId('joe')">Login as Joe</button>
-				<hr>
-			</div>
-			<div>
-				<div class="custom-control custom-radio d-flex" v-for="method in paymentMethods" :key="method['.key']">
-					<input type="radio" :id="method.token" name="customRadio" class="custom-control-input" v-model="token" :value="method.token">
-					<label class="custom-control-label" :for="method.token">{{ method.maskedNumber }}</label>
-					<span class="ml-5">{{ method.cardType }}</span>
-					<span class="ml-auto">{{ method.expirationDate }}</span>
-				</div>
-			</div>
 			<div class="mb-3">
 				<button class="d-block btn btn-info my-2" @click="subscribe('stranerd_monthly_amateur_plan')">Stranerd Amateur subscription $9.99/month</button>
 				<button class="d-block btn btn-info my-2" @click="subscribe('stranerd_yearly_amateur_plan')">Stranerd basic subscription 16% off $100/year</button>
@@ -26,13 +13,6 @@
 				<button class="d-block btn btn-info my-2" @click="subscribe('stranerd_yearly_intermediate_plan')">Stranerd intermediate subscription 16% off $150/year</button>
 				<button class="d-block btn btn-info my-2" @click="subscribe('stranerd_monthly_master_plan')">Stranerd master subscription $19.99/month</button>
 				<button class="d-block btn btn-info my-2" @click="subscribe('stranerd_yearly_master_plan')">Stranerd master subscription 16% off $200/year</button>
-			</div>
-			<div>
-				<h4>Bio</h4>
-				<p>Name: {{ getUser.bio.name }}</p>
-				<p>Email: {{ getUser.bio.email }}</p>
-				<p>Bio: {{ getUser.bio.bio }}</p>
-				<hr>
 			</div>
 			<div>
 				<h4>Status</h4>
@@ -86,11 +66,12 @@
 </template>
 
 <script>
-	//import { firestore } from '@/config/firebase'
 	import { mapGetters, mapActions } from 'vuex'
 	import HelperSpinner from '@/components/helpers/Spinner'
 	import AccountNav from '@/components/account/single/AccountNav'
 	import AccountOverview from '@/components/account/single/AccountOverview'
+	import AccountPaymentMethods from '@/components/account/single/AccountPaymentMethods'
+	import AccountTransactions from '@/components/account/single/AccountTransactions'
 	export default {
 		name: 'Account',
 		data: () => ({
@@ -106,7 +87,7 @@
 			isTabTransactions(){ return this.$route.query.tab && this.$route.query.tab === 'transactions' },
 		},
 		methods:{
-			...mapActions(['setId','setAccountModalStateEditProfile','subscribeToPlan','setAccountModalStateUpdatePassword']),
+			...mapActions(['subscribeToPlan']),
 			/*async subscribe(planId){
 				if(!this.token){ return new window.Toast({ icon:'error', title: 'No card chosen' }) }
 				this.isLoading = true
@@ -115,14 +96,14 @@
 			}*/
 		},
 		async mounted(){
-			/*let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).get()
-			docs.forEach(doc => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))*/
 			this.isLoading = false
 		},
 		components: {
 			'helper-spinner': HelperSpinner,
 			'account-nav': AccountNav,
-			'account-overview': AccountOverview
+			'account-overview': AccountOverview,
+			'account-payment-methods': AccountPaymentMethods,
+			'account-transactions': AccountTransactions
 		}
 	}
 </script>

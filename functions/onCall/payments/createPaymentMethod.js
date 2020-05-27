@@ -24,7 +24,10 @@ module.exports = functions.https.onCall(async (data, context) => {
 		})
 		if(result.success){
 			let details = JSON.parse(JSON.stringify(result.paymentMethod))
-			await admin.firestore().collection(`users/${data.id}/paymentMethods`).add(details)
+			await admin.firestore().collection(`users/${data.id}/paymentMethods`).add({
+				...details,
+				dates: { createdAt: admin.firestore.FieldValue.serverTimestamp() }
+			})
 		}
 		return result.success
 	}catch(error){
