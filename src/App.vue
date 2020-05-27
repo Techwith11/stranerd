@@ -9,6 +9,7 @@
 		<session-modal v-if="isSessionModalOpen"/>
 		<post-modal v-if="isPostModalOpen" />
 		<cart-modal v-if="isCartModalOpen" />
+		<account-modal v-if="isAccountModalOpen" />
 	</div>
 </template>
 
@@ -20,6 +21,7 @@
 	import SessionModal from '@/components/sessions/modals/SessionModal'
 	import PostModal from '@/components/posts/modals/PostModal'
 	import CartModal from '@/components/shop/modals/CartModal'
+	import AccountModal from '@/components/account/modals/AccountModal'
 	export default {
 		name: 'App',
 		components: {
@@ -28,9 +30,10 @@
 			'auth-modal': AuthModal,
 			'session-modal': SessionModal,
 			'post-modal': PostModal,
-			'cart-modal': CartModal
+			'cart-modal': CartModal,
+			'account-modal': AccountModal
 		},
-		computed: mapGetters(['isModalOpen', 'getId', 'isTutor', 'isSessionModalOpen','isPostModalOpen','isCartModalOpen']),
+		computed: mapGetters(['isModalOpen', 'getId', 'isTutor', 'isSessionModalOpen','isPostModalOpen','isCartModalOpen','isAccountModalOpen']),
 		methods: {
 			...mapActions(['setProfileListener','closeProfileListener', 'initializeTutorSessionsListener','closeTutorSessionsListener','checkForUnfinishedTests']),
 			closeAllListeners(){
