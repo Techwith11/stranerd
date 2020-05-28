@@ -1,6 +1,6 @@
 import {functions} from '@/config/firebase'
-import {client, hostedFields, paypalCheckout} from 'braintree-web'
-import paypal from 'paypal-checkout'
+import {client, hostedFields, /*paypalCheckout*/} from 'braintree-web'
+//import paypal from 'paypal-checkout'
 
 let helpers = {
 	getBraintreeClientToken: async () => (await functions.httpsCallable('getClientToken')()).data,
@@ -23,7 +23,7 @@ const mutations = {
 }
 
 const actions = {
-	async initPaymentFields({ getters, commit }, data){
+	async initPaymentFields({ /*getters,*/ commit }, /*data*/){
 		try{
 			let tokens = await helpers.getBraintreeClientToken()
 			let clientInstance = await client.create({ authorization: tokens.braintree })
@@ -39,7 +39,7 @@ const actions = {
 				}
 			}
 			commit('setHostedFieldsInstance',await hostedFields.create(options))
-			let paypalInstance = await paypalCheckout.create({ client: clientInstance, client_id: tokens.paypal })
+			/*let paypalInstance = await paypalCheckout.create({ client: clientInstance, client_id: tokens.paypal })
 			paypal.Button.render({
 				env: 'sandbox',
 				style: { label: 'paypal', size: 'large', shape: 'rect' },
@@ -64,7 +64,7 @@ const actions = {
 				},
 				onCancel: () => new window.Toast({ icon: 'warning', title: 'Account addition cancelled.' }),
 				onError: error => new window.Toast({ icon: 'error', title: error.message })
-			}, '#paypalButton')
+			}, '#paypalButton')*/
 		}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 	},
 	async createPaymentMethod({ getters }){

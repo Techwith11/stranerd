@@ -1,32 +1,10 @@
 <template>
 	<div>
 		<helper-spinner v-if="isLoading"/>
-		<form v-if="showForm">
+		<div v-if="showForm">
 			<a class="text-info d-block my-3" @click.prevent="backToPaymentMethods">Back to payment methods</a>
-			<div class="form-group">
-				<label>Credit Card Number</label>
-				<div id="creditCardNumber" class="form-control"></div>
-			</div>
-			<div class="form-group">
-				<div class="row">
-					<div class="col-6">
-						<label>Expire Date</label>
-						<div id="expireDate" class="form-control"></div>
-					</div>
-					<div class="col-6">
-						<label>CVV</label>
-						<div id="cvv" class="form-control"></div>
-					</div>
-				</div>
-			</div>
-			<div class="text-center">
-				<button class="btn btn-primary btn-block" :disabled="!isThereAHoistedFieldInstance" @click.prevent="addCard">Add Credit Card</button>
-			</div>
-			<hr />
-			<div class="form-group text-center">
-				<div id="paypalButton"></div>
-			</div>
-		</form>
+			<add-payment-method :onAddMethodSuccessful="refreshPaymentMethods"/>
+		</div>
 		<div v-else>
 			<div v-if="paymentMethods.length === 0">
 				<p class="">No payment method saved. Click below to add a new payment method</p>
@@ -34,7 +12,7 @@
 			</div>
 			<div v-else>
 				<div class="py-2 my-2 rounded px-4 d-flex" v-for="method in paymentMethods" :key="method['.key']" @click="token = method.token"
-					:class="token === method.token ? 'bg-success text-white' : 'bg-light'">
+					:class="token === method.token ? 'bg-info text-white' : 'bg-light'">
 					<span class="" :for="method.token">{{ method.cardType }}</span>
 					<span class="ml-3">{{ method.maskedNumber }}</span>
 					<span class="ml-auto">Expires {{ method.expirationDate }}</span>
@@ -50,6 +28,7 @@
 	import { mapActions, mapGetters } from 'vuex'
 	import { firestore } from '@/config/firebase'
 	import HelperSpinner from '@/components/helpers/Spinner'
+	import AddPaymentMethod from "@/components/helpers/AddPaymentMethod";
 	export default {
 		data: () => ({
 			isLoading: false,
@@ -72,11 +51,11 @@
 			}
 		},
 		computed: {
-			...mapGetters(['getId','isThereAHoistedFieldInstance']),
+			...mapGetters(['getId']),
 			cannotPay(){ return this.isLoading === true || this.token === null },
 		},
 		methods: {
-			...mapActions(['initPaymentFields','createPaymentMethod','makePayment']),
+			...mapActions(['makePayment']),
 			refreshPaymentMethods(){
 				this.showForm = false
 				this.token = null
@@ -86,28 +65,12 @@
 				this.showForm = this.isLoading
 				this.token = null
 			},
-			async showFormFields(){
-				this.isLoading = true
-				this.showForm = true
-				await this.initPaymentFields({ onPayPalAuthorization: this.refreshPaymentMethods })
-				this.isLoading = false
-			},
+			async showFormFields(){ this.showForm = true },
 			async fetchPaymentMethods(){
 				this.isLoading = true
 				this.paymentMethods = []
-				let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).get()
+				let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
 				docs.forEach(doc => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
-				this.isLoading = false
-			},
-			async addCard(){
-				this.isLoading = true
-				try{
-					let successful = await this.createPaymentMethod()
-					if(successful){
-						new window.Toast({ icon: 'success', title: 'Card added successfully' })
-						this.refreshPaymentMethods()
-					}
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
 			},
 			async pay(){
@@ -122,7 +85,8 @@
 			},
 		},
 		components: {
-			'helper-spinner': HelperSpinner
+			'helper-spinner': HelperSpinner,
+			'add-payment-method': AddPaymentMethod
 		},
 		async mounted(){
 			await this.fetchPaymentMethods()
