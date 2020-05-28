@@ -26,7 +26,7 @@
 			...mapGetters(['getId']),
 		},
 		methods: {
-			...mapActions(['setAccountModalStateAddPaymentMethod']),
+			...mapActions(['setAccountModalStateAddPaymentMethod','removePaymentMethod']),
 			async fetchPaymentMethods(){
 				let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
 				docs.forEach(doc => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
@@ -42,8 +42,12 @@
 					confirmButtonText: 'Remove'
 				})
 				if (result.value) {
-					console.log(method)
-					this.paymentMethods = this.paymentMethods.filter(x => x['.key'] !== method['.key'])
+					try{
+						this.isLoading = true
+						await this.removePaymentMethod(method['.key'])
+						this.paymentMethods = this.paymentMethods.filter(x => x['.key'] !== method['.key'])
+					}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+					this.isLoading = false
 				}
 			}
 		},

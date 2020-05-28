@@ -5,6 +5,7 @@ import {client, hostedFields, /*paypalCheckout*/} from 'braintree-web'
 let helpers = {
 	getBraintreeClientToken: async () => (await functions.httpsCallable('getClientToken')()).data,
 	createPaymentMethod: async (data) => (await functions.httpsCallable('createPaymentMethod')(data)).data,
+	removePaymentMethod: async (data) => (await functions.httpsCallable('removePaymentMethod')(data)).data,
 	makePayment: async (data) => (await functions.httpsCallable('makePayment')(data)).data,
 	subscribeToPlan: async (data) => (await functions.httpsCallable('subscribeToPlan')(data)).data,
 }
@@ -75,6 +76,16 @@ const actions = {
 		})
 		if(result === false){
 			throw new Error('Error adding card')
+		}
+		return result
+	},
+	async removePaymentMethod({ getters }, id){
+		let result = await helpers.removePaymentMethod({
+			user: getters.getId,
+			id
+		})
+		if(result === false){
+			throw new Error('Error removing card')
 		}
 		return result
 	},
