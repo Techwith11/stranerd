@@ -4,9 +4,7 @@
 		<div v-else>
 			<helper-message message="You haven't made any transaction on Stranerd" v-if="transactions.length === 0" />
 			<div v-else>
-				<div v-for="transaction in transactions" :key="transaction['.key']">
-					{{ transaction }}
-				</div>
+				<transaction-card v-for="transaction in transactions" :key="transaction['.key']" :transaction="transaction" />
 				<div class="d-flex justify-content-end my-3" v-if="hasMore">
 					<button class="btn-success" @click="fetchOlderTransactions">
 						<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderTransactionsLoading"></i>
@@ -23,6 +21,7 @@
 	import { firestore } from '@/config/firebase'
 	import HelperSpinner from '@/components/helpers/Spinner'
 	import HelperMessage from '@/components/helpers/Message'
+	import TransactionCard from '@/components/account/single/TransactionCard'
 	export default {
 		name: 'Transactions',
 		data: () => ({
@@ -34,7 +33,8 @@
 		}),
 		components: {
 			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage
+			'helper-message': HelperMessage,
+			'transaction-card': TransactionCard
 		},
 		async mounted(){
 			await this.getTransactions()

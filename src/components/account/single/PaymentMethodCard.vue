@@ -5,7 +5,7 @@
 			<span class="ml-3">{{ method.maskedNumber }}</span>
 			<span class="float-right">Expires {{ method.expirationDate }}</span>
 		</div>
-		<div class="d-flex justify-content-between">
+		<div class="d-flex justify-content-between small">
 			<span>Added {{ getDateOrTime }}</span>
 			<a class="text-info" @click.prevent="remove">Remove</a>
 		</div>
