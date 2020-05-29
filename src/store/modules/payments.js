@@ -8,6 +8,7 @@ let helpers = {
 	removePaymentMethod: async (data) => (await functions.httpsCallable('removePaymentMethod')(data)).data,
 	makePayment: async (data) => (await functions.httpsCallable('makePayment')(data)).data,
 	subscribeToPlan: async (data) => (await functions.httpsCallable('subscribeToPlan')(data)).data,
+	cancelSubscription: async (data) => (await functions.httpsCallable('cancelSubscription')(data)).data,
 }
 
 const state = {
@@ -103,7 +104,11 @@ const actions = {
 		return result
 	},
 	async cancelSubscription({ getters }){
-		console.log(getters.getId)
+		let result = await helpers.cancelSubscription({ id: getters.getId })
+		if(result === false){
+			throw new Error('Error cancelling subscription')
+		}
+		return result
 	}
 }
 
