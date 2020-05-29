@@ -37,6 +37,26 @@
 				</div>
 			</div>
 		</div>
+		<div class="my-3" v-if="getUser.roles.isTutor">
+			<h5>Tutor Information</h5>
+			<div class="row">
+				<div class="col-md-6">
+					<p>Certified to teach: {{ getUser.tutor.canTeach }}</p>
+				</div>
+				<div class="col-md-6">
+					<p>Overall Rating: {{ getUser.tutor.rating }}</p>
+				</div>
+				<div class="col-12">
+					<h6>Courses</h6>
+					<ul>
+						<li v-for="course in getUser.tutor.courses" :key="course">
+							<span class="font-weight-bold text-capitalize">{{ course }} </span>
+							<span>Level {{ getUser.tutor.levels[course] }}</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 

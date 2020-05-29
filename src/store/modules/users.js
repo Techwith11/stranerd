@@ -6,6 +6,7 @@ const helpers = {
 
 const state = {
 	defaultImage: 'http://localhost:3000/stranerd/users/images/Cassette.svg',
+	logo: 'http://localhost:3000/stranerd/assets/stranerd_logo.png',
 	intendedRoute: null,
 	accountModalOpen: false,
 	accountModalState: null
@@ -13,6 +14,7 @@ const state = {
 
 const getters = {
 	getDefaultImage: state => state.defaultImage,
+	getLogo: state => state.logo,
 	getIntendedRoute: (state) => state.intendedRoute,
 	isAccountModalOpen: state => state.accountModalOpen,
 	isAccountModalOverview: state => state.accountModalState === 'profile-overview',
