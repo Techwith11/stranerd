@@ -33,9 +33,6 @@
 					return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
 				}
 			}
-		},
-		mounted(){
-			console.log(this.transaction)
 		}
 	}
 </script>

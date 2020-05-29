@@ -101,6 +101,9 @@ const actions = {
 		let result = await helpers.subscribeToPlan({ ...data, id: getters.getId })
 		result ? new window.Toast({ icon: 'success', title: 'Subscription successful.' }) : new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
 		return result
+	},
+	async cancelSubscription({ getters }){
+		console.log(getters.getId)
 	}
 }
 

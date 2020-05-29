@@ -15,9 +15,11 @@ const getters = {
 	getDefaultImage: state => state.defaultImage,
 	getIntendedRoute: (state) => state.intendedRoute,
 	isAccountModalOpen: state => state.accountModalOpen,
+	isAccountModalOverview: state => state.accountModalState === 'profile-overview',
 	isAccountModalEditProfile: state => state.accountModalState === 'edit-profile',
 	isAccountModalUpdatePassword: state => state.accountModalState === 'update-password',
 	isAccountModalAddPaymentMethod: state => state.accountModalState === 'add-payment-method',
+	isAccountModalSelectSubscription: state => state.accountModalState === 'select-subscription'
 }
 
 const mutations = {
@@ -32,9 +34,11 @@ const mutations = {
 const actions = {
 	setIntendedRoute: ({ commit }, route) => commit('setIntendedRoute', route),
 	clearIntendedRoute: ({ commit }) => commit('setIntendedRoute', null),
+	setAccountModalStateOverview: ({ commit }) => commit('setAccountModalState', 'profile-overview'),
 	setAccountModalStateEditProfile: ({ commit }) => commit('setAccountModalState', 'edit-profile'),
 	setAccountModalStateUpdatePassword: ({ commit }) => commit('setAccountModalState', 'update-password'),
 	setAccountModalStateAddPaymentMethod: ({ commit }) => commit('setAccountModalState', 'add-payment-method'),
+	setAccountModalStateSelectSubscription: ({ commit }) => commit('setAccountModalState', 'select-subscription'),
 	closeAccountModal: ({ commit }) => commit('setAccountModalState', null),
 	async updateProfile({ getters }, data){
 		let bio = data.bio

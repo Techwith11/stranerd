@@ -1,9 +1,9 @@
 <template>
 	<div class="alert" role="alert" :class="{'alert-danger': method.expired, 'alert-warning': !method.expired}">
-		<div>
+		<div class="d-flex">
 			<span>{{ method.cardType }}</span>
 			<span class="ml-3">{{ method.maskedNumber }}</span>
-			<span class="float-right">Expires {{ method.expirationDate }}</span>
+			<span class="ml-auto"><span class="d-none d-sm-inline">Expires </span>{{ method.expirationDate }}</span>
 		</div>
 		<div class="d-flex justify-content-between small">
 			<span>Added {{ getDateOrTime }}</span>

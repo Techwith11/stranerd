@@ -1,12 +1,12 @@
 <template>
-	<ul class="bg-dark nav small justify-content-between mb-4">
-		<li class="nav-item flex-grow-1 text-center">
+	<ul class="bg-dark nav small mb-4 scrolling-nav p-0">
+		<li class="nav-item text-center">
 			<router-link class="nav-link" to="/account">Profile</router-link>
 		</li>
-		<li class="nav-item flex-grow-1 text-center">
+		<li class="nav-item text-center">
 			<router-link class="nav-link" to="/account?tab=paymentMethods">Payment Methods</router-link>
 		</li>
-		<li class="nav-item flex-grow-1 text-center">
+		<li class="nav-item text-center">
 			<router-link class="nav-link" to="/account?tab=transactions">Transactions</router-link>
 		</li>
 	</ul>
@@ -21,7 +21,7 @@
 		border-radius: 10px 10px 0 0;
 		background: #fff;
 	}
-	a{
-		color: white;
+	.nav-link{
+		color: #aaa !important;
 	}
 </style>
