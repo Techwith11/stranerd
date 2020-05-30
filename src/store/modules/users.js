@@ -8,19 +8,19 @@ let url = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000/st
 
 const state = {
 	images: {
-		defaultImage: url + 'users/images/user_profile.png',
-		logo: url + 'assets/stranerd_logo.png',
-		landing_hero: url + 'assets/landing_hero.jpg',
-		success_hero: url + 'assets/success_stories.jpg',
-		why_us_hero: url + 'assets/why_us_hero.jpg',
+		defaultImage: url + encodeURIComponent('users/images/user_profile.png') + '?alt=media',
+		logo: url + encodeURIComponent('assets/stranerd_logo.png') + '?alt=media',
+		landing_hero: url + encodeURIComponent('assets/landing_hero.jpg') + '?alt=media',
+		success_hero: url + encodeURIComponent('assets/success_stories.jpg') + '?alt=media',
+		why_us_hero: url + encodeURIComponent('assets/why_us_hero.jpg') + '?alt=media',
 		icons: {
-			registered_students: url + 'assets/icons/Registered Students.svg',
-			unlimited_access: url + 'assets/icons/Unlimited Access.svg',
-			learn_anywhere: url + 'assets/icons/Learn Anywhere.svg',
-			helped_students: url + 'assets/icons/Helped Students.svg',
-			expert_teacher: url + 'assets/icons/Expert Teacher.svg',
-			rank: url + 'assets/icons/Rank.svg',
-			visits: url + 'assets/icons/Visits.svg'
+			registered_students: url + encodeURIComponent('assets/icons/Registered Students.svg') + '?alt=media',
+			unlimited_access: url + encodeURIComponent('assets/icons/Unlimited Access.svg') + '?alt=media',
+			learn_anywhere: url + encodeURIComponent('assets/icons/Learn Anywhere.svg') + '?alt=media',
+			helped_students: url + encodeURIComponent('assets/icons/Helped Students.svg') + '?alt=media',
+			expert_teacher: url + encodeURIComponent('assets/icons/Expert Teacher.svg') + '?alt=media',
+			rank: url + encodeURIComponent('assets/icons/Rank.svg') + '?alt=media',
+			visits: url + encodeURIComponent('assets/icons/Visits.svg') + '?alt=media'
 		}
 	},
 	intendedRoute: null,
