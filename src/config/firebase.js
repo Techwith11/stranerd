@@ -33,6 +33,7 @@ export const auth = firebase.auth()
 export const database = firebase.database()
 export const firestore = firebase.firestore()
 export const functions = firebase.functions()
+export const storage = firebase.storage()
 
 if(process.env.NODE_ENV === 'production'){
 	auth.onAuthStateChanged(async user => user && user.uid ? store.dispatch('setId', user.uid) : null)
