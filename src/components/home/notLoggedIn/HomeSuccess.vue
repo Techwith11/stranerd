@@ -1,5 +1,5 @@
 <template>
-    <div id="background">
+    <div id="background" :style="{backgroundImage: `url(${getImages.success_hero})`}">
         <div class="container d-flex justify-content-center align-items-center">
             <div>
                 <h2 class="font-weight-bold">Success Stories From Our Students WorldWide!</h2>
@@ -12,10 +12,17 @@
     </div>
 </template>
 
+<script>
+    import { mapGetters } from 'vuex'
+    export default {
+        computed: mapGetters(['getImages'])
+    }
+</script>
+
 <style lang="scss" scoped>
     @import '../../../style/index.scss';
     #background{
-        background: url("../../../assets/images/apple-black-box-business-416343.jpg"), $gradient-reversed, none;
+        background-color: $gradient-reversed;
         padding: 5rem 0;
         color: $white;
     }

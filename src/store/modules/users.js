@@ -4,17 +4,33 @@ const helpers = {
 	updateProfile: async (bio, id) => await firestore.collection('users').doc(id).set({ bio }, { merge: true })
 }
 
+let url = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000/stranerd/'
+
 const state = {
-	defaultImage: 'http://localhost:3000/stranerd/users/images/Cassette.svg',
-	logo: 'http://localhost:3000/stranerd/assets/stranerd_logo.png',
+	images: {
+		defaultImage: url + 'users/images/user_profile.png',
+		logo: url + 'assets/stranerd_logo.png',
+		landing_hero: url + 'assets/landing_hero.jpg',
+		success_hero: url + 'assets/success_stories.jpg',
+		why_us_hero: url + 'assets/why_us_hero.jpg',
+		icons: {
+			registered_students: url + 'assets/icons/Registered Students.svg',
+			unlimited_access: url + 'assets/icons/Unlimited Access.svg',
+			learn_anywhere: url + 'assets/icons/Learn Anywhere.svg',
+			helped_students: url + 'assets/icons/Helped Students.svg',
+			expert_teacher: url + 'assets/icons/Expert Teacher.svg',
+			rank: url + 'assets/icons/Rank.svg',
+			visits: url + 'assets/icons/Visits.svg'
+		}
+	},
 	intendedRoute: null,
 	accountModalOpen: false,
 	accountModalState: null
 }
 
 const getters = {
-	getDefaultImage: state => state.defaultImage,
-	getLogo: state => state.logo,
+	getDefaultImage: state => state.images.defaultImage,
+	getImages: state => state.images,
 	getIntendedRoute: (state) => state.intendedRoute,
 	isAccountModalOpen: state => state.accountModalOpen,
 	isAccountModalOverview: state => state.accountModalState === 'profile-overview',

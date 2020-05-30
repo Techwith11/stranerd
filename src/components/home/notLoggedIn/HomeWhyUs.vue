@@ -3,23 +3,23 @@
         <div class="container">
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-md-4 mb-5 mb-md-0">
-                    <img src="@/assets/images/icons/Unlimited Access.svg" alt="" class="icons" />
+                    <img :src="getImages.icons.unlimited_access" alt="" class="icons" />
                     <h3 class="icon-title">Unlimited Access</h3>
                     <p class="icon-subtitle">One subscription unlimited access</p>
                 </div>
                 <div class="col-md-4 mb-5 mb-md-0">
-                    <img src="@/assets/images/icons/Expert Teacher.svg" alt="" class="icons" />
+                    <img :src="getImages.icons.expert_teacher" alt="" class="icons" />
                     <h3 class="icon-title">Expert Teachers</h3>
                     <p class="icon-subtitle">Learn from industry experts who are passionate about teaching</p>
                 </div>
                 <div class="col-md-4 mb-5 mb-md-0">
-                    <img src="@/assets/images/icons/Learn Anywhere.svg" alt="" class="icons" />
+                    <img :src="getImages.icons.learn_anywhere" alt="" class="icons" />
                     <h3 class="icon-title">Learn Anywhere</h3>
                     <p class="icon-subtitle">Switch between your computer, tablet, or mobile device.</p>
                 </div>
             </div>
             <div class="d-flex flex-md-row flex-column justify-content-center text-left align-items-stretch" id="spacer">
-                <img src="@/assets/images/shallow-focus-photo-of-people-discussing-3182826.jpg" alt="" class="img">
+                <img :src="getImages.why_us_hero" alt="" class="img">
                 <div class="pl-4">
                     <h2 class="font-weight-light">Learn a skill.</h2>
                     <h2 class="font-weight-light">Build your portfolio.</h2>
@@ -31,6 +31,13 @@
         </div>
     </div>
 </template>
+
+<script>
+    import { mapGetters } from 'vuex'
+    export default {
+        computed: mapGetters(['getImages'])
+    }
+</script>
 
 <style lang="scss" scoped>
     @import '../../../style/index.scss';

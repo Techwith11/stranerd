@@ -111,13 +111,13 @@
 	#smaller-height{
 		height: calc(100vh - 218px + 32px);
 		ul{
-			height: calc(100vh - 256px);
+			height: calc(100vh - 272px);
 		}
 	}
 	#longer-height{
 		height: calc(100vh - 168px + 32px);
 		ul{
-			height: calc(100vh - 206px);
+			height: calc(100vh - 222px);
 		}
 	}
 </style>

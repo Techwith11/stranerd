@@ -1,7 +1,7 @@
 <template>
     <header class="bg-dark">
         <nav class="container navbar navbar-dark bg-dark" :class="isLoggedIn ? 'navbar-expand-lg' : 'navbar-expand'">
-            <router-link class="navbar-brand" to="/"><img :src="getLogo" alt="" height="50px"></router-link>
+            <router-link class="navbar-brand" to="/"><img :src="getImages.logo" alt="" height="50px"></router-link>
             <button class="navbar-toggler rounded-0" @click="toggleNavbar" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -93,6 +93,6 @@
                 this.openCartModal()
             }
         },
-        computed: mapGetters(['isLoggedIn','isAdmin','getCartLength','getLogo'])
+        computed: mapGetters(['isLoggedIn','isAdmin','getCartLength','getImages'])
     }
 </script>

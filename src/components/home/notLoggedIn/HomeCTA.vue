@@ -1,6 +1,7 @@
 <template>
-    <div id="background">
-        <div class="container">
+    <div id="background" :style="{backgroundImage: `url(${getImages.landing_hero})`}">
+        <div id="opacity"></div>
+        <div class="container" id="inner">
             <div class="text-left">
                 <h1 class="font-weight-bold" id="headline">Get Access to Unlimited Educational Resources. Everywhere, Everytime!</h1>
                 <p id="subtitle">Premium access to more than 10,000 resources ranging from courses, events e.t.c.</p>
@@ -10,13 +11,34 @@
     </div>
 </template>
 
+<script>
+    import { mapGetters } from 'vuex'
+    export default {
+        computed: mapGetters(['getImages'])
+    }
+</script>
+
 <style lang="scss" scoped>
     @import '../../../style/index.scss';
     #background{
+        position: relative;
         padding: 10rem 0;
         color: $text-black;
         background-size: cover;
-        background: url("../../../assets/images/photo-of-three-people-smiling-while-having-a-meeting-3184338.jpg"), $gradient, none;
+        background-color: $gradient;
+    }
+    #opacity{
+        z-index: 0.5;
+        background: #55555555;
+        opacity: 0.5;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    #inner{
+        z-index: 1;
     }
     #ctaButton{
         background: $primary-dark;
