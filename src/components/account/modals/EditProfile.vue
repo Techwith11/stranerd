@@ -8,8 +8,8 @@
 		<div class="form-group my-3">
 			<img :src="imageLink" alt="" class="w-100" v-if="imageLink">
 			<input type="file" @change="catchImage" class="d-none" ref="image" accept="image/*">
-			<a @click.prevent="$refs.image.click()">
-				<span class="text-info">{{ image ? 'Change Image' : 'Upload Profile Image'}}</span>
+			<a @click.prevent="() => { $refs.image.value= ''; $refs.image.click() }">
+				<span class="text-info">Upload Profile Image</span>
 			</a>
 		</div>
 		<div class="form-group my-3">
@@ -46,7 +46,7 @@
 			isLoading: false
 		}),
 		computed: {
-			...mapGetters(['getUser'])
+			...mapGetters(['getUser','getDefaultImage'])
 		},
 		methods: {
 			...mapActions(['closeAccountModal', 'updateProfile']),
@@ -72,6 +72,8 @@
 			this.bio.bio = this.getUser.bio.bio
 			if(this.getUser.bio.image && this.getUser.bio.image.link){
 				this.imageLink = this.getUser.bio.image.link
+			}else{
+				this.imageLink = this.getDefaultImage
 			}
 		},
 		validations:{

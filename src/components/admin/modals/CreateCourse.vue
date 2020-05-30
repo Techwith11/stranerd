@@ -36,14 +36,14 @@
 			<div v-if="page === 2">
 				<div class="form-group my-3">
 					<input type="file" @change="catchVideo" class="d-none" ref="videoInput" accept="video/*">
-					<a @click.prevent="$refs.videoInput.click()">
+					<a @click.prevent="() => { $refs.videoInput.value= ''; $refs.videoInput.click() }">
 						<span v-if="video">{{video.name}} </span>
 						<span class="text-info">Upload video</span>
 					</a>
 				</div>
 				<div class="form-group my-3">
 					<input type="file" @change="catchImage" class="d-none" ref="imageInput" accept="image/*">
-					<a @click.prevent="$refs.imageInput.click()">
+					<a @click.prevent="() => { $refs.imageInput.value= ''; $refs.imageInput.click() }">
 						<span v-if="image">{{image.name}} </span>
 						<span class="text-info">Upload image preview</span>
 					</a>
@@ -55,7 +55,7 @@
 				</div>
 				<div v-if="course.premium" class="form-group my-3">
 					<input type="file" @change="catchPreview" class="d-none" ref="previewInput" accept="video/*">
-					<a @click.prevent="$refs.previewInput.click()">
+					<a @click.prevent="() => { $refs.previewInput.value= ''; $refs.previewInput.click() }">
 						<span v-if="preview">{{preview.name}}  </span>
 						<span class="text-info">Upload video preview</span>
 					</a>
@@ -63,7 +63,7 @@
 				<div class="form-group my-3">
 					<input type="file" @change="catchDocuments" class="d-none" ref="documentInput" multiple>
 					<span>{{ documents.map(doc => doc.name).join(', ') }} </span>
-					<a class="text-info" @click.prevent="$refs.documentInput.click()">Upload attachment files</a>
+					<a class="text-info" @click.prevent="() => { $refs.documentInput.value= ''; $refs.documentInput.click() }">Upload attachment files</a>
 				</div>
 				<div class="d-flex justify-content-between align-items-center my-3">
 					<button class="bg-info text-white my-2 py-2 px-4" @click.prevent="goToPrevious">

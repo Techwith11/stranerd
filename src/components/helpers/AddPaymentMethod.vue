@@ -34,7 +34,7 @@
 	import HelperSpinner from '@/components/helpers/Spinner'
 	export default {
 		data: () => ({
-			isLoading: false,
+			isLoading: true,
 		}),
 		props: {
 			onAddMethodSuccessful: {
@@ -62,6 +62,7 @@
 		},
 		async mounted(){
 			await this.initPaymentFields({ onPayPalAuthorization: this.onAddMethodSuccessful })
+			this.isLoading = false
 		}
 	}
 </script>

@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div class="row">
+		<div class="row align-items-center d-flex">
 			<div class="col-sm-3">
 				<img :src="getUserImageLink" alt="" class="w-100">
 			</div>
@@ -57,6 +57,7 @@
 				</div>
 			</div>
 		</div>
+		<router-link class="btn btn-primary" to="/tests/tutors">Take test</router-link>
 	</div>
 </template>
 
@@ -64,8 +65,8 @@
 	import { mapGetters, mapActions } from 'vuex'
 	export default {
 		computed: {
-			...mapGetters(['getUser']),
-			getUserImageLink(){ return this.getUser && this.getUser.bio.image ? this.getUser.bio.image.link : '' }
+			...mapGetters(['getUser','getDefaultImage']),
+			getUserImageLink(){ return this.getUser && this.getUser.bio.image ? this.getUser.bio.image.link : this.getDefaultImage }
 		},
 		methods: {
 			...mapActions(['setAccountModalStateOverview','setAccountModalStateSelectSubscription'])
