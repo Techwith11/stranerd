@@ -26,8 +26,6 @@ module.exports = functions.https.onCall(async (data, context) => {
 		marked: true, score, answers
 	}, { merge: true })
 
-	let doc = await admin.firestore().collection('tests/tutors/tests').doc(data.id).get()
-
 	let upgrade = {}
 	upgrade[course] = {}
 	let tutor = { tutor: { upgrade } }

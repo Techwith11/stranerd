@@ -35,15 +35,15 @@
 		<div class="mt-2" v-if="fetched && !fetchingUsers">
 			<p class="text-danger opacity-75" v-if="users.length === 0">No user with such email exist</p>
 			<div class="my-3 d-flex justify-content-between align-items-center" v-for="user in users" :key="user['.key']">
-				<div class="text-truncate">
+				<div class="">
 					<p class="lead mb-1 text-wrap">{{ user.bio.name }}</p>
 					<p class="small mb-0 text-wrap">{{ user.bio.email }}</p>
 				</div>
-				<button class="btn-sm text-nowrap btn-success" @click="tutorUser(user)" :disabled="upgrading || $v.tutor.$invalid" v-if="!(user.roles.isTutor && user.tutor.courses.includes(tutor.course))">
+				<button class="btn-sm btn-success" @click="tutorUser(user)" :disabled="upgrading || $v.tutor.$invalid" v-if="!(user.roles.isTutor && user.tutor.courses.includes(tutor.course))">
 					<i class="fas fa-spinner fa-spin" v-if="upgrading"></i>
 					<span v-else>Make tutor</span>
 				</button>
-				<a class="text-nowrap text-info" v-else @click.prevent="() => {}">Already a {{ tutor.course }} tutor</a>
+				<a class="text-info" v-else @click.prevent="() => {}">Already a {{ tutor.course }} tutor</a>
 			</div>
 		</div>
 	</div>
@@ -95,7 +95,7 @@
 				if(res) {
 					let x = this.users.find(x => x['.key'] === user['.key'])
 					new window.Toast({ icon: 'success', title: `${x.bio.name} has been registered as a ${this.tutor.course} successfully` })
-					x.tutor.courses.push(this.tutor.course)
+					await this.getUsersByEmail()
 				}
 				this.upgrading = false
 			}

@@ -60,8 +60,7 @@
 				this.upgrading = true
 				let res = await this.makeAdmin(user['.key'])
 				if(res) {
-					let x = this.users.find(x => x['.key'] === user['.key'])
-					x.roles.isAdmin = true
+					this.getUsersByEmail()
 				}
 				this.upgrading = false
 			},
@@ -69,8 +68,7 @@
 				this.upgrading = true
 				let res = await this.removeAdmin(user['.key'])
 				if(res) {
-					let x = this.users.find(x => x['.key'] === user['.key'])
-					x.roles.isAdmin = false
+					this.getUsersByEmail()
 				}
 				this.upgrading = false
 			}
