@@ -57,7 +57,6 @@
 				</div>
 			</div>
 		</div>
-		<router-link class="btn btn-primary" to="/tests/tutors">Take test</router-link>
 	</div>
 </template>
 

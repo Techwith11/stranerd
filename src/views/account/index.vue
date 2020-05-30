@@ -1,9 +1,10 @@
 <template>
 	<div class="container py-3" v-if="getUser && getUser.bio">
 		<account-nav />
-		<account-overview v-if="isTabOverview" />
 		<account-payment-methods v-if="isTabPaymentMethods" />
-		<account-transactions v-if="isTabTransactions" />
+		<account-transactions v-else-if="isTabTransactions" />
+		<account-tests v-else-if="isTabTests" />
+		<account-overview v-else />
 	</div>
 </template>
 
@@ -13,12 +14,13 @@
 	import AccountOverview from '@/components/account/single/AccountOverview'
 	import AccountPaymentMethods from '@/components/account/single/AccountPaymentMethods'
 	import AccountTransactions from '@/components/account/single/AccountTransactions'
+	import AccountTests from '@/components/account/single/AccountTests'
 	export default {
 		name: 'Account',
 		computed: {
-			...mapGetters(['getUser']),
-			isTabOverview(){ return !this.$route.query.tab },
+			...mapGetters(['getUser','isTutor']),
 			isTabPaymentMethods(){ return this.$route.query.tab && this.$route.query.tab === 'paymentMethods' },
+			isTabTests(){ return this.$route.query.tab && this.$route.query.tab === 'tests' && this.isTutor },
 			isTabTransactions(){ return this.$route.query.tab && this.$route.query.tab === 'transactions' },
 		},
 		async mounted(){
@@ -28,7 +30,8 @@
 			'account-nav': AccountNav,
 			'account-overview': AccountOverview,
 			'account-payment-methods': AccountPaymentMethods,
-			'account-transactions': AccountTransactions
+			'account-transactions': AccountTransactions,
+			'account-tests': AccountTests
 		}
 	}
 </script>
