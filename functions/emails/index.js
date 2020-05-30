@@ -8,9 +8,8 @@ let data = functions.config().admin[environment]
 let email = data.email.email
 let pass = data.email.pass
 let domain = data.meta.domain
-let storage = data.meta.storage
 let meta = {
-	logo: `${storage}/assets/stranerd_logo.png`,
+	logo: data.meta.logo,
 	color: data.meta.color,
 	domain
 }

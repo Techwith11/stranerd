@@ -1,4 +1,36 @@
 {
+  "paypal": {
+    "development": {
+      "client_id": "Ac-WzTkiNB9FEinROuMlVUfmCqLVQHRSjQooTDrVYBWHJBmIqtb_17u2zQ4SibWWNg8L02JUhkSSY7n_"
+    },
+    "production": {
+      "client_id": ""
+    }
+  },
+  "admin": {
+    "development": {
+      "email": {
+        "pass": "merciful",
+        "email": "stranerds@gmail.com"
+      },
+      "meta": {
+        "domain": "http://localhost:8080",
+        "logo": "http://localhost:8080/stranerd/assets/stranerd_logo.png",
+        "color": "#22DD77"
+      }
+    },
+    "production": {
+      "meta": {
+        "domain": "https://stranerd.com",
+        "logo": "https://firebasestorage.googleapis.com/v0/b/stranerd-13084.appspot.com/o/users%2Fimages%2Fuser_profile.png?alt=media",
+        "color": "#22DD77"
+      },
+      "email": {
+        "pass": "merciful",
+        "email": "stranerds@gmail.com"
+      }
+    }
+  },
   "environment": {
     "mode": "development"
   },
@@ -9,30 +41,9 @@
       "private_key": "bb26a3a051b5d1da5f430872c820f616"
     },
     "production": {
-      "public_key": "",
       "merchant_id": "",
+      "public_key": "",
       "private_key": ""
-    }
-  },
-  "admin": {
-    "development": {
-      "email": {
-        "pass": "masked222",
-        "email": "kevinfizu@gmail.com"
-      },
-      "meta": {
-        "domain": "http://localhost:8080",
-        "storage": "http://localhost:3000/stranerd",
-        "color": "#22DD77"
-      }
-    }
-  },
-  "paypal": {
-    "development": {
-      "client_id": "Ac-WzTkiNB9FEinROuMlVUfmCqLVQHRSjQooTDrVYBWHJBmIqtb_17u2zQ4SibWWNg8L02JUhkSSY7n_"
-    },
-    "production": {
-      "client_id": ""
     }
   }
 }

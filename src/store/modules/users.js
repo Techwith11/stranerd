@@ -4,7 +4,7 @@ const helpers = {
 	updateProfile: async (bio, id) => await firestore.collection('users').doc(id).set({ bio }, { merge: true })
 }
 
-let url = process.env.NODE_ENV === 'production' ? '' : 'http://localhost:3000/stranerd/'
+let url = process.env.NODE_ENV === 'production' ? 'https://firebasestorage.googleapis.com/v0/b/stranerd-13084.appspot.com/o/' : 'http://localhost:3000/stranerd/'
 
 const state = {
 	images: {
