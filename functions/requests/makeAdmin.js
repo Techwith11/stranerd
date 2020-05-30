@@ -2,7 +2,7 @@ const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 
 module.exports = functions.https.onRequest(async (request, response) => {
-	let user = await admin.auth().getUserByEmail(request.body.email)
+	let user = await admin.auth().getUserByEmail('kevinfizu@gmail.com')
 	if(user){
 		await admin.auth().setCustomUserClaims(user.uid, { isAdmin: true })
 		await admin.firestore()
@@ -11,7 +11,7 @@ module.exports = functions.https.onRequest(async (request, response) => {
 			.set({
 				roles: { isAdmin: true }
 			}, { merge: true })
-		return response.status(200).json({ message: 'User upgraded to admin' })
+		return response.status(200).json({ message: 'kevinfizu@gmail.com upgraded to admin' })
 	}else{
 		return response.status(400).json({ message: 'User doesnt exist' })
 	}
