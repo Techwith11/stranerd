@@ -65,7 +65,7 @@
 	header{
         position: relative;
 		z-index: 3;
-		height: 100%;
+		height: 64px;
 	}
     .dropdown-menu{
         border: none !important;
