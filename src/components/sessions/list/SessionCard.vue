@@ -113,7 +113,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	img{
 		max-width: 150px;
 	}

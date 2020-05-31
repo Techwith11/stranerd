@@ -44,7 +44,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	img{
 		width: 25%;
 		max-width: 150px;
