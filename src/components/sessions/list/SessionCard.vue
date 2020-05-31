@@ -1,8 +1,8 @@
 <template>
-	<router-link :to="`/sessions/${session['.key']}`" class="text-decoration-none">
-		<div class="alert px-2 d-flex align-content-center my-2" role="alert" :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
+	<router-link :to="`/sessions/${session['.key']}`" class="text-decoration-none" target="_blank">
+		<div class="alert d-flex align-items-center my-2" role="alert" :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
 			<img :src="getImageLink" class="mr-2 w-25" alt="">
-			<div class="flex-grow-1 w-50">
+			<div>
 				<p class="mb-0">{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}</p>
 				<div v-if="!wasCancelled">
 					<span class="small" v-if="isStillInSession">{{ getTime }}</span>
@@ -112,3 +112,9 @@
 		}
 	}
 </script>
+
+<style>
+	img{
+		max-width: 150px;
+	}
+</style>
