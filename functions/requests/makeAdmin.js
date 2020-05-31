@@ -13,6 +13,6 @@ module.exports = functions.https.onRequest(async (request, response) => {
 			}, { merge: true })
 		return response.status(200).json({ message: 'kevinfizu@gmail.com upgraded to admin' })
 	}else{
-		return response.status(400).json({ message: 'User doesnt exist' })
+		return response.status(400).json({ message: 'kevinfizu@gmail.com doesn\'t exist' })
 	}
 })
