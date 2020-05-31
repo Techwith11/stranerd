@@ -1,7 +1,7 @@
 <template>
-	<div class="card px-sm-3">
+	<div class="border border-secondary rounded py-2 px-sm-3">
 		<div class="row">
-			<div class="col-sm-3 d-flex justify-content-center">
+			<div class="col-sm-3 text-center my-auto">
 				<img :src="getImageLink" alt="" class="w-100">
 			</div>
 			<div class="col-sm-9 px-sm-0">
@@ -43,3 +43,10 @@
 		}
 	}
 </script>
+
+<style>
+	img{
+		width: 25%;
+		max-width: 150px;
+	}
+</style>
