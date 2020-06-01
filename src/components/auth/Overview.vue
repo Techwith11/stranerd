@@ -31,21 +31,24 @@
 
 <script>
 	import firebase, { auth } from '@/config/firebase'
-	import { mapActions } from 'vuex'
+	import { mapGetters, mapActions } from 'vuex'
 	export default {
         name: "Overview",
 		data: () => ({
 			isLoadingF: false,
 			isLoadingG: false
 		}),
+		computed: mapGetters(['getIntendedRoute']),
 		methods: {
-			...mapActions(['setModalLogin','setModalRegisterStudent','closeModal','setModalRegisterTutor']),
+			...mapActions(['setModalLogin','setModalRegisterStudent','closeModal','setModalRegisterTutor','clearIntendedRoute']),
 			loginWithGoogle(){
 				this.isLoadingG = true
 				let googleProvider = new firebase.auth.GoogleAuthProvider()
-				auth.signInWithPopup(googleProvider).then(() => {
+				auth.signInWithPopup(googleProvider).then(async () => {
 					this.isLoadingG = false
 					this.closeModal()
+					this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
+					this.clearIntendedRoute()
 				}).catch(error => {
 					this.isLoadingG = false
 					new window.Toast({ icon: 'error', title: error.message })
@@ -54,9 +57,11 @@
 			loginWithFacebook(){
 				this.isLoadingF = true
 				let facebookProvider = new firebase.auth.FacebookAuthProvider()
-				auth.signInWithPopup(facebookProvider).then(() => {
+				auth.signInWithPopup(facebookProvider).then(async () => {
 					this.isLoadingF = false
 					this.closeModal()
+					this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
+					this.clearIntendedRoute()
 				}).catch(error => {
 					this.isLoadingF = false
 					new window.Toast({ icon: 'error', title: error.message })

@@ -62,7 +62,7 @@ service cloud.firestore {
 		}
 
 		match /subjects/{id} {
-			allow read: if isAuthenticated();
+			allow read: if true;
 			allow write: if isAdmin();
 		}
 
