@@ -1,6 +1,7 @@
 const state = {
     modal: null,
-    createModal: null
+    createModal: null,
+    accountModal: null
 }
 
 const getters = {
@@ -17,11 +18,19 @@ const getters = {
     isCreateModalQuestion: state => state.createModal === 'create-question',
     isCreateModalNote: state => state.createModal === 'create-note',
     isCreateModalBlog: state => state.createModal === 'create-blog-post',
+
+    isAccountModalOpen: state => !!state.accountModal,
+    isAccountModalOverview: state => state.accountModal === 'profile-overview',
+    isAccountModalEditProfile: state => state.accountModal === 'edit-profile',
+    isAccountModalUpdatePassword: state => state.accountModal === 'update-password',
+    isAccountModalAddPaymentMethod: state => state.accountModal === 'add-payment-method',
+    isAccountModalSelectSubscription: state => state.accountModal === 'select-subscription'
 }
 
 const mutations = {
     setAuthModal: (state, mode) => state.modal = mode,
-    setCreateModal: (state,mode) => state.createModal = mode
+    setCreateModal: (state,mode) => state.createModal = mode,
+    setAccountModal: (state, mode) => state.accountModal = mode
 }
 
 const actions = {
@@ -32,12 +41,19 @@ const actions = {
     setAuthModalRegisterTutor: ({ commit }) => commit('setAuthModal', 'register-tutor'),
     closeAuthModal: ({ commit }) => commit('setAuthModal', null),
 
-    closeCreateModal: ({ commit }) => commit('setCreateModal', null),
     setCreateModalOverview: ({ commit }) => commit('setCreateModal', 'create-overview'),
     setCreateModalCourse: ({ commit }) => commit('setCreateModal', 'create-course'),
     setCreateModalQuestion: ({ commit }) => commit('setCreateModal', 'create-question'),
     setCreateModalNote: ({ commit }) => commit('setCreateModal', 'create-note'),
     setCreateModalBlog: ({ commit }) => commit('setCreateModal', 'create-blog-post'),
+    closeCreateModal: ({ commit }) => commit('setCreateModal', null),
+
+    setAccountModalOverview: ({ commit }) => commit('setAccountModal', 'profile-overview'),
+    setAccountModalEditProfile: ({ commit }) => commit('setAccountModal', 'edit-profile'),
+    setAccountModalUpdatePassword: ({ commit }) => commit('setAccountModal', 'update-password'),
+    setAccountModalAddPaymentMethod: ({ commit }) => commit('setAccountModal', 'add-payment-method'),
+    setAccountModalSelectSubscription: ({ commit }) => commit('setAccountModal', 'select-subscription'),
+    closeAccountModal: ({ commit }) => commit('setAccountModal', null),
 }
 
 export default { state, getters, mutations, actions }

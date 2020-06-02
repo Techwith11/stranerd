@@ -6,7 +6,7 @@
 			<div v-else>
 				<payment-method-card :method="method" v-for="method in paymentMethods" :key="method['.key']"  :onRemove="removeMethod"/>
 			</div>
-			<button class="floating-button" @click="setAccountModalStateAddPaymentMethod"><i class="fas fa-plus"></i></button>
+			<button class="floating-button" @click="setAccountModalAddPaymentMethod"><i class="fas fa-plus"></i></button>
 		</div>
 	</div>
 </template>
@@ -26,7 +26,7 @@
 			...mapGetters(['getId']),
 		},
 		methods: {
-			...mapActions(['setAccountModalStateAddPaymentMethod','removePaymentMethod']),
+			...mapActions(['setAccountModalAddPaymentMethod','removePaymentMethod']),
 			async fetchPaymentMethods(){
 				let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
 				docs.forEach(doc => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))

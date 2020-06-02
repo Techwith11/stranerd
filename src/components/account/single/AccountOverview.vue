@@ -10,7 +10,7 @@
 				<p>{{ getUser.bio.bio }}</p>
 			</div>
 		</div>
-		<button class="floating-button" @click="setAccountModalStateOverview"><i class="fas fa-cog"></i></button>
+		<button class="floating-button" @click="setAccountModalOverview"><i class="fas fa-cog"></i></button>
 		<div class="my-3">
 			<h5>Subscription</h5>
 			<div v-if="getUser.account.subscription && getUser.account.subscription.id" class="row">
@@ -33,7 +33,7 @@
 			<div v-else>
 				<p>You are currently not on any subscription plan. Click below to select one from our generous packages.</p>
 				<div class="d-flex justify-content-end">
-					<button class="btn btn-info small" @click="setAccountModalStateSelectSubscription">Subscribe Now</button>
+					<button class="btn btn-info small" @click="setAccountModalSelectSubscription">Subscribe Now</button>
 				</div>
 			</div>
 		</div>
@@ -68,7 +68,7 @@
 			getUserImageLink(){ return this.getUser && this.getUser.bio.image ? this.getUser.bio.image.link : this.getDefaultImage }
 		},
 		methods: {
-			...mapActions(['setAccountModalStateOverview','setAccountModalStateSelectSubscription'])
+			...mapActions(['setAccountModalOverview','setAccountModalSelectSubscription'])
 		}
 	}
 </script>

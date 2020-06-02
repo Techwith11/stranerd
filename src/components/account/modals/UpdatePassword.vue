@@ -1,5 +1,5 @@
 <template>
-	<div class="m-md-5">
+	<form class="m-md-5">
 		<div class="d-flex align-items-center justify-content-between my-3">
 			<i></i>
 			<h4 class="mb-0">Update Password</h4>
@@ -7,12 +7,12 @@
 		</div>
 		<div class="form-group">
 			<input type="password" id="password" class="form-control" placeholder="Password" v-model.trim="$v.user.password.$model"
-				:class="{'is-invalid': $v.user.password.$error, 'is-valid': !$v.user.password.$invalid}">
+				:class="{'is-invalid': $v.user.password.$error, 'is-valid': !$v.user.password.$invalid}" autocomplete="password">
 			<span class="small" v-if="$v.user.password.$error">Must be 6-16 characters long</span>
 		</div>
 		<div class="form-group">
 			<input type="password" id="c_password" class="form-control" placeholder="Confirm Password" v-model.trim="$v.user.c_password.$model"
-				:class="{'is-invalid': $v.user.c_password.$error, 'is-valid': !$v.user.c_password.$invalid}">
+				:class="{'is-invalid': $v.user.c_password.$error, 'is-valid': !$v.user.c_password.$invalid}" autocomplete="password">
 			<span class="small" v-if="$v.user.c_password.$error">Passwords must match</span>
 		</div>
 		<div class="d-flex justify-content-end">
@@ -21,7 +21,7 @@
 				<span>Update</span>
 			</button>
 		</div>
-	</div>
+	</form>
 </template>
 
 <script>

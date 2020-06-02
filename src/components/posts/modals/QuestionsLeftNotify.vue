@@ -14,7 +14,7 @@
 			<div class="d-flex justify-content-end">
 				<button class="btn-success" @click="setPostModalCreate" v-if="questionsLeft">Continue</button>
 				<button class="btn-success" @click="setPostModalBuyMore" v-if="!questionsLeft && isSubscribed">Buy more</button>
-				<button class="btn-success" @click="setAccountModalStateSelectSubscription" v-if="!questionsLeft && !isSubscribed">Upgrade</button>
+				<button class="btn-success" @click="setAccountModalSelectSubscription" v-if="!questionsLeft && !isSubscribed">Upgrade</button>
 			</div>
 		</div>
 	</div>
@@ -23,7 +23,7 @@
 <script>
 	import { mapActions, mapGetters } from 'vuex'
 	export default {
-		methods: mapActions(['setPostModalBuyMore','setPostModalCreate','closePostModal','setAccountModalStateSelectSubscription']),
+		methods: mapActions(['setPostModalBuyMore','setPostModalCreate','closePostModal','setAccountModalSelectSubscription']),
 		computed: mapGetters(['isLoggedIn','isSubscribed','questionsLeft'])
 	}
 </script>
