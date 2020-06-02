@@ -32,9 +32,9 @@
 			...mapGetters(['getId','getDefaultImage']),
 		},
 		methods:{
-			...mapActions(['setSessionModalStateStudentDuration']),
+			...mapActions(['setSessionModalStudentDuration']),
 			bringUpSessionForm(){
-				this.setSessionModalStateStudentDuration({ student: this.getId, tutor: this.user['.key'] })
+				this.setSessionModalStudentDuration({ student: this.getId, tutor: this.user['.key'] })
 			}
 		}
 	}

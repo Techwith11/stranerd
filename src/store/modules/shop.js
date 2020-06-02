@@ -44,7 +44,7 @@ const actions = {
 	setCartModalPay({ commit }){ commit('setCartModal', 'select-payment-method') },
 	closeCartModal({ commit }){ commit('setCartModal', null) },
 
-	addToCart({ commit  }, note){ commit('addToCart', note) },
+	addToCart({ commit }, note){ commit('addToCart', note) },
 	removeFromCart({ commit }, note){ commit('removeFromCart', note) },
 
 	async checkout({ getters, commit }){

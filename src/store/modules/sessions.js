@@ -39,7 +39,7 @@ const state = {
 	session: null,
 	tutorListener: () => {},
 	sessionListener: () => {},
-	sessionModalState: null,
+	sessionModal: null,
 	newSessionData: {},
 	otherPerson: null,
 	otherPersonListener: () => {},
@@ -49,33 +49,33 @@ const state = {
 const getters = {
 	getCurrentSession: state => state.session,
 	getSessionForRatings: state => state.sessionForRatings,
-	isSessionModalOpen: state => !!state.sessionModalState,
+	isSessionModalOpen: state => !!state.sessionModal,
 	getNewSessionData: state => state.newSessionData,
 	getOtherPersonOnSession: state => state.otherPerson,
-	isSessionModalStateStudentDuration: state => state.sessionModalState === 'student-duration',
-	isSessionModalStateTutorAccept: state => state.sessionModalState === 'tutor-accept',
-	isSessionModalStateStudentWaiting: state => state.sessionModalState === 'student-waiting',
-	isSessionModalStateTutorCancelled: state => state.sessionModalState === 'tutor-cancelled',
-	isSessionModalStateStudentCancelled: state => state.sessionModalState === 'student-cancelled',
-	isSessionModalStateStudentPays: state => state.sessionModalState === 'student-pays',
-	isSessionModalStateTutorWaiting: state => state.sessionModalState === 'tutor-waiting',
-	isSessionModalStateSessionRatings: state => state.sessionModalState === 'session-ratings',
+	isSessionModalStudentDuration: state => state.sessionModal === 'student-duration',
+	isSessionModalTutorAccept: state => state.sessionModal === 'tutor-accept',
+	isSessionModalStudentWaiting: state => state.sessionModal === 'student-waiting',
+	isSessionModalTutorCancelled: state => state.sessionModal === 'tutor-cancelled',
+	isSessionModalStudentCancelled: state => state.sessionModal === 'student-cancelled',
+	isSessionModalStudentPays: state => state.sessionModal === 'student-pays',
+	isSessionModalTutorWaiting: state => state.sessionModal === 'tutor-waiting',
+	isSessionModalSessionRatings: state => state.sessionModal === 'session-ratings',
 }
 
 const mutations = {
 	async setSession(state, [session, id]){
 		state.session = session
 		if(session){
-			if(tutorSelectSessionState(session,id)){ state.sessionModalState = 'tutor-accept' }
-			else if (studentCancelsSessionState(session,id)){ state.sessionModalState = 'student-cancelled' }
-			else if(tutorRejectsSessionState(session,id)){ state.sessionModalState = 'tutor-cancelled' }
-			else if(tutorAcceptsSessionState(session,id)){ state.sessionModalState = 'student-pays' }
-			else if(tutorAcceptedSessionState(session,id)){ state.sessionModalState = 'tutor-waiting' }
+			if(tutorSelectSessionState(session,id)){ state.sessionModal = 'tutor-accept' }
+			else if (studentCancelsSessionState(session,id)){ state.sessionModal = 'student-cancelled' }
+			else if(tutorRejectsSessionState(session,id)){ state.sessionModal = 'tutor-cancelled' }
+			else if(tutorAcceptsSessionState(session,id)){ state.sessionModal = 'student-pays' }
+			else if(tutorAcceptedSessionState(session,id)){ state.sessionModal = 'tutor-waiting' }
 			else if(studentPaidSessionState(session,id)){
 				let name = state.otherPerson ? state.otherPerson.bio.name : 'Student'
 				new window.Toast({ icon: 'success', title: `${name} has paid for the session` })
 				await router.push(`/sessions/${session['.key']}`).catch(error => error)
-				state.sessionModalState = null
+				state.sessionModal = null
 				state.newSessionData = {}
 				state.sessionListener()
 				state.sessionListener = () => {}
@@ -107,17 +107,17 @@ const mutations = {
 		state.tutorListener()
 		state.tutorListener = listener
 	},
-	setSessionModalStateStudentDuration: (state, data) => {
-		state.sessionModalState = 'student-duration'
+	setSessionModalStudentDuration: (state, data) => {
+		state.sessionModal = 'student-duration'
 		state.newSessionData = data
 	},
-	setSessionModalStateStudentWaiting: state => state.sessionModalState = 'student-waiting',
-	setSessionModalStateSessionRatings: (state, session) => {
+	setSessionModalStudentWaiting: state => state.sessionModal = 'student-waiting',
+	setSessionModalSessionRatings: (state, session) => {
 		state.sessionForRatings = session
-		state.sessionModalState = 'session-ratings'
+		state.sessionModal = 'session-ratings'
 	},
 	closeSessionModal: state => {
-		state.sessionModalState = null
+		state.sessionModal = null
 		state.newSessionData = {}
 		state.sessionForRatings = null
 	},
@@ -128,7 +128,7 @@ const actions = {
 		// TODO: After implementing active users, show toast if tutor is not online
 		functions.httpsCallable('startSession')(data).then(res => {
 			setSessionListener(res.data, commit, getters.getId)
-			commit('setSessionModalStateStudentWaiting')
+			commit('setSessionModalStudentWaiting')
 		}).catch(error => {
 			new window.Toast({ icon: 'error', title: error.message })
 			commit('setSessionListener', () => {})
@@ -191,7 +191,7 @@ const actions = {
 	closeTutorSessionsListener({ commit }){ commit('setTutorSessionsListener', () => {}) },
 
 	showSessionRatingsForm({ commit }, session){
-		commit('setSessionModalStateSessionRatings', session)
+		commit('setSessionModalSessionRatings', session)
 	},
 	async submitSessionRating({ commit, getters }, { rating, comment }){
 		if(rating || comment){
@@ -200,7 +200,7 @@ const actions = {
 		commit('closeSessionModal')
 	},
 
-	setSessionModalStateStudentDuration({ commit }, data = {}){ commit('setSessionModalStateStudentDuration', data) },
+	setSessionModalStudentDuration({ commit }, data = {}){ commit('setSessionModalStudentDuration', data) },
 	async cancelSessionAndCloseModal({ getters, commit }){
 		try{
 			let session = getters.getCurrentSession

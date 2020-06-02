@@ -1,7 +1,8 @@
 const state = {
     modal: null,
     createModal: null,
-    accountModal: null
+    accountModal: null,
+    postModal: null
 }
 
 const getters = {
@@ -24,13 +25,19 @@ const getters = {
     isAccountModalEditProfile: state => state.accountModal === 'edit-profile',
     isAccountModalUpdatePassword: state => state.accountModal === 'update-password',
     isAccountModalAddPaymentMethod: state => state.accountModal === 'add-payment-method',
-    isAccountModalSelectSubscription: state => state.accountModal === 'select-subscription'
+    isAccountModalSelectSubscription: state => state.accountModal === 'select-subscription',
+
+    isPostModalOpen: state => !!state.postModal,
+    isPostModalNotify: state => state.postModal === 'post-notify',
+    isPostModalCreate: state => state.postModal === 'post-create',
+    isPostModalBuyMore: state => state.postModal === 'buy-more',
 }
 
 const mutations = {
     setAuthModal: (state, mode) => state.modal = mode,
     setCreateModal: (state,mode) => state.createModal = mode,
-    setAccountModal: (state, mode) => state.accountModal = mode
+    setAccountModal: (state, mode) => state.accountModal = mode,
+    setPostModal: (state, mode) => state.postModal = mode
 }
 
 const actions = {
@@ -54,6 +61,11 @@ const actions = {
     setAccountModalAddPaymentMethod: ({ commit }) => commit('setAccountModal', 'add-payment-method'),
     setAccountModalSelectSubscription: ({ commit }) => commit('setAccountModal', 'select-subscription'),
     closeAccountModal: ({ commit }) => commit('setAccountModal', null),
+
+    setPostModalCreate: ({ commit }) => commit('setPostModal','post-create'),
+    setPostModalNotify: ({ commit }) => commit('setPostModal','post-notify'),
+    setPostModalBuyMore: ({ commit }) => commit('setPostModal','buy-more'),
+    closePostModal: ({ commit }) =>  commit('setPostModal', null)
 }
 
 export default { state, getters, mutations, actions }

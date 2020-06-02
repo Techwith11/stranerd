@@ -1,14 +1,14 @@
 <template>
 	<div class="modal-background">
 		<div class="modal-inner">
-			<duration-form v-if="isSessionModalStateStudentDuration" />
-			<tutor-accept v-if="isSessionModalStateTutorAccept" />
-			<student-waiting v-if="isSessionModalStateStudentWaiting" />
-			<tutor-cancelled v-if="isSessionModalStateTutorCancelled" />
-			<student-cancelled v-if="isSessionModalStateStudentCancelled" />
-			<student-pays v-if="isSessionModalStateStudentPays" />
-			<tutor-waiting v-if="isSessionModalStateTutorWaiting" />
-			<session-ratings v-if="isSessionModalStateSessionRatings" />
+			<duration-form v-if="isSessionModalStudentDuration" />
+			<tutor-accept v-if="isSessionModalTutorAccept" />
+			<student-waiting v-if="isSessionModalStudentWaiting" />
+			<tutor-cancelled v-if="isSessionModalTutorCancelled" />
+			<student-cancelled v-if="isSessionModalStudentCancelled" />
+			<student-pays v-if="isSessionModalStudentPays" />
+			<tutor-waiting v-if="isSessionModalTutorWaiting" />
+			<session-ratings v-if="isSessionModalSessionRatings" />
 		</div>
 	</div>
 </template>
@@ -26,14 +26,14 @@
     export default {
         computed: {
             ...mapGetters([
-                'isSessionModalStateStudentDuration',
-				'isSessionModalStateTutorAccept',
-				'isSessionModalStateStudentWaiting',
-				'isSessionModalStateTutorCancelled',
-                'isSessionModalStateStudentCancelled',
-				'isSessionModalStateStudentPays',
-				'isSessionModalStateTutorWaiting',
-				'isSessionModalStateSessionRatings'
+                'isSessionModalStudentDuration',
+				'isSessionModalTutorAccept',
+				'isSessionModalStudentWaiting',
+				'isSessionModalTutorCancelled',
+                'isSessionModalStudentCancelled',
+				'isSessionModalStudentPays',
+				'isSessionModalTutorWaiting',
+				'isSessionModalSessionRatings'
             ])
         },
 		components: {

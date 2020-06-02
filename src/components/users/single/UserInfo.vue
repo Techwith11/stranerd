@@ -34,9 +34,9 @@
 			canHaveSession(){ return this.user.roles.isTutor && this.user['.key'] !== this.getId && this.user.tutor.levels[this.user.tutor.courses[0]] > 0 }
 		},
 		methods:{
-			...mapActions(['setSessionModalStateStudentDuration']),
+			...mapActions(['setSessionModalStudentDuration']),
 			bringUpSessionForm(){
-				this.setSessionModalStateStudentDuration({ student: this.getId, tutor: this.user['.key'] })
+				this.setSessionModalStudentDuration({ student: this.getId, tutor: this.user['.key'] })
 			}
 		},
 		components: {
