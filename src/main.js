@@ -5,6 +5,7 @@ import router from './router/'
 import store from './store/'
 
 Vue.config.productionTip = true
+store.dispatch('setId', window.localStorage.getItem('user_id'))
 
 new Vue({
   router,

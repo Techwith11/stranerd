@@ -3,7 +3,7 @@ import router from '@/router/index'
 import store from '@/store/index'
 
 const state = {
-	id: window.localStorage.getItem('user_id'),
+	id: null,
 	user: {},
 	profileListener: () => {}
 }
