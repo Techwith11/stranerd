@@ -8,7 +8,7 @@ import store from '@/store/'
 
 const config = {
 	apiKey: 'AIzaSyCk6CnAF1mcdp9jOh2r1zDQS67-cHVpqZY',
-	authDomain: 'stranerd-13084.firebaseapp.com',
+	authDomain: 'stranerd.com',
 	databaseURL: 'https://stranerd-13084.firebaseio.com',
 	projectId: 'stranerd-13084',
 	storageBucket: 'stranerd-13084.appspot.com',
@@ -34,7 +34,7 @@ export const functions = firebase.functions()
 export const storage = firebase.storage()
 
 if(process.env.NODE_ENV === 'production'){
-	auth.onAuthStateChanged(async user => user && user.uid ? store.dispatch('setId', user.uid) : null)
+	auth.onAuthStateChanged(async user => store.dispatch('setId', user ? user.uid : null))
 }
 
 let uploadToMockServer = async (path, file) => {

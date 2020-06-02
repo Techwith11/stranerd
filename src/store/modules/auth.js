@@ -1,5 +1,6 @@
 import { auth, firestore, functions } from '@/config/firebase'
 import router from '@/router/index'
+import store from '@/store/index'
 
 const state = {
 	id: window.localStorage.getItem('user_id'),
@@ -19,11 +20,21 @@ const getters = {
 }
 
 const mutations = {
-	setId: (state, id) => {
+	setId: async (state, id) => {
 		state.id = id
-		id ? window.localStorage.setItem('user_id', id) : window.localStorage.removeItem('user_id')
+		state.profileListener()
+		if(id){
+			state.profileListener = firestore
+				.collection('users')
+				.doc(id)
+				.onSnapshot(snapshot => snapshot.exists ? state.user = snapshot.data() : store.dispatch('setId',null))
+			await store.dispatch('checkForUnfinishedTests')
+			window.localStorage.setItem('user_id', id)
+		}else{
+			state.profileListener = () => {}
+			window.localStorage.removeItem('user_id')
+		}
 	},
-	setUser: (state, user) => (state.user = user),
 	setProfileListener: (state, listener) => {
 		state.profileListener()
 		state.profileListener = listener
@@ -32,16 +43,6 @@ const mutations = {
 
 const actions = {
 	setId: ({ commit }, id) => commit('setId', id),
-	setUser: ({ commit }, user) => commit('setUser', user),
-	setProfileListener: ({ getters, commit }) => {
-		let listener = getters.getId
-			? firestore
-				.collection('users')
-				.doc(getters.getId)
-				.onSnapshot((snapshot) => (snapshot.exists ? commit('setUser', snapshot.data()) : commit('setId', null)))
-			: () => {}
-		commit('setProfileListener', listener)
-	},
 	closeProfileListener: ({ commit }) => commit('setProfileListener', () => {}),
 	makeTutor: (store, tutor) => {
 		let makeTutor = functions.httpsCallable('makeTutor')
@@ -62,9 +63,10 @@ const actions = {
 			.catch((error) => new window.Toast({ icon: 'error', title: error.message }))
 	},
 	logout: async ({ commit }) => {
-		await auth.signOut()
 		commit('setId', null)
-		await router.push('/').catch((error) => error)
+		await store.dispatch('closeTutorSessionsListener')
+		await router.push('/').catch(error => error)
+		await auth.signOut()
 		window.closeNavbar()
 		window.closeAccountDropdown()
 		window.closeAdminDropdown()

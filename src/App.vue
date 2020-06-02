@@ -33,28 +33,20 @@
 			'cart-modal': CartModal,
 			'account-modal': AccountModal
 		},
-		computed: mapGetters(['isModalOpen', 'getId', 'isTutor', 'isSessionModalOpen','isPostModalOpen','isCartModalOpen','isAccountModalOpen']),
+		computed: mapGetters(['isModalOpen', 'isTutor', 'isSessionModalOpen','isPostModalOpen','isCartModalOpen','isAccountModalOpen']),
 		methods: {
-			...mapActions(['setProfileListener','closeProfileListener', 'initializeTutorSessionsListener','closeTutorSessionsListener','checkForUnfinishedTests']),
+			...mapActions(['closeProfileListener', 'initializeTutorSessionsListener','closeTutorSessionsListener']),
 			closeAllListeners(){
-				this.closeProfileListener()
 				this.closeTutorSessionsListener()
+				this.closeProfileListener()
 			}
         },
-		mounted(){
-            this.getId ? this.setProfileListener() : null
-            this.checkForUnfinishedTests()
-            this.isTutor ? this.initializeTutorSessionsListener() : null
+		async mounted(){
+			this.isTutor ? this.initializeTutorSessionsListener() : null
 			window.addEventListener('beforeunload', this.closeAllListeners)
 		},
 		beforeDestroy(){ this.closeAllListeners() },
 		watch: {
-			getId(){
-				if(this.getId){
-					this.setProfileListener()
-					this.checkForUnfinishedTests()
-				}
-			},
 			isTutor(){ return this.isTutor ? this.initializeTutorSessionsListener() : null }
 		}
 	}
