@@ -22,7 +22,7 @@
 			</tbody>
 		</table>
 		<div class="d-flex justify-content-end">
-			<button class="btn-success" @click.prevent="proceedToPay">Checkout Now</button>
+			<button class="btn-success" @click.prevent="setCartModalPay">Checkout Now</button>
 		</div>
 	</div>
 </template>
@@ -31,7 +31,7 @@
 	import { mapActions, mapGetters } from 'vuex'
 	export default {
 		methods: {
-			...mapActions(['closeCartModal','removeFromCart','proceedToPay'])
+			...mapActions(['closeCartModal','removeFromCart','setCartModalPay'])
 		},
 		computed: {
 			...mapGetters(['getCart'])

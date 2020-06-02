@@ -1,7 +1,7 @@
 <template>
 	<div class="m-md-5">
 		<div class="d-flex align-items-center justify-content-between my-3">
-			<a @click.prevent="openCartModal"><i class="fas fa-arrow-left"></i></a>
+			<a @click.prevent="setCartModalOverview"><i class="fas fa-arrow-left"></i></a>
 			<h4 class="mb-0">Select Payment Method</h4>
 			<i></i>
 		</div>
@@ -16,7 +16,7 @@
 	export default {
 		computed: mapGetters(['getId','getCartPrice','getCartLength']),
 		methods: {
-			...mapActions(['openCartModal','checkout']),
+			...mapActions(['setCartModalOverview','checkout']),
 			async onPaymentSuccessful(){
 				new window.Toast({ icon: 'success', title: 'Purchase successful' })
 				await this.checkout()

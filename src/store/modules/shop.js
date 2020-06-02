@@ -6,8 +6,7 @@ const helpers = {
 
 const state = {
 	cart: [],
-	cartModalOpen: false,
-	cartModalState: null
+	cartModal: null
 }
 
 const getters = {
@@ -15,10 +14,11 @@ const getters = {
 	getCartPrice: state => state.cart.map(item => parseFloat(item.price)).reduce((a,b) => a + b),
 	getCartLength: state => state.cart.length,
 	isInCart: state => item => state.cart.some(x => x['.key'] === item['.key']),
-	isCartModalOpen: state => state.cartModalOpen,
-	isCartModalOverview: state => state.cartModalState === 'cart-overview',
-	isCartModalSelectPayment: state => state.cartModalState === 'select-payment-method',
-	isCartModalEmailConfirmation: state => state.cartModalState === 'email-confirmation',
+
+	isCartModalOpen: state => !!state.cartModal,
+	isCartModalOverview: state => state.cartModal === 'cart-overview',
+	isCartModalSelectPayment: state => state.cartModal === 'select-payment-method',
+	isCartModalEmailConfirmation: state => state.cartModal === 'email-confirmation',
 }
 
 const mutations = {
@@ -33,31 +33,26 @@ const mutations = {
 	removeFromCart: (state, item) => {
 		state.cart = state.cart.filter(x => x['.key'] !== item['.key'])
 		if(state.cart.length === 0){
-			state.cartModalOpen = false
+			state.cartModal = null
 		}
 	},
-	setCartModalState: (state, mode) => {
-		state.cartModalState = mode
-		state.cartModalOpen = true
-	},
-	setCartModalOpen: (state, open) => {
-		open ? state.cartModalState = 'cart-overview' : null
-		state.cartModalOpen = open
-	}
+	setCartModal: (state, mode) => state.cartModal = mode,
 }
 
 const actions = {
-	openCartModal({ commit }){ commit('setCartModalOpen', true) },
-	closeCartModal({ commit }){ commit('setCartModalOpen', false) },
+	setCartModalOverview({ commit }){ commit('setCartModal', 'cart-overview') },
+	setCartModalPay({ commit }){ commit('setCartModal', 'select-payment-method') },
+	closeCartModal({ commit }){ commit('setCartModal', null) },
+
 	addToCart({ commit  }, note){ commit('addToCart', note) },
 	removeFromCart({ commit }, note){ commit('removeFromCart', note) },
-	proceedToPay({ commit }){ commit('setCartModalState', 'select-payment-method') },
+
 	async checkout({ getters, commit }){
 		try{
 			await helpers.sendEmailAfterPurchase({ cart: getters.getCart, id: getters.getId })
 			commit('checkout')
 		}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-		commit('setCartModalState', 'email-confirmation')
+		commit('setCartModal', 'email-confirmation')
 	},
 }
 

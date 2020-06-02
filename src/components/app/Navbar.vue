@@ -84,13 +84,13 @@
     import { mapGetters, mapActions } from 'vuex'
     export default {
         methods: {
-            ...mapActions(['setAuthModalOverview', 'logout','openCartModal']),
+            ...mapActions(['setAuthModalOverview', 'logout','setCartModalOverview']),
             toggleNavbar: () => window.toggleNavbar(),
             toggleAccountDropDown: () => window.toggleAccountDropDown(),
             toggleAdminDropDown: () => window.toggleAdminDropDown(),
             showCartModal(){
                 window.closeNavbar()
-                this.openCartModal()
+                this.setCartModalOverview()
             }
         },
         computed: mapGetters(['isLoggedIn','isAdmin','getCartLength','getImages'])

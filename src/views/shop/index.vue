@@ -12,7 +12,7 @@
 					</button>
 				</div>
 			</div>
-			<button class="floating-button" @click="openCartModal" v-if="getCartLength"><i class="fas fa-shopping-basket"></i></button>
+			<button class="floating-button" @click="setCartModalOverview" v-if="getCartLength"><i class="fas fa-shopping-basket"></i></button>
 		</div>
 	</div>
 </template>
@@ -34,7 +34,7 @@
 		}),
 		computed: mapGetters(['getCartLength']),
 		methods: {
-			...mapActions(['openCartModal']),
+			...mapActions(['setCartModalOverview']),
 			async getNotes(){
 				let docs = firestore.collection('notes').orderBy('dates.createdAt','desc')
 					.limit(this.paginationLimit)
