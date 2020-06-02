@@ -1,7 +1,7 @@
 <template>
 	<div class="m-md-5">
 		<div class="d-flex align-items-baseline justify-content-between my-3">
-			<a @click.prevent="setModalLogin"><i class="fas fa-arrow-left"></i></a>
+			<a @click.prevent="setAuthModalLogin"><i class="fas fa-arrow-left"></i></a>
 			<h4>Forgot Password</h4>
 			<i></i>
 		</div>
@@ -9,7 +9,7 @@
 		<form class="mx-2">
 			<div class="form-group">
 				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="$v.user.email.$model"
-					:class="{'is-invalid': $v.user.email.$error, 'is-valid': !$v.user.email.$invalid}">
+					:class="{'is-invalid': $v.user.email.$error, 'is-valid': !$v.user.email.$invalid}" autocomplete="email">
 				<span class="small" v-if="$v.user.email.$error">Must be a valid email address</span>
 			</div>
 			<div class="d-flex flex-column">
@@ -35,14 +35,14 @@
 			isLoading: false
 		}),
 		methods:{
-			...mapActions(['setModalLogin','closeModal']),
+			...mapActions(['setAuthModalLogin','closeAuthModal']),
 			retrievePassword(){
 				this.isLoading = true
 				auth.sendPasswordResetEmail(this.user.email)
 					.then(async () => {
 						this.isLoading = false
 						new window.Toast({ icon: 'success', title: 'Proceed to email to continue' })
-						this.closeModal()
+						this.closeAuthModal()
 					})
 					.catch(error => {
 						new window.Toast({ icon: 'error', title: error.message })

@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<router-view />
-		<button class="floating-button" @click="openCreateModal"><i class="fas fa-plus"></i></button>
+		<button class="floating-button" @click="setCreateModalOverview"><i class="fas fa-plus"></i></button>
 		<create-new-modal v-if="isCreateModalOpen" />
 	</div>
 </template>
@@ -14,7 +14,7 @@
 		components: {
 			'create-new-modal': CreateNewModal
 		},
-		methods: mapActions(['openCreateModal']),
+		methods: mapActions(['setCreateModalOverview']),
 		computed: mapGetters(['isCreateModalOpen'])
 	}
 </script>

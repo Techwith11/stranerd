@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
 	const isAdmin = store.getters.isAdmin
 	if (requiresAuth && !isLoggedIn) {
 		new window.Toast({ icon: 'error', 'title': 'Login to continue' })
-		store.dispatch('setModalOverview')
+		store.dispatch('setAuthModalOverview')
 		store.dispatch('setIntendedRoute', to.fullPath)
 		return next('/')
 	}

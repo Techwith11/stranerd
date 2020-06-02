@@ -50,10 +50,10 @@
                 </ul>
                 <ul class="navbar-nav ml-auto align-items-md-center" v-else>
                     <li class="nav-item d-inline">
-                        <a class="nav-link" @click.prevent="openModal">Sign Up</a>
+                        <a class="nav-link" @click.prevent="setAuthModalOverview">Sign Up</a>
                     </li>
                     <li class="nav-item d-inline">
-                        <a class="nav-link" @click.prevent="openModal">Login</a>
+                        <a class="nav-link" @click.prevent="setAuthModalOverview">Login</a>
                     </li>
                 </ul>
             </div>
@@ -84,7 +84,7 @@
     import { mapGetters, mapActions } from 'vuex'
     export default {
         methods: {
-            ...mapActions(['openModal', 'logout','openCartModal']),
+            ...mapActions(['setAuthModalOverview', 'logout','openCartModal']),
             toggleNavbar: () => window.toggleNavbar(),
             toggleAccountDropDown: () => window.toggleAccountDropDown(),
             toggleAdminDropDown: () => window.toggleAdminDropDown(),

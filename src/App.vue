@@ -5,7 +5,7 @@
 			<router-view/>
 		</div>
 		<app-footer />
-		<auth-modal v-if="isModalOpen"/>
+		<auth-modal v-if="isAuthModalOpen"/>
 		<session-modal v-if="isSessionModalOpen"/>
 		<post-modal v-if="isPostModalOpen" />
 		<cart-modal v-if="isCartModalOpen" />
@@ -33,7 +33,7 @@
 			'cart-modal': CartModal,
 			'account-modal': AccountModal
 		},
-		computed: mapGetters(['isModalOpen', 'isTutor', 'isSessionModalOpen','isPostModalOpen','isCartModalOpen','isAccountModalOpen']),
+		computed: mapGetters(['isAuthModalOpen', 'isTutor', 'isSessionModalOpen','isPostModalOpen','isCartModalOpen','isAccountModalOpen']),
 		methods: {
 			...mapActions(['closeProfileListener', 'initializeTutorSessionsListener','closeTutorSessionsListener']),
 			closeAllListeners(){

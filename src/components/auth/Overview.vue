@@ -1,7 +1,7 @@
 <template>
 	<div class="text-center m-md-5">
 		<div class="d-flex justify-content-end">
-			<a @click.prevent="closeModal"><i class="fas fa-times text-danger lead"></i></a>
+			<a @click.prevent="closeAuthModal"><i class="fas fa-times text-danger lead"></i></a>
 		</div>
 		<h4 class="my-3">Stranerd</h4>
 		<p class="small my-4">Sign in to allow us serve you personalized content, course recommendations, track tutors you like, your sessions and your payments.</p>
@@ -16,13 +16,13 @@
 				<i class="fab fa-facebook-f" v-else></i>
 				Login with Facebook
 			</button>-->
-			<button @click="setModalLogin">
+			<button @click="setAuthModalLogin">
 				<i class="fas fa-envelope"></i>
 				Login with Email
 			</button>
 			<span class="my-2">
 				No account?
-				<a class="text-info" @click="setModalRegisterStudent">Sign up with email</a>
+				<a class="text-info" @click="setAuthModalRegisterStudent">Sign up with email</a>
 			</span>
 		</div>
 		<p class="small text-muted my-4">To make Stranerd work, we might log user data and share it with service providers. Click "Sign In" above to accept Stranerd's Terms of Service & Privacy Policy.</p>
@@ -40,13 +40,13 @@
 		}),
 		computed: mapGetters(['getIntendedRoute']),
 		methods: {
-			...mapActions(['setModalLogin','setModalRegisterStudent','closeModal','setModalRegisterTutor','clearIntendedRoute']),
+			...mapActions(['setAuthModalLogin','setAuthModalRegisterStudent','closeAuthModal','clearIntendedRoute']),
 			loginWithGoogle(){
 				this.isLoadingG = true
 				let googleProvider = new firebase.auth.GoogleAuthProvider()
 				auth.signInWithPopup(googleProvider).then(async () => {
 					this.isLoadingG = false
-					this.closeModal()
+					this.closeAuthModal()
 					this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
 					this.clearIntendedRoute()
 				}).catch(error => {
@@ -59,7 +59,7 @@
 				let facebookProvider = new firebase.auth.FacebookAuthProvider()
 				auth.signInWithPopup(facebookProvider).then(async () => {
 					this.isLoadingF = false
-					this.closeModal()
+					this.closeAuthModal()
 					this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
 					this.clearIntendedRoute()
 				}).catch(error => {

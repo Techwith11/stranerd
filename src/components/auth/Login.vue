@@ -1,7 +1,7 @@
 <template>
 	<div class="m-md-5">
 		<div class="d-flex align-items-baseline justify-content-between my-3">
-			<a @click.prevent="setModalOverview"><i class="fas fa-arrow-left"></i></a>
+			<a @click.prevent="setAuthModalOverview"><i class="fas fa-arrow-left"></i></a>
 			<h4>Sign in with Email</h4>
 			<i></i>
 		</div>
@@ -9,12 +9,12 @@
 		<form class="mx-2">
 			<div class="form-group">
 				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="$v.user.email.$model"
-					:class="{'is-invalid': $v.user.email.$error, 'is-valid': !$v.user.email.$invalid}">
+					:class="{'is-invalid': $v.user.email.$error, 'is-valid': !$v.user.email.$invalid}" autocomplete="email">
 				<span class="small" v-if="$v.user.email.$error">Must be a valid email address</span>
 			</div>
 			<div class="form-group">
 				<input type="password" id="password" class="form-control" placeholder="Password" v-model.trim="$v.user.password.$model"
-					:class="{'is-invalid': $v.user.password.$error, 'is-valid': !$v.user.password.$invalid}">
+					:class="{'is-invalid': $v.user.password.$error, 'is-valid': !$v.user.password.$invalid}" autocomplete="password">
 				<span class="small" v-if="$v.user.password.$error">Must be 6-16 characters long</span>
 			</div>
 			<div class="d-flex flex-column">
@@ -25,7 +25,7 @@
 			</div>
 			<span class="small my-3">
 				Forgot Password?
-				<a class="text-info" @click.prevent="setModalForgotPassword">Retrieve Now</a>
+				<a class="text-info" @click.prevent="setAuthModalForgotPassword">Retrieve Now</a>
 			</span>
 		</form>
 	</div>
@@ -46,13 +46,13 @@
 		}),
 		computed: mapGetters(['getIntendedRoute']),
 		methods:{
-			...mapActions(['setModalOverview','setModalForgotPassword', 'closeModal','clearIntendedRoute']),
+			...mapActions(['setAuthModalOverview','setAuthModalForgotPassword', 'closeAuthModal','clearIntendedRoute']),
 			loginUser(){
 				this.isLoading = true
 				auth.signInWithEmailAndPassword(this.user.email, this.user.password)
 					.then(async () => {
 						this.isLoading = false
-						this.closeModal()
+						this.closeAuthModal()
 						this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
 						this.clearIntendedRoute()
 					})

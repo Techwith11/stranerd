@@ -1,11 +1,11 @@
 <template>
 	<div class="modal-background">
 		<div class="modal-inner">
-			<overview v-if="isModalOverview" />
-			<login v-if="isModalLogin" />
-			<forgot-password v-if="isModalForgotPassword" />
-			<register-student v-if="isModalRegisterStudent" />
-			<register-tutor v-if="isModalRegisterTutor" />
+			<overview v-if="isAuthModalOverview" />
+			<login v-if="isAuthModalLogin" />
+			<forgot-password v-if="isAuthModalForgotPassword" />
+			<register-student v-if="isAuthModalRegisterStudent" />
+			<register-tutor v-if="isAuthModalRegisterTutor" />
 		</div>
 	</div>
 </template>
@@ -26,7 +26,7 @@
 			'register-tutor': RegisterTutor,
 		},
 		computed: {
-			...mapGetters(['isModalOverview','isModalLogin','isModalRegisterStudent','isModalRegisterTutor','isModalForgotPassword'])
+			...mapGetters(['isAuthModalOverview','isAuthModalLogin','isAuthModalRegisterStudent','isAuthModalRegisterTutor','isAuthModalForgotPassword'])
 		}
 	}
 </script>

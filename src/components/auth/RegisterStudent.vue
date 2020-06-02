@@ -1,7 +1,7 @@
 <template>
 	<div class="m-md-5">
 		<div class="d-flex align-items-baseline justify-content-between my-3">
-			<a @click.prevent="setModalOverview"><i class="fas fa-arrow-left"></i></a>
+			<a @click.prevent="setAuthModalOverview"><i class="fas fa-arrow-left"></i></a>
 			<h4>Sign up with Email</h4>
 			<i></i>
 		</div>
@@ -9,22 +9,22 @@
 		<form class="mx-2">
 			<div class="form-group">
 				<input type="text" id="name" class="form-control" placeholder="Full name" v-model.trim="$v.user.name.$model"
-					:class="{'is-invalid': $v.user.name.$error, 'is-valid': !$v.user.name.$invalid}">
+					:class="{'is-invalid': $v.user.name.$error, 'is-valid': !$v.user.name.$invalid}" autocomplete="name">
 				<span class="small" v-if="$v.user.name.$error">Must be at least 3 characters</span>
 			</div>
 			<div class="form-group">
 				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="$v.user.email.$model"
-					:class="{'is-invalid': $v.user.email.$error, 'is-valid': !$v.user.email.$invalid}">
+					:class="{'is-invalid': $v.user.email.$error, 'is-valid': !$v.user.email.$invalid}" autocomplete="email">
 				<span class="small" v-if="$v.user.email.$error">Must be a valid email address</span>
 			</div>
 			<div class="form-group">
 				<input type="password" id="password" class="form-control" placeholder="Password" v-model.trim="$v.user.password.$model"
-					:class="{'is-invalid': $v.user.password.$error, 'is-valid': !$v.user.password.$invalid}">
+					:class="{'is-invalid': $v.user.password.$error, 'is-valid': !$v.user.password.$invalid}" autocomplete="password">
 				<span class="small" v-if="$v.user.password.$error">Must be 6-16 characters long</span>
 			</div>
 			<div class="form-group">
 				<input type="password" id="c_password" class="form-control" placeholder="Confirm Password" v-model.trim="$v.user.c_password.$model"
-					:class="{'is-invalid': $v.user.c_password.$error, 'is-valid': !$v.user.c_password.$invalid}">
+					:class="{'is-invalid': $v.user.c_password.$error, 'is-valid': !$v.user.c_password.$invalid}" autocomplete="password">
 				<span class="small" v-if="$v.user.c_password.$error">Passwords must match</span>
 			</div>
 			<div class="d-flex flex-column">
@@ -54,13 +54,13 @@
 		}),
 		computed: mapGetters(['getIntendedRoute']),
 		methods:{
-			...mapActions(['setModalOverview','closeModal']),
+			...mapActions(['setAuthModalOverview','closeAuthModal']),
 			registerUser(){
 				this.isLoading = true
 				auth.createUserWithEmailAndPassword(this.user.email, this.user.password)
 					.then(async result => {
 						await firestore.collection('users').doc(result.user.uid).set({ bio: { name: this.user.name }},{ merge: true })
-						this.closeModal()
+						this.closeAuthModal()
 						this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
 						this.clearIntendedRoute()
 						this.isLoading = false
