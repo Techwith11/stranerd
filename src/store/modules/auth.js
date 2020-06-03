@@ -31,6 +31,7 @@ const mutations = {
 			await store.dispatch('checkForUnfinishedTests')
 			window.localStorage.setItem('user_id', id)
 		}else{
+			state.user = {}
 			state.profileListener = () => {}
 			window.localStorage.removeItem('user_id')
 		}
