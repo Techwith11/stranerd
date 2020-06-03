@@ -39,6 +39,10 @@
 			onMethodSelected: {
 				required: true,
 				type: Function
+			},
+			loading: {
+				type: Boolean,
+				required: true
 			}
 		},
 		computed: {
@@ -46,8 +50,10 @@
 		},
 		methods: {
 			selectMethod(token){
-				this.onMethodSelected(token)
-				this.token = token
+				if(!this.loading){
+					this.onMethodSelected(token)
+					this.token = token
+				}
 			},
 			refreshPaymentMethods(){
 				this.showForm = false

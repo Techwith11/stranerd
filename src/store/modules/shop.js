@@ -1,7 +1,8 @@
-import { functions } from '@/config/firebase'
+import { firestore, functions } from '@/config/firebase'
 
 const helpers = {
-	sendEmailAfterPurchase: async data => (await functions.httpsCallable('sendEmailAfterPurchase')(data)).data
+	sendEmailAfterPurchase: async data => (await functions.httpsCallable('sendEmailAfterPurchase')(data)).data,
+	addMoreQuestions: async data => await firestore.collection('users').doc(data.id).update('account.questions', data.quantity)
 }
 
 const state = {
@@ -54,6 +55,10 @@ const actions = {
 		}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 		commit('setCartModal', 'email-confirmation')
 	},
+
+	async addMoreQuestions({ getters }, quantity){
+		return await helpers.addMoreQuestions({ id: getters.getId, quantity })
+	}
 }
 
 export default { state, getters, mutations, actions }

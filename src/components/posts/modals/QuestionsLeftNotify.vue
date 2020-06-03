@@ -7,13 +7,13 @@
 		</div>
 		<div>
 			<p>
-				<span>You have {{ questionsLeft }} questions left in your subscription. Note that this will reset to the default number of questions allocated for whatever subscription you are on, whenever it renews. </span>
-				<span v-if="!questionsLeft && isSubscribed">Consider purchasing extra questions from the shop</span>
+				<span>You have {{ questionsLeft }} questions left in your subscription. Note that this will reset to the default number of questions allocated for whatever subscription you are on, when it renews. </span>
+				<span v-if="!questionsLeft && isSubscribed">Consider purchasing 3 extra questions from the shop for &dollar;10.00</span>
 				<span v-if="!questionsLeft && !isSubscribed">Consider upgrading to a paid subscription to ask more</span>
 			</p>
 			<div class="d-flex justify-content-end">
 				<button class="btn-success" @click="setPostModalCreate" v-if="questionsLeft">Continue</button>
-				<button class="btn-success" @click="setPostModalBuyMore" v-if="!questionsLeft && isSubscribed">Buy more</button>
+				<button class="btn-success" @click="setPostModalBuyMore" v-if="!questionsLeft && isSubscribed">Buy now</button>
 				<button class="btn-success" @click="setAccountModalSelectSubscription" v-if="!questionsLeft && !isSubscribed">Upgrade</button>
 			</div>
 		</div>

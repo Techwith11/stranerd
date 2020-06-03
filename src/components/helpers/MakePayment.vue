@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<select-payment-method :onMethodSelected="setToken"/>
+		<select-payment-method :onMethodSelected="setToken" :loading="isLoading"/>
 		<button class="w-100 btn-success" v-if="this.token !== null" @click="pay">
 			<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
 			{{ buttonTitle }}
