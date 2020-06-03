@@ -16,11 +16,11 @@ module.exports = functions.https.onCall(async (data, context) => {
 	let userRef = await admin.firestore().collection('users').doc(user)
 	let userData = (await userRef.get()).data()
 	if(userData.roles.isTutor){
-		let { ratings, reviews } = userData.tutor
-		let overall = ((ratings * reviews) + 5) / (reviews + 1)
+		let { rating, reviews } = userData.tutor
+		let overall = ((rating * reviews) + 5) / (reviews + 1)
 		await userRef.set({
 			tutor: {
-				ratings: parseFloat(overall.toFixed(2)),
+				rating: parseFloat(overall.toFixed(2)),
 				reviews: reviews + 1
 			}
 		}, { merge: true })
