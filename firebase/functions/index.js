@@ -32,6 +32,8 @@ exports.makeAdmin = require('./onCall/roles/makeAdmin')
 exports.removeAdmin = require('./onCall/roles/removeAdmin')
 
 exports.createPost = require('./onCall/contents/createPost')
+exports.upvoteReply = require('./onCall/contents/upvoteReply')
+exports.downvoteReply = require('./onCall/contents/downvoteReply')
 
 exports.sendEmailAfterPurchase = require('./onCall/shop/sendEmailAfterPurchase')
 

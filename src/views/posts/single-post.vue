@@ -11,10 +11,10 @@
 							<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderRepliesLoading"></i>
 							<span @click="fetchOlderReplies">Fetch Older Replies</span>
 						</div>
-						<ul class="">
-							<reply-card v-for="reply in replies" :key="reply['.key']" :reply="reply"/>
-							<reply-card v-for="reply in newReplies" :key="reply['.key']" :reply="reply"/>
-						</ul>
+						<div class="pl-4">
+							<reply-card v-for="reply in replies" :key="reply['.key']" :reply="reply" :post="post"/>
+							<reply-card v-for="reply in newReplies" :key="reply['.key']" :reply="reply" :post="post"/>
+						</div>
 					</div>
 				</div>
 			</div>
