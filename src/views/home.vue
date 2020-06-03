@@ -8,6 +8,7 @@
 		</div>
 		<div v-else>
 			<cta />
+			<ask-question />
 			<why-us />
 			<success />
 			<courses />
@@ -21,6 +22,7 @@
 <script>
 	import { mapGetters, mapActions } from 'vuex'
 	import CTA from '@/components/home/notLoggedIn/HomeCTA'
+	import AskQuestion from '@/components/home/notLoggedIn/AskQuestion'
 	import WhyUs from '@/components/home/notLoggedIn/HomeWhyUs'
 	import Success from '@/components/home/notLoggedIn/HomeSuccess'
 	import Courses from '@/components/home/notLoggedIn/HomeCourses'
@@ -34,6 +36,7 @@
 		name: 'Home',
 		components: {
 			'cta': CTA,
+			'ask-question': AskQuestion,
 			'why-us': WhyUs,
 			'success': Success,
 			'courses': Courses,
@@ -44,7 +47,17 @@
 			'recent-posts': RecentPosts,
 			'recent-sessions': RecentSessions,
 		},
-		computed: mapGetters(['isLoggedIn']),
-		methods: mapActions(['setPostModalNotify'])
+		computed: mapGetters(['isLoggedIn','questionsLeft']),
+		methods: mapActions(['setPostModalNotify','setPostModalCreate']),
+		mounted(){
+			if(this.$route.query.createPost){
+				if(this.questionsLeft){
+					this.setPostModalCreate()
+				}else{
+					this.setPostModalNotify()
+				}
+				this.$router.push('/')
+			}
+		}
 	}
 </script>

@@ -40,7 +40,7 @@
 
 <script>
 	import { required, minLength } from 'vuelidate/lib/validators'
-	import { mapActions } from 'vuex'
+	import { mapActions, mapGetters } from 'vuex'
 	export default {
 		data: () => ({
 			post: {
@@ -51,8 +51,9 @@
 			tag: '',
 			isLoading: false
 		}),
+		computed: mapGetters(['getCreatePost']),
 		methods: {
-			...mapActions(['closePostModal','createPost','uploadFromEditor']),
+			...mapActions(['closePostModal','createPost','uploadFromEditor','setCreatePost']),
 			splitTag(){
 				let tag = this.tag.trim().split(',')[0].toLowerCase()
 				this.tag = ''
@@ -75,6 +76,12 @@
 					await this.$router.push(`/posts/${id}`)
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
+			}
+		},
+		mounted(){
+			if(this.getCreatePost){
+				this.post = this.getCreatePost
+				this.setCreatePost(null)
 			}
 		},
 		validations:{
