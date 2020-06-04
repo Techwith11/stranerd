@@ -4,7 +4,7 @@
             <div class="mb-5">
                 <h2 class="font-weight-bold">Our Pricing Plans</h2>
                 <p class="small">StraNerd is an online education platform that delivers video courses, programs and resources for</p>
-                <button class="primary-button">Start Free Trial</button>
+                <button class="primary-button" @click="setAuthModalOverview">Start Free Trial</button>
             </div>
             <div class="price-card">
                 <span class="font-weight-light">Amateur</span>
@@ -99,6 +99,13 @@
         </div>
     </div>
 </template>
+
+<script>
+    import { mapActions } from 'vuex'
+    export default {
+        methods: mapActions(['setAuthModalOverview'])
+    }
+</script>
 
 <style lang="scss" scoped>
     @import '../../../style/index.scss';

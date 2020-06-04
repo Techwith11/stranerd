@@ -4,11 +4,11 @@ export default [
         name: 'Home',
         component: () => import(/* webpackChunkName: "home" */ '@/views/home')
     },
-    {
+    /*{
         path: '/about',
         name: 'About',
-        component: () => import(/* webpackChunkName: "about" */ '@/views/about')
-    },
+        component: () => import(/!* webpackChunkName: "about" *!/ '@/views/about')
+    },*/
     {
         path: '/blog',
         name: 'Blog Posts',
