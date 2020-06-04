@@ -24,28 +24,30 @@
 				No account?
 				<a class="text-info" @click="setAuthModalRegisterStudent">Sign up with email</a>
 			</span>
-			<div class="d-flex">
+			<div v-if="isDev">
+				<div class="d-flex">
 				<span class="mr-2">
 					<input type="radio" v-model="devUser" value="kevin11" class="mr-1">
 					<label>kevin11</label>
 				</span>
-				<span class="mr-2">
+					<span class="mr-2">
 					<input type="radio" v-model="devUser" value="frank" class="mr-1">
 					<label>frank</label>
 				</span>
-				<span class="mr-2">
+					<span class="mr-2">
 					<input type="radio" v-model="devUser" value="max" class="mr-1">
 					<label>max</label>
 				</span>
-				<span class="mr-2">
+					<span class="mr-2">
 					<input type="radio" v-model="devUser" value="jow" class="mr-1">
 					<label>jow</label>
 				</span>
+				</div>
+				<button @click="loginAsDevUser" :disabled="!devUser">
+					<i class="fas fa-user-cog text-info"></i>
+					Login as dev user
+				</button>
 			</div>
-			<button @click="loginAsDevUser" v-if="isDev" :disabled="!devUser">
-				<i class="fas fa-user-cog text-info"></i>
-				Login as dev user
-			</button>
 		</div>
 		<p class="small text-muted my-4">To make Stranerd work, we might log user data and share it with service providers. Click "Sign In" above to accept Stranerd's Terms of Service & Privacy Policy.</p>
 	</div>
