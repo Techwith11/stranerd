@@ -1,11 +1,10 @@
 <template>
     <div id="background" :style="{backgroundImage: `url(${getImages.landing_hero})`}">
-        <div id="opacity"></div>
-        <div class="container" id="inner">
+        <div class="container">
             <div class="text-left">
-                <h1 class="font-weight-bold" id="headline">Get Access to Unlimited Educational Resources. Everywhere, Everytime!</h1>
+                <h1 class="font-weight-bold" id="headline">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
                 <p id="subtitle">Premium access to more than 10,000 resources ranging from courses, events e.t.c.</p>
-                <button class="primary-button" id="ctaButton" @click="$router.push('/courses')">Get Access</button>
+                <button class="primary-button" id="ctaButton"><router-link class="text-decoration-none text-white" to="/courses">Get Access</router-link></button>
             </div>
         </div>
     </div>
@@ -21,24 +20,10 @@
 <style lang="scss" scoped>
     @import '../../../style/index.scss';
     #background{
-        position: relative;
         padding: 10rem 0;
         color: $text-black;
         background-size: cover;
         background-color: $gradient;
-    }
-    #opacity{
-        z-index: 0.5;
-        background: #55555555;
-        opacity: 0.5;
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 0;
-        left: 0;
-    }
-    #inner{
-        z-index: 1;
     }
     #ctaButton{
         background: $primary-dark;

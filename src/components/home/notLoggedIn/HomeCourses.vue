@@ -1,5 +1,5 @@
 <template>
-    <div id="background">
+    <div id="background" v-if="courses.length > 1">
         <div class="container">
             <h2>Courses</h2>
             <course-nav />

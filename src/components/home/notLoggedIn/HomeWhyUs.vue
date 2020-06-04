@@ -1,6 +1,7 @@
 <template>
     <div id="background">
         <div class="container">
+            <!--<h5 class="text-center mb-5" id="primary-text">Why Stranerd</h5>-->
             <div class="d-flex flex-column flex-md-row">
                 <div class="col-md-4 mb-5 mb-md-0">
                     <img :src="getImages.icons.unlimited_access" alt="" class="icons" />
@@ -18,16 +19,16 @@
                     <p class="icon-subtitle">Switch between your computer, tablet, or mobile device.</p>
                 </div>
             </div>
-            <div class="d-flex flex-md-row flex-column justify-content-center text-left align-items-stretch" id="spacer">
+            <!--<div class="d-flex flex-md-row flex-column justify-content-center text-left align-items-stretch" id="spacer">
                 <img :src="getImages.why_us_hero" alt="" class="img">
                 <div class="pl-4">
                     <h2 class="font-weight-light">Learn a skill.</h2>
                     <h2 class="font-weight-light">Build your portfolio.</h2>
                     <h2 class="font-weight-bold">Get Hired.</h2>
                     <p class="small">StraNerd is an online education platform that delivers video courses, programs and resources for Individual, Advertising & Media Specialist, Online Marketing Professionals, Freelancers and anyone looking to pursue a career in digital marketing, Accounting, Web development, Programming. Multimedia and CAD design.</p>
-                    <button class="btn primary-button mt-1" @click="$router.push('/courses')">Discover</button>
+                    <button class="btn primary-button mt-1"><router-link class="text-white text-decoration-none" to="/courses">Discover</router-link></button>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </template>
@@ -45,7 +46,10 @@
         background: $primary-light;
         color: $text-black;
         text-align: center;
-        padding: 8rem 0 4rem;
+        padding: 4rem 0 4rem;
+    }
+    #primary-text{
+        color: $primary-dark;
     }
     #spacer{
         margin-top: 10rem;

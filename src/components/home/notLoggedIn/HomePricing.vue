@@ -1,22 +1,26 @@
 <template>
     <div id="background">
         <div class="container d-flex flex-column flex-md-row justify-content-center align-items-center">
-            <div>
+            <div class="mb-5">
                 <h2 class="font-weight-bold">Our Pricing Plans</h2>
                 <p class="small">StraNerd is an online education platform that delivers video courses, programs and resources for</p>
                 <button class="primary-button">Start Free Trial</button>
             </div>
             <div class="price-card">
-                <span class="font-weight-light">Basic</span>
+                <span class="font-weight-light">Amateur</span>
                 <span>
-                    <span class="price">$15</span>
-                    <span>/monthly</span>
+                    <span class="price">$10</span>
+                    <span>/month</span>
                 </span>
-                <span class="price-subtitle w-50">StraNerd is an online education platform that delivers video courses, programs and resources for</span>
+                <span class="price-subtitle w-75">Perfect for newbies and those just looking to stay for a short while.</span>
                 <ul>
                     <li>
                         <i class="fas fa-check-circle"></i>
-                        <span>Unlimited Downloads</span>
+                        <span>5 free questions monthly</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Unlimited Access</span>
                     </li>
                     <li>
                         <i class="fas fa-check-circle"></i>
@@ -28,25 +32,25 @@
                     </li>
                     <li>
                         <i class="fas fa-check-circle"></i>
-                        <span>Job Opportunities</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>2.0% Transaction Fee</span>
+                        <span>Save 16% for $100/year</span>
                     </li>
                 </ul>
             </div>
             <div class="price-card">
                 <p class="font-weight-light">Premium</p>
                 <p>
-                    <span class="display-2 price">$150</span>
-                    <span>/yearly</span>
+                    <span class="display-2 price">$15</span>
+                    <span>/month</span>
                 </p>
-                <p class="price-subtitle w-50">StraNerd is an online education platform that delivers video courses, programs and resources for</p>
+                <p class="price-subtitle w-75">Perfect for those trying to get the best while saving a few dollars as well.</p>
                 <ul>
                     <li>
                         <i class="fas fa-check-circle"></i>
-                        <span>Unlimited Downloads</span>
+                        <span>10 free questions monthly</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Unlimited Access</span>
                     </li>
                     <li>
                         <i class="fas fa-check-circle"></i>
@@ -58,11 +62,37 @@
                     </li>
                     <li>
                         <i class="fas fa-check-circle"></i>
-                        <span>Job Opportunities</span>
+                        <span>Save 16% for $150/year</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="price-card">
+                <p class="font-weight-light">Master</p>
+                <p>
+                    <span class="display-2 price">$20</span>
+                    <span>/month</span>
+                </p>
+                <p class="price-subtitle w-75">Perfect for those that believe they are going to be with us a while .</p>
+                <ul>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>15 free questions monthly</span>
                     </li>
                     <li>
                         <i class="fas fa-check-circle"></i>
-                        <span>2.0% Transaction Fee</span>
+                        <span>Unlimited Access</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Offline Accessibility</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>24/7 Support</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Save 16% for $200/year</span>
                     </li>
                 </ul>
             </div>
@@ -103,9 +133,12 @@
         font-size: 2.5rem;
     }
     .price-subtitle{
-        font-size: 0.625rem;
+        font-size: 0.65rem;
     }
     @media screen and (max-width: 767px){
+        .price-subtitle{
+            font-size: 0.90rem;
+        }
         #background{
             text-align: center;
         }

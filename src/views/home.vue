@@ -8,10 +8,8 @@
 		</div>
 		<div v-else>
 			<cta />
-			<ask-question />
 			<why-us />
-			<success />
-			<courses />
+			<ask-question />
 			<stats />
 			<students-says />
 			<pricing />
@@ -24,8 +22,6 @@
 	import CTA from '@/components/home/notLoggedIn/HomeCTA'
 	import AskQuestion from '@/components/home/notLoggedIn/AskQuestion'
 	import WhyUs from '@/components/home/notLoggedIn/HomeWhyUs'
-	import Success from '@/components/home/notLoggedIn/HomeSuccess'
-	import Courses from '@/components/home/notLoggedIn/HomeCourses'
 	import Stats from '@/components/home/notLoggedIn/HomeStats'
 	import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay'
 	import Pricing from '@/components/home/notLoggedIn/HomePricing'
@@ -38,8 +34,6 @@
 			'cta': CTA,
 			'ask-question': AskQuestion,
 			'why-us': WhyUs,
-			'success': Success,
-			'courses': Courses,
 			'stats': Stats,
 			'students-says': StudentsSay,
 			'pricing': Pricing,
