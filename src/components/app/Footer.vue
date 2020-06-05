@@ -5,11 +5,6 @@
                 <div class="col-12 col-md-6">
                     <p class="lead">Stranerd</p>
                     <p class="small">Stranerd is an online education platform that delivers video courses, programs and resources.</p>
-                    <p>
-                        <a href="https://facebook.com/officialstranerd" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://instagram.com/officialstranerd" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://twitter.com/stranerds" target="_blank"><i class="fab fa-twitter"></i></a>
-                    </p>
                 </div>
                 <div class="col-4 col-md-2">
                     <h6>Quick Links</h6>
@@ -19,9 +14,13 @@
                 </div>
                 <div class="col-4 col-md-2">
                     <h6>Contact Us</h6>
-                    <a class="links" href="tel:xxxxxxxxxx">Phone Number</a>
-                    <a class="links" href="mailto:officialstranerd@gmail.com">Officialstranerd@gmail.com</a>
-                    <a class="links" href="">Contact Address</a>
+                    <a class="links" href="tel:+14040435611">Call us</a>
+                    <a class="links" href="mailto:officialstranerd@gmail.com">Mail us</a>
+                    <p>
+                        <a href="https://facebook.com/officialstranerd" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/officialstranerd" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/stranerds" target="_blank"><i class="fab fa-twitter"></i></a>
+                    </p>
                 </div>
                 <div class="col-4 col-md-2">
                     <h6>Others</h6>
@@ -45,6 +44,7 @@
         align-items: center;
         justify-content: center;
         margin-right: 0.5rem;
+        margin-bottom: 0.25rem;
         color: white;
         &.fa-facebook-f{
             background: #3B5998;
