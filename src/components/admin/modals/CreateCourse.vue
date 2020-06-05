@@ -140,7 +140,7 @@
 		validations: {
 			course: {
 				title: { required, minLength: minLength(3) },
-				description: { required, minLength: minLength(3) },
+				description: { required },
 				premium: { required },
 				tags: { required, minLength: minLength(1) },
 			},

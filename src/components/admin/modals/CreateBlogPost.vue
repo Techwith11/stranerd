@@ -28,8 +28,7 @@
 				<vue-editor class="rounded border" v-model.trim="$v.post.body.$model" useCustomImageHandler @image-added="handleImageAdded"
 					:class="{'border-danger': $v.post.body.$error, 'border-success': !$v.post.body.$invalid}" placeholder="Full content"
 				/>
-				<small class="small text-danger d-block" v-if="$v.post.body.$error">Question body must be at least 3 characters</small>
-				<small class="small text-muted" v-if="post.body.length === 0">Describe your question in full length to give us a clear picture of what it is about</small>
+				<small class="small text-danger d-block" v-if="$v.post.body.$error">Post body is required</small>
 			</div>
 			<div class="form-group my-3">
 				<input type="text" class="form-control" placeholder="Tags" v-model.trim="tag" @keyup.188="splitTag"
@@ -101,7 +100,7 @@
 			post: {
 				title: { required, minLength: minLength(3)},
 				description: { required, minLength: minLength(3) },
-				body: { required, minLength: minLength(3) },
+				body: { required },
 				tags: { required, minLength: minLength(1) }
 			},
 			image: { required },

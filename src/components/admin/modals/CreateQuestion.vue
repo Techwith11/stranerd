@@ -7,10 +7,10 @@
 		</div>
 		<form class="mx-2">
 			<div class="form-group my-3">
-				<vue-editor class="rounded border" v-model.trim="$v.question.title.$model" :editor-toolbar="customToolBar"
+				<vue-editor class="rounded border" v-model.trim="$v.question.title.$model" useCustomImageHandler @image-added="handleImageAdded" :editor-toolbar="customToolBar"
 					:class="{'border-danger': $v.question.title.$error, 'border-success': !$v.question.title.$invalid}" placeholder="Question..."
 				/>
-				<span class="small" v-if="$v.question.title.$error">Must be at least 3 characters long</span>
+				<span class="small" v-if="$v.question.title.$error">Question is required</span>
 			</div>
 			<div class="form-group my-3">
 				<select class="form-control" v-model="$v.question.subject.$model"
@@ -81,7 +81,7 @@
 				[{header: [false,1,2,3,4,5,6]}], ['bold','italic','underline','strikethrough'],
 				[{align:''},{align:'center'},{align:'right'},{align:'justify'}],
 				['blockquote','code-block'], [{list:'ordered'},{list:'bullet'},{list:'check'}],
-				[{color:[]},{background:[]}], ['link'/*,'image','video'*/],['clean']
+				[{color:[]},{background:[]}], ['link','image',/*'video'*/],['clean']
 			]
 		}),
 		async mounted(){
@@ -89,7 +89,15 @@
 			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 		},
 		methods:{
-			...mapActions(['setCreateModalOverview', 'closeCreateModal', 'createQuestion']),
+			...mapActions(['setCreateModalOverview', 'closeCreateModal', 'createQuestion','uploadFromEditor']),
+			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
+				try{
+					await this.uploadFromEditor({
+						file, editor, cursorLocation, resetUploader,
+						path: 'editor/tests/tutors/tests/title'
+					})
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+			},
 			async submitQuestion() {
 				this.isLoading = true
 				try{
@@ -102,7 +110,7 @@
 		},
 		validations:{
 			question: {
-				title: { required, minLength: minLength(3)},
+				title: { required },
 				subject: { required, minLength: minLength(1) },
 				a: { required, minLength: minLength(1) },
 				b: { required, minLength: minLength(1) },
