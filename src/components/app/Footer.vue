@@ -7,8 +7,8 @@
                     <p class="small">Stranerd is an online education platform that delivers video courses, programs and resources.</p>
                     <p>
                         <a href="https://facebook.com/officialstranerd" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://instagram.com/officialstranerd" target="_blank"><i class="fab fa-twitter"></i></a>
-                        <a href="https://twitter.com/stranerds" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://instagram.com/officialstranerd" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/stranerds" target="_blank"><i class="fab fa-twitter"></i></a>
                     </p>
                 </div>
                 <div class="col-4 col-md-2">
