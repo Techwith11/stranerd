@@ -1,54 +1,59 @@
 <template>
     <footer class="bg-dark py-5 text-white mt-auto">
-       <div class="container">
-           <div class="row">
-               <div class="col-12 col-md-6">
-                   <p class="lead">Stranerd</p>
-                   <p class="small">Stranerd is an online education platform that delivers video courses, programs and resources.</p>
-                   <p>
-                       <i class="fab fa-facebook-f"></i>
-                       <i class="fab fa-twitter"></i>
-                       <i class="fab fa-youtube"></i>
-                   </p>
-               </div>
-               <div class="col-4 col-md-2">
-                   <h6>Quick Links</h6>
-                   <router-link class="links" to="/">Home</router-link>
-                   <router-link class="links" to="/blog">Blog</router-link>
-                   <router-link class="links" to="/about">About Us</router-link>
-               </div>
-               <div class="col-4 col-md-2">
-                   <h6>Contact Us</h6>
-                   <a class="links" href="tel:xxxxxxxxxx">Phone Number</a>
-                   <a class="links" href="mailto:xxxxxxxxxx">Mail address</a>
-                   <a class="links" href="">Contact Address</a>
-               </div>
-               <div class="col-4 col-md-2">
-                   <h6>Others</h6>
-                   <router-link class="links" to="/privacy_policy">Privacy Policy</router-link>
-                   <router-link class="links" to="terms_and_conditions/">Terms And Conditions</router-link>
-                   <router-link class="links" to="/faqs">Faqs</router-link>
-               </div>
-           </div>
-       </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6">
+                    <p class="lead">Stranerd</p>
+                    <p class="small">Stranerd is an online education platform that delivers video courses, programs and resources.</p>
+                    <p>
+                        <a href="https://facebook.com/officialstranerd" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://instagram.com/officialstranerd" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://twitter.com/stranerds" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </p>
+                </div>
+                <div class="col-4 col-md-2">
+                    <h6>Quick Links</h6>
+                    <router-link class="links" to="/">Home</router-link>
+                    <router-link class="links" to="/blog">Blog</router-link>
+                    <router-link class="links" to="/about">About Us</router-link>
+                </div>
+                <div class="col-4 col-md-2">
+                    <h6>Contact Us</h6>
+                    <a class="links" href="tel:xxxxxxxxxx">Phone Number</a>
+                    <a class="links" href="mailto:officialstranerd@gmail.com">Officialstranerd@gmail.com</a>
+                    <a class="links" href="">Contact Address</a>
+                </div>
+                <div class="col-4 col-md-2">
+                    <h6>Others</h6>
+                    <router-link class="links" to="/privacy_policy">Privacy Policy</router-link>
+                    <router-link class="links" to="terms_and_conditions/">Terms And Conditions</router-link>
+                    <router-link class="links" to="/faqs">Faqs</router-link>
+                </div>
+            </div>
+        </div>
     </footer>
 </template>
 
 <style lang="scss" scoped>
     @import '../../style/index';
-   i{
+    i{
         border-radius: 50rem;
+        width: 2rem;
+        height: 2rem;
         border: 1px solid transparent;
-        padding: 0.5rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
         margin-right: 0.5rem;
+        color: white;
         &.fa-facebook-f{
-            background: #272EAE;
+            background: #3B5998;
         }
         &.fa-twitter{
-            background: #1590D8;
+            background: #00ACED;
         }
-        &.fa-youtube{
-            background: #D0021B;
+        &.fa-instagram{
+            background: #F56040;
         }
     }
     .section{
