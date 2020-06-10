@@ -52,7 +52,7 @@ window.uploadFile = async (path, file) => {
 		let link = `${path}/${Date.now()}_${file.name}`
 		if(process.env.NODE_ENV === 'production'){
 			await storage.ref(link).put(file)
-			link = await storage.ref(path).getDownloadURL()
+			link = await storage.ref(link).getDownloadURL()
 		}else{
 			link = `stranerd/${link}`
 			await uploadToMockServer(link, file)
