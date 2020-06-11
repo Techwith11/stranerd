@@ -62,7 +62,7 @@
 				</div>
 				<div class="form-group my-3">
 					<input type="file" @change="catchDocuments" class="d-none" ref="documentInput" multiple>
-					<span>{{ documents.map(doc => doc.name).join(', ') }} </span>
+					<span v-for="doc in documents" :key="doc.name">{{ doc.name}}<i class="fas fa-times text-danger mr-2" @click.prevent="removeDocument(doc)"></i></span>
 					<a class="text-info" @click.prevent="() => { $refs.documentInput.value= ''; $refs.documentInput.click() }">Upload attachment files</a>
 				</div>
 				<div class="d-flex justify-content-between align-items-center my-3">
@@ -124,7 +124,13 @@
 			catchVideo(e){ e.target.files[0] && e.target.files[0].type.startsWith('video/') ? this.video = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})},
 			catchImage(e){ e.target.files[0] &&e.target.files[0].type.startsWith('image/') ? this.image = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not an image'})},
 			catchPreview(e){ e.target.files[0] && e.target.files[0].type.startsWith('video/') ? this.preview = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})},
-			catchDocuments(e){ this.documents = [...e.target.files] },
+			catchDocuments(e){
+				e.target.files.forEach(file => {
+					if(this.documents.find(doc => doc.name === file.name)){ return }
+					this.documents.push(file)
+				})
+			},
+			removeDocument(document){ this.documents = this.documents.filter(doc => doc.name !== document.name) },
 			async submitCourse(){
 				this.isLoading = true
 				try{

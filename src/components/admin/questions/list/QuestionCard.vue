@@ -9,8 +9,10 @@
 		</p>
 		<span class="d-block">Answer: {{ question.answer }}</span>
 		<span class="d-block">Level {{ question.level }} {{ question.subject }}</span>
-		<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
-		<a class="mr-3 text-danger" @click.prevent="removeQuestion"><i class="fas fa-trash mr-1"></i>Delete</a>
+		<div class="mt-3">
+			<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
+			<a class="mr-3 text-danger" @click.prevent="removeQuestion"><i class="fas fa-trash mr-1"></i>Delete</a>
+		</div>
 	</div>
 </template>
 
