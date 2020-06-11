@@ -31,6 +31,7 @@ let helpers = {
 		return await firestore.collection('blog').add(post)
 	},
 	deleteQuestion: async (id) => await firestore.collection('tests/tutors/questions').doc(id).delete(),
+	deleteNote: async (id) => await firestore.collection('notes').doc(id).delete(),
 	editQuestion: async (question) => {
 		let id = question['.key']
 		delete question['.key']
@@ -69,6 +70,7 @@ const actions = {
 	uploadFromEditor: async (store, data) => await helpers.uploadFromEditor(data),
 
 	deleteQuestion: async (store, id) => await helpers.deleteQuestion(id),
+	deleteNote: async (store, id) => await helpers.deleteNote(id),
 
 	editQuestion: async (store, question) => await helpers.editQuestion(question)
 }

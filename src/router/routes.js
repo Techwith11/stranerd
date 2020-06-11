@@ -111,6 +111,11 @@ export default [
                 path: '/admins/questions',
                 name: 'Questions',
                 component: () => import(/* webpackChunkName: "questions" */ '@/views/admin/questions/index'),
+            },
+            {
+                path: '/admins/notes',
+                name: 'Notes',
+                component: () => import(/* webpackChunkName: "notes" */ '@/views/admin/notes/index'),
             }
         ],
         meta: { requiresAuth: true, requiresAdmin: true }

@@ -23,6 +23,7 @@ const getters = {
 
     isEditModalOpen: state => !!state.editModal,
     isEditModalQuestion: state => state.editModal === 'edit-question',
+    isEditModalNote: state => state.editModal === 'edit-note',
 
     isAccountModalOpen: state => !!state.accountModal,
     isAccountModalOverview: state => state.accountModal === 'profile-overview',
@@ -61,6 +62,7 @@ const actions = {
     closeCreateModal: ({ commit }) => commit('setCreateModal', null),
 
     setEditModalQuestion: ({ commit }) => commit('setEditModal', 'edit-question'),
+    setEditModalNote: ({ commit }) => commit('setEditModal', 'edit-note'),
     closeEditModal: ({ commit }) => commit('setEditModal', null),
 
     setAccountModalOverview: ({ commit }) => commit('setAccountModal', 'profile-overview'),
