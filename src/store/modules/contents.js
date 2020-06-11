@@ -32,6 +32,7 @@ let helpers = {
 	},
 	deleteQuestion: async (id) => await firestore.collection('tests/tutors/questions').doc(id).delete(),
 	deleteNote: async (id) => await firestore.collection('notes').doc(id).delete(),
+	deleteBlogPost: async (id) => await firestore.collection('blog').doc(id).delete(),
 	editQuestion: async (question) => {
 		let id = question['.key']
 		delete question['.key']
@@ -77,6 +78,7 @@ const actions = {
 
 	deleteQuestion: async (store, id) => await helpers.deleteQuestion(id),
 	deleteNote: async (store, id) => await helpers.deleteNote(id),
+	deleteBlogPost: async (store, id) => await helpers.deleteBlogPost(id),
 
 	editQuestion: async (store, question) => await helpers.editQuestion(question),
 	editNote: async (store, { note, document}) => {
