@@ -128,9 +128,14 @@
 			async submitCourse(){
 				this.isLoading = true
 				try{
-					await this.createCourse({
-						video: this.video, image: this.image, documents: this.documents, course: this.course, preview: this.preview
+					let res = await this.createCourse({
+						video: this.video,
+						image: this.image,
+						documents: this.documents,
+						course: this.course,
+						preview: this.preview
 					})
+					await this.$router.push(`/courses/${res.id}`)
 					this.closeCreateModal()
 					new window.Toast({ icon: 'success', title: 'Course created successfully' })
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
