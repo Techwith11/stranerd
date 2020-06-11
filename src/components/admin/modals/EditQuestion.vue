@@ -104,8 +104,8 @@
 				this.isLoading = true
 				try{
 					await this.editQuestion(this.question)
-					this.closeEditModal()
 					window.Fire.$emit('QuestionEdited',this.question)
+					this.closeEditModal()
 					new window.Toast({icon: 'success', title: 'Question edited successfully'})
 				}catch(error){ new window.Toast({icon: 'error', title: error.message}) }
 				this.isLoading = false

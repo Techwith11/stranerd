@@ -37,6 +37,12 @@ let helpers = {
 		delete question['.key']
 		question.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
 		return await firestore.collection('tests/tutors/questions').doc(id).set(question, { merge: true })
+	},
+	editNote: async (note) => {
+		let id = note['.key']
+		delete note['.key']
+		note.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
+		return await firestore.collection('notes').doc(id).set(note, { merge: true })
 	}
 }
 
@@ -72,7 +78,13 @@ const actions = {
 	deleteQuestion: async (store, id) => await helpers.deleteQuestion(id),
 	deleteNote: async (store, id) => await helpers.deleteNote(id),
 
-	editQuestion: async (store, question) => await helpers.editQuestion(question)
+	editQuestion: async (store, question) => await helpers.editQuestion(question),
+	editNote: async (store, { note, document}) => {
+		if(document.size){
+			note.document = await window.uploadFile('notes', document)
+		}
+		return await helpers.editNote(note)
+	}
 }
 
 export default { actions }
