@@ -41,7 +41,7 @@
 			await this.getPosts()
 			this.isLoading = false
 			window.Fire.$on('BlogPostEdited', post => {
-				let index = this.posts.findIndex(p => p['.key'] !== post['.key'])
+				let index = this.posts.findIndex(p => p['.key'] === post['.key'])
 				this.posts[index] = post
 			})
 			window.Fire.$on('BlogPostDeleted', post => this.posts = this.posts.filter(p => p['.key'] !== post['.key']))

@@ -37,7 +37,7 @@
 			await this.getNotes()
 			this.isLoading = false
 			window.Fire.$on('NoteEdited', note => {
-				let index = this.notes.findIndex(q => q['.key'] !== note['.key'])
+				let index = this.notes.findIndex(n => n['.key'] === note['.key'])
 				this.notes[index] = note
 			})
 			window.Fire.$on('NoteDeleted', note => this.notes = this.notes.filter(q => q['.key'] !== note['.key']))

@@ -34,22 +34,25 @@ let helpers = {
 	deleteNote: async (id) => await firestore.collection('notes').doc(id).delete(),
 	deleteBlogPost: async (id) => await firestore.collection('blog').doc(id).delete(),
 	editQuestion: async (question) => {
-		let id = question['.key']
-		delete question['.key']
-		question.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
-		return await firestore.collection('tests/tutors/questions').doc(id).set(question, { merge: true })
+		let copy = { ...question }
+		let id = copy['.key']
+		delete copy['.key']
+		copy.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
+		return await firestore.collection('tests/tutors/questions').doc(id).set(copy, { merge: true })
 	},
 	editNote: async (note) => {
-		let id = note['.key']
-		delete note['.key']
-		note.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
-		return await firestore.collection('notes').doc(id).set(note, { merge: true })
+		let copy = { ...note }
+		let id = copy['.key']
+		delete copy['.key']
+		copy.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
+		return await firestore.collection('notes').doc(id).set(copy, { merge: true })
 	},
 	editBlogPost: async (post) => {
-		let id = post['.key']
-		delete post['.key']
-		post.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
-		return await firestore.collection('blog').doc(id).set(post, { merge: true })
+		let copy = { ...post }
+		let id = copy['.key']
+		delete copy['.key']
+		copy.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
+		return await firestore.collection('blog').doc(id).set(copy, { merge: true })
 	}
 }
 
