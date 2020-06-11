@@ -23,6 +23,7 @@
 			this.post = { '.key': doc.id, ...doc.data() }
 			this.isLoading = false
 			window.Fire.$on('BlogPostEdited', post => this.post = post)
+			window.Fire.$on('BlogPostDeleted', () => this.$router.push('/blog'))
 		},
 		components: {
 			'helper-spinner': HelperSpinner,

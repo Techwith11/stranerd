@@ -6,9 +6,9 @@
 			<helper-message message="No courses available at the moment. Check again later" v-if="courses.length === 0" />
 			<div v-else>
 				<div class="container">
-					<div class="row">
-						<div class="col-md-6 col-lg-4" v-for="course in filteredCourses" :key="course['.key']">
-							<course-card :course="course" />
+					<div class="card-deck">
+						<div class="col-lg-6 p-0" v-for="course in filteredCourses" :key="course['.key']">
+							<course-card :course="course"/>
 						</div>
 					</div>
 					<div class="d-flex justify-content-end my-3" v-if="hasMore">
