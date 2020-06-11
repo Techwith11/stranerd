@@ -3,7 +3,7 @@
 		<div class="d-flex align-items-baseline justify-content-between my-3">
 			<i></i>
 			<h4>Edit Question</h4>
-			<a @click.prevent="closeEditModal"><i class="fas fa-times"></i></a>
+			<a @click.prevent="closeEditModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
 		<form class="mx-2">
 			<div class="form-group my-3">

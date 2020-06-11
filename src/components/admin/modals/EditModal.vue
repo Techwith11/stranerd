@@ -4,6 +4,7 @@
 			<edit-question v-if="isEditModalQuestion" />
 			<edit-note v-if="isEditModalNote" />
 			<edit-blog-post v-if="isEditModalBlog" />
+			<edit-course v-if="isEditModalCourse" />
 		</div>
 	</div>
 </template>
@@ -13,12 +14,14 @@
 	import EditQuestion from '@/components/admin/modals/EditQuestion'
 	import EditNote from '@/components/admin/modals/EditNote'
 	import EditBlogPost from '@/components/admin/modals/EditBlogPost'
+	import EditCourse from '@/components/admin/modals/EditCourse'
 	export default {
-		computed: mapGetters(['isEditModalQuestion','isEditModalNote','isEditModalBlog']),
+		computed: mapGetters(['isEditModalQuestion','isEditModalNote','isEditModalBlog','isEditModalCourse']),
 		components: {
 			'edit-question': EditQuestion,
 			'edit-note': EditNote,
 			'edit-blog-post': EditBlogPost,
+			'edit-course': EditCourse,
 		}
 	}
 </script>

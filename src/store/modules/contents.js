@@ -54,6 +54,13 @@ let helpers = {
 		delete copy['.key']
 		copy.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
 		return await firestore.collection('blog').doc(id).set(copy, { merge: true })
+	},
+	editCourse: async (course) => {
+		let copy = { ...course }
+		let id = copy['.key']
+		delete copy['.key']
+		copy.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
+		return await firestore.collection('courses').doc(id).set(copy, { merge: true })
 	}
 }
 
@@ -103,6 +110,27 @@ const actions = {
 			post.image = await window.uploadFile('blog', image)
 		}
 		return await helpers.editBlogPost(post)
+	},
+	editCourse: async (store, { course, video, preview, documents, image}) => {
+		if(image.size){
+			course.image = await window.uploadFile('courses/images', image)
+		}
+		if(video.size){
+			course.video = await window.uploadFile('courses/videos', video)
+		}
+		if(preview && preview.size){
+			course.preview = await window.uploadFile('courses/previews', video)
+		}
+		course.documents = []
+		for (const file of documents) {
+			if(file.size){
+				let media = await window.uploadFile('courses/documents', file)
+				course.documents.push(media)
+			}else{
+				course.documents.push(file)
+			}
+		}
+		return await helpers.editCourse(course)
 	}
 }
 

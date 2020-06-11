@@ -30,7 +30,11 @@
         },
 		filters: {
 			getDate(date){
-				return new Date(date.seconds * 1000).toDateString()
+				if(date.seconds){
+					return new Date(date.seconds * 1000).toDateString()
+				}else{
+					return new Date().toDateString()
+				}
 			}
 		},
 		computed: {
