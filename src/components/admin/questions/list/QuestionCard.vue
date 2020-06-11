@@ -9,15 +9,39 @@
 		</p>
 		<span class="d-block">Answer: {{ question.answer }}</span>
 		<span class="d-block">Level {{ question.level }} {{ question.subject }}</span>
+		<a class="mr-3 text-warning"><i class="fas fa-pen mr-1"></i>Edit</a>
+		<a class="mr-3 text-danger" @click.prevent="removeQuestion"><i class="fas fa-trash mr-1"></i>Delete</a>
 	</div>
 </template>
 
 <script>
+	import { mapActions } from 'vuex'
 	export default {
 		props: {
 			question: {
 				required: true,
 				type: Object
+			}
+		},
+		methods: {
+			...mapActions(['deleteQuestion']),
+			async removeQuestion(){
+				try{
+					let result = await new window.SweetAlert({
+						title: 'Delete question',
+						text: 'Are you sure you want to delete these question? This cannot be undone',
+						icon: 'info',
+						showCancelButton: true,
+						cancelButtonColor: '#3085d6',
+						confirmButtonColor: '#d33',
+						confirmButtonText: 'Delete'
+					})
+					if (result.value) {
+						await this.deleteQuestion(this.question['.key'])
+						window.Fire.$emit('QuestionDeleted', this.question)
+						new window.Toast({ icon: 'success', title: 'Question deleted successfully' })
+					}
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 			}
 		}
 	}

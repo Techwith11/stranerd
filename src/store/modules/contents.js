@@ -30,6 +30,7 @@ let helpers = {
 		post.userId = id
 		return await firestore.collection('blog').add(post)
 	},
+	deleteQuestion: async (id) => await firestore.collection('tests/tutors/questions').doc(id).delete(),
 }
 
 const actions = {
@@ -59,7 +60,8 @@ const actions = {
 		post.image = await window.uploadFile('blog', data.image)
 		return await helpers.createBlogPost(post, getters.getId)
 	},
-	uploadFromEditor: async (store, data) => await helpers.uploadFromEditor(data)
+	uploadFromEditor: async (store, data) => await helpers.uploadFromEditor(data),
+	deleteQuestion: async (store, id) => await helpers.deleteQuestion(id)
 }
 
 export default { actions }

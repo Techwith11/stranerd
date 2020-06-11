@@ -47,6 +47,7 @@
 			await this.getSubjects()
 			await this.getQuestions()
 			this.isLoading = false
+			window.Fire.$on('QuestionDeleted',question => this.questions = this.questions.filter(q => q['.key'] !== question['.key']))
 		},
 		components: {
 			'question-nav': QuestionNav,
