@@ -44,6 +44,12 @@ let helpers = {
 		delete note['.key']
 		note.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
 		return await firestore.collection('notes').doc(id).set(note, { merge: true })
+	},
+	editBlogPost: async (post) => {
+		let id = post['.key']
+		delete post['.key']
+		post.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
+		return await firestore.collection('blog').doc(id).set(post, { merge: true })
 	}
 }
 
@@ -86,6 +92,12 @@ const actions = {
 			note.document = await window.uploadFile('notes', document)
 		}
 		return await helpers.editNote(note)
+	},
+	editBlogPost: async (store, { post, image}) => {
+		if(image.size){
+			post.image = await window.uploadFile('blog', image)
+		}
+		return await helpers.editBlogPost(post)
 	}
 }
 

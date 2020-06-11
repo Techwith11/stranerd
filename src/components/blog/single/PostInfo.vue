@@ -5,7 +5,7 @@
 		<div v-html="post.body" class="editor-container"></div>
 		<p class="text-muted my-3">Uploaded {{ getDateOrTime }}</p>
 		<div class="my-3 d-flex" v-if="isAdmin">
-			<button class="btn-warning mr-2"><i class="fas fa-pen mr-2"></i>Edit</button>
+			<button class="btn-warning mr-2" @click="openEditModal"><i class="fas fa-pen mr-2"></i>Edit</button>
 			<button class="btn-danger" @click="removePost"><i class="fas fa-trash mr-2"></i>Delete</button>
 		</div>
 		<p class="my-3 text-muted">
@@ -51,7 +51,7 @@
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 			},
 			async openEditModal(){
-				this.setEditMeta(this.question)
+				this.setEditMeta(this.post)
 				this.setEditModalBlog()
 			}
 		},

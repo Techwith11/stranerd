@@ -7,10 +7,9 @@
 			<span class="d-block my-2">Uploaded {{ getDateOrTime }}</span>
 			<router-link :to="`/blog/${post['.key']}`" class="btn btn-primary" target="_blank">View article</router-link>
 			<div class="my-3" v-if="isAdmin">
-
+				<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
+				<a class="mr-3 text-danger" @click.prevent="removePost"><i class="fas fa-trash mr-1"></i>Delete</a>
 			</div>
-			<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
-			<a class="mr-3 text-danger" @click.prevent="removePost"><i class="fas fa-trash mr-1"></i>Delete</a>
 		</div>
 	</div>
 </template>
@@ -61,7 +60,7 @@
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 			},
 			async openEditModal(){
-				this.setEditMeta(this.question)
+				this.setEditMeta(this.post)
 				this.setEditModalBlog()
 			}
 		}

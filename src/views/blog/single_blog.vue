@@ -22,6 +22,7 @@
 			if(!doc.exists){ return this.$router.replace('/blog') }
 			this.post = { '.key': doc.id, ...doc.data() }
 			this.isLoading = false
+			window.Fire.$on('BlogPostEdited', post => this.post = post)
 		},
 		components: {
 			'helper-spinner': HelperSpinner,
