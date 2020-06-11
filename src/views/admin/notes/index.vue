@@ -40,7 +40,7 @@
 				let index = this.notes.findIndex(n => n['.key'] === note['.key'])
 				this.notes[index] = note
 			})
-			window.Fire.$on('NoteDeleted', note => this.notes = this.notes.filter(q => q['.key'] !== note['.key']))
+			window.Fire.$on('NoteDeleted', note => this.notes = this.notes.filter(n => n['.key'] !== note['.key']))
 		},
 		components: {
 			'note-card': NoteCard,

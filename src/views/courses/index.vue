@@ -47,6 +47,11 @@
 		async mounted(){
 			await this.getCourses()
 			this.isLoading = false
+			window.Fire.$on('CourseEdited', course => {
+				let index = this.courses.findIndex(c => c['.key'] === course['.key'])
+				this.courses[index] = course
+			})
+			window.Fire.$on('CourseDeleted', course => this.courses = this.courses.filter(c => c['.key'] !== course['.key']))
 		},
 		computed: {
 			filteredCourses(){

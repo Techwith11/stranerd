@@ -33,6 +33,7 @@ let helpers = {
 	deleteQuestion: async (id) => await firestore.collection('tests/tutors/questions').doc(id).delete(),
 	deleteNote: async (id) => await firestore.collection('notes').doc(id).delete(),
 	deleteBlogPost: async (id) => await firestore.collection('blog').doc(id).delete(),
+	deleteCourse: async (id) => await firestore.collection('courses').doc(id).delete(),
 	editQuestion: async (question) => {
 		let copy = { ...question }
 		let id = copy['.key']
@@ -88,6 +89,7 @@ const actions = {
 	deleteQuestion: async (store, id) => await helpers.deleteQuestion(id),
 	deleteNote: async (store, id) => await helpers.deleteNote(id),
 	deleteBlogPost: async (store, id) => await helpers.deleteBlogPost(id),
+	deleteCourse: async (store, id) => await helpers.deleteCourse(id),
 
 	editQuestion: async (store, question) => await helpers.editQuestion(question),
 	editNote: async (store, { note, document}) => {
