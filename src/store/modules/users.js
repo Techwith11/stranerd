@@ -24,19 +24,22 @@ const state = {
 		}
 	},
 	intendedRoute: null,
-	createPost: null
+	createPost: null,
+	editMeta: null
 }
 
 const getters = {
 	getDefaultImage: state => state.images.defaultImage,
 	getImages: state => state.images,
 	getIntendedRoute: state => state.intendedRoute,
-	getCreatePost: state => state.createPost
+	getCreatePost: state => state.createPost,
+	getEditMeta: state => state.editMeta
 }
 
 const mutations = {
 	setIntendedRoute: (state, route) => state.intendedRoute = route,
 	setCreatePost: (state, post) => state.createPost = post,
+	setEditMeta: (state, meta) => state.editMeta = meta,
 }
 
 
@@ -45,6 +48,8 @@ const actions = {
 	clearIntendedRoute: ({ commit }) => commit('setIntendedRoute', null),
 	setCreatePost: ({ commit }, post) => commit('setCreatePost', post),
 	clearCreatePost: ({ commit }) => commit('setCreatePost', null),
+	setEditMeta: ({ commit }, meta) => commit('setEditMeta', meta),
+	clearEditMeta: ({ commit }) => commit('setEditMeta', null),
 	async updateProfile({ getters }, data){
 		let bio = data.bio
 		let image = data.image

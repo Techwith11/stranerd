@@ -1,6 +1,7 @@
 const state = {
     modal: null,
     createModal: null,
+    editModal: null,
     accountModal: null,
     postModal: null
 }
@@ -20,6 +21,9 @@ const getters = {
     isCreateModalNote: state => state.createModal === 'create-note',
     isCreateModalBlog: state => state.createModal === 'create-blog-post',
 
+    isEditModalOpen: state => !!state.editModal,
+    isEditModalQuestion: state => state.editModal === 'edit-question',
+
     isAccountModalOpen: state => !!state.accountModal,
     isAccountModalOverview: state => state.accountModal === 'profile-overview',
     isAccountModalEditProfile: state => state.accountModal === 'edit-profile',
@@ -36,6 +40,7 @@ const getters = {
 const mutations = {
     setAuthModal: (state, mode) => state.modal = mode,
     setCreateModal: (state,mode) => state.createModal = mode,
+    setEditModal: (state,mode) => state.editModal = mode,
     setAccountModal: (state, mode) => state.accountModal = mode,
     setPostModal: (state, mode) => state.postModal = mode
 }
@@ -54,6 +59,9 @@ const actions = {
     setCreateModalNote: ({ commit }) => commit('setCreateModal', 'create-note'),
     setCreateModalBlog: ({ commit }) => commit('setCreateModal', 'create-blog-post'),
     closeCreateModal: ({ commit }) => commit('setCreateModal', null),
+
+    setEditModalQuestion: ({ commit }) => commit('setEditModal', 'edit-question'),
+    closeEditModal: ({ commit }) => commit('setEditModal', null),
 
     setAccountModalOverview: ({ commit }) => commit('setAccountModal', 'profile-overview'),
     setAccountModalEditProfile: ({ commit }) => commit('setAccountModal', 'edit-profile'),

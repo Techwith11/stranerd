@@ -31,6 +31,12 @@ let helpers = {
 		return await firestore.collection('blog').add(post)
 	},
 	deleteQuestion: async (id) => await firestore.collection('tests/tutors/questions').doc(id).delete(),
+	editQuestion: async (question) => {
+		let id = question['.key']
+		delete question['.key']
+		question.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
+		return await firestore.collection('tests/tutors/questions').doc(id).set(question, { merge: true })
+	}
 }
 
 const actions = {
@@ -61,7 +67,10 @@ const actions = {
 		return await helpers.createBlogPost(post, getters.getId)
 	},
 	uploadFromEditor: async (store, data) => await helpers.uploadFromEditor(data),
-	deleteQuestion: async (store, id) => await helpers.deleteQuestion(id)
+
+	deleteQuestion: async (store, id) => await helpers.deleteQuestion(id),
+
+	editQuestion: async (store, question) => await helpers.editQuestion(question)
 }
 
 export default { actions }

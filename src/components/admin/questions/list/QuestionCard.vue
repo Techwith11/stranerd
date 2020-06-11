@@ -9,7 +9,7 @@
 		</p>
 		<span class="d-block">Answer: {{ question.answer }}</span>
 		<span class="d-block">Level {{ question.level }} {{ question.subject }}</span>
-		<a class="mr-3 text-warning"><i class="fas fa-pen mr-1"></i>Edit</a>
+		<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
 		<a class="mr-3 text-danger" @click.prevent="removeQuestion"><i class="fas fa-trash mr-1"></i>Delete</a>
 	</div>
 </template>
@@ -24,7 +24,11 @@
 			}
 		},
 		methods: {
-			...mapActions(['deleteQuestion']),
+			...mapActions(['deleteQuestion','setEditModalQuestion','setEditMeta']),
+			async openEditModal(){
+				this.setEditMeta(this.question)
+				this.setEditModalQuestion()
+			},
 			async removeQuestion(){
 				try{
 					let result = await new window.SweetAlert({

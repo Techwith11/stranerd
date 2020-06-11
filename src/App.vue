@@ -6,6 +6,7 @@
 		</div>
 		<app-footer />
 		<auth-modal v-if="isAuthModalOpen"/>
+		<edit-modal v-if="isEditModalOpen"/>
 		<session-modal v-if="isSessionModalOpen"/>
 		<post-modal v-if="isPostModalOpen" />
 		<cart-modal v-if="isCartModalOpen" />
@@ -18,6 +19,7 @@
 	import Navbar from '@/components/app/Navbar'
 	import Footer from '@/components/app/Footer'
 	import AuthModal from '@/components/auth/AuthModal'
+	import EditModal from '@/components/admin/modals/EditModal'
 	import SessionModal from '@/components/sessions/modals/SessionModal'
 	import PostModal from '@/components/posts/modals/PostModal'
 	import CartModal from '@/components/shop/modals/CartModal'
@@ -28,12 +30,13 @@
 			'app-nav-bar': Navbar,
 			'app-footer': Footer,
 			'auth-modal': AuthModal,
+			'edit-modal': EditModal,
 			'session-modal': SessionModal,
 			'post-modal': PostModal,
 			'cart-modal': CartModal,
 			'account-modal': AccountModal
 		},
-		computed: mapGetters(['isAuthModalOpen', 'isTutor', 'isSessionModalOpen','isPostModalOpen','isCartModalOpen','isAccountModalOpen']),
+		computed: mapGetters(['isAuthModalOpen', 'isTutor', 'isEditModalOpen','isSessionModalOpen','isPostModalOpen','isCartModalOpen','isAccountModalOpen']),
 		methods: {
 			...mapActions(['closeProfileListener', 'initializeTutorSessionsListener','closeTutorSessionsListener']),
 			closeAllListeners(){
