@@ -23,18 +23,6 @@ let helpers = {
         return await firestore.doc(path).set({
             dates: { readAt: firebase.firestore.FieldValue.serverTimestamp() }
         }, { merge: true })
-    },
-    sendDiscussion: async (userId, id, body) => {
-        return await firestore.collection(`courses/${id}/discussions`).add({
-            body, userId,
-            dates: { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
-        })
-    },
-    sendPostReply: async (userId, id, body) => {
-        return await firestore.collection(`posts/${id}/replies`).add({
-            body, userId,
-            dates: { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
-        })
     }
 }
 
@@ -71,12 +59,6 @@ let actions = {
         let path = `sessions/${data.id}/chats`
         return await helpers.sendMediaChat(getters.getId, path, data.media)
     },
-    async sendDiscussion({ getters }, data){
-        return await helpers.sendDiscussion(getters.getId, data.id, data.body)
-    },
-    async sendPostReply({ getters }, data){
-        return await helpers.sendPostReply(getters.getId, data.id, data.body)
-    }
 }
 
 export default { actions }

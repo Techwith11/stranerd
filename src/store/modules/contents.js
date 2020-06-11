@@ -1,6 +1,14 @@
 import firebase, { firestore, functions } from '@/config/firebase'
 
 let helpers = {
+	sendDiscussion: async (userId, id, body) => await firestore.collection(`courses/${id}/discussions`).add({
+		body, userId,
+		dates: { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
+	}),
+	sendPostReply: async (userId, id, body) => await firestore.collection(`posts/${id}/replies`).add({
+		body, userId,
+		dates: { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
+	}),
 	createPost: async (post, id) => (await functions.httpsCallable('createPost')({ post, id })).data,
 	upvoteReply: async (data) => (await functions.httpsCallable('upvoteReply')(data)).data,
 	downvoteReply: async (data) => (await functions.httpsCallable('downvoteReply')(data)).data,
@@ -66,6 +74,8 @@ let helpers = {
 
 const actions = {
 	createPost: async ({ getters }, post) => await helpers.createPost(post, getters.getId),
+	sendDiscussion: async ({ getters }, data) => await helpers.sendDiscussion(getters.getId, data.id, data.body),
+	sendPostReply: async ({ getters }, data) => await helpers.sendPostReply(getters.getId, data.id, data.body),
 	upvoteReply: async ({ getters }, data) => await helpers.upvoteReply({ ...data, id: getters.getId }),
 	downvoteReply: async ({ getters }, data) => await helpers.downvoteReply({ ...data, id: getters.getId }),
 	createQuestion: async ({ getters }, data) => await helpers.createQuestion(data, getters.getId),
