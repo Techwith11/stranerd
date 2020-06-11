@@ -27,7 +27,10 @@ module.exports = functions.https.onCall(async (data, context) => {
 			if(account.subscription.planId === data.planId){
 				throw new functions.https.HttpsError('invalid-argument', 'You are already on this plan')
 			}
-			await gateway.subscription.cancel(account.subscription.id)
+			let result = await gateway.subscription.cancel(account.subscription.id)
+			if(result.success){
+				await ref.update('account.subscription', {})
+			}
 		}
 		let result = await gateway.subscription.create({
 			planId: data.planId,
@@ -35,7 +38,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 		})
 		if(result.success){
 			let subscription = JSON.parse(JSON.stringify(result.subscription))
-			await ref.set({ account: { subscription }}, { merge: true })
+			await ref.set({ account: { subscription }})
 		}
 		return result.success
 	}catch(error){

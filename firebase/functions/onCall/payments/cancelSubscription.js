@@ -21,7 +21,6 @@ module.exports = functions.https.onCall(async (data, context) => {
 		if(account.subscription && account.subscription.id){
 			let result = await gateway.subscription.cancel(account.subscription.id)
 			if(result.success){
-				let subscription = JSON.parse(JSON.stringify(result.subscription))
 				await ref.update('account.subscription', {})
 			}
 			return result.success

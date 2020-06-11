@@ -8,6 +8,7 @@ exports.authUserDeleted = require('./auth/onDelete')
 
 // Request Triggers
 exports.requestMakeAdmin = require('./requests/makeAdmin')
+exports.braintreeWebhookSubscriptionStateChanged = require('./requests/braintreeWebhookSubscriptionStateChanged')
 
 
 // On Call Triggers
