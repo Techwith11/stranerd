@@ -4,6 +4,9 @@ import VueChatScroll from 'vue-chat-scroll'
 import { VueEditor } from 'vue2-editor'
 //import '@/config/registerServiceWorker'
 import '@/style/index.scss'
+import 'jquery'
+import 'popper.js'
+import 'bootstrap'
 
 import SweetAlert from 'sweetalert2'
 

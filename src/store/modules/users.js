@@ -8,6 +8,11 @@ let url = process.env.NODE_ENV === 'production' ? 'https://firebasestorage.googl
 
 const state = {
 	images: {
+		slides: [
+			url + encodeURIComponent('assets/slides_1.jpg'),
+			url + encodeURIComponent('assets/slides_2.jpg'),
+			url + encodeURIComponent('assets/slides_3.jpg')
+		],
 		defaultImage: url + encodeURIComponent('users/images/user_profile.png') + '?alt=media',
 		logo: url + encodeURIComponent('assets/stranerd_logo.png') + '?alt=media',
 		landing_hero: url + encodeURIComponent('assets/landing_hero.jpg') + '?alt=media',
