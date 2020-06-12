@@ -3,7 +3,7 @@
         <div class="container d-flex flex-column flex-md-row justify-content-center align-items-center">
             <div class="mb-5">
                 <h2 class="font-weight-bold">Our Pricing Plans</h2>
-                <p class="small">StraNerd is an online education platform that delivers video courses, programs and resources for</p>
+                <p class="small">Stranerd is an online educational platform that offers academic assistance to students worldwide.</p>
                 <button class="primary-button" @click="setAuthModalOverview">Start Free Trial</button>
             </div>
             <div class="price-card">
@@ -37,7 +37,7 @@
                 </ul>
             </div>
             <div class="price-card">
-                <p class="font-weight-light">Premium</p>
+                <p class="font-weight-light">Intermediate</p>
                 <p>
                     <span class="display-2 price">$15</span>
                     <span>/month</span>

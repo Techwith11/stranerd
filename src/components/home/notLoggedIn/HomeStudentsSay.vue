@@ -2,7 +2,7 @@
     <div id="background">
         <div class="container">
             <h2>What Students Say</h2>
-            <p class="small mx-auto">Stranerd is an online education platform that delivers video courses, programs and resources for Individual, Advertising & Media Specialist,.</p>
+            <p class="small mx-auto">Stranerd is an online educational platform that offers academic assistance to students worldwide.</p>
             <div class="row mt-3">
                 <div class="col-md-6 col-lg-3 mt-2" v-for="index in 4" :key="index">
                     <div class="card">

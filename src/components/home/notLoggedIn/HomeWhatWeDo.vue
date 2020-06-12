@@ -37,6 +37,7 @@
     @import '../../../style/index.scss';
     #background{
         padding: 4rem 0;
+        background: $primary-light;
         color: $text-black;
         text-align: center;
     }

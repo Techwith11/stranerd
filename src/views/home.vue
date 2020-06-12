@@ -14,6 +14,7 @@
 			<students-says />
 			<what-makes-us-different />
 			<recent-courses />
+			<mckenwin />
 			<pricing />
 		</div>
 	</div>
@@ -28,6 +29,7 @@
 	import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay'
 	import WhatMakesUsDifferent from '@/components/home/notLoggedIn/HomeWhatMakesUsDifferent'
 	import RecentCourses from '@/components/home/notLoggedIn/HomeRecentCourses'
+	import Mckenwin from '@/components/home/notLoggedIn/HomeMckenwin'
 	import Pricing from '@/components/home/notLoggedIn/HomePricing'
 	import TopTutors from '@/components/home/loggedIn/TopTutors'
 	import RecentSessions from '@/components/home/loggedIn/RecentSessions'
@@ -42,6 +44,7 @@
 			'students-says': StudentsSay,
 			'what-makes-us-different': WhatMakesUsDifferent,
 			'recent-courses': RecentCourses,
+			'mckenwin': Mckenwin,
 			'pricing': Pricing,
 			'top-tutors': TopTutors,
 			'recent-posts': RecentPosts,

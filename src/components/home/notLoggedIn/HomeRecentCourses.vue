@@ -2,7 +2,6 @@
     <div id="background" v-if="courses.length > 1">
         <div class="container">
             <h2>Courses</h2>
-            <course-nav />
             <div class="card-deck mt-2">
                 <div class="col-lg-6 p-0" v-for="course in courses" :key="course['.key']">
                     <course-card :course="course" />
@@ -17,14 +16,12 @@
 
 <script>
     import { firestore } from '@/config/firebase'
-    import CourseNav from '@/components/courses/list/CourseNav'
     import CourseCard from '@/components/courses/list/CourseCard'
     export default {
         data: () => ({
             courses: []
         }),
         components: {
-            'course-nav': CourseNav,
             'course-card': CourseCard
         },
         async mounted(){

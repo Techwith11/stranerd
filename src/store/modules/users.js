@@ -23,6 +23,7 @@ const state = {
 		],
 		logo: url + encodeURIComponent('assets/stranerd_logo.png') + '?alt=media',
 		what_makes_us_different: url + encodeURIComponent('assets/what_makes_us_different.jpg') + '?alt=media',
+		mckenwin: url + encodeURIComponent('assets/mckenwin.jpg') + '?alt=media',
 		icons: {
 			unlimited_access: url + encodeURIComponent('assets/icons/Unlimited Access.svg') + '?alt=media',
 			study_anywhere: url + encodeURIComponent('assets/icons/Study Anywhere.svg') + '?alt=media',

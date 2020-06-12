@@ -1,5 +1,5 @@
 <template>
-	<div id="background">
+	<div class="py-5">
 		<div class="p-3 p-md-5 container">
 			<div class="px-md-3">
 				<h4 class="text-muted text-center">Ask Your Questions</h4>
@@ -36,15 +36,6 @@
 		</div>
 	</div>
 </template>
-
-<style lang="scss" scoped>
-	@import '../../../style/index.scss';
-	#background{
-		background: $primary-light;
-		color: $text-black;
-		padding: 2rem 0;
-	}
-</style>
 
 <script>
 	import { required, minLength } from 'vuelidate/lib/validators'

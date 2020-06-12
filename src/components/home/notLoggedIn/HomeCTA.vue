@@ -11,7 +11,7 @@
                     <img :src="getImages.slides[0]" class="d-block w-100" alt="">
                     <div class="carousel-caption">
                         <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
-                        <p class="subhead">Premium access to more than 10,000 resources ranging from courses, events e.t.c.</p>
+                        <p class="subhead">Premium access to loads of resources ranging from courses, tests e.t.c.</p>
                         <button class="primary-button ctaButton"><router-link class="text-decoration-none text-white" to="/courses">Get Access</router-link></button>
                     </div>
                 </div>
@@ -19,7 +19,7 @@
                     <img :src="getImages.slides[1]" class="d-block w-100" alt="">
                     <div class="carousel-caption">
                         <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
-                        <p class="subhead">Premium access to more than 10,000 resources ranging from courses, events e.t.c.</p>
+                        <p class="subhead">Premium access to loads of resources ranging from courses, tests e.t.c.</p>
                         <button class="primary-button ctaButton"><router-link class="text-decoration-none text-white" to="/courses">Get Access</router-link></button>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <img :src="getImages.slides[2]" class="d-block w-100" alt="">
                     <div class="carousel-caption text-dark">
                         <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
-                        <p class="subhead">Premium access to more than 10,000 resources ranging from courses, events e.t.c.</p>
+                        <p class="subhead">Premium access to loads of resources ranging from courses, tests e.t.c.</p>
                         <button class="primary-button ctaButton"><router-link class="text-decoration-none text-white" to="/courses">Get Access</router-link></button>
                     </div>
                 </div>
