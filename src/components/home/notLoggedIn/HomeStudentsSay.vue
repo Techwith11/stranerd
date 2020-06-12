@@ -2,20 +2,24 @@
     <div id="background">
         <div class="container">
             <h2>What Students Say</h2>
-            <p class="small  mx-auto">Semaj Africa is an online education platform that delivers video courses, programs and resources for Individual, Advertising & Media Specialist,.</p>
+            <p class="small mx-auto">Stranerd is an online education platform that delivers video courses, programs and resources for Individual, Advertising & Media Specialist,.</p>
             <div class="row mt-3">
                 <div class="col-md-6 col-lg-3 mt-2" v-for="index in 4" :key="index">
                     <div class="card">
                         <div class="card-body">
-                            <h1 class="font-weight-bold">&ldquo;</h1>
+                            <div class="text-center mb-3">
+                                <img :src="getImages.students[0]" alt="" class="rounded">
+                            </div>
                             <p class="card-text">
-                                Semaj Africa is an online education platform that delivers video courses, programs and resources for Individual,
+                                Stranerd is an online education platform that delivers video courses, programs and resources for Individual,
                                 Advertising & Media Specialist, Online Marketing Professionals, Freelancers and anyone.
                             </p>
-                            <p>
-                                <span class="font-weight-bold">Arthur Brown</span><br/>
+                            <div>
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <span class="font-weight-bold">Arthur Brown</span><br/>
+                                </div>
                                 <span>3D Modelling, University of Illinios</span>
-                            </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -24,6 +28,13 @@
     </div>
 </template>
 
+<script>
+    import { mapGetters } from 'vuex'
+    export default {
+        computed: mapGetters(['getImages'])
+    }
+</script>
+
 <style lang="scss" scoped>
     @import '../../../style/index.scss';
     #background{
@@ -31,6 +42,10 @@
         padding: 4rem 0;
         color: $text-black;
         text-align: center;
+    }
+    img{
+        width: 100px;
+        height: 100px;
     }
     h2{
         color: $primary-dark;

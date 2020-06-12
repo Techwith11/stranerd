@@ -52,7 +52,7 @@
 		}),
 		computed: mapGetters(['getCreatePost']),
 		methods: {
-			...mapActions(['closePostModal','createPost','uploadFromEditor','setCreatePost']),
+			...mapActions(['closePostModal','createPost','uploadFromEditor','clearCreatePost']),
 			splitTag(){
 				let tag = this.tag.trim().split(',')[0].toLowerCase()
 				this.tag = ''
@@ -80,7 +80,7 @@
 		mounted(){
 			if(this.getCreatePost){
 				this.post = this.getCreatePost
-				this.setCreatePost(null)
+				this.clearCreatePost()
 			}
 		},
 		validations:{

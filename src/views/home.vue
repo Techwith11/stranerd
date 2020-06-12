@@ -10,8 +10,10 @@
 			<cta />
 			<why-us />
 			<ask-question />
-			<stats />
+			<what-we-do />
 			<students-says />
+			<what-makes-us-different />
+			<recent-courses />
 			<pricing />
 		</div>
 	</div>
@@ -20,10 +22,12 @@
 <script>
 	import { mapGetters, mapActions } from 'vuex'
 	import CTA from '@/components/home/notLoggedIn/HomeCTA'
-	import AskQuestion from '@/components/home/notLoggedIn/AskQuestion'
 	import WhyUs from '@/components/home/notLoggedIn/HomeWhyUs'
-	import Stats from '@/components/home/notLoggedIn/HomeStats'
+	import WhatWeDo from '@/components/home/notLoggedIn/HomeWhatWeDo'
+	import AskQuestion from '@/components/home/notLoggedIn/HomeAskQuestion'
 	import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay'
+	import WhatMakesUsDifferent from '@/components/home/notLoggedIn/HomeWhatMakesUsDifferent'
+	import RecentCourses from '@/components/home/notLoggedIn/HomeRecentCourses'
 	import Pricing from '@/components/home/notLoggedIn/HomePricing'
 	import TopTutors from '@/components/home/loggedIn/TopTutors'
 	import RecentSessions from '@/components/home/loggedIn/RecentSessions'
@@ -32,10 +36,12 @@
 		name: 'Home',
 		components: {
 			'cta': CTA,
-			'ask-question': AskQuestion,
 			'why-us': WhyUs,
-			'stats': Stats,
+			'ask-question': AskQuestion,
+			'what-we-do': WhatWeDo,
 			'students-says': StudentsSay,
+			'what-makes-us-different': WhatMakesUsDifferent,
+			'recent-courses': RecentCourses,
 			'pricing': Pricing,
 			'top-tutors': TopTutors,
 			'recent-posts': RecentPosts,

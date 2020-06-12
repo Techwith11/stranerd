@@ -3,12 +3,12 @@
         <div class="container">
             <h2>Courses</h2>
             <course-nav />
-            <div class="row mt-2">
-                <div class="col-md-6 col-lg-4" v-for="course in courses" :key="course['.key']">
+            <div class="card-deck mt-2">
+                <div class="col-lg-6 p-0" v-for="course in courses" :key="course['.key']">
                     <course-card :course="course" />
                 </div>
             </div>
-            <button class="primary-button">
+            <button class="primary-button mt-4">
                 <router-link class="text-white text-decoration-none" to="/courses">Discover</router-link>
             </button>
         </div>

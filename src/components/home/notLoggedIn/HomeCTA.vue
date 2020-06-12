@@ -25,7 +25,7 @@
                 </div>
                 <div class="carousel-item" data-interval="3000">
                     <img :src="getImages.slides[2]" class="d-block w-100" alt="">
-                    <div class="carousel-caption">
+                    <div class="carousel-caption text-dark">
                         <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
                         <p class="subhead">Premium access to more than 10,000 resources ranging from courses, events e.t.c.</p>
                         <button class="primary-button ctaButton"><router-link class="text-decoration-none text-white" to="/courses">Get Access</router-link></button>
