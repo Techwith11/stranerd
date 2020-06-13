@@ -8,7 +8,7 @@
 		<div>
 			<p class="lead">You must be subscribed to view this page. </p>
 			<div class="d-flex justify-content-end">
-				<button class="btn btn-success" @click="setAccountModalMustSubscribeWarning">Continue</button>
+				<button class="btn btn-success" @click="setAccountModalSelectSubscription">Continue</button>
 			</div>
 		</div>
 	</div>
@@ -18,7 +18,7 @@
 	import { mapActions } from 'vuex'
 	export default {
 		methods: {
-			...mapActions(['closeAccountModal','setAccountModalMustSubscribeWarning']),
+			...mapActions(['closeAccountModal','setAccountModalSelectSubscription']),
 		}
 	}
 </script>
