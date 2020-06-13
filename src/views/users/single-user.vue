@@ -2,8 +2,8 @@
 	<div class="container">
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
-			<user-info :user="user" />
-			<div v-if="user.roles.isTutor" class="mt-5">
+			<user-info :user="user" v-if="user['.key']" />
+			<div v-if="user.roles && user.roles.isTutor" class="mt-5">
 				<h6 class="text-center font-weight-bold" v-if="sessions.length > 0">Recent Sessions</h6>
 				<div class="row">
 					<div class="col-md-6 col-lg-4" v-for="session in sessions" :key="session['.key']">
@@ -33,21 +33,24 @@
 			'user-info': UserInfo,
 			'helper-spinner': HelperSpinner
 		},
-		async mounted() {
+		async activated() {
+			this.isLoading = true
+			if(!this.user['.key']){
+				let docs = await firestore.collection('sessions').where('tutor','==',this.$route.params.id)
+					.where('cancelled.student','==',false)
+					.where('cancelled.tutor','==',false)
+					.orderBy('dates.createdAt','desc')
+					.limit(12)
+					.get()
+				docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
+			}
 			this.listener = firestore.collection('users').doc(this.$route.params.id).onSnapshot(snapshot => {
-				if(!snapshot.exists){ return this.$router.push('/tutors') }
+				if(!snapshot.exists){ return this.$router.replace('/tutors') }
 				this.user = { '.key': snapshot.id, ...snapshot.data() }
-				this.isLoading = false
 			})
-			let docs = await firestore.collection('sessions').where('tutor','==',this.$route.params.id)
-				.where('cancelled.student','==',false)
-				.where('cancelled.tutor','==',false)
-				.orderBy('dates.createdAt','desc')
-				.limit(12)
-				.get()
-			docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
+			this.isLoading = false
 		},
-		beforeDestroy(){
+		deactivated(){
 			this.listener()
 		}
 	}

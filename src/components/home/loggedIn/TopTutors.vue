@@ -3,9 +3,7 @@
 		<p class="text-muted">Top Tutors</p>
 		<tutor-card class="my-2" v-for="tutor in tutors" :user="tutor" :key="tutor['.key']" />
 		<div class="d-flex justify-content-end my-3">
-			<button class="btn-success">
-				<router-link class="text-decoration-none text-white" to="/tutors">See More</router-link>
-			</button>
+			<router-link class="btn btn-success text-decoration-none text-white px-4" to="/tutors">See More</router-link>
 		</div>
 	</div>
 </template>

@@ -123,6 +123,7 @@
             }
         },
 		async activated(){
+			this.isLoading = true
 			if(!this.session['.key']){
 				await this.getSessionInfo()
 				await this.getChats()

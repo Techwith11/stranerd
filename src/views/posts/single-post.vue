@@ -93,6 +93,7 @@
 			}
 		},
 		async activated(){
+			this.isLoading = true
 			if(!this.post['.key']){
 				await this.getPost()
 				await this.getOwner()

@@ -98,6 +98,7 @@
 			'helper-message': HelperMessage,
 		},
 		async activated(){
+			this.isLoading = true
 			if(!this.user['.key']){
 				await this.getUser()
 				await this.getChats()
