@@ -14,7 +14,7 @@
 			<div class="d-flex align-items-center" v-if="user && user['.key']">
 				<img :src="getImageLink" class="mr-2" width="40px" alt="">
 				<div class="small">
-					<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`">{{ user.bio.name }}</router-link></p>
+					<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`" target="_blank">{{ user.bio.name }}</router-link></p>
 					<p class="mb-0">on {{ getDate }}</p>
 				</div>
 			</div>

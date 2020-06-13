@@ -12,7 +12,7 @@
 					</h5>
 					<p class="card-text mb-1">{{ user.bio.bio }}</p>
 					<p class="card-text mb-1">Courses: {{ getCourses }}</p>
-					<router-link :to="`/users/${user['.key']}`" class="card-link">Visit Profile</router-link>
+					<router-link :to="`/users/${user['.key']}`" class="card-link" target="_blank">Visit Profile</router-link>
 				</div>
 			</div>
 		</div>

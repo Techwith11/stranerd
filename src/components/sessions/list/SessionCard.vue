@@ -1,5 +1,5 @@
 <template>
-	<router-link :to="`/sessions/${session['.key']}`" class="text-decoration-none">
+	<router-link :to="`/sessions/${session['.key']}`" class="text-decoration-none" target="_blank">
 		<div class="alert d-flex align-items-center my-2" role="alert" :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
 			<img :src="getImageLink" class="mr-2 w-25" alt="">
 			<div>

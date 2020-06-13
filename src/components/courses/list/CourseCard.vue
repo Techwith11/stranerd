@@ -1,5 +1,5 @@
 <template>
-	<router-link class="card my-3 text-decoration-none" :to="`/courses/${course['.key']}`">
+	<router-link class="card my-3 text-decoration-none" :to="`/courses/${course['.key']}`" target="_blank">
 		<img :src="course.image.link" class="card-img-top w-100" alt="">
 		<div class="card-body">
 			<h6 class="card-title">{{ course.title }}</h6>
