@@ -2,7 +2,10 @@
 	<div>
 		<div id="content">
 			<app-nav-bar />
-			<router-view/>
+			<keep-alive v-if="isLoggedIn">
+				<router-view :key="$route.fullPath" />
+			</keep-alive>
+			<router-view v-else />
 		</div>
 		<app-footer />
 		<auth-modal v-if="isAuthModalOpen"/>
@@ -36,7 +39,7 @@
 			'cart-modal': CartModal,
 			'account-modal': AccountModal
 		},
-		computed: mapGetters(['isAuthModalOpen', 'isTutor', 'isEditModalOpen','isSessionModalOpen','isPostModalOpen','isCartModalOpen','isAccountModalOpen']),
+		computed: mapGetters(['isAuthModalOpen', 'isLoggedIn', 'isTutor', 'isEditModalOpen','isSessionModalOpen','isPostModalOpen','isCartModalOpen','isAccountModalOpen']),
 		methods: {
 			...mapActions(['closeProfileListener', 'initializeTutorSessionsListener','closeTutorSessionsListener']),
 			closeAllListeners(){
