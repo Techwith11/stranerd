@@ -47,15 +47,6 @@
         text-align: center;
         padding: 4rem 0 4rem;
     }
-    #primary-text{
-        color: $primary-dark;
-    }
-    #spacer{
-        margin-top: 10rem;
-        img {
-            width: 60%;
-        }
-    }
     .icons{
         height: 100px;
     }
@@ -67,14 +58,5 @@
     .icon-subtitle{
         margin: 0.5rem 0;
         font-size: 0.875rem;
-    }
-    @media screen and (max-width: 768px){
-        #spacer{
-            margin-top: 4rem;
-            img{
-                width: 100%;
-                margin-bottom: 2rem;
-            }
-        }
     }
 </style>
