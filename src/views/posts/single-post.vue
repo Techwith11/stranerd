@@ -92,14 +92,14 @@
 				this.isOlderRepliesLoading = false
 			}
 		},
-		async mounted(){
-			await this.getPost()
-			await this.getOwner()
-			await this.getReplies()
-			this.isLoading = false
-		},
 		async activated(){
+			if(!this.post['.key']){
+				await this.getPost()
+				await this.getOwner()
+				await this.getReplies()
+			}
 			await this.setRepliesListeners()
+			this.isLoading = false
 		},
 		deactivated(){
 			this.listener()

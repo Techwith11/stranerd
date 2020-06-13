@@ -31,7 +31,7 @@
 		data: () => ({
 			user: {},
 			chats: [],
-			isLoading: false,
+			isLoading: true,
 			isOlderChatsLoading: false,
 			chatsListener: () => {},
 			paginationLimit: 10,
@@ -98,7 +98,6 @@
 			'helper-message': HelperMessage,
 		},
 		async activated(){
-			this.isLoading = true
 			if(!this.user['.key']){
 				await this.getUser()
 				await this.getChats()

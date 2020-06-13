@@ -29,7 +29,7 @@
 	export default {
 		name: "SingleSession",
 		data: () => ({
-			isLoading: false,
+			isLoading: true,
 			isOlderChatsLoading: false,
 			timer: 600,
 			interval: null,
@@ -123,7 +123,6 @@
             }
         },
 		async activated(){
-			this.isLoading = true
 			if(!this.session['.key']){
 				await this.getSessionInfo()
 				await this.getChats()

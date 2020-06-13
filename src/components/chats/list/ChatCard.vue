@@ -5,7 +5,7 @@
 			<div class="flex-grow-1 w-25">
 				<div class="font-weight-bold d-flex justify-content-between align-items-baseline">
 					<span>{{ getUserName }}</span>
-					<span class="small">{{ getChatTime | getDateOrTime }}</span>
+					<span class="small">{{ getChatTime }}</span>
 				</div>
 				<div class="d-flex justify-content-between">
 					<span class="d-block small text-truncate" :class="{'font-weight-bold': !isByMe && !getChatRead}">{{ getChatContent }}</span>
@@ -36,12 +36,10 @@
 			getUserId(){ return this.user.id },
 			getUserName(){ return this.user.bio ? this.user.bio.name : '' },
 			getChatContent(){ return this.chat.media ? this.chat.media.name : this.chat.content },
-			getChatTime(){ return this.chat.dates ? new Date(this.chat.dates.sentAt.seconds * 1000) : '' },
 			getChatRead(){ return this.chat.dates.readAt != null },
-		},
-		filters: {
-			getDateOrTime(date){
-				if(typeof(date) === 'string') { return date }
+			getChatTime(){
+				let sentAt = this.chat && this.chat.dates ? this.chat.dates.sentAt : null
+				let date = sentAt ? new Date(sentAt.seconds * 1000) : new Date()
 				let now = new Date()
 				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
