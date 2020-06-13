@@ -27,9 +27,9 @@
 <style lang="scss" scoped>
     @import '../../../style/index.scss';
     #background{
-        background: $accent;
+        background: $primary-light;
         padding: 4rem 0;
-        color: $white;
+        color: $text-black;
         text-align: center;
     }
     h2{

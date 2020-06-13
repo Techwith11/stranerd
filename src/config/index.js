@@ -23,44 +23,21 @@ window.Toast = SweetAlert.mixin({
     timer: 3000
 });
 
-window.toggleNavbar = () => {
-    let collapse = document.getElementsByClassName('navbar-collapse')[0]
-    collapse.classList.toggle('collapse')
-    collapse.classList.toggle('in')
-}
-
 window.closeNavbar = () => {
-    let collapse = document.getElementsByClassName('navbar-collapse')[0]
-    collapse ? collapse.classList.add('collapse') : null
-    collapse ? collapse.classList.add('in') : null
-}
-
-window.toggleAccountDropDown = () => {
-    window.closeAdminDropdown()
-    let dropdown = document.getElementsByClassName('dropdown-menu')[0]
-    dropdown ? dropdown.classList.toggle('show') : null
-    let dropdownToggle = document.getElementsByClassName('dropdown-toggle')[0]
-    dropdownToggle ? dropdownToggle.classList.toggle('show') : null
+    let collapse = document.getElementById('navbar')
+    collapse ? collapse.classList.remove('show') : null
 }
 
 window.closeAccountDropdown = () => {
-    let dropdown = document.getElementsByClassName('dropdown-menu')[0]
-    dropdown ? dropdown.classList.remove('show') : null
-    let dropdownToggle = document.getElementsByClassName('dropdown-toggle')[0]
-    dropdownToggle ? dropdownToggle.classList.remove('show') : null
-}
-
-window.toggleAdminDropDown = () => {
-    window.closeAccountDropdown()
-    let dropdown = document.getElementsByClassName('dropdown-menu')[1]
-    dropdown ? dropdown.classList.toggle('show') : null
-    let dropdownToggle = document.getElementsByClassName('dropdown-toggle')[1]
-    dropdownToggle ? dropdownToggle.classList.toggle('show') : null
+    let collapse = document.getElementById('accountDropdown')
+    collapse ? collapse.classList.remove('show') : null
+    let menu = document.getElementById('accountDropdownMenu')
+    menu ? menu.classList.remove('show') : null
 }
 
 window.closeAdminDropdown = () => {
-    let dropdown = document.getElementsByClassName('dropdown-menu')[1]
-    dropdown ? dropdown.classList.remove('show') : null
-    let dropdownToggle = document.getElementsByClassName('dropdown-toggle')[1]
-    dropdownToggle ? dropdownToggle.classList.remove('show') : null
+    let collapse = document.getElementById('adminDropdown')
+    collapse ? collapse.classList.remove('show') : null
+    let menu = document.getElementById('adminDropdownMenu')
+    menu ? menu.classList.remove('show') : null
 }
