@@ -28,19 +28,19 @@
 				<div class="d-flex">
 				<span class="mr-2">
 					<input type="radio" v-model="devUser" value="kevin11" class="mr-1">
-					<label>kevin11</label>
+					<label>Kevin11</label>
 				</span>
 					<span class="mr-2">
 					<input type="radio" v-model="devUser" value="frank" class="mr-1">
-					<label>frank</label>
+					<label>Frank</label>
 				</span>
 					<span class="mr-2">
 					<input type="radio" v-model="devUser" value="max" class="mr-1">
-					<label>max</label>
+					<label>Max</label>
 				</span>
 					<span class="mr-2">
-					<input type="radio" v-model="devUser" value="jow" class="mr-1">
-					<label>jow</label>
+					<input type="radio" v-model="devUser" value="joe" class="mr-1">
+					<label>Joe</label>
 				</span>
 				</div>
 				<button @click="loginAsDevUser" :disabled="!devUser">

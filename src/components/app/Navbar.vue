@@ -26,7 +26,7 @@
                         <router-link class="nav-link text-white" to="/shop">Shop</router-link>
                     </li>
                     <li class="nav-item dropdown" id="accountDropdown">
-                        <a class="nav-link dropdown-toggle" id="accountDropdownToggle" @click.prevent="toggleAccountDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle text-white" id="accountDropdownToggle" @click.prevent="toggleAccountDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             My account
                         </a>
                         <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="accountDropdownToggle`" id="accountDropdownMenu">
