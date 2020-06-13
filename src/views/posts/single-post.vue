@@ -13,7 +13,6 @@
 						</div>
 						<div class="pl-4">
 							<reply-card v-for="reply in replies" :key="reply['.key']" :reply="reply" :post="post"/>
-							<reply-card v-for="reply in newReplies" :key="reply['.key']" :reply="reply" :post="post"/>
 						</div>
 					</div>
 				</div>
@@ -62,7 +61,14 @@
 				}
 				docs = await docs.get()
 				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.replies.unshift({ '.key': doc.id, ...doc.data() }))
+				docs.forEach(doc => {
+					let index = this.replies.findIndex(r => r['.key'] === doc.id)
+					if(index === -1){
+						this.replies.unshift({ '.key': doc.id, ...doc.data() })
+					}else{
+						this.replies[index] = { '.key': doc.id, ...doc.data() }
+					}
+				})
 			},
 			async setRepliesListeners(){
 				let lastItem = this.replies[this.replies.length - 1]
@@ -71,8 +77,14 @@
 					query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
 				}
 				this.listener = query.onSnapshot(snapshot => {
-					this.newReplies = []
-					snapshot.docs.forEach(doc => this.newReplies.push({ '.key': doc.id, ...doc.data() }))
+					snapshot.docs.forEach(doc => {
+						let index = this.replies.findIndex(r => r['.key'] === doc.id)
+						if(index === -1){
+							this.replies.push({ '.key': doc.id, ...doc.data() })
+						}else{
+							this.replies[index] = { '.key': doc.id, ...doc.data() }
+						}
+					})
 				})
 			},
 			async fetchOlderReplies(){
@@ -85,17 +97,19 @@
 			await this.getPost()
 			await this.getOwner()
 			await this.getReplies()
-			await this.setRepliesListeners()
 			this.isLoading = false
+		},
+		async activated(){
+			await this.setRepliesListeners()
+		},
+		deactivated(){
+			this.listener()
 		},
 		components: {
 			'helper-spinner': HelperSpinner,
 			'post-info': PostInfo,
 			'reply-form': ReplyForm,
 			'reply-card': ReplyCard,
-		},
-		beforeDestroy(){
-			this.listener()
 		}
 	}
 </script>

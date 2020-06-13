@@ -45,7 +45,8 @@
 			...mapGetters(['getId','getDefaultImage']),
 			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
 			getDate(){
-				let date = new Date(this.reply.dates.createdAt.seconds * 1000)
+				let createdAt = this.reply.dates.createdAt
+				let date = createdAt ? new Date(this.reply.dates.createdAt.seconds * 1000) : new Date()
 				let now = new Date()
 				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
 				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
