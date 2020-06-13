@@ -5,7 +5,7 @@
 			<h5 class="card-title">{{ post.title }}</h5>
 			<p class="card-text">{{ post.description }}</p>
 			<span class="d-block my-2">Uploaded {{ getDateOrTime }}</span>
-			<router-link :to="`/blog/${post['.key']}`" class="btn btn-primary" target="_blank">View article</router-link>
+			<router-link :to="`/blog/${post['.key']}`" class="btn btn-primary">View article</router-link>
 			<div class="my-3" v-if="isAdmin">
 				<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
 				<a class="mr-3 text-danger" @click.prevent="removePost"><i class="fas fa-trash mr-1"></i>Delete</a>
