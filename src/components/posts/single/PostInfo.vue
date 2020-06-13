@@ -5,7 +5,7 @@
 		<div class="small d-flex">
 			<img :src="getImageLink" class="mr-2" width="50px" alt="">
 			<div>
-				<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`" target="_blank">{{ user.bio.name }}</router-link></p>
+				<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`">{{ user.bio.name }}</router-link></p>
 				<p class="mb-0">{{ getDate }}</p>
 			</div>
 		</div>
