@@ -4,14 +4,13 @@
 		<div v-else>
 			<session-nav :user="otherPerson" :timer="timer" />
 			<div class="container py-3" :id="timer > 0 ? 'smaller-height' : 'longer-height'">
-				<helper-message v-if="chats.length < 1 && newChats.length < 1" :message="timer > 0 ? 'No messages. Send a message now' : 'Session has ended and no message was sent.'" />
+				<helper-message v-if="chats.length < 1" :message="timer > 0 ? 'No messages. Send a message now' : 'Session has ended and no message was sent.'" />
 				<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
 					<li class="d-block text-center small text-muted mb-2" v-if="hasMore">
 						<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
 						<span @click="fetchOlderMessages">Fetch Older</span>
 					</li>
 					<session-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
-					<session-chat-message :chat="chat" v-for="chat in newChats" :key="chat['.key']" />
 				</ul>
 				<session-chat-form v-if="timer > 0" />
 			</div>
@@ -30,14 +29,13 @@
 	export default {
 		name: "SingleSession",
 		data: () => ({
-			isLoading: true,
+			isLoading: false,
 			isOlderChatsLoading: false,
 			timer: 600,
 			interval: null,
 			session: {},
 			otherPerson: {},
 			chats: [],
-			newChats: [],
 			paginationLimit: 10,
 			hasMore: true,
             otherPersonListener: () => {},
@@ -50,16 +48,6 @@
 			'session-chat-form': SessionChatForm,
 			'session-chat-message': SessionChatMessage,
         },
-		async mounted(){
-			await this.getSessionInfo()
-			if(this.session['.key']){
-				this.initTimer()
-				await this.getChats()
-				this.setChatListener()
-				this.setOtherPersonListener()
-			}
-            this.isLoading = false
-		},
 		methods:{
 			...mapActions(['showSessionRatingsForm']),
 			async getSessionInfo(){
@@ -134,7 +122,20 @@
                 if(Math.floor(this.timer) === 10){ new window.Toast({ icon: 'warning', title: 'This session will end in 10 seconds.' }) }
             }
         },
-        beforeDestroy(){ this.cleanUp() },
+		async activated(){
+			this.isLoading = true
+			if(!this.session['.key']){
+				await this.getSessionInfo()
+				await this.getChats()
+			}
+			this.initTimer()
+			this.setChatListener()
+			this.setOtherPersonListener()
+			this.isLoading = false
+		},
+		deactivated(){
+			this.cleanUp()
+		},
 		computed: {
 			...mapGetters(['getId']),
             getTime(){

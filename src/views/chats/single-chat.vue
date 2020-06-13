@@ -4,14 +4,13 @@
 		<div v-else id="messageContainer">
 			<single-chat-nav :user="user" />
 			<div class="container py-3" :id="canHaveSession ? 'smaller-height' : 'longer-height'">
-				<helper-message v-if="chats.length < 1 && newChats.length < 1" message="No chats. Send a message now" />
+				<helper-message v-if="chats.length < 1" message="No chats. Send a message now" />
 				<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
 					<li class="d-block text-center small text-muted mb-2" v-if="hasMore">
 						<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderChatsLoading"></i>
 						<span @click="fetchOlderMessages">Fetch Older</span>
 					</li>
 					<single-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
-					<single-chat-message :chat="chat" v-for="chat in newChats" :key="chat['.key']" />
 				</ul>
 				<single-chat-form />
 			</div>
@@ -30,19 +29,17 @@
 	export default {
 		name: 'Chat',
 		data: () => ({
-			doesExist: false,
 			user: {},
 			chats: [],
-			newChats: [],
-			isLoading: true,
+			isLoading: false,
 			isOlderChatsLoading: false,
-			chatsListeners: () => {},
+			chatsListener: () => {},
 			paginationLimit: 10,
 			hasMore: false
 		}),
 		computed: {
 			...mapGetters(['getId']),
-            canHaveSession(){ return this.user.roles.isTutor && this.user['.key'] !== this.getId },
+            canHaveSession(){ return this.user.roles && this.user.roles.isTutor && this.user['.key'] !== this.getId },
 			getChatPath(){ return [this.$route.params.id, this.getId].sort().join('_') }
 		},
 		methods: {
@@ -50,7 +47,6 @@
 				let doc = await firestore.collection('users').doc(this.$route.params.id).get()
 				if(!doc.exists){ return this.$router.replace('/chats') }
 				this.user = { '.key': doc.id, ...doc.data() }
-				this.doesExist = doc.exists
 				this.isLoading = false
 			},
 			async getChats(){
@@ -62,7 +58,14 @@
 				}
 				docs = await docs.get()
 				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.chats.unshift({ '.key': doc.id, ...doc.data() }))
+				docs.forEach(doc => {
+					let index = this.chats.findIndex(r => r['.key'] === doc.id)
+					if(index === -1){
+						this.chats.unshift({ '.key': doc.id, ...doc.data() })
+					}else{
+						this.chats[index] = { '.key': doc.id, ...doc.data() }
+					}
+				})
 			},
 			setListener(){
 				let lastItem = this.chats[this.chats.length - 1]
@@ -70,9 +73,15 @@
 				if(lastItem){
 					query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
 				}
-				this.chatsListeners = query.onSnapshot(snapshot => {
-					this.newChats = []
-					snapshot.docs.forEach(doc => this.newChats.push({ '.key': doc.id, ...doc.data() }))
+				this.chatsListener = query.onSnapshot(snapshot => {
+					snapshot.docs.forEach(doc => {
+						let index = this.chats.findIndex(r => r['.key'] === doc.id)
+						if(index === -1){
+							this.chats.push({ '.key': doc.id, ...doc.data() })
+						}else{
+							this.chats[index] = { '.key': doc.id, ...doc.data() }
+						}
+					})
 				})
 			},
 			async fetchOlderMessages(){
@@ -88,15 +97,18 @@
 			'helper-spinner': HelperSpinner,
 			'helper-message': HelperMessage,
 		},
-		async mounted() {
-			await this.getUser()
-			await this.getChats()
+		async activated(){
+			this.isLoading = true
+			if(!this.user['.key']){
+				await this.getUser()
+				await this.getChats()
+			}
+			await this.setListener()
 			this.isLoading = false
-			this.setListener()
 		},
-		beforeDestroy(){
-			this.chatsListeners()
-		}
+		deactivated(){
+			this.chatsListener()
+		},
 	}
 </script>
 

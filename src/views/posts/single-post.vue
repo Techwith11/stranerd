@@ -34,7 +34,6 @@
 			post: {},
 			user: {},
 			replies: [],
-			newReplies: [],
 			listener: () => {},
 			isLoading: true,
 			isOlderRepliesLoading: false,

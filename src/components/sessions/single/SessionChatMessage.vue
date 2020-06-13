@@ -9,7 +9,7 @@
 				</a>
 			</div>
 			<div class="d-flex justify-content-between small">
-				<span class="mr-5 text-black-50">{{ getChatTime | getDateOrTime }}</span>
+				<span class="mr-5 text-black-50">{{ getChatTime }}</span>
 				<span :class="{'d-none':!isByMe, 'text-primary': !isChatRead, 'text-success': isChatRead }">
 					<i class="fas fa-check"></i><i class="fas fa-check ml-n2"></i>
 				</span>
@@ -31,12 +31,22 @@
 			...mapGetters(['getId']),
 			isByMe(){ return this.chat.from === this.getId },
 			isChatRead(){ return this.chat.dates.readAt !== null },
-			getChatTime(){ return this.chat.dates && this.chat.dates.sentAt ? new Date(this.chat.dates.sentAt.seconds * 1000) : '' }
+			getChatTime(){
+				let sentAt = this.chat && this.chat.dates ? this.chat.dates.sentAt : null
+				let date = sentAt ? new Date(sentAt.seconds * 1000) : new Date()
+				let now = new Date()
+				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+				if(date > today){
+					return date.toTimeString().slice(0,5)
+				}else if(date > yesterday){
+					return 'Yesterday'
+				}else{
+					return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
+				}
+			}
 		},
 		async mounted(){
-			if(!this.isByMe && !this.isChatRead){
-				await this.readSessionChat({ id: this.chat['.key'], path: this.$route.params.id })
-			}
 			if(!this.isByMe && !this.isChatRead){
 				if(document.visibilityState === 'visible'){
 					await this.readSessionChat({ id: this.chat['.key'], path: this.$route.params.id })
@@ -50,21 +60,6 @@
 			}
 		},
 		methods: mapActions(['readSessionChat']),
-		filters: {
-			getDateOrTime(date){
-				if(typeof(date) === 'string') { return date }
-				let now = new Date()
-				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
-				if(date > today){
-					return date.toTimeString().slice(0,5)
-				}else if(date > yesterday){
-					return 'Yesterday'
-				}else{
-					return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
-				}
-			}
-		},
 		beforeDestroy(){ document.onvisibilitychange = undefined }
 	}
 </script>
