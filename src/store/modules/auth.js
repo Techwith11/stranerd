@@ -4,7 +4,7 @@ import store from '@/store/index'
 
 const state = {
 	id: null,
-	user: {},
+	user: JSON.parse(window.localStorage.getItem('user')) || {},
 	profileListener: () => {}
 }
 
@@ -27,12 +27,21 @@ const mutations = {
 			state.profileListener = firestore
 				.collection('users')
 				.doc(id)
-				.onSnapshot(snapshot => snapshot.exists ? state.user = snapshot.data() : store.dispatch('setId',null))
+				.onSnapshot(snapshot => {
+					if (snapshot.exists) {
+						let user = snapshot.data()
+						state.user = user
+						window.localStorage.setItem('user', JSON.stringify(user))
+					} else {
+						store.dispatch('setId', null)
+					}
+				})
 			await store.dispatch('checkForUnfinishedTests')
 			window.localStorage.setItem('user_id', id)
 		}else{
 			state.user = {}
 			state.profileListener = () => {}
+			window.localStorage.removeItem('user')
 			window.localStorage.removeItem('user_id')
 		}
 	},
