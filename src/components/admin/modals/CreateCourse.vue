@@ -17,14 +17,11 @@
 					/>
 				</div>
 				<div class="form-group my-3">
-					<h6>Tags</h6>
-					<div class="custom-control custom-checkbox d-inline-block mx-1"  v-for="tag in tags" :key="tag.name">
-						<input type="checkbox" class="custom-control-input" :id="tag.name"  v-model="$v.course.tags.$model" :value="tag.name">
-						<label class="custom-control-label" :for="tag.name">{{ tag.name }}</label>
-					</div>
-					<small id="tagsHelpBlock" class="form-text" :class="$v.course.tags.$error ? 'text-danger' : 'text-muted'">
-						Please select at least one tag
-					</small>
+					<h6>Subject</h6>
+					<select class="form-control" v-model="$v.course.subject.$model" :class="{'is-invalid': $v.course.subject.$error, 'is-valid': !$v.course.subject.$invalid}">
+						<option :value="null" disabled>Please select a subject</option>
+						<option :value="subject.name" v-for="subject in subjects" :key="subject['.key']">{{ subject.name }}</option>
+					</select>
 				</div>
 				<div class="d-flex justify-content-end my-3">
 					<button class="text-white my-2 py-2 px-4" @click.prevent="goToNext" :class="cannotGoToNext ? 'opacity-25' : 'bg-info'" :disabled="cannotGoToNext">
@@ -92,13 +89,13 @@
 				title: '',
 				description: '',
 				premium: false,
-				tags: []
+				subject: null
 			},
 			video: null,
 			image: null,
 			preview: null,
 			documents: [],
-			tags: [],
+			subjects: [],
 			isLoading: false,
 			page: 1,
 			customToolBar: [
@@ -110,10 +107,10 @@
 		}),
 		async mounted(){
 			let docs = await firestore.collection('subjects').get()
-			docs.forEach(doc => this.tags.push({ '.key': doc.id, ...doc.data() }))
+			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 		},
 		computed: {
-			cannotGoToNext(){ return this.$v.course.title.$invalid || this.$v.course.description.$invalid || this.$v.course.tags.$invalid },
+			cannotGoToNext(){ return this.$v.course.title.$invalid || this.$v.course.description.$invalid || this.$v.course.subject.$invalid },
 			needsPreview(){ return this.course.premium === true && !this.preview },
 			cannotSubmit(){ return this.$v.$invalid || this.isLoading || this.needsPreview }
 		},
@@ -153,7 +150,7 @@
 				title: { required, minLength: minLength(3) },
 				description: { required },
 				premium: { required },
-				tags: { required, minLength: minLength(1) },
+				subject: { required },
 			},
 			video: { required },
 			image: { required },

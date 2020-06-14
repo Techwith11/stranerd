@@ -72,7 +72,7 @@
 				let docs = firestore.collection('courses').orderBy('dates.updatedAt','desc')
 					.limit(this.paginationLimit)
 				if(this.course){
-					docs = docs.where('tags','array-contains', this.course)
+					docs = docs.where('subject','==', this.course)
 				}
 				let lastItem = this.courses[this.courses.length - 1]
 				if(lastItem){
@@ -91,7 +91,7 @@
 				let lastItem = this.courses[this.courses.length - 1]
 				let query = firestore.collection('courses').orderBy('dates.updatedAt')
 				if(this.course){
-					query = query.where('tags','array-contains', this.course)
+					query = query.where('subject','==', this.course)
 				}
 				if(lastItem){
 					query = query.where('dates.updatedAt','>',lastItem.dates.updatedAt)

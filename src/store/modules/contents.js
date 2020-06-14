@@ -19,7 +19,6 @@ let helpers = {
 	},
 	createCourse: async (course, id) => {
 		course.dates = { createdAt: firebase.firestore.FieldValue.serverTimestamp(), updatedAt: firebase.firestore.FieldValue.serverTimestamp() }
-		course.savedBy = []
 		course.userId = id
 		return await firestore.collection('courses').add(course)
 	},
