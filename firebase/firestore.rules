@@ -19,8 +19,8 @@ service cloud.firestore {
 		}
 
 		match /courses/{course}/discussions/{id} {
-			allow read: if hasAccessToCourse(course);
-			allow create: if hasAccessToCourse(course);
+			allow read: if isAuthenticated();
+			allow create: if isAuthenticated();
 			allow update: if isMine(resource.data.userId);
 			allow delete: if isAdmin();
 		}
@@ -117,10 +117,6 @@ service cloud.firestore {
 
 		function isMine(id) {
 			return true;//request.auth.uid == id;
-		}
-
-		function hasAccessToCourse(course) {
-			return true;//request.auth.uid in get(/databases/$(database)/documents/courses/$(course)).data.savedBy;
 		}
 
 		function hasAccessToSession(session) {
