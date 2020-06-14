@@ -4,12 +4,7 @@
 		<div class="card-body">
 			<h6 class="card-title">{{ course.title }}</h6>
 			<div v-html="course.description"  class="small editor-container"></div>
-			<p class="small">
-				<span class="mr-2" v-for="tag in course.tags" :key="tag">
-					<i class="fas fa-circle" :class="getColorClass(tag)"></i>
-					{{ tag }}
-				</span>
-			</p>
+			<p class="small">{{ course.subject }} : {{ course.module }}</p>
 			<p class="small">Updated: {{ course.dates.updatedAt | getDate }}</p>
 			<div class="my-3" v-if="isAdmin">
 				<a class="mr-3 btn btn-sm btn-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
@@ -42,14 +37,6 @@
 		},
 		methods:{
 			...mapActions(['deleteCourse','setEditMeta','setEditModalCourse']),
-			getColorClass(tag){
-				let classes = {
-					'Physics': 'text-danger',
-					'Mathematics': 'text-success',
-					'Chemistry': 'text-primary',
-				}
-				return classes[tag]
-			},
 			async removePost(){
 				try{
 					let result = await new window.SweetAlert({

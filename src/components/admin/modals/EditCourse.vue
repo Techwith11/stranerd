@@ -23,6 +23,13 @@
 						<option :value="subject.name" v-for="subject in subjects" :key="subject['.key']">{{ subject.name }}</option>
 					</select>
 				</div>
+				<div class="form-group my-3">
+					<h6>Module</h6>
+					<select class="form-control" v-model="$v.course.module.$model" :class="{'is-invalid': $v.course.module.$error, 'is-valid': !$v.course.module.$invalid}">
+						<option :value="null" disabled>Please select a module</option>
+						<option :value="module" v-for="module in getModules" :key="module">{{ module }}</option>
+					</select>
+				</div>
 				<div class="d-flex justify-content-end my-3">
 					<button class="text-white my-2 py-2 px-4" @click.prevent="goToNext" :class="cannotGoToNext ? 'opacity-25' : 'bg-info'" :disabled="cannotGoToNext">
 						<span>Next</span>
@@ -45,18 +52,6 @@
 						<span class="text-info">Change image preview</span>
 					</a>
 				</div>
-				<div class="custom-control custom-checkbox my-3">
-					<input type="checkbox" class="custom-control-input" id="isPremium"  v-model="$v.course.premium.$model"
-						:class="$v.course.premium.$error ? 'text-danger' : 'text-muted'">
-					<label class="custom-control-label" for="isPremium">Is course premium?</label>
-				</div>
-				<div v-if="course.premium" class="form-group my-3">
-					<input type="file" @change="catchPreview" class="d-none" ref="previewInput" accept="video/*">
-					<a @click.prevent="() => { $refs.previewInput.value= ''; $refs.previewInput.click() }">
-						<span v-if="preview">{{preview.name}}  </span>
-						<span class="text-info">Change video preview</span>
-					</a>
-				</div>
 				<div class="form-group my-3">
 					<input type="file" @change="catchDocuments" class="d-none" ref="documentInput" multiple>
 					<span v-for="doc in documents" :key="doc.name">{{ doc.name}}<i class="fas fa-times text-danger mr-2" @click.prevent="removeDocument(doc)"></i></span>
@@ -67,7 +62,7 @@
 						<i class="fas fa-angle-left mr-2"></i>
 						<span>Previous</span>
 					</button>
-					<button class="text-white my-2 py-2 px-4" @click.prevent="submitCourse" :class="{'opacity-25':$v.$invalid || needsPreview, 'primary-button': !$v.$invalid && !needsPreview}" :disabled="cannotSubmit">
+					<button class="text-white my-2 py-2 px-4" @click.prevent="submitCourse" :class="{'opacity-25':$v.$invalid, 'primary-button': !$v.$invalid}" :disabled="cannotSubmit">
 						<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
 						<span v-else>Save course</span>
 					</button>
@@ -77,23 +72,21 @@
 	</div>
 </template>
 
-
 <script>
 	import { mapActions, mapGetters } from 'vuex'
 	import { firestore } from '@/config/firebase'
-	import { required, minLength, requiredIf } from 'vuelidate/lib/validators'
+	import { required, minLength } from 'vuelidate/lib/validators'
 	export default {
 		name: 'EditCourse',
 		data: () => ({
 			course: {
 				title: '',
 				description: '',
-				premium: false,
+				module: null,
 				subject: null
 			},
 			video: null,
 			image: null,
-			preview: null,
 			documents: [],
 			subjects: [],
 			isLoading: false,
@@ -109,7 +102,6 @@
 			this.course = this.getEditMeta
 			this.video = this.course.video
 			this.image = this.course.image
-			this.course.premium ? this.preview = this.course.preview : null
 			this.documents = this.course.documents
 			this.clearEditMeta()
 			let docs = await firestore.collection('subjects').get()
@@ -117,9 +109,9 @@
 		},
 		computed: {
 			...mapGetters(['getEditMeta']),
-			cannotGoToNext(){ return this.$v.course.title.$invalid || this.$v.course.description.$invalid || this.$v.course.subject.$invalid },
-			needsPreview(){ return this.course.premium === true && !this.preview },
-			cannotSubmit(){ return this.$v.$invalid || this.isLoading || this.needsPreview }
+			cannotGoToNext(){ return this.$v.course.$invalid },
+			cannotSubmit(){ return this.$v.$invalid || this.isLoading },
+			getModules(){ return this.course.subject && this.subjects.find(s => s.name === this.course.subject) ? this.subjects.find(s => s.name === this.course.subject).modules : [] }
 		},
 		methods: {
 			...mapActions(['closeEditModal','editCourse','clearEditMeta']),
@@ -127,7 +119,6 @@
 			goToPrevious(){ this.page = 1},
 			catchVideo(e){ e.target.files[0] && e.target.files[0].type.startsWith('video/') ? this.video = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})},
 			catchImage(e){ e.target.files[0] &&e.target.files[0].type.startsWith('image/') ? this.image = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not an image'})},
-			catchPreview(e){ e.target.files[0] && e.target.files[0].type.startsWith('video/') ? this.preview = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not a video'})},
 			catchDocuments(e){
 				e.target.files.forEach(file => {
 					if(this.documents.find(doc => doc.name === file.name)){ return }
@@ -142,8 +133,7 @@
 						video: this.video,
 						image: this.image,
 						documents: this.documents,
-						course: this.course,
-						preview: this.preview
+						course: this.course
 					})
 					window.Fire.$emit('CourseEdited',this.course)
 					this.closeEditModal()
@@ -156,13 +146,20 @@
 			course: {
 				title: { required, minLength: minLength(3) },
 				description: { required },
-				premium: { required },
 				subject: { required },
+				module: { required }
 			},
 			video: { required },
 			image: { required },
-			preview: { requiredIf: requiredIf('course.premium') },
 			documents: { required, minLength: minLength(1) }
+		},
+		watch: {
+			'course.subject'() {
+				let subject = this.subjects.find(s => s.name === this.course.subject)
+				if (subject && !subject.modules.includes(this.course.module)) {
+					this.course.module = null
+				}
+			}
 		}
 	}
 </script>

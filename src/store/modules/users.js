@@ -49,7 +49,7 @@ const getters = {
 const mutations = {
 	setIntendedRoute: (state, route) => state.intendedRoute = route,
 	setCreatePost: (state, post) => state.createPost = post,
-	setEditMeta: (state, meta) => state.editMeta = meta,
+	setEditMeta: (state, meta) => state.editMeta = { ...meta },
 }
 
 

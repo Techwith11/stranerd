@@ -8,13 +8,7 @@
 					<span class="font-weight-bold mr-4">Released Date: </span>
 					<span>{{ course.dates.createdAt | formatDate }}</span>
 				</p>
-				<p class="small">
-					<span class="font-weight-bold mr-4">Tags: </span>
-					<span class="mr-2" v-for="tag in course.tags" :key="tag">
-						<i class="fas fa-circle" :class="getColorClass(tag)"></i>
-						{{ tag }}
-					</span>
-				</p>
+				<p class="small font-weight-bold">{{ course.subject }} : {{ course.module }}</p>
 				<div class="my-3 text-white" v-if="isAdmin">
 					<a class="mr-3 btn btn-sm btn-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
 					<a class="mr-3 btn btn-sm btn-danger" @click.prevent="removePost"><i class="fas fa-trash mr-1"></i>Delete</a>

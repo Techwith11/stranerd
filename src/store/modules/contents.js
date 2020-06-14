@@ -82,7 +82,6 @@ const actions = {
 		let course = data.course
 		course.video = await window.uploadFile('courses/videos', data.video)
 		course.image = await window.uploadFile('courses/images', data.image)
-		course.premium ? course.preview = await window.uploadFile('courses/previews', data.preview) : null
 		course.documents = []
 		for (const file of data.documents) {
 			let media = await window.uploadFile('courses/documents', file)
@@ -120,15 +119,12 @@ const actions = {
 		}
 		return await helpers.editBlogPost(post)
 	},
-	editCourse: async (store, { course, video, preview, documents, image}) => {
+	editCourse: async (store, { course, video, documents, image}) => {
 		if(image.size){
 			course.image = await window.uploadFile('courses/images', image)
 		}
 		if(video.size){
 			course.video = await window.uploadFile('courses/videos', video)
-		}
-		if(preview && preview.size){
-			course.preview = await window.uploadFile('courses/previews', video)
 		}
 		course.documents = []
 		for (const file of documents) {
