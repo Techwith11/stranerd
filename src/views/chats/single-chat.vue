@@ -5,13 +5,14 @@
 			<single-chat-nav :user="user" />
 			<div class="container py-3" :id="canHaveSession ? 'smaller-height' : 'longer-height'">
 				<helper-message v-if="chats.length < 1" message="No chats. Send a message now" />
-				<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
+				<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}" v-if="chats.length > 0">
 					<li class="d-block text-center small text-muted mb-2" v-if="hasMore">
 						<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderChatsLoading"></i>
 						<span @click="fetchOlderMessages">Fetch Older</span>
 					</li>
 					<single-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
 				</ul>
+				<ul v-else></ul>
 				<single-chat-form />
 			</div>
 		</div>

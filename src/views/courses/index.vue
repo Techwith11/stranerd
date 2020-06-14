@@ -7,7 +7,7 @@
 			<div v-else>
 				<div class="container">
 					<div class="card-deck">
-						<div class="col-lg-6 p-0" v-for="course in filteredCourses" :key="course['.key']">
+						<div class="col-lg-6 p-0" v-for="course in courses" :key="course['.key']">
 							<course-card :course="course"/>
 						</div>
 					</div>
@@ -35,6 +35,8 @@
 			isLoading: true,
 			isOlderCoursesLoading: false,
 			courses: [],
+			fetched: false,
+			listener: () => {},
 			paginationLimit: 24,
 			hasMore: true
 		}),
@@ -46,6 +48,7 @@
 		},
 		async mounted(){
 			await this.getCourses()
+			this.fetched = true
 			this.isLoading = false
 			window.Fire.$on('CourseEdited', course => {
 				let index = this.courses.findIndex(c => c['.key'] === course['.key'])
@@ -53,19 +56,27 @@
 			})
 			window.Fire.$on('CourseDeleted', course => this.courses = this.courses.filter(c => c['.key'] !== course['.key']))
 		},
-		computed: {
-			filteredCourses(){
-				let tag = this.$route.query.tab
-				return tag ? this.courses.filter(video => video.tags.includes(tag)) : this.courses
+		async activated(){
+			if(this.fetched){
+				await this.setCoursesListeners()
 			}
+		},
+		deactivated(){
+			this.listener()
+		},
+		computed: {
+			course(){ return this.$route.query.tab },
 		},
 		methods: {
 			async getCourses(){
-				let docs = firestore.collection('courses').orderBy('dates.createdAt','desc')
+				let docs = firestore.collection('courses').orderBy('dates.updatedAt','desc')
 					.limit(this.paginationLimit)
+				if(this.course){
+					docs = docs.where('tags','array-contains', this.course)
+				}
 				let lastItem = this.courses[this.courses.length - 1]
 				if(lastItem){
-					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
+					docs = docs.where('dates.updatedAt','<',lastItem.dates.createdAt)
 				}
 				docs = await docs.get()
 				this.hasMore = docs.size >= this.paginationLimit
@@ -75,7 +86,27 @@
 				this.isOlderCoursesLoading = true
 				await this.getCourses()
 				this.isOlderCoursesLoading = false
-			}
+			},
+			async setCoursesListeners(){
+				let lastItem = this.courses[this.courses.length - 1]
+				let query = firestore.collection('courses').orderBy('dates.updatedAt')
+				if(this.course){
+					query = query.where('tags','array-contains', this.course)
+				}
+				if(lastItem){
+					query = query.where('dates.updatedAt','>',lastItem.dates.updatedAt)
+				}
+				this.listener = query.onSnapshot(snapshot => {
+					snapshot.docs.forEach(doc => {
+						let index = this.courses.findIndex(r => r['.key'] === doc.id)
+						if(index === -1){
+							this.courses.unshift({ '.key': doc.id, ...doc.data() })
+						}else{
+							this.courses[index] = { '.key': doc.id, ...doc.data() }
+						}
+					})
+				})
+			},
 		}
 	}
 </script>

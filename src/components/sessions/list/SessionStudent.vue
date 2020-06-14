@@ -24,6 +24,8 @@
 		data: () => ({
 			sessions: [],
 			isLoading: true,
+			fetched: false,
+			listener: () => {},
 			paginationLimit: 24,
 			hasMore: true,
 			isOlderSessionsLoading: false
@@ -37,6 +39,14 @@
 		async mounted(){
 			await this.getSessions()
 			this.isLoading = false
+		},
+		async activated(){
+			if(this.fetched){
+				await this.setSessionsListeners()
+			}
+		},
+		deactivated(){
+			this.listener()
 		},
 		methods: {
 			async getSessions(){
@@ -56,6 +66,26 @@
 				this.isOlderSessionsLoading = true
 				await this.getSessions()
 				this.isOlderSessionsLoading = false
+			},
+			async setSessionsListeners(){
+				let lastItem = this.sessions[this.sessions.length - 1]
+				let query = firestore.collection('sessions')
+					.where('student','==', this.getId)
+					.orderBy('dates.createdAt')
+					.limit(this.paginationLimit)
+				if(lastItem){
+					query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
+				}
+				this.listener = query.onSnapshot(snapshot => {
+					snapshot.docs.forEach(doc => {
+						let index = this.sessions.findIndex(r => r['.key'] === doc.id)
+						if(index === -1){
+							this.sessions.unshift({ '.key': doc.id, ...doc.data() })
+						}else{
+							this.sessions[index] = { '.key': doc.id, ...doc.data() }
+						}
+					})
+				})
 			}
 		}
 	}
