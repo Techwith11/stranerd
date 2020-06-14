@@ -37,7 +37,7 @@
 		}),
 		async mounted() {
 			await this.getNotes()
-			this.fetched = false
+			this.fetched = true
 			this.isLoading = false
 			window.Fire.$on('NoteEdited', note => {
 				let index = this.notes.findIndex(n => n['.key'] === note['.key'])

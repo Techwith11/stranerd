@@ -6,7 +6,7 @@
 			<helper-message message="No questions available at the moment. Try adding some new ones." v-if="questions.length === 0" />
 			<div v-else>
 				<div class="container">
-					<question-card :question="question" v-for="question in filteredQuestions" :key="question['.key']" />
+					<question-card :question="question" v-for="question in questions" :key="question['.key']" />
 					<div class="d-flex justify-content-end mb-3" v-if="hasMore">
 						<button class="btn-success" @click="fetchOlderQuestions">
 							<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderQuestionsLoading"></i>
@@ -32,26 +32,32 @@
 			subjects: [],
 			isLoading: true,
 			isOlderQuestionsLoading: false,
+			fetched: false,
+			listener: () => {},
 			paginationLimit: 24,
 			hasMore: true
 		}),
 		computed: {
-			getCourses() {
-				return this.$route.query.tab ? [this.$route.query.tab] : this.subjects.map(subject => subject.name)
-			},
-			filteredQuestions() {
-				return this.questions.filter(question => this.getCourses.includes(question.subject))
-			}
+			course(){ return this.$route.query.tab },
 		},
 		async mounted() {
 			await this.getSubjects()
 			await this.getQuestions()
+			this.fetched = true
 			this.isLoading = false
 			window.Fire.$on('QuestionEdited', question => {
 				let index = this.questions.findIndex(q => q['.key'] === question['.key'])
 				this.questions[index] = question
 			})
 			window.Fire.$on('QuestionDeleted', question => this.questions = this.questions.filter(q => q['.key'] !== question['.key']))
+		},
+		async activated(){
+			if(this.fetched){
+				await this.setQuestionsListeners()
+			}
+		},
+		deactivated(){
+			this.listener()
 		},
 		components: {
 			'question-nav': QuestionNav,
@@ -67,6 +73,9 @@
 			async getQuestions(){
 				let docs = firestore.collection('tests/tutors/questions').orderBy('dates.createdAt','desc')
 					.limit(this.paginationLimit)
+				if(this.course){
+					docs = docs.where('subject','==', this.course)
+				}
 				let lastItem = this.questions[this.questions.length - 1]
 				if(lastItem){
 					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
@@ -79,7 +88,27 @@
 				this.isOlderQuestionsLoading = true
 				await this.getQuestions()
 				this.isOlderQuestionsLoading = false
-			}
+			},
+			async setQuestionsListeners(){
+				let lastItem = this.questions[this.questions.length - 1]
+				let query = firestore.collection('tests/tutors/questions').orderBy('dates.createdAt')
+				if(this.course){
+					query = query.where('subject','==', this.course)
+				}
+				if(lastItem){
+					query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
+				}
+				this.listener = query.onSnapshot(snapshot => {
+					snapshot.docs.forEach(doc => {
+						let index = this.questions.findIndex(r => r['.key'] === doc.id)
+						if(index === -1){
+							this.questions.unshift({ '.key': doc.id, ...doc.data() })
+						}else{
+							this.questions[index] = { '.key': doc.id, ...doc.data() }
+						}
+					})
+				})
+			},
 		}
 	}
 </script>
