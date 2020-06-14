@@ -10,11 +10,6 @@
 				<span class="d-block">{{ discussion.body }}</span>
 				<small class="small text-black">{{ discussion.dates.createdAt.seconds | getDateOrTime }}</small>
 			</li>
-			<li class="alert alert-warning py-1 border my-1" v-for="discussion in newDiscussions" :key="discussion['.key']"
-				:class="discussion.userId === getId ? 'ml-auto' : 'mr-auto'">
-				<span class="d-block">{{ discussion.body }}</span>
-				<small class="small text-black">{{ discussion.dates.createdAt.seconds | getDateOrTime }}</small>
-			</li>
 		</ul>
 		<div class="d-flex flex-column flex-lg-row align-items-lg-center">
 			<textarea rows="3" class="form-control my-2 mr-lg-4" placeholder="Comment ..." v-model.trim="$v.content.$model"></textarea>
@@ -27,7 +22,6 @@
 </template>
 
 <script>
-	//TODO: Replace view if user doesnt have access to this course.
 	import { firestore } from '@/config/firebase'
 	import { required, minLength } from 'vuelidate/lib/validators'
     import { mapActions, mapGetters } from 'vuex'
@@ -37,7 +31,6 @@
 			isLoading: false,
             isOlderDiscussionsLoading: false,
 			discussions: [],
-			newDiscussions: [],
 			listener: false,
 			paginationLimit: 24,
             hasMore: true
@@ -50,10 +43,6 @@
 			}
 		},
 		computed: mapGetters(['getId']),
-		async mounted(){
-            await this.fetchDiscussions()
-			this.setListener()
-		},
 		methods:{
 			...mapActions(['sendDiscussion']),
 			async fetchDiscussions(){
@@ -75,7 +64,15 @@
                 }
                 this.listener = query.onSnapshot(snapshot => {
                     this.newDiscussions = []
-                    snapshot.docs.forEach(doc => this.newDiscussions.push({ '.key': doc.id, ...doc.data() }))
+                    snapshot.docs.forEach(doc => {
+						let index = this.discussions.findIndex(r => r['.key'] === doc.id)
+						if(index === -1){
+							this.discussions.push({ '.key': doc.id, ...doc.data() })
+						}else{
+							this.discussions[index] = { '.key': doc.id, ...doc.data() }
+						}
+                    })
+
                 })
             },
 			async fetchOlderDiscussions(){
@@ -93,7 +90,14 @@
                 this.isLoading = false
 			}
 		},
-		beforeDestroy(){
+		async mounted(){
+			await this.fetchDiscussions()
+			this.setListener()
+		},
+		activated(){
+			this.setListener()
+		},
+		deactivated(){
 			this.listener()
 		},
         filters: {
