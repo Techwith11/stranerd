@@ -20,7 +20,6 @@
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
 	import { mapGetters, mapActions } from 'vuex'
 	export default {
 		name: 'EditSubjectModule',
@@ -31,19 +30,16 @@
 			isLoading: false
 		}),
 		methods:{
-			...mapActions(['closeEditModal','clearEditMeta']),
+			...mapActions(['closeEditModal','clearEditMeta','editModule']),
 			async submit() {
 				this.isLoading = true
 				try{
-					let modules = this.subject.modules
-					let index = modules.findIndex(x => x === this.module)
 					let name = this.name
-					modules[index] = name[0].toUpperCase() + name.slice(1).toLowerCase()
-					await firestore.collection('subjects').doc(this.subject['.key']).update('modules',modules)
-					this.name = ''
+					name = name[0].toUpperCase() + name.slice(1).toLowerCase()
+					await this.editModule({ subject: this.subject, module: this.module, updated: name })
 					this.closeEditModal()
-					window.Fire.$emit('SubjectEdited',{ ...this.subject, modules })
 					new window.Toast({ icon: 'success', title: 'Module edited successfully' })
+					this.name = ''
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
 			}

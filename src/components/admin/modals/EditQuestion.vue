@@ -16,7 +16,7 @@
 				<select class="form-control" v-model="$v.question.subject.$model"
 					:class="{'is-invalid': $v.question.subject.$error, 'is-valid': !$v.question.subject.$invalid}">
 					<option :value="null" disabled>Under what subject</option>
-					<option :value="subject.name" v-for="subject in subjects" :key="subject.name">{{ subject.name }}</option>
+					<option :value="subject.name" v-for="subject in getAllSubjects" :key="subject.name">{{ subject.name }}</option>
 				</select>
 			</div>
 			<div class="form-group my-3">
@@ -58,7 +58,6 @@
 
 <script>
 	import { mapGetters, mapActions } from 'vuex'
-	import { firestore } from '@/config/firebase'
 	import { required, minLength, minValue } from 'vuelidate/lib/validators'
 	export default {
 		name: 'EditQuestion',
@@ -75,7 +74,6 @@
 			},
 			isLoading: false,
 			answers: ['a','b','c','d'],
-			subjects: [],
 			customToolBar: [
 				[{header: [false,1,2,3,4,5,6]}], ['bold','italic','underline','strikethrough'],
 				[{align:''},{align:'center'},{align:'right'},{align:'justify'}],
@@ -83,12 +81,10 @@
 				[{color:[]},{background:[]}], ['link','image',/*'video'*/],['clean']
 			]
 		}),
-		computed: mapGetters(['getEditMeta']),
+		computed: mapGetters(['getEditMeta', 'getAllSubjects']),
 		async mounted(){
 			this.question = this.getEditMeta
 			this.clearEditMeta()
-			let docs = await firestore.collection('subjects').get()
-			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 		},
 		methods:{
 			...mapActions(['closeEditModal','uploadFromEditor','clearEditMeta','editQuestion']),

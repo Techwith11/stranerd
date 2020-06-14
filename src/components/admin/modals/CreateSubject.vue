@@ -30,7 +30,6 @@
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
 	import { mapActions } from 'vuex'
 	export default {
 		name: 'CreateSubject',
@@ -43,7 +42,7 @@
 			isLoading: false
 		}),
 		methods:{
-			...mapActions(['closeCreateModal']),
+			...mapActions(['closeCreateModal','createSubject']),
 			splitModule(){
 				let module = this.module.trim().split(',')[0]
 				module = module[0].toUpperCase() + module.slice(1).toLowerCase()
@@ -54,9 +53,8 @@
 			async submit() {
 				this.isLoading = true
 				try{
-					let doc = await firestore.collection('subjects').add(this.subject)
+					await this.createSubject({ ...this.subject })
 					this.closeCreateModal()
-					window.Fire.$emit('SubjectAdded',{ ...this.subject, '.key': doc.id })
 					new window.Toast({ icon: 'success', title: 'Subject added successfully' })
 					this.subject.name = ''
 					this.subject.modules = []

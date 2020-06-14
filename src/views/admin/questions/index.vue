@@ -41,7 +41,6 @@
 			course(){ return this.$route.query.tab },
 		},
 		async mounted() {
-			await this.getSubjects()
 			await this.getQuestions()
 			this.fetched = true
 			this.isLoading = false
@@ -66,10 +65,6 @@
 			'helper-message': HelperMessage
 		},
 		methods: {
-			async getSubjects(){
-				let docs = await firestore.collection('subjects').get()
-				docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
-			},
 			async getQuestions(){
 				let docs = firestore.collection('tests/tutors/questions').orderBy('dates.createdAt','desc')
 					.limit(this.paginationLimit)

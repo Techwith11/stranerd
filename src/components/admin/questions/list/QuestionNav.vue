@@ -5,7 +5,7 @@
 				<li class="nav-item">
 					<router-link class="nav-link" to="/admins/questions">All</router-link>
 				</li>
-				<li class="nav-item" v-for="subject in subjects" :key="subject['.key']">
+				<li class="nav-item" v-for="subject in getAllSubjects" :key="subject['.key']">
 					<router-link class="nav-link" :to="`/admins/questions?tab=${subject.name}`">{{ subject.name }}</router-link>
 				</li>
 			</ul>
@@ -14,13 +14,9 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
 	export default {
-		props: {
-			subjects: {
-				required: true,
-				type: Array
-			}
-		}
+		computed: mapGetters(['getAllSubjects'])
 	}
 </script>
 

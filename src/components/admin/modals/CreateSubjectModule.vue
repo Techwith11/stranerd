@@ -20,7 +20,6 @@
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
 	import { mapGetters, mapActions } from 'vuex'
 	export default {
 		name: 'CreateSubjectModule',
@@ -30,18 +29,16 @@
 			isLoading: false
 		}),
 		methods:{
-			...mapActions(['closeCreateModal','clearEditMeta']),
+			...mapActions(['closeCreateModal','clearEditMeta','createModule']),
 			async submit() {
 				this.isLoading = true
 				try{
 					let name = this.name
 					name = name[0].toUpperCase() + name.slice(1).toLowerCase()
-					let modules = [ ...this.subject.modules, name ]
-					await firestore.collection('subjects').doc(this.subject['.key']).update('modules',modules)
-					this.name = ''
+					await this.createModule({ subject: this.subject, module: name })
 					this.closeCreateModal()
-					window.Fire.$emit('SubjectEdited',{ ...this.subject, modules })
 					new window.Toast({ icon: 'success', title: 'Module created successfully' })
+					this.name = ''
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
 			}

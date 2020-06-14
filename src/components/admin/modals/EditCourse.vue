@@ -20,7 +20,7 @@
 					<h6>Subject</h6>
 					<select class="form-control" v-model="$v.course.subject.$model" :class="{'is-invalid': $v.course.subject.$error, 'is-valid': !$v.course.subject.$invalid}">
 						<option :value="null" disabled>Please select a subject</option>
-						<option :value="subject.name" v-for="subject in subjects" :key="subject['.key']">{{ subject.name }}</option>
+						<option :value="subject.name" v-for="subject in getAllSubjects" :key="subject['.key']">{{ subject.name }}</option>
 					</select>
 				</div>
 				<div class="form-group my-3">
@@ -74,7 +74,6 @@
 
 <script>
 	import { mapActions, mapGetters } from 'vuex'
-	import { firestore } from '@/config/firebase'
 	import { required, minLength } from 'vuelidate/lib/validators'
 	export default {
 		name: 'EditCourse',
@@ -88,7 +87,6 @@
 			video: null,
 			image: null,
 			documents: [],
-			subjects: [],
 			isLoading: false,
 			page: 1,
 			customToolBar: [
@@ -104,14 +102,12 @@
 			this.image = this.course.image
 			this.documents = this.course.documents
 			this.clearEditMeta()
-			let docs = await firestore.collection('subjects').get()
-			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 		},
 		computed: {
-			...mapGetters(['getEditMeta']),
+			...mapGetters(['getEditMeta','getAllSubjects']),
 			cannotGoToNext(){ return this.$v.course.$invalid },
 			cannotSubmit(){ return this.$v.$invalid || this.isLoading },
-			getModules(){ return this.course.subject && this.subjects.find(s => s.name === this.course.subject) ? this.subjects.find(s => s.name === this.course.subject).modules : [] }
+			getModules(){ return this.course.subject && this.getAllSubjects.find(s => s.name === this.course.subject) ? this.getAllSubjects.find(s => s.name === this.course.subject).modules : [] }
 		},
 		methods: {
 			...mapActions(['closeEditModal','editCourse','clearEditMeta']),
@@ -155,7 +151,7 @@
 		},
 		watch: {
 			'course.subject'() {
-				let subject = this.subjects.find(s => s.name === this.course.subject)
+				let subject = this.getAllSubjects.find(s => s.name === this.course.subject)
 				if (subject && !subject.modules.includes(this.course.module)) {
 					this.course.module = null
 				}
