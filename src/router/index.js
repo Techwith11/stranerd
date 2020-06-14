@@ -9,10 +9,19 @@ Vue.use(VueRouter)
 const router = new VueRouter({
 	mode: 'history',
 	base: process.env.BASE_URL,
-	routes
+	routes,
+	scrollBehavior: async to => {
+		let y = store.getters.getScrollCache[to.fullPath] || 0
+		return new Promise((resolve) => {
+			setTimeout(() => {
+				resolve({ x: 0, y })
+			}, 1)
+		})
+	}
 })
 
 router.beforeEach((to, from, next) => {
+	store.dispatch('setScrollCache', { page: from.fullPath, position: document.documentElement.scrollTop })
 	const requiresAuth = to.matched.some(route => route.meta.requiresAuth)
 	const requiresSubscription = to.matched.some(route => route.meta.requiresSubscription)
 	const requiresAdmin = to.matched.some(route => route.meta.requiresAdmin)

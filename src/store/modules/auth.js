@@ -72,6 +72,14 @@ const actions = {
 			.then((res) => res.data)
 			.catch((error) => new window.Toast({ icon: 'error', title: error.message }))
 	},
+	async updateProfile({ getters }, data){
+		let bio = data.bio
+		let image = data.image
+		if(image){
+			bio.image = await window.uploadFile('users/images', image)
+		}
+		return await firestore.collection('users').doc(getters.getId).set({ bio }, { merge: true })
+	},
 	logout: async ({ commit }) => {
 		commit('setId', null)
 		await store.dispatch('closeTutorSessionsListener')
