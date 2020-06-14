@@ -30,17 +30,28 @@
 			subjects: [],
 			isLoading: true,
 			isOlderNotesLoading: false,
+			fetched: false,
+			listener: () => {},
 			paginationLimit: 24,
 			hasMore: true
 		}),
 		async mounted() {
 			await this.getNotes()
+			this.fetched = false
 			this.isLoading = false
 			window.Fire.$on('NoteEdited', note => {
 				let index = this.notes.findIndex(n => n['.key'] === note['.key'])
 				this.notes[index] = note
 			})
 			window.Fire.$on('NoteDeleted', note => this.notes = this.notes.filter(n => n['.key'] !== note['.key']))
+		},
+		async activated(){
+			if(this.fetched){
+				await this.setNotesListeners()
+			}
+		},
+		deactivated(){
+			this.listener()
 		},
 		components: {
 			'note-card': NoteCard,
@@ -63,6 +74,23 @@
 				this.isOlderNotesLoading = true
 				await this.getNotes()
 				this.isOlderNotesLoading = false
+			},
+			async setNotesListeners(){
+				let lastItem = this.notes[this.notes.length - 1]
+				let query = firestore.collection('notes').orderBy('dates.createdAt')
+				if(lastItem){
+					query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
+				}
+				this.listener = query.onSnapshot(snapshot => {
+					snapshot.docs.forEach(doc => {
+						let index = this.notes.findIndex(r => r['.key'] === doc.id)
+						if(index === -1){
+							this.notes.unshift({ '.key': doc.id, ...doc.data() })
+						}else{
+							this.notes[index] = { '.key': doc.id, ...doc.data() }
+						}
+					})
+				})
 			}
 		}
 	}

@@ -38,6 +38,7 @@
 		},
 		async mounted(){
 			await this.getSessions()
+			this.fetched = true
 			this.isLoading = false
 		},
 		async activated(){

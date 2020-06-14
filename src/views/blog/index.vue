@@ -28,6 +28,8 @@
 		data: () => ({
 			isLoading: true,
 			isOlderPostsLoading: false,
+			fetched: false,
+			listener: () => {},
 			posts: [],
 			paginationLimit: 24,
 			hasMore: true
@@ -39,12 +41,21 @@
 		},
 		async mounted(){
 			await this.getPosts()
+			this.fetched = true
 			this.isLoading = false
 			window.Fire.$on('BlogPostEdited', post => {
 				let index = this.posts.findIndex(p => p['.key'] === post['.key'])
 				this.posts[index] = post
 			})
 			window.Fire.$on('BlogPostDeleted', post => this.posts = this.posts.filter(p => p['.key'] !== post['.key']))
+		},
+		async activated(){
+			if(this.fetched){
+				await this.setPostsListeners()
+			}
+		},
+		deactivated(){
+			this.listener()
 		},
 		methods: {
 			async getPosts(){
@@ -62,6 +73,23 @@
 				this.isOlderPostsLoading = true
 				await this.getPosts()
 				this.isOlderPostsLoading = false
+			},
+			async setPostsListeners(){
+				let lastItem = this.posts[this.posts.length - 1]
+				let query = firestore.collection('blog').orderBy('dates.createdAt')
+				if(lastItem){
+					query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
+				}
+				this.listener = query.onSnapshot(snapshot => {
+					snapshot.docs.forEach(doc => {
+						let index = this.posts.findIndex(r => r['.key'] === doc.id)
+						if(index === -1){
+							this.posts.unshift({ '.key': doc.id, ...doc.data() })
+						}else{
+							this.posts[index] = { '.key': doc.id, ...doc.data() }
+						}
+					})
+				})
 			}
 		}
 	}

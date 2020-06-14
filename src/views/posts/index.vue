@@ -37,7 +37,7 @@
 		},
 		async mounted(){
 			await this.getPosts()
-			this.fetched = false
+			this.fetched = true
 			this.isLoading = false
 		},
 		async activated(){
