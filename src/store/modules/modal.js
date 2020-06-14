@@ -20,12 +20,16 @@ const getters = {
     isCreateModalQuestion: state => state.createModal === 'create-question',
     isCreateModalNote: state => state.createModal === 'create-note',
     isCreateModalBlog: state => state.createModal === 'create-blog-post',
+    isCreateModalSubject: state => state.createModal === 'create-subject',
+    isCreateModalSubjectModule: state => state.createModal === 'create-subject-module',
 
     isEditModalOpen: state => !!state.editModal,
     isEditModalQuestion: state => state.editModal === 'edit-question',
     isEditModalNote: state => state.editModal === 'edit-note',
     isEditModalBlog: state => state.editModal === 'edit-blog-post',
     isEditModalCourse: state => state.editModal === 'edit-course',
+    isEditModalSubject: state => state.editModal === 'edit-subject',
+    isEditModalSubjectModule: state => state.editModal === 'edit-subject-module',
 
     isAccountModalOpen: state => !!state.accountModal,
     isAccountModalOverview: state => state.accountModal === 'profile-overview',
@@ -62,12 +66,16 @@ const actions = {
     setCreateModalQuestion: ({ commit }) => commit('setCreateModal', 'create-question'),
     setCreateModalNote: ({ commit }) => commit('setCreateModal', 'create-note'),
     setCreateModalBlog: ({ commit }) => commit('setCreateModal', 'create-blog-post'),
+    setCreateModalSubject: ({ commit }) => commit('setCreateModal', 'create-subject'),
+    setCreateModalSubjectModule: ({ commit }) => commit('setCreateModal', 'create-subject-module'),
     closeCreateModal: ({ commit }) => commit('setCreateModal', null),
 
     setEditModalQuestion: ({ commit }) => commit('setEditModal', 'edit-question'),
     setEditModalNote: ({ commit }) => commit('setEditModal', 'edit-note'),
     setEditModalBlog: ({ commit }) => commit('setEditModal', 'edit-blog-post'),
     setEditModalCourse: ({ commit }) => commit('setEditModal', 'edit-course'),
+    setEditModalSubject: ({ commit }) => commit('setEditModal', 'edit-subject'),
+    setEditModalSubjectModule: ({ commit }) => commit('setEditModal', 'edit-subject-module'),
     closeEditModal: ({ commit }) => commit('setEditModal', null),
 
     setAccountModalOverview: ({ commit }) => commit('setAccountModal', 'profile-overview'),

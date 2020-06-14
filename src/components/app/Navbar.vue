@@ -45,6 +45,7 @@
                         <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="adminDropdownToggle" id="adminDropdownMenu">
                             <router-link class="dropdown-item text-white nav-link py-1 py-lg-2" to="/admins/questions">Tests Questions</router-link>
                             <router-link class="dropdown-item text-white nav-link py-1 py-lg-2" to="/admins/notes">Shop Notes</router-link>
+                            <router-link class="dropdown-item text-white nav-link py-1 py-lg-2" to="/admins/subjects">Subjects</router-link>
                             <router-link class="dropdown-item text-white nav-link py-1 py-lg-2" to="/admins/upgrades">Upgrade Users</router-link>
                         </div>
                     </li>
