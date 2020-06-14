@@ -2,8 +2,10 @@
 	<div class="container">
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
-			<helper-message message="No subjects available at the moment. Try adding some new ones." v-if="subjects.length === 0" />
-			<div v-else>
+			<div class="d-flex justify-content-end">
+				<button class="btn btn-success my-3" @click="setCreateModalSubject">Add New Subject</button>
+			</div>
+			<div>
 				<div class="container">
 					<subject-card :subject="subject" v-for="subject in subjects" :key="subject['.key']" />
 				</div>
@@ -14,11 +16,11 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
+	import { mapActions } from 'vuex'
 	import SubjectCard from '@/components/admin/subjects/list/SubjectCard'
 	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	export default {
-		name: 'Notes',
+		name: 'Subjects',
 		data: () => ({
 			subjects: [],
 			isLoading: true
@@ -31,14 +33,15 @@
 				this.subjects[index] = subject
 				this.$forceUpdate()
 			})
-			window.Fire.$on('SubjectDeleted', subject => this.subjects = this.subjects.filter(s => s['.key'] !== subject['.key']))
+			window.Fire.$on('SubjectAdded', subject => this.subjects.push(subject))
+			window.Fire.$on('SubjectDeleted', id => this.subjects = this.subjects.filter(s => s['.key'] !== id))
 		},
 		components: {
 			'subject-card': SubjectCard,
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage
+			'helper-spinner': HelperSpinner
 		},
 		methods: {
+			...mapActions(['setCreateModalSubject']),
 			async getSubjects(){
 				let docs = await firestore.collection('subjects').get()
 				docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))

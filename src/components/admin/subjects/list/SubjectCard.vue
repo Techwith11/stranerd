@@ -10,13 +10,15 @@
 				<li class="list-group-item my-1 d-flex justify-content-between align-items-center" v-for="module in subject.modules" :key="module">
 					<h6 class="mb-0">{{ module }}</h6>
 					<div class="d-flex">
-						<i class="fas fa-pen mr-3 text-warning" @click.prevent="openEditModal(module)"></i>
-						<i class="fas fa-trash text-danger" @click="deleteModule(module)"></i>
+						<a @click.prevent="openModuleEditModal(module)"><i class="fas fa-pen mr-3 text-warning"></i></a>
+						<a @click.prevent="deleteModule(module)"><i class="fas fa-trash text-danger"></i></a>
 					</div>
 				</li>
 			</ul>
-			<div class="d-flex my-2 justify-content-end">
-				<button class="btn-sm px-3 btn-success" @click="openCreateModal">Add New Module</button>
+			<div class="d-flex my-2 justify-content-end align-items-center" id="main">
+				<a @click.prevent="openCreateModal"><i class="fas fa-plus text-success mr-3"></i></a>
+				<a @click.prevent="openSubjectEditModal"><i class="fas fa-pen text-warning mr-3"></i></a>
+				<a @click.prevent="deleteSubject"><i class="fas fa-trash text-danger mr-3"></i></a>
 			</div>
 		</div>
 	</div>
@@ -36,7 +38,7 @@
 			}
 		},
 		methods: {
-			...mapActions(['setEditMeta','setEditModalSubjectModule','setCreateModalSubjectModule']),
+			...mapActions(['setEditMeta','setEditModalSubjectModule','setCreateModalSubjectModule','setEditModalSubject']),
 			showCollapse(){
 				document.getElementById(this.subject['.key']).classList.add('show')
 				this.show = true
@@ -49,9 +51,31 @@
 				this.setEditMeta(this.subject)
 				this.setCreateModalSubjectModule()
 			},
-			openEditModal(module){
+			openSubjectEditModal(){
+				this.setEditMeta(this.subject)
+				this.setEditModalSubject()
+			},
+			openModuleEditModal(module){
 				this.setEditMeta({ subject: this.subject, module })
 				this.setEditModalSubjectModule()
+			},
+			async deleteSubject(){
+				try{
+					let result = await new window.SweetAlert({
+						title: `Delete ${this.subject.name}`,
+						text: 'Are you sure you want to delete this subject',
+						icon: 'info',
+						showCancelButton: true,
+						confirmButtonColor: '#d33',
+						cancelButtonColor: '#3085d6',
+						confirmButtonText: 'Delete'
+					})
+					if (result.value) {
+						//await firestore.collection('subjects').doc(this.subject['.key']).delete()
+						window.Fire.$emit('SubjectDeleted', this.subject['.key'])
+						new window.Toast({icon: 'success', title: 'Subject deleted successfully'})
+					}
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 			},
 			async deleteModule(module){
 				try{
@@ -75,3 +99,11 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	#main{
+		i{
+			font-size: 1.5rem;
+		}
+	}
+</style>

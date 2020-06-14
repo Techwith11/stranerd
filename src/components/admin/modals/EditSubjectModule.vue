@@ -7,12 +7,12 @@
 		</div>
 		<form class="mx-2">
 			<div class="form-group my-3">
-				<input class="form-control" placeholder="Module name" v-model.trim="edit">
+				<input class="form-control" placeholder="Module name" v-model.trim="name">
 			</div>
 			<div class="d-flex justify-content-end my-3">
-				<button class="btn btn-success" @click.prevent="submit" :disabled="!edit">
+				<button class="btn btn-success" @click.prevent="submit" :disabled="!name">
 					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
-					<span v-else>Save Module</span>
+					<span v-else>Save module</span>
 				</button>
 			</div>
 		</form>
@@ -26,7 +26,7 @@
 		name: 'EditSubjectModule',
 		data: () => ({
 			module: '',
-			edit: '',
+			name: '',
 			subject: {},
 			isLoading: false
 		}),
@@ -37,9 +37,10 @@
 				try{
 					let modules = this.subject.modules
 					let index = modules.findIndex(x => x === this.module)
-					modules[index] = this.edit
+					let name = this.name
+					modules[index] = name[0].toUpperCase() + name.slice(1).toLowerCase()
 					await firestore.collection('subjects').doc(this.subject['.key']).update('modules',modules)
-					this.edit = ''
+					this.name = ''
 					this.closeEditModal()
 					window.Fire.$emit('SubjectEdited',{ ...this.subject, modules })
 					new window.Toast({ icon: 'success', title: 'Module edited successfully' })
@@ -50,7 +51,7 @@
 		computed: mapGetters(['getEditMeta']),
 		async mounted(){
 			this.subject = this.getEditMeta.subject
-			this.module = this.edit = this.getEditMeta.module
+			this.module = this.name = this.getEditMeta.module
 			this.clearEditMeta()
 		}
 	}
