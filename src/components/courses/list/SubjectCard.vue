@@ -21,7 +21,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
 	.module{
 		width: 25%;
 		box-sizing: border-box;
