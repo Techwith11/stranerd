@@ -1,14 +1,14 @@
 <template>
 	<div class="my-3 alert alert-secondary">
 		<div class="d-flex justify-content-between align-items-center my-3">
-			<h4>{{ subject.name }}</h4>
+			<h4 class="text-capitalize">{{ subject.name }}</h4>
 			<a @click.prevent="hideCollapse" v-if="show"><i class="fas fa-angle-up"></i></a>
 			<a @click.prevent="showCollapse" v-else><i class="fas fa-angle-down"></i></a>
 		</div>
 		<div class="collapse" :id="subject['.key']">
 			<ul class="list-group">
 				<li class="list-group-item my-1 d-flex justify-content-between align-items-center" v-for="module in subject.modules" :key="module">
-					<h6 class="mb-0">{{ module }}</h6>
+					<h6 class="mb-0 text-capitalize">{{ module }}</h6>
 					<div class="d-flex">
 						<a @click.prevent="openModuleEditModal(module)"><i class="fas fa-pen mr-3 text-warning"></i></a>
 						<a @click.prevent="removeModule(module)"><i class="fas fa-trash text-danger"></i></a>

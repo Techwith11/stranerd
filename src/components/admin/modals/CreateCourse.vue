@@ -18,14 +18,14 @@
 				</div>
 				<div class="form-group my-3">
 					<h6>Subject</h6>
-					<select class="form-control" v-model="$v.course.subject.$model" :class="{'is-invalid': $v.course.subject.$error, 'is-valid': !$v.course.subject.$invalid}">
+					<select class="form-control text-capitalize" v-model="$v.course.subject.$model" :class="{'is-invalid': $v.course.subject.$error, 'is-valid': !$v.course.subject.$invalid}">
 						<option :value="null" disabled>Please select a subject</option>
 						<option :value="subject.name" v-for="subject in getAllSubjects" :key="subject['.key']">{{ subject.name }}</option>
 					</select>
 				</div>
 				<div class="form-group my-3">
 					<h6>Module</h6>
-					<select class="form-control" v-model="$v.course.module.$model" :class="{'is-invalid': $v.course.module.$error, 'is-valid': !$v.course.module.$invalid}">
+					<select class="form-control text-capitalize" v-model="$v.course.module.$model" :class="{'is-invalid': $v.course.module.$error, 'is-valid': !$v.course.module.$invalid}">
 						<option :value="null" disabled>Please select a {{ course.subject ? 'module' : 'subject first' }}</option>
 						<option :value="module" v-for="module in getModules" :key="module">{{ module }}</option>
 					</select>

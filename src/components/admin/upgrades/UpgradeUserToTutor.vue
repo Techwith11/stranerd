@@ -12,10 +12,10 @@
 		<div class="mt-3" v-if="fetched && !fetchingUsers">
 			<div class="form-group row">
 				<div class="col-md-6">
-					<select id="course" class="form-control" v-model="$v.tutor.course.$model"
+					<select id="course" class="form-control text-capitalize" v-model="$v.tutor.course.$model"
 							:class="{'is-invalid': $v.tutor.course.$error, 'is-valid': !$v.tutor.course.$invalid}">
 						<option :value="null" disabled>Select the course tutor can teach</option>
-						<option :value="subject.name" v-for="subject in subjects" :key="subject.name">{{ subject.name }}</option>
+						<option :value="subject.name" v-for="subject in getAllSubjects" :key="subject.name">{{ subject.name }}</option>
 					</select>
 				</div>
 				<div class="col-md-6 mt-3 mt-md-0">
@@ -51,7 +51,7 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
-	import { mapActions } from 'vuex'
+	import { mapActions, mapGetters } from 'vuex'
 	import { required, minLength } from 'vuelidate/lib/validators'
 	export default {
 		data: () => ({
@@ -65,12 +65,12 @@
 				qualification: null,
 				bio: ''
 			},
-			subjects: [],
 			qualifications: [
 				{ name:'High school graduate', value: 0}, { name: 'Diploma Certificate', value: 1 },
 				{ name: 'Bachelors Degree', value: 2 }, { name: 'Masters Degree', value: 3 }
 			],
 		}),
+		computed: mapGetters(['getAllSubjects']),
 		methods: {
 			...mapActions(['makeTutor']),
 			clearAll(){
@@ -99,10 +99,6 @@
 				}
 				this.upgrading = false
 			}
-		},
-		async mounted(){
-			let docs = await firestore.collection('subjects').get()
-			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 		},
 		validations:{
 			tutor: {

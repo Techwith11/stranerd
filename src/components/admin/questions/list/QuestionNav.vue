@@ -6,7 +6,7 @@
 					<router-link class="nav-link" to="/admins/questions">All</router-link>
 				</li>
 				<li class="nav-item" v-for="subject in getAllSubjects" :key="subject['.key']">
-					<router-link class="nav-link" :to="`/admins/questions?tab=${subject.name}`">{{ subject.name }}</router-link>
+					<router-link class="nav-link text-capitalize" :to="`/admins/questions?tab=${subject.name}`">{{ subject.name }}</router-link>
 				</li>
 			</ul>
 		</div>

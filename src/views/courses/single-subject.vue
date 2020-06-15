@@ -1,7 +1,13 @@
 <template>
 	<div class="container">
 		<helper-spinner v-if="isLoading" />
-		<subject-card v-else :key="subject['.key']" :subject="subject"/>
+		<div v-else>
+			<router-link class="text-muted h6 text-decoration-none my-3 d-inline-block text-capitalize" :to="`/courses`">
+				<i class="fas fa-arrow-left mr-2"></i>
+				<span>All</span>
+			</router-link>
+			<subject-card :key="subject['.key']" :subject="subject"/>
+		</div>
 	</div>
 </template>
 

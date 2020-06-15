@@ -4,7 +4,7 @@
 		<div class="card-body">
 			<h6 class="card-title">{{ course.title }}</h6>
 			<div v-html="course.description"  class="small editor-container"></div>
-			<p class="small">{{ course.subject }} : {{ course.module }}</p>
+			<p class="small text-capitalize">{{ course.subject }} : {{ course.module }}</p>
 			<p class="small">Updated: {{ course.dates.updatedAt | getDate }}</p>
 			<div class="my-3" v-if="isAdmin">
 				<a class="mr-3 btn btn-sm btn-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>

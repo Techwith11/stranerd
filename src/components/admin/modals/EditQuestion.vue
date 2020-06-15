@@ -13,7 +13,7 @@
 				<span class="small" v-if="$v.question.title.$error">Question is required</span>
 			</div>
 			<div class="form-group my-3">
-				<select class="form-control" v-model="$v.question.subject.$model"
+				<select class="form-control text-capitalize" v-model="$v.question.subject.$model"
 					:class="{'is-invalid': $v.question.subject.$error, 'is-valid': !$v.question.subject.$invalid}">
 					<option :value="null" disabled>Under what subject</option>
 					<option :value="subject.name" v-for="subject in getAllSubjects" :key="subject.name">{{ subject.name }}</option>
