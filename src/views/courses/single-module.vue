@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<course-nav />
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<helper-message message="No courses available at the moment. Check again later" v-if="courses.length === 0" />
@@ -27,7 +26,6 @@
 	import { firestore } from '@/config/firebase'
 	import HelperSpinner from '@/components/helpers/Spinner'
 	import HelperMessage from '@/components/helpers/Message'
-	import CourseNav from '@/components/courses/list/CourseNav'
 	import CourseCard from '@/components/courses/list/CourseCard'
 	export default {
 		name: 'Courses',
@@ -41,7 +39,6 @@
 			hasMore: true
 		}),
 		components: {
-			'course-nav': CourseNav,
 			'course-card': CourseCard,
 			'helper-spinner': HelperSpinner,
 			'helper-message': HelperMessage
@@ -69,7 +66,10 @@
 		},
 		methods: {
 			async getCourses(){
-				let docs = firestore.collection('courses').orderBy('dates.updatedAt','desc')
+				let docs = firestore.collection('courses')
+					.where('subject','==',this.$route.params.subject.toLowerCase())
+					.where('module','==',this.$route.params.module.toLowerCase())
+					.orderBy('dates.updatedAt','desc')
 					.limit(this.paginationLimit)
 				if(this.course){
 					docs = docs.where('subject','==', this.course)
@@ -89,7 +89,10 @@
 			},
 			async setCoursesListeners(){
 				let lastItem = this.courses[this.courses.length - 1]
-				let query = firestore.collection('courses').orderBy('dates.updatedAt')
+				let query = firestore.collection('courses')
+					.where('subject','==',this.$route.params.subject.toLowerCase())
+					.where('module','==',this.$route.params.module.toLowerCase())
+					.orderBy('dates.updatedAt')
 				if(this.course){
 					query = query.where('subject','==', this.course)
 				}

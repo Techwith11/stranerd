@@ -33,8 +33,7 @@
 			async submit() {
 				this.isLoading = true
 				try{
-					let name = this.name
-					name = name[0].toUpperCase() + name.slice(1).toLowerCase()
+					let name = this.name.toLowerCase()
 					await this.createModule({ subject: this.subject, module: name })
 					this.closeCreateModal()
 					new window.Toast({ icon: 'success', title: 'Module created successfully' })

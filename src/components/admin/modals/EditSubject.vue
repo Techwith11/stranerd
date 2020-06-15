@@ -45,8 +45,7 @@
 		methods:{
 			...mapActions(['closeEditModal','clearEditMeta','editSubject']),
 			splitModule(){
-				let module = this.module.trim().split(',')[0]
-				module = module[0].toUpperCase() + module.slice(1).toLowerCase()
+				let module = this.module.trim().split(',')[0].toLowerCase()
 				this.module = ''
 				module && !this.subject.modules.includes(module) ? this.subject.modules.push(module) : null
 			},
@@ -54,7 +53,7 @@
 			async submit() {
 				this.isLoading = true
 				try{
-					await this.editSubject({ ...this.subject })
+					await this.editSubject({ ...this.subject, name: this.subject.name.toLowerCase() })
 					this.closeEditModal()
 					new window.Toast({ icon: 'success', title: 'Subject edited successfully' })
 					this.subject.name = ''
@@ -64,7 +63,7 @@
 			}
 		},
 		mounted(){
-			this.subject = this.getEditMeta
+			this.subject = { ...this.getEditMeta }
 			this.clearEditMeta()
 		}
 	}

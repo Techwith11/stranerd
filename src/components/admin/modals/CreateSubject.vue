@@ -44,8 +44,7 @@
 		methods:{
 			...mapActions(['closeCreateModal','createSubject']),
 			splitModule(){
-				let module = this.module.trim().split(',')[0]
-				module = module[0].toUpperCase() + module.slice(1).toLowerCase()
+				let module = this.module.trim().split(',')[0].toLowerCase()
 				this.module = ''
 				module && !this.subject.modules.includes(module) ? this.subject.modules.push(module) : null
 			},
@@ -53,7 +52,7 @@
 			async submit() {
 				this.isLoading = true
 				try{
-					await this.createSubject({ ...this.subject })
+					await this.createSubject({ ...this.subject, name: this.subject.name.toLowerCase() })
 					this.closeCreateModal()
 					new window.Toast({ icon: 'success', title: 'Subject added successfully' })
 					this.subject.name = ''

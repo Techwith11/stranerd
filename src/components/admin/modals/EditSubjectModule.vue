@@ -34,8 +34,7 @@
 			async submit() {
 				this.isLoading = true
 				try{
-					let name = this.name
-					name = name[0].toUpperCase() + name.slice(1).toLowerCase()
+					let name = this.name.toLowerCase()
 					await this.editModule({ subject: this.subject, module: this.module, updated: name })
 					this.closeEditModal()
 					new window.Toast({ icon: 'success', title: 'Module edited successfully' })
