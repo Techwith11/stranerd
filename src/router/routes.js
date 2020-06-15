@@ -32,7 +32,19 @@ export default [
         meta: { requiresAuth: true }
     },
     {
-        path: '/courses/:id',
+        path: '/courses/:subject',
+        name: 'CourseSubject',
+        component: () => import(/* webpackChunkName: "course-subject" */ '@/views/courses/single-subject'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/courses/:subject/:module',
+        name: 'CourseModule',
+        component: () => import(/* webpackChunkName: "course-module" */ '@/views/courses/single-module'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/courses/:subject/:module/:id',
         name: 'Course',
         component: () => import(/* webpackChunkName: "course" */ '@/views/courses/single-course'),
         meta: { requiresAuth: true, requiresSubscription: true }

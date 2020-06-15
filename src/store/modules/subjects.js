@@ -20,7 +20,7 @@ const mutations = {
 }
 
 const actions = {
-	async fetchAllSubject({ commit }){
+	async fetchAllSubjects({ commit }){
 		let docs = await firestore.collection('subjects').get()
 		let subjects = docs.docs.map(doc => ({ ...doc.data(), '.key': doc.id }))
 		commit('setAllSubjects', subjects)
