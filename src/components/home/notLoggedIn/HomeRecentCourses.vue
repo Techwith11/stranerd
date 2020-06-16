@@ -34,7 +34,7 @@
 <style lang="scss" scoped>
     @import '../../../style/index.scss';
     #background{
-        background: $white;
+        background: $primary-light;
         padding: 4rem 0;
         color: $text-black;
         text-align: center;

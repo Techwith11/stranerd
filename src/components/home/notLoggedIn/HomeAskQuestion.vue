@@ -1,6 +1,6 @@
 <template>
-	<div class="py-5">
-		<div class="p-3 p-md-5 container">
+	<div class="py-5 px-2">
+		<div class="p-3 p-md-5 container border border-secondary rounded-lg">
 			<div class="px-md-3">
 				<h4 class="text-muted text-center">Ask Your Questions</h4>
 				<div class="form-group my-3">

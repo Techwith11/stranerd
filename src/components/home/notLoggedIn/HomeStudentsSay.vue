@@ -6,7 +6,7 @@
             <div class="row mt-3">
                 <div class="col-md-6 col-lg-3 mt-2" v-for="index in 4" :key="index">
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body rounded-lg">
                             <div class="text-center mb-3">
                                 <img :src="getImages.students[0]" alt="" class="rounded">
                             </div>
@@ -38,7 +38,7 @@
 <style lang="scss" scoped>
     @import '../../../style/index.scss';
     #background{
-        background: $white;
+        background: $primary-light;
         padding: 4rem 0;
         color: $text-black;
         text-align: center;
