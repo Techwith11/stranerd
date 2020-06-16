@@ -13,7 +13,7 @@ service cloud.firestore {
 		}
 
 		match /courses/{id} {
-			allow read: if true;
+			allow read: if isAuthenticated();
 			allow create, delete: if isAdmin();
 			allow update: if isAuthenticated();
 		}
