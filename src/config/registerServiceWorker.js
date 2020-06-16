@@ -19,7 +19,6 @@ if(process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator){
 			}
 		}
 	}
-	console.log(123)
 	wb.addEventListener('waiting', showSkipWaitingPrompt)
 	wb.addEventListener('externalwaiting', showSkipWaitingPrompt)
 	wb.register().then(reg => registration = reg)
