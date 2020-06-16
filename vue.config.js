@@ -5,6 +5,7 @@ module.exports = {
 			swSrc: './src/config/service_worker.js',
 			importWorkboxFrom: 'local'
 		},
+		msTileColor: '#FFFFFF',
 		manifestOptions: {
 			name: "Stranerd",
 			short_name: "Stranerd",
