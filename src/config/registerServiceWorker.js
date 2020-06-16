@@ -1,6 +1,6 @@
 import { Workbox, messageSW } from 'workbox-window'
 
-if('serviceWorker' in navigator){
+if(process.env.Node_ENV === 'production' && 'serviceWorker' in navigator){
 	let wb = new Workbox('./service_worker.js')
 	let registration;
 	let showSkipWaitingPrompt = async () => {
