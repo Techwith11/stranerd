@@ -10,7 +10,6 @@
 			<cta />
 			<why-us />
 			<ask-question />
-			<what-we-do />
 			<students-says />
 			<what-makes-us-different />
 			<recent-courses />
@@ -24,7 +23,6 @@
 	import { mapGetters, mapActions } from 'vuex'
 	import CTA from '@/components/home/notLoggedIn/HomeCTA'
 	import WhyUs from '@/components/home/notLoggedIn/HomeWhyUs'
-	import WhatWeDo from '@/components/home/notLoggedIn/HomeWhatWeDo'
 	import AskQuestion from '@/components/home/notLoggedIn/HomeAskQuestion'
 	import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay'
 	import WhatMakesUsDifferent from '@/components/home/notLoggedIn/HomeWhatMakesUsDifferent'
@@ -40,7 +38,7 @@
 			'cta': CTA,
 			'why-us': WhyUs,
 			'ask-question': AskQuestion,
-			'what-we-do': WhatWeDo,
+			/*'what-we-do': WhatWeDo,*/
 			'students-says': StudentsSay,
 			'what-makes-us-different': WhatMakesUsDifferent,
 			'recent-courses': RecentCourses,
