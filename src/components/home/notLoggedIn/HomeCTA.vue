@@ -8,7 +8,7 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active" data-interval="3000">
-                    <img :src="getImages.slides[0]" class="d-block w-100" alt="">
+                    <img src="@/assets/slides_1.jpg" class="d-block w-100" alt="">
                     <div class="carousel-caption">
                         <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
                         <p class="subhead">Premium access to loads of resources ranging from courses, tests e.t.c.</p>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="carousel-item" data-interval="3000">
-                    <img :src="getImages.slides[1]" class="d-block w-100" alt="">
+                    <img src="@/assets/slides_2.jpg" class="d-block w-100" alt="">
                     <div class="carousel-caption">
                         <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
                         <p class="subhead">Premium access to loads of resources ranging from courses, tests e.t.c.</p>
@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="carousel-item" data-interval="3000">
-                    <img :src="getImages.slides[2]" class="d-block w-100" alt="">
+                    <img src="@/assets/slides_3.jpg" class="d-block w-100" alt="">
                     <div class="carousel-caption text-dark">
                         <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
                         <p class="subhead">Premium access to loads of resources ranging from courses, tests e.t.c.</p>
@@ -35,13 +35,6 @@
         </div>
     </div>
 </template>
-
-<script>
-    import { mapGetters } from 'vuex'
-    export default {
-        computed: mapGetters(['getImages'])
-    }
-</script>
 
 <style lang="scss" scoped>
     @import '../../../style/index.scss';

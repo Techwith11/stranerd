@@ -3,7 +3,7 @@
         <div class="container">
             <h2>What Makes Us Different</h2>
             <div class="d-flex flex-column flex-md-row justify-content-center align-items-center">
-                <img :src="getImages.what_makes_us_different" alt="" class="col-md-6 mb-4">
+                <img src="@/assets/what_makes_us_different.jpg" alt="" class="col-md-6 mb-4">
                 <div class="col-md-6 mb-4 text-left">
                     <h4>We put students first</h4>
                     <p></p>
@@ -16,13 +16,6 @@
         </div>
     </div>
 </template>
-
-<script>
-    import { mapGetters } from 'vuex'
-    export default {
-        computed: mapGetters(['getImages'])
-    }
-</script>
 
 <style lang="scss" scoped>
     @import '../../../style/index.scss';

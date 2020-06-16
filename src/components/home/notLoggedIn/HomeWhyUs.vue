@@ -3,27 +3,27 @@
         <div class="container">
             <div class="d-flex flex-column flex-md-row row justify-content-center">
                 <div class="col-md-4 mb-5">
-                    <img :src="getImages.icons.unlimited_access" alt="" class="icons" />
+                    <img src="@/assets/icons/Unlimited Access.svg" alt="" class="icons" />
                     <h3 class="icon-title">Unlimited Access</h3>
                     <p class="icon-subtitle">One subscription, unlimited access.</p>
                 </div>
                 <div class="col-md-4 mb-5">
-                    <img :src="getImages.icons.expert_teacher" alt="" class="icons" />
+                    <img src="@/assets/icons/Expert Teacher.svg" alt="" class="icons" />
                     <h3 class="icon-title">Expert Teachers</h3>
                     <p class="icon-subtitle">Learn from expert teachers who are passionate about teaching.</p>
                 </div>
                 <div class="col-md-4 mb-5">
-                    <img :src="getImages.icons.study_anywhere" alt="" class="icons" />
+                    <img src="@/assets/icons/Study Anywhere.svg" alt="" class="icons" />
                     <h3 class="icon-title">Study Anywhere</h3>
                     <p class="icon-subtitle">Improve your academic performance with courses made by experts..</p>
                 </div>
                 <div class="col-md-4 mb-5">
-                    <img :src="getImages.icons.test_preps" alt="" class="icons" />
+                    <img src="@/assets/icons/Test Preps.svg" alt="" class="icons" />
                     <h3 class="icon-title">Test Preps</h3>
                     <p class="icon-subtitle">Identify your strengths and improve your weaknesses with our concise tests.</p>
                 </div>
                 <div class="col-md-4 mb-5">
-                    <img :src="getImages.icons.post_questions" alt="" class="icons" />
+                    <img src="@/assets/icons/Post Questions.svg" alt="" class="icons" />
                     <h3 class="icon-title">Ask questions</h3>
                     <p class="icon-subtitle">Asks questions for free and get answers from our expert tutors.</p>
                 </div>
@@ -31,13 +31,6 @@
         </div>
     </div>
 </template>
-
-<script>
-    import { mapGetters } from 'vuex'
-    export default {
-        computed: mapGetters(['getImages'])
-    }
-</script>
 
 <style lang="scss" scoped>
     @import '../../../style/index.scss';

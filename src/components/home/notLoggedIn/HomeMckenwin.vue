@@ -1,6 +1,6 @@
 <template>
     <div>
-		<div id="background" :style="`background: url(${getImages.mckenwin});`">
+		<div id="background">
 			<div id="overlay">
 				<div class="container text-white">
 					<h2>Study In Europe</h2>
@@ -29,8 +29,8 @@
     @import '../../../style/index.scss';
     #background{
 		background-size: cover;
-		background-position: center;
-    }
+		background: url('../../../assets/mckenwin.jpg') center;
+	}
     #overlay{
         padding: 5rem 0;
 		text-align: center;

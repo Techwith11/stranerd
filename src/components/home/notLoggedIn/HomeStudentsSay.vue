@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="card-body rounded-lg">
                             <div class="text-center mb-3">
-                                <img :src="getImages.students[0]" alt="" class="rounded">
+                                <img src="@/assets/icons/Cassette.svg" alt="" class="rounded">
                             </div>
                             <p class="card-text">
                                 Stranerd is an online education platform that delivers video courses, programs and resources for Individual,
