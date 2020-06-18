@@ -145,6 +145,18 @@
                 let seconds = Math.floor(this.timer % 60).toFixed(0)
                 return `${hours < 10 ? '0' + hours : hours} : ${minutes < 10 ? '0' + minutes : minutes} : ${seconds < 10 ? '0' + seconds : seconds}`
             }
+		},
+		meta(){
+			return {
+				title: `Session with ${this.otherPerson.bio ? this.otherPerson.bio.name : 'user'}`,
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
 		}
 	}
 </script>

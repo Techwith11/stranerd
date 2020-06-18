@@ -13,6 +13,18 @@
 		components: {
 			'upgrade-user-to-admin': UpgradeUserToAdmin,
 			'upgrade-user-to-tutor': UpgradeUserToTutor,
+		},
+		meta(){
+			return {
+				title: 'User Upgrades',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
 		}
 	}
 </script>

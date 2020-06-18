@@ -110,6 +110,23 @@
 					})
 				})
 			},
+		},
+		meta(){
+			return {
+				title: this.$route.params.module[0].toUpperCase() + this.$route.params.module.slice(1).toLowerCase(),
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: ''
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: [].join(', ')
+					}
+				]
+			}
 		}
 	}
 </script>

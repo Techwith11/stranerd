@@ -45,6 +45,23 @@
 			isOverview(){ return !this.$route.query.tab || this.$route.query.tab === 'overview'},
 			isDiscussions(){ return this.$route.query.tab && this.$route.query.tab === 'discussions'},
 			isDocuments(){ return this.$route.query.tab && this.$route.query.tab === 'documents'},
+		},
+		meta(){
+			return {
+				title: this.course.title || 'Course Title',
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: this.course.description || ''
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: [].join(', ')
+					}
+				]
+			}
 		}
 	}
 </script>

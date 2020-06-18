@@ -11,6 +11,18 @@
 		components: {
 			'helper-spinner': HelperSpinner
 		},
-		async created(){ await this.$router.push('/?createPost=true') }
+		async created(){ await this.$router.push('/?createPost=true') },
+		meta(){
+			return {
+				title: 'Create Post',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
+		}
 	}
 </script>

@@ -75,6 +75,18 @@
 				this.getChats()
 				this.getUsers()
 			}
+		},
+		meta(){
+			return {
+				title: 'Chats',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
 		}
 	}
 </script>

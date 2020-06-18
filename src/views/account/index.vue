@@ -32,6 +32,18 @@
 			'account-payment-methods': AccountPaymentMethods,
 			'account-transactions': AccountTransactions,
 			'account-tests': AccountTests
+		},
+		meta(){
+			return {
+				title: `${this.getUser.bio ? this.getUser.bio.name : 'User'} Profile`,
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
 		}
 	}
 </script>

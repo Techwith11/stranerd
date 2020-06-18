@@ -19,6 +19,18 @@
 			'session-nav': SessionNav,
 			'session-student': SessionStudent,
 			'session-tutor': SessionTutor,
+		},
+		meta(){
+			return {
+				title: 'Recent Sessions',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
 		}
 	}
 </script>

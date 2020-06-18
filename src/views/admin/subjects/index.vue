@@ -16,6 +16,18 @@
 			'subject-card': SubjectCard
 		},
 		computed: mapGetters(['getAllSubjects']),
-		methods: mapActions(['setCreateModalSubject'])
+		methods: mapActions(['setCreateModalSubject']),
+		meta(){
+			return {
+				title: 'Subjects',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
+		}
 	}
 </script>

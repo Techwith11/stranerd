@@ -15,6 +15,18 @@
 		methods: {
 			goBack(){ this.$router.back() },
 			goHome(){ this.$router.replace('/') }
+		},
+		meta(){
+			return {
+				title: 'Page Not Found',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
 		}
 	}
 </script>

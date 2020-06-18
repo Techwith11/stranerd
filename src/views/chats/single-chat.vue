@@ -110,6 +110,18 @@
 		deactivated(){
 			this.chatsListener()
 		},
+		meta(){
+			return {
+				title: this.user.bio ? this.user.bio.name : 'Chat',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
+		}
 	}
 </script>
 

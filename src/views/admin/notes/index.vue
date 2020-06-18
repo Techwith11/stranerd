@@ -92,6 +92,18 @@
 					})
 				})
 			}
+		},
+		meta(){
+			return {
+				title: 'Shop Notes',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
 		}
 	}
 </script>

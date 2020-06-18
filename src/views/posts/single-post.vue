@@ -110,6 +110,28 @@
 			'post-info': PostInfo,
 			'reply-form': ReplyForm,
 			'reply-card': ReplyCard,
+		},
+		meta(){
+			return {
+				title: this.post.title || 'Question Title',
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: ''
+					},
+					{
+						vmid: 'author',
+						name: 'author',
+						content: this.user.bio ? this.user.bio.name : 'user'
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: (this.post.tags || []).join(', ')
+					}
+				]
+			}
 		}
 	}
 </script>

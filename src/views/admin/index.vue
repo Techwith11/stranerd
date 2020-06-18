@@ -14,6 +14,18 @@
 	export default {
 		name: "Admins",
 		methods: mapActions(['setCreateModalOverview']),
-		computed: mapGetters(['isLoggedIn'])
+		computed: mapGetters(['isLoggedIn']),
+		meta(){
+			return {
+				title: 'Stranerd Admin',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
+		}
 	}
 </script>

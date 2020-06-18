@@ -39,6 +39,23 @@
 				await this.$router.replace('/courses')
 			}
 			this.isLoading = false
+		},
+		meta(){
+			return {
+				title: this.$route.params.subject[0].toUpperCase() + this.$route.params.subject.slice(1).toLowerCase(),
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: ''
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: [ this.subject.name || '', ...this.subject.modules || []].join(', ')
+					}
+				]
+			}
 		}
 	}
 </script>

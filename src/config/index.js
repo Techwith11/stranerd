@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import VueMeta from 'vue-meta'
 import Vuelidate from 'vuelidate'
 import VueChatScroll from 'vue-chat-scroll'
 import { VueEditor } from 'vue2-editor'
@@ -10,6 +11,7 @@ import 'bootstrap'
 
 import SweetAlert from 'sweetalert2'
 
+Vue.use(VueMeta, { keyName: 'meta', refreshOnceOnNavigation: true })
 Vue.use(Vuelidate)
 Vue.use(VueChatScroll)
 Vue.component('vue-editor', VueEditor)

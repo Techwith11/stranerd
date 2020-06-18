@@ -52,6 +52,23 @@
 		},
 		deactivated(){
 			this.listener()
+		},
+		meta(){
+			return {
+				title: this.user.bio ? this.user.bio.name : 'Stranerd User',
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: this.user.bio && this.user.bio.bio
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: [this.user.bio && this.user.bio.name].join(', ')
+					}
+				]
+			}
 		}
 	}
 </script>

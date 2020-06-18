@@ -89,5 +89,22 @@
 			'helper-spinner': HelperSpinner,
 			'helper-message': HelperMessage
 		},
+		meta(){
+			return {
+				title: 'Shop on Stranerd',
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: ''
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: [].join(', ')
+					}
+				]
+			}
+		}
 	}
 </script>

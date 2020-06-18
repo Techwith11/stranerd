@@ -56,6 +56,23 @@
 			'tutor-card': TutorCard,
 			'helper-spinner': HelperSpinner,
 			'helper-message': HelperMessage,
+		},
+		meta(){
+			return {
+				title: 'Stranerd Tutors',
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: ''
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: [].join(', ')
+					}
+				]
+			}
 		}
 	}
 </script>

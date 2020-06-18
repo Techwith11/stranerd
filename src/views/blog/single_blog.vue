@@ -28,6 +28,23 @@
 		components: {
 			'helper-spinner': HelperSpinner,
 			'post-info': PostInfo
+		},
+		meta(){
+			return {
+				title: this.blog.title || 'Title',
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: ''
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: [].join(', ')
+					}
+				]
+			}
 		}
 	}
 </script>

@@ -104,6 +104,18 @@
 					})
 				})
 			},
+		},
+		meta(){
+			return {
+				title: 'Tutors Tests Questions',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
 		}
 	}
 </script>

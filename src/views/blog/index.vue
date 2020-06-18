@@ -91,6 +91,23 @@
 					})
 				})
 			}
+		},
+		meta(){
+			return {
+				title: 'Stranerd Blog',
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: ''
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: [].join(', ')
+					}
+				]
+			}
 		}
 	}
 </script>

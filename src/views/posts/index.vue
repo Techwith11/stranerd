@@ -82,6 +82,23 @@
 					})
 				})
 			}
+		},
+		meta(){
+			return {
+				title: 'Recent Questions',
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: ''
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: [].join(', ')
+					}
+				]
+			}
 		}
 	}
 </script>

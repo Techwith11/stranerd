@@ -15,7 +15,10 @@
 		data: () => ({
 			isLoading: true
 		}),
-		computed: mapGetters(['getAllSubjects']),
+		computed: {
+			...mapGetters(['getAllSubjects']),
+			getAllModules(){ return this.getAllSubjects.map(subject => [subject.name, ...subject.modules]).join() },
+		},
 		methods: mapActions(['fetchAllSubjects']),
 		components: {
 			'subject-card': SubjectCard,
@@ -27,6 +30,23 @@
 				await this.fetchAllSubjects()
 			}
 			this.isLoading = false
+		},
+		meta(){
+			return {
+				title: 'Courses',
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: ''
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: this.getAllModules
+					}
+				]
+			}
 		}
 	}
 </script>

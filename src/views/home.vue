@@ -38,7 +38,6 @@
 			'cta': CTA,
 			'why-us': WhyUs,
 			'ask-question': AskQuestion,
-			/*'what-we-do': WhatWeDo,*/
 			'students-says': StudentsSay,
 			'what-makes-us-different': WhatMakesUsDifferent,
 			'recent-courses': RecentCourses,
@@ -48,7 +47,7 @@
 			'recent-posts': RecentPosts,
 			'recent-sessions': RecentSessions,
 		},
-		computed: mapGetters(['isLoggedIn','questionsLeft']),
+		computed: mapGetters(['isLoggedIn','getUser','questionsLeft']),
 		methods: mapActions(['setPostModalNotify','setPostModalCreate']),
 		mounted(){
 			if(this.$route.query.createPost){
@@ -58,6 +57,23 @@
 					this.setPostModalNotify()
 				}
 				this.$router.push('/')
+			}
+		},
+		meta(){
+			return {
+				title: this.isLoggedIn ? `Stranerd Dashboard - ${this.getUser.bio && this.getUser.bio.name}` : 'Stranerd Home Page',
+				meta: [
+					{
+						vmid: 'description',
+						name: 'description',
+						content: this.isLoggedIn ? this.getUser.bio && this.getUser.bio.bio : 'Welcome to the home of the top upcoming tutoring service worldwide. Feel free to access from our wide range of courses, tutors, notes, questions etc'
+					},
+					{
+						vmid: 'keywords',
+						name: 'keywords',
+						content: ['stranerd','tutors','courses','questions','notes'].join(', ')
+					}
+				]
 			}
 		}
 	}

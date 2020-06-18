@@ -83,6 +83,18 @@
 		},
 		components: {
 			'helper-spinner': HelperSpinner,
+		},
+		meta(){
+			return {
+				title: 'Tutors Tests',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
+			}
 		}
 	}
 </script>
