@@ -1,6 +1,24 @@
 {
   "indexes": [
     {
+      "collectionGroup": "courses",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "module",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "subject",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "dates.updatedAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "questions",
       "queryScope": "COLLECTION",
       "fields": [
@@ -54,6 +72,20 @@
       "fields": [
         {
           "fieldPath": "student",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "dates.createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "sessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "tutor",
           "order": "ASCENDING"
         },
         {

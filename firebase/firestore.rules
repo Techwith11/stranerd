@@ -2,9 +2,9 @@ rules_version = '2';
 service cloud.firestore {
 	match /databases/{database}/documents {
 		match /blog/{id} {
-            allow read: if true;
-            allow write: if isAdmin();
-        }
+		    allow read: if true;
+		    allow write: if isAdmin();
+		}
 
 		match /chats/{path}/chats/{id} {
 			allow read, update: if hasAccessToChat(path);
@@ -14,23 +14,18 @@ service cloud.firestore {
 
 		match /courses/{id} {
 			allow read: if isAuthenticated();
-			allow create, delete: if isAdmin();
-			allow update: if isAuthenticated();
+			allow write: if isAdmin();
 		}
 
 		match /courses/{course}/discussions/{id} {
-			allow read: if isAuthenticated();
-			allow create: if isAuthenticated();
+			allow read, create: if isAuthenticated();
 			allow update: if isMine(resource.data.userId);
 			allow delete: if isAdmin();
 		}
 
 		match /errors/types/emails/{id} {
-            allow read: if isAdmin();
-            allow create: if isAdmin();
-            allow update: if isAdmin();
-            allow delete: if isAdmin();
-        }
+	        allow read, write: if isAdmin();
+	    }
 
 		match /notes/{id} {
 			allow read: if isAuthenticated();
@@ -38,31 +33,26 @@ service cloud.firestore {
 		}
 
 		match /posts/{id} {
-			allow read: if isAuthenticated();
-			allow write: if isAdmin();
+			allow read, create: if isAuthenticated();
+            allow update, delete: if isMine(resource.data.userId)
 		}
 
 		match /posts/{post}/replies/{id} {
-            allow read: if isAuthenticated();
-            allow write: if isAdmin();
-        }
+	        allow read, write: if isAuthenticated();
+	    }
 
-        match /posts/{post}/replies/{id}/votes/votes {
-            allow read: if isAuthenticated();
-            allow write: if isAuthenticated();
-        }
+	    match /posts/{post}/replies/{id}/votes/votes {
+	        allow read, write: if isAuthenticated();
+	    }
 
 		match /sessions/{id} {
-			allow read: if isAuthenticated();
-			allow create: if isAuthenticated();
+			allow read, create: if isAuthenticated();
 			allow update: if hasAccessToSession(id);
 			allow delete: if isAdmin();
 		}
 
 		match /sessions/{session}/chats/{id} {
-			allow read: if hasAccessToSession(session);
-			allow create: if hasAccessToSession(session);
-			allow update: if hasAccessToSession(session);
+			allow read, create, update: if hasAccessToSession(session);
 			allow delete: if isAdmin();
 		}
 
@@ -72,35 +62,27 @@ service cloud.firestore {
 		}
 
 		match /tests/tutors/questions/{id} {
-            allow read: if isAuthenticated();
-            allow write: if isAdmin();
-        }
+        allow read, write: if isAdmin();
+    }
 
 		match /tests/tutors/tests/{id} {
 			allow read: if isMine(resource.data.user);
-			allow create: if isAdmin();
-			allow update, delete: if isAdmin();
+			allow create, update, delete: if isAdmin();
 		}
 
 		match /users/{id} {
-			allow read: if isAuthenticated();
-			allow create: if isAuthenticated();
+			allow read, create: if isAuthenticated();
 			allow update: if isMine(id);
 			allow delete: if isAdmin();
 		}
 
 		match /users/{user}/transactions/{id} {
-			allow read: if isMine(user);
-			allow create: if isMine(user);
-			allow update: if isMine(user);
+			allow read, create, update: if isMine(user);
 			allow delete: if isAdmin();
 		}
 
 		match /users/{user}/paymentMethods/{id} {
-			allow read: if isMine(user);
-			allow create: if isMine(user);
-			allow update: if isMine(user);
-			allow delete: if isAdmin();
+			allow read, write: if isMine(user);
 		}
 
 		match /{document=**} {
@@ -108,24 +90,24 @@ service cloud.firestore {
 		}
 
 		function isAuthenticated() {
-			return true;//request.auth != null;
+			return true//request.auth != null;
 		}
 
 		function isAdmin() {
-			return true;//request.auth.token.isAdmin == true;
+			return true//request.auth.token.isAdmin == true;
 		}
 
 		function isMine(id) {
-			return true;//request.auth.uid == id;
+			return true//request.auth.uid == id;
 		}
 
 		function hasAccessToSession(session) {
 			let sessionData = get(/databases/$(database)/documents/sessions/$(session)).data;
-			return true;//request.auth.uid == sessionData.tutor || request.auth.uid == sessionData.student;
+			return true//request.auth.uid == sessionData.tutor || request.auth.uid == sessionData.student;
 		}
 
 		function hasAccessToChat(path) {
-			return true;//request.auth.uid in path.split('_');
+			return true//request.auth.uid in path.split('_');
 		}
 	}
 }
