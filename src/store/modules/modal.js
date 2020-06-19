@@ -12,7 +12,6 @@ const getters = {
     isAuthModalLogin: state => state.modal === 'login',
     isAuthModalForgotPassword: state => state.modal === 'forgot-password',
     isAuthModalRegisterStudent: state => state.modal === 'register-student',
-    isAuthModalRegisterTutor: state => state.modal === 'register-tutor',
 
     isCreateModalOpen: state => !!state.createModal,
     isCreateModalOverview: state => state.createModal === 'create-overview',
@@ -58,7 +57,6 @@ const actions = {
     setAuthModalLogin: ({ commit }) => commit('setAuthModal', 'login'),
     setAuthModalForgotPassword: ({ commit }) => commit('setAuthModal', 'forgot-password'),
     setAuthModalRegisterStudent: ({ commit }) => commit('setAuthModal', 'register-student'),
-    setAuthModalRegisterTutor: ({ commit }) => commit('setAuthModal', 'register-tutor'),
     closeAuthModal: ({ commit }) => commit('setAuthModal', null),
 
     setCreateModalOverview: ({ commit }) => commit('setCreateModal', 'create-overview'),

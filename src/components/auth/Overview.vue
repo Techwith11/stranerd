@@ -26,22 +26,22 @@
 			</span>
 			<div v-if="isDev">
 				<div class="d-flex">
-				<span class="mr-2">
-					<input type="radio" v-model="devUser" value="kevin11" class="mr-1">
-					<label>Kevin11</label>
-				</span>
 					<span class="mr-2">
-					<input type="radio" v-model="devUser" value="frank" class="mr-1">
-					<label>Frank</label>
-				</span>
+						<input type="radio" v-model="devUser" value="kevin11" class="mr-1">
+						<label>Kevin11</label>
+					</span>
 					<span class="mr-2">
-					<input type="radio" v-model="devUser" value="max" class="mr-1">
-					<label>Max</label>
-				</span>
+						<input type="radio" v-model="devUser" value="frank" class="mr-1">
+						<label>Frank</label>
+					</span>
 					<span class="mr-2">
-					<input type="radio" v-model="devUser" value="joe" class="mr-1">
-					<label>Joe</label>
-				</span>
+						<input type="radio" v-model="devUser" value="max" class="mr-1">
+						<label>Max</label>
+					</span>
+					<span class="mr-2">
+						<input type="radio" v-model="devUser" value="joe" class="mr-1">
+						<label>Joe</label>
+					</span>
 				</div>
 				<button @click="loginAsDevUser" :disabled="!devUser">
 					<i class="fas fa-user-cog text-info"></i>

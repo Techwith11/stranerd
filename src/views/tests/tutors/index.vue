@@ -76,7 +76,7 @@
                 return false
 			}
 		},
-		async mounted(){
+		async activated(){
 			if(!this.isTutor){ await this.$router.push('/') }
 			await this.checkForUnfinishedTests()
 			this.isLoading = false

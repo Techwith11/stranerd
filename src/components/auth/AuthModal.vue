@@ -5,7 +5,6 @@
 			<login v-if="isAuthModalLogin" />
 			<forgot-password v-if="isAuthModalForgotPassword" />
 			<register-student v-if="isAuthModalRegisterStudent" />
-			<register-tutor v-if="isAuthModalRegisterTutor" />
 		</div>
 	</div>
 </template>
@@ -16,17 +15,15 @@
 	import Login from '@/components/auth/Login'
 	import ForgotPassword from '@/components/auth/ForgotPassword'
 	import RegisterStudent from '@/components/auth/RegisterStudent'
-	import RegisterTutor from '@/components/auth/RegisterTutor'
 	export default {
 		components: {
 			'overview': Overview,
 			'login': Login,
 			'forgot-password': ForgotPassword,
 			'register-student': RegisterStudent,
-			'register-tutor': RegisterTutor,
 		},
 		computed: {
-			...mapGetters(['isAuthModalOverview','isAuthModalLogin','isAuthModalRegisterStudent','isAuthModalRegisterTutor','isAuthModalForgotPassword'])
+			...mapGetters(['isAuthModalOverview','isAuthModalLogin','isAuthModalRegisterStudent','isAuthModalForgotPassword'])
 		}
 	}
 </script>

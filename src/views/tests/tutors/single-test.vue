@@ -47,24 +47,25 @@
                 let doc = await firestore.collection('tests/tutors/tests').doc(this.$route.params.id).get()
                 if(doc.exists){
                     this.test = { '.key': doc.id, ...doc.data() }
-                    if(this.test.user !== this.getId){ await this.$router.push('/tests/tutors') }
-                    if(this.test.marked){
-                        new window.Toast({ icon: 'error', title: 'Test has been submitted already' })
-                        await this.$router.push('/tests/tutors')
-                    }else{
-                        let endsAt = new Date(this.test.dates.endedAt.seconds * 1000)
-                        if(endsAt < new Date()){
-                            new window.Toast({ icon: 'error', title: 'This test was closed without submitting. Submitting now..' })
-							this.submitTest({ id: this.$route.params.id, answers: this.answers })
-                        }else{
-                            this.timer = Math.floor((endsAt - new Date()) / 1000)
-                            this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
-                        }
-					}
-                    this.isLoading = false
                 }else{
-                    await this.$router.push('/tests/tutors')
+                    await this.$router.replace('/tests/tutors')
                 }
+			},
+			async validateTest(){
+				if(this.test.user !== this.getId){ await this.$router.replace('/tests/tutors') }
+				if(this.test.marked){
+					new window.Toast({ icon: 'error', title: 'Test has been submitted already' })
+					await this.$router.replace('/tests/tutors')
+				}else{
+					let endsAt = new Date(this.test.dates.endedAt.seconds * 1000)
+					if(endsAt < new Date()){
+						new window.Toast({ icon: 'error', title: 'This test was closed without submitting. Submitting now..' })
+						this.submitTest({ id: this.$route.params.id, answers: this.answers })
+					}else{
+						this.timer = Math.floor((endsAt - new Date()) / 1000)
+						this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
+					}
+				}
 			},
 			onAnswerSelected(key, answer){
 				this.answers[key] = answer
@@ -85,18 +86,25 @@
                 this.isMarked = true
                 clearInterval(this.interval)
 				if(document.visibilityState !== 'visible'){
-					return this.$router.push('/tests/tutors')
+					return this.$router.replace('/tests/tutors')
 				}
                 new window.Toast({ icon: 'info', title: 'Submitting answers' })
                 let score = await this.submitTest({ id: this.$route.params.id, answers: this.answers })
                 new window.Toast({ icon: 'info', title: `You scored ${score}%` })
-                await this.$router.push('/tests/tutors')
+                await this.$router.replace('/tests/tutors')
             },
 		},
         async mounted(){
             await this.fetchTest()
-			window.addEventListener('beforeunload', () => window.clearInterval(this.interval))
+			await this.validateTest()
+			this.isLoading = false
         },
+		async activated(){
+			if(this.test['.key']){
+				await this.validateTest()
+				window.addEventListener('beforeunload', () => window.clearInterval(this.interval))
+			}
+		},
         components: {
             'helper-spinner': HelperSpinner,
             'question': Question,
@@ -106,7 +114,7 @@
                 if(Math.floor(this.timer) === 0){ this.endTest() }
             }
         },
-		beforeDestroy(){ window.clearInterval(this.interval) },
+		deactivated(){ window.clearInterval(this.interval) },
 		meta(){
 			return {
 				title: `Level ${this.test.level} ${this.test.course}`,

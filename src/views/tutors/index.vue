@@ -7,9 +7,9 @@
 					<input type="text" class="form-control" placeholder="Search by name" v-model="name">
 				</div>
 				<div class="col-5 pl-0">
-					<select class="form-control" v-model="course">
+					<select class="form-control text-capitalize" v-model="course">
 						<option value="All">All</option>
-						<option :value="subject.name" v-for="subject in subjects" :key="subject['.key']">{{ subject.name }}</option>
+						<option :value="subject.name" v-for="subject in getAllSubjects" :key="subject['.key']">{{ subject.name }}</option>
 					</select>
 				</div>
 			</div>
@@ -21,6 +21,7 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
+	import { mapGetters } from 'vuex'
 	import HelperSpinner from '@/components/helpers/Spinner'
 	import HelperMessage from '@/components/helpers/Message'
 	import TutorCard from '@/components/users/list/TutorCard'
@@ -29,16 +30,15 @@
 		data: () => ({
 			isLoading: true,
 			tutors: [],
-			subjects: [],
 			course: 'All',
 			name: ''
 		}),
 		computed: {
+			...mapGetters(['getAllSubjects']),
 			filteredTutors(){
 				let filtered = this.tutors
 				if(this.course !== 'All'){ filtered = filtered.filter(tutor => tutor.tutor.courses.includes(this.course) && tutor.tutor.levels[this.course] > 0) }
-				filtered = filtered.filter(tutor => tutor.bio.name.toLowerCase().includes(this.name.toLowerCase()))
-				return filtered
+				return filtered.filter(tutor => tutor.bio.name.toLowerCase().includes(this.name.toLowerCase()))
 			}
 		},
 		async mounted(){
@@ -48,8 +48,6 @@
 				.orderBy('tutor.rating','desc')
 				.get()
 			docs.forEach(doc => this.tutors.push({ '.key': doc.id, ...doc.data() }))
-			docs = await firestore.collection('subjects').get()
-			docs.forEach(doc => this.subjects.push({ '.key': doc.id, ...doc.data() }))
 			this.isLoading = false
 		},
 		components: {
