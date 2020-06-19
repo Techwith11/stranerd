@@ -42,7 +42,7 @@
 		},
 		meta(){
 			return {
-				title: this.$route.params.subject[0].toUpperCase() + this.$route.params.subject.slice(1).toLowerCase(),
+				title: this.$route.params.subject ? this.$route.params.subject[0].toUpperCase() + this.$route.params.subject.slice(1).toLowerCase() : 'Subject Name',
 				meta: [
 					{
 						vmid: 'description',

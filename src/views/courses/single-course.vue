@@ -30,8 +30,8 @@
 			if(!doc.exists){ return this.$router.replace('/courses') }
 			this.course = { '.key': doc.id, ...doc.data() }
 			this.isLoading = false
-			window.Fire.$on('CourseEdited', course => this.course = course)
-			window.Fire.$on('CourseDeleted', () => this.$router.push('/courses'))
+			window.Fire.$on('CourseEdited', course => course['.key'] === this.course['.key'] ? this.course = course : null)
+			window.Fire.$on('CourseDeleted', course => course['.key'] === this.course['.key'] ? this.$router.push('/courses') : null)
 		},
 		components: {
 			'single-video': SingleVideo,

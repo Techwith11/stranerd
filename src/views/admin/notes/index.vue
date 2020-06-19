@@ -42,6 +42,7 @@
 			window.Fire.$on('NoteEdited', note => {
 				let index = this.notes.findIndex(n => n['.key'] === note['.key'])
 				this.notes[index] = note
+				this.$forceUpdate()
 			})
 			window.Fire.$on('NoteDeleted', note => this.notes = this.notes.filter(n => n['.key'] !== note['.key']))
 		},

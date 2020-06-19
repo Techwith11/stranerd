@@ -46,6 +46,7 @@
 			window.Fire.$on('BlogPostEdited', post => {
 				let index = this.posts.findIndex(p => p['.key'] === post['.key'])
 				this.posts[index] = post
+				this.$forceUpdate()
 			})
 			window.Fire.$on('BlogPostDeleted', post => this.posts = this.posts.filter(p => p['.key'] !== post['.key']))
 		},

@@ -22,8 +22,8 @@
 			if(!doc.exists){ return this.$router.replace('/blog') }
 			this.post = { '.key': doc.id, ...doc.data() }
 			this.isLoading = false
-			window.Fire.$on('BlogPostEdited', post => this.post = post)
-			window.Fire.$on('BlogPostDeleted', () => this.$router.push('/blog'))
+			window.Fire.$on('BlogPostEdited', post => post['.key'] === this.post['.key'] ? this.post = post : null)
+			window.Fire.$on('BlogPostDeleted', post => post['.key'] === this.post['.key'] ? this.$router.push('/blog') : null)
 		},
 		components: {
 			'helper-spinner': HelperSpinner,
@@ -31,7 +31,7 @@
 		},
 		meta(){
 			return {
-				title: this.blog.title || 'Title',
+				title: this.post.title || 'Title',
 				meta: [
 					{
 						vmid: 'description',

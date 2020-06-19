@@ -50,6 +50,7 @@
 			window.Fire.$on('CourseEdited', course => {
 				let index = this.courses.findIndex(c => c['.key'] === course['.key'])
 				this.courses[index] = course
+				this.$forceUpdate()
 			})
 			window.Fire.$on('CourseDeleted', course => this.courses = this.courses.filter(c => c['.key'] !== course['.key']))
 		},
@@ -113,7 +114,7 @@
 		},
 		meta(){
 			return {
-				title: this.$route.params.module[0].toUpperCase() + this.$route.params.module.slice(1).toLowerCase(),
+				title: this.$route.params.module ? this.$route.params.module[0].toUpperCase() + this.$route.params.module.slice(1).toLowerCase() : 'Module Name',
 				meta: [
 					{
 						vmid: 'description',

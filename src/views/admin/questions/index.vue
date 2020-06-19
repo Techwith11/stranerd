@@ -47,6 +47,7 @@
 			window.Fire.$on('QuestionEdited', question => {
 				let index = this.questions.findIndex(q => q['.key'] === question['.key'])
 				this.questions[index] = question
+				this.$forceUpdate()
 			})
 			window.Fire.$on('QuestionDeleted', question => this.questions = this.questions.filter(q => q['.key'] !== question['.key']))
 		},
