@@ -1,110 +1,38 @@
 <template>
 	<div>
-		<question-nav class="mb-3" :subjects="subjects" />
 		<helper-spinner v-if="isLoading"/>
-		<div v-else>
-			<helper-message message="No questions available at the moment. Try adding some new ones." v-if="questions.length === 0" />
-			<div v-else>
-				<div class="container">
-					<question-card :question="question" v-for="question in questions" :key="question['.key']" />
-					<div class="d-flex justify-content-end mb-3" v-if="hasMore">
-						<button class="btn-success" @click="fetchOlderQuestions">
-							<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderQuestionsLoading"></i>
-							<span>Fetch More</span>
-						</button>
-					</div>
-				</div>
-			</div>
+		<div class="container" v-else>
+			<router-link :to="`/admins/questions/${subject.name}`" v-for="subject in getAllSubjects" :key="subject['.key']"
+				class="text-decoration-none alert alert-dark d-block my-3">
+				<h5 class="card-title mb-0 text-capitalize">{{ subject.name }}</h5>
+			</router-link>
 		</div>
 	</div>
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
-	import QuestionNav from '@/components/admin/questions/list/QuestionNav'
-	import QuestionCard from '@/components/admin/questions/list/QuestionCard'
+	import { mapGetters, mapActions } from 'vuex'
 	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	export default {
 		name: 'Questions',
 		data: () => ({
-			questions: [],
-			subjects: [],
 			isLoading: true,
-			isOlderQuestionsLoading: false,
-			fetched: false,
-			listener: () => {},
-			paginationLimit: 24,
-			hasMore: true
 		}),
 		computed: {
-			course(){ return this.$route.query.tab },
-		},
-		async mounted() {
-			await this.getQuestions()
-			this.fetched = true
-			this.isLoading = false
-			window.Fire.$on('QuestionEdited', question => {
-				let index = this.questions.findIndex(q => q['.key'] === question['.key'])
-				this.questions[index] = question
-				this.$forceUpdate()
-			})
-			window.Fire.$on('QuestionDeleted', question => this.questions = this.questions.filter(q => q['.key'] !== question['.key']))
+			...mapGetters(['getAllSubjects']),
 		},
 		async activated(){
-			if(this.fetched){
-				await this.setQuestionsListeners()
+			this.isLoading = true
+			if(this.getAllSubjects.length === 0){
+				await this.fetchAllSubjects()
 			}
-		},
-		deactivated(){
-			this.listener()
+			this.isLoading = false
 		},
 		components: {
-			'question-nav': QuestionNav,
-			'question-card': QuestionCard,
 			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage
 		},
 		methods: {
-			async getQuestions(){
-				let docs = firestore.collection('tests/tutors/questions').orderBy('dates.createdAt','desc')
-					.limit(this.paginationLimit)
-				if(this.course){
-					docs = docs.where('subject','==', this.course)
-				}
-				let lastItem = this.questions[this.questions.length - 1]
-				if(lastItem){
-					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
-				}
-				docs = await docs.get()
-				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
-			},
-			async fetchOlderQuestions(){
-				this.isOlderQuestionsLoading = true
-				await this.getQuestions()
-				this.isOlderQuestionsLoading = false
-			},
-			async setQuestionsListeners(){
-				let lastItem = this.questions[this.questions.length - 1]
-				let query = firestore.collection('tests/tutors/questions').orderBy('dates.createdAt')
-				if(this.course){
-					query = query.where('subject','==', this.course)
-				}
-				if(lastItem){
-					query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
-				}
-				this.listener = query.onSnapshot(snapshot => {
-					snapshot.docs.forEach(doc => {
-						let index = this.questions.findIndex(r => r['.key'] === doc.id)
-						if(index === -1){
-							this.questions.unshift({ '.key': doc.id, ...doc.data() })
-						}else{
-							this.questions[index] = { '.key': doc.id, ...doc.data() }
-						}
-					})
-				})
-			},
+			...mapActions(['fetchAllSubjects']),
 		},
 		meta(){
 			return {
