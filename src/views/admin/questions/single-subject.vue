@@ -1,105 +1,48 @@
 <template>
-	<div>
-		<helper-spinner v-if="isLoading"/>
+	<div class="container">
+		<helper-spinner v-if="isLoading" />
 		<div v-else>
-			<helper-message message="No questions available at the moment. Try adding some new ones." v-if="questions.length === 0" />
-			<div class="container pt-3" v-else>
-				<question-card :question="question" v-for="question in questions" :key="question['.key']" />
-				<div class="d-flex justify-content-end mb-3" v-if="hasMore">
-					<button class="btn-success" @click="fetchOlderQuestions">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderQuestionsLoading"></i>
-						<span>Fetch More</span>
-					</button>
-				</div>
-			</div>
+			<router-link class="text-muted h6 text-decoration-none my-3 d-inline-block text-capitalize" :to="`/admins/questions`">
+				<i class="fas fa-arrow-left mr-2"></i>
+				<span>All</span>
+			</router-link>
+			<subject-card :key="subject['.key']" :subject="subject"/>
 		</div>
 	</div>
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
-	import QuestionCard from '@/components/admin/questions/list/QuestionCard'
 	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
+	import SubjectCard from "@/components/admin/questions/list/SubjectCard"
+	import { mapGetters, mapActions } from 'vuex'
 	export default {
-		name: 'Questions',
 		data: () => ({
-			questions: [],
-			isLoading: true,
-			isOlderQuestionsLoading: false,
-			fetched: false,
-			listener: () => {},
-			paginationLimit: 24,
-			hasMore: true
+			subject: {},
+			isLoading: true
 		}),
-		async mounted() {
-			await this.getQuestions()
-			this.fetched = true
-			this.isLoading = false
-			window.Fire.$on('QuestionEdited', question => {
-				let index = this.questions.findIndex(q => q['.key'] === question['.key'])
-				this.questions[index] = question
-				this.$forceUpdate()
-			})
-			window.Fire.$on('QuestionDeleted', question => this.questions = this.questions.filter(q => q['.key'] !== question['.key']))
+		computed: mapGetters(['getAllSubjects']),
+		methods: mapActions(['fetchAllSubjects']),
+		components: {
+			'subject-card': SubjectCard,
+			'helper-spinner': HelperSpinner
 		},
 		async activated(){
-			if(this.fetched){
-				await this.setQuestionsListeners()
+			this.isLoading = true
+			let name = this.$route.params.subject
+			if(this.getAllSubjects.length === 0){
+				await this.fetchAllSubjects()
 			}
-		},
-		deactivated(){
-			this.listener()
-		},
-		components: {
-			'question-card': QuestionCard,
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage
-		},
-		computed: {
-			subject(){ return this.$route.params.subject || '' }
-		},
-		methods: {
-			async getQuestions(){
-				let docs = firestore.collection('tests/tutors/questions').orderBy('dates.createdAt','desc')
-					.limit(this.paginationLimit)
-					.where('subject','==', this.subject.toLowerCase())
-				let lastItem = this.questions[this.questions.length - 1]
-				if(lastItem){
-					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
-				}
-				docs = await docs.get()
-				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
-			},
-			async fetchOlderQuestions(){
-				this.isOlderQuestionsLoading = true
-				await this.getQuestions()
-				this.isOlderQuestionsLoading = false
-			},
-			async setQuestionsListeners(){
-				let lastItem = this.questions[this.questions.length - 1]
-				let query = firestore.collection('tests/tutors/questions')
-					.where('subject','==', this.subject.toLowerCase())
-					.orderBy('dates.createdAt')
-				if(lastItem){
-					query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
-				}
-				this.listener = query.onSnapshot(snapshot => {
-					snapshot.docs.forEach(doc => {
-						let index = this.questions.findIndex(r => r['.key'] === doc.id)
-						if(index === -1){
-							this.questions.unshift({ '.key': doc.id, ...doc.data() })
-						}else{
-							this.questions[index] = { '.key': doc.id, ...doc.data() }
-						}
-					})
-				})
-			},
+			let subject = this.getAllSubjects.find(s => s.name.toLowerCase() === name.toLowerCase())
+			if(subject){
+				this.subject = subject
+			}else{
+				await this.$router.replace('/admins/questions')
+			}
+			this.isLoading = false
 		},
 		meta(){
 			return {
-				title: `${this.subject && this.subject[0].toUpperCase() + this.subject.slice(1).toLowerCase()} Tutors Tests Questions`,
+				title: `${this.subject.name && this.subject.name[0].toUpperCase() + this.subject.name.slice(1).toLowerCase()} Tutors Tests Questions`,
 				meta: [
 					{
 						vmid: 'robots',

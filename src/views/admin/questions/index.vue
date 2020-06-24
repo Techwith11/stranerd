@@ -1,25 +1,28 @@
 <template>
-	<div>
-		<helper-spinner v-if="isLoading"/>
-		<div class="container" v-else>
-			<router-link :to="`/admins/questions/${subject.name}`" v-for="subject in getAllSubjects" :key="subject['.key']"
-				class="text-decoration-none alert alert-dark d-block my-3">
-				<h5 class="card-title mb-0 text-capitalize">{{ subject.name }}</h5>
-			</router-link>
+	<div class="container">
+		<helper-spinner v-if="isLoading" />
+		<div v-else>
+			<subject-card v-for="subject in getAllSubjects" :key="subject['.key']" :subject="subject"/>
 		</div>
 	</div>
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
 	import HelperSpinner from '@/components/helpers/Spinner'
+	import SubjectCard from "@/components/admin/questions/list/SubjectCard"
+	import { mapGetters, mapActions } from 'vuex'
 	export default {
-		name: 'Questions',
 		data: () => ({
-			isLoading: true,
+			isLoading: true
 		}),
 		computed: {
 			...mapGetters(['getAllSubjects']),
+			getAllModules(){ return this.getAllSubjects.map(subject => [subject.name, ...subject.modules]).join() },
+		},
+		methods: mapActions(['fetchAllSubjects']),
+		components: {
+			'subject-card': SubjectCard,
+			'helper-spinner': HelperSpinner
 		},
 		async activated(){
 			this.isLoading = true
@@ -27,12 +30,6 @@
 				await this.fetchAllSubjects()
 			}
 			this.isLoading = false
-		},
-		components: {
-			'helper-spinner': HelperSpinner,
-		},
-		methods: {
-			...mapActions(['fetchAllSubjects']),
 		},
 		meta(){
 			return {

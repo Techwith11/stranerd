@@ -130,6 +130,11 @@ export default [
                 component: () => import(/* webpackChunkName: "question-subject" */ '@/views/admin/questions/single-subject'),
             },
             {
+                path: '/admins/questions/:subject/:module',
+                name: 'QuestionModule',
+                component: () => import(/* webpackChunkName: "question-module" */ '@/views/admin/questions/single-module'),
+            },
+            {
                 path: '/admins/subjects',
                 name: 'Subjects',
                 component: () => import(/* webpackChunkName: "subjects" */ '@/views/admin/subjects/index'),
