@@ -20,6 +20,12 @@
 				</select>
 			</div>
 			<div class="form-group my-3">
+				<select class="form-control text-capitalize" v-model="$v.question.module.$model" :class="{'is-invalid': $v.question.module.$error, 'is-valid': !$v.question.module.$invalid}">
+					<option :value="null" disabled>Please select a {{ question.subject ? 'module' : 'subject first' }}</option>
+					<option :value="module" v-for="module in getModules" :key="module">{{ module }}</option>
+				</select>
+			</div>
+			<div class="form-group my-3">
 				<input type="text" class="form-control" v-model="$v.question.a.$model" placeholder="Option A"
 					:class="{'is-invalid': $v.question.a.$error, 'is-valid': !$v.question.a.$invalid}">
 			</div>
@@ -65,6 +71,7 @@
 			question: {
 				title: '',
 				subject: null,
+				module: null,
 				a: '',
 				b: '',
 				c: '',
@@ -81,7 +88,10 @@
 				[{color:[]},{background:[]}], ['link','image',/*'video'*/],['clean']
 			]
 		}),
-		computed: mapGetters(['getAllSubjects']),
+		computed: {
+			...mapGetters(['getAllSubjects']),
+			getModules(){ return this.question.subject ? this.getAllSubjects.find(s => s.name === this.question.subject).modules : [] }
+		},
 		methods:{
 			...mapActions(['setCreateModalOverview', 'closeCreateModal', 'createQuestion','uploadFromEditor']),
 			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
@@ -106,12 +116,21 @@
 			question: {
 				title: { required },
 				subject: { required, minLength: minLength(1) },
+				module: { required, minLength: minLength(1) },
 				a: { required, minLength: minLength(1) },
 				b: { required, minLength: minLength(1) },
 				c: { required, minLength: minLength(1) },
 				d: { required, minLength: minLength(1) },
 				answer: { required },
 				level: { required, minValue: minValue(1) }
+			}
+		},
+		watch: {
+			'question.subject'() {
+				let subject = this.getAllSubjects.find(s => s.name === this.question.subject)
+				if (subject && !subject.modules.includes(this.question.module)) {
+					this.question.module = null
+				}
 			}
 		}
 	}
