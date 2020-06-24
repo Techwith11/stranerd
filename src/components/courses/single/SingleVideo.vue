@@ -1,9 +1,6 @@
 <template>
-	<div class="container-md p-0 px-md-4">
-		<div class="position-relative">
-			<video :src="getVideoLink" class="w-100 mb-0" controls></video>
-			<i class="position-absolute fas fa-crown fa-2x text-danger" v-if="course.premium"></i>
-		</div>
+	<div class="container-md p-0 px-md-4 pt-1">
+		<video :src="getVideoLink" class="w-100 mb-0" controls></video>
 		<h6 class="text-center">{{ course.title }}</h6>
 	</div>
 </template>
@@ -17,16 +14,7 @@
 			}
 		},
 		computed: {
-			getVideoLink(){ return this.course.premium ? this.course.preview.link : this.course.video.link }
+			getVideoLink(){ return this.course.video.link }
 		}
 	}
 </script>
-
-<style>
-	i{
-		z-index: 3;
-		right: 0;
-		top: 0;
-		padding: 0.5rem;
-	}
-</style>

@@ -3,13 +3,13 @@
 		<div class="container">
 			<ul class="nav justify-content-center">
 				<li class="nav-item">
-					<router-link class="nav-link" :to="`/courses/${$route.params.id}`">Overview</router-link>
+					<router-link class="nav-link" :to="`${$route.path}`">Overview</router-link>
 				</li>
 				<li class="nav-item">
-					<router-link class="nav-link" :to="`/courses/${$route.params.id}?tab=documents`">Documents</router-link>
+					<router-link class="nav-link" :to="`${$route.path}?tab=documents`">Documents</router-link>
 				</li>
 				<li class="nav-item">
-					<router-link class="nav-link" :to="`/courses/${$route.params.id}?tab=discussions`">Discussions</router-link>
+					<router-link class="nav-link" :to="`${$route.path}?tab=discussions`">Discussions</router-link>
 				</li>
 			</ul>
 		</div>
