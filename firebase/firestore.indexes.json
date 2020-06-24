@@ -95,6 +95,20 @@
       ]
     },
     {
+      "collectionGroup": "sessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "tutor",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "dates.endedAt",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "tests",
       "queryScope": "COLLECTION",
       "fields": [
