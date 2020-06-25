@@ -18,6 +18,18 @@ module.exports = functions.https.onCall(async (data, context) => {
 		let time = session.duration > 1 ? `${session.duration} hours` : `${session.duration} hour`
 		throw new functions.https.HttpsError('failed-precondition',`Tutor is currently in a ${time} session. Try again later.`)
 	}
+	docs = await admin.firestore().collection('sessions')
+		.where('tutor','==', data.tutor)
+		.where('cancelled.tutor','==', false)
+		.where('cancelled.student','==', false)
+		.where('paid','==', false)
+		.limit(1)
+		.get()
+	if(!docs.empty){
+		let session = docs.docs[0].data()
+		let time = session.duration > 1 ? `${session.duration} hours` : `${session.duration} hour`
+		throw new functions.https.HttpsError('failed-precondition',`Tutor is currently in a ${time} session. Try again later.`)
+	}
 
 	let session = {
 		duration: data.duration,

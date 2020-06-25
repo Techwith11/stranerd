@@ -71,6 +71,28 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
+          "fieldPath": "cancelled.student",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "cancelled.tutor",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "paid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "tutor",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "sessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
           "fieldPath": "student",
           "order": "ASCENDING"
         },
