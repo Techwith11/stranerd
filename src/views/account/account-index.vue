@@ -32,9 +32,7 @@
 			</div>
 			<div v-else>
 				<p>You are currently not on any subscription plan. Click below to select one from our generous packages.</p>
-				<div class="d-flex justify-content-end">
-					<button class="btn btn-info small" @click="setAccountModalSelectSubscription">Subscribe Now</button>
-				</div>
+				<button class="btn btn-info small" @click="setAccountModalSelectSubscription">Subscribe Now</button>
 			</div>
 		</div>
 		<div class="my-3" v-if="getUser.roles.isTutor">

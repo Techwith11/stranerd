@@ -9,7 +9,7 @@
 		<div class="mx-2">
 			<button class="w-100 my-2 rounded" @click="setMode(0.25)" :disabled="isLoading"
 				:class="{'bg-info text-white': mode === 0.25}">
-				<span>15 minutes - &dollar;10</span>
+				<span>15 minutes - &dollar;7.5</span>
 			</button>
 			<button class="w-100 my-2 rounded" @click="setMode(0.5)" :disabled="isLoading"
 				:class="{'bg-info text-white': mode === 0.5}">
@@ -49,7 +49,7 @@
 			mode: null,
 			secret: true,
 			prices: {
-				0.25: 10,
+				0.25: 7.5,
 				0.5: 15,
 				1: 30,
 				2: 60,
