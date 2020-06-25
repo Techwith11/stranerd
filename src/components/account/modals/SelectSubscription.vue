@@ -7,50 +7,20 @@
 		</div>
 		<div v-if="page === 1">
 			<div class="d-flex flex-column flex-sm-row">
-				<div class="flex-grow-1 mb-4 mb-sm-0">
-					<div class="border border-success rounded p-2" @click="planId = 'stranerd_monthly_amateur_plan'"
-						:class="planId === 'stranerd_monthly_amateur_plan' ? 'bg-success text-white' : 'text-success'"
+				<div class="flex-grow-1 mb-4 mb-sm-0" v-for="(plan,index) in plans" :key="index">
+					<div class="border border-success rounded p-2" @click="planId = plan.monthlyId"
+						:class="planId === plan.monthlyId ? 'bg-success text-white' : 'text-success'"
 					>
-						<h6 class="text-center">Stranerd Amateur Plan</h6>
-						<p class="text-center">&dollar;10/mo</p>
+						<h6 class="text-center">{{ plan.title }}</h6>
+						<p class="text-center">&dollar;{{ plan.monthly }}/mo</p>
 						<ul class="small">
 							<li class="">Access to unlimited resources and tutors</li>
-							<li>5 free questions per month</li>
+							<li>{{ plan.questions }} free questions per month</li>
 						</ul>
 					</div>
-					<div class="small text-center my-2 border border-info rounded p-2" @click="planId = 'stranerd_yearly_amateur_plan'"
-						:class="planId === 'stranerd_yearly_amateur_plan' ? 'bg-info text-white' : 'text-info'"
-					>save 16% and pay &dollar;100 for a year</div>
-				</div>
-				<div class="flex-grow-1 mb-4 mb-sm-0 mx-sm-2">
-					<div class="border border-success rounded p-2" @click="planId = 'stranerd_monthly_intermediate_plan'"
-						:class="planId === 'stranerd_monthly_intermediate_plan' ? 'bg-success text-white' : 'text-success'"
-					>
-						<h6 class="text-center">Stranerd Intermediate Plan</h6>
-						<p class="text-center">&dollar;15/mo</p>
-						<ul class="small">
-							<li class="">Access to unlimited resources and tutors</li>
-							<li>10 free questions per month</li>
-						</ul>
-					</div>
-					<div class="small text-center my-2 border border-info rounded p-2" @click="planId = 'stranerd_yearly_intermediate_plan'"
-						:class="planId === 'stranerd_yearly_intermediate_plan' ? 'bg-info text-white' : 'text-info'"
-					>save 16% and pay &dollar;150 for a year</div>
-				</div>
-				<div class="flex-grow-1 mb-4 mb-sm-0">
-					<div class="border border-success rounded p-2" @click="planId = 'stranerd_monthly_master_plan'"
-						:class="planId === 'stranerd_monthly_master_plan' ? 'bg-success text-white' : 'text-success'"
-					>
-						<h6 class="text-center">Stranerd All Out Master Plan</h6>
-						<p class="text-center">&dollar;20/mo</p>
-						<ul class="small">
-							<li class="">Access to unlimited resources and tutors</li>
-							<li>15 free questions per month</li>
-						</ul>
-					</div>
-					<div class="small text-center my-2 border border-info rounded p-2" @click="planId = 'stranerd_yearly_master_plan'"
-						:class="planId === 'stranerd_yearly_master_plan' ? 'bg-info text-white' : 'text-info'"
-					>save 16% and pay &dollar;200 for a year</div>
+					<div class="small text-center my-2 border border-info rounded p-2" @click="planId = plan.yearlyId"
+						:class="planId === plan.yearlyId ? 'bg-info text-white' : 'text-info'"
+					>save 16% and pay &dollar;{{ plan.yearly }} for a year</div>
 				</div>
 			</div>
 			<div class="d-flex justify-content-end">
@@ -75,6 +45,32 @@
 	import SelectPaymentMethod from "@/components/helpers/SelectPaymentMethod"
 	export default {
 		data: () => ({
+			plans: [
+				{
+					title: 'Amateur Plan',
+					monthly: 9.99,
+					yearly: 100,
+					questions: 5,
+					monthlyId: 'stranerd_monthly_amateur_plan',
+					yearlyId: 'stranerd_yearly_amateur_plan'
+				},
+				{
+					title: 'Intermediate Plan',
+					monthly: 19.99,
+					yearly: 200,
+					questions: 9,
+					monthlyId: 'stranerd_monthly_intermediate_plan',
+					yearlyId: 'stranerd_yearly_intermediate_plan'
+				},
+				{
+					title: 'Master Plan',
+					monthly: 49.99,
+					yearly: 500,
+					questions: 15,
+					monthlyId: 'stranerd_monthly_master_plan',
+					yearlyId: 'stranerd_yearly_master_plan'
+				}
+			],
 			page: 1,
 			planId: null,
 			token: null,

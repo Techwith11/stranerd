@@ -6,47 +6,17 @@
                 <p class="small">Stranerd is an online educational platform that offers academic assistance to students worldwide.</p>
                 <button class="primary-button" @click="setAuthModalOverview">Start Free Trial</button>
             </div>
-            <div class="price-card">
-                <span class="font-weight-light">Amateur</span>
-                <span>
-                    <span class="price">$10</span>
-                    <span>/month</span>
-                </span>
-                <span class="price-subtitle w-75">Perfect for newbies and those just looking to stay for a short while.</span>
-                <ul>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>5 free questions monthly</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Unlimited Access</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Offline Accessibility</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>24/7 Support</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Save 16% for $100/year</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="price-card">
-                <p class="font-weight-light">Intermediate</p>
+            <div class="price-card" v-for="(plan, index) in plans" :key="index">
+                <p class="font-weight-light">{{ plan.title }}</p>
                 <p>
-                    <span class="display-2 price">$15</span>
+                    <span class="display-2 price">${{ plan.price }}</span>
                     <span>/month</span>
                 </p>
-                <p class="price-subtitle w-75">Perfect for those trying to get the best while saving a few dollars as well.</p>
+                <p class="price-subtitle w-75">{{ plan.description }}</p>
                 <ul>
                     <li>
                         <i class="fas fa-check-circle"></i>
-                        <span>10 free questions monthly</span>
+                        <span>{{ plan.questions }} free questions monthly</span>
                     </li>
                     <li>
                         <i class="fas fa-check-circle"></i>
@@ -62,37 +32,7 @@
                     </li>
                     <li>
                         <i class="fas fa-check-circle"></i>
-                        <span>Save 16% for $150/year</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="price-card">
-                <p class="font-weight-light">Master</p>
-                <p>
-                    <span class="display-2 price">$20</span>
-                    <span>/month</span>
-                </p>
-                <p class="price-subtitle w-75">Perfect for those that believe they are going to be with us a while .</p>
-                <ul>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>15 free questions monthly</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Unlimited Access</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Offline Accessibility</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>24/7 Support</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Save 16% for $200/year</span>
+                        <span>Save 16% for ${{ plan.yearly }}/year</span>
                     </li>
                 </ul>
             </div>
@@ -103,6 +43,31 @@
 <script>
     import { mapActions } from 'vuex'
     export default {
+        data: () => ({
+            plans: [
+                {
+                    title: 'Amateur',
+                    description: 'Perfect for newbies and those just looking to stay for a short while.',
+                    price: 9.99,
+                    yearly: 100,
+                    questions: 5
+                },
+                {
+                    title: 'Intermediate',
+                    description: 'Perfect for those trying to get the best while saving a few dollars as well.',
+                    price: 19.99,
+                    yearly: 200,
+                    questions: 9
+                },
+                {
+                    title: 'Master',
+                    description: 'Perfect for those that believe they are going to be with us a while.',
+                    price: 49.99,
+                    yearly: 500,
+                    questions: 15
+                }
+            ]
+        }),
         methods: mapActions(['setAuthModalOverview'])
     }
 </script>
