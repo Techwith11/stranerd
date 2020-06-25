@@ -6,10 +6,10 @@
                 <p class="small">Stranerd is an online educational platform that offers academic assistance to students worldwide.</p>
                 <button class="primary-button" @click="setAuthModalOverview">Start Free Trial</button>
             </div>
-            <div class="price-card" v-for="(plan, index) in plans" :key="index">
+            <div class="price-card" v-for="plan in getPlans" :key="plan['.key']">
                 <p class="font-weight-light">{{ plan.title }}</p>
                 <p>
-                    <span class="display-2 price">${{ plan.price }}</span>
+                    <span class="display-2 price">${{ plan.monthlyPrice }}</span>
                     <span>/month</span>
                 </p>
                 <p class="price-subtitle w-75">{{ plan.description }}</p>
@@ -32,7 +32,7 @@
                     </li>
                     <li>
                         <i class="fas fa-check-circle"></i>
-                        <span>Save 16% for ${{ plan.yearly }}/year</span>
+                        <span>Save 16% for ${{ plan.yearlyPrice }}/year</span>
                     </li>
                 </ul>
             </div>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
+    import { mapActions, mapGetters } from 'vuex'
     export default {
         data: () => ({
             plans: [
@@ -68,6 +68,7 @@
                 }
             ]
         }),
+        computed: mapGetters(['getPlans']),
         methods: mapActions(['setAuthModalOverview'])
     }
 </script>

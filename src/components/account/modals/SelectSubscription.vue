@@ -7,20 +7,22 @@
 		</div>
 		<div v-if="page === 1">
 			<div class="d-flex flex-column flex-sm-row">
-				<div class="flex-grow-1 mb-4 mb-sm-0" v-for="(plan,index) in plans" :key="index">
+				<div class="flex-grow-1 mb-4 mb-sm-0 mr-sm-1" v-for="plan in getPlans" :key="plan['.key']">
 					<div class="border border-success rounded p-2" @click="planId = plan.monthlyId"
 						:class="planId === plan.monthlyId ? 'bg-success text-white' : 'text-success'"
 					>
-						<h6 class="text-center">{{ plan.title }}</h6>
-						<p class="text-center">&dollar;{{ plan.monthly }}/mo</p>
+						<h5 class="text-center">{{ plan.title }}</h5>
+						<p class="text-center">&dollar;{{ plan.monthlyPrice }}/mo</p>
+						<p class="text-center small">{{ plan.description }}</p>
 						<ul class="small">
 							<li class="">Access to unlimited resources and tutors</li>
 							<li>{{ plan.questions }} free questions per month</li>
 						</ul>
 					</div>
 					<div class="small text-center my-2 border border-info rounded p-2" @click="planId = plan.yearlyId"
-						:class="planId === plan.yearlyId ? 'bg-info text-white' : 'text-info'"
-					>save 16% and pay &dollar;{{ plan.yearly }} for a year</div>
+						:class="planId === plan.yearlyId ? 'bg-info text-white' : 'text-info'">
+						save 16% and pay &dollar;{{ plan.yearlyPrice }} for a year
+					</div>
 				</div>
 			</div>
 			<div class="d-flex justify-content-end">
@@ -45,32 +47,6 @@
 	import SelectPaymentMethod from "@/components/helpers/SelectPaymentMethod"
 	export default {
 		data: () => ({
-			plans: [
-				{
-					title: 'Amateur Plan',
-					monthly: 9.99,
-					yearly: 100,
-					questions: 5,
-					monthlyId: 'stranerd_monthly_amateur_plan',
-					yearlyId: 'stranerd_yearly_amateur_plan'
-				},
-				{
-					title: 'Intermediate Plan',
-					monthly: 19.99,
-					yearly: 200,
-					questions: 9,
-					monthlyId: 'stranerd_monthly_intermediate_plan',
-					yearlyId: 'stranerd_yearly_intermediate_plan'
-				},
-				{
-					title: 'Master Plan',
-					monthly: 49.99,
-					yearly: 500,
-					questions: 15,
-					monthlyId: 'stranerd_monthly_master_plan',
-					yearlyId: 'stranerd_yearly_master_plan'
-				}
-			],
 			page: 1,
 			planId: null,
 			token: null,
@@ -91,7 +67,7 @@
 			}
 		},
 		computed: {
-			...mapGetters(['getUser','isSubscribed'])
+			...mapGetters(['getUser','isSubscribed','getPlans'])
 		},
 		mounted(){
 			if(this.isSubscribed){

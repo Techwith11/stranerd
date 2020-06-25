@@ -7,6 +7,7 @@ import store from './store/'
 Vue.config.productionTip = true
 store.dispatch('setId', window.localStorage.getItem('user_id'))
 store.dispatch('fetchAllSubjects')
+store.dispatch('fetchAllPlans')
 
 new Vue({
   router,

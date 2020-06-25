@@ -1,3 +1,5 @@
+import { firestore } from '@/config/firebase'
+
 let url = `https://firebasestorage.googleapis.com/v0/b/stranerd-13084.appspot.com/o/${encodeURIComponent('users/images/user_profile.png')}?alt=media`
 
 const state = {
@@ -5,7 +7,8 @@ const state = {
 	intendedRoute: null,
 	createPost: null,
 	editMeta: null,
-	scrollCache: {}
+	scrollCache: {},
+	plans: []
 }
 
 const getters = {
@@ -13,7 +16,8 @@ const getters = {
 	getIntendedRoute: state => state.intendedRoute,
 	getCreatePost: state => state.createPost,
 	getEditMeta: state => state.editMeta,
-	getScrollCache: state => state.scrollCache
+	getScrollCache: state => state.scrollCache,
+	getPlans: state => state.plans
 }
 
 const mutations = {
@@ -21,6 +25,7 @@ const mutations = {
 	setCreatePost: (state, post) => state.createPost = post,
 	setEditMeta: (state, meta) => state.editMeta = { ...meta },
 	setScrollCache: (state, { page, position }) => state.scrollCache[page] = position,
+	setPlans: (state, plans) => state.plans = plans,
 }
 
 const actions = {
@@ -30,7 +35,13 @@ const actions = {
 	clearCreatePost: ({ commit }) => commit('setCreatePost', null),
 	setEditMeta: ({ commit }, meta) => commit('setEditMeta', meta),
 	clearEditMeta: ({ commit }) => commit('setEditMeta', null),
-	setScrollCache: ({ commit }, meta) => commit('setScrollCache', meta)
+	setScrollCache: ({ commit }, meta) => commit('setScrollCache', meta),
+	fetchAllPlans: async ({ commit }) => {
+		let docs = await firestore.collection('subscriptions').get()
+		let plans = docs.docs.map(doc => ({ '.key': doc.id, ...doc.data() }))
+		plans.sort((a, b) => a.questions - b.questions)
+		commit('setPlans', plans)
+	},
 }
 
 export default { state, getters, mutations, actions }
