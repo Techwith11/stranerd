@@ -8,7 +8,7 @@
 			<li class="alert alert-warning py-1 border my-1" v-for="discussion in discussions" :key="discussion['.key']"
 				:class="discussion.userId === getId ? 'ml-auto' : 'mr-auto'">
 				<span class="d-block">{{ discussion.body }}</span>
-				<small class="small text-black">{{ discussion.dates.createdAt.seconds | getDateOrTime }}</small>
+				<small class="small text-black">{{ discussion.dates.createdAt.seconds || Date.now() / 1000 | getDateOrTime }}</small>
 			</li>
 		</ul>
 		<div class="d-flex flex-column flex-lg-row align-items-lg-center">
@@ -125,7 +125,7 @@
 		min-width: 20%;
 	}
 	#scroller{
-		height: 60vh;
+		height: 40vh;
 		overflow: auto;
 		-ms-overflow-style: none;
 		&::-webkit-scrollbar{
