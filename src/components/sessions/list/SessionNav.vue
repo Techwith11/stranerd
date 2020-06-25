@@ -4,7 +4,7 @@
 			:id="isRouteMyTaughtSessions && isTutor ? 'not-active' : 'active'">
 			My Sessions
 		</router-link>
-		<router-link class="text-center py-2 text-decoration-none" to="/sessions?tab=byMe" v-if="isTutor"
+		<router-link class="text-center py-2 text-decoration-none" to="/sessions/taught" v-if="isTutor"
 			:id="isRouteMyTaughtSessions ? 'active' : 'not-active'">
 			Sessions Taught
 		</router-link>
@@ -16,7 +16,7 @@
 	export default {
 		computed: {
 			...mapGetters(['isTutor']),
-			isRouteMyTaughtSessions(){ return this.$route.query.tab === 'byMe'  }
+			isRouteMyTaughtSessions(){ return this.$route.path.includes('taught') }
 		}
 	}
 </script>

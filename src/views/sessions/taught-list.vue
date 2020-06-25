@@ -1,7 +1,8 @@
 <template>
 	<div>
 		<helper-spinner v-if="isLoading" />
-		<div v-else>
+		<div class="container" v-else>
+			<session-nav />
 			<helper-message message="No sessions taught yet." v-if="sessions.length === 0" />
 			<div v-else>
 				<session-card :session="session" v-for="session in sessions" :key="session['.key']" />
@@ -17,6 +18,7 @@
 <script>
 	import HelperSpinner from '@/components/helpers/Spinner'
 	import HelperMessage from '@/components/helpers/Message'
+	import SessionNav from '@/components/sessions/list/SessionNav'
 	import SessionCard from '@/components/sessions/list/SessionCard'
 	import { firestore } from '@/config/firebase'
 	import { mapGetters } from 'vuex'
@@ -34,7 +36,8 @@
 		components: {
 			'helper-spinner': HelperSpinner,
 			'helper-message': HelperMessage,
-			'session-card': SessionCard
+			'session-card': SessionCard,
+			'session-nav': SessionNav
 		},
 		async mounted(){
 			await this.getSessions()
@@ -87,6 +90,18 @@
 						}
 					})
 				})
+			}
+		},
+		meta(){
+			return {
+				title: 'Recent Sessions',
+				meta: [
+					{
+						vmid: 'robots',
+						name: 'robots',
+						content: 'none'
+					}
+				]
 			}
 		}
 	}

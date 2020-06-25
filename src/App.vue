@@ -3,7 +3,7 @@
 		<div id="content">
 			<app-nav-bar />
 			<keep-alive v-if="isLoggedIn">
-				<router-view :key="$route.fullPath" />
+				<router-view :key="$route.path" />
 			</keep-alive>
 			<router-view v-else />
 		</div>

@@ -63,8 +63,14 @@ export default [
     },
     {
         path: '/sessions',
-        name: 'Sessions',
-        component: () => import(/* webpackChunkName: "sessions" */ '@/views/sessions/index'),
+        name: 'SessionsAttended',
+        component: () => import(/* webpackChunkName: "sessions-attended" */ '@/views/sessions/attended-list'),
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/sessions/taught',
+        name: 'SessionsTaught',
+        component: () => import(/* webpackChunkName: "sessions-taught" */ '@/views/sessions/taught-list'),
         meta: { requiresAuth: true }
     },
     {
