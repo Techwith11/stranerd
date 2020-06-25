@@ -83,6 +83,28 @@ export default [
         path: '/account',
         name: 'Account',
         component: () => import(/* webpackChunkName: "account" */ '@/views/account/index'),
+        children: [
+            {
+                path: '/account',
+                name: 'AccountIndex',
+                component: () => import(/* webpackChunkName: "account_index" */ '@/views/account/account-index'),
+            },
+            {
+                path: '/account/tests',
+                name: 'AccountTests',
+                component: () => import(/* webpackChunkName: "account_tests" */ '@/views/account/account-tests'),
+            },
+            {
+                path: '/account/paymentMethods',
+                name: 'AccountPaymentMethods',
+                component: () => import(/* webpackChunkName: "account_payment_methods" */ '@/views/account/account-payment-methods'),
+            },
+            {
+                path: '/account/transactions',
+                name: 'AccountTransactions',
+                component: () => import(/* webpackChunkName: "account_transactions" */ '@/views/account/account-transactions'),
+            },
+        ],
         meta: { requiresAuth: true }
     },
     {

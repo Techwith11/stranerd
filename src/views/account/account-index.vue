@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="getUser.bio">
 		<div class="row align-items-center d-flex">
 			<div class="col-sm-3">
 				<img :src="getUserImageLink" alt="" class="w-100">
