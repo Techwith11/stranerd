@@ -16,7 +16,7 @@
 						<p class="text-center small">{{ plan.description }}</p>
 						<ul class="small">
 							<li class="">Access to unlimited resources and tutors</li>
-							<li>{{ plan.questions }} free questions per month</li>
+							<li>{{ plan.questions }} questions per month</li>
 						</ul>
 					</div>
 					<div class="small text-center my-2 border border-info rounded p-2" @click="planId = plan.yearlyId"

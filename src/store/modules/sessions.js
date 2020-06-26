@@ -126,7 +126,7 @@ const mutations = {
 const actions = {
 	async startSession({ getters, commit }, data){
 		// TODO: After implementing active users, show toast if tutor is not online
-		functions.httpsCallable('startSession')(data).then(res => {
+		return await functions.httpsCallable('startSession')(data).then(res => {
 			setSessionListener(res.data, commit, getters.getId)
 			commit('setSessionModalStudentWaiting')
 		}).catch(error => {
