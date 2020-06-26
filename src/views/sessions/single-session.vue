@@ -37,6 +37,7 @@
 			session: {},
 			otherPerson: {},
 			chats: [],
+			fetched: false,
 			paginationLimit: 10,
 			hasMore: true,
             otherPersonListener: () => {},
@@ -91,8 +92,14 @@
                     query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
                 }
                 this.chatsListener = query.onSnapshot(snapshot => {
-                    this.newChats = []
-                    snapshot.docs.forEach(doc => this.newChats.push({ '.key': doc.id, ...doc.data() }))
+					snapshot.docs.forEach(doc => {
+						let index = this.chats.findIndex(r => r['.key'] === doc.id)
+						if(index === -1){
+							this.chats.push({ '.key': doc.id, ...doc.data() })
+						}else{
+							this.chats[index] = { '.key': doc.id, ...doc.data() }
+						}
+					})
                 })
             },
 			setOtherPersonListener(){
@@ -125,16 +132,21 @@
                 if(Math.floor(this.timer) === 10){ new window.Toast({ icon: 'warning', title: 'This session will end in 10 seconds.' }) }
             }
         },
-		async activated(){
+		async mounted(){
 			this.isLoading = true
-			if(!this.session['.key']){
-				await this.getSessionInfo()
-				await this.getChats()
-			}
+			await this.getSessionInfo()
 			this.initTimer()
+			await this.getChats()
 			this.setChatListener()
 			this.setOtherPersonListener()
+			this.fetched = true
 			this.isLoading = false
+		},
+		async activated(){
+			if(this.fetched){
+				this.setChatListener()
+				this.setOtherPersonListener()
+			}
 		},
 		deactivated(){
 			this.cleanUp()
