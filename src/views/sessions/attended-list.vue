@@ -54,17 +54,19 @@
 		},
 		methods: {
 			async getSessions(){
-				let lastItem = this.sessions[this.sessions.length - 1]
-				let query = firestore.collection('sessions')
-					.where('student','==', this.getId)
-					.orderBy('dates.createdAt','desc')
-					.limit(this.paginationLimit)
-				if(lastItem){
-					query = query.where('dates.createdAt','<',lastItem.dates.createdAt)
-				}
-				let docs = await query.get()
-				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
+				try{
+					let lastItem = this.sessions[this.sessions.length - 1]
+					let query = firestore.collection('sessions')
+						.where('student','==', this.getId)
+						.orderBy('dates.createdAt','desc')
+						.limit(this.paginationLimit)
+					if(lastItem){
+						query = query.where('dates.createdAt','<',lastItem.dates.createdAt)
+					}
+					let docs = await query.get()
+					this.hasMore = docs.size >= this.paginationLimit
+					docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
+				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching sessions. Try refreshing the page' }) }
 			},
 			async fetchOlderSessions(){
 				this.isOlderSessionsLoading = true

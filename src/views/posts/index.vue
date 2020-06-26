@@ -50,15 +50,17 @@
 		},
 		methods: {
 			async getPosts(){
-				let docs = firestore.collection('posts').orderBy('dates.createdAt','desc')
-					.limit(this.paginationLimit)
-				if(this.posts.length > 0){
-					let lastItem = this.posts[0]
-					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
-				}
-				docs = await docs.get()
-				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.posts.unshift({ '.key': doc.id, ...doc.data() }))
+				try{
+					let docs = firestore.collection('posts').orderBy('dates.createdAt','desc')
+						.limit(this.paginationLimit)
+					if(this.posts.length > 0){
+						let lastItem = this.posts[0]
+						docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
+					}
+					docs = await docs.get()
+					this.hasMore = docs.size >= this.paginationLimit
+					docs.forEach(doc => this.posts.unshift({ '.key': doc.id, ...doc.data() }))
+				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching posts. Try refreshing the page' }) }
 			},
 			async fetchOlderPosts(){
 				this.isOlderPostsLoading = true

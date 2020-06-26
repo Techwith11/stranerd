@@ -46,15 +46,17 @@
 		},
 		methods: {
 			async getTests(){
-				let docs = firestore.collection(`tests/tutors/tests`).where('user','==',this.getId).orderBy('dates.startedAt','desc')
-					.limit(this.paginationLimit)
-				let lastItem = this.tests[this.tests.length - 1]
-				if(lastItem){
-					docs = docs.where('dates.startedAt','<',lastItem.dates.createdAt)
-				}
-				docs = await docs.get()
-				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.tests.push({ '.key': doc.id, ...doc.data() }))
+				try{
+					let docs = firestore.collection(`tests/tutors/tests`).where('user','==',this.getId).orderBy('dates.startedAt','desc')
+						.limit(this.paginationLimit)
+					let lastItem = this.tests[this.tests.length - 1]
+					if(lastItem){
+						docs = docs.where('dates.startedAt','<',lastItem.dates.createdAt)
+					}
+					docs = await docs.get()
+					this.hasMore = docs.size >= this.paginationLimit
+					docs.forEach(doc => this.tests.push({ '.key': doc.id, ...doc.data() }))
+				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching tests. Try refreshing the page' }) }
 			},
 			async fetchOlderTests(){
 				this.isOlderTestsLoading = true

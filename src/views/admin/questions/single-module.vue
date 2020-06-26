@@ -62,17 +62,19 @@
 		},
 		methods: {
 			async getQuestions(){
-				let docs = firestore.collection('tests/tutors/questions').orderBy('dates.createdAt','desc')
-					.limit(this.paginationLimit)
-					.where('subject','==', this.subject.toLowerCase())
-					.where('module','==', this.module.toLowerCase())
-				let lastItem = this.questions[this.questions.length - 1]
-				if(lastItem){
-					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
-				}
-				docs = await docs.get()
-				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
+				try{
+					let docs = firestore.collection('tests/tutors/questions').orderBy('dates.createdAt','desc')
+						.limit(this.paginationLimit)
+						.where('subject','==', this.subject.toLowerCase())
+						.where('module','==', this.module.toLowerCase())
+					let lastItem = this.questions[this.questions.length - 1]
+					if(lastItem){
+						docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
+					}
+					docs = await docs.get()
+					this.hasMore = docs.size >= this.paginationLimit
+					docs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
+				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching questions. Try refreshing the page' }) }
 			},
 			async fetchOlderQuestions(){
 				this.isOlderQuestionsLoading = true

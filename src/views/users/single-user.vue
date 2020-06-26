@@ -35,18 +35,20 @@
 		},
 		async activated() {
 			this.isLoading = true
-			if(!this.user['.key']){
-				let docs = await firestore.collection('sessions').where('tutor','==',this.$route.params.id)
-					.where('cancelled.student','==',false)
-					.where('cancelled.tutor','==',false)
-					.orderBy('dates.createdAt','desc')
-					.limit(12)
-					.get()
-				docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
-			}
-			this.listener = firestore.collection('users').doc(this.$route.params.id).onSnapshot(snapshot => {
+			this.listener = firestore.collection('users').doc(this.$route.params.id).onSnapshot(async snapshot => {
 				if(!snapshot.exists){ return this.$router.replace('/tutors') }
 				this.user = { '.key': snapshot.id, ...snapshot.data() }
+				let isTutor = snapshot.data().roles.isTutor
+				if(isTutor){
+					let docs = await firestore.collection('sessions').where('tutor','==',this.$route.params.id)
+						.where('cancelled.student','==',false)
+						.where('cancelled.tutor','==',false)
+						.orderBy('dates.createdAt','desc')
+						.limit(12)
+						.get()
+					this.sessions = []
+					docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
+				}
 			})
 			this.isLoading = false
 		},

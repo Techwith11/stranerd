@@ -64,18 +64,20 @@
 		},
 		methods: {
 			async getCourses(){
-				let docs = firestore.collection('courses')
-					.where('subject','==',this.$route.params.subject.toLowerCase())
-					.where('module','==',this.$route.params.module.toLowerCase())
-					.orderBy('dates.updatedAt','desc')
-					.limit(this.paginationLimit)
-				let lastItem = this.courses[this.courses.length - 1]
-				if(lastItem){
-					docs = docs.where('dates.updatedAt','<',lastItem.dates.createdAt)
-				}
-				docs = await docs.get()
-				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.courses.push({ '.key': doc.id, ...doc.data() }))
+				try{
+					let docs = firestore.collection('courses')
+						.where('subject','==',this.$route.params.subject.toLowerCase())
+						.where('module','==',this.$route.params.module.toLowerCase())
+						.orderBy('dates.updatedAt','desc')
+						.limit(this.paginationLimit)
+					let lastItem = this.courses[this.courses.length - 1]
+					if(lastItem){
+						docs = docs.where('dates.updatedAt','<',lastItem.dates.createdAt)
+					}
+					docs = await docs.get()
+					this.hasMore = docs.size >= this.paginationLimit
+					docs.forEach(doc => this.courses.push({ '.key': doc.id, ...doc.data() }))
+				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching courses. Try refreshing the page' }) }
 			},
 			async fetchOlderCourses(){
 				this.isOlderCoursesLoading = true

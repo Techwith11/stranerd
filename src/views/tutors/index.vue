@@ -42,12 +42,14 @@
 			}
 		},
 		async mounted(){
-			let docs = await firestore.collection('users')
-				.where('roles.isTutor','==',true)
-				.where('tutor.canTeach','==',true)
-				.orderBy('tutor.rating','desc')
-				.get()
-			docs.forEach(doc => this.tutors.push({ '.key': doc.id, ...doc.data() }))
+			try{
+				let docs = await firestore.collection('users')
+					.where('roles.isTutor','==',true)
+					.where('tutor.canTeach','==',true)
+					.orderBy('tutor.rating','desc')
+					.get()
+				docs.forEach(doc => this.tutors.push({ '.key': doc.id, ...doc.data() }))
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching tutors. Try refreshing the page' }) }
 			this.isLoading = false
 		},
 		components: {

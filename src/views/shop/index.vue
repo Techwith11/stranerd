@@ -38,15 +38,17 @@
 		methods: {
 			...mapActions(['setCartModalOverview']),
 			async getNotes(){
-				let docs = firestore.collection('notes').orderBy('dates.createdAt','desc')
-					.limit(this.paginationLimit)
-				let lastItem = this.notes[this.notes.length - 1]
-				if(lastItem){
-					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
-				}
-				docs = await docs.get()
-				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.notes.push({ '.key': doc.id, ...doc.data() }))
+				try{
+					let docs = firestore.collection('notes').orderBy('dates.createdAt','desc')
+						.limit(this.paginationLimit)
+					let lastItem = this.notes[this.notes.length - 1]
+					if(lastItem){
+						docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
+					}
+					docs = await docs.get()
+					this.hasMore = docs.size >= this.paginationLimit
+					docs.forEach(doc => this.notes.push({ '.key': doc.id, ...doc.data() }))
+				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching notes. Try refreshing the page' }) }
 			},
 			async fetchOlderNotes(){
 				this.isOlderNotesLoading = true
