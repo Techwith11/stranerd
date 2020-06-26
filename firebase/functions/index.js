@@ -41,11 +41,23 @@ exports.sendEmailAfterPurchase = require('./onCall/shop/sendEmailAfterPurchase')
 
 // Firestore Triggers
 // On Create
-exports.firestoreErrorEmail = require('./firestore/onCreate/errors_emails')
+exports.firestoreErrorEmailCreated = require('./firestore/onCreate/errors_emails')
+exports.firestoreBlogPostCreated = require('./firestore/onCreate/blog')
+exports.firestoreCourseCreated = require('./firestore/onCreate/courses')
+exports.firestoreNoteCreated = require('./firestore/onCreate/notes')
+exports.firestorePostCreated = require('./firestore/onCreate/posts')
+exports.firestoreUserCreated = require('./firestore/onCreate/users')
 
 // On Update
-//exports.firestoreCourseUpdated = require('./firestore/onUpdate/courses')
+exports.firestoreBlogPostUpdated = require('./firestore/onUpdate/blog')
+exports.firestoreCourseUpdated = require('./firestore/onUpdate/courses')
+exports.firestoreNoteUpdated = require('./firestore/onUpdate/notes')
+exports.firestorePostUpdated = require('./firestore/onUpdate/posts')
+exports.firestoreUserUpdated = require('./firestore/onUpdate/users')
 
 // On Delete
-//exports.firestoreChatDeleted = require('./firestore/onDelete/chats')
-//exports.firestoreCourseDeleted = require('./firestore/onDelete/courses')
+exports.firestoreBlogPostDeleted = require('./firestore/onDelete/blog')
+exports.firestoreCourseDeleted = require('./firestore/onDelete/courses')
+exports.firestoreNoteDeleted = require('./firestore/onDelete/notes')
+exports.firestorePostDeleted = require('./firestore/onDelete/posts')
+exports.firestoreUserDeleted = require('./firestore/onDelete/users')
