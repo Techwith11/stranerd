@@ -23,26 +23,30 @@ let getQuestions = async (course, level) => {
 }
 
 module.exports = functions.https.onCall(async (data, context) => {
-	if (functions.config().environment.mode === 'production' && !context.auth) {
-		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can take tests')
+	try{
+		if (functions.config().environment.mode === 'production' && !context.auth) {
+			throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can take tests')
+		}
+
+		let level = data.level
+		let course = data.course
+		let user = data.user
+		let questions = await getQuestions(course, level)
+
+		let now = admin.firestore.Timestamp.now()
+		let startedAt = now.toDate(), endedAt = now.toDate()
+		endedAt.setMinutes(endedAt.getMinutes() + questions.length)
+
+		let test = {
+			questions, level, course, user,
+			dates: { startedAt, endedAt },
+			marked: false
+		}
+
+		let doc = await admin.firestore().collection('tests/tutors/tests').add(test)
+
+		return { id: doc.id }
+	}catch(error){
+		throw new functions.https.HttpsError('unknown', error.message)
 	}
-
-	let level = data.level
-	let course = data.course
-	let user = data.user
-	let questions = await getQuestions(course, level)
-
-	let now = admin.firestore.Timestamp.now()
-	let startedAt = now.toDate(), endedAt = now.toDate()
-	endedAt.setMinutes(endedAt.getMinutes() + questions.length)
-
-	let test = {
-		questions, level, course, user,
-		dates: { startedAt, endedAt },
-		marked: false
-	}
-
-	let doc = await admin.firestore().collection('tests/tutors/tests').add(test)
-
-	return { id: doc.id }
 })
