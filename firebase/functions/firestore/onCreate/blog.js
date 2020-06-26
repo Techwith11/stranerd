@@ -5,7 +5,7 @@ const algolia = functions.config().algolia[environment]
 
 module.exports = functions.firestore.document('/blog/{id}').onCreate(async (snap, context) => {
 	try{
-		const client = algoliaSearch(algolia.appId, algolia.apiKey)
+		const client = algoliaSearch(algolia.app_id, algolia.api_key)
 		const index = client.initIndex('blog')
 		let data = { objectId: snap.id, ...snap.data() }
 		index.addObject(data)

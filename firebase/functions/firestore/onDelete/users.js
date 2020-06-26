@@ -15,7 +15,7 @@ module.exports = functions.firestore.document('/users/{id}').onDelete(async (sna
 		console.warn(error)
 	}
 	try{
-		const client = algoliaSearch(algolia.appId, algolia.apiKey)
+		const client = algoliaSearch(algolia.app_id, algolia.api_key)
 		const index = client.initIndex('users')
 		index.deleteObject(snap.id)
 	}catch(error){

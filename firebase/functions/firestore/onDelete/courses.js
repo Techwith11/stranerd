@@ -16,7 +16,7 @@ module.exports = functions.firestore.document('/courses/{id}').onDelete(async (s
 		console.warn(error)
 	}
 	try{
-		const client = algoliaSearch(algolia.appId, algolia.apiKey)
+		const client = algoliaSearch(algolia.app_id, algolia.api_key)
 		const index = client.initIndex('posts')
 		return index.deleteObject(snap.id)
 	}catch(error){
