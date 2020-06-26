@@ -21,9 +21,11 @@ const mutations = {
 
 const actions = {
 	async fetchAllSubjects({ commit }){
-		let docs = await firestore.collection('subjects').get()
-		let subjects = docs.docs.map(doc => ({ ...doc.data(), '.key': doc.id }))
-		commit('setAllSubjects', subjects)
+		try{
+			let docs = await firestore.collection('subjects').get()
+			let subjects = docs.docs.map(doc => ({ ...doc.data(), '.key': doc.id }))
+			commit('setAllSubjects', subjects)
+		}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching content. Try refreshing the page' }) }
 	},
 	async createSubject({ commit }, subject){
 		let doc = await firestore.collection('subjects').add(subject)

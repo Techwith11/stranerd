@@ -37,10 +37,12 @@ const actions = {
 	clearEditMeta: ({ commit }) => commit('setEditMeta', null),
 	setScrollCache: ({ commit }, meta) => commit('setScrollCache', meta),
 	fetchAllPlans: async ({ commit }) => {
-		let docs = await firestore.collection('subscriptions').get()
-		let plans = docs.docs.map(doc => ({ '.key': doc.id, ...doc.data() }))
-		plans.sort((a, b) => a.questions - b.questions)
-		commit('setPlans', plans)
+		try{
+			let docs = await firestore.collection('subscriptions').get()
+			let plans = docs.docs.map(doc => ({ '.key': doc.id, ...doc.data() }))
+			plans.sort((a, b) => a.questions - b.questions)
+			commit('setPlans', plans)
+		}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching content. Try refreshing the page' }) }
 	},
 }
 

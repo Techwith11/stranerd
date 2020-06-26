@@ -72,15 +72,17 @@
                 window.addEventListener('beforeunload',() => { this.cleanUp() })
 			},
             async getChats(){
-                let docs = firestore.collection(`sessions/${this.session['.key']}/chats`).orderBy('dates.sentAt','desc')
-                    .limit(this.paginationLimit)
-                if(this.chats.length > 0){
-                    let lastItem = this.chats[0]
-                    docs = docs.where('dates.sentAt','<',lastItem.dates.sentAt)
-                }
-                docs = await docs.get()
-                this.hasMore = docs.size >= this.paginationLimit
-                docs.forEach(doc => this.chats.unshift({ '.key': doc.id, ...doc.data() }))
+				try{
+					let docs = firestore.collection(`sessions/${this.session['.key']}/chats`).orderBy('dates.sentAt','desc')
+						.limit(this.paginationLimit)
+					if(this.chats.length > 0){
+						let lastItem = this.chats[0]
+						docs = docs.where('dates.sentAt','<',lastItem.dates.sentAt)
+					}
+					docs = await docs.get()
+					this.hasMore = docs.size >= this.paginationLimit
+					docs.forEach(doc => this.chats.unshift({ '.key': doc.id, ...doc.data() }))
+				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching chats. Try refreshing the page' }) }
             },
             setChatListener(){
                 let lastItem = this.chats[this.chats.length - 1]

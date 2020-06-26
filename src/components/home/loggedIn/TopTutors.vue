@@ -16,12 +16,14 @@
 			tutors: []
 		}),
 		async mounted() {
-			let docs = await firestore.collection('users')
-				.where('roles.isTutor','==',true)
-				.where('tutor.canTeach','==',true)
-				.orderBy('tutor.rating','desc')
-				.limit(3).get()
-			docs.forEach(doc => this.tutors.push({ '.key': doc.id, ...doc.data() }))
+			try{
+				let docs = await firestore.collection('users')
+					.where('roles.isTutor','==',true)
+					.where('tutor.canTeach','==',true)
+					.orderBy('tutor.rating','desc')
+					.limit(3).get()
+				docs.forEach(doc => this.tutors.push({ '.key': doc.id, ...doc.data() }))
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching top tutors. Try refreshing the page' }) }
 		},
 		components: {
 			'tutor-card': TutorCard

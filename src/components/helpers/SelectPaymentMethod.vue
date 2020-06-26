@@ -70,9 +70,11 @@
 			},
 			async fetchPaymentMethods(){
 				this.isLoading = true
-				this.paymentMethods = []
-				let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
-				docs.forEach(doc => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
+				try{
+					this.paymentMethods = []
+					let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
+					docs.forEach(doc => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
+				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching payment methods. Try refreshing the page' }) }
 				this.isLoading = false
 			}
 		},

@@ -60,10 +60,12 @@
 			}
 		},
 		async mounted(){
-			let doc = await firestore.collection('users').doc(this.reply.userId).get()
-			this.user = { '.key': doc.id, ...doc.data() }
-			doc = await firestore.doc(`posts/${this.post['.key']}/replies/${this.reply['.key']}/votes/votes`).get()
-			if(doc.exists && doc.data().votes){ this.votes = doc.data().votes }
+			try{
+				let doc = await firestore.collection('users').doc(this.reply.userId).get()
+				this.user = { '.key': doc.id, ...doc.data() }
+				doc = await firestore.doc(`posts/${this.post['.key']}/replies/${this.reply['.key']}/votes/votes`).get()
+				if(doc.exists && doc.data().votes){ this.votes = doc.data().votes }
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching reply owner details. Try refreshing the page' }) }
 		},
 		methods: {
 			...mapActions(['upvoteReply', 'downvoteReply']),

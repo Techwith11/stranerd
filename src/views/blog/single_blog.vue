@@ -18,9 +18,11 @@
 			isLoading: true
 		}),
 		async mounted(){
-			let doc = await firestore.collection('blog').doc(this.$route.params.id).get()
-			if(!doc.exists){ return this.$router.replace('/blog') }
-			this.post = { '.key': doc.id, ...doc.data() }
+			try{
+				let doc = await firestore.collection('blog').doc(this.$route.params.id).get()
+				if(!doc.exists){ return await this.$router.replace('/blog') }
+				this.post = { '.key': doc.id, ...doc.data() }
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching post. Try refreshing the page' }) }
 			this.isLoading = false
 			window.Fire.$on('BlogPostEdited', post => post['.key'] === this.post['.key'] ? this.post = post : null)
 			window.Fire.$on('BlogPostDeleted', post => post['.key'] === this.post['.key'] ? this.$router.push('/blog') : null)

@@ -44,12 +44,14 @@
         methods: {
 			...mapActions(['submitTest']),
 			async fetchTest(){
-                let doc = await firestore.collection('tests/tutors/tests').doc(this.$route.params.id).get()
-                if(doc.exists){
-                    this.test = { '.key': doc.id, ...doc.data() }
-                }else{
-                    await this.$router.replace('/tests/tutors')
-                }
+				try{
+					let doc = await firestore.collection('tests/tutors/tests').doc(this.$route.params.id).get()
+					if(doc.exists){
+						this.test = { '.key': doc.id, ...doc.data() }
+					}else{
+						await this.$router.replace('/tests/tutors')
+					}
+				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching test questions. Try refreshing the page' }) }
 			},
 			async validateTest(){
 				if(this.test.user !== this.getId){ await this.$router.replace('/tests/tutors') }

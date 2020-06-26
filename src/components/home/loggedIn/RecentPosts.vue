@@ -16,8 +16,10 @@
 			posts: [],
 		}),
 		async mounted(){
-			let docs = await firestore.collection('posts').orderBy('dates.createdAt','desc').limit(3).get()
-			docs.forEach(doc => this.posts.push({ '.key': doc.id, ...doc.data() }))
+			try{
+				let docs = await firestore.collection('posts').orderBy('dates.createdAt','desc').limit(3).get()
+				docs.forEach(doc => this.posts.push({ '.key': doc.id, ...doc.data() }))
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching recent posts. Try refreshing the page' }) }
 		},
 		components: {
 			'post-card': PostCard

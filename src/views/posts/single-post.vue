@@ -42,32 +42,36 @@
 		}),
 		methods: {
 			async getPost(){
-				let doc = await firestore.collection('posts').doc(this.$route.params.id).get()
-				if(!doc.exists){ return this.$router.replace('/posts') }
-				this.post = { '.key': doc.id, ...doc.data() }
+				try{
+					let doc = await firestore.collection('posts').doc(this.$route.params.id).get()
+					if(!doc.exists){ return await this.$router.replace('/posts') }
+					this.post = { '.key': doc.id, ...doc.data() }
+				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching post. Try refreshing the page' }) }
 			},
 			async getOwner(){
 				let doc = await firestore.collection('users').doc(this.post.userId).get()
 				this.user = { '.key': doc.id, ...doc.data() }
 			},
 			async getReplies(){
-				let docs = firestore.collection(`posts/${this.$route.params.id}/replies`)
-					.orderBy('dates.createdAt','desc')
-					.limit(this.paginationLimit)
-				if(this.replies.length > 0){
-					let lastItem = this.replies[0]
-					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
-				}
-				docs = await docs.get()
-				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => {
-					let index = this.replies.findIndex(r => r['.key'] === doc.id)
-					if(index === -1){
-						this.replies.unshift({ '.key': doc.id, ...doc.data() })
-					}else{
-						this.replies[index] = { '.key': doc.id, ...doc.data() }
+				try{
+					let docs = firestore.collection(`posts/${this.$route.params.id}/replies`)
+						.orderBy('dates.createdAt','desc')
+						.limit(this.paginationLimit)
+					if(this.replies.length > 0){
+						let lastItem = this.replies[0]
+						docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
 					}
-				})
+					docs = await docs.get()
+					this.hasMore = docs.size >= this.paginationLimit
+					docs.forEach(doc => {
+						let index = this.replies.findIndex(r => r['.key'] === doc.id)
+						if(index === -1){
+							this.replies.unshift({ '.key': doc.id, ...doc.data() })
+						}else{
+							this.replies[index] = { '.key': doc.id, ...doc.data() }
+						}
+					})
+				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching replies. Try refreshing the page' }) }
 			},
 			async setRepliesListeners(){
 				let lastItem = this.replies[this.replies.length - 1]
