@@ -8,7 +8,7 @@ module.exports = functions.firestore.document('/courses/{id}').onCreate(async (s
 		const client = algoliaSearch(algolia.app_id, algolia.api_key)
 		const index = client.initIndex('courses')
 		let data = { objectId: snap.id, ...snap.data() }
-		index.addObject(data)
+		index.saveObject(data)
 	}catch(error){
 		console.warn(error)
 	}
