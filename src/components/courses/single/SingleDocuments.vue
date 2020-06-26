@@ -10,7 +10,6 @@
 </template>
 
 <script>
-	// TODO: Replace view if user is not premium or has access to this course.
 	export default {
 		props: {
 			course: {
