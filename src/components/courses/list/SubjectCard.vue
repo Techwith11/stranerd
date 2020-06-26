@@ -3,8 +3,8 @@
 		<router-link class="text-muted h6 text-decoration-none mb-3 d-inline-block text-capitalize" :to="`/courses/${subject.name.toLowerCase()}`">{{ subject.name}}</router-link>
 		<div class="d-flex scrolling-nav">
 			<router-link :to="`/courses/${subject.name}/${module}`" v-for="module in subject.modules" :key="module"
-				class="text-decoration-none bg-dark rounded d-flex align-items-center justify-content-center mr-3 p-3 module">
-				<h5 class="card-title mb-0 text-wrap text-center text-light text-capitalize">{{ module }}</h5>
+				class="text-decoration-none bg-dark rounded d-flex flex-column justify-content-center mr-3 p-3 module">
+				<span class="h5 mb-0 text-wrap text-truncate text-center text-light text-capitalize">{{ module }}</span>
 			</router-link>
 		</div>
 	</div>
@@ -23,7 +23,9 @@
 
 <style lang="scss" scoped>
 	.module{
-		height: 150px;
+		min-height: 150px;
+	}
+	span{
 		min-width: 150px;
 	}
 </style>
