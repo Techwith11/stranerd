@@ -3,10 +3,10 @@ const algoliaSearch = require('algoliasearch')
 const environment = functions.config().environment.mode
 const algolia = functions.config().algolia[environment]
 
-module.exports = functions.firestore.document('/courses/{id}').onUpdate(async (snap, context) => {
+module.exports = functions.firestore.document('/blog/{id}').onUpdate(async (snap, context) => {
 	try{
 		const client = algoliaSearch(algolia.app_id, algolia.api_key)
-		const index = client.initIndex('courses')
+		const index = client.initIndex('blog')
 		let data = { objectId: snap.after.id, ...snap.after.data() }
 		index.saveObject(data)
 	}catch(error){
