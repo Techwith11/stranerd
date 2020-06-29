@@ -69,6 +69,9 @@
 		z-index: 3;
 		height: 64px;
 	}
+    .dropdown{
+        cursor: pointer;
+    }
     .dropdown-menu{
         border: none !important;
         margin-left: 1rem !important;
