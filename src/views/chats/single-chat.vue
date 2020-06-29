@@ -3,7 +3,7 @@
 		<helper-spinner v-if="isLoading" />
 		<div v-else id="messageContainer">
 			<single-chat-nav :user="user" />
-			<div class="container py-3" :id="canHaveSession ? 'smaller-height' : 'longer-height'">
+			<div class="container py-3 mb-3" :id="canHaveSession ? 'smaller-height' : 'longer-height'">
 				<helper-message v-if="chats.length < 1" message="No chats. Send a message now" />
 				<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}" v-if="chats.length > 0">
 					<li class="d-block text-center small text-muted mb-2" v-if="hasMore">
@@ -32,6 +32,7 @@
 		data: () => ({
 			user: {},
 			chats: [],
+			fetched: false,
 			isLoading: true,
 			isOlderChatsLoading: false,
 			chatsListener: () => {},
@@ -98,11 +99,20 @@
 			'helper-spinner': HelperSpinner,
 			'helper-message': HelperMessage,
 		},
+		async mounted(){
+			this.isLoading = true
+			await this.getUser()
+			await this.getChats()
+			await this.setListener()
+			this.fetched = true
+			this.isLoading = false
+		},
 		async activated(){
 			this.isLoading = true
-			if(!this.user['.key']){
+			if(!this.fetched){
 				await this.getUser()
 				await this.getChats()
+				this.fetched = true
 			}
 			await this.setListener()
 			this.isLoading = false
@@ -134,15 +144,23 @@
 		}
 	}
 	#smaller-height{
-		height: calc(100vh - 218px + 32px);
+		height: calc(100vh - 230px + 32px);
 		ul{
-			height: calc(100vh - 256px);
+			height: calc(100vh - 268px);
+		}
+		@media screen and (min-width: 768px) {
+			&{
+				height: calc(100vh - 180px + 32px);
+				ul{
+					height: calc(100vh - 218px);
+				}
+			}
 		}
 	}
 	#longer-height{
-		height: calc(100vh - 168px + 32px);
+		height: calc(100vh - 180px + 32px);
 		ul{
-			height: calc(100vh - 206px);
+			height: calc(100vh - 218px);
 		}
 	}
 </style>

@@ -67,7 +67,7 @@
 	header{
         position: relative;
 		z-index: 3;
-		height: 80px;
+		height: 76px;
 	}
     .dropdown{
         cursor: pointer;
