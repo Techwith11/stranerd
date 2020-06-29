@@ -11,8 +11,13 @@
 						<rating-stars class="small d-inline" :rating="user.tutor.rating"/>
 					</h5>
 					<p class="card-text mb-1">{{ user.bio.bio }}</p>
-					<p class="card-text mb-1">Courses: {{ getCourses }}</p>
-					<router-link :to="`/users/${user['.key']}`" class="card-link">Visit Profile</router-link>
+					<p class="card-text mb-1">
+						Courses:
+						<span class="text-capitalize" v-for="course in getCourses" :key="course">{{ course }}</span>
+					</p>
+					<div class="d-flex justify-content-end">
+						<router-link :to="`/users/${user['.key']}`" class="card-link btn btn-outline-primary">Visit Profile</router-link>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -35,7 +40,7 @@
 			getCourses(){
 				return this.user.tutor.courses.filter(course => {
 					return this.user.tutor.levels[course] > 0
-				}).join(',')
+				})
 			}
 		},
 		components: {
