@@ -3,12 +3,13 @@ const admin = require('firebase-admin')
 const algoliaSearch = require('algoliasearch')
 const environment = functions.config().environment.mode
 const algolia = functions.config().algolia[environment]
+const { deleteFromStorage } = require('../../helpers/storage')
 
 module.exports = functions.firestore.document('/courses/{id}').onDelete(async (snap, context) => {
 	try{
-		/*admin.storage().bucket(snap.data().video.name).delete()
-		admin.storage().bucket(snap.data().image.name).delete()
-		snap.data().documents.forEach(document => admin.storage().bucket(document.name).delete())*/
+		await deleteFromStorage(snap.data().video.link)
+		await deleteFromStorage(snap.data().image.link)
+		snap.data().documents.map(async document => await deleteFromStorage(document.link))
 
 		let courseDiscussions = await admin.firestore().collection('courses').doc(snap.id).collection('discussions').get()
 		courseDiscussions.docs.forEach(discussion => discussion.ref.delete())
