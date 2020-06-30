@@ -12,8 +12,8 @@ module.exports = functions.firestore.document('/blog/{id}').onDelete(async (snap
 	try{
 		const client = algoliaSearch(algolia.app_id, algolia.api_key)
 		const index = client.initIndex('blog')
-		index.deleteObject(snap.id)
+		return await index.deleteObject(snap.id)
 	}catch(error){
-		console.warn(error)
+		return console.warn(error)
 	}
 })

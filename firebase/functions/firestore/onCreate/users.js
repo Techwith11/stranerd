@@ -12,8 +12,8 @@ module.exports = functions.firestore.document('/users/{id}').onCreate(async (sna
 		if(snap.data().roles.isTutor){
 			data['tutor'] = snap.data().tutor
 		}
-		index.saveObject(data)
+		return await index.saveObject(data)
 	}catch(error){
-		console.warn(error)
+		return console.warn(error)
 	}
 })

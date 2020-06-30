@@ -8,8 +8,8 @@ module.exports = functions.firestore.document('/notes/{id}').onUpdate(async (sna
 		const client = algoliaSearch(algolia.app_id, algolia.api_key)
 		const index = client.initIndex('notes')
 		let data = { objectId: snap.after.id, ...snap.after.data() }
-		index.saveObject(data)
+		return await index.saveObject(data)
 	}catch(error){
-		console.warn(error)
+		return console.warn(error)
 	}
 })
