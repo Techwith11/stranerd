@@ -4,8 +4,8 @@
 			<div class="col-sm-3 text-center my-auto">
 				<img :src="getImageLink" alt="" class="w-100">
 			</div>
-			<div class="col-sm-9 px-sm-0">
-				<div class="card-body px-sm-0">
+			<div class="col-sm-9">
+				<div class="card-body">
 					<h5 class="card-title">
 						<span class="mr-2">{{ user.bio.name }}</span>
 						<rating-stars class="small d-inline" :rating="user.tutor.rating"/>
