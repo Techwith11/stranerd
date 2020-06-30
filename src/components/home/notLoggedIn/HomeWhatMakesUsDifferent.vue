@@ -5,12 +5,22 @@
             <div class="d-flex flex-column flex-md-row justify-content-center align-items-center">
                 <img src="@/assets/what_makes_us_different.png" alt="" class="col-md-6 mb-4">
                 <div class="col-md-6 mb-4 text-left">
-                    <h4>We put students first</h4>
-                    <p></p>
-                    <h4>We are fast and efficient</h4>
-                    <p></p>
-                    <h4>We make it easy to chat one on one with tutors</h4>
-                    <p></p>
+                    <h4>Accessibility</h4>
+                    <ul>
+                        <li>Certified tutors  with high educational qualifications and experience</li>
+                        <li>Round the clock access to tutors</li>
+                    </ul>
+
+                    <h4>Prompt service delivery </h4>
+                    <ul>
+                        <li>We work well with your deadlines</li>
+                        <li>Got an assignment due in a hour, we got you</li>
+                    </ul>
+
+                    <h4>Money back guarantee</h4>
+                    <ul>
+                        <li>Guaranteed refund if our service falls short of your expectations</li>
+                    </ul>
                 </div>
             </div>
         </div>
