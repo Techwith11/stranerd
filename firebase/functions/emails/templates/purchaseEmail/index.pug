@@ -5,7 +5,7 @@ html(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
     body(style="font-family: Roboto;margin:0;padding:1rem;width:100vw;min-height:100vh;box-sizing: border-box;")
         img(src=meta.logo, alt="", style="height:50px;")
-        h1(style=`color: ${meta.color}`) Stranerd Shop
+        h1(style='color: #22DD77') Stranerd Shop
         p #{user.name}, you received this email because you recently made a purchase on our website #{meta.domain}.
         p Your cart contains the following items:
         ul
@@ -16,5 +16,5 @@ html(lang="en")
                     p
                         span You can download the file: #{item.document.name}&nbsp;
                         a(href=item.document.link download) here
-        button(style=`padding: 0.5rem 1.5rem; border-radius: 0.5rem; margin: 1rem 0; background: ${meta.color};`)
+        button(style=`padding: 0.5rem 1.5rem; border-radius: 0.5rem; margin: 1rem 0; background: #22DD77;`)
             a(href=meta.domain, style="text-decoration:none;color: #FFFFFF;", target="__blank") Back to Stranerd
