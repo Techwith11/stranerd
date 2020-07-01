@@ -8,7 +8,7 @@
 		<div v-if="page === 1">
 			<div class="d-flex flex-column flex-sm-row">
 				<div class="flex-grow-1 mb-4 mb-sm-0 mr-sm-1" v-for="plan in getPlans" :key="plan['.key']">
-					<div class="border border-success rounded p-2" @click="planId = plan.monthlyId"
+					<div class="border border-success rounded p-2 pointer" @click="planId = plan.monthlyId"
 						:class="planId === plan.monthlyId ? 'bg-success text-white' : 'text-success'"
 					>
 						<h5 class="text-center">{{ plan.title }}</h5>
@@ -19,7 +19,7 @@
 							<li>{{ plan.questions }} questions per month</li>
 						</ul>
 					</div>
-					<div class="small text-center my-2 border border-info rounded p-2" @click="planId = plan.yearlyId"
+					<div class="small text-center my-2 border border-info rounded p-2 pointer" @click="planId = plan.yearlyId"
 						:class="planId === plan.yearlyId ? 'bg-info text-white' : 'text-info'">
 						save 16% and pay &dollar;{{ plan.yearlyPrice }} for a year
 					</div>
@@ -79,3 +79,12 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	.pointer{
+		cursor: pointer !important;
+		* {
+			cursor: pointer !important;
+		}
+	}
+</style>
