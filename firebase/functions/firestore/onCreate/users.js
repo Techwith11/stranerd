@@ -8,7 +8,7 @@ module.exports = functions.firestore.document('/users/{id}').onCreate(async (sna
 		const client = algoliaSearch(algolia.app_id, algolia.api_key)
 		const index = client.initIndex('users')
 		let bio = snap.data().bio
-		let data = { objectId: snap.id, bio }
+		let data = { objectID: snap.id, bio }
 		if(snap.data().roles.isTutor){
 			data['tutor'] = snap.data().tutor
 		}

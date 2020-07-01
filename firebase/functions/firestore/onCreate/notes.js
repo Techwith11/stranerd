@@ -7,7 +7,7 @@ module.exports = functions.firestore.document('/notes/{id}').onCreate(async (sna
 	try{
 		const client = algoliaSearch(algolia.app_id, algolia.api_key)
 		const index = client.initIndex('notes')
-		let data = { objectId: snap.id, ...snap.data() }
+		let data = { objectID: snap.id, ...snap.data() }
 		return await index.saveObject(data)
 	}catch(error){
 		return console.warn(error)

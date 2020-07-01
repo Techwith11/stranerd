@@ -10,7 +10,7 @@ module.exports = functions.firestore.document('/users/{id}').onUpdate(async (sna
 		const index = client.initIndex('users')
 		if(!equal(snap.before.data().bio, snap.after.data().bio) || !equal(snap.before.data().tutor, snap.after.data().tutor)){
 			let bio = snap.after.data().bio
-			let data = { objectId: snap.after.id, bio }
+			let data = { objectID: snap.after.id, bio }
 			if(snap.after.data().roles.isTutor){
 				data['tutor'] = snap.after.data().tutor
 			}
