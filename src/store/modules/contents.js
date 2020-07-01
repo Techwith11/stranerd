@@ -80,7 +80,9 @@ const actions = {
 	createQuestion: async ({ getters }, data) => await helpers.createQuestion(data, getters.getId),
 	createCourse: async ({ getters }, data) => {
 		let course = data.course
-		course.video = await window.uploadFile('courses/videos', data.video)
+		if(course.hasVideo){
+			course.video = await window.uploadFile('courses/videos', data.video)
+		}
 		course.image = await window.uploadFile('courses/images', data.image)
 		course.documents = []
 		for (const file of data.documents) {
@@ -123,8 +125,12 @@ const actions = {
 		if(image.size){
 			course.image = await window.uploadFile('courses/images', image)
 		}
-		if(video.size){
-			course.video = await window.uploadFile('courses/videos', video)
+		if(course.hasVideo){
+			if(video.size){
+				course.video = await window.uploadFile('courses/videos', video)
+			}
+		}else{
+			delete course.video
 		}
 		course.documents = []
 		for (const file of documents) {

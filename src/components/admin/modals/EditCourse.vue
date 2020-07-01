@@ -38,7 +38,13 @@
 				</div>
 			</div>
 			<div v-if="page === 2">
-				<div class="form-group my-3">
+				<div class="form-check">
+					<input class="form-check-input" type="checkbox" v-model="course.hasVideo" id="hasVideo">
+					<label class="form-check-label" for="hasVideo">
+						Course has video?
+					</label>
+				</div>
+				<div class="form-group my-3" v-if="course.hasVideo">
 					<input type="file" @change="catchVideo" class="d-none" ref="videoInput" accept="video/*">
 					<a @click.prevent="() => { $refs.videoInput.value= ''; $refs.videoInput.click() }">
 						<span v-if="video">{{video.name}} </span>
@@ -74,13 +80,14 @@
 
 <script>
 	import { mapActions, mapGetters } from 'vuex'
-	import { required, minLength } from 'vuelidate/lib/validators'
+	import { required, minLength, requiredIf } from 'vuelidate/lib/validators'
 	export default {
 		name: 'EditCourse',
 		data: () => ({
 			course: {
 				title: '',
 				description: '',
+				hasVideo: false,
 				module: null,
 				subject: null
 			},
@@ -142,10 +149,11 @@
 			course: {
 				title: { required, minLength: minLength(3) },
 				description: { required },
+				hasVideo: { required },
 				subject: { required },
 				module: { required }
 			},
-			video: { required },
+			video: { requiredIf: requiredIf(function(){ return this.course.hasVideo }) },
 			image: { required },
 			documents: { required, minLength: minLength(1) }
 		},
