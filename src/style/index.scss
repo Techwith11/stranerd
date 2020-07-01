@@ -98,3 +98,10 @@ button{
 .accent-background{
 	background: $accent;
 }
+
+a{
+	cursor: pointer;
+	span{
+		cursor: pointer;
+	}
+}
