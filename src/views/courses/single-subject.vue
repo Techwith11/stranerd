@@ -52,7 +52,7 @@
 					{
 						vmid: 'keywords',
 						name: 'keywords',
-						content: [ this.subject.name || '', ...this.subject.modules || []].join(', ')
+						content: [ this.subject.name || '', ...this.subject.modules.map(m => m.name) || []].join(', ')
 					}
 				]
 			}
