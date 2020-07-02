@@ -51,7 +51,7 @@ const actions = {
 		commit('editSubject', { ...subject })
 	},
 	async deleteModule({ commit }, { subject, module }){
-		subject.modules = subject.modules.filter(m => m !== module)
+		subject.modules = subject.modules.filter(m => m.name !== module.name)
 		await firestore.collection('subjects').doc(subject['.key']).set(subject)
 		commit('editSubject', { ...subject })
 	}

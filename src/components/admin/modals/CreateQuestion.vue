@@ -22,7 +22,7 @@
 			<div class="form-group my-3">
 				<select class="form-control text-capitalize" v-model="$v.question.module.$model" :class="{'is-invalid': $v.question.module.$error, 'is-valid': !$v.question.module.$invalid}">
 					<option :value="null" disabled>Please select a {{ question.subject ? 'module' : 'subject first' }}</option>
-					<option :value="module" v-for="module in getModules" :key="module">{{ module }}</option>
+					<option :value="module.name" v-for="module in getModules" :key="module.name">{{ module.name }}</option>
 				</select>
 			</div>
 			<div class="form-group my-3">
@@ -128,7 +128,7 @@
 		watch: {
 			'question.subject'() {
 				let subject = this.getAllSubjects.find(s => s.name === this.question.subject)
-				if (subject && !subject.modules.includes(this.question.module)) {
+				if (subject && !subject.modules.find(m => m.name === this.question.module)) {
 					this.question.module = null
 				}
 			}

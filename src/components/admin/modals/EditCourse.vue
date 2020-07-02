@@ -27,7 +27,7 @@
 					<h6>Module</h6>
 					<select class="form-control text-capitalize" v-model="$v.course.module.$model" :class="{'is-invalid': $v.course.module.$error, 'is-valid': !$v.course.module.$invalid}">
 						<option :value="null" disabled>Please select a module</option>
-						<option :value="module" v-for="module in getModules" :key="module">{{ module }}</option>
+						<option :value="module.name" v-for="module in getModules" :key="module">{{ module.name }}</option>
 					</select>
 				</div>
 				<div class="d-flex justify-content-end my-3">
@@ -160,7 +160,7 @@
 		watch: {
 			'course.subject'() {
 				let subject = this.getAllSubjects.find(s => s.name === this.course.subject)
-				if (subject && !subject.modules.includes(this.course.module)) {
+				if (subject && !subject.modules.find(m => m.name === this.course.module)) {
 					this.course.module = null
 				}
 			}

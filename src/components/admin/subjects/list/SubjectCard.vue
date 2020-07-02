@@ -7,8 +7,8 @@
 		</div>
 		<div class="collapse" :id="subject['.key']">
 			<ul class="list-group">
-				<li class="list-group-item my-1 d-flex justify-content-between align-items-center" v-for="module in subject.modules" :key="module">
-					<h6 class="mb-0 text-capitalize">{{ module }}</h6>
+				<li class="list-group-item my-1 d-flex justify-content-between align-items-center" v-for="module in subject.modules" :key="module.name">
+					<h6 class="mb-0 text-capitalize">{{ module.name }}</h6>
 					<div class="d-flex">
 						<a @click.prevent="openModuleEditModal(module)"><i class="fas fa-pen mr-3 text-warning"></i></a>
 						<a @click.prevent="removeModule(module)"><i class="fas fa-trash text-danger"></i></a>
@@ -78,7 +78,7 @@
 			async removeModule(module){
 				try{
 					let result = await new window.SweetAlert({
-						title: `Delete ${module}`,
+						title: `Delete ${module.name}`,
 						text: 'Are you sure you want to delete this module',
 						icon: 'info',
 						showCancelButton: true,
