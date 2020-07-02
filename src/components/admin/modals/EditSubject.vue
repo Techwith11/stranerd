@@ -7,20 +7,10 @@
 		</div>
 		<form class="mx-2">
 			<div class="form-group my-3">
-				<input class="form-control" placeholder="Module name" v-model.trim="subject.name">
-			</div>
-			<div class="form-group my-3">
-				<input type="text" class="form-control" placeholder="Modules" v-model.trim="module" @keyup.188="splitModule">
-				<div class="small mt-1" v-if="subject.modules.length > 0">
-					<span v-for="module in subject.modules" :key="module">
-						{{ module }}
-						<a @click.prevent="removeModule(module)"><i class="fas fa-times text-danger mr-1"></i></a>
-					</span>
-				</div>
-				<small class="small text-muted" v-else>Use comma separated module names to add modules.</small>
+				<input class="form-control" placeholder="Module name" v-model.trim="name">
 			</div>
 			<div class="d-flex justify-content-end my-3">
-				<button class="btn btn-success" @click.prevent="submit" :disabled="!subject.name">
+				<button class="btn btn-success" @click.prevent="submit" :disabled="!name">
 					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
 					<span v-else>Save subject</span>
 				</button>
@@ -38,24 +28,19 @@
 				name: '',
 				modules: []
 			},
-			module: '',
+			name: '',
 			isLoading: false
 		}),
 		computed: mapGetters(['getEditMeta']),
 		methods:{
 			...mapActions(['closeEditModal','clearEditMeta','editSubject']),
-			splitModule(){
-				let module = this.module.trim().split(',')[0].toLowerCase()
-				this.module = ''
-				module && !this.subject.modules.includes(module) ? this.subject.modules.push(module) : null
-			},
-			removeModule(module){ this.subject.modules = this.subject.modules.filter(item => module !== item) },
 			async submit() {
 				this.isLoading = true
 				try{
-					await this.editSubject({ ...this.subject, name: this.subject.name.toLowerCase() })
+					await this.editSubject({ ...this.subject, name: this.name.toLowerCase() })
 					this.closeEditModal()
 					new window.Toast({ icon: 'success', title: 'Subject edited successfully' })
+					this.name = ''
 					this.subject.name = ''
 					this.subject.modules = []
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
@@ -64,6 +49,7 @@
 		},
 		mounted(){
 			this.subject = { ...this.getEditMeta }
+			this.name = this.subject && this.subject.name
 			this.clearEditMeta()
 		}
 	}
