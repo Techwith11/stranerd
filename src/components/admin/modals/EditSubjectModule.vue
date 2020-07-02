@@ -2,7 +2,7 @@
 	<div class="m-md-5">
 		<div class="d-flex align-items-baseline justify-content-between my-3">
 			<i></i>
-			<h4>Edit {{ module }}</h4>
+			<h4>Edit {{ module.name }}</h4>
 			<a @click.prevent="closeEditModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
 		<form class="mx-2">
@@ -35,7 +35,7 @@
 				this.isLoading = true
 				try{
 					let name = this.name.toLowerCase()
-					await this.editModule({ subject: this.subject, module: this.module, updated: name })
+					await this.editModule({ subject: this.subject, module: this.module, updated: { name } })
 					this.closeEditModal()
 					new window.Toast({ icon: 'success', title: 'Module edited successfully' })
 					this.name = ''
@@ -46,7 +46,8 @@
 		computed: mapGetters(['getEditMeta']),
 		async mounted(){
 			this.subject = this.getEditMeta.subject
-			this.module = this.name = this.getEditMeta.module
+			this.module = this.getEditMeta.module
+			this.name = this.module.name
 			this.clearEditMeta()
 		}
 	}

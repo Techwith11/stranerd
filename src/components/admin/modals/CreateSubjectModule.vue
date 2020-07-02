@@ -34,7 +34,7 @@
 				this.isLoading = true
 				try{
 					let name = this.name.toLowerCase()
-					await this.createModule({ subject: this.subject, module: name })
+					await this.createModule({ subject: this.subject, module: { name } })
 					this.closeCreateModal()
 					new window.Toast({ icon: 'success', title: 'Module created successfully' })
 					this.name = ''

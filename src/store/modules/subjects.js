@@ -45,7 +45,7 @@ const actions = {
 		commit('editSubject', { ...subject })
 	},
 	async editModule({ commit }, { subject, module, updated }){
-		let index = subject.modules.findIndex(m => m === module)
+		let index = subject.modules.findIndex(m => m.name === module.name)
 		subject.modules[index] = updated
 		await firestore.collection('subjects').doc(subject['.key']).set(subject)
 		commit('editSubject', { ...subject })
