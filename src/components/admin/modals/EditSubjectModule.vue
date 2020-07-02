@@ -9,8 +9,15 @@
 			<div class="form-group my-3">
 				<input class="form-control" placeholder="Module name" v-model.trim="name">
 			</div>
+			<div class="form-group my-3">
+				<input type="file" @change="catchImage" class="d-none" ref="imageInput" accept="image/*">
+				<a @click.prevent="() => { $refs.imageInput.value= ''; $refs.imageInput.click() }">
+					<span v-if="image">{{image.name}} </span>
+					<span class="text-info">Upload image preview</span>
+				</a>
+			</div>
 			<div class="d-flex justify-content-end my-3">
-				<button class="btn btn-success" @click.prevent="submit" :disabled="!name">
+				<button class="btn btn-success" @click.prevent="submit" :disabled="$v.$invalid">
 					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
 					<span v-else>Save module</span>
 				</button>
@@ -21,24 +28,28 @@
 
 <script>
 	import { mapGetters, mapActions } from 'vuex'
+	import { required } from 'vuelidate/lib/validators'
 	export default {
 		name: 'EditSubjectModule',
 		data: () => ({
-			module: '',
+			module: {},
 			name: '',
+			image: null,
 			subject: {},
 			isLoading: false
 		}),
 		methods:{
 			...mapActions(['closeEditModal','clearEditMeta','editModule']),
+			catchImage(e){ e.target.files[0] &&e.target.files[0].type.startsWith('image/') ? this.image = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not an image'})},
 			async submit() {
 				this.isLoading = true
 				try{
 					let name = this.name.toLowerCase()
-					await this.editModule({ subject: this.subject, module: this.module, updated: { name } })
+					await this.editModule({ subject: this.subject, module: this.module, updated: { name }, image: this.image })
 					this.closeEditModal()
 					new window.Toast({ icon: 'success', title: 'Module edited successfully' })
 					this.name = ''
+					this.image = null
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
 			}
@@ -48,7 +59,12 @@
 			this.subject = this.getEditMeta.subject
 			this.module = this.getEditMeta.module
 			this.name = this.module.name
+			this.image = this.module.image
 			this.clearEditMeta()
+		},
+		validations: {
+			name: { required },
+			image: { required }
 		}
 	}
 </script>

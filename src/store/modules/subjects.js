@@ -39,12 +39,16 @@ const actions = {
 		await firestore.collection('subjects').doc(id).delete()
 		commit('deleteSubject',id)
 	},
-	async createModule({ commit }, { subject, module }){
+	async createModule({ commit }, { subject, module, image }){
+		module.image = await window.uploadFile('subjects', image)
 		subject.modules.push(module)
 		await firestore.collection('subjects').doc(subject['.key']).set(subject)
 		commit('editSubject', { ...subject })
 	},
-	async editModule({ commit }, { subject, module, updated }){
+	async editModule({ commit }, { subject, module, updated, image }){
+		if(image.size){
+			updated.image = await window.uploadFile('subjects', image)
+		}
 		let index = subject.modules.findIndex(m => m.name === module.name)
 		subject.modules[index] = updated
 		await firestore.collection('subjects').doc(subject['.key']).set(subject)
