@@ -27,7 +27,7 @@
 					<h6>Module</h6>
 					<select class="form-control text-capitalize" v-model="$v.course.module.$model" :class="{'is-invalid': $v.course.module.$error, 'is-valid': !$v.course.module.$invalid}">
 						<option :value="null" disabled>Please select a {{ course.subject ? 'module' : 'subject first' }}</option>
-						<option :value="module.name" v-for="module in getModules" :key="module">{{ module.name }}</option>
+						<option :value="module.name" v-for="module in getModules" :key="module.name">{{ module.name }}</option>
 					</select>
 				</div>
 				<div class="d-flex justify-content-end my-3">
