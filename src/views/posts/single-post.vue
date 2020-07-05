@@ -2,22 +2,20 @@
 	<div class="container">
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
-			<div id="content">
-				<post-info :post="post" :user="user" />
-				<div class="my-3">
-					<p class="text-muted" v-if="replies.length === 0">No replies yet. Consider leaving one</p>
-					<div v-else>
-						<div class="text-center small text-muted my-2" v-if="hasMore">
-							<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderRepliesLoading"></i>
-							<span @click="fetchOlderReplies">Fetch Older Replies</span>
-						</div>
-						<div class="pl-4">
-							<reply-card v-for="reply in replies" :key="reply['.key']" :reply="reply" :post="post"/>
-						</div>
+			<post-info :post="post" :user="user" />
+			<div class="my-3">
+				<p class="text-muted" v-if="replies.length === 0">No replies yet. Consider leaving one</p>
+				<div v-else>
+					<div class="text-center small text-muted my-2" v-if="hasMore">
+						<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderRepliesLoading"></i>
+						<span @click="fetchOlderReplies">Fetch Older Replies</span>
+					</div>
+					<div class="pl-4">
+						<reply-card v-for="reply in replies" :key="reply['.key']" :reply="reply" :post="post"/>
 					</div>
 				</div>
 			</div>
-			<reply-form />
+			<reply-form class="mt-auto" />
 		</div>
 	</div>
 </template>
@@ -132,16 +130,10 @@
 					{
 						vmid: 'keywords',
 						name: 'keywords',
-						content: (this.post.tags || []).join(', ')
+						content: [this.post.module, this.post.subject, this.post.title].join(', ')
 					}
 				]
 			}
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
-	#content{
-		min-height: calc(100vh - 150px);
-	}
-</style>

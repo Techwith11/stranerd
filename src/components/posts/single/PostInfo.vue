@@ -1,8 +1,12 @@
 <template>
 	<div class="my-3">
-		<h4>{{ post.title }}</h4>
+		<h3>{{ post.title }}</h3>
+		<p>
+			<span class="text-capitalize">{{ post.module }}, </span>
+			<span class="text-capitalize">{{ post.subject }}</span>
+		</p>
 		<div v-html="post.body" class="lead editor-container"></div>
-		<div class="small d-flex">
+		<div class="d-flex align-items-center">
 			<img :src="getImageLink" class="mr-2" width="50px" alt="">
 			<div>
 				<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`">{{ user.bio.name }}</router-link></p>
