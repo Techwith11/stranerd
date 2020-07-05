@@ -18,15 +18,18 @@
 			<small class="small text-muted" v-if="post.body.length === 0">Describe your question in full length to give us a clear picture of what it is about</small>
 		</div>
 		<div class="form-group my-3">
-			<input type="text" class="form-control" placeholder="Tags" v-model.trim="tag" @keyup.188="splitTag"
-				:class="{'is-invalid': $v.post.tags.$error,'is-valid': !$v.post.tags.$invalid}">
-			<div class="small mt-1" v-if="post.tags.length > 0">
-				<span v-for="tag in post.tags" :key="tag">
-					{{ tag }}
-					<a @click.prevent="removeTag(tag)"><i class="fas fa-times text-danger mr-1"></i></a>
-				</span>
-			</div>
-			<small class="small text-muted" v-else>Use comma separated tags to attach keywords related to your questions. This can include related subjects, topics, formulas etc. At least one tag is required</small>
+			<h6>Related Subject</h6>
+			<select class="form-control text-capitalize" v-model="$v.post.subject.$model" :class="{'is-invalid': $v.post.subject.$error, 'is-valid': !$v.post.subject.$invalid}">
+				<option :value="null" disabled>Please select a subject</option>
+				<option :value="subject.name" v-for="subject in getAllSubjects" :key="subject['.key']">{{ subject.name }}</option>
+			</select>
+		</div>
+		<div class="form-group my-3">
+			<h6>Related Module</h6>
+			<select class="form-control text-capitalize" v-model="$v.post.module.$model" :class="{'is-invalid': $v.post.module.$error, 'is-valid': !$v.post.module.$invalid}">
+				<option :value="null" disabled>Please select a {{ post.subject ? 'module' : 'subject first' }}</option>
+				<option :value="module.name" v-for="module in getModules" :key="module.name">{{ module.name }}</option>
+			</select>
 		</div>
 		<div class="d-flex justify-content-end">
 			<button class="btn-success" :disabled="isLoading || $v.$invalid" @click="submitPost">
@@ -45,20 +48,17 @@
 			post: {
 				title: '',
 				body: '',
-				tags: []
+				subject: null,
+				module: null
 			},
-			tag: '',
 			isLoading: false
 		}),
-		computed: mapGetters(['getCreatePost']),
+		computed: {
+			...mapGetters(['getCreatePost','getAllSubjects']),
+			getModules(){ return this.post.subject ? this.getAllSubjects.find(s => s.name === this.post.subject).modules : [] }
+		},
 		methods: {
 			...mapActions(['closePostModal','createPost','uploadFromEditor','clearCreatePost']),
-			splitTag(){
-				let tag = this.tag.trim().split(',')[0].toLowerCase()
-				this.tag = ''
-				tag && !this.post.tags.includes(tag) ? this.post.tags.push(tag) : null
-			},
-			removeTag(tag){ this.post.tags = this.post.tags.filter(item => tag !== item) },
 			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
 				try{
 					await this.uploadFromEditor({
@@ -83,11 +83,20 @@
 				this.clearCreatePost()
 			}
 		},
+		watch: {
+			'post.subject'() {
+				let subject = this.getAllSubjects.find(s => s.name === this.post.subject)
+				if (subject && !subject.modules.find(m => m.name === this.post.module)) {
+					this.post.module = null
+				}
+			}
+		},
 		validations:{
 			post: {
 				title: { required, minLength: minLength(3) },
 				body: { required },
-				tags: { required, minLength: minLength(1) }
+				subject: { required },
+				module: { required }
 			}
 		}
 	}
