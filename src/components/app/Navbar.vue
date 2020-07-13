@@ -1,6 +1,6 @@
 <template>
     <header class="bg-dark">
-        <nav class="container navbar navbar-dark bg-dark text-white" :class="isLoggedIn ? 'navbar-expand-lg' : 'navbar-expand'">
+        <nav class="container navbar navbar-dark bg-dark text-white d-flex justify-content-between flex-row-reverse" :class="isLoggedIn ? 'navbar-expand-lg flex-lg-row' : 'navbar-expand-md flex-md-row'">
             <router-link class="navbar-brand" to="/"><img src="@/assets/images/stranerd_logo.png" alt="STRANERD" height="50px"></router-link>
             <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -51,6 +51,15 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto align-items-md-center" v-else>
+                    <li class="nav-item">
+                        <router-link class="nav-link text-white" to="/pricing-plans">Pricing Plans</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link text-white" to="/ask-a-question">Ask a Question</router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link text-white" to="/blog">Blog</router-link>
+                    </li>
                     <li class="nav-item d-inline">
                         <a class="nav-link text-white" @click.prevent="setAuthModalOverview">Sign Up</a>
                     </li>
