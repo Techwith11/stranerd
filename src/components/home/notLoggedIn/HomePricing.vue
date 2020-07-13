@@ -4,7 +4,7 @@
             <div class="mb-5">
                 <h2 class="font-weight-bold">Our Pricing Plans</h2>
                 <p class="small">Stranerd is an online educational platform that offers academic assistance to students worldwide.</p>
-                <button class="primary-button" @click="setAuthModalOverview">Start Free Trial</button>
+                <router-link class="btn primary-button" to="/pricing-plans">See more details</router-link>
             </div>
             <div class="price-card" v-for="plan in getPlans" :key="plan['.key']">
                 <p class="font-weight-light">{{ plan.title }}</p>
@@ -35,6 +35,7 @@
                         <span>Save 16% for ${{ plan.yearlyPrice }}/year</span>
                     </li>
                 </ul>
+               <router-link class="mx-auto small" to="/pricing-plans">read more...</router-link>
             </div>
         </div>
     </div>
