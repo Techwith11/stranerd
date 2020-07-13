@@ -1,28 +1,28 @@
 <template>
     <div id="background">
         <div class="container">
-            <div class="d-flex flex-column flex-md-row row justify-content-center">
-                <div class="col-md-4 mb-5">
+            <div class="d-flex flex-column flex-sm-row row justify-content-center">
+                <div class="col-sm-6 col-md-4 mb-5">
                     <img src="@/assets/icons/Unlimited Access.svg" alt="" class="icons" />
                     <h3 class="icon-title">Unlimited Access</h3>
                     <p class="icon-subtitle">One subscription, unlimited access.</p>
                 </div>
-                <div class="col-md-4 mb-5">
+                <div class="col-sm-6 col-md-4 mb-5">
                     <img src="@/assets/icons/Expert Teacher.svg" alt="" class="icons" />
                     <h3 class="icon-title">Expert Teachers</h3>
                     <p class="icon-subtitle">Learn from expert teachers who are passionate about teaching.</p>
                 </div>
-                <div class="col-md-4 mb-5">
+                <div class="col-sm-6 col-md-4 mb-5">
                     <img src="@/assets/icons/Study Anywhere.svg" alt="" class="icons" />
                     <h3 class="icon-title">Study Anywhere</h3>
                     <p class="icon-subtitle">Improve your academic performance with courses made by experts..</p>
                 </div>
-                <div class="col-md-4 mb-5">
+                <div class="col-sm-6 col-md-4 mb-5">
                     <img src="@/assets/icons/Test Preps.svg" alt="" class="icons" />
                     <h3 class="icon-title">Test Preps</h3>
                     <p class="icon-subtitle">Identify your strengths and improve your weaknesses with our concise tests.</p>
                 </div>
-                <div class="col-md-4 mb-5">
+                <div class="col-sm-6 col-md-4 mb-5">
                     <img src="@/assets/icons/Post Questions.svg" alt="" class="icons" />
                     <h3 class="icon-title">Ask questions</h3>
                     <p class="icon-subtitle">Asks questions for free and get answers from our expert tutors.</p>
@@ -42,6 +42,10 @@
     }
     .icons{
         height: 100px;
+        padding: 0.5rem;
+        border-radius: 10rem;
+        background: $primary;
+        border: 2px solid black !important;
     }
     .icon-title{
         margin: 1rem 0 0.5rem;
