@@ -7,8 +7,8 @@
                 <div class="col-lg-4 mt-2" v-for="(testimonial,index) in testimonials" :key="index">
                     <div class="card">
                         <div class="card-body rounded-lg">
-                            <div class="text-center mb-3">
-                                <img src="@/assets/images/icons/Cassette.svg" alt="" class="rounded">
+                            <div class="text-center">
+                                <p class="display-3 mb-0">&ldquo;</p>
                             </div>
                             <p class="card-text">{{ testimonial.testimonial }}</p>
                             <div>
@@ -51,14 +51,15 @@
 
 <style lang="scss" scoped>
     #background{
-        background: $primary-light;
+        background: url('../../../assets/images/students_say_background.svg');
+        background-color: $primary-light;
+        background-size: cover;
         padding: 4rem 0;
         color: $text-black;
         text-align: center;
     }
-    img{
-        width: 100px;
-        height: 100px;
+    p.display-3{
+        color: $primary-dark;
     }
     h2{
         color: $primary-dark;
