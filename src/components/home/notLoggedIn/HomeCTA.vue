@@ -37,7 +37,6 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '../../../style/index.scss';
     img{
         max-height: 90vh;
         min-height: 40vh;

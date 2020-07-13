@@ -17,7 +17,6 @@
 </template>
 
 <style lang="scss" scoped>
-	@import '../../../style/index';
 	#background{
 		background: $gradient;
 	}

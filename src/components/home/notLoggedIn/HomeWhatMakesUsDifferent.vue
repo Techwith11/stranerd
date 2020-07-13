@@ -28,7 +28,6 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '../../../style/index.scss';
     #background{
         background: $white;
         padding: 4rem 0;

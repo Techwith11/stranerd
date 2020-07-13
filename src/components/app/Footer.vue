@@ -34,7 +34,6 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '../../style/index';
     i{
         border-radius: 50rem;
         width: 2rem;

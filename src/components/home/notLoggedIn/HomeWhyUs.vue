@@ -33,7 +33,6 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '../../../style/index.scss';
     #background{
         background: $primary-light;
         color: $text-black;

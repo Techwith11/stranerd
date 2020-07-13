@@ -71,7 +71,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../../style/index.scss';
 	.title{
 		color: $primary-dark;
 	}

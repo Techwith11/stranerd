@@ -16,7 +16,6 @@
 </template>
 
 <style lang="scss" scoped>
-	@import '../../../style/index';
 	.router-link-exact-active{
 		border-top: 1px solid $text-black;
 		border-left: 1px solid $text-black;

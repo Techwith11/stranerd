@@ -83,7 +83,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../style/index';
 	input{
 		padding: 1rem;
 		max-width: 700px;

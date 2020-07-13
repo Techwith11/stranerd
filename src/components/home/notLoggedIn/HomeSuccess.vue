@@ -20,7 +20,6 @@
 </script>
 
 <style lang="scss" scoped>
-    @import '../../../style/index.scss';
     #background{
         background-color: $gradient-reversed;
         padding: 5rem 0;

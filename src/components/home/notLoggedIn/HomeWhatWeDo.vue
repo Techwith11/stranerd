@@ -27,7 +27,6 @@
 </template>
 
 <style lang="scss" scoped>
-    @import '../../../style/index.scss';
     #background{
         padding: 4rem 0;
         background: $primary-light;

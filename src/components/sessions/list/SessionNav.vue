@@ -22,7 +22,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../../style/index';
 	a{
 		width: 100%;
 		min-width: 50%;

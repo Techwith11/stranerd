@@ -50,7 +50,6 @@
 </script>
 
 <style lang="scss" scoped>
-    @import '../../../style/index.scss';
     #background{
         background: $primary-light;
         padding: 4rem 0;

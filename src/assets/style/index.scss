@@ -1,18 +1,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
+@import './variables.scss';
 @import './modal.scss';
-
-$primary-dark: #FF8A00;
-$primary: #FFC000;
-$primary-light: #FFF7DF;
-$accent: #22DD77;
-$white: #FFFFFF;
-$text-black: #343A40;
-
-$gradient: linear-gradient(to right, $primary-dark, $primary);
-$gradient-reversed: linear-gradient(to left, $primary-dark, $primary);
-
-$font-base-size: 16px;
 
 body{
 	font-size: $font-base-size;

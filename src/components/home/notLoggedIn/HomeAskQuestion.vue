@@ -98,7 +98,6 @@
 </script>
 
 <style lang="scss" scoped>
-	@import '../../../style/index.scss';
 	#background{
 		background: url('../../../assets/ask_questions_background.svg');
 		background-size: cover;

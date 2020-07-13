@@ -26,7 +26,6 @@
 </script>
 
 <style lang="scss" scoped>
-    @import '../../../style/index.scss';
     #background{
 		background-size: cover;
 		background: url('../../../assets/mckenwin.jpg') center;
