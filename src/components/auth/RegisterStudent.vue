@@ -1,11 +1,11 @@
 <template>
-	<div class="m-md-5">
-		<div class="d-flex align-items-baseline justify-content-between my-3">
-			<a @click.prevent="setAuthModalOverview"><i class="fas fa-arrow-left"></i></a>
-			<h4>Sign up with Email</h4>
+	<div class="m-md-4">
+		<div class="d-flex align-items-center justify-content-between mb-2">
 			<i></i>
+			<h4 class="mb-0">Sign Up</h4>
+			<a @click.prevent="closeAuthModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
-		<p class="small text-center my-4">Create an account to gain access to millions of ready made courses fit for everyone.</p>
+		<p class="small text-center mb-4">Create an account to gain access to millions of ready made courses fit for everyone.</p>
 		<form class="mx-2">
 			<div class="form-group">
 				<input type="text" id="name" class="form-control" placeholder="Full name" v-model.trim="$v.user.name.$model"
@@ -27,10 +27,24 @@
 					:class="{'is-invalid': $v.user.c_password.$error, 'is-valid': !$v.user.c_password.$invalid}" autocomplete="password">
 				<span class="small" v-if="$v.user.c_password.$error">Passwords must match</span>
 			</div>
-			<div class="d-flex flex-column">
-				<button @click.prevent="registerUser" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
+			<div class="d-flex flex-column mt-2">
+				<button @click.prevent="registerUser" id="registerBtn" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
 					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
-					<span v-else>Sign Up</span>
+					<span v-else>Submit</span>
+				</button>
+			</div>
+			<div class="small mt-2">
+				<span>
+					Already have an account?
+					<a class="text-info" @click.prevent="setAuthModalLogin">Login</a>
+				</span>
+			</div>
+			<p class="text-center small text-muted mt-4 mb-0">Or sign up with other options</p>
+			<div class="form-group d-flex flex-column my-3">
+				<button @click="loginWithGoogle" :disabled="isLoadingG || isLoading">
+					<i class="fas fa-spinner fa-spin" v-if="isLoadingG"></i>
+					<i class="fab fa-google" v-else></i>
+					Sign Up with Google
 				</button>
 			</div>
 		</form>
@@ -39,7 +53,7 @@
 
 <script>
 	import { mapGetters, mapActions } from 'vuex'
-	import { auth, firestore } from '@/config/firebase.js'
+	import firebase, { auth, firestore } from '@/config/firebase.js'
 	import { required, minLength, email, maxLength, sameAs } from 'vuelidate/lib/validators'
 	export default {
 		name: 'RegisterStudent',
@@ -50,11 +64,25 @@
 				password: '',
 				c_password: '',
 			},
+			isLoadingG: false,
 			isLoading: false
 		}),
 		computed: mapGetters(['getIntendedRoute']),
 		methods:{
-			...mapActions(['setAuthModalOverview','closeAuthModal']),
+			...mapActions(['setAuthModalLogin','closeAuthModal','clearIntendedRoute']),
+			loginWithGoogle(){
+				this.isLoadingG = true
+				let googleProvider = new firebase.auth.GoogleAuthProvider()
+				auth.signInWithPopup(googleProvider).then(async () => {
+					this.isLoadingG = false
+					this.closeAuthModal()
+					this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
+					this.clearIntendedRoute()
+				}).catch(error => {
+					this.isLoadingG = false
+					new window.Toast({ icon: 'error', title: error.message })
+				})
+			},
 			registerUser(){
 				this.isLoading = true
 				auth.createUserWithEmailAndPassword(this.user.email, this.user.password)
@@ -93,10 +121,17 @@
 	button{
 		margin: 0.5rem 0;
 		padding: 0.5rem 1.5rem;
-		color: $white;
+		border: 1px solid #333333;
 		display: block;
 		min-width: 256px;
 		max-width: 700px;
 		box-shadow: none;
+	}
+	#registerBtn{
+		color: $white;
+	}
+	i.fa-google{
+		color: #DD4B39;
+		margin: 0 0.5rem 0 0;
 	}
 </style>
