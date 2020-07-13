@@ -1,39 +1,43 @@
 <template>
-	<div class="py-5 px-2">
-		<div class="p-3 p-md-5 container border border-secondary rounded-lg">
-			<div class="px-md-3">
-				<h4 class="text-muted text-center">Ask Your Questions</h4>
-				<div class="form-group my-3">
-					<input type="text" class="form-control" placeholder="Question Topic" v-model.trim="$v.post.title.$model"
-						:class="{'is-invalid': $v.post.title.$error,'is-valid': !$v.post.title.$invalid}">
-					<small class="small text-danger d-block" v-if="$v.post.title.$error">Topic must be at least 3 characters</small>
-					<small class="small text-muted" v-if="post.title.length === 0">One quick sentence summary of your question</small>
+	<div id="background" class="p-5">
+		<div class="container">
+			<div class="row align-items-center justify-content-center flex-column flex-md-row">
+				<div class="col-md-4 mb-3 mb-md-0">
+					<h1 class="text-muted text-center">Ask Your Questions</h1>
 				</div>
-				<div class="form-group my-3">
-					<vue-editor class="rounded border bg-white" v-model.trim="$v.post.body.$model" useCustomImageHandler @image-added="handleImageAdded"
-						:class="{'border-danger': $v.post.body.$error, 'border-success': !$v.post.body.$invalid}" placeholder="Question content"
-					/>
-					<small class="small text-muted" v-if="post.body.length === 0">Describe your question in full length to give us a clear picture of what it is about</small>
-				</div>
-				<div class="form-group my-3">
-					<h6>Related Subject</h6>
-					<select class="form-control text-capitalize" v-model="$v.post.subject.$model" :class="{'is-invalid': $v.post.subject.$error, 'is-valid': !$v.post.subject.$invalid}">
-						<option :value="null" disabled>Please select a subject</option>
-						<option :value="subject.name" v-for="subject in getAllSubjects" :key="subject['.key']">{{ subject.name }}</option>
-					</select>
-				</div>
-				<div class="form-group my-3">
-					<h6>Related Module</h6>
-					<select class="form-control text-capitalize" v-model="$v.post.module.$model" :class="{'is-invalid': $v.post.module.$error, 'is-valid': !$v.post.module.$invalid}">
-						<option :value="null" disabled>Please select a {{ post.subject ? 'module' : 'subject first' }}</option>
-						<option :value="module.name" v-for="module in getModules" :key="module.name">{{ module.name }}</option>
-					</select>
-				</div>
-				<div class="d-flex justify-content-end">
-					<button class="btn-success" :disabled="isLoading || $v.$invalid" @click="submitPost">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
-						<span>Post question</span>
-					</button>
+				<div class="col-md-8 border border-secondary p-3 p-md-5 rounded-lg">
+					<div class="form-group my-3">
+						<input type="text" class="form-control" placeholder="Question Topic" v-model.trim="$v.post.title.$model"
+							:class="{'is-invalid': $v.post.title.$error,'is-valid': !$v.post.title.$invalid}">
+						<small class="small text-danger d-block" v-if="$v.post.title.$error">Topic must be at least 3 characters</small>
+						<small class="small" v-if="post.title.length === 0">One quick sentence summary of your question</small>
+					</div>
+					<div class="form-group my-3">
+						<vue-editor class="rounded border bg-white" v-model.trim="$v.post.body.$model" useCustomImageHandler @image-added="handleImageAdded"
+									:class="{'border-danger': $v.post.body.$error, 'border-success': !$v.post.body.$invalid}" placeholder="Question content"
+						/>
+						<small class="small" v-if="post.body.length === 0">Describe your question in full length to give us a clear picture of what it is about</small>
+					</div>
+					<div class="form-group my-3">
+						<h6>Related Subject</h6>
+						<select class="form-control text-capitalize" v-model="$v.post.subject.$model" :class="{'is-invalid': $v.post.subject.$error, 'is-valid': !$v.post.subject.$invalid}">
+							<option :value="null" disabled>Please select a subject</option>
+							<option :value="subject.name" v-for="subject in getAllSubjects" :key="subject['.key']">{{ subject.name }}</option>
+						</select>
+					</div>
+					<div class="form-group my-3">
+						<h6>Related Module</h6>
+						<select class="form-control text-capitalize" v-model="$v.post.module.$model" :class="{'is-invalid': $v.post.module.$error, 'is-valid': !$v.post.module.$invalid}">
+							<option :value="null" disabled>Please select a {{ post.subject ? 'module' : 'subject first' }}</option>
+							<option :value="module.name" v-for="module in getModules" :key="module.name">{{ module.name }}</option>
+						</select>
+					</div>
+					<div class="d-flex justify-content-end">
+						<button id="bg-primary" :disabled="isLoading || $v.$invalid" @click="submitPost">
+							<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
+							<span>Post question</span>
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -92,3 +96,15 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	@import '../../../style/index.scss';
+	#background{
+		background: url('../../../assets/ask_questions_background.svg');
+		background-size: cover;
+	}
+	#bg-primary{
+		background: $primary-dark;
+		color: $white;
+	}
+</style>
