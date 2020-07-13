@@ -28,7 +28,7 @@
 <style lang="scss" scoped>
     #background{
 		background-size: cover;
-		background: url('../../../assets/mckenwin.jpg') center;
+		background: url('../../../assets/images/mckenwin.jpg') center;
 	}
     #overlay{
         padding: 5rem 0;

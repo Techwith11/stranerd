@@ -21,7 +21,7 @@
                         <li>Guaranteed refund if our service falls short of your expectations</li>
                     </ul>
                 </div>
-                <img src="@/assets/what_makes_us_different.svg" alt="" class="col-md-6 mb-3">
+                <img src="@/assets/images/what_makes_us_different.svg" alt="" class="col-md-6 mb-3">
             </div>
         </div>
     </div>

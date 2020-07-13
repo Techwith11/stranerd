@@ -8,7 +8,7 @@
                     <div class="card">
                         <div class="card-body rounded-lg">
                             <div class="text-center mb-3">
-                                <img src="@/assets/icons/Cassette.svg" alt="" class="rounded">
+                                <img src="@/assets/images/icons/Cassette.svg" alt="" class="rounded">
                             </div>
                             <p class="card-text">{{ testimonial.testimonial }}</p>
                             <div>

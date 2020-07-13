@@ -99,7 +99,7 @@
 
 <style lang="scss" scoped>
 	#background{
-		background: url('../../../assets/ask_questions_background.svg');
+		background: url('../../../assets/images/ask_questions_background.svg');
 		background-size: cover;
 	}
 	#bg-primary{
