@@ -2,9 +2,8 @@
     <div id="background">
         <div class="container">
             <h2>What Makes Us Different</h2>
-            <div class="d-flex flex-column flex-md-row justify-content-center align-items-center">
-                <img src="@/assets/what_makes_us_different.png" alt="" class="col-md-6 mb-4">
-                <div class="col-md-6 mb-4 text-left">
+            <div class="d-flex flex-column-reverse flex-md-row justify-content-center align-items-center">
+                <div class="col-md-6 mb-3 text-left">
                     <h4>Accessibility</h4>
                     <ul>
                         <li>Certified tutors  with high educational qualifications and experience</li>
@@ -22,6 +21,7 @@
                         <li>Guaranteed refund if our service falls short of your expectations</li>
                     </ul>
                 </div>
+                <img src="@/assets/what_makes_us_different.svg" alt="" class="col-md-6 mb-3">
             </div>
         </div>
     </div>

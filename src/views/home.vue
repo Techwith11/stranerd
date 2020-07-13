@@ -10,8 +10,8 @@
 			<cta />
 			<why-us />
 			<ask-question />
-			<students-says />
 			<what-makes-us-different />
+			<students-says />
 			<recent-courses />
 			<mckenwin />
 			<pricing />
