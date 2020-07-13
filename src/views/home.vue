@@ -12,8 +12,8 @@
 			<ask-question />
 			<what-makes-us-different />
 			<students-says />
-			<recent-courses />
 			<mckenwin />
+			<!--<recent-courses />-->
 			<pricing />
 		</div>
 	</div>
@@ -26,7 +26,7 @@
 	import AskQuestion from '@/components/home/notLoggedIn/HomeAskQuestion'
 	import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay'
 	import WhatMakesUsDifferent from '@/components/home/notLoggedIn/HomeWhatMakesUsDifferent'
-	import RecentCourses from '@/components/home/notLoggedIn/HomeRecentCourses'
+	/*import RecentCourses from '@/components/home/notLoggedIn/HomeRecentCourses'*/
 	import Mckenwin from '@/components/home/notLoggedIn/HomeMckenwin'
 	import Pricing from '@/components/home/notLoggedIn/HomePricing'
 	import TopTutors from '@/components/home/loggedIn/TopTutors'
@@ -40,7 +40,7 @@
 			'ask-question': AskQuestion,
 			'students-says': StudentsSay,
 			'what-makes-us-different': WhatMakesUsDifferent,
-			'recent-courses': RecentCourses,
+			/*'recent-courses': RecentCourses,*/
 			'mckenwin': Mckenwin,
 			'pricing': Pricing,
 			'top-tutors': TopTutors,
