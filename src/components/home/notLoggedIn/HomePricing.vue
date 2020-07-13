@@ -42,7 +42,7 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters } from 'vuex'
+    import { mapGetters } from 'vuex'
     export default {
         data: () => ({
             plans: [
@@ -69,8 +69,7 @@
                 }
             ]
         }),
-        computed: mapGetters(['getPlans']),
-        methods: mapActions(['setAuthModalOverview'])
+        computed: mapGetters(['getPlans'])
     }
 </script>
 

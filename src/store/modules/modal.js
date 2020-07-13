@@ -8,7 +8,6 @@ const state = {
 
 const getters = {
     isAuthModalOpen: state => !!state.modal,
-    isAuthModalOverview: state => state.modal === 'overview',
     isAuthModalLogin: state => state.modal === 'login',
     isAuthModalForgotPassword: state => state.modal === 'forgot-password',
     isAuthModalRegisterStudent: state => state.modal === 'register-student',
@@ -53,7 +52,6 @@ const mutations = {
 }
 
 const actions = {
-    setAuthModalOverview: ({ commit }) => commit('setAuthModal', 'overview'),
     setAuthModalLogin: ({ commit }) => commit('setAuthModal', 'login'),
     setAuthModalForgotPassword: ({ commit }) => commit('setAuthModal', 'forgot-password'),
     setAuthModalRegisterStudent: ({ commit }) => commit('setAuthModal', 'register-student'),

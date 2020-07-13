@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
 	const isSubscribed = store.getters.isSubscribed
 	if (requiresAuth && !isLoggedIn) {
 		new window.Toast({ icon: 'error', 'title': 'Login to continue' })
-		store.dispatch('setAuthModalOverview')
+		store.dispatch('setAuthModalLogin')
 		store.dispatch('setIntendedRoute', to.fullPath)
 		return next('/')
 	}

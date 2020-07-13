@@ -61,10 +61,10 @@
                         <router-link class="nav-link text-white" to="/blog">Blog</router-link>
                     </li>
                     <li class="nav-item d-inline">
-                        <a class="nav-link text-white" @click.prevent="setAuthModalOverview">Sign Up</a>
+                        <a class="nav-link text-white" @click.prevent="setAuthModalRegisterStudent">Sign Up</a>
                     </li>
                     <li class="nav-item d-inline">
-                        <a class="nav-link text-white" @click.prevent="setAuthModalOverview">Login</a>
+                        <a class="nav-link text-white" @click.prevent="setAuthModalLogin">Sign In</a>
                     </li>
                 </ul>
             </div>
@@ -98,7 +98,7 @@
     import { mapGetters, mapActions } from 'vuex'
     export default {
         methods: {
-            ...mapActions(['setAuthModalOverview', 'logout','setCartModalOverview']),
+            ...mapActions(['setAuthModalRegisterStudent', 'setAuthModalLogin', 'logout','setCartModalOverview']),
             toggleAccountDropDown: () => window.closeAdminDropdown(),
             toggleAdminDropDown: () => window.closeAccountDropdown(),
             showCartModal(){
