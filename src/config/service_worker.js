@@ -12,8 +12,8 @@ self.addEventListener('install', async event => {
 
 precaching.precacheAndRoute(self.__precacheManifest || [])
 routing.registerRoute('/', new strategies.NetworkFirst({ cacheName: 'src' }))
-routing.registerRoute(({ request }) => request.destination === 'style', new strategies.StaleWhileRevalidate({ cacheName: 'stylesheets' }))
-routing.registerRoute(({ request }) => request.destination === 'script', new strategies.StaleWhileRevalidate({ cacheName: 'javascripts' }))
+routing.registerRoute(({ request }) => request.destination === 'style', new strategies.NetworkFirst({ cacheName: 'stylesheets' }))
+routing.registerRoute(({ request }) => request.destination === 'script', new strategies.NetworkFirst({ cacheName: 'javascripts' }))
 routing.registerRoute(({ request }) => request.destination === 'image', new strategies.CacheFirst({ cacheName: 'images', plugins: [
 		new cacheableResponse.Plugin({
 			statuses: [0, 200]
