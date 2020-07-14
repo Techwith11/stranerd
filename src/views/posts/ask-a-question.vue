@@ -1,5 +1,6 @@
 <template>
-	<div class="container">
+	<div class="container py-5">
+		<h3 class="text-center mb-4">Ask A Question</h3>
 		<form class="my-3" @submit.prevent>
 			<div class="form-group my-3">
 				<input type="text" class="form-control" placeholder="Question Topic" v-model.trim="$v.post.title.$model"
@@ -28,7 +29,7 @@
 				</select>
 			</div>
 			<div class="d-flex justify-content-end">
-				<button class="btn-success" @click="login" v-if="!isLoggedIn">
+				<button class="btn-success" @click="setAuthModalLogin" v-if="!isLoggedIn">
 					Login to continue
 				</button>
 				<button class="btn-success" :disabled="isLoading || $v.$invalid" @click="submitPost" v-else>
@@ -60,7 +61,7 @@
 			getModules(){ return this.post.subject ? this.getAllSubjects.find(s => s.name === this.post.subject).modules : [] }
 		},
 		methods: {
-			...mapActions(['createPost','uploadFromEditor','clearCreatePost','setCreatePost','setAuthModalLogin','setPostModalNotify']),
+			...mapActions(['createPost','uploadFromEditor','clearCreatePost','setAuthModalLogin','setPostModalNotify']),
 			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
 				try{
 					await this.uploadFromEditor({
@@ -80,10 +81,6 @@
 				}else{
 					this.setPostModalNotify()
 				}
-			},
-			login(){
-				this.setCreatePost(this.post)
-				this.setAuthModalLogin()
 			}
 		},
 		mounted(){

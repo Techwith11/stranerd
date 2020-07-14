@@ -4,7 +4,7 @@
 			<recent-posts />
 			<top-tutors />
 			<recent-sessions />
-			<button class="floating-button" @click="setPostModalNotify"><i class="fas fa-plus"></i></button>
+			<router-link class="floating-button text-decoration-none" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
 		</div>
 		<div v-else>
 			<cta />
