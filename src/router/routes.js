@@ -120,6 +120,12 @@ export default [
         meta: { requiresAuth: true }
     },
     {
+        path: '/ask-a-question',
+        name: 'AskQuestion',
+        component: () => import(/* webpackChunkName: "ask_question" */ '@/views/posts/ask-a-question'),
+        meta: { requiresAuth: false }
+    },
+    {
         path: '/posts/:id',
         name: 'Post',
         component: () => import(/* webpackChunkName: "post" */ '@/views/posts/single-post'),
