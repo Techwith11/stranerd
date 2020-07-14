@@ -39,7 +39,6 @@ const getters = {
 
     isPostModalOpen: state => !!state.postModal,
     isPostModalNotify: state => state.postModal === 'post-notify',
-    isPostModalCreate: state => state.postModal === 'post-create',
     isPostModalBuyMore: state => state.postModal === 'buy-more',
 }
 
@@ -82,7 +81,6 @@ const actions = {
     setAccountModalMustSubscribeWarning: ({ commit }) => commit('setAccountModal', 'must-subscribe-warning'),
     closeAccountModal: ({ commit }) => commit('setAccountModal', null),
 
-    setPostModalCreate: ({ commit }) => commit('setPostModal','post-create'),
     setPostModalNotify: ({ commit }) => commit('setPostModal','post-notify'),
     setPostModalBuyMore: ({ commit }) => commit('setPostModal','buy-more'),
     closePostModal: ({ commit }) =>  commit('setPostModal', null)
