@@ -5,8 +5,8 @@
 			<h4 class="mb-0">Edit Profile</h4>
 			<a @click.prevent="closeAccountModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
-		<div class="form-group my-3">
-			<img :src="imageLink" alt="" class="w-100" v-if="imageLink">
+		<div class="form-group my-3 d-flex flex-column align-items-center">
+			<img :src="imageLink" alt=""  v-if="imageLink">
 			<input type="file" @change="catchImage" class="d-none" ref="image" accept="image/*">
 			<a @click.prevent="() => { $refs.image.value= ''; $refs.image.click() }">
 				<span class="text-info">Upload Profile Image</span>
@@ -84,3 +84,10 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	img{
+		width: 180px;
+		margin: 0 0 0.5rem;
+	}
+</style>
