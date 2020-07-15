@@ -1,7 +1,9 @@
 <template>
-	<div class="container py-3">
-		<account-nav />
-		<router-view />
+	<div id="background">
+		<div class="container py-3">
+			<account-nav />
+			<router-view />
+		</div>
 	</div>
 </template>
 
@@ -28,3 +30,7 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	#background{ background: $primary-light; min-height: 100vh; }
+</style>
