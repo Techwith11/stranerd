@@ -16,15 +16,11 @@
                 <ul>
                     <li>
                         <i class="fas fa-check-circle"></i>
-                        <span>{{ plan.questions }} free questions monthly</span>
+                        <span>{{ plan.questions }} questions monthly</span>
                     </li>
                     <li>
                         <i class="fas fa-check-circle"></i>
                         <span>Unlimited Access</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Offline Accessibility</span>
                     </li>
                     <li>
                         <i class="fas fa-check-circle"></i>

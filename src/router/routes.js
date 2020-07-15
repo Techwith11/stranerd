@@ -10,6 +10,11 @@ export default [
         component: () => import(/!* webpackChunkName: "about" *!/ '@/views/about')
     },*/
     {
+        path: '/pricing-plans',
+        name: 'Pricing Plan',
+        component: () => import(/* webpackChunkName: "pricing_plans" */ '@/views/pricing-plans')
+    },
+    {
         path: '/blog',
         name: 'Blog Posts',
         component: () => import(/* webpackChunkName: "blog_posts" */ '@/views/blog/index')
