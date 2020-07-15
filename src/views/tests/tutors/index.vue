@@ -3,9 +3,12 @@
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<div v-if="isTutor">
+				<select class="form-control text-capitalize mb-3" v-model="course">
+					<option v-for="course in tutor.courses" :key="course">{{ course }}</option>
+				</select>
 				<div class="jumbotron">
-					<h3 class="text-center">Level {{ getNewLevel }} {{ getCourse }}</h3>
-					<p class="lead">This is a simple {{ getCourse }} test designed to figure out how comfortable you are with {{ getCourse }} before pairing you with students.</p>
+					<h3 class="text-center">Level {{ getNewLevel }} {{ course }}</h3>
+					<p class="lead">This is a simple {{ course }} test designed to figure out how comfortable you are with {{ course }} before pairing you with students.</p>
 					<div class="text-danger" v-if="failed">
 						<hr class="my-4">
 						<span>You took this test less than 2 hours ago and failed to meet the 70% pass mark. You can retake the test by {{ getRetakeTime }}.</span>
@@ -33,7 +36,8 @@
 	export default {
 		name: 'TestsTutors',
 		data: () => ({
-			isLoading: true
+			isLoading: true,
+			course: null
 		}),
 		methods: {
 			...mapActions(['startTest','checkForUnfinishedTests']),
@@ -49,7 +53,7 @@
 				})
 				if(result.value){
 					this.isLoading = true
-					await this.startTest()
+					await this.startTest(this.course)
 					this.isLoading = false
 				}
 			}
@@ -57,16 +61,15 @@
 		computed: {
 			...mapGetters(['getUser','isTutor']),
 			tutor(){ return this.getUser.tutor || {} },
-			getCourse(){ return this.tutor.courses[0] },
-			getNewLevel(){ return this.tutor['levels'][this.getCourse] + 1},
+			getNewLevel(){ return this.tutor['levels'][this.course] + 1},
 			getRetakeTime(){
-				let d = this.tutor.upgrade[this.getCourse][this.getNewLevel]['takenAt']
+				let d = this.tutor.upgrade[this.course][this.getNewLevel]['takenAt']
 				d = new Date(d.seconds * 1000)
 				d.setHours(d.getHours() + 2)
 				return d.toTimeString().slice(0,5)
 			},
 			failed(){
-                let courseUpgrade = this.tutor.upgrade[this.getCourse]
+                let courseUpgrade = this.tutor.upgrade[this.course]
                 let upgrade = courseUpgrade[this.getNewLevel]
                 if(upgrade && upgrade['passed'] === false){
                     let twoHoursToMs = 7200000
@@ -76,8 +79,14 @@
                 return false
 			}
 		},
+		created(){
+			let course = this.$route.query.course?.toLowerCase()
+			this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
+		},
 		async activated(){
 			if(!this.isTutor){ await this.$router.push('/') }
+			let course = this.$route.query.course?.toLowerCase()
+			this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
 			await this.checkForUnfinishedTests()
 			this.isLoading = false
 		},

@@ -11,10 +11,9 @@ const actions = {
             await router.push(`/tests/tutors/${tests.docs[0].id}`).catch(error => error)
         }
     },
-    startTest({ getters }){
+    startTest({ getters }, course){
         let tutor = getters.getUser.tutor
         let user = getters.getId
-        let course = tutor.courses[0]
         let level = tutor['levels'][course] + 1
         let data = { user, course, level }
         return functions.httpsCallable('startTutorTest')(data).then(async res => {

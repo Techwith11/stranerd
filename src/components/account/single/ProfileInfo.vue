@@ -38,7 +38,7 @@
 								<i class="fas fa-check"></i>
 								<i class="ml-n2 fas fa-check"></i>
 							</span>
-						<router-link class="text-info" v-else to="/tests/tutors">Take test</router-link>
+						<router-link class="text-info" v-else :to="`/tests/tutors?course=${course.toLowerCase()}`">Take test</router-link>
 					</li>
 					<li class="d-flex justify-content-between align-items-center mt-2">
 						<span>Average Rating</span>
