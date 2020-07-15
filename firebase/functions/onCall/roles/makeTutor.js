@@ -29,7 +29,6 @@ module.exports = functions.https.onCall(async (data, context) => {
 		let courses = user.roles.isTutor ? [...user.tutor.courses, data.course] : [data.course]
 
 		await ref.set({
-			bio: { bio: data.bio },
 			roles: { isTutor: true },
 			tutor: { upgrade, levels, reviews, rating, canTeach, qualifications, courses }
 		}, { merge: true })

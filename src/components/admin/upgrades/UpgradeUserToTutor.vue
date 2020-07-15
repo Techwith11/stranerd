@@ -26,11 +26,6 @@
 					</select>
 				</div>
 			</div>
-			<div class="form-group">
-				<textarea id="bio" rows="3" class="form-control" v-model="$v.tutor.bio.$model"  placeholder="A short bio about the tutor"
-					:class="{'is-invalid': $v.tutor.bio.$error, 'is-valid': !$v.tutor.bio.$invalid}">
-				</textarea>
-			</div>
 		</div>
 		<div class="mt-2" v-if="fetched && !fetchingUsers">
 			<p class="text-danger opacity-75" v-if="users.length === 0">No user with such email exist</p>
@@ -52,7 +47,7 @@
 <script>
 	import { firestore } from '@/config/firebase'
 	import { mapActions, mapGetters } from 'vuex'
-	import { required, minLength } from 'vuelidate/lib/validators'
+	import { required } from 'vuelidate/lib/validators'
 	export default {
 		data: () => ({
 			email: '',
@@ -62,8 +57,7 @@
 			users: [],
 			tutor: {
 				course: null,
-				qualification: null,
-				bio: ''
+				qualification: null
 			},
 			qualifications: [
 				{ name:'High school graduate', value: 0}, { name: 'Diploma Certificate', value: 1 },
@@ -105,8 +99,7 @@
 		validations:{
 			tutor: {
 				course: { required },
-				qualification: { required },
-				bio: { required, minLength: minLength(3) }
+				qualification: { required }
 			}
 		}
 	}
