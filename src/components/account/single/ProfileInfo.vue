@@ -28,9 +28,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-5 bordered rounded-xl p-3 bg-white" v-if="getUser.roles.isTutor">
-			<p class="small font-weight-bold text-center">Tutor</p>
-			<div>
+		<div class="col-md-5" v-if="getUser.roles.isTutor">
+			<div class="p-3 bordered rounded-xl bg-white">
+				<p class="small font-weight-bold text-center">Tutor</p>
 				<ul class="list-group">
 					<li class=" d-flex justify-content-between align-items-center mb-2" v-for="course in getUser.tutor.courses" :key="course">
 						<span class="text-capitalize">{{ course }}</span>
