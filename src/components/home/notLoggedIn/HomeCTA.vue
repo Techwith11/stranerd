@@ -38,7 +38,7 @@
 
 <style lang="scss" scoped>
     img{
-        min-height: 40vh;
+        min-height: 50vh;
     }
     .carousel-caption{
         left: 0;

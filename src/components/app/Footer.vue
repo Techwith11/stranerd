@@ -10,6 +10,14 @@
                         <a href="https://instagram.com/officialstranerd" target="_blank"><i class="fab fa-instagram"></i></a>
                         <a href="https://twitter.com/stranerds" target="_blank"><i class="fab fa-twitter"></i></a>
                     </p>
+                    <div class="form-group">
+                        <h6>Subscribe to our Newsletter</h6>
+                        <input type="email" class="form-control" v-model.trim="$v.email.$model" :class="{'is-invalid': $v.email.$error, 'is-valid': !$v.email.$invalid}">
+                        <button class="btn btn-primary mx-0 mt-3 mb-5" :disabled="loading || $v.$invalid" @click.prevent="subscribe">
+                            <i class="fas fa-spin fa-spinner mr-2" v-if="loading"></i>
+                            <span>Subscribe</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="col-4 col-md-2">
                     <h6>Quick Links</h6>
@@ -68,3 +76,31 @@
         border: none !important;
     }
 </style>
+
+<script>
+    import { required, email} from 'vuelidate/lib/validators'
+    import { mapActions } from 'vuex'
+    export default {
+        data: () => ({
+            email: '',
+            loading: false
+        }),
+        validations: {
+            email: { required, email }
+        },
+        methods: {
+            ...mapActions(['subscribeToMail']),
+            async subscribe(){
+                this.loading = true
+                let email = this.email
+                try{
+                    await this.subscribeToMail(email)
+                    new window.Toast({ icon: 'success', title: 'Successfully subscribed' })
+                    this.email = ''
+                    this.$v.$reset()
+                }catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+                this.loading = false
+            }
+        }
+    }
+</script>

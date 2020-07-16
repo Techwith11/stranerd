@@ -1,4 +1,4 @@
-import { firestore } from '@/config/firebase'
+import { firestore, functions } from '@/config/firebase'
 
 let url = `https://firebasestorage.googleapis.com/v0/b/stranerd-13084.appspot.com/o/${encodeURIComponent('users/images/user_profile.png')}?alt=media`
 
@@ -44,6 +44,9 @@ const actions = {
 			commit('setPlans', plans)
 		}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching content. Try refreshing the page' }) }
 	},
+	async subscribeToMail(store, email){
+		return await functions.httpsCallable('subscribeToMailingList')(email)
+	}
 }
 
 export default { state, getters, mutations, actions }
