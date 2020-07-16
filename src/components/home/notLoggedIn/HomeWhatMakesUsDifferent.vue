@@ -15,11 +15,6 @@
                         <li>We work well with your deadlines</li>
                         <li>Got an assignment due in a hour, we got you</li>
                     </ul>
-
-                    <h4>Money back guarantee</h4>
-                    <ul>
-                        <li>Guaranteed refund if our service falls short of your expectations</li>
-                    </ul>
                 </div>
                 <img src="@/assets/images/what_makes_us_different.svg" alt="" class="col-md-6 mb-3">
             </div>
