@@ -38,6 +38,7 @@ exports.downvoteReply = require('./onCall/contents/downvoteReply')
 
 exports.sendEmailAfterPurchase = require('./onCall/shop/sendEmailAfterPurchase')
 
+exports.subscribeToMailingList = require('./onCall/mailing/subscribeToMailingList')
 
 // Firestore Triggers
 // On Create

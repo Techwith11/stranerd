@@ -45,7 +45,7 @@ const actions = {
 		}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching content. Try refreshing the page' }) }
 	},
 	async subscribeToMail(store, email){
-		return await functions.httpsCallable('subscribeToMailingList')(email)
+		return await functions.httpsCallable('subscribeToMailingList')({ email })
 	}
 }
 
