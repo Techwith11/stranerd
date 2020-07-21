@@ -4,6 +4,7 @@
 @import './modal.scss';
 
 body{
+	background: $primary-light;
 	font-size: $font-base-size;
 	font-family: Poppins, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;

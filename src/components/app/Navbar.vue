@@ -1,32 +1,32 @@
 <template>
-    <header class="bg-dark">
-        <nav class="container navbar navbar-dark bg-dark text-white d-flex justify-content-between flex-row-reverse" :class="isLoggedIn ? 'navbar-expand-lg flex-lg-row' : 'navbar-expand-md flex-md-row'">
+    <header class="bg-white shadow">
+        <nav class="container navbar bg-white navbar-light d-flex justify-content-between flex-row-reverse" :class="isLoggedIn ? 'navbar-expand-lg flex-lg-row' : 'navbar-expand-md flex-md-row'">
             <router-link class="navbar-brand" to="/"><img src="@/assets/images/stranerd_logo.png" alt="STRANERD" height="50px"></router-link>
             <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse text-white" id="navbar">
+            <div class="collapse navbar-collapse" id="navbar">
                 <ul class="navbar-nav ml-auto" v-if="isLoggedIn">
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" to="/">Dashboard</router-link>
+                        <router-link class="nav-link" to="/">Dashboard</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" to="/posts">Posts</router-link>
+                        <router-link class="nav-link" to="/posts">Posts</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" to="/sessions">Sessions</router-link>
+                        <router-link class="nav-link" to="/sessions">Sessions</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" to="/courses">Courses</router-link>
+                        <router-link class="nav-link" to="/courses">Courses</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" to="/tutors">Tutors</router-link>
+                        <router-link class="nav-link" to="/tutors">Tutors</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" to="/shop">Shop</router-link>
+                        <router-link class="nav-link" to="/shop">Shop</router-link>
                     </li>
                     <li class="nav-item dropdown" id="accountDropdown">
-                        <a class="nav-link dropdown-toggle text-white" id="accountDropdownToggle" @click.prevent="toggleAccountDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" id="accountDropdownToggle" @click.prevent="toggleAccountDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             My account
                         </a>
                         <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="accountDropdownToggle`" id="accountDropdownMenu">
@@ -35,36 +35,36 @@
                                 <span class="badge badge-pill badge-primary" v-if="getCartLength">{{ getCartLength }}</span>
                             </a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item text-white nav-link py-1 py-lg-2"  @click.prevent="logout">Logout</a>
+                            <a class="dropdown-item nav-link py-1 py-lg-2"  @click.prevent="logout">Logout</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown" v-if="isAdmin" id="adminDropdown">
-                        <a class="nav-link dropdown-toggle text-white" @click.prevent="toggleAdminDropDown" id="adminDropdownToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" @click.prevent="toggleAdminDropDown" id="adminDropdownToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Admin Pages
                         </a>
                         <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="adminDropdownToggle" id="adminDropdownMenu">
-                            <router-link class="dropdown-item text-white nav-link py-1 py-lg-2" to="/admins/questions">Tests Questions</router-link>
-                            <router-link class="dropdown-item text-white nav-link py-1 py-lg-2" to="/admins/notes">Shop Notes</router-link>
-                            <router-link class="dropdown-item text-white nav-link py-1 py-lg-2" to="/admins/subjects">Subjects</router-link>
-                            <router-link class="dropdown-item text-white nav-link py-1 py-lg-2" to="/admins/upgrades">Upgrade Users</router-link>
+                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/questions">Tests Questions</router-link>
+                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/notes">Shop Notes</router-link>
+                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/subjects">Subjects</router-link>
+                            <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/upgrades">Upgrade Users</router-link>
                         </div>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto align-items-md-center" v-else>
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" to="/pricing-plans">Pricing Plans</router-link>
+                        <router-link class="nav-link" to="/pricing-plans">Pricing Plans</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" to="/ask-a-question">Ask a Question</router-link>
+                        <router-link class="nav-link" to="/ask-a-question">Ask a Question</router-link>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link text-white" to="/blog">Blog</router-link>
+                        <router-link class="nav-link" to="/blog">Blog</router-link>
                     </li>
                     <li class="nav-item d-inline">
-                        <a class="nav-link text-white" @click.prevent="setAuthModalRegisterStudent">Sign Up</a>
+                        <a class="nav-link" @click.prevent="setAuthModalRegisterStudent">Sign Up</a>
                     </li>
                     <li class="nav-item d-inline">
-                        <a class="nav-link text-white" @click.prevent="setAuthModalLogin">Sign In</a>
+                        <a class="nav-link" @click.prevent="setAuthModalLogin">Sign In</a>
                     </li>
                 </ul>
             </div>
@@ -78,6 +78,9 @@
 		z-index: 3;
 		height: 76px;
 	}
+    .bg-white{
+        background: $white;
+    }
     .dropdown{
         cursor: pointer;
     }
