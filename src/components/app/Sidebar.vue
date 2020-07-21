@@ -26,7 +26,7 @@
 <style lang="scss" scoped>
 	#sidebar{
 		padding: 2rem 0;
-		background: $primary-dark;
+		background: $primary;
 		width: 80px;
 		display: flex;
 		flex-direction: column;
