@@ -10,26 +10,29 @@
                     <li class="nav-item">
                         <router-link class="nav-link" to="/">Dashboard</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-none d-lg-inline">
+                        <router-link class="nav-link" to="/blog">Blog</router-link>
+                    </li>
+                    <li class="nav-item d-lg-none">
                         <router-link class="nav-link" to="/posts">Posts</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-lg-none">
                         <router-link class="nav-link" to="/sessions">Sessions</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-lg-none">
                         <router-link class="nav-link" to="/courses">Courses</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-lg-none">
                         <router-link class="nav-link" to="/tutors">Tutors</router-link>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item d-lg-none">
                         <router-link class="nav-link" to="/shop">Shop</router-link>
                     </li>
                     <li class="nav-item dropdown" id="accountDropdown">
                         <a class="nav-link dropdown-toggle" id="accountDropdownToggle" @click.prevent="toggleAccountDropDown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             My account
                         </a>
-                        <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="accountDropdownToggle`" id="accountDropdownMenu">
+                        <div class="dropdown-menu bg-white shadow-sm py-0 py-lg-2" aria-labelledby="accountDropdownToggle`" id="accountDropdownMenu">
                             <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/account">My Account</router-link>
                             <a class="dropdown-item nav-link py-1 py-lg-2" @click.prevent="showCartModal">My Cart
                                 <span class="badge badge-pill badge-primary" v-if="getCartLength">{{ getCartLength }}</span>
@@ -42,7 +45,7 @@
                         <a class="nav-link dropdown-toggle" @click.prevent="toggleAdminDropDown" id="adminDropdownToggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Admin Pages
                         </a>
-                        <div class="dropdown-menu bg-dark py-0 py-lg-2" aria-labelledby="adminDropdownToggle" id="adminDropdownMenu">
+                        <div class="dropdown-menu bg-white shadow-sm py-0 py-lg-2" aria-labelledby="adminDropdownToggle" id="adminDropdownMenu">
                             <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/questions">Tests Questions</router-link>
                             <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/notes">Shop Notes</router-link>
                             <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/admins/subjects">Subjects</router-link>

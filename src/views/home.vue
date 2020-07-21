@@ -1,6 +1,6 @@
 <template>
-	<WithSidebar>
-		<div id="bg-primary-light" v-if="isLoggedIn">
+	<Default>
+		<div v-if="isLoggedIn">
 			<div class="container py-3">
 				<div class="row">
 					<div class="col-lg-5 d-none d-lg-block mb-3 pl-0">
@@ -35,7 +35,7 @@
 			<!--<recent-courses />-->
 			<pricing />
 		</div>
-	</WithSidebar>
+	</Default>
 </template>
 
 <script>
@@ -99,9 +99,3 @@
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
-	#bg-primary-light{
-		background: $primary-light;
-	}
-</style>
