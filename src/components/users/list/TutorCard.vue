@@ -1,24 +1,16 @@
 <template>
-	<div class="border border-secondary rounded py-2 px-sm-3">
-		<div class="row">
-			<div class="col-sm-3 text-center my-auto">
-				<img :src="getImageLink" alt="" class="w-100">
-			</div>
-			<div class="col-sm-9">
-				<div class="card-body">
-					<h5 class="card-title">
-						<span class="mr-2">{{ user.bio.name }}</span>
-						<rating-stars class="small d-inline" :rating="user.tutor.rating"/>
-					</h5>
-					<p class="card-text mb-1">{{ user.bio.bio }}</p>
-					<p class="card-text mb-1">
-						Courses:
-						<span class="text-capitalize" v-for="course in getCourses" :key="course">{{ course }}</span>
-					</p>
-					<div class="d-flex justify-content-end">
-						<router-link :to="`/users/${user['.key']}`" class="card-link btn btn-outline-primary">Visit Profile</router-link>
-					</div>
-				</div>
+	<div class="p-2">
+		<div class="row align-items-start">
+			<img :src="getImageLink" alt="">
+			<div>
+				<router-link :to="`/users/${user['.key']}`" class="card-link">
+					<h5 class="card-title mb-0">{{ user.bio.name }}</h5>
+				</router-link>
+				<p class="card-text mb-0">
+					Teaches:
+					<span class="text-capitalize" v-for="course in getCourses" :key="course">{{ course }}</span>
+				</p>
+				<rating-stars class="small d-inline" :rating="user.tutor.rating"/>
 			</div>
 		</div>
 	</div>
@@ -51,7 +43,8 @@
 
 <style lang="scss" scoped>
 	img{
-		width: 25%;
-		max-width: 150px;
+		width: 80px;
+		height: 80px;
+		margin-right: 0.5rem;
 	}
 </style>

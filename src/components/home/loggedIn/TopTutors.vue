@@ -1,10 +1,13 @@
 <template>
-	<div class="my-4" v-if="tutors.length > 0">
+	<div class="p-3 white shadow-sm">
 		<p class="text-muted">Top Tutors</p>
-		<tutor-card class="my-2" v-for="tutor in tutors" :user="tutor" :key="tutor['.key']" />
-		<div class="d-flex justify-content-end my-3">
-			<router-link class="btn btn-success text-decoration-none text-white px-4" to="/tutors">See More</router-link>
+		<div v-if="tutors.length > 0">
+			<tutor-card class="my-2" v-for="tutor in tutors" :user="tutor" :key="tutor['.key']" />
+			<div class="d-flex justify-content-end my-3">
+				<router-link class="text-decoration-none" to="/tutors">See More</router-link>
+			</div>
 		</div>
+		<p class="lead" v-else>No tutors available at the moment.</p>
 	</div>
 </template>
 

@@ -1,10 +1,10 @@
 <template>
-	<div class="my-4">
+	<div class="p-3 white shadow-sm">
 		<p class="text-muted">Recent Sessions</p>
 		<div v-if="sessions.length > 0">
 			<session-card v-for="session in sessions" :key="session['.key']" :session="session" />
 			<div class="d-flex justify-content-end my-3">
-				<router-link class="btn btn-success text-decoration-none text-white px-4" to="/sessions">See More</router-link>
+				<router-link class="text-decoration-none" to="/sessions">See More</router-link>
 			</div>
 		</div>
 		<div v-else>
@@ -31,7 +31,7 @@
 			try{
 				let docs = await firestore.collection('sessions').orderBy('dates.createdAt','desc')
 					.where(this.isTutor ? 'tutor' : 'student', '==', this.getId)
-					.limit(5).get()
+					.limit(3).get()
 				docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching recent sessions. Try refreshing the page' }) }
 		},

@@ -1,10 +1,29 @@
 <template>
 	<div>
-		<div class="container" v-if="isLoggedIn">
-			<recent-posts />
-			<top-tutors />
-			<recent-sessions />
-			<router-link class="floating-button text-decoration-none" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
+		<div id="bg-primary-light" v-if="isLoggedIn">
+			<div class="container py-3">
+				<div class="row">
+					<div class="col-lg-5 d-none d-lg-block mb-3 pl-0">
+						<show-ask-question />
+					</div>
+					<div class="col-lg-7 mb-3 px-0">
+						<recent-posts />
+					</div>
+					<router-link class="d-lg-none floating-button text-decoration-none" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
+				</div>
+				<div class="py-3"></div>
+				<div class="row">
+					<div class="col-lg-4 px-0 mb-3">
+						<recent-sessions />
+					</div>
+					<div class="col-lg-4 px-0 pl-lg-2 mb-3">
+						<top-tutors />
+					</div>
+					<div class="col-lg-4 px-0 pl-lg-2 mb-3">
+						<top-tutors />
+					</div>
+				</div>
+			</div>
 		</div>
 		<div v-else>
 			<cta />
@@ -30,6 +49,7 @@
 	import Mckenwin from '@/components/home/notLoggedIn/HomeMckenwin'
 	import Pricing from '@/components/home/notLoggedIn/HomePricing'
 	import TopTutors from '@/components/home/loggedIn/TopTutors'
+	import ShowAskQuestion from '@/components/home/loggedIn/AskQuestion'
 	import RecentSessions from '@/components/home/loggedIn/RecentSessions'
 	import RecentPosts from '@/components/home/loggedIn/RecentPosts'
 	export default {
@@ -44,6 +64,7 @@
 			'mckenwin': Mckenwin,
 			'pricing': Pricing,
 			'top-tutors': TopTutors,
+			'show-ask-question': ShowAskQuestion,
 			'recent-posts': RecentPosts,
 			'recent-sessions': RecentSessions,
 		},
@@ -78,3 +99,9 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	#bg-primary-light{
+		background: $primary-light;
+	}
+</style>
