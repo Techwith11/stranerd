@@ -1,22 +1,24 @@
 <template>
-	<div class="container">
-		<helper-spinner v-if="isLoading" />
-		<div v-else>
-			<div class="row my-2">
-				<div class="col-7 pr-2">
-					<input type="text" class="form-control" placeholder="Search by name" v-model="name">
+	<Default>
+		<div class="container">
+			<helper-spinner v-if="isLoading" />
+			<div v-else>
+				<div class="row my-2">
+					<div class="col-7 pr-2">
+						<input type="text" class="form-control" placeholder="Search by name" v-model="name">
+					</div>
+					<div class="col-5 pl-0">
+						<select class="form-control text-capitalize" v-model="course">
+							<option value="All">All</option>
+							<option :value="subject.name" v-for="subject in getAllSubjects" :key="subject['.key']">{{ subject.name }}</option>
+						</select>
+					</div>
 				</div>
-				<div class="col-5 pl-0">
-					<select class="form-control text-capitalize" v-model="course">
-						<option value="All">All</option>
-						<option :value="subject.name" v-for="subject in getAllSubjects" :key="subject['.key']">{{ subject.name }}</option>
-					</select>
-				</div>
+				<tutor-card class="my-2" :user="tutor" v-for="tutor in filteredTutors" :key="tutor['.key']" />
+				<helper-message message="No tutors available" v-if="filteredTutors.length === 0" />
 			</div>
-			<tutor-card class="my-2" :user="tutor" v-for="tutor in filteredTutors" :key="tutor['.key']" />
-			<helper-message message="No tutors available" v-if="filteredTutors.length === 0" />
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

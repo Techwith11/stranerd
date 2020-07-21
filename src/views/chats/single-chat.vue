@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<Default>
 		<helper-spinner v-if="isLoading" />
 		<div v-else id="messageContainer">
 			<single-chat-nav :user="user" />
@@ -16,7 +16,7 @@
 				<single-chat-form />
 			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

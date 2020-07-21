@@ -1,7 +1,9 @@
 <template>
-	<div class="container">
-		<p>Users List</p>
-	</div>
+	<Default>
+		<div class="container">
+			<p>Users List</p>
+		</div>
+	</Default>
 </template>
 
 <script>

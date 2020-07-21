@@ -1,18 +1,20 @@
 <template>
-	<div class="container">
-		<helper-spinner v-if="isLoading"/>
-		<div v-else>
-			<user-info :user="user" v-if="user['.key']" />
-			<div v-if="user.roles && user.roles.isTutor" class="mt-5">
-				<h6 class="text-center font-weight-bold" v-if="sessions.length > 0">Recent Sessions</h6>
-				<div class="row">
-					<div class="col-md-6 col-lg-4" v-for="session in sessions" :key="session['.key']">
-						<user-session-card  :session="session" />
+	<Default>
+		<div class="container">
+			<helper-spinner v-if="isLoading"/>
+			<div v-else>
+				<user-info :user="user" v-if="user['.key']" />
+				<div v-if="user.roles && user.roles.isTutor" class="mt-5">
+					<h6 class="text-center font-weight-bold" v-if="sessions.length > 0">Recent Sessions</h6>
+					<div class="row">
+						<div class="col-md-6 col-lg-4" v-for="session in sessions" :key="session['.key']">
+							<user-session-card  :session="session" />
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

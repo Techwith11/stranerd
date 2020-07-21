@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<Default>
 		<div id="bg-primary-light" v-if="isLoggedIn">
 			<div class="container py-3">
 				<div class="row">
@@ -35,7 +35,7 @@
 			<!--<recent-courses />-->
 			<pricing />
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

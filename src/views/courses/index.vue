@@ -1,10 +1,12 @@
 <template>
-	<div class="container">
-		<helper-spinner v-if="isLoading" />
-		<div v-else>
-			<subject-card v-for="subject in getAllSubjects" :key="subject['.key']" :subject="subject"/>
+	<Default>
+		<div class="container">
+			<helper-spinner v-if="isLoading" />
+			<div v-else>
+				<subject-card v-for="subject in getAllSubjects" :key="subject['.key']" :subject="subject"/>
+			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

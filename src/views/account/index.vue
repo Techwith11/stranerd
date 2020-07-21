@@ -1,10 +1,10 @@
 <template>
-	<div id="background">
+	<Default id="background">
 		<div class="container py-3">
 			<account-nav />
 			<router-view />
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

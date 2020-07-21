@@ -1,20 +1,22 @@
 <template>
-	<div class="container">
-		<helper-spinner v-if="isLoading"/>
-		<div v-else>
-			<h3 class="position-sticky sticky-top text-right" :class="{'text-danger': timer <= 120}" v-if="!isMarked">{{ getTime }}</h3>
-			<div>
-				<question v-for="(question,index) in test.questions" :question="question" :key="question['.key']"
-					:onSelect="onAnswerSelected" :index="index" :disabled="isMarked" />
-			</div>
-			<div class="d-flex justify-content-end mb-5">
-				<button class="btn-success" @click="submit" :disabled="isMarked">
-					<i class="fas fa-spinner fa-spin mr-2" v-if="isMarked"></i>
-					<span>Submit</span>
-				</button>
+	<Default>
+		<div class="container">
+			<helper-spinner v-if="isLoading"/>
+			<div v-else>
+				<h3 class="position-sticky sticky-top text-right" :class="{'text-danger': timer <= 120}" v-if="!isMarked">{{ getTime }}</h3>
+				<div>
+					<question v-for="(question,index) in test.questions" :question="question" :key="question['.key']"
+						:onSelect="onAnswerSelected" :index="index" :disabled="isMarked" />
+				</div>
+				<div class="d-flex justify-content-end mb-5">
+					<button class="btn-success" @click="submit" :disabled="isMarked">
+						<i class="fas fa-spinner fa-spin mr-2" v-if="isMarked"></i>
+						<span>Submit</span>
+					</button>
+				</div>
 			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

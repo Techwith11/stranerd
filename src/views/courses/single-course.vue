@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<Default>
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<single-video :course="course" />
@@ -8,7 +8,7 @@
 			<single-discussions v-if="isDiscussions" :course="course" />
 			<single-documents v-if="isDocuments" :course="course" />
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

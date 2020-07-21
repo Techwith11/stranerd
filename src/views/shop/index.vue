@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<Default>
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<helper-message message="No notes currently in the shop. Check again later" v-if="notes.length === 0" />
@@ -14,7 +14,7 @@
 			</div>
 			<button class="floating-button" @click="setCartModalOverview" v-if="getCartLength"><i class="fas fa-shopping-basket"></i></button>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

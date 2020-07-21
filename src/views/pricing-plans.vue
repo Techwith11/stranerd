@@ -1,53 +1,55 @@
 <template>
-	<div class="container py-5">
-		<div v-if="page === 1">
-			<div class="d-flex justify-content-center align-items-center mb-5">
-				<span class="mr-2">Monthly</span>
-				<div class="custom-control custom-switch">
-					<input type="checkbox" class="custom-control-input" id="toggle" v-model="annual">
-					<label for="toggle" class="custom-control-label">Annually</label>
+	<Default>
+		<div class="container py-5">
+			<div v-if="page === 1">
+				<div class="d-flex justify-content-center align-items-center mb-5">
+					<span class="mr-2">Monthly</span>
+					<div class="custom-control custom-switch">
+						<input type="checkbox" class="custom-control-input" id="toggle" v-model="annual">
+						<label for="toggle" class="custom-control-label">Annually</label>
+					</div>
+				</div>
+				<div class="row my-3">
+					<div class="col-lg-4 mb-5" v-for="(plan,index) in getPlans" :key="plan['.key']">
+						<div class="text-center alert mb-3" :class="`alert-${colors[index]}`">
+							<h5 class="text-capitalize mb-4">{{ plan.title }}</h5>
+							<p v-if="annual">save 16%</p>
+							<h1>&dollar;{{ annual ? plan.yearlyPrice : plan.monthlyPrice }}</h1>
+							<p>per {{ annual ? 'year' : 'month' }}</p>
+						</div>
+						<div class="alert" :class="`alert-${colors[index]}`">
+							<p class="text-center">{{ plan.description }}</p>
+							<hr class="my-4">
+							<ul class="small list-group">
+								<li class="list-group-item">{{ plan.questions }} questions per month</li>
+								<li class="list-group-item">Unlimited access to resources</li>
+								<li class="list-group-item">Unlimited tutors</li>
+								<li class="list-group-item">24/7 support</li>
+							</ul>
+						</div>
+						<div class="d-flex justify-content-center" v-if="annual">
+							<p v-if="isLoggedIn && plan.yearlyId === getCurrentId">Currently on this plan</p>
+							<button class="btn btn-success" @click="setId(plan.yearlyId)" v-else>Select</button>
+						</div>
+						<div class="d-flex justify-content-center" v-else>
+							<p v-if="isLoggedIn && plan.monthlyId === getCurrentId">Currently on this plan</p>
+							<button class="btn btn-success" @click="setId(plan.monthlyId)" v-else>Select</button>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="row my-3">
-				<div class="col-lg-4 mb-5" v-for="(plan,index) in getPlans" :key="plan['.key']">
-					<div class="text-center alert mb-3" :class="`alert-${colors[index]}`">
-						<h5 class="text-capitalize mb-4">{{ plan.title }}</h5>
-						<p v-if="annual">save 16%</p>
-						<h1>&dollar;{{ annual ? plan.yearlyPrice : plan.monthlyPrice }}</h1>
-						<p>per {{ annual ? 'year' : 'month' }}</p>
-					</div>
-					<div class="alert" :class="`alert-${colors[index]}`">
-						<p class="text-center">{{ plan.description }}</p>
-						<hr class="my-4">
-						<ul class="small list-group">
-							<li class="list-group-item">{{ plan.questions }} questions per month</li>
-							<li class="list-group-item">Unlimited access to resources</li>
-							<li class="list-group-item">Unlimited tutors</li>
-							<li class="list-group-item">24/7 support</li>
-						</ul>
-					</div>
-					<div class="d-flex justify-content-center" v-if="annual">
-						<p v-if="isLoggedIn && plan.yearlyId === getCurrentId">Currently on this plan</p>
-						<button class="btn btn-success" @click="setId(plan.yearlyId)" v-else>Select</button>
-					</div>
-					<div class="d-flex justify-content-center" v-else>
-						<p v-if="isLoggedIn && plan.monthlyId === getCurrentId">Currently on this plan</p>
-						<button class="btn btn-success" @click="setId(plan.monthlyId)" v-else>Select</button>
-					</div>
+			<div v-else>
+				<h5 class="mb-5 text-center">Select payment method to use to pay for subscription</h5>
+				<select-payment-method :onMethodSelected="setToken" :loading="isLoading" />
+				<div class="d-flex justify-content-end">
+					<button class="btn" :class="token ? 'btn-success' : 'btn-secondary opacity-25'" :disabled="token === null" @click="subscribe">
+						<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
+						Subscribe
+					</button>
 				</div>
 			</div>
 		</div>
-		<div v-else>
-			<h5 class="mb-5 text-center">Select payment method to use to pay for subscription</h5>
-			<select-payment-method :onMethodSelected="setToken" :loading="isLoading" />
-			<div class="d-flex justify-content-end">
-				<button class="btn" :class="token ? 'btn-success' : 'btn-secondary opacity-25'" :disabled="token === null" @click="subscribe">
-					<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
-					Subscribe
-				</button>
-			</div>
-		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

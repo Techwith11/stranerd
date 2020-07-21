@@ -1,10 +1,12 @@
 <template>
-	<div class="container">
-		<helper-spinner v-if="isLoading"/>
-		<div v-else>
-			<post-info :post="post" />
+	<Default>
+		<div class="container">
+			<helper-spinner v-if="isLoading"/>
+			<div v-else>
+				<post-info :post="post" />
+			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

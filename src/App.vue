@@ -1,13 +1,9 @@
 <template>
 	<div>
-		<div id="content">
-			<app-nav-bar />
-			<keep-alive v-if="isLoggedIn">
-				<router-view :key="$route.path" />
-			</keep-alive>
-			<router-view v-else />
-		</div>
-		<app-footer />
+		<keep-alive v-if="isLoggedIn">
+			<router-view :key="$route.path" />
+		</keep-alive>
+		<router-view v-else />
 		<auth-modal v-if="isAuthModalOpen"/>
 		<create-modal v-if="isCreateModalOpen" />
 		<edit-modal v-if="isEditModalOpen"/>
@@ -20,8 +16,6 @@
 
 <script>
 	import { mapGetters, mapActions } from 'vuex'
-	import Navbar from '@/components/app/Navbar'
-	import Footer from '@/components/app/Footer'
 	import AuthModal from '@/components/auth/AuthModal'
 	import CreateModal from '@/components/admin/modals/CreateModal'
 	import EditModal from '@/components/admin/modals/EditModal'
@@ -32,8 +26,6 @@
 	export default {
 		name: 'App',
 		components: {
-			'app-nav-bar': Navbar,
-			'app-footer': Footer,
 			'auth-modal': AuthModal,
 			'create-modal': CreateModal,
 			'edit-modal': EditModal,

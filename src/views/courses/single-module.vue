@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<Default>
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<helper-message message="No courses available at the moment. Check again later" v-if="courses.length === 0" />
@@ -19,7 +19,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

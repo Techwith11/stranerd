@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<Default>
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<session-nav :user="otherPerson" :timer="timer" />
@@ -16,7 +16,7 @@
 				<session-chat-form v-if="timer > 0" />
 			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

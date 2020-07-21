@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<Default>
 		<helper-spinner v-if="isLoading"/>
 		<div class="container" v-else>
 			<helper-message message="No posts at the moment. Check again later" v-if="posts.length === 0" />
@@ -11,7 +11,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

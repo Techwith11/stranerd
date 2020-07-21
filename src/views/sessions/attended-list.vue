@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<Default>
 		<helper-spinner v-if="isLoading" />
 		<div class="container" v-else>
 			<session-nav />
@@ -12,7 +12,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

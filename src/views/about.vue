@@ -1,7 +1,9 @@
 <template>
-	<div class="container">
-		<p>About page coming soon</p>
-	</div>
+	<Default>
+		<div class="container">
+			<p>About page coming soon</p>
+		</div>
+	</Default>
 </template>
 
 <script>

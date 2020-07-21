@@ -1,7 +1,7 @@
 <template>
-	<div>
+	<Default>
 		<helper-spinner />
-	</div>
+	</Default>
 </template>
 
 <script>

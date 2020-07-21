@@ -1,33 +1,35 @@
 <template>
-	<div class="container mt-3 mb-5">
-		<helper-spinner v-if="isLoading"/>
-		<div v-else>
-			<div v-if="isTutor">
-				<select class="form-control text-capitalize mb-3" v-model="course">
-					<option v-for="course in tutor.courses" :key="course">{{ course }}</option>
-				</select>
-				<div class="jumbotron">
-					<h3 class="text-center">Level {{ getNewLevel }} {{ course }}</h3>
-					<p class="lead">This is a simple {{ course }} test designed to figure out how comfortable you are with {{ course }} before pairing you with students.</p>
-					<div class="text-danger" v-if="failed">
-						<hr class="my-4">
-						<span>You took this test less than 2 hours ago and failed to meet the 70% pass mark. You can retake the test by {{ getRetakeTime }}.</span>
+	<Default>
+		<div class="container mt-3 mb-5">
+			<helper-spinner v-if="isLoading"/>
+			<div v-else>
+				<div v-if="isTutor">
+					<select class="form-control text-capitalize mb-3" v-model="course">
+						<option v-for="course in tutor.courses" :key="course">{{ course }}</option>
+					</select>
+					<div class="jumbotron">
+						<h3 class="text-center">Level {{ getNewLevel }} {{ course }}</h3>
+						<p class="lead">This is a simple {{ course }} test designed to figure out how comfortable you are with {{ course }} before pairing you with students.</p>
+						<div class="text-danger" v-if="failed">
+							<hr class="my-4">
+							<span>You took this test less than 2 hours ago and failed to meet the 70% pass mark. You can retake the test by {{ getRetakeTime }}.</span>
+						</div>
 					</div>
-				</div>
-				<h5>Important Notice</h5>
-				<ul class="list-group small">
-					<li class="list-group-item">The test cannot be paused once started.</li>
-					<li class="list-group-item">You must pass at least 70% to become a tutor</li>
-					<li class="list-group-item">Make sure you have at least an hour to spare before starting the test.</li>
-					<li class="list-group-item">Do not attempt to open the test on two tabs at the same time, as they might attempt to upload different results when the time is up.</li>
-					<li class="list-group-item">If for whatsoever reason you have to open a new tab, ensure to close the old one. We will attempt to reconnect you back to the test</li>
-				</ul>
-				<div class="d-flex justify-content-end">
-					<button class="my-3" :class="failed ? 'opacity-25' : 'btn-success'" @click="beginTest" :disabled="failed">Start Test</button>
+					<h5>Important Notice</h5>
+					<ul class="list-group small">
+						<li class="list-group-item">The test cannot be paused once started.</li>
+						<li class="list-group-item">You must pass at least 70% to become a tutor</li>
+						<li class="list-group-item">Make sure you have at least an hour to spare before starting the test.</li>
+						<li class="list-group-item">Do not attempt to open the test on two tabs at the same time, as they might attempt to upload different results when the time is up.</li>
+						<li class="list-group-item">If for whatsoever reason you have to open a new tab, ensure to close the old one. We will attempt to reconnect you back to the test</li>
+					</ul>
+					<div class="d-flex justify-content-end">
+						<button class="my-3" :class="failed ? 'opacity-25' : 'btn-success'" @click="beginTest" :disabled="failed">Start Test</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>
