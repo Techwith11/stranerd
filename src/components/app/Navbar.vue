@@ -81,9 +81,6 @@
 		z-index: 3;
 		height: 76px;
 	}
-    .bg-white{
-        background: $white;
-    }
     .dropdown{
         cursor: pointer;
     }

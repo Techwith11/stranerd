@@ -78,8 +78,5 @@
 		border-radius: 2.0rem !important;
 		box-shadow: 0 1px 2px $text-black;
 	}
-	.bg-white{
-		background: $white;
-	}
 	.text-primary-dark{ color: $primary-dark }
 </style>
