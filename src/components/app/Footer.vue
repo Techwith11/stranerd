@@ -23,7 +23,6 @@
                     <h6>Quick Links</h6>
                     <router-link class="links" to="/">Home</router-link>
                     <router-link class="links" to="/blog">Blog</router-link>
-                    <router-link class="links" to="/about">About Us</router-link>
                 </div>
                 <div class="col-4 col-md-2">
                     <h6>Contact Us</h6>
@@ -34,7 +33,6 @@
                     <h6>Others</h6>
                     <router-link class="links" to="/privacy_policy">Privacy Policy</router-link>
                     <router-link class="links" to="terms_and_conditions/">Terms And Conditions</router-link>
-                    <router-link class="links" to="/faqs">Faqs</router-link>
                 </div>
             </div>
         </div>

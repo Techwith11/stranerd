@@ -1,27 +1,25 @@
 <template>
 	<Default>
-		<div v-if="isLoggedIn">
-			<div class="container py-3">
-				<div class="row">
-					<div class="col-lg-5 d-none d-lg-block mb-3 pl-0">
-						<show-ask-question />
-					</div>
-					<div class="col-lg-7 mb-3 px-0">
-						<recent-posts />
-					</div>
-					<router-link class="d-lg-none floating-button text-decoration-none" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
+		<div v-if="isLoggedIn" class="container-fluid">
+			<div class="row">
+				<div class="col-lg-5 d-none d-lg-block mb-3 pl-0">
+					<show-ask-question />
 				</div>
-				<div class="py-3"></div>
-				<div class="row">
-					<div class="col-lg-4 px-0 mb-3">
-						<recent-sessions />
-					</div>
-					<div class="col-lg-4 px-0 pl-lg-2 mb-3">
-						<top-tutors />
-					</div>
-					<div class="col-lg-4 px-0 pl-lg-2 mb-3">
-						<top-tutors />
-					</div>
+				<div class="col-lg-7 mb-3 px-0">
+					<recent-posts />
+				</div>
+				<router-link class="d-lg-none floating-button text-decoration-none" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
+			</div>
+			<div class="py-3"></div>
+			<div class="row">
+				<div class="col-lg-4 px-0 mb-3">
+					<recent-sessions />
+				</div>
+				<div class="col-lg-4 px-0 pl-lg-2 mb-3">
+					<top-tutors />
+				</div>
+				<div class="col-lg-4 px-0 pl-lg-2 mb-3">
+					<top-tutors />
 				</div>
 			</div>
 		</div>
@@ -32,7 +30,6 @@
 			<what-makes-us-different />
 			<students-says />
 			<mckenwin />
-			<!--<recent-courses />-->
 			<pricing />
 		</div>
 	</Default>
@@ -45,7 +42,6 @@
 	import AskQuestion from '@/components/home/notLoggedIn/HomeAskQuestion'
 	import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay'
 	import WhatMakesUsDifferent from '@/components/home/notLoggedIn/HomeWhatMakesUsDifferent'
-	/*import RecentCourses from '@/components/home/notLoggedIn/HomeRecentCourses'*/
 	import Mckenwin from '@/components/home/notLoggedIn/HomeMckenwin'
 	import Pricing from '@/components/home/notLoggedIn/HomePricing'
 	import TopTutors from '@/components/home/loggedIn/TopTutors'
@@ -60,7 +56,6 @@
 			'ask-question': AskQuestion,
 			'students-says': StudentsSay,
 			'what-makes-us-different': WhatMakesUsDifferent,
-			/*'recent-courses': RecentCourses,*/
 			'mckenwin': Mckenwin,
 			'pricing': Pricing,
 			'top-tutors': TopTutors,
