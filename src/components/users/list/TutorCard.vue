@@ -1,10 +1,10 @@
 <template>
 	<div class="p-2">
-		<div class="row align-items-start">
-			<img :src="getImageLink" alt="">
+		<div class="d-flex align-items-center">
+			<img :src="getImageLink" alt="" class="mr-2">
 			<div>
 				<router-link :to="`/users/${user['.key']}`" class="card-link">
-					<h5 class="card-title mb-0">{{ user.bio.name }}</h5>
+					<h6 class="card-title mb-0">{{ user.bio.name }}</h6>
 				</router-link>
 				<p class="card-text mb-0">
 					Teaches:
@@ -45,6 +45,6 @@
 	img{
 		width: 80px;
 		height: 80px;
-		margin-right: 0.5rem;
+		margin-right: 1rem;
 	}
 </style>

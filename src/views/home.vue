@@ -12,18 +12,19 @@
 			</div>
 			<div class="py-3"></div>
 			<div class="row">
-				<div class="col-lg-4 px-0 mb-3">
+				<div class="col-xl-6 px-0 mb-3">
+					<recent-courses />
+				</div>
+				<div class="col-lg-6 col-xl-3 px-0 pl-md-2 mb-3">
 					<recent-sessions />
 				</div>
-				<div class="col-lg-4 px-0 pl-lg-2 mb-3">
+				<div class="col-lg-6 col-xl-3 px-0 pl-md-2 mb-3">
 					<top-tutors />
-				</div>
-				<div class="col-lg-4 px-0 pl-lg-2 mb-3">
-					<top-tutors />
+					<subscribe-card v-if="!isSubscribed" />
 				</div>
 			</div>
 		</div>
-		<div v-else>
+		<div v-else class="m-n3">
 			<cta />
 			<why-us />
 			<ask-question />
@@ -48,6 +49,8 @@
 	import ShowAskQuestion from '@/components/home/loggedIn/AskQuestion'
 	import RecentSessions from '@/components/home/loggedIn/RecentSessions'
 	import RecentPosts from '@/components/home/loggedIn/RecentPosts'
+	import RecentCourses from '@/components/home/loggedIn/RecentCourses'
+	import SubscribeCard from '@/components/home/loggedIn/SubscribeCard'
 	export default {
 		name: 'Home',
 		components: {
@@ -61,9 +64,11 @@
 			'top-tutors': TopTutors,
 			'show-ask-question': ShowAskQuestion,
 			'recent-posts': RecentPosts,
+			'recent-courses': RecentCourses,
 			'recent-sessions': RecentSessions,
+			'subscribe-card': SubscribeCard,
 		},
-		computed: mapGetters(['isLoggedIn','getUser','questionsLeft']),
+		computed: mapGetters(['isLoggedIn','getUser','questionsLeft','isSubscribed']),
 		methods: mapActions(['setPostModalNotify','setPostModalCreate']),
 		mounted(){
 			if(this.$route.query.createPost){
