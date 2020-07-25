@@ -18,7 +18,7 @@
 				<span class="small" v-if="$v.user.password.$error">Must be 6-16 characters long</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button id="loginBtn" @click.prevent="loginUser" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
+				<button id="loginBtn" @click.prevent="loginWithEmail" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
 					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
 					<span v-else>Sign In with email</span>
 				</button>
@@ -43,21 +43,9 @@
 			</div>
 			<div v-if="isDev" class="my-4">
 				<div class="d-flex justify-content-center">
-					<span class="mr-2">
-						<input type="radio" v-model="devUser" value="kevin11" class="mr-1">
-						<label>Kevin11</label>
-					</span>
-					<span class="mr-2">
-						<input type="radio" v-model="devUser" value="frank" class="mr-1">
-						<label>Frank</label>
-					</span>
-					<span class="mr-2">
-						<input type="radio" v-model="devUser" value="max" class="mr-1">
-						<label>Max</label>
-					</span>
-					<span class="mr-2">
-						<input type="radio" v-model="devUser" value="joe" class="mr-1">
-						<label>Joe</label>
+					<span class="mr-2" v-for="dev in devs" :key="dev">
+						<input type="radio" v-model="devUser" :value="dev" class="mr-1">
+						<label class="text-capitalize">{{ dev }}</label>
 					</span>
 				</div>
 				<button @click="loginAsDevUser" :disabled="!devUser" class="w-100">
@@ -70,9 +58,9 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	import firebase, { auth } from '@/config/firebase'
+	import { mapActions } from 'vuex'
 	import { required, minLength, email, maxLength } from 'vuelidate/lib/validators'
+	import { loginWithEmail, loginWithGoogle, loginAsDevUser } from '@/config/auth'
 	export default {
 		name: 'Login',
 		data: () => ({
@@ -80,48 +68,28 @@
 				email: '',
 				password: ''
 			},
+			devs: ['kevin11','frank','joe','max'],
 			devUser: null,
 			isLoadingG: false,
 			isLoading: false
 		}),
 		computed: {
-			...mapGetters(['getIntendedRoute']),
 			isDev(){ return process.env.NODE_ENV === 'development'}
 		},
 		methods:{
-			...mapActions(['setId','setAuthModalForgotPassword', 'setAuthModalRegisterStudent', 'closeAuthModal','clearIntendedRoute']),
-			loginWithGoogle(){
+			...mapActions(['setAuthModalForgotPassword', 'setAuthModalRegisterStudent','closeAuthModal']),
+			async loginWithGoogle(){
 				this.isLoadingG = true
-				let googleProvider = new firebase.auth.GoogleAuthProvider()
-				auth.signInWithPopup(googleProvider).then(async () => {
-					this.isLoadingG = false
-					this.closeAuthModal()
-					this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
-					this.clearIntendedRoute()
-				}).catch(error => {
-					this.isLoadingG = false
-					new window.Toast({ icon: 'error', title: error.message })
-				})
+				await loginWithGoogle()
+				this.isLoadingG = false
 			},
-			loginUser(){
+			async loginWithEmail(){
 				this.isLoading = true
-				auth.signInWithEmailAndPassword(this.user.email, this.user.password)
-					.then(async () => {
-						this.isLoading = false
-						this.closeAuthModal()
-						this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
-						this.clearIntendedRoute()
-					})
-					.catch(error => {
-						new window.Toast({ icon: 'error', title: error.message })
-						this.isLoading = false;
-					})
+				await loginWithEmail(this.user)
+				this.isLoading = false
 			},
 			async loginAsDevUser(){
-				this.setId(this.devUser)
-				this.closeAuthModal()
-				this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
-				this.clearIntendedRoute()
+				await loginAsDevUser(this.devUser)
 			}
 		},
 		validations:{

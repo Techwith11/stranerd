@@ -28,7 +28,7 @@
 				<span class="small" v-if="$v.user.c_password.$error">Passwords must match</span>
 			</div>
 			<div class="d-flex flex-column mt-2">
-				<button @click.prevent="registerUser" id="registerBtn" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
+				<button @click.prevent="registerWithEmail" id="registerBtn" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
 					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
 					<span v-else>Submit</span>
 				</button>
@@ -52,9 +52,9 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	import firebase, { auth, firestore } from '@/config/firebase.js'
+	import { mapActions } from 'vuex'
 	import { required, minLength, email, maxLength, sameAs } from 'vuelidate/lib/validators'
+	import { registerWithEmail, loginWithGoogle } from '@/config/auth'
 	export default {
 		name: 'RegisterStudent',
 		data: () => ({
@@ -67,36 +67,17 @@
 			isLoadingG: false,
 			isLoading: false
 		}),
-		computed: mapGetters(['getIntendedRoute']),
 		methods:{
-			...mapActions(['setAuthModalLogin','closeAuthModal','clearIntendedRoute']),
-			loginWithGoogle(){
+			...mapActions(['setAuthModalLogin','closeAuthModal']),
+			async loginWithGoogle(){
 				this.isLoadingG = true
-				let googleProvider = new firebase.auth.GoogleAuthProvider()
-				auth.signInWithPopup(googleProvider).then(async () => {
-					this.isLoadingG = false
-					this.closeAuthModal()
-					this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
-					this.clearIntendedRoute()
-				}).catch(error => {
-					this.isLoadingG = false
-					new window.Toast({ icon: 'error', title: error.message })
-				})
+				await loginWithGoogle()
+				this.isLoadingG = false
 			},
-			registerUser(){
+			async registerWithEmail(){
 				this.isLoading = true
-				auth.createUserWithEmailAndPassword(this.user.email, this.user.password)
-					.then(async result => {
-						await firestore.collection('users').doc(result.user.uid).set({ bio: { name: this.user.name }},{ merge: true })
-						this.closeAuthModal()
-						this.getIntendedRoute ? await this.$router.push(this.getIntendedRoute) : null
-						this.clearIntendedRoute()
-						this.isLoading = false
-					})
-					.catch(error => {
-						new window.Toast({ icon: 'error', title: error.message })
-						this.isLoading = false;
-					})
+				await registerWithEmail(this.user)
+				this.isLoading = false
 			}
 		},
 		validations:{
