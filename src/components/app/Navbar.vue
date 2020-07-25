@@ -1,6 +1,6 @@
 <template>
     <header class="bg-white shadow">
-        <nav class="container navbar bg-white navbar-light d-flex justify-content-between flex-row-reverse" :class="isLoggedIn ? 'navbar-expand-lg flex-lg-row' : 'navbar-expand-md flex-md-row'">
+        <nav class="navbar container bg-white navbar-light d-flex justify-content-between flex-row-reverse" :class="isLoggedIn ? 'navbar-expand-lg flex-lg-row' : 'navbar-expand-md flex-md-row'">
             <router-link class="navbar-brand" to="/"><img src="@/assets/images/stranerd_logo.png" alt="STRANERD" height="50px"></router-link>
             <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -81,18 +81,35 @@
 		z-index: 3;
 		height: 76px;
 	}
+    @media (max-width: 992px){
+        .container{
+            margin: 0;
+            max-width: 100vw;
+        }
+        .navbar{
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+        }
+    }
+    .nav-link{
+        color: $text-black !important;
+        font-weight: 600;
+        text-transform: capitalize;
+        opacity: 0.85;
+        &:hover{
+        color: $link-blue !important;
+    }
+    }
+    .nav-link:hover{
+        color: $link-blue !important;
+    }
     .dropdown{
         cursor: pointer;
     }
     .dropdown-menu{
-        border: none !important;
-        margin-left: 1rem !important;
+        border: none;
+        padding: 0 1rem;
         .nav-link{
             display: inline-block;
-        }
-        .nav-link:hover {
-            color: green;
-            background: initial !important;
         }
     }
 </style>

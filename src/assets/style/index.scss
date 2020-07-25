@@ -11,6 +11,12 @@ body{
 	-moz-osx-font-smoothing: grayscale;
 }
 
+a:hover {
+	color: $link-blue !important;
+	text-decoration: none;
+	cursor: pointer;
+}
+
 button{
 	display: inline-block;
 	font-weight: 400;

@@ -25,12 +25,13 @@
 
 <style lang="scss" scoped>
 	#sidebar{
-		padding: 2rem 0;
+		padding: 2rem 0.5rem;
 		background: $primary;
-		width: 80px;
+		width: 75px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+		text-transform: uppercase;
 	}
 	img{
 		width: 30px;
@@ -39,5 +40,6 @@
 	}
 	a{
 		color: $text-black;
+		font-weight: 500;
 	}
 </style>
