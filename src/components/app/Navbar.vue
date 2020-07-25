@@ -116,16 +116,20 @@
 
 <script>
     import { mapGetters, mapActions } from 'vuex'
+    import { logout } from '@/config/auth'
     export default {
         methods: {
-            ...mapActions(['setAuthModalRegisterStudent', 'setAuthModalLogin', 'logout','setCartModalOverview']),
+            ...mapActions(['setAuthModalRegisterStudent', 'setAuthModalLogin','setCartModalOverview']),
             toggleAccountDropDown: () => window.closeAdminDropdown(),
             toggleAdminDropDown: () => window.closeAccountDropdown(),
             showCartModal(){
                 window.closeNavbar()
                 this.setCartModalOverview()
+            },
+            async logout(){
+                await logout()
             }
         },
-        computed: mapGetters(['isLoggedIn','isAdmin','getCartLength','getImages'])
+        computed: mapGetters(['isLoggedIn','isAdmin','getCartLength'])
     }
 </script>

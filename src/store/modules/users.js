@@ -1,5 +1,4 @@
-import { auth, firestore, functions } from '@/config/firebase'
-import router from '@/router/index'
+import { firestore, functions } from '@/config/firebase'
 import store from '@/store/index'
 
 const state = {
@@ -80,15 +79,6 @@ const actions = {
 		}
 		return await firestore.collection('users').doc(getters.getId).set({ bio }, { merge: true })
 	},
-	logout: async ({ commit }) => {
-		commit('setId', null)
-		await store.dispatch('closeTutorSessionsListener')
-		await router.push('/').catch(error => error)
-		await auth.signOut()
-		window.closeNavbar()
-		window.closeAccountDropdown()
-		window.closeAdminDropdown()
-	}
 }
 
 export default { state, getters, mutations, actions }

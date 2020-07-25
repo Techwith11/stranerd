@@ -3,10 +3,10 @@ import Vuex from 'vuex'
 
 import chats from './modules/chats'
 import contents from './modules/contents'
+import meta from './modules/meta'
 import modal from './modules/modal'
 import payments from './modules/payments'
 import sessions from './modules/sessions'
-import settings from './modules/settings'
 import shop from './modules/shop'
 import subjects from './modules/subjects'
 import tests from './modules/tests'
@@ -18,10 +18,10 @@ export default new Vuex.Store({
 	modules: {
 		chats,
 		contents,
+		meta,
 		modal,
 		payments,
 		sessions,
-		settings,
 		shop,
 		subjects,
 		tests,

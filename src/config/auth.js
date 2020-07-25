@@ -1,10 +1,11 @@
 import firebase, { auth, firestore } from '@/config/firebase'
 import store from '@/store'
+import router from '@/router'
 
 let afterAuthHook = async () => {
 	await store.dispatch('closeAuthModal')
 	let route = store.getters.getIntendedRoute
-	route ? await this.$router.push(route) : null
+	if(route) await this.$router.push(route)
 	await store.dispatch('clearIntendedRoute')
 }
 
@@ -40,4 +41,14 @@ export const loginWithGoogle = async () => {
 export const loginAsDevUser = async (id) => {
 	await store.dispatch('setId', id)
 	await afterAuthHook()
+}
+
+export const logout = async () => {
+	await store.dispatch('setId', null)
+	if(store.getters.isTutor) await store.dispatch('closeTutorSessionsListener')
+	await router.push('/').catch(error => error)
+	await auth.signOut()
+	window.closeNavbar()
+	window.closeAccountDropdown()
+	window.closeAdminDropdown()
 }
