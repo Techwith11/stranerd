@@ -1,51 +1,93 @@
-import { firestore, functions } from '@/config/firebase'
-
-let url = `https://firebasestorage.googleapis.com/v0/b/stranerd-13084.appspot.com/o/${encodeURIComponent('users/images/user_profile.png')}?alt=media`
+import { auth, firestore, functions } from '@/config/firebase'
+import router from '@/router/index'
+import store from '@/store/index'
 
 const state = {
-	defaultImage: process.env.NODE_ENV === 'production' ? url : '/img/user_profile.png',
-	intendedRoute: null,
-	createPost: null,
-	editMeta: null,
-	scrollCache: {},
-	plans: []
+	id: null,
+	user: JSON.parse(window.localStorage.getItem('user')) || {},
+	profileListener: () => {}
 }
 
 const getters = {
-	getDefaultImage: state => state.defaultImage,
-	getIntendedRoute: state => state.intendedRoute,
-	getCreatePost: state => state.createPost,
-	getEditMeta: state => state.editMeta,
-	getScrollCache: state => state.scrollCache,
-	getPlans: state => state.plans
+	getId: (state) => state.id,
+	getUser: (state) => state.user,
+	getChattedWith: (state) => state.user.chattedWith || [],
+	isLoggedIn: (state) => !!state.id && !!state.user.bio,
+	isAdmin: (state) => state.user && state.user.roles && state.user.roles.isAdmin,
+	isTutor: (state) => state.user && state.user.roles && state.user.roles.isTutor,
+	questionsLeft: (state) => state.user && state.user.account ? state.user.account.questions : 0,
+	isSubscribed: (state) => state.user && state.user.account && state.user.account.subscription && state.user.account.subscription.id
 }
 
 const mutations = {
-	setIntendedRoute: (state, route) => state.intendedRoute = route,
-	setCreatePost: (state, post) => state.createPost = post,
-	setEditMeta: (state, meta) => state.editMeta = { ...meta },
-	setScrollCache: (state, { page, position }) => state.scrollCache[page] = position,
-	setPlans: (state, plans) => state.plans = plans,
+	setId: async (state, id) => {
+		state.id = id
+		state.profileListener()
+		if(id){
+			state.profileListener = firestore
+				.collection('users')
+				.doc(id)
+				.onSnapshot(snapshot => {
+					if (snapshot.exists) {
+						let user = snapshot.data()
+						state.user = user
+						window.localStorage.setItem('user', JSON.stringify(user))
+					} else {
+						store.dispatch('setId', null)
+					}
+				})
+			await store.dispatch('checkForUnfinishedTests')
+			window.localStorage.setItem('user_id', id)
+		}else{
+			state.user = {}
+			state.profileListener = () => {}
+			window.localStorage.removeItem('user')
+			window.localStorage.removeItem('user_id')
+		}
+	},
+	setProfileListener: (state, listener) => {
+		state.profileListener()
+		state.profileListener = listener
+	}
 }
 
 const actions = {
-	setIntendedRoute: ({ commit }, route) => commit('setIntendedRoute', route),
-	clearIntendedRoute: ({ commit }) => commit('setIntendedRoute', null),
-	setCreatePost: ({ commit }, post) => commit('setCreatePost', post),
-	clearCreatePost: ({ commit }) => commit('setCreatePost', null),
-	setEditMeta: ({ commit }, meta) => commit('setEditMeta', meta),
-	clearEditMeta: ({ commit }) => commit('setEditMeta', null),
-	setScrollCache: ({ commit }, meta) => commit('setScrollCache', meta),
-	fetchAllPlans: async ({ commit }) => {
-		try{
-			let docs = await firestore.collection('subscriptions').get()
-			let plans = docs.docs.map(doc => ({ '.key': doc.id, ...doc.data() }))
-			plans.sort((a, b) => a.questions - b.questions)
-			commit('setPlans', plans)
-		}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching content. Try refreshing the page' }) }
+	setId: ({ commit }, id) => commit('setId', id),
+	closeProfileListener: ({ commit }) => commit('setProfileListener', () => {}),
+	makeTutor: (store, tutor) => {
+		let makeTutor = functions.httpsCallable('makeTutor')
+		return makeTutor(tutor)
+			.then((res) => res.data)
+			.catch((error) => new window.Toast({ icon: 'error', title: error.message }))
 	},
-	async subscribeToMail(store, email){
-		return await functions.httpsCallable('subscribeToMailingList')({ email })
+	makeAdmin: (store, data) => {
+		let makeAdmin = functions.httpsCallable('makeAdmin')
+		return makeAdmin(data)
+			.then((res) => res.data)
+			.catch((error) => new window.Toast({ icon: 'error', title: error.message }))
+	},
+	removeAdmin: (store, data) => {
+		let removeAdmin = functions.httpsCallable('removeAdmin')
+		return removeAdmin(data)
+			.then((res) => res.data)
+			.catch((error) => new window.Toast({ icon: 'error', title: error.message }))
+	},
+	async updateProfile({ getters }, data){
+		let bio = data.bio
+		let image = data.image
+		if(image){
+			bio.image = await window.uploadFile('users/images', image)
+		}
+		return await firestore.collection('users').doc(getters.getId).set({ bio }, { merge: true })
+	},
+	logout: async ({ commit }) => {
+		commit('setId', null)
+		await store.dispatch('closeTutorSessionsListener')
+		await router.push('/').catch(error => error)
+		await auth.signOut()
+		window.closeNavbar()
+		window.closeAccountDropdown()
+		window.closeAdminDropdown()
 	}
 }
 
