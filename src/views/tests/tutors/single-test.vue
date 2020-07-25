@@ -23,7 +23,8 @@
     import HelperSpinner from '@/components/helpers/Spinner'
     import Question from '@/components/tests/tutors/Question'
 	import { firestore } from '@/config/firebase'
-	import { mapGetters, mapActions } from 'vuex'
+	import { mapGetters } from 'vuex'
+    import { submitTest } from '@/config/tests'
 	export default {
 		name: 'SingleTutorTest',
 		data: () => ({
@@ -44,7 +45,6 @@
             },
 		},
         methods: {
-			...mapActions(['submitTest']),
 			async fetchTest(){
 				try{
 					let doc = await firestore.collection('tests/tutors/tests').doc(this.$route.params.id).get()
@@ -63,8 +63,8 @@
 				}else{
 					let endsAt = new Date(this.test.dates.endedAt.seconds * 1000)
 					if(endsAt < new Date()){
-						new window.Toast({ icon: 'error', title: 'This test was closed without submitting. Submitting now..' })
-						this.submitTest({ id: this.$route.params.id, answers: this.answers })
+						new window.Toast({ icon: 'error', title: 'This test was exited without submitting' })
+						await submitTest({ id: this.$route.params.id, answers: this.answers })
 					}else{
 						this.timer = Math.floor((endsAt - new Date()) / 1000)
 						this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
@@ -93,7 +93,7 @@
 					return this.$router.replace('/tests/tutors')
 				}
                 new window.Toast({ icon: 'info', title: 'Submitting answers' })
-                let score = await this.submitTest({ id: this.$route.params.id, answers: this.answers })
+                let score = await submitTest({ id: this.$route.params.id, answers: this.answers })
                 new window.Toast({ icon: 'info', title: `You scored ${score}%` })
                 await this.$router.replace('/tests/tutors')
             },

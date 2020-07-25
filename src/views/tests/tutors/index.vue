@@ -34,7 +34,8 @@
 
 <script>
 	import HelperSpinner from '@/components/helpers/Spinner'
-	import { mapGetters, mapActions } from 'vuex'
+	import { mapGetters } from 'vuex'
+	import { checkForUnfinishedTests, startTest } from '@/config/tests'
 	export default {
 		name: 'TestsTutors',
 		data: () => ({
@@ -42,7 +43,6 @@
 			course: null
 		}),
 		methods: {
-			...mapActions(['startTest','checkForUnfinishedTests']),
 			async beginTest(){
 				let result = await new window.SweetAlert({
 					title: 'Start test',
@@ -55,13 +55,13 @@
 				})
 				if(result.value){
 					this.isLoading = true
-					await this.startTest(this.course)
+					await startTest({ id: this.getId, tutor: this.getUser.tutor, course: this.course })
 					this.isLoading = false
 				}
 			}
 		},
 		computed: {
-			...mapGetters(['getUser','isTutor']),
+			...mapGetters(['getId','getUser','isTutor']),
 			tutor(){ return this.getUser.tutor || {} },
 			getNewLevel(){ return this.tutor['levels'][this.course] + 1},
 			getRetakeTime(){
@@ -89,7 +89,7 @@
 			if(!this.isTutor){ await this.$router.push('/') }
 			let course = this.$route.query.course?.toLowerCase()
 			this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
-			await this.checkForUnfinishedTests()
+			await checkForUnfinishedTests(this.getId)
 			this.isLoading = false
 		},
 		components: {

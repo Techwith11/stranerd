@@ -9,7 +9,6 @@ import payments from './modules/payments'
 import sessions from './modules/sessions'
 import shop from './modules/shop'
 import subjects from './modules/subjects'
-import tests from './modules/tests'
 import users from './modules/users'
 
 Vue.use(Vuex)
@@ -24,7 +23,6 @@ export default new Vuex.Store({
 		sessions,
 		shop,
 		subjects,
-		tests,
 		users
 	}
 })

@@ -1,5 +1,6 @@
 import { firestore } from '@/config/firebase'
 import store from '@/store/index'
+import { checkForUnfinishedTests } from '@/config/tests'
 
 const state = {
 	id: null,
@@ -35,7 +36,7 @@ const mutations = {
 						store.dispatch('setId', null)
 					}
 				})
-			await store.dispatch('checkForUnfinishedTests')
+			await checkForUnfinishedTests(store.getters.getId)
 			window.localStorage.setItem('user_id', id)
 		}else{
 			state.user = {}
