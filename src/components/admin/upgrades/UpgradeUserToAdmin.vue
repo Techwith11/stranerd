@@ -31,7 +31,7 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
-	import { mapActions } from 'vuex'
+	import { makeAdmin, removeAdmin } from '@/config/admin/upgrades'
 	export default {
 		data: () => ({
 			email: '',
@@ -41,7 +41,6 @@
 			users: []
 		}),
 		methods: {
-			...mapActions(['makeAdmin','removeAdmin']),
 			clearAll(){
 				this.email = ''
 				this.fetched = false
@@ -60,18 +59,14 @@
 			},
 			async adminUser(user){
 				this.upgrading = true
-				let res = await this.makeAdmin(user['.key'])
-				if(res) {
-					this.getUsersByEmail()
-				}
+				await makeAdmin(user['.key'])
+				await this.getUsersByEmail()
 				this.upgrading = false
 			},
 			async deAdminUser(user){
 				this.upgrading = true
-				let res = await this.removeAdmin(user['.key'])
-				if(res) {
-					this.getUsersByEmail()
-				}
+				await removeAdmin(user['.key'])
+				await this.getUsersByEmail()
 				this.upgrading = false
 			}
 		}

@@ -1,4 +1,4 @@
-import { firestore, functions } from '@/config/firebase'
+import { firestore } from '@/config/firebase'
 import store from '@/store/index'
 
 const state = {
@@ -53,24 +53,6 @@ const mutations = {
 const actions = {
 	setId: ({ commit }, id) => commit('setId', id),
 	closeProfileListener: ({ commit }) => commit('setProfileListener', () => {}),
-	makeTutor: (store, tutor) => {
-		let makeTutor = functions.httpsCallable('makeTutor')
-		return makeTutor(tutor)
-			.then((res) => res.data)
-			.catch((error) => new window.Toast({ icon: 'error', title: error.message }))
-	},
-	makeAdmin: (store, data) => {
-		let makeAdmin = functions.httpsCallable('makeAdmin')
-		return makeAdmin(data)
-			.then((res) => res.data)
-			.catch((error) => new window.Toast({ icon: 'error', title: error.message }))
-	},
-	removeAdmin: (store, data) => {
-		let removeAdmin = functions.httpsCallable('removeAdmin')
-		return removeAdmin(data)
-			.then((res) => res.data)
-			.catch((error) => new window.Toast({ icon: 'error', title: error.message }))
-	},
 	async updateProfile({ getters }, data){
 		let bio = data.bio
 		let image = data.image

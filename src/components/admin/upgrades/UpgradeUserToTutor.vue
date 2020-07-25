@@ -46,7 +46,8 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
-	import { mapActions, mapGetters } from 'vuex'
+	import { mapGetters } from 'vuex'
+	import { makeTutor } from '@/config/admin/upgrades'
 	import { required } from 'vuelidate/lib/validators'
 	export default {
 		data: () => ({
@@ -66,7 +67,6 @@
 		}),
 		computed: mapGetters(['getAllSubjects']),
 		methods: {
-			...mapActions(['makeTutor']),
 			clearAll(){
 				this.email = ''
 				this.fetched = false
@@ -87,7 +87,7 @@
 			},
 			async tutorUser(user){
 				this.upgrading = true
-				let res = await this.makeTutor({ id: user['.key'], ...this.tutor })
+				let res = makeTutor({ id: user['.key'], ...this.tutor })
 				if(res) {
 					let x = this.users.find(x => x['.key'] === user['.key'])
 					new window.Toast({ icon: 'success', title: `${x.bio.name} has been registered as a ${this.tutor.course} successfully` })
