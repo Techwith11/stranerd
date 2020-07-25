@@ -84,7 +84,7 @@
 			async subscribe(){
 				this.isLoading = true
 				try{
-					await this.subscribeToPlan({token: this.token, planId: this.planId })
+					await this.subscribeToPlan({token: this.token, planId: this.id })
 					await this.$router.push('/')
 					new window.Toast({ icon: 'success', title: 'Subscription created successfully' })
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
