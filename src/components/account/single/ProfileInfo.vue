@@ -3,7 +3,7 @@
 		<div class="col-md-7 mb-4">
 			<div class="d-flex align-items-center align-items-md-start">
 				<div class="mb-3">
-					<img :src="getUserImageLink" alt="" class="mr-3 profile">
+					<img :src="getUserImageLink" alt="" class="profile-image" id="userImage">
 					<a href="" class="text-info d-block" @click.prevent="setAccountModalEditProfile">Change picture</a>
 				</div>
 				<div class="flex-grow-1">
@@ -67,13 +67,7 @@
 </script>
 
 <style lang="scss" scoped>
-	.profile{
-		width: 120px;
-		height: 120px;
-		border-radius: 10rem;
-		padding: 0.5rem;
-		background: #FCCAE3;
-	}
+	img#userImage{ width: 120px; height: 120px; border: 4px solid #FCCAE3; }
 	.rounded-xl{
 		border-radius: 2.0rem !important;
 		box-shadow: 0 1px 2px $text-black;

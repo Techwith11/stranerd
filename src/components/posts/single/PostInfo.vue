@@ -7,7 +7,7 @@
 		</p>
 		<div v-html="post.body" class="lead editor-container"></div>
 		<div class="d-flex align-items-center">
-			<img :src="getImageLink" class="mr-2" width="50px" alt="">
+			<img :src="getImageLink" class="profile-image" id="ownerImage" alt="">
 			<div>
 				<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`">{{ user.bio.name }}</router-link></p>
 				<p class="mb-0">{{ getDate }}</p>
@@ -39,3 +39,7 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	img#ownerImage{ width: 50px; height: 50px; }
+</style>

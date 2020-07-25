@@ -1,5 +1,5 @@
 <template>
-	<div class="d-flex my-3 align-items-end">
+	<div class="d-flex my-3 align-items-end" v-if="user['.key']">
 		<div class="d-flex flex-column align-items-center mr-2">
 			<span class="small">{{ votes.length }}</span>
 			<span class="small">{{ votes.length === 1 ? 'vote' : 'votes' }}</span>
@@ -12,7 +12,7 @@
 		<div class="border border-secondary py-1 px-2 rounded flex-grow-1">
 			<div v-html="reply.body" class="editor-container"></div>
 			<div class="d-flex align-items-center" v-if="user && user['.key']">
-				<img :src="getImageLink" class="mr-2" width="40px" alt="">
+				<img :src="getImageLink" class="profile-image" id="ownerImage" alt="">
 				<div class="small">
 					<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`">{{ user.bio.name }}</router-link></p>
 					<p class="mb-0">on {{ getDate }}</p>
@@ -98,3 +98,7 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	img#ownerImage{ width: 40px; height: 40px; }
+</style>

@@ -1,7 +1,7 @@
 <template>
 	<div class="p-2">
 		<div class="d-flex align-items-center">
-			<img :src="getImageLink" alt="" class="mr-2">
+			<img :src="getImageLink" alt="" class="profile-image">
 			<div>
 				<router-link :to="`/users/${user['.key']}`" class="card-link">
 					<h6 class="card-title mb-0">{{ user.bio.name }}</h6>
@@ -40,11 +40,3 @@
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
-	img{
-		width: 80px;
-		height: 80px;
-		margin-right: 1rem;
-	}
-</style>

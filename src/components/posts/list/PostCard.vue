@@ -1,7 +1,7 @@
 <template>
 	<div class="mb-5 mt-3">
 		<div class="d-flex align-items-center mb-2">
-			<img :src="getImageLink" alt="" class="mr-2">
+			<img :src="getImageLink" alt="" class="profile-image" id="ownerImage">
 			<div>
 				<h6 class="mb-0">{{ getName }}</h6>
 				<p class="mb-0 small">Posted {{ getCreatedDate }}</p>
@@ -57,5 +57,5 @@
 </script>
 
 <style lang="scss" scoped>
-	img{ width: 60px; }
+	img#ownerImage{ width: 60px; height: 60px; }
 </style>
