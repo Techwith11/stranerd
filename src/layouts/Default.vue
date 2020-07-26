@@ -4,7 +4,7 @@
 			<app-navbar />
 			<div class="d-flex flex-grow-1">
 				<app-sidebar v-if="isLoggedIn" class="d-none d-lg-block" />
-				<div class="flex-grow-1 p-sm-3">
+				<div class="flex-grow-1" :class="{'px-md-3 py-3': isLoggedIn}">
 					<slot></slot>
 				</div>
 			</div>

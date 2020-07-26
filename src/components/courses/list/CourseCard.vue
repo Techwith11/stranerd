@@ -1,15 +1,17 @@
 <template>
-	<div class="mb-5">
+	<div class="mb-5 shadow-sm white p-3">
 		<router-link :to="`/courses/${course.subject}/${course.module}/${course['.key']}`">
 			<img :src="course.image.link" class="card-img-top w-100" alt="">
 		</router-link>
 		<div class="mt-3">
-			<router-link class="text-decoration-none" :to="`/courses/${course.subject}/${course.module}/${course['.key']}`">
-				<h6 class="card-title">{{ course.title }}</h6>
+			<h5 class="card-title">
+				<router-link :to="`/courses/${course.subject}/${course.module}/${course['.key']}`">{{ course.title }}</router-link>
+			</h5>
+			<router-link :to="`/courses/${course.subject}/${course.module}/${course['.key']}`">
 				<div v-html="course.description"  class="small editor-container"></div>
-				<p class="small text-capitalize">{{ course.subject }} : {{ course.module }}</p>
-				<p class="small">Updated: {{ course.dates.updatedAt | getDate }}</p>
 			</router-link>
+			<p class="small text-capitalize">{{ course.subject }} : {{ course.module }}</p>
+			<p class="small">Updated: {{ course.dates.updatedAt | getDate }}</p>
 			<div class="my-3" v-if="isAdmin">
 				<a class="mr-3 btn btn-sm btn-warning text-white" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
 				<a class="mr-3 btn btn-sm btn-danger text-white" @click.prevent="removePost"><i class="fas fa-trash mr-1"></i>Delete</a>

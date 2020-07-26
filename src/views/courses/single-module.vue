@@ -5,8 +5,8 @@
 			<helper-message message="No courses available at the moment. Check again later" v-if="courses.length === 0" />
 			<div v-else>
 				<div class="container">
-					<div class="card-deck">
-						<div class="col-lg-6 p-0" v-for="course in courses" :key="course['.key']">
+					<div class="row">
+						<div class="col-lg-6" v-for="course in courses" :key="course['.key']">
 							<course-card :course="course"/>
 						</div>
 					</div>

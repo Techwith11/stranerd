@@ -1,6 +1,6 @@
 <template>
 	<Default>
-		<div v-if="isLoggedIn" class="container-fluid">
+		<div v-if="isLoggedIn" class="container-fluid p-0">
 			<div class="row">
 				<div class="col-lg-5 d-none d-lg-block mb-3 pl-0">
 					<show-ask-question />
