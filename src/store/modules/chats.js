@@ -1,4 +1,4 @@
-import firebase,{ firestore, functions } from '@/config/firebase'
+import firebase, { firestore, functions, uploadFile } from '@/config/firebase'
 
 let helpers = {
     createNewChatCollection: async (from, to) => {
@@ -16,7 +16,7 @@ let helpers = {
             from,
             dates: { sentAt: firebase.firestore.FieldValue.serverTimestamp(), readAt: null },
         }
-        chat.media = await window.uploadFile(path, media)
+        chat.media = await uploadFile(path, media)
         return await firestore.collection(path).add(chat)
     },
     readChat: async (path) => {

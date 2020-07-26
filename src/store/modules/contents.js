@@ -1,4 +1,4 @@
-import firebase, { firestore, functions } from '@/config/firebase'
+import firebase, { firestore, functions, uploadFile } from '@/config/firebase'
 
 let helpers = {
 	sendDiscussion: async (userId, id, body) => await firestore.collection(`courses/${id}/discussions`).add({
@@ -28,7 +28,7 @@ let helpers = {
 		return await firestore.collection('notes').add(note)
 	},
 	uploadFromEditor: async data => {
-		let res = await window.uploadFile(data.path, data.file)
+		let res = await uploadFile(data.path, data.file)
 		data.editor.insertEmbed(data.cursorLocation, "image", res.link)
 		data.resetUploader()
 	},
@@ -81,24 +81,24 @@ const actions = {
 	createCourse: async ({ getters }, data) => {
 		let course = data.course
 		if(course.hasVideo){
-			course.video = await window.uploadFile('courses/videos', data.video)
+			course.video = await uploadFile('courses/videos', data.video)
 		}
-		course.image = await window.uploadFile('courses/images', data.image)
+		course.image = await uploadFile('courses/images', data.image)
 		course.documents = []
 		for (const file of data.documents) {
-			let media = await window.uploadFile('courses/documents', file)
+			let media = await uploadFile('courses/documents', file)
 			course.documents.push(media)
 		}
 		return await helpers.createCourse(course, getters.getId)
 	},
 	createNote: async ({ getters }, data) => {
 		let note = data.note
-		note.document = await window.uploadFile('notes', data.document)
+		note.document = await uploadFile('notes', data.document)
 		return await helpers.createNote(note, getters.getId)
 	},
 	createBlogPost: async ({ getters }, data) => {
 		let post = data.post
-		post.image = await window.uploadFile('blog', data.image)
+		post.image = await uploadFile('blog', data.image)
 		return await helpers.createBlogPost(post, getters.getId)
 	},
 	uploadFromEditor: async (store, data) => await helpers.uploadFromEditor(data),
@@ -111,23 +111,23 @@ const actions = {
 	editQuestion: async (store, question) => await helpers.editQuestion(question),
 	editNote: async (store, { note, document}) => {
 		if(document.size){
-			note.document = await window.uploadFile('notes', document)
+			note.document = await uploadFile('notes', document)
 		}
 		return await helpers.editNote(note)
 	},
 	editBlogPost: async (store, { post, image}) => {
 		if(image.size){
-			post.image = await window.uploadFile('blog', image)
+			post.image = await uploadFile('blog', image)
 		}
 		return await helpers.editBlogPost(post)
 	},
 	editCourse: async (store, { course, video, documents, image}) => {
 		if(image.size){
-			course.image = await window.uploadFile('courses/images', image)
+			course.image = await uploadFile('courses/images', image)
 		}
 		if(course.hasVideo){
 			if(video.size){
-				course.video = await window.uploadFile('courses/videos', video)
+				course.video = await uploadFile('courses/videos', video)
 			}
 		}else{
 			delete course.video
@@ -135,7 +135,7 @@ const actions = {
 		course.documents = []
 		for (const file of documents) {
 			if(file.size){
-				let media = await window.uploadFile('courses/documents', file)
+				let media = await uploadFile('courses/documents', file)
 				course.documents.push(media)
 			}else{
 				course.documents.push(file)

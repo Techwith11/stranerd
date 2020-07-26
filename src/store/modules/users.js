@@ -1,4 +1,4 @@
-import { firestore } from '@/config/firebase'
+import { firestore, uploadFile } from '@/config/firebase'
 import store from '@/store/index'
 import { checkForUnfinishedTests } from '@/config/tests'
 
@@ -58,7 +58,7 @@ const actions = {
 		let bio = data.bio
 		let image = data.image
 		if(image){
-			bio.image = await window.uploadFile('users/images', image)
+			bio.image = await uploadFile('users/images', image)
 		}
 		return await firestore.collection('users').doc(getters.getId).set({ bio }, { merge: true })
 	},

@@ -51,7 +51,7 @@ let uploadToMockServer = async (path, file) => {
 	})
 	return res.json()
 }
-window.uploadFile = async (path, file) => {
+export const uploadFile = async (path, file) => {
 	try{
 		let link = `${path}/${Date.now()}_${file.name}`
 		if(process.env.NODE_ENV === 'production'){

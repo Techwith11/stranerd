@@ -1,4 +1,4 @@
-import { firestore } from '@/config/firebase'
+import { firestore, uploadFile } from '@/config/firebase'
 
 const state = {
 	subjects: []
@@ -40,14 +40,14 @@ const actions = {
 		commit('deleteSubject',id)
 	},
 	async createModule({ commit }, { subject, module, image }){
-		module.image = await window.uploadFile('subjects', image)
+		module.image = await uploadFile('subjects', image)
 		subject.modules.push(module)
 		await firestore.collection('subjects').doc(subject['.key']).set(subject)
 		commit('editSubject', { ...subject })
 	},
 	async editModule({ commit }, { subject, module, updated, image }){
 		if(image.size){
-			updated.image = await window.uploadFile('subjects', image)
+			updated.image = await uploadFile('subjects', image)
 		}
 		let index = subject.modules.findIndex(m => m.name === module.name)
 		subject.modules[index] = updated
