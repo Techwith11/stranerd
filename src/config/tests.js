@@ -1,17 +1,19 @@
 import { firestore, functions } from '@/config/firebase'
 import router from '@/router/index'
+import store from '@/store/index'
 
-export const checkForUnfinishedTests = async (id) => {
+export const checkForUnfinishedTests = async () => {
     let tests = await firestore.collection('tests/tutors/tests')
-        .where('user','==', id)
+        .where('user','==', store.getters.getId)
         .where('marked','==',false)
         .limit(1).get()
     if(!tests.empty){
         await router.push(`/tests/tutors/${tests.docs[0].id}`).catch(error => error)
     }
 }
-export const startTest = async ({ tutor, id: user, course }) => {
-    let level = tutor['levels'][course] + 1
+export const startTest = async (course) => {
+    let level = 1 + store.getters.getUser?.tutor['levels'][course] ?? 0
+    let user = store.getters.getId
     let data = { user, course, level }
     return functions.httpsCallable('startTutorTest')(data).then(async res => {
         await router.push(`/tests/tutors/${res.data.id}`)

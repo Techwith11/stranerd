@@ -55,7 +55,7 @@
 				})
 				if(result.value){
 					this.isLoading = true
-					await startTest({ id: this.getId, tutor: this.getUser.tutor, course: this.course })
+					await startTest(this.course)
 					this.isLoading = false
 				}
 			}
@@ -89,7 +89,7 @@
 			if(!this.isTutor){ await this.$router.push('/') }
 			let course = this.$route.query.course?.toLowerCase()
 			this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
-			await checkForUnfinishedTests(this.getId)
+			await checkForUnfinishedTests()
 			this.isLoading = false
 		},
 		components: {
