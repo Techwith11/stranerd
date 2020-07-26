@@ -1,5 +1,5 @@
 <template>
-	<div class="my-4">
+	<div class="my-4 bg-white p-4 shadow-sm rounded-lg">
 		<h4 class="text-muted mb-3">Upgrade User to Admin</h4>
 		<div class="d-flex align-items-center">
 			<input type="email" class="form-control flex-grow-1" placeholder="Enter user's email address" v-model="email">
@@ -11,19 +11,22 @@
 		</button>
 		<div class="mt-2" v-if="fetched && !fetchingUsers">
 			<p class="text-danger opacity-75" v-if="users.length === 0">No user with such email exists</p>
-			<div class="my-3 d-flex justify-content-between align-items-center" v-for="user in users" :key="user['.key']">
-				<div class="text-truncate">
-					<p class="lead mb-1 text-wrap">{{ user.bio.name }}</p>
-					<p class="small mb-0 text-wrap">{{ user.bio.email }}</p>
+			<div class="my-3" v-for="user in users" :key="user['.key']">
+				<div class="d-flex justify-content-between align-items-center">
+					<div class="text-truncate">
+						<p class="lead mb-1 text-wrap">{{ user.bio.name }}</p>
+						<p class="small mb-0 text-wrap">{{ user.bio.email }}</p>
+					</div>
+					<button class="btn-sm text-nowrap btn-danger" v-if="user.roles.isAdmin" @click="deAdminUser(user)" :disabled="upgrading">
+						<i class="fas fa-spinner fa-spin" v-if="upgrading"></i>
+						<span v-else>Remove admin</span>
+					</button>
+					<button class="btn-sm text-nowrap btn-success" v-else @click="adminUser(user)" :disabled="upgrading">
+						<i class="fas fa-spinner fa-spin" v-if="upgrading"></i>
+						<span v-else>Make admin</span>
+					</button>
 				</div>
-				<button class="btn-sm text-nowrap btn-danger" v-if="user.roles.isAdmin" @click="deAdminUser(user)" :disabled="upgrading">
-					<i class="fas fa-spinner fa-spin" v-if="upgrading"></i>
-					<span v-else>Remove admin</span>
-				</button>
-				<button class="btn-sm text-nowrap btn-success" v-else @click="adminUser(user)" :disabled="upgrading">
-					<i class="fas fa-spinner fa-spin" v-if="upgrading"></i>
-					<span v-else>Make admin</span>
-				</button>
+				<hr class="mt-2">
 			</div>
 		</div>
 	</div>

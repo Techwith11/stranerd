@@ -1,5 +1,5 @@
 <template>
-	<div class="my-5">
+	<div class="my-5 bg-white p-4 shadow-sm rounded-lg">
 		<h4 class="text-muted mb-3">Upgrade User to Tutor</h4>
 		<div class="d-flex align-items-center">
 			<input type="email" class="form-control flex-grow-1" placeholder="Enter user's email address" v-model="email">
@@ -9,7 +9,7 @@
 			<i class="fas fa-spinner fa-spin mr-2" v-if="fetchingUsers"></i>
 			<span>Find User</span>
 		</button>
-		<div class="mt-3" v-if="fetched && !fetchingUsers">
+		<div class="my-3" v-if="fetched && !fetchingUsers">
 			<div class="form-group row">
 				<div class="col-md-6">
 					<select id="course" class="form-control text-capitalize" v-model="$v.tutor.course.$model"
@@ -29,16 +29,19 @@
 		</div>
 		<div class="mt-2" v-if="fetched && !fetchingUsers">
 			<p class="text-danger opacity-75" v-if="users.length === 0">No user with such email exist</p>
-			<div class="my-3 d-flex justify-content-between align-items-center" v-for="user in users" :key="user['.key']">
-				<div class="">
-					<p class="lead mb-1 text-wrap">{{ user.bio.name }}</p>
-					<p class="small mb-0 text-wrap">{{ user.bio.email }}</p>
+			<div class="my-3" v-for="user in users" :key="user['.key']">
+				<div class="d-flex justify-content-between align-items-center">
+					<div class="">
+						<p class="lead mb-1 text-wrap">{{ user.bio.name }}</p>
+						<p class="small mb-0 text-wrap">{{ user.bio.email }}</p>
+					</div>
+					<button class="btn-sm btn-success" @click="tutorUser(user)" :disabled="upgrading || $v.tutor.$invalid" v-if="!(user.roles.isTutor && user.tutor.courses.includes(tutor.course))">
+						<i class="fas fa-spinner fa-spin" v-if="upgrading"></i>
+						<span v-else>Make tutor</span>
+					</button>
+					<a class="text-info" v-else @click.prevent="() => {}">Already a {{ tutor.course }} tutor</a>
 				</div>
-				<button class="btn-sm btn-success" @click="tutorUser(user)" :disabled="upgrading || $v.tutor.$invalid" v-if="!(user.roles.isTutor && user.tutor.courses.includes(tutor.course))">
-					<i class="fas fa-spinner fa-spin" v-if="upgrading"></i>
-					<span v-else>Make tutor</span>
-				</button>
-				<a class="text-info" v-else @click.prevent="() => {}">Already a {{ tutor.course }} tutor</a>
+				<hr class="mt-2">
 			</div>
 		</div>
 	</div>
@@ -87,10 +90,10 @@
 			},
 			async tutorUser(user){
 				this.upgrading = true
-				let res = makeTutor({ id: user['.key'], ...this.tutor })
+				let res = await makeTutor({ id: user['.key'], ...this.tutor })
 				if(res) {
 					let x = this.users.find(x => x['.key'] === user['.key'])
-					new window.Toast({ icon: 'success', title: `${x.bio.name} has been registered as a ${this.tutor.course} successfully` })
+					new window.Toast({ icon: 'success', title: `${x.bio.name} has been registered as a ${this.tutor.course} tutor successfully` })
 					await this.getUsersByEmail()
 				}
 				this.upgrading = false

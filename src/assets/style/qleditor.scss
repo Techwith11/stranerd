@@ -1,0 +1,36 @@
+.editor-container{
+	margin-bottom: 0.5rem;
+	max-width: 100%;
+}
+
+.quillWrapper{
+	background: $white;
+	box-sizing: border-box;
+	max-width: 100vw !important;
+	position: relative;
+	.ql-toolbar{
+		z-index: 10;
+		width: 100% !important;
+		max-width: 100% !important;
+		display: flex;
+		align-items: stretch;
+		flex-wrap: nowrap !important;
+		overflow-x: auto;
+		overflow-y: hidden;
+		padding: 4px !important;
+		.ql-formats{
+			border-right: 1px solid $text-black;
+			display: flex;
+			margin: 4px !important;
+			.ql-expanded{
+				position: static;
+				.ql-picker-options{
+					min-width: 0;
+					top: 0;
+					left: 0;
+					position: absolute;
+				}
+			}
+		}
+	}
+}

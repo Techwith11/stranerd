@@ -41,7 +41,7 @@
 				this.listener = firestore.collection('users').doc(this.$route.params.id).onSnapshot(async snapshot => {
 					if(!snapshot.exists){ return this.$router.replace('/tutors') }
 					this.user = { '.key': snapshot.id, ...snapshot.data() }
-					let isTutor = snapshot.data().roles.isTutor
+					let isTutor = snapshot.data().roles.isTutor && snapshot.data().tutor.canTeach
 					if(isTutor){
 						let docs = await firestore.collection('sessions').where('tutor','==',this.$route.params.id)
 							.where('cancelled.student','==',false)

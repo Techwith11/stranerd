@@ -1,14 +1,14 @@
 <template>
 	<div class="d-flex flex-column align-items-center py-3 py-md-5">
-		<img :src="getImageLink" id="profileImage" alt="">
+		<img :src="getImageLink" class="profile-image" id="profileImage" alt="">
 		<p class="title font-weight-bold my-3">
-			<span>{{ user.roles.isTutor ? 'Instructor' : 'Student' }}</span>
+			<span>{{ isTutor ? 'Instructor' : 'Student' }}</span>
 			<i class="ml-2 rounded-pill fas fa-circle" :class="user.status.online ? 'text-success' : 'text-danger'"></i>
 		</p>
 		<p class="lead font-weight-bold">{{ user.bio.name }}</p>
 		<p class="text-center w-75">{{ user.bio.bio }}</p>
-		<div v-if="user.roles.isTutor">
-			<p>Courses: {{ user.tutor.courses.join(', ') }}</p>
+		<div v-if="isTutor">
+			<p class="text-capitalize">Courses: {{ getCourses }}</p>
 			<p>
 				<span>Ratings: {{ user.tutor.rating }}</span>
 				<rating-stars class="d-inline ml-1" :rating="user.tutor.rating"/>
@@ -30,6 +30,8 @@
 		},
 		computed: {
 			...mapGetters(['getDefaultImage','getId']),
+			isTutor(){ return this.user.roles.isTutor && this.user.tutor.canTeach },
+			getCourses(){ return this.user.tutor.courses.filter(x => this.user.tutor.levels[x] > 0).join(', ') },
 			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
 			canHaveSession(){ return this.user.roles && this.user.roles.isTutor && this.user['.key'] !== this.getId && this.user.tutor.levels[this.user.tutor.courses[0]] > 0 }
 		},
@@ -47,8 +49,7 @@
 
 <style lang="scss" scoped>
 	#profileImage{
-		width: 50%;
-		min-width: 50px;
-		max-width: 150px;
+		width: 150px;
+		height: 150px;
 	}
 </style>
