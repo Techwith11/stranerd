@@ -7,16 +7,18 @@
 				</div>
 				<div class="col-md-8 border border-secondary p-3 p-md-5 rounded-lg">
 					<div class="form-group my-3">
-						<input type="text" class="form-control" placeholder="Question Topic" v-model.trim="$v.post.title.$model"
+						<h6>Title</h6>
+						<input type="text" class="form-control" placeholder="eg What is the result of integrating 2x" v-model.trim="$v.post.title.$model"
 							:class="{'is-invalid': $v.post.title.$error,'is-valid': !$v.post.title.$invalid}">
-						<small class="small text-danger d-block" v-if="$v.post.title.$error">Topic must be at least 3 characters</small>
-						<small class="small" v-if="post.title.length === 0">One quick sentence summary of your question</small>
+						<small class="small text-danger d-block" v-if="$v.post.title.$error">Title must be at least 3 characters</small>
+						<small class="small text-muted">One quick sentence summary of your question</small>
 					</div>
 					<div class="form-group my-3">
-						<vue-editor class="rounded border bg-white" v-model.trim="$v.post.body.$model" useCustomImageHandler @image-added="handleImageAdded"
-									:class="{'border-danger': $v.post.body.$error, 'border-success': !$v.post.body.$invalid}" placeholder="Question content"
+						<h6>Body</h6>
+						<vue-editor class="rounded border" v-model.trim="$v.post.body.$model" useCustomImageHandler @image-added="handleImageAdded"
+							:class="{'border-danger': $v.post.body.$error, 'border-success': !$v.post.body.$invalid}" placeholder=""
 						/>
-						<small class="small" v-if="post.body.length === 0">Describe your question in full length to give us a clear picture of what it is about</small>
+						<small class="small text-muted">Include all information necessary for someone to answer your question</small>
 					</div>
 					<div class="form-group my-3">
 						<h6>Related Subject</h6>
