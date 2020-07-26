@@ -6,7 +6,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can upgrade accounts')
 	}
 	if (functions.config().environment.mode === 'production' && !context.auth.token.isAdmin) {
-		throw new functions.https.HttpsError('failed-precondition', 'Only admins can be upgrade users')
+		throw new functions.https.HttpsError('failed-precondition', 'Only admins can upgrade users')
 	}
 	try{
 		if (functions.config().environment.mode === 'production'){
