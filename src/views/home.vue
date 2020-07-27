@@ -37,7 +37,7 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
+	import { mapGetters } from 'vuex'
 	import CTA from '@/components/home/notLoggedIn/HomeCTA'
 	import WhyUs from '@/components/home/notLoggedIn/HomeWhyUs'
 	import AskQuestion from '@/components/home/notLoggedIn/HomeAskQuestion'
@@ -68,18 +68,7 @@
 			'recent-sessions': RecentSessions,
 			'subscribe-card': SubscribeCard,
 		},
-		computed: mapGetters(['isLoggedIn','getUser','questionsLeft','isSubscribed']),
-		methods: mapActions(['setPostModalNotify','setPostModalCreate']),
-		mounted(){
-			if(this.$route.query.createPost){
-				if(this.questionsLeft){
-					this.setPostModalCreate()
-				}else{
-					this.setPostModalNotify()
-				}
-				this.$router.push('/')
-			}
-		},
+		computed: mapGetters(['isLoggedIn','getUser','isSubscribed']),
 		meta(){
 			return {
 				title: this.isLoggedIn ? `Stranerd Dashboard - ${this.getUser.bio && this.getUser.bio.name}` : 'Stranerd Home Page',

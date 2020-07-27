@@ -119,12 +119,6 @@ export default [
         meta: { requiresAuth: true }
     },
     {
-        path: '/posts/create',
-        name: 'CreatePost',
-        component: () => import(/* webpackChunkName: "create_post" */ '@/views/posts/create-post'),
-        meta: { requiresAuth: true }
-    },
-    {
         path: '/ask-a-question',
         name: 'AskQuestion',
         component: () => import(/* webpackChunkName: "ask_question" */ '@/views/posts/ask-a-question'),
