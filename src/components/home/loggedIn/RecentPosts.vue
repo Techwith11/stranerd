@@ -1,10 +1,10 @@
 <template>
 	<div class="p-3 shadow-sm white">
-		<p class="text-muted">Recent Questions</p>
+		<p class="text-muted txt-shadow">Recent Questions</p>
 		<div v-if="posts.length > 0">
 			<post-card v-for="post in posts" :key="post['.key']" :post="post" />
 			<div class="d-flex justify-content-end mb-3">
-				<router-link class="btn btn-primary text-decoration-none" to="/posts">See More</router-link>
+				<router-link class="txt-shadow text-decoration-none" to="/posts">See More</router-link>
 			</div>
 		</div>
 		<p class="lead" v-else>No questions available at the moment. Try asking one <router-link to="/ask-a-question">here</router-link></p>

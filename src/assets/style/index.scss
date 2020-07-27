@@ -105,6 +105,10 @@ a{
 	}
 }
 
+.txt-shadow{
+	text-shadow: 0 0.25rem 0.25rem rgba(0, 0, 0, 0.2);
+}
+
 .white{
 	background: $white;
 	border: 1px solid $white;
@@ -113,7 +117,7 @@ a{
 
 img.profile-image{
 	border-radius: 10rem;
-	border: 1.5px solid black;
+	border: 1.5px solid rgba(0,0,0,0.1);
 	width: 80px;
 	height: 80px;
 	margin-right: 0.75rem;

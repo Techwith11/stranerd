@@ -1,10 +1,10 @@
 <template>
 	<div class="p-3 shadow-sm white">
-		<p class="text-muted">Recent Courses</p>
+		<p class="text-mutedb txt-shadow">Recent Courses</p>
 		<div v-if="courses.length > 0">
 			<course-card v-for="course in courses" :key="course['.key']" :course="course" />
 			<div class="d-flex justify-content-end mb-3">
-				<router-link class="btn btn-primary text-decoration-none" to="/courses">See More</router-link>
+				<router-link class="text-decoration-none txt-shadow" to="/courses">See More</router-link>
 			</div>
 		</div>
 		<p class="lead" v-else>No courses available at the moment.</p>

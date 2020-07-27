@@ -1,10 +1,10 @@
 <template>
 	<div class="p-3 white shadow-sm">
-		<p class="text-muted">Top Tutors</p>
+		<p class="text-muted txt-shadow">Top Tutors</p>
 		<div v-if="tutors.length > 0">
 			<tutor-card class="my-2" v-for="tutor in tutors" :user="tutor" :key="tutor['.key']" />
 			<div class="d-flex justify-content-end my-3">
-				<router-link class="text-decoration-none" to="/tutors">See More</router-link>
+				<router-link class="text-decoration-none txt-shadow" to="/tutors">See More</router-link>
 			</div>
 		</div>
 		<p class="lead" v-else>No tutors available at the moment.</p>

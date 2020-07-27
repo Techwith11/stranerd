@@ -1,10 +1,10 @@
 <template>
 	<div class="p-3 white shadow-sm">
-		<p class="text-muted">Recent Sessions</p>
+		<p class="text-muted txt-shadow">Recent Sessions</p>
 		<div v-if="sessions.length > 0">
 			<session-card v-for="session in sessions" :key="session['.key']" :session="session" />
 			<div class="d-flex justify-content-end my-3">
-				<router-link class="text-decoration-none" to="/sessions">See More</router-link>
+				<router-link class="text-decoration-none txt-shadow" to="/sessions">See More</router-link>
 			</div>
 		</div>
 		<div v-else>
