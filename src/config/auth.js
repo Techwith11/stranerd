@@ -3,10 +3,10 @@ import store from '@/store'
 import router from '@/router'
 
 let afterAuthHook = async () => {
-	await store.dispatch('closeAuthModal')
 	let route = store.getters.getIntendedRoute
-	if(route) await this.$router.push(route)
+	if(route) await router.push(route)
 	await store.dispatch('clearIntendedRoute')
+	await store.dispatch('closeAuthModal')
 }
 
 export const registerWithEmail = async ({ name, email, password }) => {

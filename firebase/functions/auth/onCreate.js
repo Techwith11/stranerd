@@ -1,6 +1,7 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 const braintree = require('braintree')
+const { subscribeToMailchimpList } = require( '../helpers/subscribeToMailchimpList')
 
 module.exports = functions.auth.user().onCreate(async (user) => {
 	await admin.auth().setCustomUserClaims(user.uid, {
@@ -41,7 +42,12 @@ module.exports = functions.auth.user().onCreate(async (user) => {
 			data.account.customer_id = result.customer.id
 		}
 	}catch(error){
-		console.log(error)
+		console.log(error, user.uid,user.email)
+	}
+	try{
+		await subscribeToMailchimpList(user.email)
+	}catch (error) {
+		console.log(error, user.uid, user.email)
 	}
 	return admin
 		.firestore()
