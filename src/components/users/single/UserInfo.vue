@@ -9,8 +9,7 @@
 		<p class="text-center w-75">{{ user.bio.bio }}</p>
 		<div v-if="isTutor">
 			<p class="text-capitalize">Courses: {{ getCourses }}</p>
-			<p>
-				<span>Ratings: {{ user.tutor.rating }}</span>
+			<p class="text-center">
 				<rating-stars class="d-inline ml-1" :rating="user.tutor.rating"/>
 			</p>
 		</div>

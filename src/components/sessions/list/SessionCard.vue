@@ -1,23 +1,27 @@
 <template>
-	<router-link :to="`/sessions/${session['.key']}`" class="text-decoration-none">
-		<div class="alert d-flex align-items-center my-2 shadow-sm" role="alert" :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
-			<img :src="getImageLink" class="profile-image" alt="">
-			<div>
-				<p class="mb-0">{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}</p>
-				<div v-if="!wasCancelled">
-					<span class="small" v-if="isStillInSession">{{ getTime }}</span>
-					<div class="small d-flex justify-content-between align-items-center" v-else>
-						<span>Ended {{ session.dates.endedAt.seconds * 1000 | getDateOrTime }}</span>
-						<rating-stars :rating="getRating" />
-					</div>
-				</div>
-				<div v-else>
-					<span class="small" v-if="session.cancelled.tutor">Cancelled by {{ session.tutor === this.getId ? 'me' : 'tutor' }}</span>
-					<span class="small" v-if="session.cancelled.student">Cancelled by {{ session.student === this.getId ? 'me' : 'student' }}</span>
+	<div class="alert d-flex align-items-center my-2 shadow-sm" role="alert"
+        :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
+		<img :src="getImageLink" class="profile-image" alt="">
+		<div>
+			<p class="mb-0">
+				<span v-if="wasCancelled">{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}</span>
+				<router-link :to="`/sessions/${session['.key']}`" class="text-black" v-else>
+					{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}
+				</router-link>
+			</p>
+			<div v-if="!wasCancelled">
+				<span class="small" v-if="isStillInSession">{{ getTime }}</span>
+				<div class="small d-flex justify-content-between align-items-center" v-else>
+					<span>Ended {{ session.dates.endedAt.seconds * 1000 | getDateOrTime }}</span>
+					<rating-stars :rating="getRating" />
 				</div>
 			</div>
+			<div v-else>
+				<span class="small" v-if="session.cancelled.tutor">Cancelled by {{ session.tutor === this.getId ? 'me' : 'tutor' }}</span>
+				<span class="small" v-if="session.cancelled.student">Cancelled by {{ session.student === this.getId ? 'me' : 'student' }}</span>
+			</div>
 		</div>
-	</router-link>
+	</div>
 </template>
 
 <script>
