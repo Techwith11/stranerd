@@ -6,6 +6,7 @@ import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
 let afterAuthHook = async () => {
 	let route = store.getters.getIntendedRoute
 	if(route) await router.push(route)
+	closeNavbar()
 	await store.dispatch('clearIntendedRoute')
 	await store.dispatch('closeAuthModal')
 }
