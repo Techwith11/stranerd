@@ -26,19 +26,19 @@ window.Toast = SweetAlert.mixin({
     timer: 3000
 });
 
-window.closeNavbar = () => {
+export const closeNavbar = () => {
     let collapse = document.getElementById('navbar')
     collapse ? collapse.classList.remove('show') : null
 }
 
-window.closeAccountDropdown = () => {
+export const closeAccountDropdown = () => {
     let collapse = document.getElementById('accountDropdown')
     collapse ? collapse.classList.remove('show') : null
     let menu = document.getElementById('accountDropdownMenu')
     menu ? menu.classList.remove('show') : null
 }
 
-window.closeAdminDropdown = () => {
+export const closeAdminDropdown = () => {
     let collapse = document.getElementById('adminDropdown')
     collapse ? collapse.classList.remove('show') : null
     let menu = document.getElementById('adminDropdownMenu')
