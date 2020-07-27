@@ -5,7 +5,7 @@
 			<tutor-card class="my-2" v-for="tutor in tutors" :user="tutor" :key="tutor['.key']" />
 			<div class="d-flex justify-content-end my-3">
 				<router-link class="text-decoration-none txt-shadow" to="/tutors">See More</router-link>
-			</div>s
+			</div>
 		</div>
 		<p class="lead" v-else>No tutors available at the moment.</p>
 	</div>
