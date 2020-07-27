@@ -1,19 +1,19 @@
 <template>
-	<div class="mb-5 mt-3">
-		<div class="d-flex align-items-center mb-2">
+	<div class="mb-5 white shadow-sm p-3">
+		<h5 class="card-title font-weight-bold"><router-link class="text-black-50" :to="`/posts/${post['.key']}`">{{ post.title }}</router-link></h5>
+		<p class="card-subtitle mb-2 text-muted small">
+			<span class="text-capitalize">{{ post.module }}, </span>
+			<span class="text-capitalize">{{ post.subject }}</span>
+		</p>
+		<p class="card-text" v-html="post.body"></p>
+		<router-link :to="`/posts/${post['.key']}`" class="card-link">See comments</router-link>
+		<div class="d-flex align-items-center my-3">
 			<img :src="getImageLink" alt="" class="profile-image" id="ownerImage">
 			<div>
 				<h6 class="mb-0">{{ getName }}</h6>
 				<p class="mb-0 small">Posted {{ getCreatedDate }}</p>
 			</div>
 		</div>
-		<router-link class="h5 card-title card-link" :to="`/posts/${post['.key']}`">{{ post.title }}</router-link>
-		<p class="card-text" v-html="post.body"></p>
-		<p class="card-subtitle mb-2 text-muted small">
-			<span class="text-capitalize">{{ post.module }}, </span>
-			<span class="text-capitalize">{{ post.subject }}</span>
-		</p>
-		<router-link :to="`/posts/${post['.key']}`" class="card-link">See comments</router-link>
 	</div>
 </template>
 
@@ -57,5 +57,5 @@
 </script>
 
 <style lang="scss" scoped>
-	img#ownerImage{ width: 60px; height: 60px; }
+	img#ownerImage{ width: 40px; height: 40px; }
 </style>

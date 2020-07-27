@@ -1,6 +1,6 @@
 <template>
 	<router-link :to="`/sessions/${session['.key']}`" class="text-decoration-none">
-		<div class="alert d-flex align-items-center my-2" role="alert" :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
+		<div class="alert d-flex align-items-center my-2 shadow-sm" role="alert" :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
 			<img :src="getImageLink" class="profile-image" alt="">
 			<div>
 				<p class="mb-0">{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}</p>

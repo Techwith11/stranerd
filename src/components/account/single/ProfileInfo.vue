@@ -1,13 +1,13 @@
 <template>
 	<div class="row align-items-start">
 		<div class="col-md-7 mb-4">
-			<div class="d-flex align-items-center align-items-md-start">
-				<div class="mb-3">
+			<div class="d-flex align-items-center align-items-md-start mb-3">
+				<div class="">
 					<img :src="getUserImageLink" alt="" class="profile-image" id="userImage">
 					<a href="" class="text-info d-block" @click.prevent="setAccountModalEditProfile">Change picture</a>
 				</div>
 				<div class="flex-grow-1">
-					<h4 class="text-primary-dark mb-1">{{ getUser.bio.name }}</h4>
+					<h4 class="text-primary-dark my-1">{{ getUser.bio.name }}</h4>
 					<h6 class="mb-3 small">{{ getUser.bio.email }}</h6>
 					<div class="d-none d-md-block">
 						<div class="bordered p-3 w-100 bg-white mb-3 rounded-xl">
@@ -67,7 +67,7 @@
 </script>
 
 <style lang="scss" scoped>
-	img#userImage{ width: 120px; height: 120px; border: 4px solid #FCCAE3; }
+	img#userImage{ min-width: 120px; width: 120px; height: 120px; border: 4px solid #FCCAE3; }
 	.rounded-xl{
 		border-radius: 2.0rem !important;
 		box-shadow: 0 1px 2px $text-black;

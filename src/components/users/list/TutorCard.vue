@@ -1,13 +1,12 @@
 <template>
-	<div class="p-2">
+	<div class="p-3 white shadow-sm">
 		<div class="d-flex align-items-center">
 			<img :src="getImageLink" alt="" class="profile-image">
 			<div>
-				<router-link :to="`/users/${user['.key']}`" class="card-link">
-					<h6 class="card-title mb-0">{{ user.bio.name }}</h6>
-				</router-link>
+				<h5 class="font-weight-bold">
+					<router-link :to="`/users/${user['.key']}`" class="card-link">{{ user.bio.name }}</router-link>
+				</h5>
 				<p class="card-text mb-0">
-					Teaches:
 					<span class="text-capitalize" v-for="course in getCourses" :key="course">{{ course }}</span>
 				</p>
 				<rating-stars class="small d-inline" :rating="user.tutor.rating"/>

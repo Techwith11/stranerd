@@ -1,6 +1,6 @@
 <template>
 	<Default id="background">
-		<div class="container py-3">
+		<div class="px-3">
 			<account-nav />
 			<router-view />
 		</div>
