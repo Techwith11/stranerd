@@ -22,6 +22,9 @@
 				<button class="btn btn-primary btn-block" :disabled="!isThereAHoistedFieldInstance" @click.prevent="addCard">Add Credit Card</button>
 			</div>
 			<hr />
+			<div class="d-flex justify-content-center">
+				<img src="../../assets/images/4_cards.png" alt="" width="200px">
+			</div>
 			<div class="form-group text-center">
 				<div id="paypalButton"></div>
 			</div>

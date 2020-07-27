@@ -19,6 +19,9 @@
 				</div>
 				<a class="text-info d-block my-3 small" @click.prevent="showFormFields">Add another card or payment method</a>
 			</div>
+			<div class="d-flex justify-content-center">
+				<img src="../../assets/images/braintree.png" alt="" width="250px">
+			</div>
 		</div>
 	</div>
 </template>
