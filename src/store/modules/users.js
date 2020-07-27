@@ -12,11 +12,11 @@ const getters = {
 	getId: (state) => state.id,
 	getUser: (state) => state.user,
 	getChattedWith: (state) => state.user.chattedWith || [],
-	isLoggedIn: (state) => !!state.id && !!state.user.bio,
-	isAdmin: (state) => state.user && state.user.roles && state.user.roles.isAdmin,
-	isTutor: (state) => state.user && state.user.roles && state.user.roles.isTutor,
-	questionsLeft: (state) => state.user && state.user.account ? state.user.account.questions : 0,
-	isSubscribed: (state) => state.user && state.user.account && state.user.account.subscription && state.user.account.subscription.id
+	isLoggedIn: (state) => !!(state.id && state.user.bio),
+	isAdmin: (state) => state.user?.roles?.isAdmin ?? false,
+	isTutor: (state) => state.user?.roles?.isTutor ?? false,
+	isSubscribed: (state) => (state.user?.account?.subscription?.id && state.user.account?.subscription?.status === 'Active') ?? false,
+	questionsLeft: (state) => state.user?.account?.questions ?? 0
 }
 
 const mutations = {
