@@ -1,9 +1,9 @@
 <template>
 	<div>
 		<helper-spinner v-if="isLoading"/>
-		<div v-else>
+		<div class="container-fluid py-3" v-else>
 			<helper-message message="No questions available at the moment. Try adding some new ones." v-if="questions.length === 0" />
-			<div class="container pt-3" v-else>
+			<div v-else>
 				<question-card :question="question" v-for="question in questions" :key="question['.key']" />
 				<div class="d-flex justify-content-end mb-3" v-if="hasMore">
 					<button class="btn-success" @click="fetchOlderQuestions">

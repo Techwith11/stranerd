@@ -1,6 +1,6 @@
 <template>
 	<Default>
-		<div class="container">
+		<div class="container py-3">
 			<helper-spinner v-if="isLoading"/>
 			<div v-else>
 				<user-info :user="user" v-if="user['.key']" />

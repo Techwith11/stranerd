@@ -1,21 +1,19 @@
 <template>
 	<Default>
 		<helper-spinner v-if="isLoading"/>
-		<div v-else>
+		<div class="container-fluid py-3" v-else>
 			<helper-message message="No courses available at the moment. Check again later" v-if="courses.length === 0" />
 			<div v-else>
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-6" v-for="course in courses" :key="course['.key']">
-							<course-card :course="course"/>
-						</div>
+				<div class="row">
+					<div class="col-lg-6" v-for="course in courses" :key="course['.key']">
+						<course-card :course="course"/>
 					</div>
-					<div class="d-flex justify-content-end my-3" v-if="hasMore">
-						<button class="btn-success" @click="fetchOlderCourses">
-							<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderCoursesLoading"></i>
-							<span>Fetch More</span>
-						</button>
-					</div>
+				</div>
+				<div class="d-flex justify-content-end my-3" v-if="hasMore">
+					<button class="btn-success" @click="fetchOlderCourses">
+						<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderCoursesLoading"></i>
+						<span>Fetch More</span>
+					</button>
 				</div>
 			</div>
 		</div>

@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container-fluid py-3">
 		<upgrade-user-to-admin />
 		<upgrade-user-to-tutor />
 	</div>

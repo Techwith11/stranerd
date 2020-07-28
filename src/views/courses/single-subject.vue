@@ -1,9 +1,9 @@
 <template>
 	<Default>
-		<div class="container">
+		<div class="container-fluid py-3">
 			<helper-spinner v-if="isLoading" />
 			<div v-else>
-				<router-link class="text-muted h6 text-decoration-none my-3 d-inline-block text-capitalize" :to="`/courses`">
+				<router-link class="text-muted h5 text-decoration-none my-3 d-inline-block text-capitalize" :to="`/courses`">
 					<i class="fas fa-arrow-left mr-2"></i>
 					<span>All</span>
 				</router-link>
@@ -54,7 +54,7 @@
 					{
 						vmid: 'keywords',
 						name: 'keywords',
-						content: [ this.subject.name || '', ...this.subject.modules.map(m => m.name) || []].join(', ')
+						content: [ this.subject.name || '', ...this.subject.modules?.map(m => m.name) || []].join(', ')
 					}
 				]
 			}

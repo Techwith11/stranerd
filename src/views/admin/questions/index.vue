@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container-fluid py-3">
 		<helper-spinner v-if="isLoading" />
 		<div v-else>
 			<subject-card v-for="subject in getAllSubjects" :key="subject['.key']" :subject="subject"/>

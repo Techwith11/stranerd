@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container-fluid py-3">
 		<div class="d-flex justify-content-end">
 			<button class="btn btn-success my-3" @click="setCreateModalSubject">Add New Subject</button>
 		</div>

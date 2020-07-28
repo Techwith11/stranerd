@@ -1,6 +1,6 @@
 <template>
 	<Default>
-		<div class="container mt-3 mb-5">
+		<div class="container pt-3 pb-5">
 			<helper-spinner v-if="isLoading"/>
 			<div v-else>
 				<div v-if="isTutor">

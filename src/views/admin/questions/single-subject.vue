@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container-fluid py-3">
 		<helper-spinner v-if="isLoading" />
 		<div v-else>
 			<router-link class="text-muted h6 text-decoration-none my-3 d-inline-block text-capitalize" :to="`/admins/questions`">

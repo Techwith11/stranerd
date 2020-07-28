@@ -1,10 +1,10 @@
 <template>
 	<Default>
 		<helper-spinner v-if="isLoading"/>
-		<div v-else>
+		<div v-else class="container py-3">
 			<helper-message message="No posts available at the moment. Check again later" v-if="posts.length === 0" />
 			<div v-else>
-				<div class="container">
+				<div>
 					<post-card :post="post" v-for="post in posts" :key="post['.key']" />
 					<div class="d-flex justify-content-end my-3" v-if="hasMore">
 						<button class="btn-success" @click="fetchOlderPosts">

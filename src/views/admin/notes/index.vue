@@ -3,8 +3,8 @@
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<helper-message message="No notes available at the moment. Try adding some new ones." v-if="notes.length === 0" />
-			<div v-else>
-				<div class="container">
+			<div v-else class="container-fluid py-3">
+				<div>
 					<note-card :note="note" v-for="note in notes" :key="note['.key']" />
 					<div class="d-flex justify-content-end mb-3" v-if="hasMore">
 						<button class="btn-success" @click="fetchOlderNotes">

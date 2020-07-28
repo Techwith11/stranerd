@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<helper-spinner v-if="isLoading"/>
-		<div v-else>
+		<div v-else class="py-3">
 			<single-video :course="course" />
 			<single-nav />
 			<single-overview v-if="isOverview" :course="course" />

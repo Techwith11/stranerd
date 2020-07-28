@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<helper-spinner v-if="isLoading"/>
-		<div class="container py-3" v-else>
+		<div class="container-fluid py-3" v-else>
 			<helper-message message="No posts at the moment. Check again later" v-if="posts.length === 0" />
 			<div v-else>
 				<post-card v-for="post in posts" :key="post['.key']" :post="post" />

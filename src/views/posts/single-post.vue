@@ -1,6 +1,6 @@
 <template>
 	<Default>
-		<div class="container">
+		<div class="container-fluid py-3">
 			<helper-spinner v-if="isLoading"/>
 			<div v-else>
 				<post-info :post="post" :user="user" />
