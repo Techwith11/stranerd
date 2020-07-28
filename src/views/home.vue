@@ -1,30 +1,29 @@
 <template>
 	<Default>
-		<div v-if="isLoggedIn" class="container-fluid p-0">
-			<div class="row">
-				<div class="col-lg-5 d-none d-lg-block mb-3 pl-0">
+		<div v-if="isLoggedIn" class="container-fluid p-0 p-lg-3">
+			<div class="d-flex flex-column flex-xl-row">
+				<div class="d-none d-xl-block mb-3 mr-xl-1 col-xl-5 p-0">
 					<show-ask-question />
 				</div>
-				<div class="col-lg-7 mb-3 px-0">
+				<div class="mb-3 mr-xl-1 col-xl-7 p-0">
 					<recent-posts />
 				</div>
-				<router-link class="d-lg-none floating-button text-decoration-none" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
+				<router-link class="d-xl-none floating-button text-white" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
 			</div>
 			<div class="py-3"></div>
-			<div class="row">
-				<div class="col-xl-6 px-0 mb-3">
-					<recent-courses />
-				</div>
-				<div class="col-lg-6 col-xl-3 px-0 pl-md-2 mb-3">
+			<div class="d-flex flex-column flex-lg-row">
+				<div class="flex-grow-1 mb-3 mr-lg-1">
 					<recent-sessions />
 				</div>
-				<div class="col-lg-6 col-xl-3 px-0 pl-md-2 mb-3">
+				<div class="flex-grow-1 mb-3 mr-lg-1">
 					<top-tutors />
 					<subscribe-card v-if="!isSubscribed" />
 				</div>
 			</div>
+			<div class="py-3"></div>
+			<recent-courses class="mb-3" />
 		</div>
-		<div v-else class="m-n3">
+		<div v-else class="">
 			<cta />
 			<why-us />
 			<ask-question />
@@ -45,11 +44,11 @@
 	import WhatMakesUsDifferent from '@/components/home/notLoggedIn/HomeWhatMakesUsDifferent'
 	import Mckenwin from '@/components/home/notLoggedIn/HomeMckenwin'
 	import Pricing from '@/components/home/notLoggedIn/HomePricing'
-	import TopTutors from '@/components/home/loggedIn/TopTutors'
 	import ShowAskQuestion from '@/components/home/loggedIn/AskQuestion'
-	import RecentSessions from '@/components/home/loggedIn/RecentSessions'
 	import RecentPosts from '@/components/home/loggedIn/RecentPosts'
 	import RecentCourses from '@/components/home/loggedIn/RecentCourses'
+	import RecentSessions from '@/components/home/loggedIn/RecentSessions'
+	import TopTutors from '@/components/home/loggedIn/TopTutors'
 	import SubscribeCard from '@/components/home/loggedIn/SubscribeCard'
 	export default {
 		name: 'Home',
@@ -61,11 +60,11 @@
 			'what-makes-us-different': WhatMakesUsDifferent,
 			'mckenwin': Mckenwin,
 			'pricing': Pricing,
-			'top-tutors': TopTutors,
 			'show-ask-question': ShowAskQuestion,
 			'recent-posts': RecentPosts,
 			'recent-courses': RecentCourses,
 			'recent-sessions': RecentSessions,
+			'top-tutors': TopTutors,
 			'subscribe-card': SubscribeCard,
 		},
 		computed: mapGetters(['isLoggedIn','getUser','isSubscribed']),
@@ -88,3 +87,9 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	.mw-40{ width: 40% !important; }
+	.flex-grow-5{ flex-grow: 5; }
+	.flex-grow-7{ flex-grow: 7; }
+</style>

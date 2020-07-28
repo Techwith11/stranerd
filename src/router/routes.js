@@ -52,7 +52,7 @@ export default [
         path: '/courses/:subject/:module/:id',
         name: 'Course',
         component: () => import(/* webpackChunkName: "course" */ '@/views/courses/single-course'),
-        meta: { requiresAuth: true, requiresSubscription: true }
+        meta: { requiresAuth: true }
     },
     {
         path: '/tutors',
@@ -64,7 +64,7 @@ export default [
         path: '/users/:id',
         name: 'User',
         component: () => import(/* webpackChunkName: "user" */ '@/views/users/single-user'),
-        meta: { requiresAuth: true, requiresSubscription: true }
+        meta: { requiresAuth: true }
     },
     {
         path: '/sessions',

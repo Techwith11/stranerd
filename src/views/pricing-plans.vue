@@ -24,6 +24,7 @@
 								<li class="list-group-item">{{ plan.questions }} questions per month</li>
 								<li class="list-group-item">Unlimited access to resources</li>
 								<li class="list-group-item">Unlimited tutors</li>
+								<li class="list-group-item">Discounted prices on sessions</li>
 								<li class="list-group-item">24/7 support</li>
 							</ul>
 						</div>

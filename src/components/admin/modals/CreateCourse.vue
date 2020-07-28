@@ -12,8 +12,8 @@
 						:class="{'is-invalid': $v.course.title.$error, 'is-valid': !$v.course.title.$invalid}">
 				</div>
 				<div class="form-group my-3">
-					<vue-editor class="rounded border" v-model.trim="$v.course.description.$model" :editor-toolbar="customToolBar"
-						:class="{'border-danger': $v.course.description.$error, 'border-success': !$v.course.description.$invalid}" placeholder="Course description..."
+					<editor :model="$v.course.description.$model" path='courses/description' :onChange="(content) => {this.$v.course.description.$model = content}"
+						:valid="!$v.course.description.$invalid" :error="$v.course.description.$error" placeholder="Course description"
 					/>
 				</div>
 				<div class="form-group my-3">

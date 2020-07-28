@@ -9,8 +9,8 @@
 		</div>
 		<div class="form-group my-3">
 			<h6>Body</h6>
-			<vue-editor class="rounded border" v-model.trim="$v.post.body.$model" useCustomImageHandler @image-added="handleImageAdded"
-				:class="{'border-danger': $v.post.body.$error, 'border-success': !$v.post.body.$invalid}" placeholder=""
+			<editor :model="$v.post.body.$model" path='posts/body' :onChange="(content) => {this.$v.post.body.$model = content}"
+				:valid="!$v.post.body.$invalid" :error="$v.post.body.$error" placeholder=""
 			/>
 			<small class="small text-muted">Include all information necessary for someone to answer your question</small>
 		</div>
@@ -73,19 +73,11 @@
 			getModules(){ return this.post.subject ? this.getAllSubjects.find(s => s.name === this.post.subject).modules : [] }
 		},
 		methods: {
-			...mapActions(['setCreatePost','createPost','uploadFromEditor','clearCreatePost','setAuthModalLogin','setPostModalNotify']),
+			...mapActions(['setCreatePost','createPost','clearCreatePost','setAuthModalLogin','setPostModalNotify']),
 			login(){
 				this.setCreatePost(this.post)
 				this.setAuthModalLogin()
 				this.$router.push('/ask-a-question').catch(error => error)
-			},
-			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
-				try{
-					await this.uploadFromEditor({
-						file, editor, cursorLocation, resetUploader,
-						path: 'editor/posts/body'
-					})
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 			},
 			splitTag(){
 				this.tag.split(' ').map(tag => {

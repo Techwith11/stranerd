@@ -1,12 +1,14 @@
 <template>
-	<div class="mt-auto mb-3 d-flex flex-column align-items-end">
-		<vue-editor class="rounded border w-100" v-model.trim="$v.body.$model" useCustomImageHandler @image-added="handleImageAdded"
-			placeholder="Leave a reply"
+	<div class="mt-auto mb-3">
+		<editor :model="$v.body.$model" :path='`editor/posts/${$route.params.id}/replies/body`' :onChange="(content) => {this.$v.body.$model = content}"
+			:valid="!$v.body.$invalid" :error="$v.body.$error" placeholder="Leave a reply"
 		/>
-		<button @click.prevent="sendReply" class="mt-3" :class="$v.$invalid ? 'bg-gray' : 'btn-success'" :disabled="isLoading || $v.$invalid">
-			<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
-			<span>Submit</span>
-		</button>
+		<div class="d-flex justify-content-end">
+			<button @click.prevent="sendReply" class="mt-3" :class="$v.$invalid ? 'bg-gray' : 'btn-success'" :disabled="isLoading || $v.$invalid">
+				<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
+				<span>Submit</span>
+			</button>
+		</div>
 	</div>
 </template>
 
@@ -22,18 +24,9 @@
 			body: { required }
 		},
 		methods:{
-            ...mapActions(['uploadFromEditor','sendPostReply']),
-			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
-				this.isLoading = true
-				try{
-					await this.uploadFromEditor({
-						file, editor, cursorLocation, resetUploader,
-						path: `editor/posts/${this.$route.params.id}/replies/body`
-					})
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-				this.isLoading = false
-			},
+            ...mapActions(['sendPostReply']),
 			async sendReply(){
+				this.isLoading = true
 				if(this.$v.$invalid){ return }
 				let body = this.body
 				this.body = ''
@@ -41,23 +34,8 @@
 				try{
 					await this.sendPostReply({ body, id: this.$route.params.id })
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message })}
+				this.isLoading = false
 			}
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
-	i{
-		font-size: 1.5rem;
-	}
-	@media screen and (min-width: 768px){
-		i{
-			font-size: 1.75rem;
-		}
-	}
-	@media screen and (min-width: 992px){
-		i{
-			font-size: 2.0rem;
-		}
-	}
-</style>

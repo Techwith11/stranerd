@@ -10,13 +10,15 @@ module.exports = functions.https.onCall(async (data, context) => {
 		let ref = admin.firestore().collection('users').doc(data.tutor)
 
 		let tutor = (await ref.get()).data().tutor
-		let rating = tutor.rating
-		let length = tutor.reviews
+		let rating = Number(tutor.rating) ?? 0
+		let length = Number(tutor.reviews) ?? 0
 
-		let overall = Number(Number((rating * length + data.review.rating) / (length + 1)).toFixed(2))
+		let totalRating = rating * length + data.review.rating
+		let totalCount = length + 1
+		let average = Number(totalRating / totalCount).toFixed(2)
 
 		return await ref.set({
-			tutor: { reviews: length + 1, rating: overall },
+			tutor: { reviews: totalCount, rating: average },
 		}, { merge: true })
 	}catch(error){
 		throw new functions.https.HttpsError('unknown', error.message)

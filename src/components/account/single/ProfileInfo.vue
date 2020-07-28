@@ -42,10 +42,9 @@
 					</li>
 					<li class="d-flex justify-content-between align-items-center mt-2">
 						<span>Average Rating</span>
-						<span>{{ getUser.tutor.rating }}</span>
+						<rating-stars :rating="getUser.tutor.rating" />
 					</li>
 				</ul>
-
 			</div>
 		</div>
 	</div>
@@ -53,6 +52,7 @@
 
 <script>
 	import { mapGetters, mapActions } from 'vuex'
+	import RatingStars from '@/components/helpers/RatingStars'
 	export default {
 		computed: {
 			...mapGetters(['getUser', 'getDefaultImage']),
@@ -62,6 +62,9 @@
 		},
 		methods: {
 			...mapActions(['setAccountModalEditProfile'])
+		},
+		components: {
+			'rating-stars': RatingStars
 		}
 	}
 </script>

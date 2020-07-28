@@ -122,13 +122,14 @@
 <script>
     import { mapGetters, mapActions } from 'vuex'
     import { logout } from '@/config/auth'
+    import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
     export default {
         methods: {
             ...mapActions(['setAuthModalRegisterStudent', 'setAuthModalLogin','setCartModalOverview']),
-            toggleAccountDropDown: () => window.closeAdminDropdown(),
-            toggleAdminDropDown: () => window.closeAccountDropdown(),
+            toggleAccountDropDown: () => closeAdminDropdown(),
+            toggleAdminDropDown: () => closeAccountDropdown(),
             showCartModal(){
-                window.closeNavbar()
+                closeNavbar()
                 this.setCartModalOverview()
             },
             async logout(){

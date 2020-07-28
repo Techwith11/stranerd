@@ -1,23 +1,29 @@
 <template>
 	<div class="container small p-2 p-lg-4">
-		<ul class="list-group list-unstyled" id="scroller" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
-			<li class="d-block text-center small text-muted mb-2" v-if="hasMore">
-				<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderDiscussionsLoading"></i>
-				<span @click="fetchOlderDiscussions">Fetch Older</span>
-			</li>
-			<li class="alert alert-warning py-1 border my-1" v-for="discussion in discussions" :key="discussion['.key']"
-				:class="discussion.userId === getId ? 'ml-auto' : 'mr-auto'">
-				<span class="d-block">{{ discussion.body }}</span>
-				<small class="small text-black">{{ discussion.dates.createdAt.seconds || Date.now() / 1000 | getDateOrTime }}</small>
-			</li>
-		</ul>
-		<div class="d-flex flex-column flex-lg-row align-items-lg-center">
-			<textarea rows="3" class="form-control my-2 mr-lg-4" placeholder="Comment ..." v-model.trim="$v.content.$model"></textarea>
-			<button class="btn-success" :disabled="$v.$invalid || isLoading" @click="submit">
-				<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
-				<span v-else>Submit</span>
-			</button>
+		<div v-if="isSubscribed">
+			<ul class="list-group list-unstyled" id="scroller" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
+				<li class="d-block text-center small text-muted mb-2" v-if="hasMore">
+					<i class="fas text-info fa-spinner fa-spin mr-1" v-if="isOlderDiscussionsLoading"></i>
+					<span @click="fetchOlderDiscussions">Fetch Older</span>
+				</li>
+				<li class="alert alert-warning py-1 border my-1" v-for="discussion in discussions" :key="discussion['.key']"
+					:class="discussion.userId === getId ? 'ml-auto' : 'mr-auto'">
+					<span class="d-block">{{ discussion.body }}</span>
+					<small class="small text-black">{{ discussion.dates.createdAt.seconds || Date.now() / 1000 | getDateOrTime }}</small>
+				</li>
+			</ul>
+			<div class="d-flex flex-column flex-lg-row align-items-lg-center">
+				<textarea rows="3" class="form-control my-2 mr-lg-4" placeholder="Comment ..." v-model.trim="$v.content.$model"></textarea>
+				<button class="btn-success" :disabled="$v.$invalid || isLoading" @click="submit">
+					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
+					<span v-else>Submit</span>
+				</button>
+			</div>
 		</div>
+		<p v-else>
+			<span>You need an active subscription to gain access to this course's documents. </span>
+			<router-link to="/pricing-plans">Subscribe Now</router-link>
+		</p>
 	</div>
 </template>
 
@@ -42,7 +48,7 @@
 				type: Object
 			}
 		},
-		computed: mapGetters(['getId']),
+		computed: mapGetters(['getId','isSubscribed']),
 		methods:{
 			...mapActions(['sendDiscussion']),
 			async fetchDiscussions(){

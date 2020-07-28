@@ -17,21 +17,22 @@ module.exports = functions.https.onCall(async (data, context) => {
 
 		let user = (await ref.get()).data()
 
-		let upgrade = {}
-		upgrade[data.course] = {}
-		let levels = {}
-		levels[data.course] = 0
-		let qualifications = {}
-		qualifications[data.course] = data.qualification
-		let rating = user.roles.isTutor ? user.tutor.rating : 0
-		let reviews = user.roles.isTutor ? user.tutor.reviews : 0
-		let canTeach = user.roles.isTutor ? user.tutor.canTeach : false
-		let courses = user.roles.isTutor ? [...user.tutor.courses, data.course] : [data.course]
+		if(user.tutor?.courses.includes(data.course)){
+			let upgrade = { [data.course]: {} }
+			let levels = { [data.course]: 0 }
+			let qualifications = { [data.course]: data.qualification }
+			let rating = user.tutor?.rating ?? 0
+			let reviews = user.tutor?.reviews ?? 0
+			let canTeach = user.tutor?.canTeach ?? false
+			let courses = [...(user.tutor?.courses ?? []), data.course]
 
-		await ref.set({
-			roles: { isTutor: true },
-			tutor: { upgrade, levels, reviews, rating, canTeach, qualifications, courses }
-		}, { merge: true })
+			await ref.set({
+				roles: { isTutor: true },
+				tutor: { upgrade, levels, reviews, rating, canTeach, qualifications, courses }
+			}, { merge: true })
+		}else{
+			throw new functions.https.HttpsError('unknown', `${user.bio.name} is already a ${data.course} tutor`)
+		}
 
 		return true
 	}catch(error){

@@ -1,7 +1,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 @import './variables.scss';
-@import 'qleditor';
+@import './qleditor.scss';
 @import './modal.scss';
 
 body{
@@ -10,15 +10,14 @@ body{
 	font-family: Poppins, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	* * {
+	.form-group {
 		min-width: auto;
 		max-width: 100%;
 	}
 }
 
-.container-fluid .row{
-	margin: 0;
-	padding: 0;
+.text-black{
+	color: $text-black;
 }
 
 a:hover {

@@ -12,8 +12,8 @@
 						:class="{'is-invalid': $v.course.title.$error, 'is-valid': !$v.course.title.$invalid}">
 				</div>
 				<div class="form-group my-3">
-					<vue-editor class="rounded border" v-model.trim="$v.course.description.$model" :editor-toolbar="customToolBar"
-						:class="{'border-danger': $v.course.description.$error, 'border-success': !$v.course.description.$invalid}" placeholder="Course description..."
+					<editor :model="$v.course.description.$model" path='courses/description' :onChange="(content) => {this.$v.course.description.$model = content}"
+						:valid="!$v.course.description.$invalid" :error="$v.course.description.$error" placeholder="Course description"
 					/>
 				</div>
 				<div class="form-group my-3">
@@ -95,15 +95,9 @@
 			image: null,
 			documents: [],
 			isLoading: false,
-			page: 1,
-			customToolBar: [
-				[{header: [false,1,2,3,4,5,6]}], ['bold','italic','underline','strikethrough'],
-				[{align:''},{align:'center'},{align:'right'},{align:'justify'}],
-				['blockquote','code-block'], [{list:'ordered'},{list:'bullet'},{list:'check'}],
-				[{color:[]},{background:[]}], ['link'/*,'image','video'*/],['clean']
-			]
+			page: 1
 		}),
-		async mounted(){
+		async created(){
 			this.course = this.getEditMeta
 			this.video = this.course.video
 			this.image = this.course.image
