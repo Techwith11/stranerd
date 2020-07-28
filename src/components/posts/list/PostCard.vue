@@ -5,8 +5,8 @@
 			<span class="text-capitalize">{{ post.module }}, </span>
 			<span class="text-capitalize">{{ post.subject }}</span>
 		</p>
-		<p class="card-text" v-html="post.body"></p>
-		<router-link :to="`/posts/${post['.key']}`" class="card-link">See comments</router-link>
+		<p class="card-text">{{ extractedHTML }}</p>
+		<router-link :to="`/posts/${post['.key']}`" class="card-link">See all replies</router-link>
 		<div class="d-flex align-items-center my-3">
 			<img :src="getImageLink" alt="" class="profile-image" id="ownerImage">
 			<div>
@@ -20,6 +20,7 @@
 <script>
 	import { firestore } from '@/config/firebase'
 	import { mapGetters } from 'vuex'
+	import { extractTextFromHTML } from '@/config/formatters'
 	export default {
 		data: () => ({
 			user: {}
@@ -36,6 +37,7 @@
 		},
 		computed: {
 			getName(){ return this.user.bio?.name ?? '' },
+			extractedHTML(){ return extractTextFromHTML(this.post.body) },
 			getCreatedDate(){
 				let createdAt = this.post.dates.createdAt
 				let date = createdAt ? new Date(createdAt.seconds * 1000) : new Date()
