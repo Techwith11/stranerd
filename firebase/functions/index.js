@@ -26,6 +26,7 @@ exports.createPaymentMethod = require('./onCall/payments/createPaymentMethod')
 exports.removePaymentMethod = require('./onCall/payments/removePaymentMethod')
 exports.makePayment = require('./onCall/payments/makePayment')
 exports.subscribeToPlan = require('./onCall/payments/subscribeToPlan')
+exports.updatePaymentMethodForSubscription = require('./onCall/payments/updatePaymentMethodForSubscription')
 exports.cancelSubscription = require('./onCall/payments/cancelSubscription')
 
 exports.makeTutor = require('./onCall/roles/makeTutor')
