@@ -25,8 +25,8 @@
 				<span class="small" v-if="$v.post.description.$error">Must be at least 3 characters long</span>
 			</div>
 			<div class="form-group my-3">
-				<vue-editor class="rounded border" v-model.trim="$v.post.body.$model" useCustomImageHandler @image-added="handleImageAdded"
-					:class="{'border-danger': $v.post.body.$error, 'border-success': !$v.post.body.$invalid}" placeholder="Full content"
+				<editor :model="$v.post.body.$model" path='posts/body' :onChange="(content) => {this.$v.post.body.$model = content}"
+					:valid="!$v.post.body.$invalid" :error="$v.post.body.$error" placeholder="Full content"
 				/>
 				<small class="small text-danger d-block" v-if="$v.post.body.$error">Post body is required</small>
 			</div>
@@ -69,7 +69,7 @@
 		}),
 		computed: mapGetters(['getEditMeta']),
 		methods:{
-			...mapActions(['closeEditModal','uploadFromEditor','clearEditMeta','editBlogPost']),
+			...mapActions(['closeEditModal','clearEditMeta','editBlogPost']),
 			catchImage(e){ e.target.files[0] && e.target.files[0].type.startsWith('image/') ? this.image = e.target.files[0] : new window.Toast({ icon:'error', title: 'File is not an image'})},
 			splitTag(){
 				let tag = this.tag.trim().split(',')[0].toLowerCase()
@@ -77,14 +77,6 @@
 				tag && !this.post.tags.includes(tag) ? this.post.tags.push(tag) : null
 			},
 			removeTag(tag){ this.post.tags = this.post.tags.filter(item => tag !== item) },
-			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
-				try{
-					await this.uploadFromEditor({
-						file, editor, cursorLocation, resetUploader,
-						path: 'editor/blog/body'
-					})
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-			},
 			async submitPost() {
 				this.isLoading = true
 				try {
@@ -98,7 +90,7 @@
 				this.isLoading = false
 			}
 		},
-		mounted(){
+		created(){
 			this.post = this.getEditMeta
 			this.image = this.post.image
 			this.clearEditMeta()

@@ -7,8 +7,8 @@
 		</div>
 		<form class="mx-2">
 			<div class="form-group my-3">
-				<vue-editor class="rounded border" v-model.trim="$v.question.title.$model" useCustomImageHandler @image-added="handleImageAdded" :editor-toolbar="customToolBar"
-					:class="{'border-danger': $v.question.title.$error, 'border-success': !$v.question.title.$invalid}" placeholder="Question..."
+				<editor :model="$v.question.title.$model" path='tests/tutors/tests/title' :onChange="(content) => {this.$v.question.title.$model = content}"
+					:valid="!$v.question.title.$invalid" :error="$v.question.title.$error" placeholder="Question body"
 				/>
 				<span class="small" v-if="$v.question.title.$error">Question is required</span>
 			</div>
@@ -80,32 +80,18 @@
 				level: 1
 			},
 			isLoading: false,
-			answers: ['a','b','c','d'],
-			customToolBar: [
-				[{header: [false,1,2,3,4,5,6]}], ['bold','italic','underline','strikethrough'],
-				[{align:''},{align:'center'},{align:'right'},{align:'justify'}],
-				['blockquote','code-block'], [{list:'ordered'},{list:'bullet'},{list:'check'}],
-				[{color:[]},{background:[]}], ['link','image',/*'video'*/],['clean']
-			]
+			answers: ['a','b','c','d']
 		}),
 		computed: {
 			...mapGetters(['getEditMeta', 'getAllSubjects']),
 			getModules(){ return this.question.subject ? this.getAllSubjects.find(s => s.name === this.question.subject).modules : [] }
 		},
-		async mounted(){
+		async created(){
 			this.question = this.getEditMeta
 			this.clearEditMeta()
 		},
 		methods:{
-			...mapActions(['closeEditModal','uploadFromEditor','clearEditMeta','editQuestion']),
-			async handleImageAdded(file, editor, cursorLocation, resetUploader) {
-				try{
-					await this.uploadFromEditor({
-						file, editor, cursorLocation, resetUploader,
-						path: 'editor/tests/tutors/tests/title'
-					})
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-			},
+			...mapActions(['closeEditModal','clearEditMeta','editQuestion']),
 			async submitQuestion() {
 				this.isLoading = true
 				try{
