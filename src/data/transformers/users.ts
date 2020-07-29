@@ -7,7 +7,7 @@ export default class UserTransformer implements BaseTransformer<UserEntity, User
         return {  }
     }
 
-    public toJSON() {
+    public toJSON(entity: UserEntity) {
         return {  }
     }
 

@@ -7,7 +7,7 @@ export class CourseTransformer implements BaseTransformer<CourseEntity, CourseMo
         return {  };
     }
 
-    public toJSON() {
+    public toJSON(entity: CourseEntity) {
         return {  };
     }
 

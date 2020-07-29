@@ -7,7 +7,7 @@ export default class SessionTransformer implements BaseTransformer<SessionEntity
         return {  }
     }
 
-    public toJSON() {
+    public toJSON(entity: SessionEntity) {
         return {  }
     }
 

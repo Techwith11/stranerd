@@ -7,7 +7,7 @@ export default class PostTransformer implements BaseTransformer<PostEntity, Post
         return {  }
     }
 
-    public toJSON() {
+    public toJSON(entity: PostEntity) {
         return {  }
     }
 
