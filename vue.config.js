@@ -3,9 +3,10 @@ const path = require('path')
 module.exports = {
 	chainWebpack: config => {
 		config.resolve.alias
+			.set('@root', path.join(__dirname, 'src'))
 			.set('@', path.join(__dirname, 'src/presentation'))
 			.set('@data', path.join(__dirname, 'src/data'))
-			.set('@repositories', path.join(__dirname, 'src/repositories'))
+			.set('@domain', path.join(__dirname, 'src/domain'))
 	},
 	css: {
 		loaderOptions: {
