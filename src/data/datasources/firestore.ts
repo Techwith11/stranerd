@@ -1,6 +1,5 @@
 import firebase,{ firestore } from '@root/helpers/firebase'
-import BaseSource from '@data/sources/base'
-import type { GetClauses } from '@data/sources/base'
+import BaseSource, { GetClauses } from '@data/datasources/base'
 
 export default class FirestoreSource implements BaseSource {
 	async find(collection: string, id: string){
