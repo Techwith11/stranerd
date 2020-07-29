@@ -1,7 +1,7 @@
 import BaseDataSource, { GetClauses } from '@data/datasources/base'
 
-export default class BaseRepository {
-    protected readonly collectionName: string = ''
+export default abstract class BaseRepository {
+    protected abstract readonly collectionName: string
     private readonly dataSource: BaseDataSource
 
     constructor(dataSource: BaseDataSource) {
