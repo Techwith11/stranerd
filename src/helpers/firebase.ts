@@ -41,7 +41,7 @@ if(process.env.NODE_ENV === 'production'){
 	auth.onAuthStateChanged(async user => store.dispatch('setId', user ? user.uid : null))
 }
 
-let uploadToMockServer = async (path, file) => {
+let uploadToMockServer = async (path: string, file: File) => {
 	let data = new FormData()
 	data.set('path', path)
 	data.set('file', file)
@@ -51,7 +51,7 @@ let uploadToMockServer = async (path, file) => {
 	})
 	return res.json()
 }
-export const uploadFile = async (path, file) => {
+export const uploadFile = async (path: string, file: File) => {
 	try{
 		let link = `${path}/${Date.now()}_${file.name}`
 		if(process.env.NODE_ENV === 'production'){
