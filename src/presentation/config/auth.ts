@@ -1,7 +1,14 @@
 import firebase, { auth, firestore } from '@/config/firebase'
 import store from '@/store'
 import router from '@/router'
+import { notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
+
+type User = {
+	name?: string
+	email: string
+	password: string
+}
 
 let afterAuthHook = async () => {
 	let route = store.getters.getIntendedRoute
@@ -11,23 +18,23 @@ let afterAuthHook = async () => {
 	await store.dispatch('closeAuthModal')
 }
 
-export const registerWithEmail = async ({ name, email, password }) => {
+export const registerWithEmail = async ({ name, email, password }: User) => {
 	try{
 		let record = await auth.createUserWithEmailAndPassword(email, password)
-		await firestore.collection('users').doc(record.user.uid).set({ bio: { name }},{ merge: true })
-		await store.dispatch('setId', record.user.uid)
+		await firestore.collection('users').doc(record.user?.uid).set({ bio: { name }},{ merge: true })
+		await store.dispatch('setId', record.user?.uid)
 		await afterAuthHook()
 	}catch(error){
-		new window.Toast({ icon: 'error', title: error.message })
+		await notify({ icon: 'error', title: error.message })
 	}
 }
 
-export const loginWithEmail = async ({ email, password }) => {
+export const loginWithEmail = async ({ email, password }: User) => {
 	try{
 		await auth.signInWithEmailAndPassword(email, password)
 		await afterAuthHook()
 	}catch(error) {
-		new window.Toast({ icon: 'error', title: error.message })
+		await notify({ icon: 'error', title: error.message })
 	}
 }
 
@@ -35,15 +42,15 @@ export const loginWithGoogle = async () => {
 	let googleProvider = new firebase.auth.GoogleAuthProvider()
 	try{
 		let record = await auth.signInWithPopup(googleProvider)
-		await firestore.collection('users').doc(record.user.uid).set({ bio: { name }},{ merge: true })
-		await store.dispatch('setId', record.user.uid)
+		await firestore.collection('users').doc(record.user?.uid).set({ bio: { name }},{ merge: true })
+		await store.dispatch('setId', record.user?.uid)
 		await afterAuthHook()
 	}catch (error) {
-		new window.Toast({ icon: 'error', title: error.message })
+		await notify({ icon: 'error', title: error.message })
 	}
 }
 
-export const loginAsDevUser = async (id) => {
+export const loginAsDevUser = async (id: string) => {
 	await store.dispatch('setId', id)
 	await afterAuthHook()
 }

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueCompositionAPI from '@vue/composition-api'
 import VueMeta from 'vue-meta'
 import Vuelidate from 'vuelidate'
+// @ts-ignore
 import VueChatScroll from 'vue-chat-scroll'
 import SweetAlert from 'sweetalert2'
 import '@/config/layouts'
@@ -17,8 +18,11 @@ export const setup = () => {
     Vue.use(Vuelidate)
     Vue.use(VueChatScroll)
 
+    // @ts-ignore
     window.Fire = new Vue()
+    // @ts-ignore
     window.SweetAlert = SweetAlert
+    // @ts-ignore
     window.Toast = SweetAlert.mixin({
         toast: true,
         position: "top-end",

@@ -1,9 +1,9 @@
 import { Workbox, messageSW } from 'workbox-window'
 
 if(process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator){
-	let wb = new Workbox('./service_worker.js')
-	let registration;
-	let showSkipWaitingPrompt = async () => {
+	const wb = new Workbox('./service_worker.js')
+	let registration: ServiceWorkerRegistration | undefined;
+	const showSkipWaitingPrompt = async () => {
 		wb.addEventListener('controlling', window.location.reload)
 		if(registration && registration.waiting){
 			await messageSW(registration.waiting, { type: 'SKIP_WAITING' })
