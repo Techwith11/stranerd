@@ -1,7 +1,11 @@
+const path = require('path')
+
 module.exports = {
 	resolve: {
-		alias:{
-			'@': require('path').resolve(__dirname,'src')
+		alias: {
+			'@': path.join(__dirname, 'src/presentation'),
+			'@data': path.join(__dirname, 'src/data'),
+			'@repositories': path.join(__dirname, 'src/repositories')
 		}
 	}
 }

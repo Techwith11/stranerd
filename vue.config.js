@@ -1,4 +1,12 @@
+const path = require('path')
+
 module.exports = {
+	chainWebpack: config => {
+		config.resolve.alias
+			.set('@', path.join(__dirname, 'src/presentation'))
+			.set('@data', path.join(__dirname, 'src/data'))
+			.set('@repositories', path.join(__dirname, 'src/repositories'))
+	},
 	css: {
 		loaderOptions: {
 			sass: {
