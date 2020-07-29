@@ -1,3 +1,4 @@
+// @ts-nocheck
 import {functions} from '@/config/firebase'
 import {client, hostedFields, /*paypalCheckout*/} from 'braintree-web'
 //import paypal from 'paypal-checkout'

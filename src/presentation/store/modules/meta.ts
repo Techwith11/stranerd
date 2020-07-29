@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { firestore, functions } from '@/config/firebase'
 
 let url = `https://firebasestorage.googleapis.com/v0/b/stranerd-13084.appspot.com/o/${encodeURIComponent('users/images/user_profile.png')}?alt=media`

@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { firestore, uploadFile } from '@/config/firebase'
 
 const state = {

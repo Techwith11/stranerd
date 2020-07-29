@@ -1,3 +1,4 @@
+// @ts-nocheck
 const state = {
     modal: null,
     createModal: null,

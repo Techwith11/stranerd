@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { firestore, functions } from '@/config/firebase'
 import router from "@/router/index"
 

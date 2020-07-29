@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { firestore, uploadFile } from '@/config/firebase'
 import store from '@/store/index'
 import { checkForUnfinishedTests } from '@/config/tests'

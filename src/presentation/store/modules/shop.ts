@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { firestore, functions } from '@/config/firebase'
 
 const helpers = {

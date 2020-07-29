@@ -1,3 +1,4 @@
+// @ts-nocheck
 import firebase, { firestore, functions, uploadFile } from '@/config/firebase'
 
 let helpers = {
