@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter, { Route } from 'vue-router'
-import routes from './routes.js'
+import routes from '@/router/routes'
 import { notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
 
