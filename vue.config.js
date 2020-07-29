@@ -7,6 +7,7 @@ module.exports = {
 			.set('@', path.join(__dirname, 'src/presentation'))
 			.set('@data', path.join(__dirname, 'src/data'))
 			.set('@domain', path.join(__dirname, 'src/domain'))
+			.set('@types', path.join(__dirname, 'src/types'))
 	},
 	css: {
 		loaderOptions: {
