@@ -1,4 +1,6 @@
+export interface BaseModelI {}
+
 export default abstract class BaseModel<Entity,ModelI> {
     static fromJSON: (json: ModelI) => Entity
-    toJSON: () => ModelI
+    abstract toJSON: () => ModelI
 }

@@ -1,10 +1,10 @@
 import BaseModel  from '@data/models/base'
 import UserEntity from '@root/domains/entities/users'
 
-export interface UsersModelI {  }
+export interface UserModelI {  }
 
-export class UsersModel extends UserEntity implements BaseModel<UserEntity, UsersModelI> {
-    static fromJSON(json: UsersModelI) {
+export class UserModel extends UserEntity implements BaseModel<UserEntity, UserModelI> {
+    static fromJSON(json: UserModelI) {
         return {  };
     }
 
