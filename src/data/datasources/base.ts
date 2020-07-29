@@ -1,5 +1,3 @@
-import BaseModel from '@data/models/base'
-
 export interface WhereCondition {
 	field: string
 	condition: "<" | "<=" | "==" | ">=" | ">" | "array-contains" | "in" | "array-contains-any"
@@ -17,6 +15,6 @@ export interface GetClauses {
 export default interface BaseDataSource {
 	find: (collection: string, id: string) => Promise<object | undefined>,
 	get: (collection: string, conditions?: GetClauses) => Promise<object[]>,
-	create: (collection: string, data: BaseModel) => Promise<object>,
-	update: (collection: string, id: string, data: BaseModel) => Promise<object>
+	create: (collection: string, data: object) => Promise<object>,
+	update: (collection: string, id: string, data: object) => Promise<object>
 }
