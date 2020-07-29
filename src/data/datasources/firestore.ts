@@ -1,21 +1,23 @@
 import firebase,{ firestore } from '@root/helpers/firebase'
-import BaseSource, { GetClauses } from '@data/datasources/base'
+import BaseDataSource, { GetClauses } from '@data/datasources/base'
 
-export default class FirestoreSource implements BaseSource {
+export default class FirestoreDataSource implements BaseDataSource {
 	async find(collection: string, id: string){
 		const doc = await firestore.collection(collection).doc(id).get()
 		if(doc.exists) return { '.key': doc.id, ...doc.data() }
 		else return undefined
 	}
-	async get(collection: string, { limit, order, where }: GetClauses){
+	async get(collection: string, conditions?: GetClauses){
 		let query: firebase.firestore.Query = firestore.collection(collection)
-		if(order) query = query.orderBy(order.field, order.desc ? 'desc' : 'asc')
-		if(where) {
-			where.forEach(clause => {
-				query = query.where(clause.field, clause.condition, clause.value)
-			})
+		if(conditions) {
+			if(conditions.order) query = query.orderBy(conditions.order.field, conditions.order.desc ? 'desc' : 'asc')
+			if(conditions.where) {
+				conditions.where.forEach(clause => {
+					query = query.where(clause.field, clause.condition, clause.value)
+				})
+			}
+			if(conditions.limit) query = query.limit(conditions.limit)
 		}
-		if(limit) query = query.limit(limit)
 		const docs = await query.get()
 		return docs.docs.map(doc => ({ '.key': doc.id, ...doc.data() }))
 	}
