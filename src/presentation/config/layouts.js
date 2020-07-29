@@ -1,6 +1,6 @@
 import Vue from 'vue'
 
-import Default from '@/layouts/Default.vue'
+import Default from '@/router/layouts/Default.vue'
 
 import Editor from '@/components/helpers/Editor'
 

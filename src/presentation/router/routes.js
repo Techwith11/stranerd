@@ -2,112 +2,112 @@ export default [
     {
         path: '/',
         name: 'Home',
-        component: () => import(/* webpackChunkName: "home" */ '@/views/home')
+        component: () => import(/* webpackChunkName: "home" */ '@/router/views/home')
     },
     /*{
         path: '/about',
         name: 'About',
-        component: () => import(/!* webpackChunkName: "about" *!/ '@/views/about')
+        component: () => import(/!* webpackChunkName: "about" *!/ '@/router/views/about')
     },*/
     {
         path: '/pricing-plans',
         name: 'Pricing Plan',
-        component: () => import(/* webpackChunkName: "pricing_plans" */ '@/views/pricing-plans')
+        component: () => import(/* webpackChunkName: "pricing_plans" */ '@/router/views/pricing-plans')
     },
     {
         path: '/blog',
         name: 'Blog Posts',
-        component: () => import(/* webpackChunkName: "blog_posts" */ '@/views/blog/index')
+        component: () => import(/* webpackChunkName: "blog_posts" */ '@/router/views/blog/index')
     },
     {
         path: '/blog/:id',
         name: 'Blog Post',
-        component: () => import(/* webpackChunkName: "blog_post" */ '@/views/blog/single_blog')
+        component: () => import(/* webpackChunkName: "blog_post" */ '@/router/views/blog/single_blog')
     },
     {
         path: '/shop',
         name: 'Shop',
-        component: () => import(/* webpackChunkName: "shop" */ '@/views/shop/index'),
+        component: () => import(/* webpackChunkName: "shop" */ '@/router/views/shop/index'),
         meta: { requiresAuth: true }
     },
     {
         path: '/courses',
         name: 'Courses',
-        component: () => import(/* webpackChunkName: "courses" */ '@/views/courses/index'),
+        component: () => import(/* webpackChunkName: "courses" */ '@/router/views/courses/index'),
         meta: { requiresAuth: true }
     },
     {
         path: '/courses/:subject',
         name: 'CourseSubject',
-        component: () => import(/* webpackChunkName: "course-subject" */ '@/views/courses/single-subject'),
+        component: () => import(/* webpackChunkName: "course-subject" */ '@/router/views/courses/single-subject'),
         meta: { requiresAuth: true }
     },
     {
         path: '/courses/:subject/:module',
         name: 'CourseModule',
-        component: () => import(/* webpackChunkName: "course-module" */ '@/views/courses/single-module'),
+        component: () => import(/* webpackChunkName: "course-module" */ '@/router/views/courses/single-module'),
         meta: { requiresAuth: true }
     },
     {
         path: '/courses/:subject/:module/:id',
         name: 'Course',
-        component: () => import(/* webpackChunkName: "course" */ '@/views/courses/single-course'),
+        component: () => import(/* webpackChunkName: "course" */ '@/router/views/courses/single-course'),
         meta: { requiresAuth: true }
     },
     {
         path: '/tutors',
         name: 'Tutors',
-        component: () => import(/* webpackChunkName: "tutors" */ '@/views/tutors/index'),
+        component: () => import(/* webpackChunkName: "tutors" */ '@/router/views/tutors/index'),
         meta: { requiresAuth: true }
     },
     {
         path: '/users/:id',
         name: 'User',
-        component: () => import(/* webpackChunkName: "user" */ '@/views/users/single-user'),
+        component: () => import(/* webpackChunkName: "user" */ '@/router/views/users/single-user'),
         meta: { requiresAuth: true }
     },
     {
         path: '/sessions',
         name: 'SessionsAttended',
-        component: () => import(/* webpackChunkName: "sessions-attended" */ '@/views/sessions/attended-list'),
+        component: () => import(/* webpackChunkName: "sessions-attended" */ '@/router/views/sessions/attended-list'),
         meta: { requiresAuth: true }
     },
     {
         path: '/sessions/taught',
         name: 'SessionsTaught',
-        component: () => import(/* webpackChunkName: "sessions-taught" */ '@/views/sessions/taught-list'),
+        component: () => import(/* webpackChunkName: "sessions-taught" */ '@/router/views/sessions/taught-list'),
         meta: { requiresAuth: true }
     },
     {
         path: '/sessions/:id',
         name: 'Session',
-        component: () => import(/* webpackChunkName: "session" */ '@/views/sessions/single-session'),
+        component: () => import(/* webpackChunkName: "session" */ '@/router/views/sessions/single-session'),
         meta: { requiresAuth: true }
     },
     {
         path: '/account',
         name: 'Account',
-        component: () => import(/* webpackChunkName: "account" */ '@/views/account/index'),
+        component: () => import(/* webpackChunkName: "account" */ '@/router/views/account/index'),
         children: [
             {
                 path: '/account',
                 name: 'AccountIndex',
-                component: () => import(/* webpackChunkName: "account_index" */ '@/views/account/account-index'),
+                component: () => import(/* webpackChunkName: "account_index" */ '@/router/views/account/account-index'),
             },
             {
                 path: '/account/tests',
                 name: 'AccountTests',
-                component: () => import(/* webpackChunkName: "account_tests" */ '@/views/account/account-tests'),
+                component: () => import(/* webpackChunkName: "account_tests" */ '@/router/views/account/account-tests'),
             },
             {
                 path: '/account/paymentMethods',
                 name: 'AccountPaymentMethods',
-                component: () => import(/* webpackChunkName: "account_payment_methods" */ '@/views/account/account-payment-methods'),
+                component: () => import(/* webpackChunkName: "account_payment_methods" */ '@/router/views/account/account-payment-methods'),
             },
             {
                 path: '/account/transactions',
                 name: 'AccountTransactions',
-                component: () => import(/* webpackChunkName: "account_transactions" */ '@/views/account/account-transactions'),
+                component: () => import(/* webpackChunkName: "account_transactions" */ '@/router/views/account/account-transactions'),
             },
         ],
         meta: { requiresAuth: true }
@@ -115,67 +115,67 @@ export default [
     {
         path: '/posts',
         name: 'Posts',
-        component: () => import(/* webpackChunkName: "posts" */ '@/views/posts/index'),
+        component: () => import(/* webpackChunkName: "posts" */ '@/router/views/posts/index'),
         meta: { requiresAuth: true }
     },
     {
         path: '/ask-a-question',
         name: 'AskQuestion',
-        component: () => import(/* webpackChunkName: "ask_question" */ '@/views/posts/ask-a-question'),
+        component: () => import(/* webpackChunkName: "ask_question" */ '@/router/views/posts/ask-a-question'),
         meta: { requiresAuth: false }
     },
     {
         path: '/posts/:id',
         name: 'Post',
-        component: () => import(/* webpackChunkName: "post" */ '@/views/posts/single-post'),
+        component: () => import(/* webpackChunkName: "post" */ '@/router/views/posts/single-post'),
         meta: { requiresAuth: true }
     },
     {
         path: '/tests/tutors',
         name: 'Tests Tutors',
-        component: () => import(/* webpackChunkName: "tests_tutors" */ '@/views/tests/tutors/index'),
+        component: () => import(/* webpackChunkName: "tests_tutors" */ '@/router/views/tests/tutors/index'),
         meta: { requiresAuth: true }
     },
     {
         path: '/tests/tutors/:id',
         name: 'Tests Tutor',
-        component: () => import(/* webpackChunkName: "tests_tutor" */ '@/views/tests/tutors/single-test'),
+        component: () => import(/* webpackChunkName: "tests_tutor" */ '@/router/views/tests/tutors/single-test'),
         meta: { requiresAuth: true }
     },
     {
         path: '/admins',
         name: 'Admins',
-        component: () => import(/* webpackChunkName: "admins" */ '@/views/admin/index'),
+        component: () => import(/* webpackChunkName: "admins" */ '@/router/views/admin/index'),
         children: [
             {
                 path: '/admins/upgrades',
                 name: 'Upgrades',
-                component: () => import(/* webpackChunkName: "upgrades" */ '@/views/admin/upgrades/index'),
+                component: () => import(/* webpackChunkName: "upgrades" */ '@/router/views/admin/upgrades/index'),
             },
             {
                 path: '/admins/questions',
                 name: 'Questions',
-                component: () => import(/* webpackChunkName: "questions" */ '@/views/admin/questions/index'),
+                component: () => import(/* webpackChunkName: "questions" */ '@/router/views/admin/questions/index'),
             },
             {
                 path: '/admins/questions/:subject',
                 name: 'QuestionSubject',
-                component: () => import(/* webpackChunkName: "question-subject" */ '@/views/admin/questions/single-subject'),
+                component: () => import(/* webpackChunkName: "question-subject" */ '@/router/views/admin/questions/single-subject'),
             },
             {
                 path: '/admins/questions/:subject/:module',
                 name: 'QuestionModule',
-                component: () => import(/* webpackChunkName: "question-module" */ '@/views/admin/questions/single-module'),
+                component: () => import(/* webpackChunkName: "question-module" */ '@/router/views/admin/questions/single-module'),
             },
             {
                 path: '/admins/subjects',
                 name: 'Subjects',
-                component: () => import(/* webpackChunkName: "subjects" */ '@/views/admin/subjects/index'),
+                component: () => import(/* webpackChunkName: "subjects" */ '@/router/views/admin/subjects/index'),
             },
             {
                 path: '/admins/notes',
                 name: 'Notes',
-                component: () => import(/* webpackChunkName: "notes" */ '@/views/admin/notes/index'),
+                component: () => import(/* webpackChunkName: "notes" */ '@/router/views/admin/notes/index'),
             }
         ],
         meta: { requiresAuth: true, requiresAdmin: true }
@@ -183,6 +183,6 @@ export default [
     {
         path: '*',
         name: 'Not Found',
-        component: () => import(/* webpackChunkName: "not_found" */ '@/views/errors/not_found')
+        component: () => import(/* webpackChunkName: "not_found" */ '@/router/views/errors/not_found')
     }
 ]
