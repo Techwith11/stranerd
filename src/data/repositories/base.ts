@@ -1,8 +1,7 @@
 import BaseDataSource, { GetClauses } from '@data/datasources/base'
-import BaseModel, { BaseModelI } from '@data/models/base'
-import BaseEntity from '@root/domains/entities/base'
+import type BaseModel from '@data/models/base'
 
-export default abstract class BaseRepository<T extends BaseModel<BaseEntity, BaseModelI>> {
+export default abstract class BaseRepository<T extends BaseModel> {
     protected abstract readonly collectionName: string
     private readonly dataSource: BaseDataSource
 
@@ -11,7 +10,7 @@ export default abstract class BaseRepository<T extends BaseModel<BaseEntity, Bas
     }
 
     public async create(data: T){
-        return await this.dataSource.create(this.collectionName, data.toJSON())
+        return await this.dataSource.create(this.collectionName, data)
     }
 
     public async find(id: string){
@@ -23,6 +22,6 @@ export default abstract class BaseRepository<T extends BaseModel<BaseEntity, Bas
     }
 
     public async update(id: string, data: T){
-        return await this.dataSource.update(this.collectionName, id, data.toJSON());
+        return await this.dataSource.update(this.collectionName, id, data);
     }
 }
