@@ -11,7 +11,8 @@ export default class SessionTransformer implements BaseTransformer<SessionEntity
         return new SessionEntity({
             id: id ?? '',
             tutor, student, duration, accepted, studentCancelled, tutorCancelled,
-            createdAt: timestampToDate(createdAt), endedAt: timestampToDate(endedAt)
+            createdAt: timestampToDate(createdAt)!,
+            endedAt: timestampToDate(endedAt)
         })
     }
 

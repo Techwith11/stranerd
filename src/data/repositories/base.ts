@@ -31,6 +31,6 @@ export default abstract class BaseRepository<Entity extends BaseEntity, Model ex
 
     public async update(id: string, data: Entity){
         const model = this.transformer.toJSON(data)
-        return await this.dataSource.update(this.collectionName, id, model);
+        return await this.dataSource.update(this.collectionName, id, model)
     }
 }

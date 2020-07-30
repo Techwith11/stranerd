@@ -15,7 +15,7 @@ export default class SessionEntity extends BaseEntity {
         id, student, tutor, duration, accepted, tutorCancelled, studentCancelled, createdAt, endedAt
     }:{
         id: string, tutor: string, student: string, duration: number, accepted: boolean,
-        tutorCancelled: boolean, studentCancelled: boolean, createdAt: Date, endedAt: Date
+        tutorCancelled: boolean, studentCancelled: boolean, createdAt: Date, endedAt: Date | undefined
     }) {
         super();
         this.id = id

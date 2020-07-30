@@ -13,6 +13,6 @@ export default interface SessionModel extends BaseModel {
     }
     dates: {
         createdAt: firebase.firestore.Timestamp
-        endedAt: firebase.firestore.Timestamp
+        endedAt?: firebase.firestore.Timestamp
     }
 }
