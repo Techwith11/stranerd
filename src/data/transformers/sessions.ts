@@ -1,14 +1,35 @@
 import BaseTransformer from '@data/transformers/base'
 import SessionEntity from '@root/domains/entities/sessions'
 import SessionModel from '@data/models/sessions'
+import { timestampToDate, dateToTimestamp } from '@data/converters/getFirestoreDate'
 
 export default class SessionTransformer implements BaseTransformer<SessionEntity, SessionModel> {
     public fromJSON(model: SessionModel) {
-        return {  }
+        const { id, tutor, student, duration, accepted,
+            cancelled: { student: studentCancelled, tutor: tutorCancelled}, dates: { createdAt, endedAt }
+        } = model
+        return new SessionEntity({
+            id: id ?? '',
+            tutor, student, duration, accepted, studentCancelled, tutorCancelled,
+            createdAt: timestampToDate(createdAt), endedAt: timestampToDate(endedAt)
+        })
     }
 
     public toJSON(entity: SessionEntity) {
-        return {  }
+        return {
+            tutor: entity.tutor,
+            student: entity.student,
+            duration: entity.duration,
+            accepted: entity.accepted,
+            cancelled: {
+                student: entity.studentCancelled,
+                tutor: entity.tutorCancelled
+            },
+            dates: {
+                createdAt: dateToTimestamp(entity.createdAt),
+                endedAt: dateToTimestamp(entity.endedAt)
+            }
+        }
     }
 
 }

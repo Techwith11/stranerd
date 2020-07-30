@@ -2,7 +2,7 @@ import BaseModel  from '@data/models/base'
 import firebase from '@helpers/firebase'
 
 export default interface PostModel extends BaseModel {
-    id: string
+    id?: string
     title: string
     body: string
     subject: string

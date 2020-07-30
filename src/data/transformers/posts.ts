@@ -6,15 +6,15 @@ import { timestampToDate, dateToTimestamp } from '@data/converters/getFirestoreD
 export default class PostTransformer implements BaseTransformer<PostEntity, PostModel> {
     public fromJSON(model: PostModel) {
         const { id, title, body, subject, module, dates: { createdAt }, userId } = model
-        const createdAtDate = timestampToDate(createdAt)
         return new PostEntity({
-            id, title, body, subject, module, createdAt: createdAtDate, userId
+            id: id ?? '',
+            title, body, subject, module, userId,
+            createdAt: timestampToDate(createdAt)
         })
     }
 
     public toJSON(entity: PostEntity) {
         return {
-            id: entity.id,
             title: entity.title,
             body: entity.body,
             subject: entity.subject,

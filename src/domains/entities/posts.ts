@@ -11,7 +11,7 @@ export default class PostEntity extends BaseEntity {
 
     constructor({ id, title, body, subject, module, createdAt, userId }: { id: string, title: string, body: string, subject: string, module: string, createdAt: Date, userId: string }) {
         super()
-        this.id = id ?? null
+        this.id = id
         this.title = title
         this.body = body
         this.subject = subject
