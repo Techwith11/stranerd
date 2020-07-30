@@ -1,10 +1,10 @@
 import BaseTransformer from '@data/transformers/base'
 import SessionEntity from '@root/domains/entities/sessions'
-import SessionModel from '@data/models/sessions'
+import { SessionFromModel, SessionToModel } from '@data/models/sessions'
 import { timestampToDate, dateToTimestamp } from '@data/converters/getFirestoreDate'
 
-export default class SessionTransformer implements BaseTransformer<SessionEntity, SessionModel> {
-    public fromJSON(model: SessionModel) {
+export default class SessionTransformer implements BaseTransformer<SessionEntity, SessionFromModel, SessionToModel> {
+    public fromJSON(model: SessionFromModel) {
         const { id, tutor, student, duration, accepted,
             cancelled: { student: studentCancelled, tutor: tutorCancelled}, dates: { createdAt, endedAt }
         } = model

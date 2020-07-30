@@ -1,3 +1,5 @@
-import BaseModel  from '@data/models/base'
+import { BaseFromModel, BaseToModel } from '@data/models/base'
 
-export default interface UserModel extends BaseModel {}
+export interface UserFromModel extends BaseFromModel {}
+
+export interface UserToModel extends BaseToModel {}

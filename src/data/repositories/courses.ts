@@ -1,7 +1,7 @@
 import BaseRepository from '@data/repositories/base'
-import CourseModel from '@data/models/courses'
+import { CourseFromModel, CourseToModel } from '@data/models/courses'
 import CourseEntity from '@root/domains/entities/courses'
 
-export default class CoursesRepository extends BaseRepository<CourseEntity, CourseModel>{
+export default class CoursesRepository extends BaseRepository<CourseEntity, CourseFromModel, CourseToModel>{
     protected readonly collectionName = 'courses'
 }

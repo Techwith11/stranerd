@@ -1,4 +1,5 @@
-export default interface BaseModel {}
+export interface BaseFromModel {}
+export interface BaseToModel {}
 
 export interface Media {
     name: string
