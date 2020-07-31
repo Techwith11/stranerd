@@ -1,5 +1,5 @@
-import { GetClauses } from '@root/core/data/datasources/base'
-import BaseEntity from '@root/core/domains/entities/base'
+import { GetClauses } from '@root/modules/core/data/datasources/base'
+import BaseEntity from '@root/modules/core/domains/entities/base'
 
 export default interface IBaseRepository<Entity extends BaseEntity> {
     add?: (data: Entity) => Promise<string | Entity>,

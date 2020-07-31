@@ -1,6 +1,6 @@
 import IPostRepository from '@root/modules/posts/domain/irepositories/ipost'
 import PostBaseDataSource from '@root/modules/posts/data/datasources/post-base'
-import { GetClauses } from '@root/core/data/datasources/base'
+import { GetClauses } from '@root/modules/core/data/datasources/base'
 import PostEntity from '@root/modules/posts/domain/entities/posts'
 import PostTransformer from '@root/modules/posts/data/transformers/post'
 import { PostFromModel } from '@root/modules/posts/data/models/post'

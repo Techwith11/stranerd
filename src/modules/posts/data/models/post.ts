@@ -1,4 +1,4 @@
-import firebase from '@helpers/firebase'
+import firebase from '@root/services/firebase'
 
 export interface PostFromModel {
     id: string

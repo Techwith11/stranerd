@@ -16,11 +16,7 @@
     ],
     "paths": {
       "@root/*": ["src/*"],
-      "@data/*": ["src/data/*"],
-      "@domain/*": ["src/domain/*"],
-      "@helpers/*": ["src/helpers/*"],
-      "@types/*": ["src/types/*"],
-      "@/*": ["src/presentation/*"]
+      "@/*": ["src/application/*"]
     },
     "lib": [
       "esnext",

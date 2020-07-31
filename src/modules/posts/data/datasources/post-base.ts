@@ -1,4 +1,4 @@
-import { GetClauses } from '@root/core/data/datasources/base'
+import { GetClauses } from '@root/modules/core/data/datasources/base'
 import { PostFromModel, PostToModel } from '@root/modules/posts/data/models/post'
 
 export default abstract class PostBaseDataSource {

@@ -1,4 +1,4 @@
-import firebase from '@root/helpers/firebase'
+import firebase from '@root/services/firebase'
 
 export const timestampToDate = (timestamp: firebase.firestore.Timestamp | undefined) :Date | undefined => {
     return timestamp?.toDate() ?? undefined

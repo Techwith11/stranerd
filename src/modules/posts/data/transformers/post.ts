@@ -1,7 +1,7 @@
 import { PostFromModel, PostToModel } from '@root/modules/posts/data/models/post'
 import PostEntity from '@root/modules/posts/domain/entities/posts'
-import { dateToTimestamp, timestampToDate } from '@root/core/data/transformers/converters/getFirestoreDate'
-import BaseTransformer from '@root/core/data/transformers/base'
+import { dateToTimestamp, timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
+import BaseTransformer from '@root/modules/core/data/transformers/base'
 
 export default class PostTransformer implements BaseTransformer<PostEntity, PostFromModel, PostToModel> {
     public fromJSON(model: PostFromModel) {

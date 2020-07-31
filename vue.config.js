@@ -5,7 +5,6 @@ module.exports = {
 		config.resolve.alias
 			.set('@root', path.join(__dirname, 'src'))
 			.set('@', path.join(__dirname, 'src/application'))
-			.set('@types', path.join(__dirname, 'src/types'))
 	},
 	css: {
 		loaderOptions: {

@@ -1,5 +1,5 @@
-import firebase,{ firestore, functions } from '@root/helpers/firebase'
-import { GetClauses } from '@root/core/datasources/base'
+import firebase,{ firestore, functions } from '@root/services/firebase'
+import { GetClauses } from '@root/modules/core/data/datasources/base'
 
 export const FirestoreService =  {
     find: async (collection: string, id: string) => {
