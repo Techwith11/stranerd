@@ -23,14 +23,12 @@ export const FirestoreService =  {
     },
     create: async (collection: string, data: object) => {
         const ref = await firestore.collection(collection).add(data)
-        const doc = await ref.get()
-        return { id: doc.id, ...doc.data() }
+        return ref.id
     },
     update: async (collection: string, id: string, data: object) => {
         const ref = await firestore.collection(collection).doc(id)
         ref.set(data, { merge: true })
-        const doc = await ref.get()
-        return { id: doc.id, ...doc.data() }
+        return ref.id
     }
 }
 

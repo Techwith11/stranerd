@@ -2,8 +2,15 @@ import IReplyRepository from '@root/modules/posts/domain/irepositories/ireply'
 import ReplyEntity from '@root/modules/posts/domain/entities/replles'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 
-export default (repository: IReplyRepository) => {
-    return async (postId: string, date?: Date) : Promise<ReplyEntity[]> => {
+export class GetRepliesUseCase {
+    private repository: IReplyRepository
+
+    constructor(repository: IReplyRepository) {
+        this.repository = repository
+    }
+
+
+    public async call (postId: string, date?: Date) :Promise<ReplyEntity[]> {
         const conditions: GetClauses = {
             order: {
                 field: 'dates.createdAt',
@@ -20,6 +27,8 @@ export default (repository: IReplyRepository) => {
                 }
             ]
         }
-        return repository.get(postId, conditions)
+        return this.repository.get(postId, conditions)
     }
 }
+
+

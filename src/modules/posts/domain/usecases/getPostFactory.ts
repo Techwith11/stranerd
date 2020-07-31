@@ -1,7 +1,8 @@
 import PostFactory from '@root/modules/posts/domain/factories/post'
 
-export default () => {
-    return () : PostFactory => {
+export class GetPostFactoryUseCase {
+    public call (factory: PostFactory) :PostFactory {
         return new PostFactory()
     }
+
 }
