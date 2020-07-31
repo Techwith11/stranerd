@@ -6,6 +6,7 @@ export interface PostFromModel {
     body: string
     subject: string
     module: string
+    tags: string[]
     userId: string
     dates: {
         createdAt: firebase.firestore.Timestamp
@@ -17,6 +18,7 @@ export interface PostToModel {
     body: string
     subject: string
     module: string
+    tags: string[]
     userId: string
     dates?: {
         createdAt: firebase.firestore.Timestamp
