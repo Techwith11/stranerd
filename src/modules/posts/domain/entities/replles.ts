@@ -1,13 +1,10 @@
-import BaseEntity from '@root/modules/core/domains/entities/base'
-
-export default class ReplyEntity extends BaseEntity{
+export default class ReplyEntity{
     public readonly id: string
     public readonly body: string
     public readonly userId: string
     public readonly createdAt: Date
 
     constructor({ id, body, createdAt, userId }: ReplyConstructorArgs) {
-        super()
         this.id = id
         this.body = body
         this.createdAt = createdAt

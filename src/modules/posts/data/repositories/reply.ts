@@ -4,7 +4,7 @@ import ReplyTransformer from '@root/modules/posts/data/transformers/reply'
 import IReplyRepository from '@root/modules/posts/domain/irepositories/ireply'
 import { ReplyFromModel, ReplyToModel } from '@root/modules/posts/data/models/reply'
 
-export default class ReplyRepository implements IReplyRepository{
+export default class ReplyRepository implements IReplyRepository {
     private dataSource: ReplyBaseDataSource
     private transformer: ReplyTransformer
 

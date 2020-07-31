@@ -6,11 +6,11 @@ import { ReplyFromModel, ReplyToModel } from '@root/modules/posts/data/models/re
 export default class ReplyFirebaseDataSource implements ReplyBaseDataSource{
 
     public async create(postId: string, data: ReplyToModel): Promise<string> {
-        return (await FirestoreService.create(`${postId}/replies`, data)).id
+        return (await FirestoreService.create(`posts/${postId}/replies`, data)).id
     }
 
     public async get(postId: string, conditions?: GetClauses): Promise<ReplyFromModel[]> {
-        return await FirestoreService.get(`${postId}/replies`,conditions) as ReplyFromModel[]
+        return await FirestoreService.get(`posts/${postId}/replies`,conditions) as ReplyFromModel[]
     }
 
 }

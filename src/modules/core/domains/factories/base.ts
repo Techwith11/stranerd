@@ -1,7 +1,6 @@
 import ValidatorService, { Rules } from '@root/modules/core/validations'
-import { BaseToModel } from '@root/modules/core/data/models/base'
 
-export abstract class BaseFactory<T extends BaseToModel> {
+export abstract class BaseFactory<T> {
     abstract readonly rules: { [key: string]: Rules }
     abstract readonly values: { [key: string]: any }
     abstract readonly errors: { [key: string]: string | undefined }

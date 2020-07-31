@@ -1,9 +1,8 @@
 import { dateToTimestamp, timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
-import BaseTransformer from '@root/modules/core/data/transformers/base'
 import { ReplyFromModel, ReplyToModel } from '@root/modules/posts/data/models/reply'
 import ReplyEntity from '@root/modules/posts/domain/entities/replles'
 
-export default class ReplyTransformer implements BaseTransformer<ReplyEntity, ReplyFromModel, ReplyToModel> {
+export default class ReplyTransformer {
     public fromJSON(model: ReplyFromModel) {
         const { id, body, dates: { createdAt }, userId } = model
         return new ReplyEntity({
@@ -13,13 +12,13 @@ export default class ReplyTransformer implements BaseTransformer<ReplyEntity, Re
         })
     }
 
-    public toJSON(entity: ReplyEntity) {
+    public toJSON(entity: ReplyEntity) :ReplyToModel {
         return {
             body: entity.body,
             userId: entity.userId,
-            dates: {
+            /*dates: {
                 createdAt: dateToTimestamp(entity.createdAt)
-            }
+            }*/
         }
     }
 

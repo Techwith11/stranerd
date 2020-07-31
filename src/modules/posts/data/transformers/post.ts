@@ -1,9 +1,8 @@
 import { PostFromModel, PostToModel } from '@root/modules/posts/data/models/post'
 import PostEntity from '@root/modules/posts/domain/entities/posts'
-import { dateToTimestamp, timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
-import BaseTransformer from '@root/modules/core/data/transformers/base'
+import { timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
 
-export default class PostTransformer implements BaseTransformer<PostEntity, PostFromModel, PostToModel> {
+export default class PostTransformer {
     public fromJSON(model: PostFromModel) {
         const { id, title, body, tags, dates: { createdAt }, userId } = model
         return new PostEntity({
@@ -13,15 +12,12 @@ export default class PostTransformer implements BaseTransformer<PostEntity, Post
         })
     }
 
-    public toJSON(entity: PostEntity) {
+    public toJSON(entity: PostEntity) :PostToModel {
         return {
             title: entity.title,
             body: entity.body,
             tags: entity.tags,
-            userId: entity.userId,
-            dates: {
-                createdAt: dateToTimestamp(entity.createdAt)
-            }
+            userId: entity.userId
         }
     }
 

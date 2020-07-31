@@ -1,6 +1,4 @@
-import BaseEntity from '@root/modules/core/domains/entities/base'
-
-export default class PostEntity extends BaseEntity{
+export default class PostEntity{
     public readonly id: string
     public readonly title: string
     public readonly body: string
@@ -9,7 +7,6 @@ export default class PostEntity extends BaseEntity{
     public readonly createdAt: Date
 
     constructor({ id, title, body, tags, createdAt, userId }: PostConstructorArgs) {
-        super()
         this.id = id
         this.title = title
         this.body = body
