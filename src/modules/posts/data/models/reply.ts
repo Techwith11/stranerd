@@ -1,19 +1,15 @@
 import firebase from '@root/services/firebase'
 
-export interface PostFromModel {
+export interface ReplyFromModel {
     id: string
-    title: string
     body: string
-    tags: string[]
     userId: string
     dates: {
         createdAt: firebase.firestore.Timestamp
     }
 }
 
-export interface PostToModel {
-    title: string
+export interface ReplyToModel {
     body: string
-    tags: string[]
     userId: string
 }

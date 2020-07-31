@@ -9,13 +9,10 @@ export default class PostFactory extends BaseFactory<PostToModel> {
         title: [isRequired,isLongerThan3],
         body: [isRequired],
         tags: [isRequired],
-        subject: [isRequired],
-        module: [isRequired],
         userId: [isRequired]
     }
     readonly values = {
-        title: '', body: '', tags: [],
-        subject: '', module: '', userId: ''
+        title: '', body: '', tags: [], userId: ''
     }
     readonly errors = {
         title: undefined, body: undefined, tags: undefined,
@@ -24,6 +21,7 @@ export default class PostFactory extends BaseFactory<PostToModel> {
 
     setTitle(value: string){ return this.set('title', value) }
     setBody(value: string){ return this.set('body', value) }
+    setUserId(value: string){ return this.set('userId', value) }
     addTag(value: string){ return this.set('tags', [...this.values.tags, value]) }
     removeTag(value: string){ return this.set('tags', this.values.tags.filter(tag => tag !== value)) }
 
@@ -33,8 +31,6 @@ export default class PostFactory extends BaseFactory<PostToModel> {
                 title: this.values.title,
                 body: this.values.body,
                 tags: this.values.tags,
-                subject: this.values.subject,
-                module: this.values.module,
                 userId: this.values.userId
             }
         }else{

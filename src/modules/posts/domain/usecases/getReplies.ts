@@ -1,9 +1,9 @@
-import IPostRepository from '@root/modules/posts/domain/irepositories/ipost'
-import PostEntity from '@root/modules/posts/domain/entities/posts'
+import IReplyRepository from '@root/modules/posts/domain/irepositories/ireply'
+import ReplyEntity from '@root/modules/posts/domain/entities/replles'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 
-export default (repository: IPostRepository) => {
-    return async (id: string, date?: Date) : Promise<PostEntity[]> => {
+export default (repository: IReplyRepository) => {
+    return async (postId: string, date?: Date) : Promise<ReplyEntity[]> => {
         const conditions: GetClauses = {
             order: {
                 field: 'dates.createdAt',
@@ -20,6 +20,6 @@ export default (repository: IPostRepository) => {
                 }
             ]
         }
-        return repository.get(conditions)
+        return repository.get(postId, conditions)
     }
 }
