@@ -7,3 +7,7 @@ export const timestampToDate = (timestamp: firebase.firestore.Timestamp | undefi
 export const dateToTimestamp = (date: Date) :firebase.firestore.Timestamp => {
     return firebase.firestore.Timestamp.fromDate(date)
 }
+
+export const serverTimeStamp = () => {
+    return firebase.firestore.FieldValue.serverTimestamp()
+}

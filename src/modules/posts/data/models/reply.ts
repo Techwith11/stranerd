@@ -12,4 +12,7 @@ export interface ReplyFromModel {
 export interface ReplyToModel {
     body: string
     userId: string
+    dates?: {
+        createdAt: firebase.firestore.FieldValue
+    }
 }
