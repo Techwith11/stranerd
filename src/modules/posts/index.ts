@@ -5,6 +5,8 @@ import AddPost from '@root/modules/posts/domain/usecases/addPost'
 import FindPost from '@root/modules/posts/domain/usecases/findPost'
 import GetPosts from '@root/modules/posts/domain/usecases/getPosts'
 import PostTransformer from '@root/modules/posts/data/transformers/post'
+import PostEntity from '@root/modules/posts/domain/entities/posts'
+import { PostToModel } from '@root/modules/posts/data/models/post'
 
 const bottle = new Bottle()
 
@@ -17,9 +19,9 @@ bottle.service('Usecases.Post.Find', FindPost, 'Repositories.Post')
 bottle.service('Usecases.Post.Get', GetPosts, 'Repositories.Post')
 
 const { Add, Find, Get } = bottle.container.Usecases.Post as {
-    Add: (data: object) => Promise<string>,
-    Find: (id: string) => Promise<object | undefined>,
-    Get: () => Promise<Object[]>
+    Add: (data: PostToModel) => Promise<string>,
+    Find: (id: string) => Promise<PostEntity | undefined>,
+    Get: () => Promise<PostEntity[]>
 }
 
 export {
