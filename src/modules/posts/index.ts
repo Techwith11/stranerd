@@ -29,9 +29,8 @@ bottle.service('Usecases.Post.Find', FindPostUseCase, 'Repositories.Post')
 bottle.service('Usecases.Post.Get', GetPostsUseCase, 'Repositories.Post')
 bottle.service('Usecases.Post.GetFactory', GetPostFactoryUseCase)
 bottle.service('Usecases.Reply.Add', AddReplyUseCase, 'Repositories.Reply')
-bottle.service('Usecases.Reply.GetReplies', GetRepliesUseCase, 'Repositories.Reply')
-bottle.service('Usecases.Replies.GetFactory', GetReplyFactoryUseCase)
-
+bottle.service('Usecases.Reply.Get', GetRepliesUseCase, 'Repositories.Reply')
+bottle.service('Usecases.Reply.GetFactory', GetReplyFactoryUseCase)
 
 const { Add: addPost, Find: findPost, Get: getPosts, GetFactory: getPostFactory } = bottle.container.Usecases.Post as {
     Add: AddPostUseCase,
