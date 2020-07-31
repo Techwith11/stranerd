@@ -20,7 +20,4 @@ export interface PostToModel {
     module: string
     tags: string[]
     userId: string
-    dates?: {
-        createdAt: firebase.firestore.Timestamp
-    }
 }
