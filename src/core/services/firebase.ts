@@ -1,0 +1,43 @@
+import firebase,{ firestore, functions } from '@root/helpers/firebase'
+import { GetClauses } from '@root/core/datasources/base'
+
+export const FirestoreService =  {
+    find: async (collection: string, id: string) => {
+        const doc = await firestore.collection(collection).doc(id).get()
+        if(doc.exists) return { id: doc.id, ...doc.data() }
+        else return undefined
+    },
+    get: async (collection: string, conditions?: GetClauses) => {
+        let query: firebase.firestore.Query = firestore.collection(collection)
+        if(conditions) {
+            if(conditions.order) query = query.orderBy(conditions.order.field, conditions.order.desc ? 'desc' : 'asc')
+            if(conditions.where) {
+                conditions.where.forEach(clause => {
+                    query = query.where(clause.field, clause.condition, clause.value)
+                })
+            }
+            if(conditions.limit) query = query.limit(conditions.limit)
+        }
+        const docs = await query.get()
+        return docs.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    },
+    create: async (collection: string, data: object) => {
+        const ref = await firestore.collection(collection).add(data)
+        const doc = await ref.get()
+        return { id: doc.id, ...doc.data() }
+    },
+    update: async (collection: string, id: string, data: object) => {
+        const ref = await firestore.collection(collection).doc(id)
+        ref.set(data, { merge: true })
+        const doc = await ref.get()
+        return { id: doc.id, ...doc.data() }
+    }
+}
+
+export const FunctionsService = {
+    call: async (name: string, data: any) => {
+        const callable =  functions.httpsCallable(name)
+        const result = await callable(data)
+        return result.data
+    }
+}
