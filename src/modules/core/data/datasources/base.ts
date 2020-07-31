@@ -1,6 +1,6 @@
 export interface WhereCondition {
 	field: string
-	condition: "<" | "<=" | "==" | ">=" | ">" | "array-contains" | "in" | "array-contains-any"
+	condition: '<' | '<=' | '==' | '>=' | '>' | 'array-contains' | 'in' | 'array-contains-any'
 	value: any
 }
 export interface GetClauses {
