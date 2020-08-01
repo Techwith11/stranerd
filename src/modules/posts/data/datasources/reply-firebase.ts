@@ -13,4 +13,8 @@ export default class ReplyFirebaseDataSource implements ReplyBaseDataSource{
         return await FirestoreService.get(`posts/${postId}/replies`,conditions) as ReplyFromModel[]
     }
 
+    public async listen(postId: string, callback: (documents: ReplyFromModel[]) => void, conditions?: GetClauses): Promise<() => void> {
+        return await FirestoreService.listen(callback, `posts/${postId}/replies`, conditions)
+    }
+
 }

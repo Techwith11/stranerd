@@ -5,4 +5,5 @@ import ReplyEntity from '@root/modules/posts/domain/entities/replles'
 export default interface IReplyRepository {
     add: (postId: string, data: ReplyToModel) => Promise<string>,
     get: (postId:string, conditions?: GetClauses) => Promise<ReplyEntity[]>
+    listen: (postId: string, callback: (entities: ReplyEntity[]) => void, conditions?: GetClauses) => Promise<() => void>
 }
