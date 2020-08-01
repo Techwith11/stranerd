@@ -3,6 +3,7 @@ import PostBaseDataSource from '@root/modules/posts/data/datasources/post-base'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 import PostTransformer from '@root/modules/posts/data/transformers/post'
 import { PostFromModel, PostToModel } from '@root/modules/posts/data/models/post'
+import PostEntity from '@root/modules/posts/domain/entities/posts'
 
 export default class PostRepository implements IPostRepository{
     private dataSource: PostBaseDataSource
@@ -26,6 +27,14 @@ export default class PostRepository implements IPostRepository{
     public async get(conditions?: GetClauses) {
         const models = await this.dataSource.get(conditions)
         return models.map((model: PostFromModel) => this.transformer.fromJSON(model))
+    }
+
+    public async listen(callback: (entities: PostEntity[]) => void, conditions?: GetClauses) {
+        const listenCB = (documents: PostFromModel[]) => {
+            const entities = documents.map(doc => this.transformer.fromJSON(doc))
+            callback(entities)
+        }
+        return await this.dataSource.listen(listenCB, conditions)
     }
 
 }

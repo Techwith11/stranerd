@@ -12,6 +12,7 @@ import { GetPostFactoryUseCase } from '@root/modules/posts/domain/usecases/getPo
 import { AddReplyUseCase } from '@root/modules/posts/domain/usecases/addReply'
 import { GetRepliesUseCase } from '@root/modules/posts/domain/usecases/getReplies'
 import { GetReplyFactoryUseCase } from '@root/modules/posts/domain/usecases/getReplyFactory'
+import { ListenToPostsUseCase } from '@root/modules/posts/domain/usecases/listenToPosts'
 
 const bottle = new Bottle()
 
@@ -27,15 +28,17 @@ bottle.service('Repositories.Reply', ReplyRepository, 'DataSources.Reply','Trans
 bottle.service('Usecases.Post.Add', AddPostUseCase, 'Repositories.Post')
 bottle.service('Usecases.Post.Find', FindPostUseCase, 'Repositories.Post')
 bottle.service('Usecases.Post.Get', GetPostsUseCase, 'Repositories.Post')
+bottle.service('Usecases.Post.Listen', ListenToPostsUseCase, 'Repositories.Post')
 bottle.service('Usecases.Post.GetFactory', GetPostFactoryUseCase)
 bottle.service('Usecases.Reply.Add', AddReplyUseCase, 'Repositories.Reply')
 bottle.service('Usecases.Reply.Get', GetRepliesUseCase, 'Repositories.Reply')
 bottle.service('Usecases.Reply.GetFactory', GetReplyFactoryUseCase)
 
-const { Add: addPost, Find: findPost, Get: getPosts, GetFactory: getPostFactory } = bottle.container.Usecases.Post as {
+const { Add: addPost, Find: findPost, Get: getPosts, Listen: listenToPosts, GetFactory: getPostFactory } = bottle.container.Usecases.Post as {
     Add: AddPostUseCase,
     Find: FindPostUseCase,
     Get: GetPostsUseCase,
+    Listen: ListenToPostsUseCase,
     GetFactory: GetPostFactoryUseCase
 }
 
@@ -46,6 +49,6 @@ const { Add: addReply, Get: getReplies, GetFactory: getReplyFactory } = bottle.c
 }
 
 export {
-    addPost, findPost, getPosts, getPostFactory,
+    addPost, findPost, getPosts, listenToPosts, getPostFactory,
     addReply, getReplies, getReplyFactory
 }
