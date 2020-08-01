@@ -36,7 +36,7 @@ bottle.service('Usecases.Reply.Get', GetRepliesUseCase, 'Repositories.Reply')
 bottle.service('Usecases.Reply.Listen', ListenToRepliesUseCase, 'Repositories.Reply')
 bottle.service('Usecases.Reply.GetFactory', GetReplyFactoryUseCase)
 
-const { Add: addPost, Find: findPost, Get: getPosts, Listen: listenToPosts, GetFactory: getPostFactory } = bottle.container.Usecases.Post as {
+const { Add: AddPost, Find: FindPost, Get: GetPosts, Listen: ListenToPosts, GetFactory: GetPostFactory } = bottle.container.Usecases.Post as {
     Add: AddPostUseCase,
     Find: FindPostUseCase,
     Get: GetPostsUseCase,
@@ -44,7 +44,7 @@ const { Add: addPost, Find: findPost, Get: getPosts, Listen: listenToPosts, GetF
     GetFactory: GetPostFactoryUseCase
 }
 
-const { Add: addReply, Get: getReplies, Listen: listenToReplies, GetFactory: getReplyFactory } = bottle.container.Usecases.Reply as {
+const { Add: AddReply, Get: GetReplies, Listen: ListenToReplies, GetFactory: GetReplyFactory } = bottle.container.Usecases.Reply as {
     Add: AddReplyUseCase
     Get: GetRepliesUseCase,
     Listen: ListenToRepliesUseCase,
@@ -52,6 +52,6 @@ const { Add: addReply, Get: getReplies, Listen: listenToReplies, GetFactory: get
 }
 
 export {
-    addPost, findPost, getPosts, listenToPosts, getPostFactory,
-    addReply, getReplies, listenToReplies, getReplyFactory
+    AddPost, FindPost, GetPosts, ListenToPosts, GetPostFactory,
+    AddReply, GetReplies, ListenToReplies, GetReplyFactory
 }
