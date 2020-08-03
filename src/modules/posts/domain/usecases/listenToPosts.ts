@@ -14,8 +14,7 @@ export class ListenToPostsUseCase {
             order: {
                 field: 'dates.createdAt',
                 desc: true
-            },
-            limit: parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
+            }
         }
         if(date){
             conditions.where = [

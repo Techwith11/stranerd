@@ -2,7 +2,7 @@ import { computed, reactive } from '@vue/composition-api'
 import PostEntity from '@root/modules/posts/domain/entities/posts'
 import { GetPosts, FindPost, ListenToPosts } from '@root/modules/posts/'
 
-const PAGINATION_LIMIT = 24
+const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const posts: PostEntity[] = reactive([])
 
 export const usePostsList = () => {
@@ -82,7 +82,7 @@ export const usePost = (id: string) => {
         }
         state.loading = false
     }
-    findPost()
+    findPost().catch(() => state.error = 'Failed to fetch post')
     return {
         loading: computed(() => state.loading),
         post: computed(() => state.post),
