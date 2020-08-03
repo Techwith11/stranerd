@@ -15,7 +15,7 @@ export class ListenToPostsUseCase {
                 field: 'dates.createdAt',
                 desc: true
             },
-            limit: process.env.VUE_APP_PAGINATION_LIMIT
+            limit: parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
         }
         if(date){
             conditions.where = [
