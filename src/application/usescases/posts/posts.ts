@@ -1,6 +1,9 @@
 import { computed, reactive } from '@vue/composition-api'
 import PostEntity from '@root/modules/posts/domain/entities/posts'
 import { GetPosts, FindPost, ListenToPosts, GetRecentPosts } from '@root/modules/posts/'
+import router from '@/router'
+import { notify } from '@/config/notifications'
+import { firestore } from '@root/services/firebase'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const posts: PostEntity[] = reactive([])
@@ -79,6 +82,7 @@ export const usePost = (id: string) => {
     const state = reactive({
         loading: false,
         post: undefined as PostEntity | undefined,
+        user: undefined as object | undefined,
         error: undefined as string | undefined
     })
     const findPost = async () => {
@@ -88,14 +92,24 @@ export const usePost = (id: string) => {
         else{
             post = await FindPost.call(id)
             if(post) state.post = post
-            else state.error = 'No post with such id found'
+            else {
+                await router.push('/posts')
+                await notify({
+                    title: 'No such post found',
+                    icon: 'error'
+                })
+            }
         }
+        const doc = await firestore.collection('users').doc(state.post!.userId).get()
+        state.user = { '.key': doc.id, ...doc.data() }
+
         state.loading = false
     }
     findPost().catch(() => state.error = 'Failed to fetch post')
     return {
         loading: computed(() => state.loading),
         post: computed(() => state.post),
+        user: computed(() => state.user),
         error: computed(() => state.error)
     }
 }

@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<div class="container-fluid py-3">
-			<helper-spinner v-if="isLoading"/>
+			<helper-spinner v-if="loading || isLoading"/>
 			<div v-else>
 				<post-info :post="post" :user="user" />
 				<div class="my-3">
@@ -23,16 +23,22 @@
 </template>
 
 <script>
+	import { defineComponent } from '@vue/composition-api'
 	import { firestore } from '@/config/firebase'
 	import HelperSpinner from '@/components/helpers/Spinner'
 	import PostInfo from '@/components/posts/single/PostInfo'
 	import ReplyForm from '@/components/posts/single/ReplyForm'
 	import ReplyCard from '@/components/posts/single/ReplyCard'
-	export default {
+	import router from '@/router'
+	import { usePost } from '@/usescases/posts/posts'
+	export default defineComponent({
 		name: "Post",
+		setup(){
+			const { id } = router.currentRoute.params
+			const { post, loading, error, user } = usePost(id)
+			return { post, loading, error, user }
+		},
 		data: () => ({
-			post: {},
-			user: {},
 			replies: [],
 			listener: () => {},
 			isLoading: true,
@@ -41,17 +47,6 @@
 			hasMore: true
 		}),
 		methods: {
-			async getPost(){
-				try{
-					let doc = await firestore.collection('posts').doc(this.$route.params.id).get()
-					if(!doc.exists){ return await this.$router.replace('/posts') }
-					this.post = { '.key': doc.id, ...doc.data() }
-				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching post. Try refreshing the page' }) }
-			},
-			async getOwner(){
-				let doc = await firestore.collection('users').doc(this.post.userId).get()
-				this.user = { '.key': doc.id, ...doc.data() }
-			},
 			async getReplies(){
 				try{
 					let docs = firestore.collection(`posts/${this.$route.params.id}/replies`)
@@ -98,9 +93,7 @@
 		},
 		async activated(){
 			this.isLoading = true
-			if(!this.post['.key']){
-				await this.getPost()
-				await this.getOwner()
+			if(!this.post?.id){
 				await this.getReplies()
 			}
 			await this.setRepliesListeners()
@@ -117,7 +110,7 @@
 		},
 		meta(){
 			return {
-				title: this.post.title || 'Question Title',
+				title: this.post?.title || 'Question Title',
 				meta: [
 					{
 						vmid: 'description',
@@ -127,15 +120,15 @@
 					{
 						vmid: 'author',
 						name: 'author',
-						content: this.user.bio ? this.user.bio.name : 'user'
+						content: this.user?.bio?.name ?? 'user'
 					},
 					{
 						vmid: 'keywords',
 						name: 'keywords',
-						content: [this.post.module, this.post.subject, this.post.title].join(', ')
+						content: [this.post?.module, this.post?.subject, this.post?.title].join(', ')
 					}
 				]
 			}
 		}
-	}
+	})
 </script>

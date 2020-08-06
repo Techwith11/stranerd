@@ -10,7 +10,7 @@
 			<img :src="getImageLink" class="profile-image" id="ownerImage" alt="">
 			<div>
 				<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`">{{ user.bio.name }}</router-link></p>
-				<p class="mb-0">{{ getDate }}</p>
+				<p class="mb-0">{{ post.createdDate }}</p>
 			</div>
 		</div>
 	</div>
@@ -18,11 +18,12 @@
 
 <script>
 	import { mapGetters } from 'vuex'
+	import PostEntity from '@root/modules/posts/domain/entities/posts'
 	export default {
 		props: {
 			post: {
 				required: true,
-				type: Object
+				type: PostEntity
 			},
 			user: {
 				required: true,
@@ -31,11 +32,7 @@
 		},
 		computed: {
 			...mapGetters(['getDefaultImage']),
-			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
-			getDate(){
-				let d = new Date(this.post.dates.createdAt.seconds * 1000)
-				return `on ${d.toDateString()} at ${d.toTimeString().slice(0,5)}`
-			}
+			getImageLink(){ return this.user.bio?.image?.link ?? this.getDefaultImage },
 		}
 	}
 </script>

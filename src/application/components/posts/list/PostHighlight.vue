@@ -1,6 +1,6 @@
 <template>
 	<div class="mb-4 white shadow-sm p-3">
-		<h5 class="card-title font-weight-bold"><router-link class="text-black-50" :to="`/posts/${post['.key']}`">{{ post.title }}</router-link></h5>
+		<h5 class="card-title font-weight-bold"><router-link class="text-black-50" :to="`/posts/${post.id}`">{{ post.title }}</router-link></h5>
 		<p class="card-subtitle mb-2 text-muted small">
 			<span class="text-capitalize">{{ post.module }}, </span>
 			<span class="text-capitalize">{{ post.subject }}</span>
