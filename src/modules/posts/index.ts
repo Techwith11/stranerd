@@ -8,6 +8,7 @@ import ReplyRepository from '@root/modules/posts/data/repositories/reply'
 import { AddPostUseCase } from '@root/modules/posts/domain/usecases/addPost'
 import { FindPostUseCase } from '@root/modules/posts/domain/usecases/findPost'
 import { GetPostsUseCase } from '@root/modules/posts/domain/usecases/getPosts'
+import { GetRecentPostsUseCase } from '@root/modules/posts/domain/usecases/getRecentPosts'
 import { GetPostFactoryUseCase } from '@root/modules/posts/domain/usecases/getPostFactory'
 import { AddReplyUseCase } from '@root/modules/posts/domain/usecases/addReply'
 import { GetRepliesUseCase } from '@root/modules/posts/domain/usecases/getReplies'
@@ -29,6 +30,7 @@ bottle.service('Repositories.Reply', ReplyRepository, 'DataSources.Reply','Trans
 bottle.service('Usecases.Post.Add', AddPostUseCase, 'Repositories.Post')
 bottle.service('Usecases.Post.Find', FindPostUseCase, 'Repositories.Post')
 bottle.service('Usecases.Post.Get', GetPostsUseCase, 'Repositories.Post')
+bottle.service('Usecases.Post.GetRecent', GetRecentPostsUseCase, 'Repositories.Post')
 bottle.service('Usecases.Post.Listen', ListenToPostsUseCase, 'Repositories.Post')
 bottle.service('Usecases.Post.GetFactory', GetPostFactoryUseCase)
 bottle.service('Usecases.Reply.Add', AddReplyUseCase, 'Repositories.Reply')
@@ -36,10 +38,11 @@ bottle.service('Usecases.Reply.Get', GetRepliesUseCase, 'Repositories.Reply')
 bottle.service('Usecases.Reply.Listen', ListenToRepliesUseCase, 'Repositories.Reply')
 bottle.service('Usecases.Reply.GetFactory', GetReplyFactoryUseCase)
 
-const { Add: AddPost, Find: FindPost, Get: GetPosts, Listen: ListenToPosts, GetFactory: GetPostFactory } = bottle.container.Usecases.Post as {
+const { Add: AddPost, Find: FindPost, Get: GetPosts, GetRecent: GetRecentPosts, Listen: ListenToPosts, GetFactory: GetPostFactory } = bottle.container.Usecases.Post as {
     Add: AddPostUseCase,
     Find: FindPostUseCase,
     Get: GetPostsUseCase,
+    GetRecent: GetRecentPostsUseCase,
     Listen: ListenToPostsUseCase,
     GetFactory: GetPostFactoryUseCase
 }
@@ -52,6 +55,6 @@ const { Add: AddReply, Get: GetReplies, Listen: ListenToReplies, GetFactory: Get
 }
 
 export {
-    AddPost, FindPost, GetPosts, ListenToPosts, GetPostFactory,
+    AddPost, FindPost, GetPosts, GetRecentPosts, ListenToPosts, GetPostFactory,
     AddReply, GetReplies, ListenToReplies, GetReplyFactory
 }

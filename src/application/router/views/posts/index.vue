@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent, onActivated, onDeactivated } from '@vue/composition-api'
+    import { defineComponent } from '@vue/composition-api'
     import HelperSpinner from '@/components/helpers/Spinner.vue'
     import HelperMessage from '@/components/helpers/Message.vue'
     import PostCard from '@/components/posts/list/PostHighlight.vue'
@@ -30,11 +30,8 @@
 		setup(){
             const {
                 loading, olderPostsLoading, hasMore, error,
-				posts,
-				fetchOlderPosts, startListener, endListener
+				posts, fetchOlderPosts
             } =  usePostsList()
-			onActivated(startListener)
-			onDeactivated(endListener)
 			return {
                 loading, olderPostsLoading, hasMore, error,
                 posts, fetchOlderPosts
