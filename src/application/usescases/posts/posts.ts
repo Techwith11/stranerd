@@ -83,7 +83,7 @@ export const usePost = (id: string) => {
         loading: false,
         post: undefined as PostEntity | undefined,
         user: undefined as object | undefined,
-        error: undefined as string | undefined
+        error: ''
     })
     const findPost = async () => {
         state.loading = true

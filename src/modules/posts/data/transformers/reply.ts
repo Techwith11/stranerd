@@ -4,7 +4,7 @@ import {
     timestampToDate
 } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
 import { ReplyFromModel, ReplyToModel } from '@root/modules/posts/data/models/reply'
-import ReplyEntity from '@root/modules/posts/domain/entities/replles'
+import ReplyEntity from '@root/modules/posts/domain/entities/replies'
 
 export default class ReplyTransformer {
     public fromJSON(model: ReplyFromModel) {
