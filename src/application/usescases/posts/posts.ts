@@ -1,6 +1,6 @@
 import { computed, reactive } from '@vue/composition-api'
 import PostEntity from '@root/modules/posts/domain/entities/posts'
-import { GetPosts, FindPost, ListenToPosts, GetRecentPosts } from '@root/modules/posts/'
+import { GetPosts, FindPost, ListenToPosts } from '@root/modules/posts/'
 import router from '@/router'
 import { notify } from '@/config/notifications'
 import { firestore } from '@root/services/firebase'
