@@ -21,7 +21,7 @@ export class GetPostsUseCase {
             conditions.where = [
                 {
                     field: 'dates.createdAt',
-                    condition: '>',
+                    condition: '<',
                     value: date
                 }
             ]

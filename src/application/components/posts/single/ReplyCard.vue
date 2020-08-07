@@ -15,7 +15,7 @@
 				<img :src="getImageLink" class="profile-image" id="ownerImage" alt="">
 				<div class="small">
 					<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`">{{ user.bio.name }}</router-link></p>
-					<p class="mb-0">on {{ getDate }}</p>
+					<p class="mb-0">on {{ reply.createdDate }}</p>
 				</div>
 			</div>
 		</div>
@@ -25,6 +25,8 @@
 <script>
 	import { firestore } from '@/config/firebase'
 	import { mapGetters, mapActions } from 'vuex'
+	import PostEntity from '@root/modules/posts/domain/entities/posts'
+	import ReplyEntity from '@root/modules/posts/domain/entities/replies'
 	export default {
 		data: () => ({
 			user: {},
@@ -34,36 +36,22 @@
 		props: {
 			reply: {
 				required: true,
-				type: Object
+				type: ReplyEntity
 			},
 			post: {
 				required: true,
-				type: Object
+				type: PostEntity
 			}
 		},
 		computed: {
 			...mapGetters(['getId','getDefaultImage']),
 			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
-			getDate(){
-				let createdAt = this.reply.dates.createdAt
-				let date = createdAt ? new Date(this.reply.dates.createdAt.seconds * 1000) : new Date()
-				let now = new Date()
-				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
-				if(date > today){
-					return date.toTimeString().slice(0,5)
-				}else if(date > yesterday){
-					return 'Yesterday'
-				}else{
-					return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
-				}
-			}
 		},
 		async mounted(){
 			try{
 				let doc = await firestore.collection('users').doc(this.reply.userId).get()
 				this.user = { '.key': doc.id, ...doc.data() }
-				doc = await firestore.doc(`posts/${this.post['.key']}/replies/${this.reply['.key']}/votes/votes`).get()
+				doc = await firestore.doc(`posts/${this.post.id}/replies/${this.reply.id}/votes/votes`).get()
 				if(doc.exists && doc.data().votes){ this.votes = doc.data().votes }
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching reply owner details. Try refreshing the page' }) }
 		},

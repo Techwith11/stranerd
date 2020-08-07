@@ -22,7 +22,7 @@ export class GetRepliesUseCase {
             conditions.where = [
                 {
                     field: 'dates.createdAt',
-                    condition: '>',
+                    condition: '<',
                     value: date
                 }
             ]
