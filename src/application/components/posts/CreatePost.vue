@@ -9,7 +9,7 @@
 		</div>
 		<div class="form-group my-3">
 			<h6>Body</h6>
-			<editor :model="$v.post.body.$model" path='posts/body' :onChange="(content) => {this.$v.post.body.$model = content}"
+			<editor :model.sync="$v.post.body.$model" path='posts/body'
 				:valid="!$v.post.body.$invalid" :error="$v.post.body.$error" placeholder=""
 			/>
 			<small class="small text-muted">Include all information necessary for someone to answer your question</small>

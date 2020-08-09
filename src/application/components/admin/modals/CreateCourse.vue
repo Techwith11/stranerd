@@ -12,7 +12,7 @@
 						:class="{'is-invalid': $v.course.title.$error, 'is-valid': !$v.course.title.$invalid}">
 				</div>
 				<div class="form-group my-3">
-					<editor :model="$v.course.description.$model" path='courses/description' :onChange="(content) => {this.$v.course.description.$model = content}"
+					<editor :model.sync="$v.course.description.$model" path='courses/description'
 						:valid="!$v.course.description.$invalid" :error="$v.course.description.$error" placeholder="Course description"
 					/>
 				</div>

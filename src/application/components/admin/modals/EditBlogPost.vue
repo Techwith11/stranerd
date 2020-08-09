@@ -25,7 +25,7 @@
 				<span class="small" v-if="$v.post.description.$error">Must be at least 3 characters long</span>
 			</div>
 			<div class="form-group my-3">
-				<editor :model="$v.post.body.$model" path='posts/body' :onChange="(content) => {this.$v.post.body.$model = content}"
+				<editor :model.sync="$v.post.body.$model" path='posts/body'
 					:valid="!$v.post.body.$invalid" :error="$v.post.body.$error" placeholder="Full content"
 				/>
 				<small class="small text-danger d-block" v-if="$v.post.body.$error">Post body is required</small>

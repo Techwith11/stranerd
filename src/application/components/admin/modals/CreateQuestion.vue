@@ -7,7 +7,7 @@
 		</div>
 		<form class="mx-2">
 			<div class="form-group my-3">
-				<editor :model="$v.question.title.$model" path='tests/tutors/tests/title' :onChange="(content) => {this.$v.question.title.$model = content}"
+				<editor :model.sync="$v.question.title.$model" path='tests/tutors/tests/title'
 					:valid="!$v.question.title.$invalid" :error="$v.question.title.$error" placeholder="Question body"
 				/>
 				<span class="small" v-if="$v.question.title.$error">Question is required</span>
