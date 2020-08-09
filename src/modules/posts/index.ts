@@ -14,6 +14,8 @@ import { GetRepliesUseCase } from '@root/modules/posts/domain/usecases/getReplie
 import { GetReplyFactoryUseCase } from '@root/modules/posts/domain/usecases/getReplyFactory'
 import { ListenToPostsUseCase } from '@root/modules/posts/domain/usecases/listenToPosts'
 import { ListenToRepliesUseCase } from '@root/modules/posts/domain/usecases/listenToReplies'
+import { UpvoteReplyUseCase } from '@root/modules/posts/domain/usecases/upvoteReply'
+import { DownvoteReplyUseCase } from '@root/modules/posts/domain/usecases/downvoteReply'
 
 const bottle = new Bottle()
 
@@ -34,6 +36,8 @@ bottle.service('Usecases.Post.GetFactory', GetPostFactoryUseCase)
 bottle.service('Usecases.Reply.Add', AddReplyUseCase, 'Repositories.Reply')
 bottle.service('Usecases.Reply.Get', GetRepliesUseCase, 'Repositories.Reply')
 bottle.service('Usecases.Reply.Listen', ListenToRepliesUseCase, 'Repositories.Reply')
+bottle.service('Usecases.Reply.Upvote', UpvoteReplyUseCase, 'Repositories.Reply')
+bottle.service('Usecases.Reply.Downvote', DownvoteReplyUseCase, 'Repositories.Reply')
 bottle.service('Usecases.Reply.GetFactory', GetReplyFactoryUseCase)
 
 const { Add: AddPost, Find: FindPost, Get: GetPosts, Listen: ListenToPosts, GetFactory: GetPostFactory } = bottle.container.Usecases.Post as {
@@ -44,14 +48,16 @@ const { Add: AddPost, Find: FindPost, Get: GetPosts, Listen: ListenToPosts, GetF
     GetFactory: GetPostFactoryUseCase
 }
 
-const { Add: AddReply, Get: GetReplies, Listen: ListenToReplies, GetFactory: GetReplyFactory } = bottle.container.Usecases.Reply as {
+const { Add: AddReply, Get: GetReplies, Listen: ListenToReplies, GetFactory: GetReplyFactory, Upvote: UpvoteReply, Downvote: DownvoteReply } = bottle.container.Usecases.Reply as {
     Add: AddReplyUseCase
     Get: GetRepliesUseCase,
     Listen: ListenToRepliesUseCase,
-    GetFactory: GetReplyFactoryUseCase
+    GetFactory: GetReplyFactoryUseCase,
+    Upvote: UpvoteReplyUseCase,
+    Downvote: DownvoteReplyUseCase
 }
 
 export {
     AddPost, FindPost, GetPosts, ListenToPosts, GetPostFactory,
-    AddReply, GetReplies, ListenToReplies, GetReplyFactory
+    AddReply, GetReplies, ListenToReplies, GetReplyFactory, UpvoteReply, DownvoteReply
 }
