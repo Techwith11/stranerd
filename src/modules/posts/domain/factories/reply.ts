@@ -1,27 +1,33 @@
 import { BaseFactory } from '@root/modules/core/domains/factories/base'
-import { isRequired } from '@root/modules/core/validations/rules'
+import { isExtractedHTMLLongerThan, isRequired } from '@root/modules/core/validations/rules'
 import { ReplyToModel } from '@root/modules/posts/data/models/reply'
 
+const isExtractedHTMLLongerThan3 = (value: string) => isExtractedHTMLLongerThan(3, value)
 export default class ReplyFactory extends BaseFactory<ReplyToModel> {
     readonly rules = {
-        body: [isRequired],
+        body: [isRequired,isExtractedHTMLLongerThan3],
         userId: [isRequired]
     }
-    readonly values = {
+    public values = {
+        body: '', userId: ''
+    }
+    readonly validValues = {
         body: '', userId: ''
     }
     readonly errors = {
         body: undefined, userId: undefined
     }
 
-    setBody(value: string){ return this.set('body', value) }
-    setUserId(value: string){ return this.set('userId', value) }
+    get body(){ return this.values.body }
+    set body(value: string){ this.set('body', value) }
+    get userId(){ return this.values.userId }
+    set userId(value: string){ this.set('userId', value) }
 
     public toModel = () => {
         if(this.valid){
             return {
-                body: this.values.body,
-                userId: this.values.userId
+                body: this.validValues.body,
+                userId: this.validValues.userId
             }
         }else{
             throw new Error('Validation errors')

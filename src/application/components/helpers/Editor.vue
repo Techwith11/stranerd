@@ -1,8 +1,11 @@
 <template>
-	<vue-editor :value="model" @input="onChange" useCustomImageHandler @image-added="handleImageAdded"
-		:placeholder="placeholder" :class="{'border-danger': error, 'border-success': valid }"
-		:editor-toolbar="customToolBar"
-	/>
+	<div>
+		<vue-editor :value="model" @input="$emit('update:model',$event)" useCustomImageHandler @image-added="handleImageAdded"
+			:placeholder="placeholder" :class="{'border border-danger': error, 'border border-success': valid }"
+			:editor-toolbar="customToolBar"
+		/>
+		<span class="small text-danger" v-if="error">{{ error }}</span>
+	</div>
 </template>
 
 <script>
@@ -39,10 +42,6 @@
 			},
 			valid: {
 				required: true
-			},
-			onChange: {
-				required: true,
-				type: Function
 			}
 		},
 		methods: {

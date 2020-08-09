@@ -1,6 +1,6 @@
 import ReplyEntity from '@root/modules/posts/domain/entities/replies'
 import { computed, reactive } from '@vue/composition-api'
-import { DownvoteReply, GetReplies, ListenToReplies, UpvoteReply } from '@root/modules/posts'
+import { DownvoteReply, GetReplies, GetReplyFactory, ListenToReplies, UpvoteReply } from '@root/modules/posts'
 import { firestore } from '@root/services/firebase'
 import store from '@/store/'
 
@@ -15,11 +15,11 @@ const repliesGlobalState: { [key: string]: {
 	listener: () => void
 } } = {}
 const votesAndUsersGlobalState: { [key: string]: {
-		loading: boolean,
-		voting: boolean,
-		votes: string[],
-		user: object | undefined
-	} } = {}
+	loading: boolean,
+	voting: boolean,
+	votes: string[],
+	user: object | undefined
+}} = {}
 
 const fetchReplies = async (postId: string) => {
 	const postReplies = repliesGlobalState[postId].replies
@@ -133,5 +133,19 @@ export const useSingleReply = (postId: string,reply: ReplyEntity) => {
 		votes: computed(() => votesAndUsersGlobalState[reply.id].votes.length),
 		user: computed(() => votesAndUsersGlobalState[reply.id].user),
 		upvoteReply, downvoteReply
+	}
+}
+
+export const useCreateReply = (postId: string) => {
+	const state = reactive({
+		loading: false,
+		factory: GetReplyFactory.call()
+	})
+	state.factory.userId = store.getters.getId
+	const createReply = () => console.log(state.factory.toModel())
+	return {
+		factory: state.factory,
+		loading: computed(() => state.loading),
+		createReply
 	}
 }
