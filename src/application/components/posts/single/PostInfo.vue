@@ -16,10 +16,11 @@
 	</div>
 </template>
 
-<script>
-	import { mapGetters } from 'vuex'
+<script lang="ts">
+	import { defineComponent, computed } from '@vue/composition-api'
 	import PostEntity from '@root/modules/posts/domain/entities/posts'
-	export default {
+	import store from '@/store'
+	export default defineComponent({
 		props: {
 			post: {
 				required: true,
@@ -30,11 +31,11 @@
 				type: Object
 			}
 		},
-		computed: {
-			...mapGetters(['getDefaultImage']),
-			getImageLink(){ return this.user.bio?.image?.link ?? this.getDefaultImage },
+		setup(props){
+			const getImageLink = computed(() => props.user.bio?.image?.link ?? store.getters.getDefaultImage)
+			return { getImageLink }
 		}
-	}
+	})
 </script>
 
 <style lang="scss" scoped>

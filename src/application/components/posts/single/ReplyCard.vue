@@ -23,11 +23,11 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { mapGetters } from 'vuex'
+	import { computed, defineComponent } from '@vue/composition-api'
 	import PostEntity from '@root/modules/posts/domain/entities/posts'
 	import ReplyEntity from '@root/modules/posts/domain/entities/replies'
 	import { useSingleReply } from '@/usescases/posts/replies'
+	import store from '@/store'
 	export default defineComponent({
 		props: {
 			reply: {
@@ -39,16 +39,13 @@
 				type: PostEntity
 			}
 		},
-		computed: {
-			...mapGetters(['getDefaultImage']),
-			getImageLink(){ return this.user?.bio?.image?.link ?? this.getDefaultImage },
-		},
 		setup(props){
 			const {
 				loading, voting, user, votes, hasVoted, canVote,
 				upvoteReply, downvoteReply
 			} = useSingleReply(props.post.id, props.reply)
-			return { loading, voting, user, votes, hasVoted, canVote, upvoteReply, downvoteReply }
+			const getImageLink = computed(() => user.value?.bio?.image?.link ?? store.getters.getDefaultImage)
+			return { loading, voting, user, votes, hasVoted, canVote, upvoteReply, downvoteReply, getImageLink }
 		}
 	})
 </script>

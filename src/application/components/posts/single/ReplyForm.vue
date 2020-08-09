@@ -12,14 +12,15 @@
 	</div>
 </template>
 
-<script>
-    import { useCreateReply } from '@/usescases/posts/replies'
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import { useCreateReply } from '@/usescases/posts/replies'
     import router from '@/router/'
-	export default {
+	export default defineComponent({
 		setup(){
 			const { id } = router.currentRoute.params
 			const { factory, loading, createReply } = useCreateReply(id)
 			return { factory, loading, createReply }
 		}
-	}
+	})
 </script>
