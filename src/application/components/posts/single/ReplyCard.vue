@@ -1,5 +1,5 @@
 <template>
-	<div class="d-flex my-3 align-items-end" v-if="user['.key']">
+	<div class="d-flex my-3 align-items-end" v-if="user && user['.key']">
 		<div class="d-flex flex-column align-items-center mr-2">
 			<span class="small">{{ votes.length }}</span>
 			<span class="small">{{ votes.length === 1 ? 'vote' : 'votes' }}</span>
@@ -11,7 +11,7 @@
 		</div>
 		<div class="border border-secondary py-1 px-2 rounded flex-grow-1">
 			<div v-html="reply.body" class="editor-container"></div>
-			<div class="d-flex align-items-center" v-if="user && user['.key']">
+			<div class="d-flex align-items-center">
 				<img :src="getImageLink" class="profile-image" id="ownerImage" alt="">
 				<div class="small">
 					<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`">{{ user.bio.name }}</router-link></p>
@@ -22,17 +22,14 @@
 	</div>
 </template>
 
-<script>
-	import { firestore } from '@/config/firebase'
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
 	import { mapGetters, mapActions } from 'vuex'
 	import PostEntity from '@root/modules/posts/domain/entities/posts'
 	import ReplyEntity from '@root/modules/posts/domain/entities/replies'
-	export default {
-		data: () => ({
-			user: {},
-			votes: [],
-			isLoading: false
-		}),
+	import { useSingleReply } from '@/usescases/posts/replies'
+	export default defineComponent({
+		data: () => ({isLoading:false}),
 		props: {
 			reply: {
 				required: true,
@@ -45,15 +42,11 @@
 		},
 		computed: {
 			...mapGetters(['getId','getDefaultImage']),
-			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
+			getImageLink(){ return this.user?.bio?.image?.link ?? this.getDefaultImage },
 		},
-		async mounted(){
-			try{
-				let doc = await firestore.collection('users').doc(this.reply.userId).get()
-				this.user = { '.key': doc.id, ...doc.data() }
-				doc = await firestore.doc(`posts/${this.post.id}/replies/${this.reply.id}/votes/votes`).get()
-				if(doc.exists && doc.data().votes){ this.votes = doc.data().votes }
-			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching reply owner details. Try refreshing the page' }) }
+		setup(props){
+			const { loading, user, votes } = useSingleReply(props.post, props.reply)
+			return { loading, user, votes }
 		},
 		methods: {
 			...mapActions(['upvoteReply', 'downvoteReply']),
@@ -84,7 +77,7 @@
 				this.isLoading = false
 			}
 		}
-	}
+	})
 </script>
 
 <style lang="scss" scoped>

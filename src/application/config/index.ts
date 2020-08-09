@@ -9,7 +9,6 @@ import '@/config/layouts'
 import '@/config/registerServiceWorker'
 import '@/style/index.scss'
 import 'jquery'
-import 'popper.js'
 import 'bootstrap'
 
 export const setup = () => {
