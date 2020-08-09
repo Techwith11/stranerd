@@ -1,8 +1,9 @@
 import ReplyEntity from '@root/modules/posts/domain/entities/replies'
 import { computed, reactive } from '@vue/composition-api'
-import { DownvoteReply, GetReplies, GetReplyFactory, ListenToReplies, UpvoteReply } from '@root/modules/posts'
+import { AddReply, DownvoteReply, GetReplies, GetReplyFactory, ListenToReplies, UpvoteReply } from '@root/modules/posts'
 import { firestore } from '@root/services/firebase'
 import store from '@/store/'
+import { notify } from '@/config/notifications'
 
 const PAGINATION_LIMIT = process.env.VUE_APP_PAGINATION_LIMIT
 const repliesGlobalState: { [key: string]: {
@@ -142,7 +143,15 @@ export const useCreateReply = (postId: string) => {
 		factory: GetReplyFactory.call()
 	})
 	state.factory.userId = store.getters.getId
-	const createReply = () => console.log(state.factory.toModel())
+	const createReply = async () => {
+		state.loading = true
+		state.factory.userId = store.getters.getId
+		try {
+			await AddReply.call(postId, state.factory)
+			state.factory.reset()
+		}catch(error){ await notify({ title: error, icon: 'error' }) }
+		state.loading = false
+	}
 	return {
 		factory: state.factory,
 		loading: computed(() => state.loading),

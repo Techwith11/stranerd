@@ -1,1 +1,1 @@
-export const extractTextFromHTML = (html: string) => html?.replace(/<[^>]+>/g, '') ?? ''
+export const extractTextFromHTML = (html: string) => html?.trim().replace(/<[^>]+>/g, '') ?? ''

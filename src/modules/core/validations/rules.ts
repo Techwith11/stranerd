@@ -10,7 +10,7 @@ export const isEmail = (value: string) => {
 }
 
 export const isLongerThan = (length: number, value: string) => {
-    return validate.single(value, { presence:true, length: { minimum: length }})
+    return validate.single(value.trim(), { presence:true, length: { minimum: length }})
 }
 
 export const isExtractedHTMLLongerThan = (length: number, value: string) => {

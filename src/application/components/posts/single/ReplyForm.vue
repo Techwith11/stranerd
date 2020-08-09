@@ -13,7 +13,6 @@
 </template>
 
 <script>
-    import { mapActions } from 'vuex'
     import { useCreateReply } from '@/usescases/posts/replies'
     import router from '@/router/'
 	export default {
@@ -21,20 +20,6 @@
 			const { id } = router.currentRoute.params
 			const { factory, loading, createReply } = useCreateReply(id)
 			return { factory, loading, createReply }
-		},
-		methods:{
-            ...mapActions(['sendPostReply']),
-			async sendReply(){
-				this.isLoading = true
-				if(this.$v.$invalid){ return }
-				let body = this.body
-				this.body = ''
-				this.$v.$reset()
-				try{
-					await this.sendPostReply({ body, id: this.$route.params.id })
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message })}
-				this.isLoading = false
-			}
 		}
 	}
 </script>
