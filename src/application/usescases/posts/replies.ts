@@ -47,12 +47,6 @@ const startListener = async (postId: string) => {
 }
 
 export const useReplies = (postId: string) => {
-	const fetchRepliesOnInit = async () => {
-		repliesGlobalState[postId].loading = true
-		await fetchReplies(postId).catch(() => repliesGlobalState[postId].error = 'Error fetching replies')
-		repliesGlobalState[postId].fetched = true
-		repliesGlobalState[postId].loading = false
-	}
 	if(repliesGlobalState[postId] === undefined){
 		repliesGlobalState[postId] = reactive({
 			fetched: false,
@@ -63,11 +57,14 @@ export const useReplies = (postId: string) => {
 			olderRepliesLoading: false,
 			listener: () => {},
 		})
-		fetchRepliesOnInit()
 	}
 
-	const startListenerOnInit = async () => {
+	const fetchRepliesAndStartListenerOnInit = async () => {
 		repliesGlobalState[postId].loading = true
+		if(!repliesGlobalState[postId].fetched){
+			await fetchReplies(postId).catch(() => repliesGlobalState[postId].error = 'Error fetching replies')
+			repliesGlobalState[postId].fetched = true
+		}
 		await startListener(postId).catch(() => repliesGlobalState[postId].error = 'Error starting listener')
 		repliesGlobalState[postId].loading = false
 	}
@@ -77,7 +74,7 @@ export const useReplies = (postId: string) => {
 		repliesGlobalState[postId].olderRepliesLoading = false
 	}
 
-	startListenerOnInit()
+	fetchRepliesAndStartListenerOnInit().catch(() => repliesGlobalState[postId].error = 'Unknown error')
 
 	return {
 		fetched: computed(() => repliesGlobalState[postId].fetched),
