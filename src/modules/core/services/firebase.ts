@@ -35,6 +35,8 @@ export const FirestoreService =  {
         })
     },
     create: async (collection: string, data: object) => {
+        // @ts-ignore
+        data.dates = { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
         const ref = await firestore.collection(collection).add(data)
         return ref.id
     },

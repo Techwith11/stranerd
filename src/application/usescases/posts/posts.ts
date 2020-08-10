@@ -1,9 +1,10 @@
-import { computed, reactive } from '@vue/composition-api'
+import { computed, reactive, ref, watch } from '@vue/composition-api'
 import PostEntity from '@root/modules/posts/domain/entities/posts'
-import { GetPosts, FindPost, ListenToPosts } from '@root/modules/posts/'
+import { GetPosts, FindPost, ListenToPosts, GetPostFactory, AddPost } from '@root/modules/posts/'
 import router from '@/router'
 import { notify } from '@/config/notifications'
 import { firestore } from '@root/services/firebase'
+import store from '@/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const posts: PostEntity[] = reactive([])
@@ -111,5 +112,61 @@ export const usePost = (id: string) => {
         post: computed(() => state.post),
         user: computed(() => state.user),
         error: computed(() => state.error)
+    }
+}
+
+const factory = GetPostFactory.call()
+export const useCreatePost = () => {
+    const state = reactive({
+        loading: false,
+        factory
+    })
+
+    const tag = ref('')
+    const splitTag = () => {
+        if(tag.value.includes(' ')){
+            tag.value.split(' ').map(tag => {
+                if(tag) factory.addTag(tag.toLowerCase())
+            })
+            tag.value = ''
+        }
+    }
+    watch(() => tag.value, splitTag)
+    const removeTag = (tag: string) => factory.removeTag(tag)
+
+    state.factory.userId = store.getters.getId
+
+    const createPost = async () => {
+        state.loading = true
+        state.factory.userId = store.getters.getId
+        if(store.getters.questionsLeft){
+            try{
+                const id = await AddPost.call(state.factory)
+                state.factory.reset()
+                await router.push(`/posts/${id}`)
+            }catch(error){ await notify({ icon: 'error', title: error.message }) }
+        }else{
+            await store.dispatch('setPostModalNotify')
+        }
+        state.loading = false
+    }
+
+    watch(() => store.getters.getId, () => state.factory.userId = store.getters.getId)
+    const login = async () => {
+        await store.dispatch('setAuthModalLogin')
+        await router.push('/ask-a-question')
+    }
+
+    return {
+        factory: state.factory,
+        tag, splitTag, removeTag,
+
+        isLoggedIn: computed(() => store.getters.isLoggedIn),
+        loading: computed(() => state.loading),
+
+        createPost, login,
+
+        subjects: computed(() => store.getters.getAllSubjects),
+        modules: computed(() => store.getters.getAllSubjects.find((s: {name: string, modules: object[]}) => s.name === state.factory.subject)?.modules ?? [])
     }
 }

@@ -16,3 +16,11 @@ export const isLongerThan = (length: number, value: string) => {
 export const isExtractedHTMLLongerThan = (length: number, value: string) => {
     return validate.single(extractTextFromHTML(value), { presence:true, length: { minimum: length }})
 }
+
+export const hasMoreThan = (length: number, value: any[]) => {
+    return validate.single(value, { presence:true, length: { minimum: length }})
+}
+
+export const hasLessThan = (length: number, value: any[]) => {
+    return validate.single(value, { presence:true, length: { maximum: length }})
+}

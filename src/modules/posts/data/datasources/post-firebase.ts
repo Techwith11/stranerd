@@ -5,8 +5,8 @@ import { PostFromModel, PostToModel } from '@root/modules/posts/data/models/post
 
 export default class PostFirebaseDataSource implements PostBaseDataSource{
 
-    public async create(data: PostToModel): Promise<string> {
-        return await FunctionsService.call('createPost', data) as string
+    public async create(post: PostToModel): Promise<string> {
+        return await FunctionsService.call('createPost', { post }) as string
     }
 
     public async find(id: string): Promise<PostFromModel | undefined> {

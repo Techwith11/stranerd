@@ -22,7 +22,13 @@ export abstract class BaseFactory<T> {
     }
 
     public isValid(property: string) :boolean {
-         return this.checkValidity(property, this.validValues[property]).isValid
+         return !!this.validValues[property] && this.checkValidity(property, this.validValues[property]).isValid
+    }
+
+    public validateAll() {
+        Object.keys(this.values).forEach(key => {
+            this.checkValidity(key, this.values[key])
+        })
     }
 
     public checkValidity(property: string, value: any) :{ isValid: boolean, message: string | undefined } {
