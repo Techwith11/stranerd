@@ -57,7 +57,7 @@
 		},
 		meta(){
 			return {
-				title: this.post?.title || 'Question Title',
+				title: (this.post as any)?.title || 'Question Title',
 				meta: [
 					{
 						vmid: 'description',
@@ -67,12 +67,16 @@
 					{
 						vmid: 'author',
 						name: 'author',
-						content: this.user?.name ?? 'user'
+						content: (this.user as any)?.name ?? 'user'
 					},
 					{
 						vmid: 'keywords',
 						name: 'keywords',
-						content: [this.post?.module, this.post?.subject, this.post?.title].join(', ')
+						content: [
+							(this.post as any)?.module,
+							(this.post as any)?.subject,
+							(this.post as any)?.title
+						].join(', ')
 					}
 				]
 			}
