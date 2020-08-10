@@ -67,7 +67,7 @@
 					{
 						vmid: 'author',
 						name: 'author',
-						content: this.post?.user?.name ?? 'user'
+						content: this.user?.name ?? 'user'
 					},
 					{
 						vmid: 'keywords',

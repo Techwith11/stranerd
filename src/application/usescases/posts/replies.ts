@@ -4,6 +4,8 @@ import { AddReply, DownvoteReply, GetReplies, GetReplyFactory, ListenToReplies, 
 import { firestore } from '@root/services/firebase'
 import store from '@/store/'
 import { notify } from '@/config/notifications'
+import { fetchUser } from '@/usescases/users/users'
+import UserEntity from '@root/modules/users/domain/entities/user'
 
 const PAGINATION_LIMIT = process.env.VUE_APP_PAGINATION_LIMIT
 const repliesGlobalState: { [key: string]: {
@@ -19,7 +21,7 @@ const votesAndUsersGlobalState: { [key: string]: {
 	loading: boolean,
 	voting: boolean,
 	votes: string[],
-	user: object | undefined
+	user: UserEntity | undefined
 }} = {}
 
 const fetchReplies = async (postId: string) => {
@@ -94,12 +96,9 @@ export const useReplies = (postId: string) => {
 export const useSingleReply = (postId: string,reply: ReplyEntity) => {
 	const fetchUserAndVotes = async () => {
 		votesAndUsersGlobalState[reply.id].loading = true
-		let doc = await firestore.collection('users').doc(reply.userId).get()
-		votesAndUsersGlobalState[reply.id].user = { '.key': doc.id, ...doc.data() }
-		doc = await firestore.doc(`posts/${postId}/replies/${reply.id}/votes/votes`).get()
-		if(doc.exists) {
-			votesAndUsersGlobalState[reply.id].votes = doc.data()?.votes ?? []
-		}
+		votesAndUsersGlobalState[reply.id].user = await fetchUser(reply.userId)
+		const doc = await firestore.doc(`posts/${postId}/replies/${reply.id}/votes/votes`).get()
+		votesAndUsersGlobalState[reply.id].votes = doc?.data()?.votes ?? []
 		votesAndUsersGlobalState[reply.id].loading = false
 	}
 	if(votesAndUsersGlobalState[reply.id] === undefined){
