@@ -41,3 +41,17 @@ export const useTutorsList = () => {
 		})
 	}
 }
+
+export const useTopTutorsList = () => {
+	if(!globalState.fetched) fetchTutors().then(() => {
+		globalState.fetched = true
+		if(globalState.tutors.length === 0) globalState.error = 'No tutors available at the moment'
+	})
+
+	return {
+		loading: computed(() => globalState.loading),
+		error: computed(() => globalState.error),
+
+		tutors: computed(() => globalState.tutors.slice(0,3)),
+	}
+}
