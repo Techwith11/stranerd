@@ -4,10 +4,10 @@ import { timestampToDate } from '@root/modules/core/data/transformers/converters
 
 export default class PostTransformer {
     public fromJSON(model: PostFromModel) {
-        const { id, title, body, tags, dates: { createdAt }, userId } = model
+        const { id, title, body, subject, module, tags, dates: { createdAt }, userId } = model
         return new PostEntity({
             id: id ?? '',
-            title, body, userId, tags,
+            title, body, userId, tags, subject, module,
             createdAt: timestampToDate(createdAt)!
         })
     }
@@ -16,6 +16,8 @@ export default class PostTransformer {
         return {
             title: entity.title,
             body: entity.body,
+            subject: entity.subject,
+            module: entity.module,
             tags: entity.tags,
             userId: entity.userId
         }

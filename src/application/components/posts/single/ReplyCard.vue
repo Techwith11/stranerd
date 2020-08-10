@@ -12,9 +12,9 @@
 		<div class="border border-secondary py-1 px-2 rounded flex-grow-1">
 			<div v-html="reply.body" class="editor-container"></div>
 			<div class="d-flex align-items-center">
-				<img :src="getImageLink" class="profile-image" id="ownerImage" alt="">
+				<img :src="user.image" class="profile-image" id="ownerImage" alt="">
 				<div class="small">
-					<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`">{{ user.bio.name }}</router-link></p>
+					<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user['.key']}`">{{ user.name }}</router-link></p>
 					<p class="mb-0">on {{ reply.createdDate }}</p>
 				</div>
 			</div>
@@ -23,11 +23,10 @@
 </template>
 
 <script lang="ts">
-	import { computed, defineComponent } from '@vue/composition-api'
+	import { defineComponent } from '@vue/composition-api'
 	import PostEntity from '@root/modules/posts/domain/entities/posts'
 	import ReplyEntity from '@root/modules/posts/domain/entities/replies'
 	import { useSingleReply } from '@/usescases/posts/replies'
-	import store from '@/store'
 	export default defineComponent({
 		props: {
 			reply: {
@@ -44,8 +43,7 @@
 				loading, voting, user, votes, hasVoted, canVote,
 				upvoteReply, downvoteReply
 			} = useSingleReply(props.post.id, props.reply)
-			const getImageLink = computed(() => user.value?.bio?.image?.link ?? store.getters.getDefaultImage)
-			return { loading, voting, user, votes, hasVoted, canVote, upvoteReply, downvoteReply, getImageLink }
+			return { loading, voting, user, votes, hasVoted, canVote, upvoteReply, downvoteReply }
 		}
 	})
 </script>

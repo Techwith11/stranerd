@@ -1,25 +1,28 @@
 import UserEntity from '@root/modules/users/domain/entities/user'
-import { trimToLength } from '@root/modules/core/validations/sanitizers'
+import { trimToLength, extractTextFromHTML } from '@root/modules/core/validations/sanitizers'
 
 export default class PostEntity{
     public readonly id: string
     public readonly title: string
     public readonly body: string
+    public readonly subject: string
+    public readonly module: string
     public readonly tags: string[]
     public readonly userId: string
     public readonly createdAt: Date
     public user: UserEntity | undefined
 
-    constructor({ id, title, body, tags, createdAt, userId }: PostConstructorArgs) {
+    constructor({ id, title, body, subject, module, tags, createdAt, userId }: PostConstructorArgs) {
         this.id = id
         this.title = title
         this.body = body
+        this.subject = subject
+        this.module = module
         this.tags = tags
         this.createdAt = createdAt
         this.userId = userId
     }
-
-    get trimmedBody(){ return trimToLength(this.body, 200) }
+    get trimmedBody(){ return trimToLength(extractTextFromHTML(this.body), 200) }
 
     get createdDate(){
         const date = this.createdAt
@@ -36,5 +39,5 @@ export default class PostEntity{
     }
 }
 
-type PostConstructorArgs = { id: string, title: string, body: string, tags: string[], createdAt: Date, userId: string }
+type PostConstructorArgs = { id: string, title: string, body: string, subject: string, module: string, tags: string[], createdAt: Date, userId: string }
 

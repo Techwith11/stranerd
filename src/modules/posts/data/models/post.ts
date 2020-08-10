@@ -4,6 +4,8 @@ export interface PostFromModel {
     id: string
     title: string
     body: string
+    subject: string
+    module: string
     tags: string[]
     userId: string
     dates: {
@@ -14,6 +16,8 @@ export interface PostFromModel {
 export interface PostToModel {
     title: string
     body: string
+    subject: string
+    module: string
     tags: string[]
     userId: string
 }
