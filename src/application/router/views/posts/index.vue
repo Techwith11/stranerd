@@ -18,7 +18,7 @@
     import { defineComponent } from '@vue/composition-api'
     import HelperSpinner from '@/components/helpers/Spinner.vue'
     import HelperMessage from '@/components/helpers/Message.vue'
-    import PostCard from '@/components/posts/list/PostHighlight.vue'
+    import PostCard from '@/components/posts/list/PostCard.vue'
     import { usePostsList } from '@/usescases/posts/posts'
 	export default defineComponent({
         name: 'Posts',

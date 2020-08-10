@@ -8,9 +8,10 @@
 </template>
 
 
-<script>
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
 	import CreatePost from '@/components/posts/CreatePost'
-	export default {
+	export default defineComponent({
 		name: 'AskAQuestion',
 		components: {
 			'create-post': CreatePost
@@ -27,5 +28,5 @@
 				]
 			}
 		}
-	}
+	})
 </script>
