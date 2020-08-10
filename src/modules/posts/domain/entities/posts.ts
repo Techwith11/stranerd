@@ -1,4 +1,5 @@
 import UserEntity from '@root/modules/users/domain/entities/user'
+import { trimToLength } from '@root/modules/core/validations/sanitizers'
 
 export default class PostEntity{
     public readonly id: string
@@ -18,12 +19,7 @@ export default class PostEntity{
         this.userId = userId
     }
 
-    get trimmedBody(){
-        let body = this.body.replace(/<[^>]+>/g, '')
-        if(body.length < 200){ return body }
-        const index = body.indexOf(' ', 200)
-        return `${body.slice(0, index)}...`
-    }
+    get trimmedBody(){ return trimToLength(this.body, 200) }
 
     get createdDate(){
         const date = this.createdAt
