@@ -3,8 +3,9 @@ import PostEntity from '@root/modules/posts/domain/entities/posts'
 import { GetPosts, FindPost, ListenToPosts, GetPostFactory, AddPost } from '@root/modules/posts/'
 import router from '@/router'
 import { notify } from '@/config/notifications'
-import { firestore } from '@root/services/firebase'
+import { fetchUser } from '@/usescases/users/users'
 import store from '@/store'
+import UserEntity from '@root/modules/users/domain/entities/user'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const posts: PostEntity[] = reactive([])
@@ -79,31 +80,32 @@ export const useRecentPostsList = () => {
     }
 }
 
+const fetchPost = async (id: string) => {
+    let post = globalState.posts.find(post => post.id === id)
+    if(post) return post
+    post = await FindPost.call(id)
+    if(post) unshiftPost(post)
+    return post
+}
+
 export const usePost = (id: string) => {
     const state = reactive({
         loading: false,
         post: undefined as PostEntity | undefined,
-        user: undefined as object | undefined,
+        user: undefined as UserEntity | undefined,
         error: ''
     })
     const findPost = async () => {
         state.loading = true
-        let post = globalState.posts.find(post => post.id === id)
-        if(post) state.post = post
-        else{
-            post = await FindPost.call(id)
-            if(post) state.post = post
-            else {
-                await router.push('/posts')
-                await notify({
-                    title: 'No such post found',
-                    icon: 'error'
-                })
-            }
+        const post = await fetchPost(id)
+        if(post) {
+            state.post = post
+            state.user = await fetchUser(post.userId)
         }
-        const doc = await firestore.collection('users').doc(state.post!.userId).get()
-        state.user = { '.key': doc.id, ...doc.data() }
-
+        else{
+            await router.push('/posts')
+            await notify({ title: 'No such post found', icon: 'error' })
+        }
         state.loading = false
     }
     findPost().catch(() => state.error = 'Failed to fetch post')

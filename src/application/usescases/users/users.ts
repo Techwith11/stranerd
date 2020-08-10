@@ -1,8 +1,11 @@
 import { computed, reactive, ref } from '@vue/composition-api'
 import UserEntity from '@root/modules/users/domain/entities/user'
-import { GetTutors } from '@root/modules/users'
+import { FindUser, GetTutors } from '@root/modules/users'
 import store from '@/store'
+import router from '@/router'
+import { notify } from '@/config/notifications'
 
+const users: UserEntity[] = reactive([])
 const globalState = reactive({
 	fetched: false,
 	loading: false,
@@ -10,10 +13,19 @@ const globalState = reactive({
 	tutors: [] as UserEntity[]
 })
 
+const addToUsersList = (user: UserEntity) => {
+	const index = users.findIndex(u => u.id === user.id)
+	if(index === -1) users.push(user)
+	else users[index] = user
+}
+
 const fetchTutors = async () => {
 	globalState.loading = true
 	const tutors = await GetTutors.call()
-	tutors.forEach(tutor => globalState.tutors.push(tutor))
+	tutors.forEach(tutor => {
+		globalState.tutors.push(tutor)
+		addToUsersList(tutor)
+	})
 	globalState.loading = false
 }
 
@@ -53,5 +65,37 @@ export const useTopTutorsList = () => {
 		error: computed(() => globalState.error),
 
 		tutors: computed(() => globalState.tutors.slice(0,3)),
+	}
+}
+
+export const fetchUser = async (id: string) => {
+	let user = users.find(user => user.id === id)
+	if(user) return user
+	user = await FindUser.call(id)
+	if(user) addToUsersList(user)
+	return user
+}
+
+export const useUser = (id: string) => {
+	const state = reactive({
+		loading: false,
+		user: undefined as UserEntity | undefined,
+		error: ''
+	})
+	const findUser = async () => {
+		state.loading = true
+		const user = await fetchUser(id)
+		if(user) state.user = user
+		else{
+			await router.push('/tutors')
+			await notify({ title: 'No such user found', icon: 'error' })
+		}
+		state.loading = false
+	}
+	findUser().catch(() => state.error = 'Failed to fetch user')
+	return {
+		loading: computed(() => state.loading),
+		user: computed(() => state.user),
+		error: computed(() => state.error)
 	}
 }

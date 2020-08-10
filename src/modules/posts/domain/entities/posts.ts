@@ -1,3 +1,5 @@
+import UserEntity from '@root/modules/users/domain/entities/user'
+
 export default class PostEntity{
     public readonly id: string
     public readonly title: string
@@ -5,6 +7,7 @@ export default class PostEntity{
     public readonly tags: string[]
     public readonly userId: string
     public readonly createdAt: Date
+    public user: UserEntity | undefined
 
     constructor({ id, title, body, tags, createdAt, userId }: PostConstructorArgs) {
         this.id = id
