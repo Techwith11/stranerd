@@ -1,5 +1,5 @@
 import ReplyEntity from '@root/modules/posts/domain/entities/replies'
-import { computed, reactive } from '@vue/composition-api'
+import { computed, reactive, watch } from '@vue/composition-api'
 import { AddReply, DownvoteReply, GetReplies, GetReplyFactory, ListenToReplies, UpvoteReply } from '@root/modules/posts'
 import { firestore } from '@root/services/firebase'
 import store from '@/store/'
@@ -143,18 +143,25 @@ export const useCreateReply = (postId: string) => {
 		factory: GetReplyFactory.call()
 	})
 	state.factory.userId = store.getters.getId
+
 	const createReply = async () => {
-		state.loading = true
-		state.factory.userId = store.getters.getId
-		try {
-			await AddReply.call(postId, state.factory)
-			state.factory.reset()
-		}catch(error){ await notify({ title: error, icon: 'error' }) }
-		state.loading = false
+		if(state.factory.valid && !state.loading){
+			state.loading = true
+			state.factory.userId = store.getters.getId
+			try {
+				await AddReply.call(postId, state.factory)
+				state.factory.reset()
+			}catch(error){ await notify({ title: error, icon: 'error' }) }
+			state.loading = false
+		}else state.factory.validateAll()
 	}
+
+	watch(() => store.getters.getId, () => state.factory.userId = store.getters.getId)
+
 	return {
 		factory: state.factory,
 		loading: computed(() => state.loading),
+		isLoggedIn: computed(() => store.getters.isLoggedIn),
 		createReply
 	}
 }

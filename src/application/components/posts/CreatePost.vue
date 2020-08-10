@@ -1,5 +1,5 @@
 <template>
-	<form class="my-3" @submit.prevent="() => (!loading || factory.valid) ? createPost() : factory.validateAll()">
+	<form class="my-3" @submit.prevent="createPost">
 		<div class="form-group my-3">
 			<h6>Title</h6>
 			<input type="text" class="form-control" placeholder="eg What is the result of integrating 2x" v-model="factory.title"

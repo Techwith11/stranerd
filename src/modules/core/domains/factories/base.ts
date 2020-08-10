@@ -27,7 +27,7 @@ export abstract class BaseFactory<T> {
 
     public validateAll() {
         Object.keys(this.values).forEach(key => {
-            this.checkValidity(key, this.values[key])
+            this.set(key, this.values[key])
         })
     }
 
@@ -37,7 +37,7 @@ export abstract class BaseFactory<T> {
     }
 
     public reset(){
-        Object.keys(this.values).forEach(key => {
+        Object.keys(this.values).filter(key => key !== 'userId').forEach(key => {
             this.values[key] = undefined
             this.validValues[key] = undefined
             this.errors[key] = undefined

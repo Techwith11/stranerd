@@ -137,18 +137,18 @@ export const useCreatePost = () => {
     state.factory.userId = store.getters.getId
 
     const createPost = async () => {
-        state.loading = true
-        state.factory.userId = store.getters.getId
-        if(store.getters.questionsLeft){
-            try{
-                const id = await AddPost.call(state.factory)
-                state.factory.reset()
-                await router.push(`/posts/${id}`)
-            }catch(error){ await notify({ icon: 'error', title: error.message }) }
-        }else{
-            await store.dispatch('setPostModalNotify')
-        }
-        state.loading = false
+        if(state.factory.valid && !state.loading){
+            state.loading = true
+            state.factory.userId = store.getters.getId
+            if(store.getters.questionsLeft){
+                try{
+                    const id = await AddPost.call(state.factory)
+                    state.factory.reset()
+                    await router.push(`/posts/${id}`)
+                }catch(error){ await notify({ icon: 'error', title: error.message }) }
+            }else await store.dispatch('setPostModalNotify')
+            state.loading = false
+        }else state.factory.validateAll()
     }
 
     watch(() => store.getters.getId, () => state.factory.userId = store.getters.getId)
