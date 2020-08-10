@@ -25,7 +25,14 @@ export default class UserEntity{
 	get name(){ return this.userBio.name }
 	get email(){ return this.userBio.email }
 	get bio(){ return this.userBio.bio }
-	get image(){ return this.userBio.image }
+	get image(){ return this.userBio.image?.link ?? DEFAULT_IMAGE_URL }
+
+	get teachableCourses(){
+		if(!this.roles.isTutor) return []
+		return this.tutor?.courses.filter(course => {
+			return this.tutor?.levels?.[course]! > 0
+		}) ?? []
+	}
 }
 
 type UserConstructorArgs = {
@@ -76,3 +83,6 @@ export interface Subscription {
 	planId: string
 	status: string
 }
+
+const url = `https://firebasestorage.googleapis.com/v0/b/stranerd-13084.appspot.com/o/${encodeURIComponent('users/images/user_profile.png')}?alt=media`
+const DEFAULT_IMAGE_URL = process.env.NODE_ENV === 'production' ? url : '/img/user_profile.png'
