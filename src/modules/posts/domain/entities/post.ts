@@ -1,6 +1,6 @@
 import { trimToLength, extractTextFromHTML, extractDate } from '@root/modules/core/validations/sanitizers'
 
-export default class PostEntity{
+export class PostEntity{
     public readonly id: string
     public readonly title: string
     public readonly body: string

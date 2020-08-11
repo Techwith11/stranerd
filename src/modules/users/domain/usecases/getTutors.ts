@@ -1,5 +1,5 @@
-import IUserRepository from '@root/modules/users/domain/irepositories/iuser'
-import UserEntity from '@root/modules/users/domain/entities/user'
+import { IUserRepository } from '@root/modules/users/domain/irepositories/iuser'
+import { UserEntity } from '@root/modules/users/domain/entities/user'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 
 export class GetTutorsUseCase {

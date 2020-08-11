@@ -13,7 +13,7 @@ const hasMoreThan3 = (value: string[]) => hasMoreThan(3, value)
 const hasLessThan6 = (value: string[]) => hasLessThan(6, value)
 const isExtractedHTMLLongerThan3 = (value: string) => isExtractedHTMLLongerThan(3, value)
 
-export default class PostFactory extends BaseFactory<PostToModel> {
+export class PostFactory extends BaseFactory<PostToModel> {
     public rules = {
         title: [isRequired,isLongerThan3],
         body: [isRequired,isExtractedHTMLLongerThan3],

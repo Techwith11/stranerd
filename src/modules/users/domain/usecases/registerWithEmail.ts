@@ -1,4 +1,4 @@
-import IAuthRepository from '@root/modules/users/domain/irepositories/iauth'
+import { IAuthRepository } from '@root/modules/users/domain/irepositories/iauth'
 import { RegisterFactory } from '@root/modules/users/domain/factories/register'
 
 export class RegisterWithEmailUseCase {

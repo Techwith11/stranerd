@@ -1,7 +1,7 @@
 import { Media } from '@root/modules/core/data/models/base'
 import firebase from '@root/services/firebase'
 
-export default class UserEntity{
+export class UserEntity{
 	public readonly id: string
 	public readonly roles: UserRoles
 

@@ -1,9 +1,9 @@
 import { FirestoreService } from '@root/modules/core/services/firebase'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
-import UserBaseDataSource from '@root/modules/users/data/datasources/user-base'
+import { UserBaseDataSource } from '@root/modules/users/data/datasources/user-base'
 import { UserFromModel } from '@root/modules/users/data/models/user'
 
-export default class UserFirebaseDataSource implements UserBaseDataSource{
+export class UserFirebaseDataSource implements UserBaseDataSource{
 
 	public async find(id: string): Promise<UserFromModel | undefined> {
 		return await FirestoreService.find('users', id) as UserFromModel | undefined

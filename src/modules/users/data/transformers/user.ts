@@ -1,8 +1,8 @@
 import { UserFromModel, UserToModel } from '@root/modules/users/data/models/user'
-import UserEntity from '@root/modules/users/domain/entities/user'
+import { UserEntity } from '@root/modules/users/domain/entities/user'
 import { timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
 
-export default class UserTransformer {
+export class UserTransformer {
 	public fromJSON(model: UserFromModel) {
 		const { id, bio, roles, tutor, dates, account } = model
 		return new UserEntity({

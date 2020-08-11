@@ -1,11 +1,11 @@
 import { computed, reactive, ref, watch } from '@vue/composition-api'
-import PostEntity from '@root/modules/posts/domain/entities/post'
+import { PostEntity } from '@root/modules/posts/domain/entities/post'
 import { GetPosts, FindPost, ListenToPosts, GetPostFactory, AddPost } from '@root/modules/posts/'
 import router from '@/router'
 import { notify } from '@/config/notifications'
 import { fetchUser } from '@/usescases/users/users'
 import store from '@/store'
-import UserEntity from '@root/modules/users/domain/entities/user'
+import { UserEntity } from '@root/modules/users/domain/entities/user'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const posts: PostEntity[] = reactive([])

@@ -1,4 +1,4 @@
-import IAuthRepository from '@root/modules/users/domain/irepositories/iauth'
+import { IAuthRepository } from '@root/modules/users/domain/irepositories/iauth'
 import { ResetPasswordFactory } from '@root/modules/users/domain/factories/resetPassword'
 
 export class ResetPasswordUseCase {

@@ -1,6 +1,6 @@
 export type Rules = ((value: any) => undefined | string)[]
 
-export default class ValidatorService {
+export class ValidatorService {
     static test(value: any, rules: Rules) : { isValid: boolean, message: string | undefined } {
         if(rules.length === 0) return { isValid: true, message: undefined }
         const checks = rules.map((rule) => {

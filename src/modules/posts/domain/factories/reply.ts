@@ -3,7 +3,7 @@ import { isExtractedHTMLLongerThan, isRequired } from '@root/modules/core/valida
 import { ReplyToModel } from '@root/modules/posts/data/models/reply'
 
 const isExtractedHTMLLongerThan3 = (value: string) => isExtractedHTMLLongerThan(3, value)
-export default class ReplyFactory extends BaseFactory<ReplyToModel> {
+export class ReplyFactory extends BaseFactory<ReplyToModel> {
     readonly rules = {
         body: [isRequired,isExtractedHTMLLongerThan3],
         userId: [isRequired]

@@ -1,9 +1,9 @@
 import { FirestoreService, FunctionsService } from '@root/modules/core/services/firebase'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
-import PostBaseDataSource from '@root/modules/posts/data/datasources/post-base'
+import { PostBaseDataSource } from '@root/modules/posts/data/datasources/post-base'
 import { PostFromModel, PostToModel } from '@root/modules/posts/data/models/post'
 
-export default class PostFirebaseDataSource implements PostBaseDataSource{
+export class PostFirebaseDataSource implements PostBaseDataSource{
 
     public async create(post: PostToModel): Promise<string> {
         return await FunctionsService.call('createPost', { post }) as string

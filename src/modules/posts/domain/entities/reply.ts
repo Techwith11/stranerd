@@ -1,6 +1,6 @@
 import { extractDate } from '@root/modules/core/validations/sanitizers'
 
-export default class ReplyEntity{
+export class ReplyEntity{
     public readonly id: string
     public readonly body: string
     public readonly userId: string

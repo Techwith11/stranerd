@@ -1,7 +1,7 @@
 import { AuthUser } from '@root/modules/users/domain/entities/auth'
 import firebase from '@root/services/firebase'
 
-export default interface IAuthRepository {
+export interface IAuthRepository {
 	loginWithEmail: (user: AuthUser) => Promise<string>
 	loginWithGoogle: () => Promise<string>
 	logout: () => Promise<void>

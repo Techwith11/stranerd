@@ -1,8 +1,8 @@
 import { PostFromModel, PostToModel } from '@root/modules/posts/data/models/post'
-import PostEntity from '@root/modules/posts/domain/entities/post'
+import { PostEntity } from '@root/modules/posts/domain/entities/post'
 import { timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
 
-export default class PostTransformer {
+export class PostTransformer {
     public fromJSON(model: PostFromModel) {
         const { id, title, body, subject, module, tags, dates: { createdAt }, userId } = model
         return new PostEntity({

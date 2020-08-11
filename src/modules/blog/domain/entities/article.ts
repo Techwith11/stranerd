@@ -1,7 +1,7 @@
 import { trimToLength, extractTextFromHTML, extractDate } from '@root/modules/core/validations/sanitizers'
 import { Media } from '@root/modules/core/data/models/base'
 
-export default class ArticleEntity{
+export class ArticleEntity{
 	public readonly id: string
 	public readonly title: string
 	public readonly body: string

@@ -1,7 +1,7 @@
-import UserEntity from '@root/modules/users/domain/entities/user'
+import { UserEntity } from '@root/modules/users/domain/entities/user'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 
-export default interface IUserRepository {
+export interface IUserRepository {
 	find: (id: string) => Promise<UserEntity | undefined>
 	get: (conditions?: GetClauses) => Promise<UserEntity[]>
 	listen: (callback: (entities: UserEntity[]) => void, conditions?: GetClauses) => Promise<() => void>

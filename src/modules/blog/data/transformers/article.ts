@@ -1,8 +1,8 @@
 import { ArticleFromModel, ArticleToModel } from '@root/modules/blog/data/models/article'
-import ArticleEntity from '@root/modules/blog/domain/entities/article'
+import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
 import { timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
 
-export default class ArticleTransformer {
+export class ArticleTransformer {
 	public fromJSON(model: ArticleFromModel) {
 		const { id, title, body, image, tags, dates: { createdAt }, userId } = model
 		return new ArticleEntity({

@@ -1,5 +1,5 @@
-import IReplyRepository from '@root/modules/posts/domain/irepositories/ireply'
-import ReplyEntity from '@root/modules/posts/domain/entities/reply'
+import { IReplyRepository } from '@root/modules/posts/domain/irepositories/ireply'
+import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 
 export class ListenToRepliesUseCase {

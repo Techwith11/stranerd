@@ -1,4 +1,4 @@
-import ValidatorService, { Rules } from '@root/modules/core/validations'
+import { Rules, ValidatorService } from '@root/modules/core/validations'
 
 export abstract class BaseFactory<T> {
     abstract readonly rules: { [key: string]: Rules }

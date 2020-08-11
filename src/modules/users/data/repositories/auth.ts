@@ -1,9 +1,9 @@
-import IAuthRepository from '@root/modules/users/domain/irepositories/iauth'
-import AuthBaseDataSource from '@root/modules/users/data/datasources/auth-base'
+import { IAuthRepository } from '@root/modules/users/domain/irepositories/iauth'
+import { AuthBaseDataSource } from '@root/modules/users/data/datasources/auth-base'
 import { AuthUser } from '@root/modules/users/domain/entities/auth'
 import firebase from '@root/services/firebase'
 
-export default class AuthRepository implements IAuthRepository {
+export class AuthRepository implements IAuthRepository {
 	private dataSource: AuthBaseDataSource
 
 	constructor(dataSource: AuthBaseDataSource) {
