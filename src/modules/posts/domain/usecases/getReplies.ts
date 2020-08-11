@@ -27,7 +27,7 @@ export class GetRepliesUseCase {
                 }
             ]
         }
-        return this.repository.get(postId, conditions)
+        return await this.repository.get(postId, conditions)
     }
 }
 

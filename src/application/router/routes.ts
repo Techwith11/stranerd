@@ -4,11 +4,6 @@ export default [
         name: 'Home',
         component: () => import(/* webpackChunkName: "home" */ '@/router/views/home.vue')
     },
-    /*{
-        path: '/about',
-        name: 'About',
-        component: () => import(/!* webpackChunkName: "about" *!/ '@/router/views/about')
-    },*/
     {
         path: '/pricing-plans',
         name: 'Pricing Plan',

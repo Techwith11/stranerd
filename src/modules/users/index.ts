@@ -13,6 +13,8 @@ import { RegisterWithEmailUseCase } from '@root/modules/users/domain/usecases/re
 import { RegisterAuthChangedCallbackUseCase } from '@root/modules/users/domain/usecases/registerOnAuthChangedCallback'
 import { GetLoginFactoryUseCase } from '@root/modules/users/domain/usecases/getLoginFactory'
 import { GetRegisterFactoryUseCase } from '@root/modules/users/domain/usecases/getRegisterFactory'
+import { GetResetPasswordFactoryUseCase } from '@root/modules/users/domain/usecases/getResetPasswordFactory'
+import { ResetPasswordUseCase } from '@root/modules/users/domain/usecases/resetPassword'
 
 const bottle = new Bottle()
 
@@ -31,8 +33,10 @@ bottle.service('Usecases.Auth.LoginWithGoogle', LoginWithGoogleUseCase, 'Reposit
 bottle.service('Usecases.Auth.Logout', LogoutUseCase, 'Repositories.Auth')
 bottle.service('Usecases.Auth.RegisterWithEmail', RegisterWithEmailUseCase, 'Repositories.Auth')
 bottle.service('Usecases.Auth.RegisterAuthChangedCB', RegisterAuthChangedCallbackUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.GetLoginFactory', GetLoginFactoryUseCase, )
-bottle.service('Usecases.Auth.GetRegisterFactory', GetRegisterFactoryUseCase, )
+bottle.service('Usecases.Auth.ResetPassword', ResetPasswordUseCase, 'Repositories.Auth')
+bottle.service('Usecases.Auth.GetLoginFactory', GetLoginFactoryUseCase)
+bottle.service('Usecases.Auth.GetRegisterFactory', GetRegisterFactoryUseCase)
+bottle.service('Usecases.Auth.GetResetPasswordFactory', GetResetPasswordFactoryUseCase)
 
 const { Find: FindUser, GetTutors } = bottle.container.Usecases.User as {
 	Find: FindUserUseCase, GetTutors: GetTutorsUseCase
@@ -41,15 +45,17 @@ const { Find: FindUser, GetTutors } = bottle.container.Usecases.User as {
 const {
 	LoginWithEmail, LoginWithGoogle, Logout,
 	RegisterWithEmail, RegisterAuthChangedCB,
-	GetLoginFactory, GetRegisterFactory
+	GetLoginFactory, GetRegisterFactory,
+	ResetPassword, GetResetPasswordFactory
 } = bottle.container.Usecases.Auth as {
 	LoginWithEmail: LoginWithEmailUseCase, LoginWithGoogle: LoginWithGoogleUseCase, Logout: LogoutUseCase,
 	RegisterWithEmail: RegisterWithEmailUseCase, RegisterAuthChangedCB: RegisterAuthChangedCallbackUseCase
-	GetLoginFactory: GetLoginFactoryUseCase, GetRegisterFactory: GetRegisterFactoryUseCase
+	GetLoginFactory: GetLoginFactoryUseCase, GetRegisterFactory: GetRegisterFactoryUseCase,
+	ResetPassword: ResetPasswordUseCase, GetResetPasswordFactory: GetResetPasswordFactoryUseCase
 }
 
 export {
 	FindUser, GetTutors,
 	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, RegisterAuthChangedCB,
-	GetLoginFactory, GetRegisterFactory
+	GetLoginFactory, GetRegisterFactory, ResetPassword, GetResetPasswordFactory
 }

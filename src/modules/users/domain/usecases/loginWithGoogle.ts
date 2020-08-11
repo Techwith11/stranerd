@@ -8,7 +8,7 @@ export class LoginWithGoogleUseCase {
 	}
 
 	public async call () : Promise<string> {
-		return this.repository.loginWithGoogle()
+		return await this.repository.loginWithGoogle()
 	}
 
 }

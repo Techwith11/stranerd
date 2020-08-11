@@ -30,4 +30,8 @@ export default class AuthRepository implements IAuthRepository {
 		return this.dataSource.registerOnAuthChangedCallback(cb)
 	}
 
+	public async resetPassword(user: { email: string }): Promise<void> {
+		return await this.dataSource.resetPassword(user)
+	}
+
 }

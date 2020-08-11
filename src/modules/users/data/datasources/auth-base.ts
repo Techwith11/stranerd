@@ -7,4 +7,5 @@ export default abstract class AuthBaseDataSource {
 	public abstract logout: () => Promise<void>
 	public abstract registerWithEmail: (user: AuthUser) => Promise<string>
 	public abstract registerOnAuthChangedCallback: (cb: (user: firebase.User | null) => void) => void
+	public abstract resetPassword: (user: { email: string}) => Promise<void>
 }

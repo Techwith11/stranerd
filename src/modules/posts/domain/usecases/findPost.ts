@@ -9,7 +9,7 @@ export class FindPostUseCase {
     }
 
     public async call (id: string) : Promise<PostEntity | undefined> {
-        return this.repository.find(id)
+        return await this.repository.find(id)
     }
 
 }

@@ -8,7 +8,7 @@ export class LogoutUseCase {
 	}
 
 	public async call () : Promise<void> {
-		return this.repository.logout()
+		return await this.repository.logout()
 	}
 
 }

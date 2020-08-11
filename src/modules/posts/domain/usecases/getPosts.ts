@@ -26,7 +26,7 @@ export class GetPostsUseCase {
                 }
             ]
         }
-        return this.repository.get(conditions)
+        return await this.repository.get(conditions)
     }
 
 }

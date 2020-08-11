@@ -18,7 +18,7 @@ export class GetTutorsUseCase {
 				{ field: 'tutor.canTeach', condition: '==', value: true }
 			]
 		}
-		return this.repository.get(conditions)
+		return await this.repository.get(conditions)
 	}
 
 }

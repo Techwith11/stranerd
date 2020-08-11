@@ -1,6 +1,6 @@
 import AuthBaseDataSource from '@root/modules/users/data/datasources/auth-base'
 import { AuthUser } from '@root/modules/users/domain/entities/auth'
-import firebase, { auth, firestore } from '@root/services/firebase'
+import firebase, { auth } from '@root/services/firebase'
 import { FirestoreService } from '@root/modules/core/services/firebase'
 
 export default class AuthFirebaseDataSource implements AuthBaseDataSource{
@@ -30,7 +30,12 @@ export default class AuthFirebaseDataSource implements AuthBaseDataSource{
 	}
 
 	public registerOnAuthChangedCallback(cb: (user: firebase.User | null) => void): void {
+		//TODO: test for production
 		auth.onAuthStateChanged(cb)
+	}
+
+	public async resetPassword(user: { email: string }): Promise<void> {
+		return await auth.sendPasswordResetEmail(user.email)
 	}
 
 }

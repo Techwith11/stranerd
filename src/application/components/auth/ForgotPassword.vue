@@ -6,15 +6,15 @@
 			<i></i>
 		</div>
 		<p class="small text-center my-4">Provide the email address associated with your previously created account.</p>
-		<form class="mx-2">
+		<form class="mx-2" @submit.prevent="resetPassword">
 			<div class="form-group">
-				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="$v.user.email.$model"
-					:class="{'is-invalid': $v.user.email.$error, 'is-valid': !$v.user.email.$invalid}" autocomplete="email">
-				<span class="small" v-if="$v.user.email.$error">Must be a valid email address</span>
+				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="factory.email"
+					:class="{'is-invalid': factory.errors.email, 'is-valid': factory.isValid('email')}" autocomplete="email">
+				<span class="small text-danger" v-if="factory.errors.email">{{ factory.errors.email }}</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button @click.prevent="retrievePassword" :disabled="$v.$invalid || $v.$error || isLoading" :class="$v.$invalid || $v.$error ? 'opacity-25' : 'primary-button'">
-					<i class="fas fa-spinner fa-spin" v-if="isLoading"></i>
+				<button type="submit" :disabled="loading || !factory.valid" :class="loading || !factory.valid ? 'opacity-50' : 'primary-button'">
+					<i class="fas fa-spinner fa-spin" v-if="loading"></i>
 					<span v-else>Retrieve Password</span>
 				</button>
 			</div>
@@ -22,40 +22,21 @@
 	</div>
 </template>
 
-<script>
-	import { mapActions } from 'vuex'
-	import { auth } from '@/config/firebase'
-	import { required, email } from 'vuelidate/lib/validators'
-	export default {
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import { useResetPasswordForm } from '@/usescases/users/auth'
+	import store from '@/store'
+	export default defineComponent({
 		name: 'ForgotPassword',
-		data: () => ({
-			user: {
-				email: ''
-			},
-			isLoading: false
-		}),
-		methods:{
-			...mapActions(['setAuthModalLogin','closeAuthModal']),
-			retrievePassword(){
-				this.isLoading = true
-				auth.sendPasswordResetEmail(this.user.email)
-					.then(async () => {
-						this.isLoading = false
-						new window.Toast({ icon: 'success', title: 'Proceed to email to continue' })
-						this.closeAuthModal()
-					})
-					.catch(error => {
-						new window.Toast({ icon: 'error', title: error.message })
-						this.isLoading = false;
-					})
+		setup(){
+			const { loading, factory, resetPassword } = useResetPasswordForm()
+			return {
+				loading, factory, resetPassword,
+				setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
+				closeAuthModal: () => store.dispatch('closeAuthModal')
 			}
 		},
-		validations:{
-			user: {
-				email: { required, email }
-			}
-		}
-	}
+	})
 </script>
 
 <style lang="scss" scoped>

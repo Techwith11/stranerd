@@ -9,7 +9,7 @@ export class FindUserUseCase {
 	}
 
 	public async call (id: string) : Promise<UserEntity | undefined> {
-		return this.repository.find(id)
+		return await this.repository.find(id)
 	}
 
 }

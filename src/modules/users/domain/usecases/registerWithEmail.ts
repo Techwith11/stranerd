@@ -9,7 +9,7 @@ export class RegisterWithEmailUseCase {
 	}
 
 	public async call (factory: RegisterFactory) : Promise<string> {
-		return this.repository.registerWithEmail(factory.toModel())
+		return await this.repository.registerWithEmail(factory.toModel())
 	}
 
 }

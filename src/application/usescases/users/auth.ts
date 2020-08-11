@@ -2,7 +2,10 @@ import store from '@/store'
 import router from '@/router'
 import { notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
-import { GetLoginFactory, GetRegisterFactory, LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail } from '@root/modules/users'
+import {
+	GetLoginFactory, GetRegisterFactory, GetResetPasswordFactory,
+	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword
+} from '@root/modules/users'
 import { computed, reactive } from '@vue/composition-api'
 
 const afterAuthHook = async () => {
@@ -125,5 +128,30 @@ export const useDevLogin = () => {
 		isDev: computed(() => process.env.NODE_ENV === 'development'),
 		id: computed({ get: () => state.id, set: (value: string) => state.id = value }),
 		devs, login
+	}
+}
+
+export const useResetPasswordForm = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetResetPasswordFactory.call(),
+	})
+	const resetPassword = async () => {
+		if(state.factory.valid && !state.loading){
+			state.loading = true
+			try{
+				await ResetPassword.call(state.factory)
+				state.factory.reset()
+				await afterAuthHook()
+			}catch(error){ await notify({ icon: 'error', title: error.message }) }
+			state.loading = false
+		}else{
+			state.factory.validateAll()
+		}
+	}
+	return {
+		loading: computed(() => state.loading),
+		factory: state.factory,
+		resetPassword
 	}
 }

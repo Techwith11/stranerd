@@ -25,7 +25,7 @@ export class ListenToRepliesUseCase {
                 }
             ]
         }
-        return this.repository.listen(postId,callback, conditions)
+        return await this.repository.listen(postId,callback, conditions)
     }
 
 }
