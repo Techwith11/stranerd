@@ -24,19 +24,25 @@ const registerWithEmail = async (user: AuthUser) => {
 	}
 }
 
-const logout = async () => {
-	await store.dispatch('setId', null)
-	if(store.getters.isTutor) await store.dispatch('closeTutorSessionsListener')
-	await router.push('/')
-	await Logout.call()
-	closeNavbar()
-	closeAccountDropdown()
-	closeAdminDropdown()
-}
+export const useLogout = () => {
+	const state = reactive({
+		loading: false
+	})
+	const logout = async () => {
+		state.loading = true
+		await store.dispatch('setId', null)
+		if(store.getters.isTutor) await store.dispatch('closeTutorSessionsListener')
+		if(router.currentRoute.meta.requiresAuth) await router.push('/')
+		await Logout.call()
+		closeNavbar()
+		closeAccountDropdown()
+		closeAdminDropdown()
+		state.loading = false
+	}
 
-export const useAuth = () => {
 	return {
-		logout,
+		loading: computed(() => state.loading),
+		logout
 	}
 }
 
@@ -84,17 +90,23 @@ export const useGoogleLogin = () => {
 }
 
 export const useDevLogin = () => {
+	const devs = ['kevin11','frank','joe','max']
 	const state = reactive({
-		loading: false
+		loading: false,
+		id: ''
 	})
-	const login = async (id: string) => {
+	const login = async () => {
 		state.loading = true
-		await store.dispatch('setId', id)
-		await afterAuthHook()
+		if(state.id){
+			await store.dispatch('setId', state.id)
+			await afterAuthHook()
+		}else await notify({ title: 'Select a dev id first', icon: 'error' })
 		state.loading = false
 	}
 	return {
 		loading: computed(() => state.loading),
-		login
+		isDev: computed(() => process.env.NODE_ENV === 'development'),
+		id: computed({ get: () => state.id, set: (value: string) => state.id = value }),
+		devs, login
 	}
 }

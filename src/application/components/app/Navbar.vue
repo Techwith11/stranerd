@@ -119,23 +119,29 @@
     }
 </style>
 
-<script>
-    import { mapGetters, mapActions } from 'vuex'
-    import { logout } from '@/config/auth'
+<script lang="ts">
+    import { defineComponent, computed } from '@vue/composition-api'
     import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
-    export default {
-        methods: {
-            ...mapActions(['setAuthModalRegisterStudent', 'setAuthModalLogin','setCartModalOverview']),
-            toggleAccountDropDown: () => closeAdminDropdown(),
-            toggleAdminDropDown: () => closeAccountDropdown(),
-            showCartModal(){
-                closeNavbar()
-                this.setCartModalOverview()
-            },
-            async logout(){
-                await logout()
+    import { useLogout } from '@/usescases/users/auth'
+    import store from '@root/application/store'
+    export default defineComponent({
+        setup(){
+            const { loading, logout } = useLogout()
+            return {
+                loading, logout,
+                isLoggedIn: computed(() => store.getters.isLoggedIn),
+                isAdmin: computed(() => store.getters.isAdmin),
+                getCartLength: computed(() => store.getters.getCartLength),
+                setAuthModalRegisterStudent: () => store.dispatch('setAuthModalRegisterStudent'),
+                setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
+                setCartModalOverview: () => store.dispatch('setCartModalOverview'),
+                toggleAccountDropDown: () => closeAdminDropdown(),
+                toggleAdminDropDown: () => closeAccountDropdown(),
+                showCartModal: () => {
+                    closeNavbar()
+                    store.dispatch('setCartModalOverview')
+                },
             }
-        },
-        computed: mapGetters(['isLoggedIn','isAdmin','getCartLength'])
-    }
+        }
+    })
 </script>
