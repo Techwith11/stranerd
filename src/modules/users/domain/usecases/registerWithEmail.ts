@@ -1,5 +1,5 @@
 import IAuthRepository from '@root/modules/users/domain/irepositories/iauth'
-import { AuthUser } from '@root/modules/users/domain/entities/auth'
+import { RegisterFactory } from '@root/modules/users/domain/factories/register'
 
 export class RegisterWithEmailUseCase {
 	private repository: IAuthRepository
@@ -8,8 +8,8 @@ export class RegisterWithEmailUseCase {
 		this.repository = repository
 	}
 
-	public async call (user: AuthUser) : Promise<string> {
-		return this.repository.registerWithEmail(user)
+	public async call (factory: RegisterFactory) : Promise<string> {
+		return this.repository.registerWithEmail(factory.toModel())
 	}
 
 }

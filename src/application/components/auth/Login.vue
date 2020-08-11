@@ -10,18 +10,18 @@
 			<div class="form-group">
 				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="emailFactory.email"
 					:class="{'is-invalid': emailFactory.errors.email, 'is-valid': emailFactory.isValid('email')}" autocomplete="email">
-				<span class="small" v-if="emailFactory.errors.email">{{ emailFactory.errors.email }}</span>
+				<span class="small text-danger" v-if="emailFactory.errors.email">{{ emailFactory.errors.email }}</span>
 			</div>
 			<div class="form-group">
 				<input type="password" id="password" class="form-control" placeholder="Password" v-model.trim="emailFactory.password"
 					:class="{'is-invalid': emailFactory.errors.password, 'is-valid': emailFactory.isValid('password')}" autocomplete="password">
-				<span class="small" v-if="emailFactory.errors.password">{{ emailFactory.errors.password }}</span>
+				<span class="small text-danger" v-if="emailFactory.errors.password">{{ emailFactory.errors.password }}</span>
 			</div>
 			<div class="d-flex flex-column">
 				<button id="loginBtn" type="submit" :disabled="anyLoading || !emailFactory.valid"
 					:class="emailFactory.valid ? 'primary-button' : 'opacity-25'">
-					<i class="fas fa-spinner fa-spin" v-if="emailLoading"></i>
-					<span v-else>Sign In with email</span>
+					<i class="fas fa-spinner fa-spin mr-2" v-if="emailLoading"></i>
+					<span>Sign In with email</span>
 				</button>
 			</div>
 			<div class="d-flex justify-content-between text-wrap align-items-center small">

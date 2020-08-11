@@ -22,10 +22,14 @@ export class LoginFactory extends BaseFactory<AuthUser> {
 	set password(value: string){ this.set('password', value) }
 
 	public toModel = (): AuthUser => {
-		return {
-			email: this.validValues.email,
-			password: this.validValues.password,
-		};
+		if(this.valid){
+			return {
+				email: this.validValues.email,
+				password: this.validValues.password,
+			}
+		}else{
+			throw new Error('Validation errors')
+		}
 	}
 
 }

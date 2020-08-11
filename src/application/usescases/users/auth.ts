@@ -2,8 +2,7 @@ import store from '@/store'
 import router from '@/router'
 import { notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
-import { AuthUser } from '@root/modules/users/domain/entities/auth'
-import { GetLoginFactory, LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail } from '@root/modules/users'
+import { GetLoginFactory, GetRegisterFactory, LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail } from '@root/modules/users'
 import { computed, reactive } from '@vue/composition-api'
 
 const afterAuthHook = async () => {
@@ -14,13 +13,29 @@ const afterAuthHook = async () => {
 	await store.dispatch('closeAuthModal')
 }
 
-const registerWithEmail = async (user: AuthUser) => {
-	try{
-		const userId = await RegisterWithEmail.call(user)
-		await store.dispatch('setId', userId)
-		await afterAuthHook()
-	}catch(error){
-		await notify({ icon: 'error', title: error.message })
+export const useRegisterForm = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetRegisterFactory.call(),
+	})
+	const register = async () => {
+		if(state.factory.valid && !state.loading){
+			state.loading = true
+			try{
+				const userId = await RegisterWithEmail.call(state.factory)
+				await store.dispatch('setId', userId)
+				state.factory.reset()
+				await afterAuthHook()
+			}catch(error){ await notify({ icon: 'error', title: error.message }) }
+			state.loading = false
+		}else{
+			state.factory.validateAll()
+		}
+	}
+	return {
+		loading: computed(() => state.loading),
+		factory: state.factory,
+		register
 	}
 }
 
@@ -55,7 +70,8 @@ export const useLoginForm = () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
 			try{
-				await LoginWithEmail.call(state.factory)
+				const userId = await LoginWithEmail.call(state.factory)
+				await store.dispatch('setId', userId)
 				state.factory.reset()
 				await afterAuthHook()
 			}catch(error){ await notify({ icon: 'error', title: error.message }) }
@@ -78,7 +94,8 @@ export const useGoogleLogin = () => {
 	const login = async () => {
 		state.loading = true
 		try{
-			await LoginWithGoogle.call()
+			const userId = await LoginWithGoogle.call()
+			await store.dispatch('setId', userId)
 			await afterAuthHook()
 		}catch(error){ await notify({ icon: 'error', title: error.message }) }
 		state.loading = false

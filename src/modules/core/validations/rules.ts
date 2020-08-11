@@ -28,3 +28,8 @@ export const hasMoreThan = (length: number, value: any[]) => {
 export const hasLessThan = (length: number, value: any[]) => {
     return validate.single(value, { presence:true, length: { maximum: length }})
 }
+
+export const isEqualTo = (value: any, compare: any) => {
+    if(value === compare) return undefined
+    return [ 'doesn\'t match' ]
+}
