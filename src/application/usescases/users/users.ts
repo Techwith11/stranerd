@@ -1,5 +1,5 @@
 import { computed, reactive, ref } from '@vue/composition-api'
-import UserEntity from '@root/modules/users/domain/entities/user'
+import { UserEntity } from '@root/modules/users/domain/entities/user'
 import { FindUser, GetTutors } from '@root/modules/users'
 import store from '@/store'
 import router from '@/router'

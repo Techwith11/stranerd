@@ -1,11 +1,11 @@
-import ReplyEntity from '@root/modules/posts/domain/entities/reply'
+import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
 import { computed, reactive, watch } from '@vue/composition-api'
 import { AddReply, DownvoteReply, GetReplies, GetReplyFactory, ListenToReplies, UpvoteReply } from '@root/modules/posts'
 import { firestore } from '@root/services/firebase'
 import store from '@/store/'
 import { notify } from '@/config/notifications'
 import { fetchUser } from '@/usescases/users/users'
-import UserEntity from '@root/modules/users/domain/entities/user'
+import { UserEntity } from '@root/modules/users/domain/entities/user'
 
 const PAGINATION_LIMIT = process.env.VUE_APP_PAGINATION_LIMIT
 const repliesGlobalState: { [key: string]: {

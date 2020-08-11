@@ -1,4 +1,4 @@
-import firebase, { firestore, functions, storage, uploadFile } from '@root/services/firebase'
+import firebase, { auth, firestore, functions, storage, uploadFile } from '@root/services/firebase'
 
 export default firebase
-export { firestore, functions, storage, uploadFile }
+export { auth, firestore, functions, storage, uploadFile }

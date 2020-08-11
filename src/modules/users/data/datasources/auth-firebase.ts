@@ -38,4 +38,9 @@ export class AuthFirebaseDataSource implements AuthBaseDataSource{
 		return await auth.sendPasswordResetEmail(user.email)
 	}
 
+	public async updatePassword(user: { password: string }): Promise<void> {
+		await auth.currentUser?.updatePassword(user.password)
+		//TODO: catch possible errors
+	}
+
 }

@@ -18,8 +18,8 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import PostEntity from '@root/modules/posts/domain/entities/post'
-	import UserEntity from '@root/modules/users/domain/entities/user'
+	import { PostEntity } from '@root/modules/posts/domain/entities/post'
+	import { UserEntity } from '@root/modules/users/domain/entities/user'
 	export default defineComponent({
 		props: {
 			post: {

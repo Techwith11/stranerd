@@ -8,4 +8,5 @@ export interface IAuthRepository {
 	registerWithEmail: (user: AuthUser) => Promise<string>
 	registerOnAuthChangedCallback: (cb: (user: firebase.User | null) => void) => void
 	resetPassword: (user: {email: string}) => Promise<void>
+	updatePassword: (user: {password: string}) => Promise<void>
 }

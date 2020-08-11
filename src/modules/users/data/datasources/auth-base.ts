@@ -8,4 +8,5 @@ export abstract class AuthBaseDataSource {
 	public abstract registerWithEmail: (user: AuthUser) => Promise<string>
 	public abstract registerOnAuthChangedCallback: (cb: (user: firebase.User | null) => void) => void
 	public abstract resetPassword: (user: { email: string}) => Promise<void>
+	public abstract updatePassword: (user: { password: string}) => Promise<void>
 }
