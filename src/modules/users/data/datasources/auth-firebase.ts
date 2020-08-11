@@ -14,6 +14,7 @@ export default class AuthFirebaseDataSource implements AuthBaseDataSource{
 		const googleProvider = new firebase.auth.GoogleAuthProvider()
 		const record = await auth.signInWithPopup(googleProvider)
 		//TODO: catch possible errors
+		await FirestoreService.update('users', record.user?.uid ?? '', { bio: {} })
 		return record.user?.uid ?? ''
 	}
 
