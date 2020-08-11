@@ -19,19 +19,20 @@
 	}
 </style>
 
-<script>
-	import { mapGetters } from 'vuex'
-	import Navbar from '@/components/app/Navbar'
-	import Sidebar from '@/components/app/Sidebar'
-	import Footer from '@/components/app/Footer'
-	export default {
+<script lang="ts">
+	import { computed, defineComponent } from '@vue/composition-api'
+	import Navbar from '@/components/app/Navbar.vue'
+	import Sidebar from '@/components/app/Sidebar.vue'
+	import Footer from '@/components/app/Footer.vue'
+	import store from '@/store'
+	export default defineComponent({
 		components: {
 			'app-navbar': Navbar,
 			'app-sidebar': Sidebar,
 			'app-footer': Footer
 		},
-		computed: {
-			...mapGetters(['isLoggedIn'])
+		setup(){
+			return { isLoggedIn: computed(() => store.getters.isLoggedIn) }
 		}
-	}
+	})
 </script>
