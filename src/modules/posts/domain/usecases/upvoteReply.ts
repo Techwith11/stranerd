@@ -1,5 +1,5 @@
 import IReplyRepository from '@root/modules/posts/domain/irepositories/ireply'
-import ReplyEntity from '@root/modules/posts/domain/entities/replies'
+import ReplyEntity from '@root/modules/posts/domain/entities/reply'
 
 export class UpvoteReplyUseCase {
     private repository: IReplyRepository

@@ -1,4 +1,4 @@
-import PostEntity from '@root/modules/posts/domain/entities/posts'
+import PostEntity from '@root/modules/posts/domain/entities/post'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 import { PostToModel } from '@root/modules/posts/data/models/post'
 

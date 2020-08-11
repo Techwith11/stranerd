@@ -1,5 +1,5 @@
 import { PostFromModel, PostToModel } from '@root/modules/posts/data/models/post'
-import PostEntity from '@root/modules/posts/domain/entities/posts'
+import PostEntity from '@root/modules/posts/domain/entities/post'
 import { timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
 
 export default class PostTransformer {

@@ -3,7 +3,7 @@ import ReplyBaseDataSource from '@root/modules/posts/data/datasources/reply-base
 import ReplyTransformer from '@root/modules/posts/data/transformers/reply'
 import IReplyRepository from '@root/modules/posts/domain/irepositories/ireply'
 import { ReplyFromModel, ReplyToModel } from '@root/modules/posts/data/models/reply'
-import ReplyEntity from '@root/modules/posts/domain/entities/replies'
+import ReplyEntity from '@root/modules/posts/domain/entities/reply'
 
 export default class ReplyRepository implements IReplyRepository {
     private dataSource: ReplyBaseDataSource

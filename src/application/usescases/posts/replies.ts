@@ -1,4 +1,4 @@
-import ReplyEntity from '@root/modules/posts/domain/entities/replies'
+import ReplyEntity from '@root/modules/posts/domain/entities/reply'
 import { computed, reactive, watch } from '@vue/composition-api'
 import { AddReply, DownvoteReply, GetReplies, GetReplyFactory, ListenToReplies, UpvoteReply } from '@root/modules/posts'
 import { firestore } from '@root/services/firebase'

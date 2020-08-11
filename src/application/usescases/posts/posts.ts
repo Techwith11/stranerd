@@ -1,5 +1,5 @@
 import { computed, reactive, ref, watch } from '@vue/composition-api'
-import PostEntity from '@root/modules/posts/domain/entities/posts'
+import PostEntity from '@root/modules/posts/domain/entities/post'
 import { GetPosts, FindPost, ListenToPosts, GetPostFactory, AddPost } from '@root/modules/posts/'
 import router from '@/router'
 import { notify } from '@/config/notifications'

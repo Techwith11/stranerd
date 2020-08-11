@@ -1,4 +1,3 @@
-import UserEntity from '@root/modules/users/domain/entities/user'
 import { trimToLength, extractTextFromHTML } from '@root/modules/core/validations/sanitizers'
 
 export default class PostEntity{
@@ -10,7 +9,6 @@ export default class PostEntity{
     public readonly tags: string[]
     public readonly userId: string
     public readonly createdAt: Date
-    public user: UserEntity | undefined
 
     constructor({ id, title, body, subject, module, tags, createdAt, userId }: PostConstructorArgs) {
         this.id = id
