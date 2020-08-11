@@ -25,7 +25,7 @@ export abstract class BaseFactory<T> {
          return !!this.validValues[property] && this.checkValidity(property, this.validValues[property]).isValid
     }
 
-    public validateAll() {
+    public validateAll() :void {
         Object.keys(this.values).forEach(key => {
             this.set(key, this.values[key])
         })

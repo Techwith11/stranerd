@@ -1,5 +1,5 @@
 import IAuthRepository from '@root/modules/users/domain/irepositories/iauth'
-import { AuthUser } from '@root/modules/users/domain/entities/auth'
+import { LoginFactory } from '@root/modules/users/domain/factories/login'
 
 export class LoginWithEmailUseCase {
 	private repository: IAuthRepository
@@ -8,8 +8,8 @@ export class LoginWithEmailUseCase {
 		this.repository = repository
 	}
 
-	public async call (user: AuthUser) : Promise<string> {
-		return this.repository.loginWithEmail(user)
+	public async call (factory: LoginFactory) : Promise<string> {
+		return this.repository.loginWithEmail(factory.toModel())
 	}
 
 }
