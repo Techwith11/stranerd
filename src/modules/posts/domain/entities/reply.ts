@@ -1,3 +1,5 @@
+import { extractDate } from '@root/modules/core/validations/sanitizers'
+
 export default class ReplyEntity{
     public readonly id: string
     public readonly body: string
@@ -11,19 +13,7 @@ export default class ReplyEntity{
         this.userId = userId
     }
 
-    get createdDate(){
-        const date = this.createdAt
-        const now = new Date()
-        const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-        const yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
-        if(date > today){
-            return date.toTimeString().slice(0,5)
-        }else if(date > yesterday){
-            return 'Yesterday'
-        }else{
-            return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
-        }
-    }
+    get createdDate(){return extractDate(this.createdAt) }
 }
 
 type ReplyConstructorArgs = { id: string, body: string, createdAt: Date, userId: string }
