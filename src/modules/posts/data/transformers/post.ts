@@ -6,7 +6,7 @@ export default class PostTransformer {
     public fromJSON(model: PostFromModel) {
         const { id, title, body, subject, module, tags, dates: { createdAt }, userId } = model
         return new PostEntity({
-            id: id ?? '',
+            id,
             title, body, userId, tags, subject, module,
             createdAt: timestampToDate(createdAt)!
         })

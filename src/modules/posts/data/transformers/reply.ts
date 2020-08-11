@@ -10,7 +10,7 @@ export default class ReplyTransformer {
     public fromJSON(model: ReplyFromModel) {
         const { id, body, dates: { createdAt }, userId } = model
         return new ReplyEntity({
-            id: id ?? '',
+            id,
             body, userId,
             createdAt: timestampToDate(createdAt)!
         })
