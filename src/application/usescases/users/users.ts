@@ -4,6 +4,7 @@ import { FindUser, GetTutors } from '@root/modules/users'
 import store from '@/store'
 import router from '@/router'
 import { notify } from '@/config/notifications'
+import { firestore } from '@root/services/firebase'
 
 const users: UserEntity[] = reactive([])
 const globalState = reactive({
@@ -76,26 +77,45 @@ export const fetchUser = async (id: string) => {
 	return user
 }
 
+const userStates: {[key:string]: {loading:boolean,error:string, user: UserEntity | undefined, sessions: object[]}} = {}
 export const useUser = (id: string) => {
-	const state = reactive({
-		loading: false,
-		user: undefined as UserEntity | undefined,
-		error: ''
-	})
-	const findUser = async () => {
-		state.loading = true
-		const user = await fetchUser(id)
-		if(user) state.user = user
-		else{
-			await router.push('/tutors')
-			await notify({ title: 'No such user found', icon: 'error' })
+	if(userStates[id] === undefined){
+		userStates[id] = reactive({
+			loading: false,
+			user: undefined as UserEntity | undefined,
+			error: '',
+			sessions: []
+		})
+		const findUser = async () => {
+			userStates[id].loading = true
+			const user = await fetchUser(id)
+			if(user) {
+				userStates[id].user = user
+				if(user.roles.isTutor && user.tutor?.canTeach){
+					let docs = await firestore.collection('sessions').where('tutor','==',id)
+						.where('cancelled.student','==',false)
+						.where('cancelled.tutor','==',false)
+						.orderBy('dates.createdAt','desc')
+						.limit(12)
+						.get()
+					userStates[id].sessions = []
+					docs.forEach(doc => userStates[id].sessions.push({ '.key': doc.id, ...doc.data() }))
+				}
+			}
+			else{
+				await router.push('/tutors')
+				await notify({ title: 'No such user found', icon: 'error' })
+			}
+			userStates[id].loading = false
 		}
-		state.loading = false
+		findUser().catch(() => userStates[id].error = 'Failed to fetch user')
 	}
-	findUser().catch(() => state.error = 'Failed to fetch user')
+	//TODO: consider using listeners for user instead of one time getters
+
 	return {
-		loading: computed(() => state.loading),
-		user: computed(() => state.user),
-		error: computed(() => state.error)
+		loading: computed(() => userStates[id].loading),
+		user: computed(() => userStates[id].user),
+		sessions: computed(() => userStates[id].sessions),
+		error: computed(() => userStates[id].error)
 	}
 }
