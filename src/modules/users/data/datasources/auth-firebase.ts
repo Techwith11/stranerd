@@ -1,6 +1,7 @@
 import AuthBaseDataSource from '@root/modules/users/data/datasources/auth-base'
 import { AuthUser } from '@root/modules/users/domain/entities/auth'
-import firebase, { auth } from '@root/services/firebase'
+import firebase, { auth, firestore } from '@root/services/firebase'
+import { FirestoreService } from '@root/modules/core/services/firebase'
 
 export default class AuthFirebaseDataSource implements AuthBaseDataSource{
 	public async loginWithEmail({ email, password }: AuthUser): Promise<string> {
@@ -23,6 +24,7 @@ export default class AuthFirebaseDataSource implements AuthBaseDataSource{
 	public async registerWithEmail({ name, email, password }: AuthUser): Promise<string> {
 		const record = await auth.createUserWithEmailAndPassword(email, password)
 		//TODO: catch possible errors
+		await FirestoreService.update('users', record.user?.uid ?? '', {})
 		return record.user?.uid ?? ''
 	}
 

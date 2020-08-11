@@ -1,66 +1,64 @@
-import firebase, { auth, firestore } from '@root/services/firebase'
 import store from '@/store'
 import router from '@/router'
 import { notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
+import { AuthUser } from '@root/modules/users/domain/entities/auth'
+import { LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail } from '@root/modules/users'
 
-type AuthUser = {
-	name?: string
-	email: string
-	password: string
-}
-
-let afterAuthHook = async () => {
-	let route = store.getters.getIntendedRoute
+const afterAuthHook = async () => {
+	const route = store.getters.getIntendedRoute
 	if(route) await router.push(route)
 	closeNavbar()
 	await store.dispatch('clearIntendedRoute')
 	await store.dispatch('closeAuthModal')
 }
 
-export const registerWithEmail = async ({ name, email, password }: AuthUser) => {
+const registerWithEmail = async (user: AuthUser) => {
 	try{
-		let record = await auth.createUserWithEmailAndPassword(email, password)
-		await firestore.collection('users').doc(record.user?.uid).set({ bio: { name }},{ merge: true })
-		await store.dispatch('setId', record.user?.uid)
+		const userId = await RegisterWithEmail.call(user)
+		await store.dispatch('setId', userId)
 		await afterAuthHook()
 	}catch(error){
 		await notify({ icon: 'error', title: error.message })
 	}
 }
 
-export const loginWithEmail = async ({ email, password }: AuthUser) => {
+const loginWithEmail = async (user: AuthUser) => {
 	try{
-		await auth.signInWithEmailAndPassword(email, password)
+		await LoginWithEmail.call(user)
 		await afterAuthHook()
 	}catch(error) {
 		await notify({ icon: 'error', title: error.message })
 	}
 }
 
-export const loginWithGoogle = async () => {
-	let googleProvider = new firebase.auth.GoogleAuthProvider()
+const loginWithGoogle = async () => {
 	try{
-		let record = await auth.signInWithPopup(googleProvider)
-		await firestore.collection('users').doc(record.user?.uid).set({ bio: { name }},{ merge: true })
-		await store.dispatch('setId', record.user?.uid)
+		let userId = await LoginWithGoogle.call()
+		await store.dispatch('setId', userId)
 		await afterAuthHook()
 	}catch (error) {
 		await notify({ icon: 'error', title: error.message })
 	}
 }
 
-export const loginAsDevUser = async (id: string) => {
+const loginAsDevUser = async (id: string) => {
 	await store.dispatch('setId', id)
 	await afterAuthHook()
 }
 
-export const logout = async () => {
+const logout = async () => {
 	await store.dispatch('setId', null)
 	if(store.getters.isTutor) await store.dispatch('closeTutorSessionsListener')
-	await router.push('/').catch(error => error)
-	await auth.signOut()
+	await router.push('/')
+	await Logout.call()
 	closeNavbar()
 	closeAccountDropdown()
 	closeAdminDropdown()
+}
+
+export const useAuth = () => {
+	return {
+		logout, loginWithGoogle, loginAsDevUser
+	}
 }
