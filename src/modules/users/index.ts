@@ -11,6 +11,8 @@ import { LoginWithGoogleUseCase } from '@root/modules/users/domain/usecases/logi
 import { LogoutUseCase } from '@root/modules/users/domain/usecases/logout'
 import { RegisterWithEmailUseCase } from '@root/modules/users/domain/usecases/registerWithEmail'
 import { RegisterAuthChangedCallbackUseCase } from '@root/modules/users/domain/usecases/registerOnAuthChangedCallback'
+import { GetLoginFactoryUseCase } from '@root/modules/users/domain/usecases/getLoginFactory'
+import { GetRegisterFactoryUseCase } from '@root/modules/users/domain/usecases/getRegisterFactory'
 
 const bottle = new Bottle()
 
@@ -29,6 +31,8 @@ bottle.service('Usecases.Auth.LoginWithGoogle', LoginWithGoogleUseCase, 'Reposit
 bottle.service('Usecases.Auth.Logout', LogoutUseCase, 'Repositories.Auth')
 bottle.service('Usecases.Auth.RegisterWithEmail', RegisterWithEmailUseCase, 'Repositories.Auth')
 bottle.service('Usecases.Auth.RegisterAuthChangedCB', RegisterAuthChangedCallbackUseCase, 'Repositories.Auth')
+bottle.service('Usecases.Auth.GetLoginFactory', GetLoginFactoryUseCase, )
+bottle.service('Usecases.Auth.GetRegisterFactory', GetRegisterFactoryUseCase, )
 
 const { Find: FindUser, GetTutors } = bottle.container.Usecases.User as {
 	Find: FindUserUseCase, GetTutors: GetTutorsUseCase
@@ -36,13 +40,16 @@ const { Find: FindUser, GetTutors } = bottle.container.Usecases.User as {
 
 const {
 	LoginWithEmail, LoginWithGoogle, Logout,
-	RegisterWithEmail, RegisterAuthChangedCB
+	RegisterWithEmail, RegisterAuthChangedCB,
+	GetLoginFactory, GetRegisterFactory
 } = bottle.container.Usecases.Auth as {
 	LoginWithEmail: LoginWithEmailUseCase, LoginWithGoogle: LoginWithGoogleUseCase, Logout: LogoutUseCase,
 	RegisterWithEmail: RegisterWithEmailUseCase, RegisterAuthChangedCB: RegisterAuthChangedCallbackUseCase
+	GetLoginFactory: GetLoginFactoryUseCase, GetRegisterFactory: GetRegisterFactoryUseCase
 }
 
 export {
 	FindUser, GetTutors,
-	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, RegisterAuthChangedCB
+	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, RegisterAuthChangedCB,
+	GetLoginFactory, GetRegisterFactory
 }
