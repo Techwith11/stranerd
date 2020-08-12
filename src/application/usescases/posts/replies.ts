@@ -3,7 +3,7 @@ import { computed, reactive, watch } from '@vue/composition-api'
 import { AddReply, DownvoteReply, GetReplies, GetReplyFactory, ListenToReplies, UpvoteReply } from '@root/modules/posts'
 import { firestore } from '@root/services/firebase'
 import store from '@/store/'
-import { notify } from '@/config/notifications'
+import { Notify } from '@/config/notifications'
 import { fetchUser } from '@/usescases/users/users'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
 
@@ -150,7 +150,7 @@ export const useCreateReply = (postId: string) => {
 			try {
 				await AddReply.call(postId, state.factory)
 				state.factory.reset()
-			}catch(error){ await notify({ title: error, icon: 'error' }) }
+			}catch(error){ await Notify({ title: error, icon: 'error' }) }
 			state.loading = false
 		}else state.factory.validateAll()
 	}

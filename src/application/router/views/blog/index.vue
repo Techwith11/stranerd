@@ -1,14 +1,14 @@
 <template>
 	<Default>
-		<helper-spinner v-if="isLoading"/>
+		<helper-spinner v-if="loading"/>
 		<div v-else class="container py-3">
-			<helper-message message="No posts available at the moment. Check again later" v-if="posts.length === 0" />
+			<helper-message :message="error" v-if="error" />
 			<div v-else>
 				<div>
-					<post-card :post="post" v-for="post in posts" :key="post['.key']" />
+					<article-card :article="article" v-for="article in articles" :key="article.id" />
 					<div class="d-flex justify-content-end my-3" v-if="hasMore">
-						<button class="btn-success" @click="fetchOlderPosts">
-							<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderPostsLoading"></i>
+						<button class="btn-success" @click="fetchOlderArticles">
+							<i class="fas fa-spinner fa-spin mr-2" v-if="olderArticlesLoading"></i>
 							<span>Fetch More</span>
 						</button>
 					</div>
@@ -18,82 +18,30 @@
 	</Default>
 </template>
 
-<script>
-	import { firestore } from '@/config/firebase'
-	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
-	import PostCard from '@/components/blog/list/PostCard'
-	export default {
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import HelperSpinner from '@/components/helpers/Spinner.vue'
+	import HelperMessage from '@/components/helpers/Message.vue'
+	import ArticleCard from '@/components/blog/list/ArticleCard.vue'
+	import { useArticlesList } from '@/usescases/blog/useArticles'
+	import { EventBus } from '@root/application/config/events'
+	export default defineComponent({
 		name: 'Posts',
-		data: () => ({
-			isLoading: true,
-			isOlderPostsLoading: false,
-			fetched: false,
-			listener: () => {},
-			posts: [],
-			paginationLimit: 24,
-			hasMore: true
-		}),
 		components: {
 			'helper-spinner': HelperSpinner,
 			'helper-message': HelperMessage,
-			'post-card': PostCard
+			'article-card': ArticleCard
+		},
+		setup(){
+			const { loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles } = useArticlesList()
+			return { loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles }
 		},
 		async mounted(){
-			await this.getPosts()
-			this.fetched = true
-			this.isLoading = false
-			window.Fire.$on('BlogPostEdited', post => {
-				let index = this.posts.findIndex(p => p['.key'] === post['.key'])
-				this.posts[index] = post
+			EventBus.$on('BlogPostEdited', article => {
+				let index = this.articles.findIndex(p => p['.key'] === article['.key'])
+				this.articles[index] = article
 				this.$forceUpdate()
 			})
-			window.Fire.$on('BlogPostDeleted', post => this.posts = this.posts.filter(p => p['.key'] !== post['.key']))
-		},
-		async activated(){
-			if(this.fetched){
-				await this.setPostsListeners()
-			}
-		},
-		deactivated(){
-			this.listener()
-		},
-		methods: {
-			async getPosts(){
-				try{
-					let docs = firestore.collection('blog').orderBy('dates.createdAt','desc')
-						.limit(this.paginationLimit)
-					let lastItem = this.posts[this.posts.length - 1]
-					if(lastItem){
-						docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
-					}
-					docs = await docs.get()
-					this.hasMore = docs.size >= this.paginationLimit
-					docs.forEach(doc => this.posts.push({ '.key': doc.id, ...doc.data() }))
-				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching posts. Try refreshing the page' }) }
-			},
-			async fetchOlderPosts(){
-				this.isOlderPostsLoading = true
-				await this.getPosts()
-				this.isOlderPostsLoading = false
-			},
-			async setPostsListeners(){
-				let lastItem = this.posts[this.posts.length - 1]
-				let query = firestore.collection('blog').orderBy('dates.createdAt')
-				if(lastItem){
-					query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
-				}
-				this.listener = query.onSnapshot(snapshot => {
-					snapshot.docs.forEach(doc => {
-						let index = this.posts.findIndex(r => r['.key'] === doc.id)
-						if(index === -1){
-							this.posts.unshift({ '.key': doc.id, ...doc.data() })
-						}else{
-							this.posts[index] = { '.key': doc.id, ...doc.data() }
-						}
-					})
-				})
-			}
 		},
 		meta(){
 			return {
@@ -112,5 +60,5 @@
 				]
 			}
 		}
-	}
+	})
 </script>

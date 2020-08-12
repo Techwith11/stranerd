@@ -1,6 +1,6 @@
 import store from '@/store'
 import router from '@/router'
-import { notify } from '@/config/notifications'
+import { Notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
 import {
 	GetLoginFactory, GetRegisterFactory, GetResetPasswordFactory, GetUpdatePasswordFactory,
@@ -29,7 +29,7 @@ export const useRegisterForm = () => {
 				await store.dispatch('setId', userId)
 				state.factory.reset()
 				await afterAuthHook()
-			}catch(error){ await notify({ icon: 'error', title: error.message }) }
+			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
 		}else{
 			state.factory.validateAll()
@@ -77,7 +77,7 @@ export const useLoginForm = () => {
 				await store.dispatch('setId', userId)
 				state.factory.reset()
 				await afterAuthHook()
-			}catch(error){ await notify({ icon: 'error', title: error.message }) }
+			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
 		}else{
 			state.factory.validateAll()
@@ -100,7 +100,7 @@ export const useGoogleLogin = () => {
 			const userId = await LoginWithGoogle.call()
 			await store.dispatch('setId', userId)
 			await afterAuthHook()
-		}catch(error){ await notify({ icon: 'error', title: error.message }) }
+		}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 		state.loading = false
 	}
 	return {
@@ -120,7 +120,7 @@ export const useDevLogin = () => {
 		if(state.id){
 			await store.dispatch('setId', state.id)
 			await afterAuthHook()
-		}else await notify({ title: 'Select a dev id first', icon: 'error' })
+		}else await Notify({ title: 'Select a dev id first', icon: 'error' })
 		state.loading = false
 	}
 	return {
@@ -142,8 +142,8 @@ export const useResetPasswordForm = () => {
 			try{
 				await ResetPassword.call(state.factory)
 				state.factory.reset()
-				await notify({ icon: 'success', title: 'Proceed to your registered email to continue' })
-			}catch(error){ await notify({ icon: 'error', title: error.message }) }
+				await Notify({ icon: 'success', title: 'Proceed to your registered email to continue' })
+			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
 		}else{
 			state.factory.validateAll()
@@ -168,8 +168,8 @@ export const useUpdatePasswordForm = () => {
 				await UpdatePassword.call(state.factory)
 				state.factory.reset()
 				store.dispatch('closeAccountModal')
-				await notify({ icon: 'success', title: 'Password updated successfully' })
-			}catch(error){ await notify({ icon: 'error', title: error.message }) }
+				await Notify({ icon: 'success', title: 'Password updated successfully' })
+			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
 		}else{
 			state.factory.validateAll()

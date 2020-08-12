@@ -7,6 +7,7 @@ import VueChatScroll from 'vue-chat-scroll'
 import SweetAlert from 'sweetalert2'
 import '@/config/layouts'
 import '@/config/registerServiceWorker'
+import '@/config/events'
 import '@/style/index.scss'
 import 'jquery'
 import 'bootstrap'
@@ -17,8 +18,6 @@ export const setup = () => {
     Vue.use(Vuelidate)
     Vue.use(VueChatScroll)
 
-    // @ts-ignore
-    window.Fire = new Vue()
     // @ts-ignore
     window.SweetAlert = SweetAlert
     // @ts-ignore

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter, { Route } from 'vue-router'
 import routes from '@/router/routes'
-import { notify } from '@/config/notifications'
+import { Notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
 
 import store from '@/store/'
@@ -29,7 +29,7 @@ router.beforeEach(async (to: Route, from: Route, next: (to?: string) => void) =>
 	const isLoggedIn = store.getters.isLoggedIn
 	const isAdmin = store.getters.isAdmin
 	if (requiresAuth && !isLoggedIn) {
-		await notify({ icon: 'error', 'title': 'Login to continue' })
+		await Notify({ icon: 'error', 'title': 'Login to continue' })
 		store.dispatch('setAuthModalLogin')
 		store.dispatch('setIntendedRoute', to.fullPath)
 		return next('/')

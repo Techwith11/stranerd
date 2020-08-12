@@ -2,7 +2,7 @@ import { computed, reactive, ref, watch } from '@vue/composition-api'
 import { PostEntity } from '@root/modules/posts/domain/entities/post'
 import { GetPosts, FindPost, ListenToPosts, GetPostFactory, AddPost } from '@root/modules/posts/'
 import router from '@/router'
-import { notify } from '@/config/notifications'
+import { Notify } from '@/config/notifications'
 import { fetchUser } from '@/usescases/users/users'
 import store from '@/store'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
@@ -104,7 +104,7 @@ export const usePost = (id: string) => {
         }
         else{
             await router.push('/posts')
-            await notify({ title: 'No such post found', icon: 'error' })
+            await Notify({ title: 'No such post found', icon: 'error' })
         }
         state.loading = false
     }
@@ -147,7 +147,7 @@ export const useCreatePost = () => {
                     const id = await AddPost.call(state.factory)
                     state.factory.reset()
                     await router.push(`/posts/${id}`)
-                }catch(error){ await notify({ icon: 'error', title: error.message }) }
+                }catch(error){ await Notify({ icon: 'error', title: error.message }) }
             }else await store.dispatch('setPostModalNotify')
             state.loading = false
         }else state.factory.validateAll()

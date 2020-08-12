@@ -7,18 +7,31 @@ const Toast = SweetAlert.mixin({
     timer: 3000
 });
 
-type Args = {
-    title: string,
+type ToastArgs = {
+    title: string
     icon?: 'warning' | 'success' | 'error' | 'info'
 }
 
-export const notify = (args: Args) => {
-    return Toast.fire({
-        title: args.title,
-        icon: args.icon ?? 'info',
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000
-    })
+export const Notify = (args: ToastArgs) => Toast.fire({
+    title: args.title,
+    icon: args.icon ?? 'info',
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3000
+})
+
+type AlertArgs = ToastArgs & {
+    text: string
+    confirmButtonText: string
 }
+export const Alert = (args: AlertArgs) => SweetAlert.fire({
+    title: args.title,
+    text: args.text,
+    icon: args.icon ?? 'info',
+    showCancelButton: true,
+    cancelButtonColor: '#3085d6',
+    confirmButtonColor: '#d33',
+    confirmButtonText: args.confirmButtonText
+})
+

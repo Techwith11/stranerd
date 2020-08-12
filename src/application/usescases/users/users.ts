@@ -3,7 +3,7 @@ import { UserEntity } from '@root/modules/users/domain/entities/user'
 import { FindUser, GetTutors } from '@root/modules/users'
 import store from '@/store'
 import router from '@/router'
-import { notify } from '@/config/notifications'
+import { Notify } from '@/config/notifications'
 import { firestore } from '@root/services/firebase'
 
 const users: UserEntity[] = reactive([])
@@ -104,7 +104,7 @@ export const useUser = (id: string) => {
 			}
 			else{
 				await router.push('/tutors')
-				await notify({ title: 'No such user found', icon: 'error' })
+				await Notify({ title: 'No such user found', icon: 'error' })
 			}
 			userStates[id].loading = false
 		}
