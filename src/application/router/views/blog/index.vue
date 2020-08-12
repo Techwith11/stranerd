@@ -4,14 +4,14 @@
 		<div v-else class="container py-3">
 			<helper-message :message="error" v-if="error" />
 			<div v-else>
-				<div>
-					<article-card :article="article" v-for="article in articles" :key="article.id" />
-					<div class="d-flex justify-content-end my-3" v-if="hasMore">
-						<button class="btn-success" @click="fetchOlderArticles">
-							<i class="fas fa-spinner fa-spin mr-2" v-if="olderArticlesLoading"></i>
-							<span>Fetch More</span>
-						</button>
-					</div>
+				<div class="grid">
+					<article-card v-for="article in articles" :article="article" :key="article.id" />
+				</div>
+				<div class="d-flex justify-content-end my-3" v-if="hasMore">
+					<button class="btn-success" @click="fetchOlderArticles">
+						<i class="fas fa-spinner fa-spin mr-2" v-if="olderArticlesLoading"></i>
+						<span>Fetch More</span>
+					</button>
 				</div>
 			</div>
 		</div>
@@ -58,3 +58,17 @@
 		}
 	})
 </script>
+
+<style lang="scss" scoped>
+	.grid{
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		grid-column-gap: 0.5rem;
+		grid-row-gap: 0.5rem;
+	}
+	@media (min-width: $md) {
+		.grid{
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+</style>

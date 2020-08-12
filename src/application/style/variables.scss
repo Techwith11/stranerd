@@ -10,3 +10,8 @@ $gradient: linear-gradient(to right, $primary-dark, $primary);
 $gradient-reversed: linear-gradient(to left, $primary-dark, $primary);
 
 $font-base-size: 16px;
+
+$sm: 576px;
+$md: 768px;
+$lg: 992px;
+$xl: 1200px;

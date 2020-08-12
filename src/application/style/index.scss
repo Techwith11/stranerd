@@ -16,6 +16,14 @@ body{
 	}
 }
 
+.bolder{
+	font-weight: 500;
+}
+
+.rounded-xl{
+	border-radius: 0.75rem;
+}
+
 .text-black{
 	color: $text-black;
 }
