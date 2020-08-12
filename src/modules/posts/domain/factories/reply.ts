@@ -23,7 +23,7 @@ export class ReplyFactory extends BaseFactory<ReplyToModel> {
     get userId(){ return this.values.userId }
     set userId(value: string){ this.set('userId', value) }
 
-    public toModel = () => {
+    public toModel = async () => {
         if(this.valid){
             return {
                 body: this.validValues.body,

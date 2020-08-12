@@ -21,7 +21,7 @@ export class UpdatePasswordFactory extends BaseFactory<{ password: string }> {
 	get c_password(){ return this.values.c_password }
 	set c_password(value: string){ this.set('c_password', value) }
 
-	public toModel = (): { password: string } => {
+	public toModel = async () => {
 		if(this.valid){
 			return { password: this.validValues.c_password }
 		}else{

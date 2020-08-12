@@ -28,7 +28,7 @@ export class RegisterFactory extends BaseFactory<AuthUser> {
 	get c_password(){ return this.values.c_password }
 	set c_password(value: string){ this.set('c_password', value) }
 
-	public toModel = (): AuthUser => {
+	public toModel = async () => {
 		if(this.valid){
 			return {
 				name: this.validValues.name,

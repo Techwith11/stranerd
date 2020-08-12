@@ -50,15 +50,15 @@ export class PostFactory extends BaseFactory<PostToModel> {
     addTag(value: string){ return !this.values.tags.includes(value) ? this.set('tags', [...this.values.tags, value]) : false }
     removeTag(value: string){ return this.set('tags', this.values.tags.filter(tag => tag !== value)) }
 
-    public toModel = () => {
+    public toModel = async () => {
         if(this.valid){
             return {
-                title: this.values.title,
-                body: this.values.body,
-                subject: this.values.subject,
-                module: this.values.module,
-                tags: this.values.tags,
-                userId: this.values.userId
+                title: this.validValues.title,
+                body: this.validValues.body,
+                subject: this.validValues.subject,
+                module: this.validValues.module,
+                tags: this.validValues.tags,
+                userId: this.validValues.userId
             }
         }else{
             throw new Error('Validation errors')

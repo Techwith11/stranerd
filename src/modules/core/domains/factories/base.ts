@@ -1,11 +1,13 @@
 import { Rules, ValidatorService } from '@root/modules/core/validations'
+import { Uploader } from '@root/modules/core/services/uploader'
+import { Media } from '@root/modules/core/data/models/base'
 
 export abstract class BaseFactory<T> {
     abstract readonly rules: { [key: string]: Rules }
     public abstract values: { [key: string]: any }
     public abstract validValues: { [key: string]: any }
     public abstract errors: { [key: string]: string | undefined }
-    abstract toModel: () => T
+    abstract toModel: () => Promise<T>
 
     public set(property: string, value: any) :boolean {
         const check = this.checkValidity(property, value)
@@ -42,5 +44,9 @@ export abstract class BaseFactory<T> {
             this.validValues[key] = undefined
             this.errors[key] = undefined
         })
+    }
+
+    protected async uploadFile(link: string, file: File) :Promise<Media> {
+        return await Uploader.call(link, file)
     }
 }

@@ -14,7 +14,7 @@ export class ResetPasswordFactory extends BaseFactory<{ email: string }> {
 	get email(){ return this.values.email }
 	set email(value: string){ this.set('email', value) }
 
-	public toModel = (): { email: string } => {
+	public toModel = async () => {
 		if(this.valid){
 			return { email: this.validValues.email }
 		}else{

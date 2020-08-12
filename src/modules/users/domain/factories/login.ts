@@ -21,7 +21,7 @@ export class LoginFactory extends BaseFactory<AuthUser> {
 	get password(){ return this.values.password }
 	set password(value: string){ this.set('password', value) }
 
-	public toModel = (): AuthUser => {
+	public toModel = async () => {
 		if(this.valid){
 			return {
 				email: this.validValues.email,

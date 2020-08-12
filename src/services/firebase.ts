@@ -3,7 +3,6 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/storage'
-import { Media } from '@root/modules/core/data/models/base'
 
 const config = {
 	apiKey: 'AIzaSyCk6CnAF1mcdp9jOh2r1zDQS67-cHVpqZY',
@@ -46,7 +45,7 @@ const uploadToMockServer = async (path: string, file: File) => {
 	})
 	return res.json()
 }
-export const uploadFile = async (path: string, file: File) :Promise<Media> => {
+export const uploadFile = async (path: string, file: File) => {
 	try{
 		let link = `${path}/${Date.now()}_${file.name}`
 		if(process.env.NODE_ENV === 'production'){
