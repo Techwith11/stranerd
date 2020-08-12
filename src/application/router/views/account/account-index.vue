@@ -1,21 +1,26 @@
 <template>
-	<div v-if="getUser.bio">
+	<div v-if="isLoggedIn">
 		<profile-info />
 		<subscription-info />
+		<button class="btn-success floating-button" @click="setAccountModalOverview"><i class="fas fa-cog"></i></button>
 	</div>
 </template>
 
-<script>
-	import { mapGetters } from 'vuex'
-	import ProfileInfo from '@/components/account/single/ProfileInfo'
-	import SubscriptionInfo from '@/components/account/single/SubscriptionInfo'
-	export default {
+<script lang="ts">
+	import { computed, defineComponent } from '@vue/composition-api'
+	import store from '@/store'
+	import ProfileInfo from '@/components/account/single/ProfileInfo.vue'
+	import SubscriptionInfo from '@/components/account/single/SubscriptionInfo.vue'
+	export default defineComponent({
 		components: {
 			'profile-info': ProfileInfo,
 			'subscription-info': SubscriptionInfo
 		},
-		computed: {
-			...mapGetters(['getUser']),
-		}
-	}
+		setup(){
+			return {
+				isLoggedIn: computed(() => store.getters.isLoggedIn),
+				setAccountModalOverview: () => store.dispatch('setAccountModalOverview')
+			}
+		},
+	})
 </script>

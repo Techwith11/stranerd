@@ -3,8 +3,8 @@ import router from '@/router'
 import { notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
 import {
-	GetLoginFactory, GetRegisterFactory, GetResetPasswordFactory,
-	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword
+	GetLoginFactory, GetRegisterFactory, GetResetPasswordFactory, GetUpdatePasswordFactory,
+	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword, UpdatePassword
 } from '@root/modules/users'
 import { computed, reactive } from '@vue/composition-api'
 
@@ -142,7 +142,7 @@ export const useResetPasswordForm = () => {
 			try{
 				await ResetPassword.call(state.factory)
 				state.factory.reset()
-				await afterAuthHook()
+				await notify({ icon: 'success', title: 'Proceed to your registered email to continue' })
 			}catch(error){ await notify({ icon: 'error', title: error.message }) }
 			state.loading = false
 		}else{
@@ -153,5 +153,31 @@ export const useResetPasswordForm = () => {
 		loading: computed(() => state.loading),
 		factory: state.factory,
 		resetPassword
+	}
+}
+
+export const useUpdatePasswordForm = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetUpdatePasswordFactory.call(),
+	})
+	const updatePassword = async () => {
+		if(state.factory.valid && !state.loading){
+			state.loading = true
+			try{
+				await UpdatePassword.call(state.factory)
+				state.factory.reset()
+				store.dispatch('closeAccountModal')
+				await notify({ icon: 'success', title: 'Password updated successfully' })
+			}catch(error){ await notify({ icon: 'error', title: error.message }) }
+			state.loading = false
+		}else{
+			state.factory.validateAll()
+		}
+	}
+	return {
+		loading: computed(() => state.loading),
+		factory: state.factory,
+		updatePassword
 	}
 }
