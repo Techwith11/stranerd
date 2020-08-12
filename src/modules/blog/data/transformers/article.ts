@@ -4,10 +4,10 @@ import { timestampToDate } from '@root/modules/core/data/transformers/converters
 
 export class ArticleTransformer {
 	public fromJSON(model: ArticleFromModel) {
-		const { id, title, body, image, tags, dates: { createdAt }, userId } = model
+		const { id, title, body, image: imageData, tags, dates: { createdAt }, userId } = model
 		return new ArticleEntity({
 			id,
-			title, body, userId, tags, image,
+			title, body, userId, tags, imageData,
 			createdAt: timestampToDate(createdAt)!
 		})
 	}
@@ -16,7 +16,7 @@ export class ArticleTransformer {
 		return {
 			title: entity.title,
 			body: entity.body,
-			image: entity.image,
+			image: entity.imageData,
 			tags: entity.tags,
 			userId: entity.userId
 		}
