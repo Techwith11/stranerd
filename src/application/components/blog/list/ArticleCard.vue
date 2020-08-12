@@ -8,7 +8,10 @@
 			<router-link :to="`/blog/${article.id}`" class="btn btn-primary">View article</router-link>
 			<div class="my-3" v-if="isAdmin">
 				<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
-				<a class="mr-3 text-danger" @click.prevent="deleteArticle"><i class="fas fa-trash mr-1"></i>Delete</a>
+				<a class="mr-3 text-danger" @click.prevent="deleteArticle" :disabled="delLoading">
+					<i class="fas mr-1" :class="delLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+					<span>Delete</span>
+				</a>
 			</div>
 		</div>
 	</div>

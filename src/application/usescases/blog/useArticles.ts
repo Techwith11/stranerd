@@ -57,7 +57,6 @@ export const useArticlesList = () => {
 export const useDeleteArticle = (article: ArticleEntity) => {
 	const state = reactive({ loading: false })
 	const deleteArticle = async () => {
-		state.loading = true
 		try {
 			const result = await Alert({
 				title: 'Delete article',
@@ -66,15 +65,16 @@ export const useDeleteArticle = (article: ArticleEntity) => {
 				confirmButtonText: 'Delete'
 			})
 			if(result.value) {
+				state.loading = true
 				//TODO: Add delete usecase
 				//store.dispatch('deleteBlogPost', article.id)
 				globalState.articles = globalState.articles.filter(a => a.id !== article.id)
+				state.loading = false
 				await Notify({ icon: 'success', title: 'Post deleted successfully' })
 			}
 		} catch(error) {
 			await Notify({ icon: 'error', title: error.message })
 		}
-		state.loading = false
 	}
 	return {
 		loading: computed(() => state.loading),
