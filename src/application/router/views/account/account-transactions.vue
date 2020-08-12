@@ -19,8 +19,6 @@
 <script>
 	import { mapGetters } from 'vuex'
 	import { firestore } from '@/config/firebase'
-	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	import TransactionCard from '@/components/account/single/TransactionCard'
 	export default {
 		name: 'Transactions',
@@ -32,8 +30,6 @@
 			hasMore: true
 		}),
 		components: {
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage,
 			'transaction-card': TransactionCard
 		},
 		async mounted(){

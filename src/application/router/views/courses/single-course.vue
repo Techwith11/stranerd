@@ -13,7 +13,6 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
-	import HelperSpinner from '@/components/helpers/Spinner'
 	import SingleVideo from '@/components/courses/single/SingleVideo'
 	import SingleNav from '@/components/courses/single/SingleNav'
 	import SingleOverview from '@/components/courses/single/SingleOverview'
@@ -41,7 +40,6 @@
 			'single-overview': SingleOverview,
 			'single-discussions': SingleDiscussions,
 			'single-documents': SingleDocuments,
-			'helper-spinner': HelperSpinner
 		},
 		computed:{
 			isOverview(){ return !this.$route.query.tab || this.$route.query.tab === 'overview'},

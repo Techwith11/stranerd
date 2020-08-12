@@ -5,7 +5,7 @@ import Vuelidate from 'vuelidate'
 // @ts-ignore
 import VueChatScroll from 'vue-chat-scroll'
 import SweetAlert from 'sweetalert2'
-import '@/config/layouts'
+import '@/config/components'
 import '@/config/registerServiceWorker'
 import '@/config/events'
 import '@/style/index.scss'

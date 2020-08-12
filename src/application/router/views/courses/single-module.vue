@@ -22,8 +22,6 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
-	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	import CourseCard from '@/components/courses/list/CourseCard'
 	export default {
 		name: 'Courses',
@@ -38,8 +36,6 @@
 		}),
 		components: {
 			'course-card': CourseCard,
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage
 		},
 		async mounted(){
 			await this.getCourses()

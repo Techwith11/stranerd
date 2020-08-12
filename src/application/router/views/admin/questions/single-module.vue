@@ -19,8 +19,6 @@
 <script>
 	import { firestore } from '@/config/firebase'
 	import QuestionCard from '@/components/admin/questions/list/QuestionCard'
-	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	export default {
 		name: 'Questions',
 		data: () => ({
@@ -53,8 +51,6 @@
 		},
 		components: {
 			'question-card': QuestionCard,
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage
 		},
 		computed: {
 			subject(){ return this.$route.params.subject || '' },

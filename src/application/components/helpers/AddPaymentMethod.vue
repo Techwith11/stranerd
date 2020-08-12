@@ -34,7 +34,6 @@
 
 <script>
 	import { mapActions, mapGetters } from 'vuex'
-	import HelperSpinner from '@/components/helpers/Spinner'
 	export default {
 		data: () => ({
 			isLoading: true,
@@ -59,9 +58,6 @@
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
 			},
-		},
-		components: {
-			'helper-spinner': HelperSpinner
 		},
 		async mounted(){
 			await this.initPaymentFields({ onPayPalAuthorization: this.onAddMethodSuccessful })

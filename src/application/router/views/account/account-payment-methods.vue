@@ -14,8 +14,6 @@
 <script>
 	import { firestore } from '@/config/firebase'
 	import { mapGetters, mapActions } from 'vuex'
-	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	import PaymentMethodCard from "@/components/account/single/PaymentMethodCard"
 	export default {
 		data: () => ({
@@ -58,8 +56,6 @@
 			this.isLoading = false
 		},
 		components: {
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage,
 			'payment-method-card': PaymentMethodCard
 		}
 	}

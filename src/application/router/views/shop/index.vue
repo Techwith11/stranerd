@@ -21,8 +21,6 @@
 	import { firestore } from '@/config/firebase'
 	import { mapActions, mapGetters } from 'vuex'
 	import NoteCard from '@/components/shop/list/NoteCard'
-	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	export default {
 		name: 'Shop',
 		data: () => ({
@@ -93,9 +91,7 @@
 			this.listener()
 		},
 		components: {
-			'note-card': NoteCard,
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage
+			'note-card': NoteCard
 		},
 		meta(){
 			return {

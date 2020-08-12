@@ -16,8 +16,6 @@
 </template>
 
 <script>
-	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	import SessionNav from '@/components/sessions/list/SessionNav'
 	import SessionCard from '@/components/sessions/list/SessionCard'
 	import { firestore } from '@/config/firebase'
@@ -34,8 +32,6 @@
 		}),
 		computed: mapGetters(['getId']),
 		components: {
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage,
 			'session-card': SessionCard,
 			'session-nav': SessionNav
 		},

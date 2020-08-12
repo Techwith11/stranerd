@@ -24,7 +24,6 @@
 
 <script lang="ts">
 	import { defineComponent, onActivated, onDeactivated } from '@vue/composition-api'
-	import HelperSpinner from '@/components/helpers/Spinner.vue'
 	import PostInfo from '@/components/posts/single/PostInfo.vue'
 	import ReplyForm from '@/components/posts/single/ReplyForm.vue'
 	import ReplyCard from '@/components/posts/single/ReplyCard.vue'
@@ -50,7 +49,6 @@
 			}
 		},
 		components: {
-			'helper-spinner': HelperSpinner,
 			'post-info': PostInfo,
 			'reply-form': ReplyForm,
 			'reply-card': ReplyCard,

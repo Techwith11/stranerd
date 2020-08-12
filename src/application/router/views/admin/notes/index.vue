@@ -21,8 +21,6 @@
 <script>
 	import { firestore } from '@/config/firebase'
 	import NoteCard from '@/components/admin/notes/list/NoteCard'
-	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	export default {
 		name: 'Notes',
 		data: () => ({
@@ -56,8 +54,6 @@
 		},
 		components: {
 			'note-card': NoteCard,
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage
 		},
 		methods: {
 			async getNotes(){

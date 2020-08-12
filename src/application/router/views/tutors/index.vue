@@ -23,8 +23,6 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import HelperSpinner from '@/components/helpers/Spinner.vue'
-	import HelperMessage from '@/components/helpers/Message.vue'
 	import TutorCard from '@/components/users/list/TutorCard.vue'
 	import { useTutorsList } from '@/usescases/users/users'
 	export default defineComponent({
@@ -37,8 +35,6 @@
 		},
 		components: {
 			'tutor-card': TutorCard,
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage,
 		},
 		meta(){
 			return {

@@ -20,8 +20,6 @@
 <script>
 	import { mapGetters } from 'vuex'
 	import { firestore } from '@/config/firebase'
-	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	import TestCard from '@/components/account/single/TestCard'
 	export default {
 		name: 'Tests',
@@ -33,8 +31,6 @@
 			hasMore: true
 		}),
 		components: {
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage,
 			'test-card': TestCard
 		},
 		async mounted(){

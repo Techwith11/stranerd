@@ -20,16 +20,12 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import HelperSpinner from '@/components/helpers/Spinner.vue'
-	import HelperMessage from '@/components/helpers/Message.vue'
 	import ArticleCard from '@/components/blog/list/ArticleCard.vue'
 	import { useArticlesList } from '@/usescases/blog/useArticles'
 	import { EventBus } from '@root/application/config/events'
 	export default defineComponent({
 		name: 'Posts',
 		components: {
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage,
 			'article-card': ArticleCard
 		},
 		setup(){

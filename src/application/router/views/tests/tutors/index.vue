@@ -33,7 +33,6 @@
 </template>
 
 <script>
-	import HelperSpinner from '@/components/helpers/Spinner'
 	import { mapGetters } from 'vuex'
 	import { checkForUnfinishedTests, startTest } from '@/config/tests'
 	export default {
@@ -91,9 +90,6 @@
 			this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
 			await checkForUnfinishedTests()
 			this.isLoading = false
-		},
-		components: {
-			'helper-spinner': HelperSpinner,
 		},
 		meta(){
 			return {

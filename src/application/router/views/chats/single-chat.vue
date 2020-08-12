@@ -23,8 +23,6 @@
 	import SingleChatNav from '@/components/chats/single/SingleChatNav'
 	import SingleChatMessage from '@/components/chats/single/SingleChatMessage'
 	import SingleChatForm from '@/components/chats/single/SingleChatForm'
-	import HelperSpinner from '@/components/helpers/Spinner'
-	import HelperMessage from '@/components/helpers/Message'
 	import { firestore } from '@/config/firebase'
 	import { mapGetters } from 'vuex'
 	export default {
@@ -96,8 +94,6 @@
 			'single-chat-nav': SingleChatNav,
 			'single-chat-message': SingleChatMessage,
 			'single-chat-form': SingleChatForm,
-			'helper-spinner': HelperSpinner,
-			'helper-message': HelperMessage,
 		},
 		async mounted(){
 			this.isLoading = true

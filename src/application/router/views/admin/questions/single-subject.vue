@@ -12,7 +12,6 @@
 </template>
 
 <script>
-	import HelperSpinner from '@/components/helpers/Spinner'
 	import SubjectCard from "@/components/admin/questions/list/SubjectCard"
 	import { mapGetters, mapActions } from 'vuex'
 	export default {
@@ -24,7 +23,6 @@
 		methods: mapActions(['fetchAllSubjects']),
 		components: {
 			'subject-card': SubjectCard,
-			'helper-spinner': HelperSpinner
 		},
 		async activated(){
 			this.isLoading = true

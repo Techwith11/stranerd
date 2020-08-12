@@ -11,7 +11,6 @@
 
 <script>
 	import { firestore } from '@/config/firebase'
-	import HelperSpinner from '@/components/helpers/Spinner'
 	import PostInfo from '@/components/blog/single/PostInfo'
 	export default {
 		name: 'BlogPost',
@@ -30,7 +29,6 @@
 			window.Fire.$on('BlogPostDeleted', post => post['.key'] === this.post['.key'] ? this.$router.push('/blog') : null)
 		},
 		components: {
-			'helper-spinner': HelperSpinner,
 			'post-info': PostInfo
 		},
 		meta(){

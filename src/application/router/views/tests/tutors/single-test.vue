@@ -20,7 +20,6 @@
 </template>
 
 <script>
-    import HelperSpinner from '@/components/helpers/Spinner'
     import Question from '@/components/tests/tutors/Question'
 	import { firestore } from '@/config/firebase'
 	import { mapGetters } from 'vuex'
@@ -110,7 +109,6 @@
 			}
 		},
         components: {
-            'helper-spinner': HelperSpinner,
             'question': Question,
 		},
         watch:{

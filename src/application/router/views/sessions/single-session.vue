@@ -22,8 +22,6 @@
 <script>
 	import { mapGetters, mapActions } from 'vuex'
 	import { firestore } from '@/config/firebase'
-    import HelperSpinner from '@/components/helpers/Spinner'
-    import HelperMessage from '@/components/helpers/Message'
     import SessionChatForm from "@/components/sessions/single/SessionChatForm"
     import SessionChatMessage from "@/components/sessions/single/SessionChatMessage"
     import SessionNav from "@/components/sessions/single/SessionNav"
@@ -44,8 +42,6 @@
 			chatsListener: () => {}
 		}),
 		components: {
-            'helper-spinner': HelperSpinner,
-            'helper-message': HelperMessage,
 			'session-nav': SessionNav,
 			'session-chat-form': SessionChatForm,
 			'session-chat-message': SessionChatMessage,

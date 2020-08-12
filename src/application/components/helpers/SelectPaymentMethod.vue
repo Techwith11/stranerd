@@ -29,7 +29,6 @@
 <script>
 	import { mapGetters } from 'vuex'
 	import { firestore } from '@/config/firebase'
-	import HelperSpinner from '@/components/helpers/Spinner'
 	import AddPaymentMethod from "@/components/helpers/AddPaymentMethod";
 	export default {
 		data: () => ({
@@ -82,7 +81,6 @@
 			}
 		},
 		components: {
-			'helper-spinner': HelperSpinner,
 			'add-payment-method': AddPaymentMethod
 		},
 		async mounted(){
