@@ -1,39 +1,33 @@
 <template>
 	<Default>
-		<div class="container-fluid py-3">
-			<helper-spinner v-if="isLoading"/>
-			<div v-else>
-				<post-info :post="post" />
-			</div>
+		<helper-spinner v-if="loading"/>
+		<div v-else>
+			<article-info :article="article" :user="user" />
 		</div>
 	</Default>
 </template>
 
-<script>
-	import { firestore } from '@/config/firebase'
-	import PostInfo from '@/components/blog/single/PostInfo'
-	export default {
-		name: 'BlogPost',
-		data: () => ({
-			post: {},
-			isLoading: true
-		}),
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import ArticleInfo from '@/components/blog/single/ArticleInfo.vue'
+	import { useSingleArticle } from '@/usescases/blog/useArticles'
+	import router from '@/router'
+	export default defineComponent({
+		name: 'Article',
+		setup(){
+			const { id } = router.currentRoute.params
+			const { loading, article, user, error } = useSingleArticle(id)
+			return { loading, article, user, error }
+		},
 		async mounted(){
-			try{
-				let doc = await firestore.collection('blog').doc(this.$route.params.id).get()
-				if(!doc.exists){ return await this.$router.replace('/blog') }
-				this.post = { '.key': doc.id, ...doc.data() }
-			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching post. Try refreshing the page' }) }
-			this.isLoading = false
-			window.Fire.$on('BlogPostEdited', post => post['.key'] === this.post['.key'] ? this.post = post : null)
-			window.Fire.$on('BlogPostDeleted', post => post['.key'] === this.post['.key'] ? this.$router.push('/blog') : null)
+			//window.Fire.$on('BlogPostEdited', article => article['.key'] === (this.article as any).id ? this.article = article : null)
 		},
 		components: {
-			'post-info': PostInfo
+			'article-info': ArticleInfo
 		},
 		meta(){
 			return {
-				title: this.post.title || 'Title',
+				title: (this.article as any)?.title || 'Title',
 				meta: [
 					{
 						vmid: 'description',
@@ -48,5 +42,5 @@
 				]
 			}
 		}
-	}
+	})
 </script>
