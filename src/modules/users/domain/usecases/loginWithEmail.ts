@@ -9,7 +9,7 @@ export class LoginWithEmailUseCase {
 	}
 
 	public async call (factory: LoginFactory) : Promise<string> {
-		return await this.repository.loginWithEmail(factory.toModel())
+		return await this.repository.loginWithEmail(await factory.toModel())
 	}
 
 }

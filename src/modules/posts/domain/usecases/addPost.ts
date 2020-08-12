@@ -9,7 +9,7 @@ export class AddPostUseCase {
     }
 
     public async call (factory: PostFactory) :Promise<string> {
-        return await this.repository.add(factory.toModel())
+        return await this.repository.add(await factory.toModel())
     }
 
 }

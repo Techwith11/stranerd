@@ -8,8 +8,8 @@ export class UpdatePasswordUseCase {
 		this.repository = repository
 	}
 
-	public async call (factory: UpdatePasswordFactory) : Promise<void> {
-		return await this.repository.updatePassword(factory.toModel())
+	public async call (factory: UpdatePasswordFactory) :Promise<void> {
+		return await this.repository.updatePassword(await factory.toModel())
 	}
 
 }

@@ -9,7 +9,7 @@ export class ResetPasswordUseCase {
 	}
 
 	public async call (factory: ResetPasswordFactory) : Promise<void> {
-		return await this.repository.resetPassword(factory.toModel())
+		return await this.repository.resetPassword(await factory.toModel())
 	}
 
 }

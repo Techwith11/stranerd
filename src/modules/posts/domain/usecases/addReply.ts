@@ -9,7 +9,7 @@ export class AddReplyUseCase {
     }
 
     public async call (postId: string, factory: ReplyFactory) :Promise<string> {
-        return await this.repository.add(postId, factory.toModel())
+        return await this.repository.add(postId, await factory.toModel())
     }
 
 }
