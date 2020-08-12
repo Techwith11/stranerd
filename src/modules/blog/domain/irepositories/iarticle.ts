@@ -6,4 +6,5 @@ export interface IArticleRepository {
 	add: (data: ArticleToModel) => Promise<string>,
 	find: (id: string) => Promise<ArticleEntity | undefined>
 	get: (conditions?: GetClauses) => Promise<ArticleEntity[]>
+	delete: (id: string) => Promise<void>
 }

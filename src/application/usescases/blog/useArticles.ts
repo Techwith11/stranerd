@@ -1,6 +1,6 @@
 import { computed, reactive } from '@vue/composition-api'
 import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
-import { GetArticles } from '@root/modules/blog'
+import { DeleteArticle, GetArticles } from '@root/modules/blog'
 import { Alert, Notify } from '@/config/notifications'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
@@ -66,8 +66,7 @@ export const useDeleteArticle = (article: ArticleEntity) => {
 			})
 			if(result.value) {
 				state.loading = true
-				//TODO: Add delete usecase
-				//store.dispatch('deleteBlogPost', article.id)
+				await DeleteArticle.call(article.id)
 				globalState.articles = globalState.articles.filter(a => a.id !== article.id)
 				state.loading = false
 				await Notify({ icon: 'success', title: 'Post deleted successfully' })

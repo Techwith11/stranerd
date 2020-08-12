@@ -5,9 +5,18 @@
 			<p class="small">Published {{ article.createdDate }}</p>
 			<router-link :to="`/blog/${article.id}`" class="d-block mb-3 h4 black card-title text-capitalize">{{ article.title }}</router-link>
 			<p class="card-text">{{ article.trimmedBody }}</p>
-			<p v-if="user.id">
-				<img :src="user.image" alt="" class="mr-2 border border-dark rounded-circle" width="40" height="40">
-				<router-link :to="`/users/${user.id}`" class="bolder text-black">by {{ user.name }}</router-link>
+			<p v-if="user.id" class="d-flex align-items-center">
+				<span>
+					<img :src="user.image" alt="" class="mr-2 border border-dark rounded-circle" width="40" height="40">
+					<router-link :to="`/users/${user.id}`" class="bolder text-black">by {{ user.name }}</router-link>
+				</span>
+				<span v-if="isAdmin" class="ml-auto d-inline-block">
+					<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
+					<a class="text-danger" @click.prevent="deleteArticle" :disabled="delLoading">
+						<i class="fas mr-1" :class="delLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+						<span>Delete</span>
+					</a>
+				</span>
 			</p>
 		</div>
 	</div>

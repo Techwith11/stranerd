@@ -44,6 +44,9 @@ export const FirestoreService =  {
         const ref = await firestore.collection(collection).doc(id)
         ref.set(data, { merge: true })
         return ref.id
+    },
+    delete: async (collection: string, id: string) => {
+        return await firestore.collection(collection).doc(id).delete()
     }
 }
 
