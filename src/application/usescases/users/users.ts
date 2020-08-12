@@ -1,4 +1,4 @@
-import { computed, reactive, ref } from '@vue/composition-api'
+import { computed, ComputedRef, reactive, ref } from '@vue/composition-api'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
 import { FindUser, GetTutors } from '@root/modules/users'
 import store from '@/store'
@@ -70,12 +70,12 @@ export const useTopTutorsList = () => {
 }
 
 export const fetchUser = async (id: string) => {
-	// TODO: Return reactive computed value
-	let user = users.find(user => user.id === id)
-	if(user) return user
-	user = await FindUser.call(id)
-	if(user) addToUsersList(user)
-	return user
+	const index = users.findIndex(user => user.id === id)
+	if(index === -1) {
+		const user = await FindUser.call(id)
+		if(user) addToUsersList(user)
+	}
+	return computed(() => users.find(user => user.id === id)).value
 }
 
 const userStates: {[key:string]: {loading:boolean,error:string, user: UserEntity | undefined, sessions: object[]}} = {}
