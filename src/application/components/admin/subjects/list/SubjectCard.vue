@@ -1,11 +1,10 @@
 <template>
 	<div class="my-3 alert alert-secondary">
-		<div class="d-flex justify-content-between align-items-center my-3">
+		<div class="d-flex justify-content-between align-items-center my-3 cursor-pointer" @click.prevent="toggleCollapse">
 			<h4 class="text-capitalize">{{ subject.name }}</h4>
-			<a @click.prevent="hideCollapse" v-if="show"><i class="fas fa-angle-up"></i></a>
-			<a @click.prevent="showCollapse" v-else><i class="fas fa-angle-down"></i></a>
+			<span><i class="fas" :class="show ? 'fa-angle-up' : 'fa-angle-down'"></i></span>
 		</div>
-		<div class="collapse" :id="subject['.key']">
+		<div class="collapse" :id="subject.id">
 			<ul class="list-group">
 				<li class="list-group-item my-1 d-flex justify-content-between align-items-center" v-for="module in subject.modules" :key="module.name">
 					<h6 class="mb-0 text-capitalize">{{ module.name }}</h6>
@@ -24,40 +23,42 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+	import { defineComponent, ref } from '@vue/composition-api'
 	import { mapActions } from 'vuex'
-	export default {
-		data: () => ({
-			show: false
-		}),
+	import store from '@/store'
+	export default defineComponent({
 		props: {
 			subject: {
 				required: true,
 				type: Object
 			}
 		},
+		setup(props){
+			const show = ref(false)
+			const toggleCollapse = () => {
+				document.getElementById(props.subject.id)!.classList.toggle('show')
+				show.value = !show.value
+			}
+			const openCreateModal = () => {
+				store.dispatch('setEditMeta',props.subject)
+				store.dispatch('setCreateModalSubjectModule')
+			}
+			const openSubjectEditModal = () => {
+				store.dispatch('setEditMeta', props.subject)
+				store.dispatch('setEditModalSubject')
+			}
+			const openModuleEditModal = (module: any) => {
+				store.dispatch('setEditMeta', { subject: props.subject, module })
+				store.dispatch('setEditModalSubject')
+			}
+			return {
+				show, toggleCollapse,
+				openCreateModal, openSubjectEditModal, openModuleEditModal,
+			}
+		},
 		methods: {
-			...mapActions(['setEditMeta','setEditModalSubjectModule','setCreateModalSubjectModule','setEditModalSubject','deleteSubject','deleteModule']),
-			showCollapse(){
-				document.getElementById(this.subject['.key']).classList.add('show')
-				this.show = true
-			},
-			hideCollapse(){
-				document.getElementById(this.subject['.key']).classList.remove('show')
-				this.show = false
-			},
-			openCreateModal(){
-				this.setEditMeta(this.subject)
-				this.setCreateModalSubjectModule()
-			},
-			openSubjectEditModal(){
-				this.setEditMeta(this.subject)
-				this.setEditModalSubject()
-			},
-			openModuleEditModal(module){
-				this.setEditMeta({ subject: this.subject, module })
-				this.setEditModalSubjectModule()
-			},
+			...mapActions(['deleteSubject','deleteModule']),
 			async removeSubject(){
 				try{
 					let result = await new window.SweetAlert({
@@ -93,7 +94,7 @@
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 			}
 		}
-	}
+	})
 </script>
 
 <style lang="scss" scoped>

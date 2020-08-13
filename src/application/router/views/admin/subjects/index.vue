@@ -1,22 +1,32 @@
 <template>
 	<div class="container-fluid py-3">
-		<div class="d-flex justify-content-end">
-			<button class="btn btn-success my-3" @click="setCreateModalSubject">Add New Subject</button>
-		</div>
-		<subject-card :subject="subject" v-for="subject in getAllSubjects" :key="subject['.key']" />
+		<helper-spinner v-if="loading" />
+		<template v-else>
+			<div class="d-flex justify-content-end">
+				<button class="btn btn-success my-3" @click="setCreateModalSubject">Add New Subject</button>
+			</div>
+			<subject-card :subject="subject" v-for="subject in subjects" :key="subject.id" />
+		</template>
 	</div>
 </template>
 
-<script>
-	import { mapActions,mapGetters } from 'vuex'
-	import SubjectCard from '@/components/admin/subjects/list/SubjectCard'
-	export default {
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import SubjectCard from '@/components/admin/subjects/list/SubjectCard.vue'
+	import { useSubjects } from '@/usecases/courses/subject'
+	import store from '@/store'
+	export default defineComponent({
 		name: 'Subjects',
 		components: {
 			'subject-card': SubjectCard
 		},
-		computed: mapGetters(['getAllSubjects']),
-		methods: mapActions(['setCreateModalSubject']),
+		setup(){
+			const { loading, subjects, error } = useSubjects()
+			return {
+				loading, subjects, error,
+				setCreateModalSubject: () => store.dispatch('setCreateModalSubject')
+			}
+		},
 		meta(){
 			return {
 				title: 'Subjects',
@@ -29,5 +39,5 @@
 				]
 			}
 		}
-	}
+	})
 </script>
