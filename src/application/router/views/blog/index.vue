@@ -64,7 +64,7 @@
 	.grid{
 		display: grid;
 		grid-template-columns: repeat(1, 1fr);
-		grid-column-gap: 0.5rem;
+		grid-column-gap: 1rem;
 		grid-row-gap: 1rem;
 	}
 	@media (min-width: $md) {

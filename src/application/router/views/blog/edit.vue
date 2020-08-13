@@ -23,7 +23,7 @@
 		setup(){
 			const { id } = router.currentRoute.params
 			const { loading, article, error } = useSingleArticle(id)
-			const { loading: editLoading, editArticle, factory } = useEditArticle()
+			const { loading: editLoading, editArticle, factory } = useEditArticle(id)
 			watch(() => article.value, () => {
 				if(article.value?.id) factory.loadEntity(article.value)
 			})

@@ -104,7 +104,7 @@ export const useUser = (id: string) => {
 				}
 			}
 			else{
-				await router.push('/tutors')
+				await router.replace('/tutors')
 				await Notify({ title: 'No such user found', icon: 'error' })
 			}
 			userStates[id].loading = false

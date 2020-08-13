@@ -1,9 +1,6 @@
 <template>
 	<div>
-		<keep-alive v-if="isLoggedIn">
-			<router-view :key="$route.path" />
-		</keep-alive>
-		<router-view v-else />
+		<router-view />
 		<auth-modal v-if="isAuthModalOpen"/>
 		<create-modal v-if="isCreateModalOpen" />
 		<edit-modal v-if="isEditModalOpen"/>

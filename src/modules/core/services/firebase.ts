@@ -41,6 +41,8 @@ export const FirestoreService =  {
         return ref.id
     },
     update: async (collection: string, id: string, data: object) => {
+        // @ts-ignore
+        data.dates = { updatedAt: firebase.firestore.FieldValue.serverTimestamp() }
         const ref = await firestore.collection(collection).doc(id)
         ref.set(data, { merge: true })
         return ref.id

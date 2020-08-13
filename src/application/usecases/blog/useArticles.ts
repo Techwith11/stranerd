@@ -1,4 +1,4 @@
-import { computed, reactive, ref, watch } from '@vue/composition-api'
+import { computed, reactive } from '@vue/composition-api'
 import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
 import {
 	DeleteArticle,
@@ -122,7 +122,7 @@ export const useSingleArticle = (id: string) => {
 			state.user = await fetchUser(article.userId)
 		}
 		else{
-			await router.push('/blog')
+			await router.replace('/blog')
 			await Notify({ title: 'No such article found', icon: 'error' })
 		}
 		state.loading = false
@@ -175,12 +175,11 @@ export const useEditArticle = (id: string) => {
 			state.loading = true
 			state.factory.userId = store.getters.getId
 			try{
-				await new Promise(resolve => setTimeout(resolve, 5000))
 				const newId = await UpdateArticle.call(id, state.factory)
 				const article = await FindArticle.call(newId)
 				if(article) unshiftArticle(article)
 				state.factory.reset()
-				await router.push(`/blog/${newId}`)
+				await router.replace(`/blog/${newId}`)
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
 		}else state.factory.validateAll()

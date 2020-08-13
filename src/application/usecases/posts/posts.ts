@@ -103,7 +103,7 @@ export const usePost = (id: string) => {
             state.user = await fetchUser(post.userId)
         }
         else{
-            await router.push('/posts')
+            await router.replace('/posts')
             await Notify({ title: 'No such post found', icon: 'error' })
         }
         state.loading = false
