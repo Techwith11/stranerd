@@ -129,7 +129,7 @@ export const useSingleArticle = (id: string) => {
 	}
 }
 
-export const useArticleForm = () => {
+export const useCreateArticle = () => {
 	const state = reactive({
 		loading: false,
 		factory: GetArticleFactory.call()
@@ -144,7 +144,6 @@ export const useArticleForm = () => {
 			try{
 				const id = await AddArticle.call(state.factory)
 				state.factory.reset()
-				await store.dispatch('closeCreateModal')
 				await router.push(`/blog/${id}`)
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
@@ -153,9 +152,35 @@ export const useArticleForm = () => {
 
 	return {
 		factory: state.factory,
-
 		loading: computed(() => state.loading),
-
 		createArticle,
+	}
+}
+
+export const useEditArticle = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetArticleFactory.call()
+	})
+
+	const editArticle = async () => {
+		if(state.factory.valid && !state.loading){
+			state.loading = true
+			state.factory.userId = store.getters.getId
+			try{
+				await new Promise(resolve => setTimeout(resolve, 5000))
+				console.log(state.factory.validValues)
+				//const id = await EditArticle.call(state.factory)
+				//state.factory.reset()
+				//await router.push(`/blog/${id}`)
+			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
+			state.loading = false
+		}else state.factory.validateAll()
+	}
+
+	return {
+		factory: state.factory,
+		loading: computed(() => state.loading),
+		editArticle,
 	}
 }

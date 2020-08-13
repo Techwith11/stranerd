@@ -26,6 +26,12 @@ export default [
         component: () => import(/* webpackChunkName: "article" */ '@/router/views/blog/single_blog.vue')
     },
     {
+        path: '/blog/:id/edit',
+        name: 'Edit Blog Article',
+        component: () => import(/* webpackChunkName: "edit_article" */ '@/router/views/blog/edit.vue'),
+        meta: { requiresAuth: true, requiresAdmin: true }
+    },
+    {
         path: '/shop',
         name: 'Shop',
         component: () => import(/* webpackChunkName: "shop" */ '@/router/views/shop/index.vue'),
