@@ -8,7 +8,7 @@
 					<img :src="user.image" alt="" width="50" height="50" class="rounded-circle border border-secondary">
 					<h6>{{ user.name }}</h6>
 					<span v-if="isAdmin" class="d-inline-block">
-						<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
+						<router-link class="mr-3 text-warning" :to="`/blog/${article.id}/edit`"><i class="fas fa-pen mr-1"></i>Edit</router-link>
 						<a class="text-danger" @click.prevent="deleteArticle" :disabled="delLoading">
 							<i class="fas mr-1" :class="delLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
 							<span>Delete</span>

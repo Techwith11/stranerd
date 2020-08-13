@@ -19,9 +19,6 @@
 			const { loading, article, user, error } = useSingleArticle(id)
 			return { loading, article, user, error }
 		},
-		async mounted(){
-			//window.Fire.$on('BlogPostEdited', article => article['.key'] === (this.article as any).id ? this.article = article : null)
-		},
 		components: {
 			'article-info': ArticleInfo
 		},

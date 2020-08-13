@@ -22,7 +22,7 @@
 				/>
 			</div>
 			<div class="form-group my-3">
-				<input type="text" placeholder="eg differentiation calculus" v-model="tag" class="form-control">
+				<input type="text" placeholder="Tags" v-model="tag" class="form-control">
 				<p class="my-2">
 					<span v-for="tag in factory.tags" @click="removeTag(tag)" class="bg-primary p-1 mr-1 cursor-pointer" :key="tag">
 						<span class="text-white">{{ tag }} </span>
@@ -33,9 +33,9 @@
 				<small class="small text-danger" v-if="factory.errors.tags">{{ factory.errors.tags }}</small>
 			</div>
 			<div class="d-flex flex-column my-3">
-				<button class="text-white my-2 py-2 px-4" type="submit" :class="!factory.valid || loading ? 'opacity-25' : 'primary-button'"
+				<button class="text-white my-2 py-2 px-4 primary-button" type="submit" :class="{ 'opacity-25': !factory.valid || loading }"
 					:disabled="loading || !factory.valid">
-					<i class="fas fa-spinner fa-spin" v-if="loading"></i>
+					<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
 					<span>
 						<slot name="buttonText">Submit</slot>
 					</span>
