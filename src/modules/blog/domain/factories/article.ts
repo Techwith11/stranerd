@@ -61,7 +61,11 @@ export class ArticleFactory extends BaseFactory<ArticleEntity, ArticleToModel> {
 	}
 
 	public loadEntity = (entity: ArticleEntity) => {
-		throw Error('Cannot load an entity into this factory')
+		this.title = entity.title
+		this.body = entity.body
+		this.set('tags', entity.tags)
+		this.userId = entity.userId
+		this.image = entity.imageData
 	}
 
 }
