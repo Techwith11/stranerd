@@ -12,12 +12,18 @@ export default [
     {
         path: '/blog',
         name: 'Blog Posts',
-        component: () => import(/* webpackChunkName: "blog_posts" */ '@/router/views/blog/index.vue')
+        component: () => import(/* webpackChunkName: "articles" */ '@/router/views/blog/index.vue')
+    },
+    {
+        path: '/blog/create',
+        name: 'Create Blog Article',
+        component: () => import(/* webpackChunkName: "create_article" */ '@/router/views/blog/create.vue'),
+        meta: { requiresAuth: true, requiresAdmin: true }
     },
     {
         path: '/blog/:id',
         name: 'Blog Post',
-        component: () => import(/* webpackChunkName: "blog_post" */ '@/router/views/blog/single_blog.vue')
+        component: () => import(/* webpackChunkName: "article" */ '@/router/views/blog/single_blog.vue')
     },
     {
         path: '/shop',
