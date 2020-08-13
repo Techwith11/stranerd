@@ -14,15 +14,21 @@
 					</button>
 				</div>
 			</div>
+			<button class="floating-button" v-if="isAdmin">
+				<router-link to="/blog/create">
+					<i class="fas fa-plus text-white"></i>
+				</router-link>
+			</button>
 		</div>
 	</Default>
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
+	import { defineComponent, computed } from '@vue/composition-api'
 	import ArticleCard from '@/components/blog/list/ArticleCard.vue'
 	import { useArticlesList } from '@/usescases/blog/useArticles'
 	import { EventBus } from '@root/application/config/events'
+	import store from '@root/application/store'
 	export default defineComponent({
 		name: 'Posts',
 		components: {
@@ -30,7 +36,10 @@
 		},
 		setup(){
 			const { loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles } = useArticlesList()
-			return { loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles }
+			return {
+				loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles,
+				isAdmin: computed(() => store.getters.isAdmin)
+			}
 		},
 		async mounted(){
 			EventBus.$on('BlogPostEdited', article => {
