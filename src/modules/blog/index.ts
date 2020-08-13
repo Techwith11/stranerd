@@ -7,6 +7,7 @@ import { FindArticleUseCase } from '@root/modules/blog/domain/usecases/findArtic
 import { DeleteArticleUseCase } from '@root/modules/blog/domain/usecases/deleteArticle'
 import { AddArticleUseCase } from '@root/modules/blog/domain/usecases/addArticle'
 import { GetArticleFactoryUseCase } from '@root/modules/blog/domain/usecases/getArticleFactory'
+import { UpdateArticleUseCase } from '@root/modules/blog/domain/usecases/updateArticle'
 
 const bottle = new Bottle()
 
@@ -19,17 +20,22 @@ bottle.service('Repositories.Article', ArticleRepository, 'DataSources.Article',
 bottle.service('Usecases.Article.Add', AddArticleUseCase, 'Repositories.Article')
 bottle.service('Usecases.Article.Find', FindArticleUseCase, 'Repositories.Article')
 bottle.service('Usecases.Article.Get', GetArticlesUseCase, 'Repositories.Article')
+bottle.service('Usecases.Article.Update', UpdateArticleUseCase, 'Repositories.Article')
 bottle.service('Usecases.Article.Delete', DeleteArticleUseCase, 'Repositories.Article')
 bottle.service('Usecases.Article.GetFactory', GetArticleFactoryUseCase)
 
-const { Add: AddArticle, Find: FindArticle, Get: GetArticles, Delete: DeleteArticle, GetFactory: GetArticleFactory } = bottle.container.Usecases.Article as {
+const {
+	Add: AddArticle, Find: FindArticle, Get: GetArticles,
+	Update: UpdateArticle, Delete: DeleteArticle, GetFactory: GetArticleFactory
+} = bottle.container.Usecases.Article as {
 	Add: AddArticleUseCase,
 	Find: FindArticleUseCase,
 	Get: GetArticlesUseCase,
+	Update: UpdateArticleUseCase,
 	Delete: DeleteArticleUseCase,
 	GetFactory: GetArticleFactoryUseCase
 }
 
 export {
-	AddArticle, FindArticle, GetArticles, DeleteArticle, GetArticleFactory
+	AddArticle, FindArticle, GetArticles, UpdateArticle, DeleteArticle, GetArticleFactory
 }
