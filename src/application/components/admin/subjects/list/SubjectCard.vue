@@ -29,7 +29,7 @@
 	import { defineComponent, ref } from '@vue/composition-api'
 	import { mapActions } from 'vuex'
 	import store from '@/store'
-	import { useDeleteSubject } from '@/usecases/courses/subject'
+	import { useDeleteSubject } from '@/usecases/courses/useSubjects'
 	import { SubjectEntity } from '@root/modules/courses/domain/entities/subject'
 	export default defineComponent({
 		props: {

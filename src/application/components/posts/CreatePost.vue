@@ -62,7 +62,7 @@
 	import { defineComponent, computed } from '@vue/composition-api'
 	import { useCreatePost } from '@/usecases/posts/posts'
 	import { useTags } from '@/usecases/core/useForms'
-	import { useSubjects } from '@/usecases/courses/subject'
+	import { useSubjects } from '@/usecases/courses/useSubjects'
 	export default defineComponent({
 		name: 'CreatePost',
 		setup(){

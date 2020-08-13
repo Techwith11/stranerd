@@ -1,6 +1,6 @@
 import { computed, reactive } from '@vue/composition-api'
 import { ModuleEntity, SubjectEntity } from '@root/modules/courses/domain/entities/subject'
-import { GetSubjects, DeleteSubject } from '@root/modules/courses'
+import { GetSubjects, DeleteSubject, GetSubjectFactory } from '@root/modules/courses'
 import router from '@/router'
 import { Alert, Notify } from '@/config/notifications'
 
@@ -80,4 +80,23 @@ export const useDeleteSubject = (subject: SubjectEntity) => {
 	}
 
 	return { loading: computed(() => state.loading), deleteSubject }
+}
+
+export const useCreateSubject = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetSubjectFactory.call()
+	})
+	const createSubject = () => {
+		if(state.factory.valid && !state.loading) {
+			state.loading = true
+			console.log(state.factory.validValues)
+			state.loading = false
+		}else state.factory.validateAll()
+	}
+	return {
+		loading: computed(() => state.loading),
+		factory: computed(() => state.factory),
+		createSubject
+	}
 }
