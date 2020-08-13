@@ -5,7 +5,7 @@ const isLongerThan3 = (value:string) => isLongerThan(3, value)
 const isLongerThan6 = (value:string) => isLongerThan(6, value)
 const isNotLongerThan16 = (value:string) => isNotLongerThan(16, value)
 
-export class UpdatePasswordFactory extends BaseFactory<{ password: string }> {
+export class UpdatePasswordFactory extends BaseFactory<null, { password: string }> {
 	public readonly rules = {
 		password: [isRequired, isLongerThan6, isNotLongerThan16],
 		c_password: [isRequired, (value: string) => isEqualTo(value, this.password)],
@@ -27,6 +27,10 @@ export class UpdatePasswordFactory extends BaseFactory<{ password: string }> {
 		}else{
 			throw new Error('Validation errors')
 		}
+	}
+
+	public loadEntity = (entity: null) => {
+		throw Error('Cannot load an entity into this factory')
 	}
 
 }

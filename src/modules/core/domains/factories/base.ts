@@ -2,12 +2,13 @@ import { Rules, ValidatorService } from '@root/modules/core/validations'
 import { Uploader } from '@root/modules/core/services/uploader'
 import { Media } from '@root/modules/core/data/models/base'
 
-export abstract class BaseFactory<T> {
+export abstract class BaseFactory<E, T> {
     abstract readonly rules: { [key: string]: Rules }
     public abstract values: { [key: string]: any }
     public abstract validValues: { [key: string]: any }
     public abstract errors: { [key: string]: string | undefined }
     abstract toModel: () => Promise<T>
+    abstract loadEntity: (entity: E) => void
 
     public set(property: string, value: any) :boolean {
         const check = this.checkValidity(property, value)

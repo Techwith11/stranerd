@@ -7,13 +7,14 @@ import {
     isRequired
 } from '@root/modules/core/validations/rules'
 import { PostToModel } from '@root/modules/posts/data/models/post'
+import { PostEntity } from '@root/modules/posts/domain/entities/post'
 
 const isLongerThan3 = (value: string) => isLongerThan(3, value)
 const hasMoreThan3 = (value: string[]) => hasMoreThan(3, value)
 const hasLessThan6 = (value: string[]) => hasLessThan(6, value)
 const isExtractedHTMLLongerThan3 = (value: string) => isExtractedHTMLLongerThan(3, value)
 
-export class PostFactory extends BaseFactory<PostToModel> {
+export class PostFactory extends BaseFactory<PostEntity, PostToModel> {
     public rules = {
         title: [isRequired,isLongerThan3],
         body: [isRequired,isExtractedHTMLLongerThan3],
@@ -63,6 +64,10 @@ export class PostFactory extends BaseFactory<PostToModel> {
         }else{
             throw new Error('Validation errors')
         }
+    }
+
+    public loadEntity = (entity: PostEntity) => {
+        throw Error('Cannot load an entity into this factory')
     }
 
 }

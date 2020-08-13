@@ -5,7 +5,7 @@ import { isLongerThan, isNotLongerThan, isRequired, isEmail } from '@root/module
 const isLongerThan6 = (value:string) => isLongerThan(6, value)
 const isNotLongerThan16 = (value:string) => isNotLongerThan(16, value)
 
-export class LoginFactory extends BaseFactory<AuthUser> {
+export class LoginFactory extends BaseFactory<null, AuthUser> {
 	public readonly rules = {
 		email: [isRequired, isEmail],
 		password: [isRequired, isLongerThan6, isNotLongerThan16]
@@ -30,6 +30,10 @@ export class LoginFactory extends BaseFactory<AuthUser> {
 		}else{
 			throw new Error('Validation errors')
 		}
+	}
+
+	public loadEntity = (entity: null) => {
+		throw Error('Cannot load an entity into this factory')
 	}
 
 }

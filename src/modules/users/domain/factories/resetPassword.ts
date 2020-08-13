@@ -1,7 +1,7 @@
 import { BaseFactory } from '@root/modules/core/domains/factories/base'
 import { isRequired, isEmail } from '@root/modules/core/validations/rules'
 
-export class ResetPasswordFactory extends BaseFactory<{ email: string }> {
+export class ResetPasswordFactory extends BaseFactory<null, { email: string }> {
 	public readonly rules = {
 		email: [isRequired, isEmail]
 	}
@@ -20,6 +20,10 @@ export class ResetPasswordFactory extends BaseFactory<{ email: string }> {
 		}else{
 			throw new Error('Validation errors')
 		}
+	}
+
+	public loadEntity = (entity: null) => {
+		throw Error('Cannot load an entity into this factory')
 	}
 
 }

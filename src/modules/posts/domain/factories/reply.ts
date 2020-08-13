@@ -1,9 +1,10 @@
 import { BaseFactory } from '@root/modules/core/domains/factories/base'
 import { isExtractedHTMLLongerThan, isRequired } from '@root/modules/core/validations/rules'
 import { ReplyToModel } from '@root/modules/posts/data/models/reply'
+import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
 
 const isExtractedHTMLLongerThan3 = (value: string) => isExtractedHTMLLongerThan(3, value)
-export class ReplyFactory extends BaseFactory<ReplyToModel> {
+export class ReplyFactory extends BaseFactory<ReplyEntity, ReplyToModel> {
     readonly rules = {
         body: [isRequired,isExtractedHTMLLongerThan3],
         userId: [isRequired]
@@ -32,6 +33,10 @@ export class ReplyFactory extends BaseFactory<ReplyToModel> {
         }else{
             throw new Error('Validation errors')
         }
+    }
+
+    public loadEntity = (entity: ReplyEntity) => {
+        throw Error('Cannot load an entity into this factory')
     }
 
 }

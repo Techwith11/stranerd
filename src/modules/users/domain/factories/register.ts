@@ -6,7 +6,7 @@ const isLongerThan3 = (value:string) => isLongerThan(3, value)
 const isLongerThan6 = (value:string) => isLongerThan(6, value)
 const isNotLongerThan16 = (value:string) => isNotLongerThan(16, value)
 
-export class RegisterFactory extends BaseFactory<AuthUser> {
+export class RegisterFactory extends BaseFactory<null, AuthUser> {
 	public readonly rules = {
 		name: [isRequired, isLongerThan3],
 		email: [isRequired, isEmail],
@@ -38,6 +38,10 @@ export class RegisterFactory extends BaseFactory<AuthUser> {
 		}else{
 			throw new Error('Validation errors')
 		}
+	}
+
+	public loadEntity = (entity: null) => {
+		throw Error('Cannot load an entity into this factory')
 	}
 
 }

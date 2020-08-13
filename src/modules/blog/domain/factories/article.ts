@@ -5,6 +5,7 @@ import {
 } from '@root/modules/core/validations/rules'
 import { ArticleToModel } from '@root/modules/blog/data/models/article'
 import { Media } from '@root/modules/core/data/models/base'
+import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
 
 type MediaContent = File | Media
 const isLongerThan3 = (value: string) => isLongerThan(3, value)
@@ -12,7 +13,7 @@ const hasMoreThan3 = (value: string[]) => hasMoreThan(3, value)
 const hasLessThan6 = (value: string[]) => hasLessThan(6, value)
 const isExtractedHTMLLongerThan3 = (value: string) => isExtractedHTMLLongerThan(3, value)
 
-export class ArticleFactory extends BaseFactory<ArticleToModel> {
+export class ArticleFactory extends BaseFactory<ArticleEntity, ArticleToModel> {
 	public rules = {
 		title: [isRequired,isLongerThan3],
 		body: [isRequired,isExtractedHTMLLongerThan3],
@@ -57,6 +58,10 @@ export class ArticleFactory extends BaseFactory<ArticleToModel> {
 		}else{
 			throw new Error('Validation errors')
 		}
+	}
+
+	public loadEntity = (entity: ArticleEntity) => {
+		throw Error('Cannot load an entity into this factory')
 	}
 
 }
