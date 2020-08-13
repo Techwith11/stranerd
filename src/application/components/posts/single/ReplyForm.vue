@@ -15,7 +15,7 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import { useCreateReply } from '@/usescases/posts/replies'
+	import { useCreateReply } from '@/usecases/posts/replies'
     import router from '@/router/'
 	export default defineComponent({
 		setup(){

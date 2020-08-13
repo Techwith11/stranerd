@@ -21,7 +21,7 @@
 	import { defineComponent } from '@vue/composition-api'
 	import UserInfo from '@/components/users/single/UserInfo.vue'
 	import UserSessionCard from '@/components/users/single/UserSessionCard.vue'
-	import { useUser } from '@/usescases/users/users'
+	import { useUser } from '@/usecases/users/users'
 	import router from '@/router'
 	export default defineComponent({
 		name: 'User',

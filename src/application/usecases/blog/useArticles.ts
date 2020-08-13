@@ -3,7 +3,7 @@ import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
 import { DeleteArticle, GetArticles, FindArticle, GetArticleFactory, AddArticle } from '@root/modules/blog'
 import { Alert, Notify } from '@/config/notifications'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
-import { fetchUser } from '@/usescases/users/users'
+import { fetchUser } from '@/usecases/users/users'
 import router from '@/router'
 import store from '@/store'
 

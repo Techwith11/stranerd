@@ -15,7 +15,7 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import { useRecentPostsList } from '@/usescases/posts/posts'
+	import { useRecentPostsList } from '@/usecases/posts/posts'
 	import PostCard from '@/components/posts/list/PostCard.vue'
 	export default defineComponent({
 		components: {

@@ -4,7 +4,7 @@ import { AddReply, DownvoteReply, GetReplies, GetReplyFactory, ListenToReplies, 
 import { firestore } from '@root/services/firebase'
 import store from '@/store/'
 import { Notify } from '@/config/notifications'
-import { fetchUser } from '@/usescases/users/users'
+import { fetchUser } from '@/usecases/users/users'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
 
 const PAGINATION_LIMIT = process.env.VUE_APP_PAGINATION_LIMIT

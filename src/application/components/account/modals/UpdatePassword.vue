@@ -26,7 +26,7 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import { useUpdatePasswordForm } from '@/usescases/users/auth'
+	import { useUpdatePasswordForm } from '@/usecases/users/auth'
 	import store from '@root/application/store'
 	export default defineComponent({
 		setup(){

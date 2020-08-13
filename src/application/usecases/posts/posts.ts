@@ -3,7 +3,7 @@ import { PostEntity } from '@root/modules/posts/domain/entities/post'
 import { GetPosts, FindPost, ListenToPosts, GetPostFactory, AddPost } from '@root/modules/posts/'
 import router from '@/router'
 import { Notify } from '@/config/notifications'
-import { fetchUser } from '@/usescases/users/users'
+import { fetchUser } from '@/usecases/users/users'
 import store from '@/store'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
 

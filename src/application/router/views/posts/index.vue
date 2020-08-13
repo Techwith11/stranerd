@@ -17,7 +17,7 @@
 <script lang="ts">
     import { defineComponent } from '@vue/composition-api'
     import PostCard from '@/components/posts/list/PostCard.vue'
-    import { usePostsList } from '@/usescases/posts/posts'
+    import { usePostsList } from '@/usecases/posts/posts'
 	export default defineComponent({
         name: 'Posts',
         components: {

@@ -24,7 +24,7 @@
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
 	import TutorCard from '@/components/users/list/TutorCard.vue'
-	import { useTutorsList } from '@/usescases/users/users'
+	import { useTutorsList } from '@/usecases/users/users'
 	export default defineComponent({
 		name: 'Tutors',
 		setup(){

@@ -26,8 +26,8 @@
 	import { computed, defineComponent, reactive } from '@vue/composition-api'
 	import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
 	import store from '@root/application/store'
-	import { useDeleteArticle } from '@root/application/usescases/blog/useArticles'
-	import { fetchUser } from '@root/application/usescases/users/users'
+	import { useDeleteArticle } from '@root/application/usecases/blog/useArticles'
+	import { fetchUser } from '@root/application/usecases/users/users'
 	export default defineComponent({
 		props: {
 			article: {

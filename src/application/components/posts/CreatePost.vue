@@ -57,7 +57,7 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import { useCreatePost } from '@/usescases/posts/posts'
+	import { useCreatePost } from '@/usecases/posts/posts'
 	export default defineComponent({
 		name: 'CreatePost',
 		setup(){

@@ -28,8 +28,8 @@
 	import ReplyForm from '@/components/posts/single/ReplyForm.vue'
 	import ReplyCard from '@/components/posts/single/ReplyCard.vue'
 	import router from '@/router'
-	import { usePost } from '@/usescases/posts/posts'
-	import { useReplies } from '@/usescases/posts/replies'
+	import { usePost } from '@/usecases/posts/posts'
+	import { useReplies } from '@/usecases/posts/replies'
 	export default defineComponent({
 		name: "Post",
 		setup(){

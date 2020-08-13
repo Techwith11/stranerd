@@ -122,7 +122,7 @@
 <script lang="ts">
     import { defineComponent, computed } from '@vue/composition-api'
     import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
-    import { useLogout } from '@/usescases/users/auth'
+    import { useLogout } from '@/usecases/users/auth'
     import store from '@root/application/store'
     export default defineComponent({
         setup(){

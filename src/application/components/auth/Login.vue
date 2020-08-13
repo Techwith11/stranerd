@@ -60,7 +60,7 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import { useDevLogin, useGoogleLogin, useLoginForm } from '@/usescases/users/auth'
+	import { useDevLogin, useGoogleLogin, useLoginForm } from '@/usecases/users/auth'
 	import store from '@root/application/store'
 	export default defineComponent({
 		name: 'Login',

@@ -24,7 +24,7 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import { useResetPasswordForm } from '@/usescases/users/auth'
+	import { useResetPasswordForm } from '@/usecases/users/auth'
 	import store from '@/store'
 	export default defineComponent({
 		name: 'ForgotPassword',

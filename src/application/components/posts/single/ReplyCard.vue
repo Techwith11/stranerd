@@ -26,7 +26,7 @@
 	import { defineComponent } from '@vue/composition-api'
 	import { PostEntity } from '@root/modules/posts/domain/entities/post'
 	import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
-	import { useSingleReply } from '@/usescases/posts/replies'
+	import { useSingleReply } from '@/usecases/posts/replies'
 	export default defineComponent({
 		props: {
 			reply: {

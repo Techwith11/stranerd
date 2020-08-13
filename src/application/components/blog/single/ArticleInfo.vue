@@ -26,7 +26,7 @@
 
 <script lang="ts">
 	import { defineComponent, computed } from '@vue/composition-api'
-	import { useDeleteArticle } from '@/usescases/blog/useArticles'
+	import { useDeleteArticle } from '@/usecases/blog/useArticles'
 	import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
 	import store from '@/store'
 	import router from '@root/application/router'
