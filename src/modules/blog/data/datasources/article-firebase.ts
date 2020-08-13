@@ -17,6 +17,10 @@ export class ArticleFirebaseDataSource implements ArticleBaseDataSource{
 		return await FirestoreService.get('blog', conditions) as ArticleFromModel[]
 	}
 
+	public async update(id: string, data: ArticleToModel): Promise<string> {
+		return await FirestoreService.update('blog', id, data)
+	}
+
 	public async delete(id: string): Promise<void> {
 		return await FirestoreService.delete('blog', id)
 	}

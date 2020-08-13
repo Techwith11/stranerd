@@ -28,6 +28,10 @@ export class ArticleRepository implements IArticleRepository{
 		return models.map((model: ArticleFromModel) => this.transformer.fromJSON(model))
 	}
 
+	public async update(id: string, data: ArticleToModel) {
+		return await this.dataSource.update(id, data)
+	}
+
 	public async delete(id: string) {
 		return await this.dataSource.delete(id)
 	}
