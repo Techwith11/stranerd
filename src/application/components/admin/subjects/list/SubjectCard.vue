@@ -15,9 +15,11 @@
 				</li>
 			</ul>
 			<div class="d-flex my-2 justify-content-end align-items-center" id="main">
-				<a @click.prevent="openCreateModal"><i class="fas fa-plus text-success mr-3"></i></a>
-				<a @click.prevent="openSubjectEditModal"><i class="fas fa-pen text-warning mr-3"></i></a>
-				<a @click.prevent="removeSubject"><i class="fas fa-trash text-danger mr-3"></i></a>
+				<a @click.prevent="openCreateModal" class="mr-3"><i class="fas fa-plus text-success"></i></a>
+				<a @click.prevent="openSubjectEditModal" class="mr-3"><i class="fas fa-pen text-warning"></i></a>
+				<a @click.prevent="deleteSubject" class="text-danger mr-3">
+					<i class="fas" :class="deleteSubjectLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+				</a>
 			</div>
 		</div>
 	</div>
@@ -27,14 +29,17 @@
 	import { defineComponent, ref } from '@vue/composition-api'
 	import { mapActions } from 'vuex'
 	import store from '@/store'
+	import { useDeleteSubject } from '@/usecases/courses/subject'
+	import { SubjectEntity } from '@root/modules/courses/domain/entities/subject'
 	export default defineComponent({
 		props: {
 			subject: {
 				required: true,
-				type: Object
+				type: SubjectEntity
 			}
 		},
 		setup(props){
+			const { loading: deleteSubjectLoading, deleteSubject } = useDeleteSubject(props.subject)
 			const show = ref(false)
 			const toggleCollapse = () => {
 				document.getElementById(props.subject.id)!.classList.toggle('show')
@@ -50,32 +55,16 @@
 			}
 			const openModuleEditModal = (module: any) => {
 				store.dispatch('setEditMeta', { subject: props.subject, module })
-				store.dispatch('setEditModalSubject')
+				store.dispatch('setEditModalSubjectModule')
 			}
 			return {
+				deleteSubjectLoading, deleteSubject,
 				show, toggleCollapse,
 				openCreateModal, openSubjectEditModal, openModuleEditModal,
 			}
 		},
 		methods: {
-			...mapActions(['deleteSubject','deleteModule']),
-			async removeSubject(){
-				try{
-					let result = await new window.SweetAlert({
-						title: `Delete ${this.subject.name}`,
-						text: 'Are you sure you want to delete this subject',
-						icon: 'info',
-						showCancelButton: true,
-						confirmButtonColor: '#d33',
-						cancelButtonColor: '#3085d6',
-						confirmButtonText: 'Delete'
-					})
-					if (result.value) {
-						await this.deleteSubject(this.subject['.key'])
-						new window.Toast({icon: 'success', title: 'Subject deleted successfully'})
-					}
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-			},
+			...mapActions(['deleteModule']),
 			async removeModule(module){
 				try{
 					let result = await new window.SweetAlert({

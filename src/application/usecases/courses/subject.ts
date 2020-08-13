@@ -1,7 +1,8 @@
 import { computed, reactive } from '@vue/composition-api'
 import { ModuleEntity, SubjectEntity } from '@root/modules/courses/domain/entities/subject'
-import { GetSubjects } from '@root/modules/courses'
+import { GetSubjects, DeleteSubject } from '@root/modules/courses'
 import router from '@/router'
+import { Alert, Notify } from '@/config/notifications'
 
 const globalState = reactive({
 	subjects: reactive([]) as SubjectEntity[],
@@ -55,4 +56,28 @@ export const useSingleSubject = (name: string) => {
 		subject: computed(() => state.subject),
 		error: computed(() => state.error),
 	}
+}
+
+export const useDeleteSubject = (subject: SubjectEntity) => {
+	const state = reactive({
+		loading: false
+	})
+
+	const deleteSubject = async () => {
+		const res = await Alert({
+			title: `Delete ${subject.name}`,
+			text: 'Are you sure you want to delete this subject',
+			icon: 'info',
+			confirmButtonText: 'Delete'
+		})
+		try{
+			state.loading = true
+			await DeleteSubject.call(subject.id)
+			globalState.subjects = globalState.subjects.filter(s => s.id !== subject.id)
+			state.loading = false
+			await Notify({ title: 'Subject deleted!', icon: 'success' })
+		}catch(error){ await Notify({ title: error.message, icon: 'error' }) }
+	}
+
+	return { loading: computed(() => state.loading), deleteSubject }
 }
