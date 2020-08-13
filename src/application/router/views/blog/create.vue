@@ -1,6 +1,6 @@
 <template>
 	<Default>
-		<div class="m-md-5">
+		<div class="container my-md-5">
 			<article-form :submit="createArticle" :loading="loading" :factory="factory">
 				<template slot="title">Create Article</template>
 				<template slot="buttonText">Create Article</template>
@@ -11,7 +11,7 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import { useArticleForm } from '@/usecases/blog/useArticles'
+	import { useCreateArticle } from '@/usecases/blog/useArticles'
 	import ArticleForm from '@/components/blog/ArticleForm.vue'
 	export default defineComponent({
 		name: 'CreateArticle',
@@ -19,7 +19,7 @@
 			'article-form': ArticleForm
 		},
 		setup(){
-			const { loading, createArticle, factory } = useArticleForm()
+			const { loading, createArticle, factory } = useCreateArticle()
 			return {
 				loading, createArticle, factory
 			}
