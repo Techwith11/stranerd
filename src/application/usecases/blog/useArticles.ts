@@ -1,6 +1,13 @@
 import { computed, reactive, ref, watch } from '@vue/composition-api'
 import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
-import { DeleteArticle, GetArticles, FindArticle, GetArticleFactory, AddArticle } from '@root/modules/blog'
+import {
+	DeleteArticle,
+	GetArticles,
+	FindArticle,
+	GetArticleFactory,
+	AddArticle,
+	UpdateArticle
+} from '@root/modules/blog'
 import { Alert, Notify } from '@/config/notifications'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
 import { fetchUser } from '@/usecases/users/users'
@@ -157,7 +164,7 @@ export const useCreateArticle = () => {
 	}
 }
 
-export const useEditArticle = () => {
+export const useEditArticle = (id: string) => {
 	const state = reactive({
 		loading: false,
 		factory: GetArticleFactory.call()
@@ -169,10 +176,11 @@ export const useEditArticle = () => {
 			state.factory.userId = store.getters.getId
 			try{
 				await new Promise(resolve => setTimeout(resolve, 5000))
-				console.log(state.factory.validValues)
-				//const id = await EditArticle.call(state.factory)
-				//state.factory.reset()
-				//await router.push(`/blog/${id}`)
+				const newId = await UpdateArticle.call(id, state.factory)
+				const article = await FindArticle.call(newId)
+				if(article) unshiftArticle(article)
+				state.factory.reset()
+				await router.push(`/blog/${newId}`)
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
 		}else state.factory.validateAll()
