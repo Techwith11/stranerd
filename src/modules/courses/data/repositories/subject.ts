@@ -17,4 +17,8 @@ export class SubjectRepository implements ISubjectRepository{
 		return models.map((model) => this.transformer.fromJSON(model))
 	}
 
+	public async delete(id: string): Promise<void> {
+		return await this.dataSource.delete(id)
+	}
+
 }

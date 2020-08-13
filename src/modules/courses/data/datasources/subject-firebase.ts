@@ -9,4 +9,8 @@ export class SubjectFirebaseDataSource implements SubjectBaseDataSource{
 		return await FirestoreService.get('subjects', conditions) as SubjectFromModel[]
 	}
 
+	public async delete(id: string): Promise<void> {
+		return await FirestoreService.delete('subjects', id)
+	}
+
 }
