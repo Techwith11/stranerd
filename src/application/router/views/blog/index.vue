@@ -27,7 +27,6 @@
 	import { defineComponent, computed } from '@vue/composition-api'
 	import ArticleCard from '@/components/blog/list/ArticleCard.vue'
 	import { useArticlesList } from '@/usescases/blog/useArticles'
-	import { EventBus } from '@root/application/config/events'
 	import store from '@root/application/store'
 	export default defineComponent({
 		name: 'Posts',
@@ -40,13 +39,6 @@
 				loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles,
 				isAdmin: computed(() => store.getters.isAdmin)
 			}
-		},
-		async mounted(){
-			EventBus.$on('BlogPostEdited', article => {
-				let index = this.articles.findIndex(p => p['.key'] === article['.key'])
-				this.articles[index] = article
-				this.$forceUpdate()
-			})
 		},
 		meta(){
 			return {
