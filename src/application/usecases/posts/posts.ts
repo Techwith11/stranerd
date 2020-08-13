@@ -8,7 +8,6 @@ import store from '@/store'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
-const posts: PostEntity[] = reactive([])
 const globalState = reactive({
     posts: reactive([]) as PostEntity[],
     fetched: false,
