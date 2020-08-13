@@ -1,48 +1,35 @@
 <template>
 	<Default>
 		<div class="container-fluid py-3">
-			<helper-spinner v-if="isLoading" />
+			<helper-spinner v-if="loading" />
 			<div v-else>
 				<router-link class="text-muted h5 text-decoration-none my-3 d-inline-block text-capitalize" :to="`/courses`">
 					<i class="fas fa-arrow-left mr-2"></i>
 					<span>All</span>
 				</router-link>
-				<subject-card :key="subject['.key']" :subject="subject"/>
+				<subject-card :subject="subject"/>
 			</div>
 		</div>
 	</Default>
 </template>
 
-<script>
-	import SubjectCard from "@/components/courses/list/SubjectCard"
-	import { mapGetters, mapActions } from 'vuex'
-	export default {
-		data: () => ({
-			subject: {},
-			isLoading: true
-		}),
-		computed: mapGetters(['getAllSubjects']),
-		methods: mapActions(['fetchAllSubjects']),
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import SubjectCard from "@/components/courses/list/SubjectCard.vue"
+	import { useSingleSubject } from '@/usecases/courses/subject'
+	import router from '@/router'
+	export default defineComponent({
 		components: {
 			'subject-card': SubjectCard,
 		},
-		async activated(){
-			this.isLoading = true
-			let name = this.$route.params.subject
-			if(this.getAllSubjects.length === 0){
-				await this.fetchAllSubjects()
-			}
-			let subject = this.getAllSubjects.find(s => s.name.toLowerCase() === name.toLowerCase())
-			if(subject){
-				this.subject = subject
-			}else{
-				await this.$router.replace('/courses')
-			}
-			this.isLoading = false
+		setup(){
+			const { subject } = router.currentRoute.params
+			const { subject: currSubject, loading, error } = useSingleSubject(subject)
+			return { subject: currSubject, loading, error }
 		},
 		meta(){
 			return {
-				title: this.$route.params.subject ? this.$route.params.subject[0].toUpperCase() + this.$route.params.subject.slice(1).toLowerCase() : 'Subject Name',
+				title: (this.subject as any)?.name ?? 'Subject Name',
 				meta: [
 					{
 						vmid: 'description',
@@ -52,10 +39,10 @@
 					{
 						vmid: 'keywords',
 						name: 'keywords',
-						content: [ this.subject.name || '', ...this.subject.modules?.map(m => m.name) || []].join(', ')
+						content: [ (this.subject as any)?.name ?? '', ...(this.subject as any)?.modules?.map((m: any) => m.name) ?? []].join(', ')
 					}
 				]
 			}
 		}
-	}
+	})
 </script>
