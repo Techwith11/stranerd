@@ -49,10 +49,10 @@ export class ArticleFactory extends BaseFactory<ArticleEntity, ArticleToModel> {
 				this.image = await this.uploadFile('blog', this.image)
 			}
 			return {
-				title: this.values.title,
-				body: this.values.body,
-				tags: this.values.tags,
-				userId: this.values.userId,
+				title: this.validValues.title,
+				body: this.validValues.body,
+				tags: this.validValues.tags,
+				userId: this.validValues.userId,
 				image: this.validValues.image as Media
 			}
 		}else{
