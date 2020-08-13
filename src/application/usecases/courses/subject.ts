@@ -1,5 +1,5 @@
 import { computed, reactive } from '@vue/composition-api'
-import { SubjectEntity } from '@root/modules/courses/domain/entities/subject'
+import { ModuleEntity, SubjectEntity } from '@root/modules/courses/domain/entities/subject'
 import { GetSubjects } from '@root/modules/courses'
 
 const globalState = reactive({
@@ -23,5 +23,9 @@ export const useSubjects = () => {
 		subjects: computed(() => globalState.subjects),
 		loading: computed(() => globalState.loading),
 		error: computed(() => globalState.error),
+		modules: computed(() => globalState.subjects.reduce((total: ModuleEntity[], val: SubjectEntity) => {
+			total.push(...val.modules)
+			return total
+		},[])),
 	}
 }

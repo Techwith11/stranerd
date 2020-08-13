@@ -1,35 +1,25 @@
 <template>
 	<Default>
 		<div class="container-fluid py-3">
-			<helper-spinner v-if="isLoading" />
+			<helper-spinner v-if="loading" />
 			<div v-else>
-				<subject-card v-for="subject in getAllSubjects" :key="subject['.key']" :subject="subject"/>
+				<subject-card v-for="subject in subjects" :key="subject.id" :subject="subject"/>
 			</div>
 		</div>
 	</Default>
 </template>
 
-<script>
-	import SubjectCard from "@/components/courses/list/SubjectCard"
-	import { mapGetters, mapActions } from 'vuex'
-	export default {
-		data: () => ({
-			isLoading: true
-		}),
-		computed: {
-			...mapGetters(['getAllSubjects']),
-			getAllModules(){ return this.getAllSubjects.map(subject => [subject.name, ...subject.modules.map(m => m.name)]).join() },
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import SubjectCard from "@/components/courses/list/SubjectCard.vue"
+	import { useSubjects } from '@/usecases/courses/subject'
+	export default defineComponent({
+		setup(){
+			const { subjects, error, loading, modules } = useSubjects()
+			return { subjects, error, loading, modules }
 		},
-		methods: mapActions(['fetchAllSubjects']),
 		components: {
 			'subject-card': SubjectCard,
-		},
-		async activated(){
-			this.isLoading = true
-			if(this.getAllSubjects.length === 0){
-				await this.fetchAllSubjects()
-			}
-			this.isLoading = false
 		},
 		meta(){
 			return {
@@ -43,10 +33,10 @@
 					{
 						vmid: 'keywords',
 						name: 'keywords',
-						content: this.getAllModules
+						content: (this.modules as any)
 					}
 				]
 			}
 		}
-	}
+	})
 </script>
