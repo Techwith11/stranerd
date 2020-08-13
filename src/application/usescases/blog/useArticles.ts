@@ -1,10 +1,11 @@
-import { computed, reactive } from '@vue/composition-api'
+import { computed, reactive, ref, watch } from '@vue/composition-api'
 import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
-import { DeleteArticle, GetArticles, FindArticle } from '@root/modules/blog'
+import { DeleteArticle, GetArticles, FindArticle, GetArticleFactory, AddArticle } from '@root/modules/blog'
 import { Alert, Notify } from '@/config/notifications'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
 import { fetchUser } from '@/usescases/users/users'
 import router from '@/router'
+import store from '@/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 
@@ -114,7 +115,7 @@ export const useSingleArticle = (id: string) => {
 			state.user = await fetchUser(article.userId)
 		}
 		else{
-			await router.push('/articles')
+			await router.push('/blog')
 			await Notify({ title: 'No such article found', icon: 'error' })
 		}
 		state.loading = false
@@ -125,5 +126,49 @@ export const useSingleArticle = (id: string) => {
 		article: computed(() => state.article),
 		user: computed(() => state.user),
 		error: computed(() => state.error)
+	}
+}
+
+export const useArticleForm = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetArticleFactory.call()
+	})
+
+	const tag = ref('')
+	const splitTag = () => {
+		if(tag.value.includes(' ')){
+			tag.value.split(' ').map(tag => {
+				if(tag) state.factory.addTag(tag.toLowerCase())
+			})
+			tag.value = ''
+		}
+	}
+	watch(() => tag.value, splitTag)
+	const removeTag = (tag: string) => state.factory.removeTag(tag)
+
+	state.factory.userId = store.getters.getId
+
+	const createArticle = async () => {
+		if(state.factory.valid && !state.loading){
+			state.loading = true
+			state.factory.userId = store.getters.getId
+			try{
+				const id = await AddArticle.call(state.factory)
+				state.factory.reset()
+				await store.dispatch('closeCreateModal')
+				await router.push(`/blog/${id}`)
+			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
+			state.loading = false
+		}else state.factory.validateAll()
+	}
+
+	return {
+		factory: state.factory,
+		tag, splitTag, removeTag,
+
+		loading: computed(() => state.loading),
+
+		createArticle,
 	}
 }
