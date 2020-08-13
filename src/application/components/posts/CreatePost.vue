@@ -58,15 +58,19 @@
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
 	import { useCreatePost } from '@/usecases/posts/posts'
+	import { useTags } from '@/usecases/core/useForms'
 	export default defineComponent({
 		name: 'CreatePost',
 		setup(){
 			const {
-				factory, tag, splitTag, removeTag,
-				loading, subjects, modules,
+				factory, loading, subjects, modules,
 				createPost,
 				isLoggedIn, login
 			} = useCreatePost()
+			const { tag, splitTag, removeTag } = useTags(
+				(tag:string) => factory.addTag(tag),
+				(tag:string) => factory.removeTag(tag)
+			)
 			return {
 				factory, tag, splitTag, removeTag,
 				loading, subjects, modules,

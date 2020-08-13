@@ -1,4 +1,4 @@
-import { computed, reactive, ref, watch } from '@vue/composition-api'
+import { computed, reactive, watch } from '@vue/composition-api'
 import { PostEntity } from '@root/modules/posts/domain/entities/post'
 import { GetPosts, FindPost, ListenToPosts, GetPostFactory, AddPost } from '@root/modules/posts/'
 import router from '@/router'
@@ -124,18 +124,6 @@ export const useCreatePost = () => {
         factory
     })
 
-    const tag = ref('')
-    const splitTag = () => {
-        if(tag.value.includes(' ')){
-            tag.value.split(' ').map(tag => {
-                if(tag) factory.addTag(tag.toLowerCase())
-            })
-            tag.value = ''
-        }
-    }
-    watch(() => tag.value, splitTag)
-    const removeTag = (tag: string) => factory.removeTag(tag)
-
     state.factory.userId = store.getters.getId
 
     const createPost = async () => {
@@ -161,7 +149,6 @@ export const useCreatePost = () => {
 
     return {
         factory: state.factory,
-        tag, splitTag, removeTag,
 
         isLoggedIn: computed(() => store.getters.isLoggedIn),
         loading: computed(() => state.loading),

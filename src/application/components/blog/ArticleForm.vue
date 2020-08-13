@@ -46,8 +46,9 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, ref, watch } from '@vue/composition-api'
+	import { defineComponent } from '@vue/composition-api'
 	import { ArticleFactory } from '@root/modules/blog/domain/factories/article'
+	import { useFileInputs, useTags } from '@/usecases/core/useForms'
 	export default defineComponent({
 		props: {
 			factory: {
@@ -64,21 +65,13 @@
 			}
 		},
 		setup(props) {
-			const tag = ref('')
-			const splitTag = () => {
-				if(tag.value.includes(' ')){
-					tag.value.split(' ').map(tag => {
-						if(tag) props.factory.addTag(tag.toLowerCase())
-					})
-					tag.value = ''
-				}
-			}
-			watch(() => tag.value, splitTag)
-			const removeTag = (tag: string) => props.factory.removeTag(tag)
-			const catchImage = (e: Event) => {
-				const file = (e.target as HTMLInputElement)?.files?.[0] ?? undefined
-				if(file) props.factory.image = file
-			}
+			const { tag, splitTag, removeTag } = useTags(
+				(tag: string) => props.factory.addTag(tag),
+				(tag: string) => props.factory.removeTag(tag)
+			)
+			const { catchFiles: catchImage } = useFileInputs(
+				(file:File) => props.factory.image = file
+			)
 			return { catchImage, tag, removeTag, splitTag }
 		}
 	})

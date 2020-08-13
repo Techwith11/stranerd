@@ -135,18 +135,6 @@ export const useArticleForm = () => {
 		factory: GetArticleFactory.call()
 	})
 
-	const tag = ref('')
-	const splitTag = () => {
-		if(tag.value.includes(' ')){
-			tag.value.split(' ').map(tag => {
-				if(tag) state.factory.addTag(tag.toLowerCase())
-			})
-			tag.value = ''
-		}
-	}
-	watch(() => tag.value, splitTag)
-	const removeTag = (tag: string) => state.factory.removeTag(tag)
-
 	state.factory.userId = store.getters.getId
 
 	const createArticle = async () => {
@@ -165,7 +153,6 @@ export const useArticleForm = () => {
 
 	return {
 		factory: state.factory,
-		tag, splitTag, removeTag,
 
 		loading: computed(() => state.loading),
 
