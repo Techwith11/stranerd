@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import VueCompositionAPI from '@vue/composition-api'
 import VueMeta from 'vue-meta'
 import Vuelidate from 'vuelidate'
 // @ts-ignore
@@ -13,7 +12,6 @@ import 'jquery'
 import 'bootstrap'
 
 export const setup = () => {
-    Vue.use(VueCompositionAPI)
     Vue.use(VueMeta, { keyName: 'meta', refreshOnceOnNavigation: true })
     Vue.use(Vuelidate)
     Vue.use(VueChatScroll)
