@@ -46,7 +46,7 @@ export abstract class BaseFactory<T> {
         })
     }
 
-    protected async uploadFile(link: string, file: File) :Promise<Media> {
+    public async uploadFile(link: string, file: File) :Promise<Media> {
         return await Uploader.call(link, file)
     }
 }

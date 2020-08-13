@@ -34,7 +34,7 @@ export const isEqualTo = (value: any, compare: any) => {
     return [ 'doesn\'t match' ]
 }
 
-export const isImage = (file: any) => {
+export const isImageOrMedia = (file: any) => {
     if(file?.type?.startsWith('image/')) return undefined
     return [ 'is not an image' ]
 }
