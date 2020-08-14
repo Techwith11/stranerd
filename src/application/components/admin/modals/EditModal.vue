@@ -3,7 +3,7 @@
 		<div class="modal-inner">
 			<edit-question v-if="isEditModalQuestion" />
 			<edit-note v-if="isEditModalNote" />
-			<edit-blog-post v-if="isEditModalBlog" />
+			<edit-article v-if="isEditModalBlog" />
 			<edit-course v-if="isEditModalCourse" />
 			<edit-subject v-if="isEditModalSubject" />
 		</div>
@@ -14,7 +14,7 @@
 	import { mapGetters } from 'vuex'
 	import EditQuestion from '@/components/admin/modals/EditQuestion'
 	import EditNote from '@/components/admin/modals/EditNote'
-	import EditBlogPost from '@/components/admin/modals/EditBlogPost'
+	import EditArticle from '@/components/admin/modals/EditArticle'
 	import EditCourse from '@/components/admin/modals/EditCourse'
 	import EditModalSubject from '@/components/admin/modals/EditSubject'
 	export default {
@@ -22,7 +22,7 @@
 		components: {
 			'edit-question': EditQuestion,
 			'edit-note': EditNote,
-			'edit-blog-post': EditBlogPost,
+			'edit-article': EditArticle,
 			'edit-course': EditCourse,
 			'edit-subject': EditModalSubject,
 		}

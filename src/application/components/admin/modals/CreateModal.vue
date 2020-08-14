@@ -5,7 +5,7 @@
 			<create-course v-if="isCreateModalCourse" />
 			<create-question v-if="isCreateModalQuestion" />
 			<create-note v-if="isCreateModalNote" />
-			<create-blog-post v-if="isCreateModalBlog" />
+			<create-article v-if="isCreateModalBlog" />
 			<create-subject v-if="isCreateModalSubject" />
 		</div>
 	</div>
@@ -17,7 +17,7 @@
 	import CreateCourse from '@/components/admin/modals/CreateCourse'
 	import CreateQuestion from '@/components/admin/modals/CreateQuestion'
 	import CreateNote from '@/components/admin/modals/CreateNote'
-	import CreateBlogPost from '@/components/admin/modals/CreateBlogPost'
+	import CreateArticle from '@/components/admin/modals/CreateArticle'
 	import CreateSubject from '@/components/admin/modals/CreateSubject'
 	export default {
 		computed: mapGetters(['isCreateModalOverview','isCreateModalCourse','isCreateModalQuestion','isCreateModalNote','isCreateModalBlog','isCreateModalSubject']),
@@ -26,7 +26,7 @@
 			'create-course': CreateCourse,
 			'create-question': CreateQuestion,
 			'create-note': CreateNote,
-			'create-blog-post': CreateBlogPost,
+			'create-article': CreateArticle,
 			'create-subject': CreateSubject,
 		}
 	}
