@@ -1,10 +1,11 @@
 import Vue from 'vue'
-import VueRouter, { Route } from 'vue-router'
+import VueRouter from 'vue-router'
 import routes from '@/router/routes'
 import { Notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
 
 import store from '@/store/'
+import { addToCachedScrolls, getCachedScroll, saveIntendedRoute } from '@/usecases/core/useRouter'
 
 Vue.use(VueRouter)
 
@@ -12,26 +13,21 @@ const router = new VueRouter({
 	mode: 'history',
 	base: process.env.BASE_URL,
 	routes,
-	scrollBehavior: async (to, from, position: { x: number, y: number } | void) => {
-		let y: number = store.getters.getScrollCache[to.fullPath] || 0
-		new Promise((resolve) => {
-			setTimeout(() => {
-				resolve({ x: 0, y })
-			}, 1)
-		})
-	}
+	scrollBehavior: async (to) => new Promise((resolve) => {
+		setTimeout(() => resolve({ x: 0, y: getCachedScroll(to.fullPath) }), 1)
+	})
 })
 
-router.beforeEach(async (to: Route, from: Route, next: (to?: string) => void) => {
-	store.dispatch('setScrollCache', { page: from.fullPath, position: document.documentElement.scrollTop })
+router.beforeEach(async (to, from, next) => {
+	addToCachedScrolls(from.fullPath, document.documentElement.scrollTop)
 	const requiresAuth = to.matched.some(route => route.meta.requiresAuth)
 	const requiresAdmin = to.matched.some(route => route.meta.requiresAdmin)
 	const isLoggedIn = store.getters.isLoggedIn
 	const isAdmin = store.getters.isAdmin
 	if (requiresAuth && !isLoggedIn) {
-		await Notify({ icon: 'error', 'title': 'Login to continue' })
 		store.dispatch('setAuthModalLogin')
-		store.dispatch('setIntendedRoute', to.fullPath)
+		saveIntendedRoute(to.fullPath)
+		await Notify({ icon: 'error', 'title': 'Login to continue' })
 		return next('/')
 	}
 	if(requiresAdmin && !isAdmin){

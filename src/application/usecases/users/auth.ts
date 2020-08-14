@@ -7,12 +7,12 @@ import {
 	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword, UpdatePassword
 } from '@root/modules/users'
 import { computed, reactive } from '@vue/composition-api'
+import { getIntendedRoute } from '@/usecases/core/useRouter'
 
 const afterAuthHook = async () => {
-	const route = store.getters.getIntendedRoute
+	const route = getIntendedRoute()
 	if(route) await router.push(route)
 	closeNavbar()
-	await store.dispatch('clearIntendedRoute')
 	await store.dispatch('closeAuthModal')
 }
 
