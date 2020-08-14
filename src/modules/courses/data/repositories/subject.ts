@@ -26,4 +26,8 @@ export class SubjectRepository implements ISubjectRepository{
 		return await this.dataSource.add(data)
 	}
 
+	public async update(id: string, data: SubjectToModel): Promise<String> {
+		return await this.dataSource.update(id, data)
+	}
+
 }

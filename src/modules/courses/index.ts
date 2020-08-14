@@ -6,6 +6,7 @@ import { GetSubjectsUseCase } from '@root/modules/courses/domain/usecases/getSub
 import { DeleteSubjectUseCase } from '@root/modules/courses/domain/usecases/deleteSubject'
 import { GetSubjectFactoryUsecase } from '@root/modules/courses/domain/usecases/getSubjectFactory'
 import { AddSubjectUsecase } from '@root/modules/courses/domain/usecases/addSubject'
+import { UpdateSubjectUsecase } from '@root/modules/courses/domain/usecases/updateSubject'
 
 const bottle = new Bottle()
 
@@ -17,14 +18,16 @@ bottle.service('Repositories.Subject', SubjectRepository, 'DataSources.Subject',
 
 bottle.service('Usecases.Subject.Add', AddSubjectUsecase, 'Repositories.Subject')
 bottle.service('Usecases.Subject.Get', GetSubjectsUseCase, 'Repositories.Subject')
+bottle.service('Usecases.Subject.Update', UpdateSubjectUsecase, 'Repositories.Subject')
 bottle.service('Usecases.Subject.Delete', DeleteSubjectUseCase, 'Repositories.Subject')
 bottle.service('Usecases.Subject.GetFactory', GetSubjectFactoryUsecase)
 
-const { Get: GetSubjects, Delete: DeleteSubject, GetFactory: GetSubjectFactory, Add: AddSubject } = bottle.container.Usecases.Subject as {
+const { Get: GetSubjects, Delete: DeleteSubject, GetFactory: GetSubjectFactory, Add: AddSubject, Update: UpdateSubject } = bottle.container.Usecases.Subject as {
 	Get: GetSubjectsUseCase, Delete: DeleteSubjectUseCase,
-	GetFactory: GetSubjectFactoryUsecase, Add: AddSubjectUsecase
+	GetFactory: GetSubjectFactoryUsecase, Add: AddSubjectUsecase,
+	Update: UpdateSubjectUsecase
 }
 
 export {
-	GetSubjects, DeleteSubject, GetSubjectFactory, AddSubject
+	GetSubjects, DeleteSubject, GetSubjectFactory, AddSubject, UpdateSubject
 }

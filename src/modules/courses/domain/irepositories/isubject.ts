@@ -4,6 +4,7 @@ import { SubjectToModel } from '@root/modules/courses/data/models/subject'
 
 export interface ISubjectRepository {
 	add: (data: SubjectToModel) => Promise<String>
+	update: (id:string, data: SubjectToModel) => Promise<String>
 	get: (conditions?: GetClauses) => Promise<SubjectEntity[]>
 	delete: (id: string) => Promise<void>
 }
