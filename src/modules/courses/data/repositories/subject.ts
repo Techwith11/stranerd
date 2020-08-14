@@ -22,11 +22,11 @@ export class SubjectRepository implements ISubjectRepository{
 		return await this.dataSource.delete(id)
 	}
 
-	public async add(data: SubjectToModel): Promise<String> {
+	public async add(data: SubjectToModel): Promise<string> {
 		return await this.dataSource.add(data)
 	}
 
-	public async update(id: string, data: SubjectToModel): Promise<String> {
+	public async update(id: string, data: SubjectToModel): Promise<string> {
 		return await this.dataSource.update(id, data)
 	}
 
