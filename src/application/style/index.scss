@@ -1,8 +1,13 @@
-@import '~bootstrap/dist/css/bootstrap.min.css';
-@import '~@fortawesome/fontawesome-free/css/all.min.css';
 @import './variables.scss';
 @import './qleditor.scss';
 @import './modal.scss';
+
+$theme-colors: (
+	'gold': $primary-gold
+);
+
+@import '~bootstrap/scss/bootstrap.scss';
+@import '~@fortawesome/fontawesome-free/css/all.min.css';
 
 body{
 	background: $primary-light;
@@ -55,12 +60,12 @@ button{
 }
 
 .white-button{
-	color: $primary;
+	color: $primary-gold;
 	background: $white;
 }
 
 .router-link-exact-active.nav-link {
-	color: $primary !important;
+	color: $primary-gold !important;
 }
 
 .floating-button{

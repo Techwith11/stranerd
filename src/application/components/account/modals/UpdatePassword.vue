@@ -16,9 +16,9 @@
 			<span class="small" v-if="factory.errors.c_password">{{ factory.errors.c_password }}</span>
 		</div>
 		<div class="d-flex justify-content-end">
-			<button type="submit" :disabled="loading || !factory.valid" :class="loading || !factory.valid ? 'btn-secondary opacity-50' : 'btn-success'">
+			<button type="submit" class="btn btn-gold" :disabled="loading || !factory.valid">
 				<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
-				<span>Update</span>
+				<span>Update password</span>
 			</button>
 		</div>
 	</form>

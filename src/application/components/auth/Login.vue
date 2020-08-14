@@ -18,8 +18,7 @@
 				<span class="small text-danger" v-if="emailFactory.errors.password">{{ emailFactory.errors.password }}</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button id="loginBtn" type="submit" :disabled="anyLoading || !emailFactory.valid"
-					:class="emailFactory.valid ? 'primary-button' : 'opacity-25'">
+				<button class="btn btn-gold" id="loginBtn" type="submit" :disabled="anyLoading || !emailFactory.valid">
 					<i class="fas fa-spinner fa-spin mr-2" v-if="emailLoading"></i>
 					<span>Sign In with email</span>
 				</button>

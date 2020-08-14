@@ -45,8 +45,7 @@
 				<small class="small text-danger" v-if="factory.errors.tags">{{ factory.errors.tags }}</small>
 			</div>
 			<div class="d-flex justify-content-end">
-				<button class="btn" type="submit" :class="factory.valid ? 'btn-success text-white' : 'btn-gray'"
-					:disabled="loading || !factory.valid" v-if="isLoggedIn">
+				<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid" v-if="isLoggedIn">
 					<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
 					<span>Post question</span>
 				</button>
@@ -64,7 +63,7 @@
 	import { useTags } from '@/usecases/core/useForms'
 	import { useSubjects } from '@/usecases/courses/useSubjects'
 	export default defineComponent({
-		name: 'CreatePost',
+		name: 'PostForm',
 		setup(){
 			const { subjects, loading: subjectLoading } = useSubjects()
 			const { factory, loading, createPost, isLoggedIn, login } = useCreatePost()

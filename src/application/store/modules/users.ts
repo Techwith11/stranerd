@@ -4,8 +4,8 @@ import store from '@/store/index'
 import { checkForUnfinishedTests } from '@/config/tests'
 
 const state = {
-	id: null,
-	user: JSON.parse(window.localStorage.getItem('user')) || {},
+	id: window.localStorage.getItem('user_id') ?? null,
+	user: JSON.parse(window.localStorage.getItem('user')) ?? {},
 	profileListener: () => {}
 }
 

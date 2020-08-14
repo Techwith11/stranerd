@@ -31,8 +31,7 @@
 				<small class="small text-danger" v-if="factory.errors.tags">{{ factory.errors.tags }}</small>
 			</div>
 			<div class="d-flex flex-column my-3">
-				<button class="text-white my-2 py-2 px-4 primary-button" type="submit" :class="{ 'opacity-25': !factory.valid || loading }"
-					:disabled="loading || !factory.valid">
+				<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid">
 					<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
 					<span>
 						<slot name="buttonText">Submit</slot>
@@ -48,6 +47,7 @@
 	import { ArticleFactory } from '@root/modules/blog/domain/factories/article'
 	import { useFileInputs, useTags } from '@/usecases/core/useForms'
 	export default defineComponent({
+		name: 'ArticleForm',
 		props: {
 			factory: {
 				type: ArticleFactory,

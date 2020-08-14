@@ -13,7 +13,7 @@
 				<span class="small text-danger" v-if="factory.errors.email">{{ factory.errors.email }}</span>
 			</div>
 			<div class="d-flex flex-column">
-				<button type="submit" :disabled="loading || !factory.valid" :class="loading || !factory.valid ? 'opacity-50' : 'primary-button'">
+				<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid">
 					<i class="fas fa-spinner fa-spin" v-if="loading"></i>
 					<span v-else>Retrieve Password</span>
 				</button>

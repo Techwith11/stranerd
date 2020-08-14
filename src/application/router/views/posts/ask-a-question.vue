@@ -10,7 +10,7 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import CreatePost from '@/components/posts/CreatePost.vue'
+	import CreatePost from '@/components/posts/PostForm.vue'
 	export default defineComponent({
 		name: 'AskAQuestion',
 		components: {

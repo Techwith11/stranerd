@@ -1,5 +1,5 @@
 <template>
-	<div id="sidebar" class="small">
+	<div id="sidebar" class="small bg-gold">
 		<router-link class="d-flex flex-column align-items-center" to="/posts">
 			<img src="@/assets/images/sidebar/posts.svg" alt="">
 			<p>Posts</p>
@@ -26,7 +26,6 @@
 <style lang="scss" scoped>
 	#sidebar{
 		padding: 2rem 0.5rem;
-		background: $primary;
 		width: 75px;
 		display: flex;
 		flex-direction: column;

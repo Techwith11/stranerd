@@ -1,5 +1,5 @@
 $primary-dark: #FF8A00;
-$primary: #FFC000;
+$primary-gold: #FFC000;
 $primary-light: #FFF7DF;
 $accent: #22DD77;
 $white: #FFFFFF;
@@ -7,8 +7,8 @@ $text-black: #343A40;
 $link-blue: dodgerblue;
 $blackTransparent: #00000088;
 
-$gradient: linear-gradient(to right, $primary-dark, $primary);
-$gradient-reversed: linear-gradient(to left, $primary-dark, $primary);
+$gradient: linear-gradient(to right, $primary-dark, $primary-gold);
+$gradient-reversed: linear-gradient(to left, $primary-dark, $primary-gold);
 
 $font-base-size: 16px;
 

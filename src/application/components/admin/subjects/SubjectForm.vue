@@ -39,14 +39,12 @@
 				</div>
 			</div>
 			<div class="d-flex justify-content-end my-3">
-				<button class="btn btn-secondary" @click.prevent="factory.addModule" :disabled="loading || !factory.moduleValid">
+				<button class="btn btn-outline-primary" @click.prevent="factory.addModule" :disabled="loading || !factory.moduleValid">
 					<span>Add module</span>
 				</button>
-				<button class="btn btn-success" type="submit" :disabled="loading || !factory.valid">
+				<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid">
 					<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
-					<span>
-						<slot name="buttonText">Submit</slot>
-					</span>
+					<span><slot name="buttonText">Submit</slot></span>
 				</button>
 			</div>
 		</form>
