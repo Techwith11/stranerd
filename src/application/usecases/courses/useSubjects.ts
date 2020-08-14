@@ -1,6 +1,6 @@
 import { computed, reactive } from '@vue/composition-api'
 import { ModuleEntity, SubjectEntity } from '@root/modules/courses/domain/entities/subject'
-import { GetSubjects, DeleteSubject, GetSubjectFactory, AddSubject } from '@root/modules/courses'
+import { AddSubject, DeleteSubject, GetSubjectFactory, GetSubjects, UpdateSubject } from '@root/modules/courses'
 import router from '@/router'
 import { Alert, Notify } from '@/config/notifications'
 import store from '@/store'
@@ -71,13 +71,15 @@ export const useDeleteSubject = (subject: SubjectEntity) => {
 			icon: 'info',
 			confirmButtonText: 'Delete'
 		})
-		try{
-			state.loading = true
-			await DeleteSubject.call(subject.id)
-			globalState.subjects = globalState.subjects.filter(s => s.id !== subject.id)
-			state.loading = false
-			await Notify({ title: 'Subject deleted!', icon: 'success' })
-		}catch(error){ await Notify({ title: error, icon: 'error' }) }
+		if(res.value){
+			try{
+				state.loading = true
+				await DeleteSubject.call(subject.id)
+				globalState.subjects = globalState.subjects.filter(s => s.id !== subject.id)
+				state.loading = false
+				await Notify({ title: 'Subject deleted!', icon: 'success' })
+			}catch(error){ await Notify({ title: error, icon: 'error' }) }
+		}
 	}
 
 	return { loading: computed(() => state.loading), deleteSubject }

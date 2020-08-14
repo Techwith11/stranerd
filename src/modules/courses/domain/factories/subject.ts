@@ -49,7 +49,7 @@ export class SubjectFactory extends BaseFactory<SubjectEntity, SubjectToModel> {
 
 	public loadEntity = (entity: SubjectEntity) => {
 		this.name = entity.name
-		this.set('modules', entity.modules)
+		this.set('modules', entity.modules.map(m => ({ name: m.name, image: m.imageData })))
 	}
 
 	public toModel = async () => {
