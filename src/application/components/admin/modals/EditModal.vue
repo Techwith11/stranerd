@@ -6,7 +6,6 @@
 			<edit-blog-post v-if="isEditModalBlog" />
 			<edit-course v-if="isEditModalCourse" />
 			<edit-subject v-if="isEditModalSubject" />
-			<edit-subject-module v-if="isEditModalSubjectModule" />
 		</div>
 	</div>
 </template>
@@ -18,16 +17,14 @@
 	import EditBlogPost from '@/components/admin/modals/EditBlogPost'
 	import EditCourse from '@/components/admin/modals/EditCourse'
 	import EditModalSubject from '@/components/admin/modals/EditSubject'
-	import EditModalSubjectModule from '@/components/admin/modals/EditSubjectModule'
 	export default {
-		computed: mapGetters(['isEditModalQuestion','isEditModalNote','isEditModalBlog','isEditModalCourse','isEditModalSubject','isEditModalSubjectModule']),
+		computed: mapGetters(['isEditModalQuestion','isEditModalNote','isEditModalBlog','isEditModalCourse','isEditModalSubject']),
 		components: {
 			'edit-question': EditQuestion,
 			'edit-note': EditNote,
 			'edit-blog-post': EditBlogPost,
 			'edit-course': EditCourse,
 			'edit-subject': EditModalSubject,
-			'edit-subject-module': EditModalSubjectModule,
 		}
 	}
 </script>
