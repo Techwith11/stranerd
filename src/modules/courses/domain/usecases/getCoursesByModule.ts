@@ -9,16 +9,20 @@ export class GetCoursesByModuleUseCase {
 		this.repository = repository
 	}
 
-	public async call (subject: string, module: string) :Promise<CourseEntity[]> {
+	public async call (subject: string, module: string, date?: Date) :Promise<CourseEntity[]> {
 		const conditions: GetClauses = {
+			limit: parseInt(process.env.VUE_APP_PAGINATION_LIMIT),
 			order: {
 				field: 'dates.createdAt',
 				desc: true
 			},
 			where: [
-				{ field: 'subject', condition: '==', value: subject },
-				{ field: 'module', condition: '==', value: module },
+				{ field: 'subject', condition: '==', value: subject.toLowerCase() },
+				{ field: 'module', condition: '==', value: module.toLowerCase() },
 			]
+		}
+		if(date){
+			conditions.where!.push({ field: 'dates.createdAt', condition: '<', value: date })
 		}
 		return await this.repository.get(conditions)
 	}

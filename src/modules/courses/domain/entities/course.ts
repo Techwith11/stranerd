@@ -1,4 +1,5 @@
 import { Media } from '@root/modules/core/data/models/base'
+import { extractDate } from '@root/modules/core/validations/sanitizers'
 
 export class CourseEntity {
 	public readonly id: string
@@ -24,6 +25,10 @@ export class CourseEntity {
 		this.documents = documents
 		this.video = video
 	}
+
+	get imageLink() { return this.image?.link ?? this.image }
+
+	get createdDate(){ return extractDate(this.createdAt) }
 }
 
 type CourseConstructorArgs = {

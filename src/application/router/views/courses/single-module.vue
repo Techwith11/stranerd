@@ -1,17 +1,17 @@
 <template>
 	<Default>
-		<helper-spinner v-if="isLoading"/>
+		<helper-spinner v-if="loading"/>
 		<div class="container-fluid py-3" v-else>
-			<helper-message message="No courses available at the moment. Check again later" v-if="courses.length === 0" />
+			<helper-message :message="error" v-if="error" />
 			<div v-else>
 				<div class="row">
-					<div class="col-lg-6" v-for="course in courses" :key="course['.key']">
+					<div class="col-lg-6" v-for="course in courses" :key="course.id">
 						<course-card :course="course"/>
 					</div>
 				</div>
 				<div class="d-flex justify-content-end my-3" v-if="hasMore">
 					<button class="btn-success" @click="fetchOlderCourses">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderCoursesLoading"></i>
+						<i class="fas fa-spinner fa-spin mr-2" v-if="olderCoursesLoading"></i>
 						<span>Fetch More</span>
 					</button>
 				</div>
@@ -20,88 +20,26 @@
 	</Default>
 </template>
 
-<script>
-	import { firestore } from '@/config/firebase'
-	import CourseCard from '@/components/courses/list/CourseCard'
-	export default {
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import CourseCard from '@/components/courses/list/CourseCard.vue'
+	import { useCoursesList } from '@/usecases/courses/useCourses'
+	import router from '@/router'
+	import { capitalizeText } from '@root/modules/core/validations/sanitizers'
+	export default defineComponent({
 		name: 'Courses',
-		data: () => ({
-			isLoading: true,
-			isOlderCoursesLoading: false,
-			courses: [],
-			fetched: false,
-			listener: () => {},
-			paginationLimit: 24,
-			hasMore: true
-		}),
 		components: {
 			'course-card': CourseCard,
 		},
-		async mounted(){
-			await this.getCourses()
-			this.fetched = true
-			this.isLoading = false
-			window.Fire.$on('CourseEdited', course => {
-				let index = this.courses.findIndex(c => c['.key'] === course['.key'])
-				this.courses[index] = course
-				this.$forceUpdate()
-			})
-			window.Fire.$on('CourseDeleted', course => this.courses = this.courses.filter(c => c['.key'] !== course['.key']))
-		},
-		async activated(){
-			if(this.fetched){
-				await this.setCoursesListeners()
-			}
-		},
-		deactivated(){
-			this.listener()
-		},
-		methods: {
-			async getCourses(){
-				try{
-					let docs = firestore.collection('courses')
-						.where('subject','==',this.$route.params.subject.toLowerCase())
-						.where('module','==',this.$route.params.module.toLowerCase())
-						.orderBy('dates.updatedAt','desc')
-						.limit(this.paginationLimit)
-					let lastItem = this.courses[this.courses.length - 1]
-					if(lastItem){
-						docs = docs.where('dates.updatedAt','<',lastItem.dates.createdAt)
-					}
-					docs = await docs.get()
-					this.hasMore = docs.size >= this.paginationLimit
-					docs.forEach(doc => this.courses.push({ '.key': doc.id, ...doc.data() }))
-				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching courses. Try refreshing the page' }) }
-			},
-			async fetchOlderCourses(){
-				this.isOlderCoursesLoading = true
-				await this.getCourses()
-				this.isOlderCoursesLoading = false
-			},
-			async setCoursesListeners(){
-				let lastItem = this.courses[this.courses.length - 1]
-				let query = firestore.collection('courses')
-					.where('subject','==',this.$route.params.subject.toLowerCase())
-					.where('module','==',this.$route.params.module.toLowerCase())
-					.orderBy('dates.updatedAt')
-				if(lastItem){
-					query = query.where('dates.updatedAt','>',lastItem.dates.updatedAt)
-				}
-				this.listener = query.onSnapshot(snapshot => {
-					snapshot.docs.forEach(doc => {
-						let index = this.courses.findIndex(r => r['.key'] === doc.id)
-						if(index === -1){
-							this.courses.unshift({ '.key': doc.id, ...doc.data() })
-						}else{
-							this.courses[index] = { '.key': doc.id, ...doc.data() }
-						}
-					})
-				})
-			},
+		setup(){
+			const { subject, module } = router.currentRoute.params
+			const { courses, loading, error, hasMore, olderCoursesLoading, fetchOlderCourses } = useCoursesList(subject, module)
+			return { courses, loading, error, hasMore, olderCoursesLoading, fetchOlderCourses }
 		},
 		meta(){
+			const { module } = router.currentRoute.params
 			return {
-				title: this.$route.params.module ? this.$route.params.module[0].toUpperCase() + this.$route.params.module.slice(1).toLowerCase() : 'Module Name',
+				title: capitalizeText(module) ?? 'Module Name',
 				meta: [
 					{
 						vmid: 'description',
@@ -116,5 +54,5 @@
 				]
 			}
 		}
-	}
+	})
 </script>

@@ -22,8 +22,7 @@ const globalState = reactive({
 	loading: false,
 	error: '',
 	hasMore: false,
-	olderArticlesLoading: false,
-	listener: () => {}
+	olderArticlesLoading: false
 })
 
 const setArticle = (article: ArticleEntity) => {
@@ -67,7 +66,6 @@ export const useArticlesList = () => {
 
 		fetchOlderArticles
 	}
-	//TODO: Think abt whether to add listeners
 }
 
 export const useDeleteArticle = (article: ArticleEntity) => {
