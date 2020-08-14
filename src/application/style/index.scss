@@ -2,10 +2,6 @@
 @import './qleditor.scss';
 @import './modal.scss';
 
-$theme-colors: (
-	'gold': $primary-gold
-);
-
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -27,10 +23,6 @@ body{
 
 .rounded-xl{
 	border-radius: 0.75rem;
-}
-
-.text-black{
-	color: $text-black;
 }
 
 a:hover {

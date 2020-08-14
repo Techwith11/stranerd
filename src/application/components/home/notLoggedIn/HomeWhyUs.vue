@@ -1,5 +1,5 @@
 <template>
-    <div id="background">
+    <div class="bg-gold-light text-black my-8 text-center">
         <div class="container">
             <div class="d-flex flex-column flex-sm-row row justify-content-center">
                 <div class="col-sm-6 col-md-4 mb-5">
@@ -33,12 +33,6 @@
 </template>
 
 <style lang="scss" scoped>
-    #background{
-        background: $primary-light;
-        color: $text-black;
-        text-align: center;
-        padding: 4rem 0 4rem;
-    }
     .icons{
         height: 100px;
         padding: 0.5rem;
