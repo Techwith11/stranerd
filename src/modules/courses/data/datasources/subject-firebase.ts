@@ -1,7 +1,7 @@
 import { FirestoreService } from '@root/modules/core/services/firebase'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 import { SubjectBaseDataSource } from '@root/modules/courses/data/datasources/subject-base'
-import { SubjectFromModel } from '@root/modules/courses/data/models/subject'
+import { SubjectFromModel, SubjectToModel } from '@root/modules/courses/data/models/subject'
 
 export class SubjectFirebaseDataSource implements SubjectBaseDataSource{
 
@@ -11,6 +11,10 @@ export class SubjectFirebaseDataSource implements SubjectBaseDataSource{
 
 	public async delete(id: string): Promise<void> {
 		return await FirestoreService.delete('subjects', id)
+	}
+
+	public async add(data: SubjectToModel): Promise<string> {
+		return await FirestoreService.create('subjects', data)
 	}
 
 }

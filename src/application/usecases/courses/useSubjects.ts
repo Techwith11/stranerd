@@ -1,8 +1,9 @@
 import { computed, reactive } from '@vue/composition-api'
 import { ModuleEntity, SubjectEntity } from '@root/modules/courses/domain/entities/subject'
-import { GetSubjects, DeleteSubject, GetSubjectFactory } from '@root/modules/courses'
+import { GetSubjects, DeleteSubject, GetSubjectFactory, AddSubject } from '@root/modules/courses'
 import router from '@/router'
 import { Alert, Notify } from '@/config/notifications'
+import store from '@/store'
 
 const globalState = reactive({
 	subjects: reactive([]) as SubjectEntity[],
@@ -76,7 +77,7 @@ export const useDeleteSubject = (subject: SubjectEntity) => {
 			globalState.subjects = globalState.subjects.filter(s => s.id !== subject.id)
 			state.loading = false
 			await Notify({ title: 'Subject deleted!', icon: 'success' })
-		}catch(error){ await Notify({ title: error.message, icon: 'error' }) }
+		}catch(error){ await Notify({ title: error, icon: 'error' }) }
 	}
 
 	return { loading: computed(() => state.loading), deleteSubject }
@@ -87,10 +88,15 @@ export const useCreateSubject = () => {
 		loading: false,
 		factory: GetSubjectFactory.call()
 	})
-	const createSubject = () => {
+	const createSubject = async () => {
 		if(state.factory.valid && !state.loading) {
 			state.loading = true
-			console.log(state.factory.validValues)
+			try{
+				await AddSubject.call(state.factory)
+				await fetchSubjects()
+				await store.dispatch('closeCreateModal')
+				await Notify({ title: 'Subject added successfully!', icon: 'success' })
+			}catch(error){ await Notify({ title: error, icon: 'error' }) }
 			state.loading = false
 		}else state.factory.validateAll()
 	}

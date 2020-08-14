@@ -22,7 +22,7 @@
 							<span class="text-capitalize lead">{{ module.name }}</span>
 							<span class="ml-2 text-info">{{ module.image.name }}</span>
 						</div>
-						<a class="cursor-pointer text-danger" @click.prevent="factory.removeModule(module.name)"><i class="fas fa-trash"></i></a>
+						<a class="cursor-pointer text-danger" @click.prevent="removeModule(module.name)"><i class="fas fa-trash"></i></a>
 					</div>
 				</div>
 				<div class="my-3">
@@ -62,6 +62,7 @@
 	import store from '@/store'
 	import { useFileInputs } from '@/usecases/core/useForms'
 	import { SubjectFactory } from '@root/modules/courses/domain/factories/subject'
+	import { Alert } from '@/config/notifications'
 	export default defineComponent({
 		props: {
 			factory: {
@@ -81,8 +82,17 @@
 			const { catchFiles: catchImage } = useFileInputs(
 				(file:File) => props.factory.moduleImage = file
 			)
+			const removeModule = async (module: string) => {
+				const res = await Alert({
+					title: `Delete ${module}`,
+					text: 'Are you sure you want to delete this module',
+					icon: 'info',
+					confirmButtonText: 'Delete'
+				})
+				if(res.value) props.factory.removeModule(module)
+			}
 			return {
-				catchImage,
+				catchImage, removeModule,
 				closeCreateModal: () => store.dispatch('closeCreateModal')
 			}
 		}
