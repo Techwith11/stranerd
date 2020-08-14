@@ -1,13 +1,13 @@
 <template>
 	<div class="my-3 alert alert-light shadow">
-		<div class="d-flex justify-content-between align-items-center my-3 cursor-pointer" @click.prevent="toggleCollapse">
-			<h4 class="text-capitalize">{{ subject.name }}</h4>
+		<div class="d-flex justify-content-between align-items-center my-3 cursor-pointer">
+			<h4 class="text-capitalize" @click.prevent="toggleCollapse">{{ subject.name }}</h4>
 			<div class="d-flex my-2 justify-content-end align-items-center" id="main">
 				<a @click.prevent="openSubjectEditModal" class="mr-3"><i class="fas fa-pen text-warning"></i></a>
 				<a @click.prevent="deleteSubject" class="text-danger mr-3">
 					<i class="fas" :class="deleteLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
 				</a>
-				<a><i class="fas" :class="show ? 'fa-angle-up' : 'fa-angle-down'"></i></a>
+				<a @click.prevent="toggleCollapse"><i class="fas" :class="show ? 'fa-angle-up' : 'fa-angle-down'"></i></a>
 			</div>
 		</div>
 		<div class="collapse" :id="subject.id">
@@ -56,7 +56,7 @@
 <style lang="scss" scoped>
 	#main{
 		i{
-			font-size: 1.5rem;
+			font-size: 1.25rem;
 		}
 	}
 </style>

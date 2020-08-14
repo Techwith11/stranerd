@@ -1,6 +1,13 @@
 import { computed, reactive } from '@vue/composition-api'
 import { ModuleEntity, SubjectEntity } from '@root/modules/courses/domain/entities/subject'
-import { AddSubject, DeleteSubject, GetSubjectFactory, GetSubjects, UpdateSubject } from '@root/modules/courses'
+import {
+	AddSubject,
+	DeleteSubject,
+	FindSubject,
+	GetSubjectFactory,
+	GetSubjects,
+	UpdateSubject
+} from '@root/modules/courses'
 import router from '@/router'
 import { Alert, Notify } from '@/config/notifications'
 import store from '@/store'
@@ -16,6 +23,17 @@ const fetchSubjects = async () => {
 	globalState.loading = true
 	globalState.subjects = await GetSubjects.call()
 	globalState.fetched = true
+	globalState.loading = false
+}
+
+const fetchSubject = async (id: string) => {
+	globalState.loading = true
+	const subject = await FindSubject.call(id)
+	if(subject){
+		const index = globalState.subjects.findIndex(s => s.id === subject.id)
+		if(index === -1) globalState.subjects.push(subject)
+		else globalState.subjects[index] = subject
+	}
 	globalState.loading = false
 }
 
@@ -94,9 +112,9 @@ export const useCreateSubject = () => {
 		if(state.factory.valid && !state.loading) {
 			state.loading = true
 			try{
-				await AddSubject.call(state.factory)
+				const id = await AddSubject.call(state.factory)
 				state.factory.reset()
-				await fetchSubjects() //TODO: Implement fetch single subject usecase
+				await fetchSubject(id)
 				await store.dispatch('closeCreateModal')
 				await Notify({ title: 'Subject added successfully!', icon: 'success' })
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }
@@ -124,9 +142,9 @@ export const useEditSubject = () => {
 		if(state.factory.valid && !state.loading) {
 			state.loading = true
 			try{
-				await UpdateSubject.call(currentEdit!.id ,state.factory)
+				const id = await UpdateSubject.call(currentEdit!.id ,state.factory)
 				state.factory.reset()
-				await fetchSubjects() //TODO: Implement fetch single subject usecase
+				await fetchSubject(id)
 				await store.dispatch('closeEditModal')
 				await Notify({ title: 'Subject updated successfully!', icon: 'success' })
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }

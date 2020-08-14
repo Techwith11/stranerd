@@ -21,4 +21,8 @@ export class SubjectFirebaseDataSource implements SubjectBaseDataSource{
 		return await FirestoreService.update('subjects', id, data)
 	}
 
+	public async find(id: string): Promise<SubjectFromModel | undefined> {
+		return await FirestoreService.find('subjects', id)  as SubjectFromModel | undefined
+	}
+
 }
