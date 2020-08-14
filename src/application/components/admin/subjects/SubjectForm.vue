@@ -1,10 +1,6 @@
 <template>
 	<div>
-		<div class="d-flex align-items-baseline justify-content-between my-3">
-			<i></i>
-			<h4><slot name="title">Title</slot></h4>
-			<a @click.prevent="closeCreateModal"><i class="fas fa-times text-danger"></i></a>
-		</div>
+		<slot name="title"><h4>Title</h4></slot>
 		<form class="mx-2" @submit.prevent="submit">
 			<div class="form-group my-3">
 				<h6>Name</h6>
@@ -14,20 +10,20 @@
 			</div>
 			<div class="form-group my-3">
 				<h6>Modules</h6>
-				<small class="small text-muted" v-if="factory.modules.length === 0">Add modules for the subject. At least one module is required.</small>
+				<small class="small text-muted" v-if="factory.modules && factory.modules.length === 0">Add modules for the subject. At least one module is required.</small>
 				<small class="small text-danger d-block" v-else-if="factory.errors.modules">{{ factory.errors.modules }}</small>
 				<div>
 					<div v-for="module in factory.modules" :key="module.name" class="d-flex justify-content-between align-items-center mb-2">
 						<div class="mb-0">
-							<span class="text-capitalize lead">{{ module.name }}</span>
-							<span class="ml-2 text-info">{{ module.image.name }}</span>
+							<span class="lead">{{ module.name }}</span>
+							<span class="ml-2 text-info">{{ module.image && module.image.name }}</span>
 						</div>
 						<a class="cursor-pointer text-danger" @click.prevent="removeModule(module.name)"><i class="fas fa-trash"></i></a>
 					</div>
 				</div>
-				<div class="my-3">
+				<div class="mt-5">
 					<div class="form-group">
-						<h6>Module Name</h6>
+						<h6>New module</h6>
 						<input class="form-control" placeholder="Module name" v-model.trim="factory.moduleName"
 							:class="{'is-invalid': factory.errors.moduleName, 'is-valid': factory.isValid('moduleName')}">
 						<small class="small text-danger d-block" v-if="factory.errors.moduleName">{{ factory.errors.moduleName }}</small>
@@ -59,7 +55,6 @@
 
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
-	import store from '@/store'
 	import { useFileInputs } from '@/usecases/core/useForms'
 	import { SubjectFactory } from '@root/modules/courses/domain/factories/subject'
 	import { Alert } from '@/config/notifications'
@@ -91,10 +86,7 @@
 				})
 				if(res.value) props.factory.removeModule(module)
 			}
-			return {
-				catchImage, removeModule,
-				closeCreateModal: () => store.dispatch('closeCreateModal')
-			}
+			return { catchImage, removeModule }
 		}
 	})
 </script>

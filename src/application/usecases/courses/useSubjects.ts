@@ -95,7 +95,8 @@ export const useCreateSubject = () => {
 			state.loading = true
 			try{
 				await AddSubject.call(state.factory)
-				await fetchSubjects()
+				state.factory.reset()
+				await fetchSubjects() //TODO: Implement fetch single subject usecase
 				await store.dispatch('closeCreateModal')
 				await Notify({ title: 'Subject added successfully!', icon: 'success' })
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }
@@ -106,5 +107,35 @@ export const useCreateSubject = () => {
 		loading: computed(() => state.loading),
 		factory: computed(() => state.factory),
 		createSubject
+	}
+}
+
+let currentEdit = undefined as SubjectEntity | undefined
+
+export const setCurrentEditingSubject = (subject: SubjectEntity) => currentEdit = subject
+
+export const useEditSubject = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetSubjectFactory.call()
+	})
+	if(currentEdit !== undefined) state.factory.loadEntity(currentEdit)
+	const editSubject = async () => {
+		if(state.factory.valid && !state.loading) {
+			state.loading = true
+			try{
+				await UpdateSubject.call(currentEdit!.id ,state.factory)
+				state.factory.reset()
+				await fetchSubjects() //TODO: Implement fetch single subject usecase
+				await store.dispatch('closeEditModal')
+				await Notify({ title: 'Subject updated successfully!', icon: 'success' })
+			}catch(error){ await Notify({ title: error, icon: 'error' }) }
+			state.loading = false
+		}else state.factory.validateAll()
+	}
+	return {
+		loading: computed(() => state.loading),
+		factory: computed(() => state.factory),
+		editSubject
 	}
 }
