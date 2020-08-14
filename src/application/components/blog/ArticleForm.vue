@@ -1,8 +1,6 @@
 <template>
 	<div>
-		<h4>
-			<slot name="title">Title</slot>
-		</h4>
+		<slot name="title"><h4>Title</h4></slot>
 		<form class="mx-2" @submit.prevent="submit">
 			<div class="form-group my-3">
 				<input type="file" @change="catchImage" class="d-none" ref="imageInput" accept="image/*">

@@ -152,6 +152,7 @@ export const useCreateArticle = () => {
 			try{
 				const id = await AddArticle.call(state.factory)
 				state.factory.reset()
+				store.dispatch('closeCreateModal')
 				await router.push(`/blog/${id}`)
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
@@ -165,22 +166,30 @@ export const useCreateArticle = () => {
 	}
 }
 
-export const useEditArticle = (id: string) => {
+let currentEdit = undefined as ArticleEntity | undefined
+
+export const setCurrentEditingArticle = (article: ArticleEntity) => currentEdit = article
+
+export const useEditArticle = () => {
 	const state = reactive({
 		loading: false,
 		factory: GetArticleFactory.call()
 	})
+
+	if(currentEdit) state.factory.loadEntity(currentEdit)
 
 	const editArticle = async () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
 			state.factory.userId = store.getters.getId
 			try{
-				const newId = await UpdateArticle.call(id, state.factory)
+				const newId = await UpdateArticle.call(currentEdit!.id, state.factory)
 				const article = await FindArticle.call(newId)
 				if(article) unshiftArticle(article)
 				state.factory.reset()
+				await router.replace('/blog')
 				await router.replace(`/blog/${newId}`)
+				store.dispatch('closeEditModal')
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
 		}else state.factory.validateAll()

@@ -11,7 +11,7 @@
 					<router-link :to="`/users/${user.id}`" class="bolder text-black">by {{ user.name }}</router-link>
 				</span>
 				<span v-if="isAdmin" class="ml-auto d-inline-block">
-					<router-link class="mr-3 text-warning" :to="`/blog/${article.id}/edit`"><i class="fas fa-pen mr-1"></i>Edit</router-link>
+					<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
 					<a class="text-danger" @click.prevent="deleteArticle" :disabled="delLoading">
 						<i class="fas mr-1" :class="delLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
 						<span>Delete</span>
@@ -26,7 +26,7 @@
 	import { computed, defineComponent, reactive } from '@vue/composition-api'
 	import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
 	import store from '@root/application/store'
-	import { useDeleteArticle } from '@root/application/usecases/blog/useArticles'
+	import { setCurrentEditingArticle, useDeleteArticle } from '@root/application/usecases/blog/useArticles'
 	import { fetchUser } from '@root/application/usecases/users/users'
 	export default defineComponent({
 		props: {
@@ -42,7 +42,7 @@
 			return {
 				isAdmin: computed(() => store.getters.isAdmin),
 				openEditModal: () => {
-					store.dispatch('setEditMeta', props.article)
+					setCurrentEditingArticle(props.article)
 					store.dispatch('setEditModalBlog')
 				},
 				delLoading, deleteArticle,

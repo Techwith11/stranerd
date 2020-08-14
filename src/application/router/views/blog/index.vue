@@ -14,10 +14,8 @@
 					</button>
 				</div>
 			</div>
-			<button class="floating-button" v-if="isAdmin">
-				<router-link to="/blog/create">
-					<i class="fas fa-plus text-white"></i>
-				</router-link>
+			<button class="floating-button" v-if="isAdmin" @click="setCreateModalBlog">
+				<i class="fas fa-plus text-white"></i>
 			</button>
 		</div>
 	</Default>
@@ -37,7 +35,8 @@
 			const { loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles } = useArticlesList()
 			return {
 				loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles,
-				isAdmin: computed(() => store.getters.isAdmin)
+				isAdmin: computed(() => store.getters.isAdmin),
+				setCreateModalBlog: () => store.dispatch('setCreateModalBlog')
 			}
 		},
 		meta(){

@@ -8,7 +8,7 @@
 					<img :src="user.image" alt="" width="50" height="50" class="rounded-circle border border-secondary">
 					<h6>{{ user.name }}</h6>
 					<span v-if="isAdmin" class="d-inline-block">
-						<router-link class="mr-3 text-warning" :to="`/blog/${article.id}/edit`"><i class="fas fa-pen mr-1"></i>Edit</router-link>
+						<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
 						<a class="text-danger" @click.prevent="deleteArticle" :disabled="delLoading">
 							<i class="fas mr-1" :class="delLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
 							<span>Delete</span>
@@ -26,7 +26,7 @@
 
 <script lang="ts">
 	import { defineComponent, computed } from '@vue/composition-api'
-	import { useDeleteArticle } from '@/usecases/blog/useArticles'
+	import { setCurrentEditingArticle, useDeleteArticle } from '@/usecases/blog/useArticles'
 	import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
 	import store from '@/store'
 	import router from '@root/application/router'
@@ -52,7 +52,7 @@
 			return {
 				isAdmin: computed(() => store.getters.isAdmin),
 				openEditModal: () => {
-					store.dispatch('setEditMeta', props.article)
+					setCurrentEditingArticle(props.article)
 					store.dispatch('setEditModalBlog')
 				},
 				delLoading, deleteArticle,
