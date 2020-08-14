@@ -48,8 +48,8 @@ export const useLogout = () => {
 	})
 	const logout = async () => {
 		state.loading = true
-		await store.dispatch('setId', null)
 		if(store.getters.isTutor) await store.dispatch('closeTutorSessionsListener')
+		await store.dispatch('setId', null)
 		if(router.currentRoute.meta.requiresAuth) await router.push('/')
 		await Logout.call()
 		closeNavbar()

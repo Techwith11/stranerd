@@ -21,46 +21,43 @@ const getters = {
 }
 
 const mutations = {
-	setId: async (state, id) => {
-		state.id = id
-		state.profileListener()
-		if(id){
-			state.profileListener = firestore
-				.collection('users')
-				.doc(id)
-				.onSnapshot(snapshot => {
-					if (snapshot.exists) {
-						let user = snapshot.data()
-						state.user = user
-						window.localStorage.setItem('user', JSON.stringify(user))
-					} else {
-						store.dispatch('setId', null)
-					}
-				})
-			await checkForUnfinishedTests(store.getters.getId)
-			window.localStorage.setItem('user_id', id)
-		}else{
-			state.user = {}
-			state.profileListener = () => {}
-			window.localStorage.removeItem('user')
-			window.localStorage.removeItem('user_id')
-		}
-	},
+	setId: (state, id) => state.id = id,
 	setProfileListener: (state, listener) => {
 		state.profileListener()
 		state.profileListener = listener
-	}
+	},
+	setUser: (state, user) => state.user = user
 }
 
 const actions = {
-	setId: ({ commit }, id) => commit('setId', id),
+	setId: async({ commit }, id) => {
+		commit('setId', id)
+		commit('setUser', {})
+		await store.dispatch('closeProfileListener')
+		if(id){
+			const listener = firestore
+				.collection('users')
+				.doc(id).onSnapshot(snapshot => {
+					if (snapshot.exists) {
+						const user = snapshot.data()
+						commit('setUser', user)
+						window.localStorage.setItem('user', JSON.stringify(user))
+					} else commit('setId', null)
+				})
+			await commit('setProfileListener', listener)
+			await checkForUnfinishedTests(id)
+			window.localStorage.setItem('user_id', id)
+		}else{
+			window.localStorage.removeItem('user')
+			window.localStorage.removeItem('user_id')
+		}
+
+	},
 	closeProfileListener: ({ commit }) => commit('setProfileListener', () => {}),
 	async updateProfile({ getters }, data){
 		let bio = data.bio
 		let image = data.image
-		if(image){
-			bio.image = await uploadFile('users/images', image)
-		}
+		if(image) bio.image = await uploadFile('users/images', image)
 		return await firestore.collection('users').doc(getters.getId).set({ bio }, { merge: true })
 	},
 }
