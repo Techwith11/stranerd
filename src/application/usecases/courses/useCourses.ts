@@ -1,6 +1,13 @@
 import { computed, reactive } from '@vue/composition-api'
 import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-import { AddCourse, DeleteCourse, FindCourse, GetCourseFactory, GetCoursesByModule } from '@root/modules/courses'
+import {
+	AddCourse,
+	DeleteCourse,
+	FindCourse,
+	GetCourseFactory,
+	GetCoursesByModule,
+	GetSubjectFactory, UpdateCourse, UpdateSubject
+} from '@root/modules/courses'
 import { Alert, Notify } from '@/config/notifications'
 import router from '@/router'
 import store from '@/store'
@@ -173,5 +180,40 @@ export const useCreateCourse = () => {
 		factory: state.factory,
 		loading: computed(() => state.loading),
 		createCourse,
+	}
+}
+
+let currentEdit = undefined as CourseEntity | undefined
+
+export const setCurrentEditingCourse = (course: CourseEntity) => currentEdit = course
+
+export const useEditCourse = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetCourseFactory.call()
+	})
+	if(currentEdit !== undefined) state.factory.loadEntity(currentEdit)
+	const editCourse = async () => {
+		if(state.factory.valid && !state.loading) {
+			state.loading = true
+			try{
+				const id = await UpdateCourse.call(currentEdit!.id ,state.factory)
+				const course = await FindCourse.call(id)
+				if(course){
+					unshiftCourse(course.subject, course.module, course)
+					if(router.currentRoute.params.id) await router.push(`/courses/${course.subject}/${course.module}`)
+					await router.push(`/courses/${course.subject}/${course.module}/${course.id}`)
+				}
+				state.factory.reset()
+				await store.dispatch('closeEditModal')
+				await Notify({ title: 'Course updated successfully!', icon: 'success' })
+			}catch(error){ await Notify({ title: error, icon: 'error' }) }
+			state.loading = false
+		}else state.factory.validateAll()
+	}
+	return {
+		loading: computed(() => state.loading),
+		factory: computed(() => state.factory),
+		editCourse
 	}
 }

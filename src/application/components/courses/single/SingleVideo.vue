@@ -19,7 +19,7 @@
 	import { computed, defineComponent } from '@vue/composition-api'
 	import { CourseEntity } from '@root/modules/courses/domain/entities/course'
 	import store from '@/store'
-	import { useDeleteCourse } from '@/usecases/courses/useCourses'
+	import { setCurrentEditingCourse, useDeleteCourse } from '@/usecases/courses/useCourses'
 	export default defineComponent({
 		props: {
 			course: {
@@ -33,7 +33,7 @@
 				delLoading, deleteCourse,
 				isAdmin: computed(() => store.getters.isAdmin),
 				openEditModal: () => {
-					store.dispatch('setEditMeta', props.course)
+					setCurrentEditingCourse(props.course)
 					store.dispatch('setEditModalCourse')
 				}
 			}
