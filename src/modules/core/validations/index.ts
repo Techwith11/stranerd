@@ -1,4 +1,4 @@
-export type Rules = ((value: any) => undefined | string)[]
+export type Rules = ((value: any) => undefined | string[])[]
 
 export class ValidatorService {
     static test(value: any, rules: Rules) : { isValid: boolean, message: string | undefined } {

@@ -25,7 +25,7 @@ export abstract class BaseFactory<E, T> {
     }
 
     public isValid(property: string) :boolean {
-         return !!this.validValues[property] && this.checkValidity(property, this.validValues[property]).isValid
+         return this.checkValidity(property, this.validValues[property]).isValid
     }
 
     public validateAll() :void {

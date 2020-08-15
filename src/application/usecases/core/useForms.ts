@@ -20,13 +20,20 @@ export const useTags = (addCb: callback, removeCb: callback) => {
 	}
 }
 
-export const useFileInputs = (cb: (file: File) => void) => {
+export const useFileInputs = (singleCB: (file: File) => void) => {
 	const catchFiles = (e: Event) => {
 		const file = (e.target as HTMLInputElement)?.files?.[0] ?? undefined
-		if(file) cb(file)
+		if(file) singleCB(file)
 	}
+	return { catchFiles }
+}
 
-	return {
-		catchFiles
+export const useMultipleFileInputs = (multipleCB: (files: File[]) => void) => {
+	const catchMultipleFiles = (e: Event) => {
+		const fileList = (e.target as HTMLInputElement)?.files ?? []
+		const files: File[] = []
+		for(let i = 0; i < fileList.length; i++) files.push(fileList[i])
+		multipleCB(files)
 	}
+	return { catchMultipleFiles }
 }

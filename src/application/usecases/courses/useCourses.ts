@@ -1,8 +1,9 @@
 import { computed, reactive } from '@vue/composition-api'
 import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-import { DeleteCourse, FindCourse, GetCoursesByModule } from '@root/modules/courses'
+import { AddCourse, DeleteCourse, FindCourse, GetCourseFactory, GetCoursesByModule } from '@root/modules/courses'
 import { Alert, Notify } from '@/config/notifications'
 import router from '@/router'
+import store from '@/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const getKey = (subject: string, module: string) => `${subject}_${module}`
@@ -138,5 +139,33 @@ export const useSingleCourse = (id: string) => {
 		loading: computed(() => state.loading),
 		error: computed(() => state.error),
 		course: computed(() => state.course),
+	}
+}
+
+export const useCreateCourse = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetCourseFactory.call()
+	})
+
+	state.factory.userId = store.getters.getId
+
+	const createCourse = async () => {
+		if(state.factory.valid && !state.loading){
+			state.loading = true
+			state.factory.userId = store.getters.getId
+			try{
+				const id = await AddCourse.call(state.factory)
+				//state.factory.reset()
+				//store.dispatch('closeCreateModal')
+			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
+			state.loading = false
+		}else state.factory.validateAll()
+	}
+
+	return {
+		factory: state.factory,
+		loading: computed(() => state.loading),
+		createCourse,
 	}
 }
