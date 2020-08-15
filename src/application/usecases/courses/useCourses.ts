@@ -1,6 +1,7 @@
 import { computed, reactive } from '@vue/composition-api'
 import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-import { GetCoursesByModule } from '@root/modules/courses'
+import { DeleteCourse, GetCoursesByModule } from '@root/modules/courses'
+import { Alert, Notify } from '@/config/notifications'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const getKey = (subject: string, module: string) => `${subject}_${module}`
@@ -66,4 +67,31 @@ export const useCoursesList = (subject: string, module: string) => {
 
 		fetchOlderCourses: async () => await fetchOlderCourses(subject, module)
 	}
+}
+
+export const useDeleteCourse = (course: CourseEntity) => {
+	const key = getKey(course.subject, course.module)
+	const state = reactive({
+		loading: false
+	})
+
+	const deleteCourse = async () => {
+		const res = await Alert({
+			title: `Delete ${course.title}`,
+			text: 'Are you sure you want to delete this course',
+			icon: 'info',
+			confirmButtonText: 'Delete'
+		})
+		if(res.value){
+			try{
+				state.loading = true
+				await DeleteCourse.call(course.id)
+				globalState[key].courses = globalState[key].courses.filter(c => c.id !== course.id)
+				state.loading = false
+				await Notify({ title: 'Subject deleted!', icon: 'success' })
+			}catch(error){ await Notify({ title: error, icon: 'error' }) }
+		}
+	}
+
+	return { loading: computed(() => state.loading), deleteCourse }
 }

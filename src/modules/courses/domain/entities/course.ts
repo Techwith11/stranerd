@@ -1,5 +1,5 @@
 import { Media } from '@root/modules/core/data/models/base'
-import { extractDate } from '@root/modules/core/validations/sanitizers'
+import { extractDate, extractTextFromHTML, trimToLength } from '@root/modules/core/validations/sanitizers'
 
 export class CourseEntity {
 	public readonly id: string
@@ -25,6 +25,8 @@ export class CourseEntity {
 		this.documents = documents
 		this.video = video
 	}
+
+	get trimmedDescription() { return trimToLength(extractTextFromHTML(this.description), 200) }
 
 	get imageLink() { return this.image?.link ?? this.image }
 
