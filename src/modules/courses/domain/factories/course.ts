@@ -15,8 +15,8 @@ export class CourseFactory extends BaseFactory<CourseEntity, CourseToModel> {
 	public rules = {
 		title: [isRequired, isLongerThan3],
 		description: [isRequired, isExtractedHTMLLongerThan3],
-		subject: [isRequired],
-		module: [isRequired],
+		subject: [isRequired,isLongerThan3],
+		module: [isRequired,isLongerThan3],
 		userId: [isRequired],
 		image: [isRequired, isImageOrMedia],
 		hasVideo: [isRequired],

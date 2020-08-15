@@ -156,8 +156,14 @@ export const useCreateCourse = () => {
 			state.factory.userId = store.getters.getId
 			try{
 				const id = await AddCourse.call(state.factory)
-				//state.factory.reset()
-				//store.dispatch('closeCreateModal')
+				const course = await fetchCourse(id)
+				if(course){
+					unshiftCourse(course.subject, course.module, course)
+					await router.push(`/courses/${course.subject}/${course.module}/${course.id}`)
+				}
+				state.factory.reset()
+				await store.dispatch('closeCreateModal')
+				await Notify({ icon: 'success', title: 'Course created successfully' })
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
 		}else state.factory.validateAll()

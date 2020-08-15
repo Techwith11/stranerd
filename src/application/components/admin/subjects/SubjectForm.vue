@@ -39,7 +39,7 @@
 				</div>
 			</div>
 			<div class="d-flex justify-content-end my-3">
-				<button class="btn btn-outline-primary" @click.prevent="factory.addModule" :disabled="loading || !factory.moduleValid">
+				<button class="btn btn-outline-gold" @click.prevent="factory.addModule" :disabled="loading || !factory.moduleValid">
 					<span>Add module</span>
 				</button>
 				<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid">

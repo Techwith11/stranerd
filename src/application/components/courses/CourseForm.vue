@@ -32,7 +32,8 @@
 					</select>
 					<small class="small text-danger d-block" v-if="factory.errors.module">{{ factory.errors.module }}</small>
 				</div>
-				<h5 class="mt-4">Media</h5>
+				<h5 class="mt-5">Media</h5>
+				<hr>
 				<div class="form-group my-3">
 					<h6>Preview Image</h6>
 					<input type="file" @change="catchImage" class="d-none" ref="imageInput" accept="image/*">
@@ -42,6 +43,7 @@
 					</a>
 					<span class="small text-danger" v-if="factory.errors.image">{{ factory.errors.image }}</span>
 				</div>
+				<hr>
 				<div class="form-check">
 					<input class="form-check-input" type="checkbox" v-model="factory.hasVideo" id="hasVideo">
 					<label class="form-check-label" for="hasVideo">
@@ -58,6 +60,7 @@
 					</a>
 					<span class="small text-danger" v-if="factory.errors.video">{{ factory.errors.video }}</span>
 				</div>
+				<hr>
 				<div class="form-group my-3">
 					<h6>Course Documents</h6>
 					<input type="file" @change="catchDocuments" class="d-none" ref="documentInput" multiple>
@@ -65,6 +68,7 @@
 					<a class="text-info d-block" @click.prevent="() => { $refs.documentInput.value= ''; $refs.documentInput.click() }">Upload attachment files</a>
 					<span class="small text-danger" v-if="factory.errors.documents">{{ factory.errors.documents }}</span>
 				</div>
+				<hr>
 				<div class="d-flex flex-column my-3">
 					<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid">
 						<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>

@@ -9,8 +9,7 @@ export class AddCourseUsecase {
 	}
 
 	public async call (factory: CourseFactory) {
-		console.log(factory.validValues)
-		return '' // await this.repository.add(await factory.toModel())
+		return await this.repository.add(await factory.toModel())
 	}
 
 }
