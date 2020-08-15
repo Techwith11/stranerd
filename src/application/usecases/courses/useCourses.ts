@@ -8,6 +8,7 @@ const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const getKey = (subject: string, module: string) => `${subject}_${module}`
 const getNewState = () => reactive({
 	courses: [],
+	fetched: false,
 	loading: false,
 	error: '',
 	hasMore: true,
@@ -17,6 +18,7 @@ const getNewState = () => reactive({
 const globalState = reactive({}) as {
 	[key: string]: {
 		courses: CourseEntity[],
+		fetched: boolean,
 		loading: boolean,
 		error: string,
 		hasMore: boolean,
@@ -58,11 +60,9 @@ const fetchOlderCourses = async (subject: string, module: string) => {
 
 export const useCoursesList = (subject: string, module: string) => {
 	const key = getKey(subject, module)
-	if(!globalState[key]){
-		globalState[key] = getNewState()
-		//todo: fix init bug
-		fetchCoursesOnInit(subject, module)
-	}
+
+	if(!globalState[key]) globalState[key] = getNewState()
+	if(!globalState[key].fetched) fetchCoursesOnInit(subject, module).then(() => globalState[key].fetched = true)
 
 	return {
 		loading: computed(() => globalState[key].loading),
