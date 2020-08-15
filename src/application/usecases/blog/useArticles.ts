@@ -82,7 +82,8 @@ export const useDeleteArticle = (article: ArticleEntity) => {
 				state.loading = true
 				await DeleteArticle.call(article.id)
 				globalState.articles = globalState.articles.filter(a => a.id !== article.id)
-				await router.replace('/blog')
+				const { id } = router.currentRoute.params
+				if(id) await router.replace('/blog')
 				state.loading = false
 				await Notify({ icon: 'success', title: 'Article deleted successfully' })
 			}

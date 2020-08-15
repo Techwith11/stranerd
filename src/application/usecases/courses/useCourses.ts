@@ -60,6 +60,7 @@ export const useCoursesList = (subject: string, module: string) => {
 	const key = getKey(subject, module)
 	if(!globalState[key]){
 		globalState[key] = getNewState()
+		//todo: fix init bug
 		fetchCoursesOnInit(subject, module)
 	}
 

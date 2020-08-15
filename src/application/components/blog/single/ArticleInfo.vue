@@ -29,7 +29,6 @@
 	import { setCurrentEditingArticle, useDeleteArticle } from '@/usecases/blog/useArticles'
 	import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
 	import store from '@/store'
-	import router from '@root/application/router'
 	import { capitalizeText } from '@root/modules/core/validations/sanitizers'
 	import { UserEntity } from '@root/modules/users/domain/entities/user'
 	export default defineComponent({
@@ -44,11 +43,7 @@
 			}
 		},
 		setup(props){
-			const { loading: delLoading, deleteArticle: deleteA } = useDeleteArticle(props.article)
-			const deleteArticle = async () => {
-				const deleted = await deleteA()
-				if(deleted) await router.push('/blog')
-			}
+			const { loading: delLoading, deleteArticle } = useDeleteArticle(props.article)
 			return {
 				isAdmin: computed(() => store.getters.isAdmin),
 				openEditModal: () => {
