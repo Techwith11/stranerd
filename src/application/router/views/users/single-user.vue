@@ -34,27 +34,6 @@
 			'user-session-card': UserSessionCard,
 			'user-info': UserInfo,
 		},
-		/*async activated() {
-			this.isLoading = true
-			try{
-				this.listener = firestore.collection('users').doc(this.$route.params.id).onSnapshot(async snapshot => {
-					if(!snapshot.exists){ return this.$router.replace('/tutors') }
-					this.user = { '.key': snapshot.id, ...snapshot.data() }
-					let isTutor = snapshot.data().roles.isTutor && snapshot.data().tutor.canTeach
-					if(isTutor){
-						let docs = await firestore.collection('sessions').where('tutor','==',this.$route.params.id)
-							.where('cancelled.student','==',false)
-							.where('cancelled.tutor','==',false)
-							.orderBy('dates.createdAt','desc')
-							.limit(12)
-							.get()
-						this.sessions = []
-						docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
-					}
-				})
-			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching user details. Try refreshing the page' }) }
-			this.isLoading = false
-		},*/
 		meta(){
 			return {
 				title: (this.user as any)?.name ?? 'Stranerd User',
