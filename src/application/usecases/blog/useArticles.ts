@@ -151,7 +151,7 @@ export const useCreateArticle = () => {
 			try{
 				const id = await AddArticle.call(state.factory)
 				state.factory.reset()
-				store.dispatch('closeCreateModal')
+				await store.dispatch('closeCreateModal')
 				await router.push(`/blog/${id}`)
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
