@@ -6,7 +6,7 @@
 				<div v-html="course.description" class="mb-4 editor-container"></div>
 				<p class="small">
 					<span class="font-weight-bold mr-4">Released Date: </span>
-					<span>{{ course.dates.createdAt | formatDate }}</span>
+					<span>{{ course.createdDate }}</span>
 				</p>
 				<p class="small font-weight-bold text-capitalize">{{ course.subject }} : {{ course.module }}</p>
 				<div class="my-3 text-white" v-if="isAdmin">
@@ -27,23 +27,11 @@
 				type: Object
 			}
 		},
-		filters:{
-			joinTags: tags => tags.join(', '),
-			formatDate: date => new Date(date.seconds * 1000).toDateString()
-		},
 		computed: {
 			...mapGetters(['isAdmin']),
 		},
 		methods:{
 			...mapActions(['deleteCourse','setEditMeta','setEditModalCourse']),
-			getColorClass(tag){
-				let classes = {
-					'Physics': 'text-danger',
-					'Mathematics': 'text-success',
-					'Chemistry': 'text-primary',
-				}
-				return classes[tag]
-			},
 			async removePost(){
 				try{
 					let result = await new window.SweetAlert({

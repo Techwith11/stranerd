@@ -1,10 +1,18 @@
 import { computed, reactive } from '@vue/composition-api'
 import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-import { DeleteCourse, GetCoursesByModule } from '@root/modules/courses'
+import { DeleteCourse, FindCourse, GetCoursesByModule } from '@root/modules/courses'
 import { Alert, Notify } from '@/config/notifications'
+import router from '@/router'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const getKey = (subject: string, module: string) => `${subject}_${module}`
+const getNewState = () => reactive({
+	courses: [],
+	loading: false,
+	error: '',
+	hasMore: true,
+	olderCoursesLoading: false
+})
 
 const globalState = reactive({}) as {
 	[key: string]: {
@@ -17,11 +25,15 @@ const globalState = reactive({}) as {
 }
 
 const setCourse = (subject: string, module: string, course: CourseEntity) => {
-	const index = globalState[getKey(subject, module)].courses.findIndex(p => p.id === course.id)
-	if(index !== -1) globalState[getKey(subject, module)].courses[index] = course
-	else globalState[getKey(subject, module)].courses.push(course)
+	const key = getKey(subject, module)
+	if(!globalState[key]) globalState[key] = getNewState()
+	const index = globalState[key].courses.findIndex(p => p.id === course.id)
+	if(index !== -1) globalState[key].courses[index] = course
+	else globalState[key].courses.push(course)
 }
 const unshiftCourse = (subject: string, module: string, course: CourseEntity) => {
+	const key = getKey(subject, module)
+	if(!globalState[key]) globalState[key] = getNewState()
 	const index = globalState[getKey(subject, module)].courses.findIndex(p => p.id === course.id)
 	if(index !== -1) globalState[getKey(subject, module)].courses[index] = course
 	else globalState[getKey(subject, module)].courses.unshift(course)
@@ -46,14 +58,8 @@ const fetchOlderCourses = async (subject: string, module: string) => {
 
 export const useCoursesList = (subject: string, module: string) => {
 	const key = getKey(subject, module)
-	if(globalState[key] === undefined){
-		globalState[key] = reactive({
-			courses: [],
-			loading: false,
-			error: '',
-			hasMore: true,
-			olderCoursesLoading: false
-		})
+	if(!globalState[key]){
+		globalState[key] = getNewState()
 		fetchCoursesOnInit(subject, module)
 	}
 
@@ -88,10 +94,48 @@ export const useDeleteCourse = (course: CourseEntity) => {
 				await DeleteCourse.call(course.id)
 				globalState[key].courses = globalState[key].courses.filter(c => c.id !== course.id)
 				state.loading = false
+				const { id, subject, module } = router.currentRoute.params
+				if(id) await router.replace(`/courses/${subject}/${module}`)
 				await Notify({ title: 'Subject deleted!', icon: 'success' })
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }
 		}
 	}
 
 	return { loading: computed(() => state.loading), deleteCourse }
+}
+
+const fetchCourse = async (id: string) => {
+	let course: CourseEntity | undefined = undefined
+	const values = Object.values(globalState)
+	values.forEach(state => {
+		const found = state.courses.find(course => course.id === id)
+		if(found) course = found
+	})
+	if(course) return course
+	course = await FindCourse.call(id)
+	if(course) unshiftCourse(course.subject, course.module, course)
+	return course
+}
+export const useSingleCourse = (id: string) => {
+	const state = reactive({
+		loading: false,
+		course: undefined as CourseEntity | undefined,
+		error: ''
+	})
+	const findCourse = async () => {
+		state.loading = true
+		const course = await fetchCourse(id)
+		if(course) state.course = course
+		else{
+			await router.replace('/courses')
+			await Notify({ title: 'No such course found', icon: 'error' })
+		}
+		state.loading = false
+	}
+	findCourse().catch(() => state.error = 'Failed to fetch course')
+	return {
+		loading: computed(() => state.loading),
+		error: computed(() => state.error),
+		course: computed(() => state.course),
+	}
 }

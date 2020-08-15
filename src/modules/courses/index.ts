@@ -13,6 +13,7 @@ import { CourseTransformer } from '@root/modules/courses/data/transformers/cours
 import { CourseRepository } from '@root/modules/courses/data/repositories/course'
 import { GetCoursesByModuleUseCase } from '@root/modules/courses/domain/usecases/getCoursesByModule'
 import { DeleteCourseUseCase } from '@root/modules/courses/domain/usecases/deleteCourse'
+import { FindCourseUsecase } from '@root/modules/courses/domain/usecases/findCourse'
 
 const bottle = new Bottle()
 
@@ -32,6 +33,7 @@ bottle.service('Usecases.Subject.Update', UpdateSubjectUsecase, 'Repositories.Su
 bottle.service('Usecases.Subject.Delete', DeleteSubjectUseCase, 'Repositories.Subject')
 bottle.service('Usecases.Subject.GetFactory', GetSubjectFactoryUsecase)
 bottle.service('Usecases.Course.GetByModule', GetCoursesByModuleUseCase, 'Repositories.Course')
+bottle.service('Usecases.Course.Find', FindCourseUsecase, 'Repositories.Course')
 bottle.service('Usecases.Course.Delete', DeleteCourseUseCase, 'Repositories.Course')
 
 const {
@@ -44,12 +46,14 @@ const {
 }
 
 const {
-	GetByModule: GetCoursesByModule, Delete: DeleteCourse
+	GetByModule: GetCoursesByModule, Delete: DeleteCourse,
+	Find: FindCourse
 } = bottle.container.Usecases.Course as {
-	GetByModule: GetCoursesByModuleUseCase, Delete: DeleteCourseUseCase
+	GetByModule: GetCoursesByModuleUseCase, Delete: DeleteCourseUseCase,
+	Find: FindCourseUsecase
 }
 
 export {
 	GetSubjects, DeleteSubject, GetSubjectFactory, AddSubject, UpdateSubject, FindSubject,
-	GetCoursesByModule, DeleteCourse
+	GetCoursesByModule, DeleteCourse, FindCourse
 }

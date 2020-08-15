@@ -1,6 +1,6 @@
 import { ICourseRepository } from '@root/modules/courses/domain/irepositories/icourse'
 
-export class DeleteCourseUseCase {
+export class FindCourseUsecase {
 	private repository: ICourseRepository
 
 	constructor(repository: ICourseRepository) {
@@ -8,9 +8,7 @@ export class DeleteCourseUseCase {
 	}
 
 	public async call (id: string) {
-		await new Promise(resolve => setTimeout(resolve, 3000))
-		console.log('Deleted')
-		// TODO: Uncomment return await this.repository.delete(id)
+		return await this.repository.find(id)
 	}
 
 }

@@ -25,6 +25,7 @@ export class CourseEntity {
 		this.documents = documents
 		this.video = video
 	}
+	get hasVideo() { return this.video !== undefined }
 
 	get trimmedDescription() { return trimToLength(extractTextFromHTML(this.description), 200) }
 

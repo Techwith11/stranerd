@@ -1,38 +1,40 @@
 <template>
 	<Default>
-		<helper-spinner v-if="isLoading"/>
-		<div v-else class="py-3">
-			<single-video :course="course" />
-			<single-nav />
-			<single-overview v-if="isOverview" :course="course" />
-			<single-discussions v-if="isDiscussions" :course="course" />
-			<single-documents v-if="isDocuments" :course="course" />
-		</div>
+		<helper-spinner v-if="loading"/>
+		<template v-else>
+			<helper-message v-if="error" :message="error" />
+			<template v-else>
+				<single-video :course="course" />
+				<single-nav />
+				<single-overview v-if="isOverview" :course="course" />
+				<single-discussions v-else-if="isDiscussions" :course="course" />
+				<single-documents v-else-if="isDocuments" :course="course" />
+			</template>
+		</template>
 	</Default>
 </template>
 
-<script>
-	import { firestore } from '@/config/firebase'
-	import SingleVideo from '@/components/courses/single/SingleVideo'
-	import SingleNav from '@/components/courses/single/SingleNav'
-	import SingleOverview from '@/components/courses/single/SingleOverview'
-	import SingleDiscussions from '@/components/courses/single/SingleDiscussions'
-	import SingleDocuments from '@/components/courses/single/SingleDocuments'
-	export default {
+<script lang="ts">
+	import { defineComponent, computed, reactive } from '@vue/composition-api'
+	import SingleVideo from '@/components/courses/single/SingleVideo.vue'
+	import SingleNav from '@/components/courses/single/SingleNav.vue'
+	import SingleOverview from '@/components/courses/single/SingleOverview.vue'
+	import SingleDiscussions from '@/components/courses/single/SingleDiscussions.vue'
+	import SingleDocuments from '@/components/courses/single/SingleDocuments.vue'
+	import { useSingleCourse } from '@/usecases/courses/useCourses'
+	import router from '@/router'
+	export default defineComponent({
 		name: 'Course',
-		data: () => ({
-			course: {},
-			isLoading: true
-		}),
-		async mounted(){
-			try{
-				let doc = await firestore.collection('courses').doc(this.$route.params.id).get()
-				if(!doc.exists){ return await this.$router.replace('/courses') }
-				this.course = { '.key': doc.id, ...doc.data() }
-			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching course. Try refreshing the page' }) }
-			this.isLoading = false
-			window.Fire.$on('CourseEdited', course => course['.key'] === this.course['.key'] ? this.course = course : null)
-			window.Fire.$on('CourseDeleted', course => course['.key'] === this.course['.key'] ? this.$router.push('/courses') : null)
+		setup(){
+			const route = reactive(router)
+			const { id } = route.currentRoute.params
+			const { course, loading, error } = useSingleCourse(id)
+			return {
+				course, loading, error,
+				isOverview: computed(() => !route.currentRoute.query.tab || route.currentRoute.query.tab === 'overview'),
+				isDiscussions: computed(() => route.currentRoute.query.tab === 'discussions'),
+				isDocuments: computed(() => route.currentRoute.query.tab === 'documents')
+			}
 		},
 		components: {
 			'single-video': SingleVideo,
@@ -41,19 +43,14 @@
 			'single-discussions': SingleDiscussions,
 			'single-documents': SingleDocuments,
 		},
-		computed:{
-			isOverview(){ return !this.$route.query.tab || this.$route.query.tab === 'overview'},
-			isDiscussions(){ return this.$route.query.tab && this.$route.query.tab === 'discussions'},
-			isDocuments(){ return this.$route.query.tab && this.$route.query.tab === 'documents'},
-		},
 		meta(){
 			return {
-				title: this.course.title || 'Course Title',
+				title: (this.course as any)?.title ?? 'Course Title',
 				meta: [
 					{
 						vmid: 'description',
 						name: 'description',
-						content: this.course.description || ''
+						content: (this.course as any)?.trimmedDescription ?? ''
 					},
 					{
 						vmid: 'keywords',
@@ -63,5 +60,5 @@
 				]
 			}
 		}
-	}
+	})
 </script>
