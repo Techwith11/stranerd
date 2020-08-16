@@ -36,7 +36,7 @@ const unshiftArticle = (article: ArticleEntity) => {
 	else globalState.articles.unshift(article)
 }
 const fetchArticles = async () => {
-	const date = globalState.articles[0]?.createdAt ?? undefined
+	const date = globalState.articles[globalState.articles.length - 1]?.createdAt ?? undefined
 	const entities = await GetArticles.call(date)
 	globalState.hasMore = entities.length === PAGINATION_LIMIT
 	entities.forEach(setArticle)
@@ -74,7 +74,7 @@ export const useDeleteArticle = (article: ArticleEntity) => {
 		try {
 			const result = await Alert({
 				title: 'Delete article',
-				text: 'Are you sure you want to delete this article? This cannot be undone',
+				text: `Are you sure you want to delete ${article.title}? This cannot be undone`,
 				icon: 'info',
 				confirmButtonText: 'Delete'
 			})
@@ -187,7 +187,7 @@ export const useEditArticle = () => {
 				const article = await FindArticle.call(newId)
 				if(article) unshiftArticle(article)
 				state.factory.reset()
-				await router.replace('/blog')
+				if(router.currentRoute.params.id) await router.replace('/blog')
 				await router.replace(`/blog/${newId}`)
 				await store.dispatch('closeEditModal')
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }

@@ -45,9 +45,10 @@ const unshiftCourse = (subject: string, module: string, course: CourseEntity) =>
 	else globalState[getKey(subject, module)].courses.unshift(course)
 }
 const fetchCourses = async (subject: string, module: string) => {
-	const date = globalState[getKey(subject, module)]?.courses[0]?.createdAt ?? undefined
+	const key = getKey(subject, module)
+	const date = globalState[key]?.courses[globalState[key]?.courses?.length - 1]?.createdAt ?? undefined
 	const entities: CourseEntity[] = await GetCoursesByModule.call(subject, module, date)
-	globalState[getKey(subject, module)].hasMore = entities.length === PAGINATION_LIMIT
+	globalState[key].hasMore = entities.length === PAGINATION_LIMIT
 	entities.forEach(entity => setCourse(subject, module, entity))
 }
 const fetchCoursesOnInit = async (subject: string, module: string) => {

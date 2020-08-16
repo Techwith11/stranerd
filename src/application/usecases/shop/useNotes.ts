@@ -1,8 +1,7 @@
 import { computed, reactive } from '@vue/composition-api'
 import { NoteEntity } from '@root/modules/shop/domain/entities/note'
-import { FindNote, GetNotes, AddNote, GetNoteFactory, UpdateNote } from '@root/modules/shop'
+import { FindNote, GetNotes, AddNote, GetNoteFactory, UpdateNote, DeleteNote } from '@root/modules/shop'
 import { Alert, Notify } from '@/config/notifications'
-import { DeleteNote } from '@root/modules/shop'
 import store from '@/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
@@ -27,7 +26,7 @@ const unshiftNote = (note: NoteEntity) => {
 	else globalState.notes.unshift(note)
 }
 const fetchNotes = async () => {
-	const date = globalState.notes[0]?.createdAt ?? undefined //TODO: Fix fetch logic, should get last date not first date
+	const date = globalState.notes[globalState.notes.length - 1]?.createdAt ?? undefined
 	const entities = await GetNotes.call(date)
 	globalState.hasMore = entities.length === PAGINATION_LIMIT
 	entities.forEach(setNote)
@@ -65,7 +64,7 @@ export const useDeleteNote = (note: NoteEntity) => {
 		try {
 			const result = await Alert({
 				title: 'Delete note',
-				text: 'Are you sure you want to delete this note? This cannot be undone',
+				text: `Are you sure you want to delete ${note.title}? This cannot be undone`,
 				icon: 'info',
 				confirmButtonText: 'Delete'
 			})
@@ -135,7 +134,7 @@ export const useEditNote = () => {
 			try{
 				const id = await UpdateNote.call(currentEdit!.id ,state.factory)
 				const note = await FindNote.call(id)
-				if(note) unshiftNote(note)
+				if(note) unshiftNote(note) //TODO: Figure out cause of un-reactivity
 				state.factory.reset()
 				await store.dispatch('closeEditModal')
 				await Notify({ title: 'Note updated successfully!', icon: 'success' })
