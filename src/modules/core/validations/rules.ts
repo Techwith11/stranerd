@@ -56,7 +56,17 @@ export const isVideoOrMediaOrUndefined = (file: any) => {
     return [ 'is not a video' ]
 }
 
+export const isMedia = (file: any) => {
+    if(file?.type) return undefined
+    return [ 'is not a valid file' ]
+}
+
 export const containsOnlyMedia = (files: any[]) => {
     if(files.every(file => file?.type)) return undefined
     return [ 'contains invalid files' ]
+}
+
+export const isMoreThan = (value: any, compare: any) => {
+    if(value > compare) return undefined
+    return [ `must be greater than ${compare}` ]
 }
