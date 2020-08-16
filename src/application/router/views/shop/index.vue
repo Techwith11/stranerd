@@ -12,24 +12,25 @@
 					</button>
 				</div>
 			</div>
-			<button class="floating-button" @click="setCartModalOverview" v-if="getCartLength"><i class="fas fa-shopping-basket"></i></button>
+			<button class="floating-button" @click="setCartModalOverview" v-if="cartLength"><i class="fas fa-shopping-basket"></i></button>
 		</div>
 	</Default>
 </template>
 
 <script lang="ts">
-	import { computed, defineComponent } from '@vue/composition-api'
+	import { defineComponent } from '@vue/composition-api'
 	import store from '@/store'
 	import NoteCard from '@/components/shop/list/NoteCard.vue'
 	import { useNotesList } from '@/usecases/shop/useNotes'
+	import { useCart } from '@/usecases/shop/useCart'
 	export default defineComponent({
 		name: 'Shop',
 		setup(){
 			const { loading, error, notes, hasMore, olderNotesLoading, fetchOlderNotes } = useNotesList()
+			const { cartLength } = useCart()
 			return {
 				loading, error, notes,
-				hasMore, olderNotesLoading, fetchOlderNotes,
-				getCartLength: computed(() => store.getters.getCartLength),
+				hasMore, olderNotesLoading, fetchOlderNotes, cartLength,
 				setCartModalOverview: () => store.dispatch('setCartModalOverview')
 			}
 		},

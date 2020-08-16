@@ -14,10 +14,10 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="item in getCart" :key="item['.key']">
-					<td class="text-center"><i class="fas fa-times text-danger" @click="removeFromCart(item)"></i></td>
-					<td>{{ item.title }}</td>
-					<td>{{ item.price }}</td>
+				<tr v-for="note in cart" :key="note.id">
+					<td class="text-center"><i class="fas fa-times text-danger" @click="removeFromCart(note)"></i></td>
+					<td>{{ note.title }}</td>
+					<td>{{ note.price }}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -27,14 +27,18 @@
 	</div>
 </template>
 
-<script>
-	import { mapActions, mapGetters } from 'vuex'
-	export default {
-		methods: {
-			...mapActions(['closeCartModal','removeFromCart','setCartModalPay'])
-		},
-		computed: {
-			...mapGetters(['getCart'])
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import { useCart } from '@/usecases/shop/useCart'
+	import store from '@/store'
+	export default defineComponent({
+		setup(){
+			const { cart, removeFromCart } = useCart()
+			return {
+				cart, removeFromCart,
+				closeCartModal: () => store.dispatch('closeCartModal'),
+				setCartModalPay: () => store.dispatch('setCartModalPay'),
+			}
 		}
-	}
+	})
 </script>

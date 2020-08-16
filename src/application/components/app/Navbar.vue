@@ -35,7 +35,7 @@
                         <div class="dropdown-menu bg-white lg-shadow py-0 py-lg-2" aria-labelledby="accountDropdownToggle`" id="accountDropdownMenu">
                             <router-link class="dropdown-item nav-link py-1 py-lg-2" to="/account">My Account</router-link>
                             <a class="dropdown-item nav-link py-1 py-lg-2" @click.prevent="showCartModal">My Cart
-                                <span class="badge badge-pill badge-primary" v-if="getCartLength">{{ getCartLength }}</span>
+                                <span class="badge badge-pill badge-primary" v-if="cartLength">{{ cartLength }}</span>
                             </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item nav-link py-1 py-lg-2"  @click.prevent="logout">Logout</a>
@@ -124,14 +124,15 @@
     import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
     import { useLogout } from '@/usecases/users/auth'
     import store from '@root/application/store'
+    import { useCart } from '@/usecases/shop/useCart'
     export default defineComponent({
         setup(){
             const { loading, logout } = useLogout()
+            const { cartLength } = useCart()
             return {
-                loading, logout,
+                loading, logout, cartLength,
                 isLoggedIn: computed(() => store.getters.isLoggedIn),
                 isAdmin: computed(() => store.getters.isAdmin),
-                getCartLength: computed(() => store.getters.getCartLength),
                 setAuthModalRegisterStudent: () => store.dispatch('setAuthModalRegisterStudent'),
                 setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
                 setCartModalOverview: () => store.dispatch('setCartModalOverview'),

@@ -9,7 +9,7 @@
 		<div class="d-flex" id="checkoutOptions">
 			<button class="px-3 ml-0 btn-sm rounded mr-2 btn-danger" @click.prevent="removeFromCart(note)" v-if="isInCart(note)">Remove</button>
 			<button class="px-3 ml-0 btn-sm rounded mr-2 btn-info" @click.prevent="addToCart(note)" v-else><i class="fas fa-shopping-basket mr-2"></i>Add to cart</button>
-			<button class="px-3 ml-0 btn-sm rounded btn-success" @click.prevent="checkoutItem(note)"><i class="fas fa-money-bill mr-2"></i>Checkout now</button>
+			<button class="px-3 ml-0 btn-sm rounded btn-success" @click.prevent="checkoutNow(note)"><i class="fas fa-money-bill mr-2"></i>Checkout now</button>
 		</div>
 	</div>
 </template>
@@ -17,7 +17,7 @@
 <script lang="ts">
 	import { defineComponent } from '@vue/composition-api'
 	import { NoteEntity } from '@root/modules/shop/domain/entities/note'
-	import store from '@/store'
+	import { useCart } from '@/usecases/shop/useCart'
 	export default defineComponent({
 		props: {
 			note: {
@@ -26,15 +26,8 @@
 			}
 		},
 		setup(){
-			return {
-				isInCart: (note: NoteEntity) => store.getters.isInCart(note),
-				addToCart: (note: NoteEntity) => store.dispatch('addToCart', note),
-				removeFromCart: (note: NoteEntity) => store.dispatch('removeFromCart', note),
-				checkoutItem: (note: NoteEntity) => {
-					store.dispatch('addToCart', note)
-					store.dispatch('setCartModalPay')
-				}
-			}
+			const { isInCart, addToCart, removeFromCart, checkoutNow } = useCart()
+			return { isInCart, addToCart, removeFromCart, checkoutNow }
 		}
 	})
 </script>
