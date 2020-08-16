@@ -7,12 +7,12 @@
 			<h4 class="card-title">
 				<router-link :to="`/courses/${course.subject}/${course.module}/${course.id}`">{{ course.title }}</router-link>
 			</h4>
+			<p class="small text-capitalize">{{ course.subject }}, {{ course.module }}</p>
 			<router-link :to="`/courses/${course.subject}/${course.module}/${course.id}`">
 				<p>{{ course.trimmedDescription }}</p>
 			</router-link>
-			<p class="small text-capitalize">{{ course.subject }} : {{ course.module }}</p>
 			<div class="d-flex align-items-center">
-				<span class="small">Posted on: {{ course.createdDate }}</span>
+				<span class="small">Posted {{ course.createdDate }}</span>
 				<div class="ml-auto" v-if="isAdmin">
 					<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
 					<a class="text-danger" @click.prevent="deleteCourse">

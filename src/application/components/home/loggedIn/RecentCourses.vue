@@ -1,31 +1,28 @@
 <template>
 	<div class="p-3 shadow-sm white">
-		<p class="text-mutedb txt-shadow">Recent Courses</p>
+		<helper-spinner v-if="loading" />
+		<p class="text-muted txt-shadow">Recent Courses</p>
 		<div v-if="courses.length > 0">
-			<course-card v-for="course in courses" :key="course['.key']" :course="course" />
+			<course-card v-for="course in courses" :key="course.id" :course="course" />
 			<div class="d-flex justify-content-end mb-3">
 				<router-link class="text-decoration-none txt-shadow" to="/courses">See More</router-link>
 			</div>
 		</div>
-		<p class="lead" v-else>No courses available at the moment.</p>
+		<helper-message class="lead" v-if="error" :message="error" />
 	</div>
 </template>
 
-<script>
-	import { firestore } from '@/config/firebase'
-	import CourseCard from '@/components/courses/list/CourseCard'
-	export default {
-		data: () => ({
-			courses: [],
-		}),
-		async mounted(){
-			try{
-				let docs = await firestore.collection('courses').orderBy('dates.createdAt','desc').limit(1).get()
-				docs.forEach(doc => this.courses.push({ '.key': doc.id, ...doc.data() }))
-			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching recent courses. Try refreshing the page' }) }
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import CourseCard from '@/components/courses/list/CourseCard.vue'
+	import { useRecentCourses } from '@/usecases/courses/useCourses'
+	export default defineComponent({
+		setup(){
+			const { loading, error, courses } = useRecentCourses()
+			return { loading, error, courses }
 		},
 		components: {
 			'course-card': CourseCard
 		}
-	}
+	})
 </script>

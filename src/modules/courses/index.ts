@@ -17,6 +17,7 @@ import { FindCourseUsecase } from '@root/modules/courses/domain/usecases/findCou
 import { AddCourseUsecase } from '@root/modules/courses/domain/usecases/addCourse'
 import { GetCourseFactoryUsecase } from '@root/modules/courses/domain/usecases/getCourseFactory'
 import { UpdateCourseUsecase } from '@root/modules/courses/domain/usecases/updateCourse'
+import { GetRecentCoursesUsecase } from '@root/modules/courses/domain/usecases/getRecentCourses'
 
 const bottle = new Bottle()
 
@@ -40,6 +41,7 @@ bottle.service('Usecases.Course.Find', FindCourseUsecase, 'Repositories.Course')
 bottle.service('Usecases.Course.Delete', DeleteCourseUseCase, 'Repositories.Course')
 bottle.service('Usecases.Course.Add', AddCourseUsecase, 'Repositories.Course')
 bottle.service('Usecases.Course.Update', UpdateCourseUsecase, 'Repositories.Course')
+bottle.service('Usecases.Course.GetRecent', GetRecentCoursesUsecase, 'Repositories.Course')
 bottle.service('Usecases.Course.GetFactory', GetCourseFactoryUsecase)
 
 const {
@@ -52,15 +54,15 @@ const {
 }
 
 const {
-	GetByModule: GetCoursesByModule, Delete: DeleteCourse,
-	Find: FindCourse, Add: AddCourse, GetFactory: GetCourseFactory, Update: UpdateCourse
+	GetByModule: GetCoursesByModule, Delete: DeleteCourse, Find: FindCourse,
+	Add: AddCourse, GetFactory: GetCourseFactory, Update: UpdateCourse, GetRecent: GetRecentCourses
 } = bottle.container.Usecases.Course as {
 	GetByModule: GetCoursesByModuleUseCase, Delete: DeleteCourseUseCase,
 	Find: FindCourseUsecase, Add: AddCourseUsecase, GetFactory: GetCourseFactoryUsecase,
-	Update: UpdateCourseUsecase
+	Update: UpdateCourseUsecase, GetRecent: GetRecentCoursesUsecase
 }
 
 export {
 	GetSubjects, DeleteSubject, GetSubjectFactory, AddSubject, UpdateSubject, FindSubject,
-	GetCoursesByModule, DeleteCourse, FindCourse, AddCourse, GetCourseFactory, UpdateCourse
+	GetCoursesByModule, DeleteCourse, FindCourse, AddCourse, GetCourseFactory, UpdateCourse, GetRecentCourses
 }

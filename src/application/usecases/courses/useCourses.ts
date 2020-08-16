@@ -1,12 +1,8 @@
 import { computed, reactive } from '@vue/composition-api'
 import { CourseEntity } from '@root/modules/courses/domain/entities/course'
 import {
-	AddCourse,
-	DeleteCourse,
-	FindCourse,
-	GetCourseFactory,
-	GetCoursesByModule,
-	GetSubjectFactory, UpdateCourse, UpdateSubject
+	AddCourse, DeleteCourse, FindCourse,
+	GetCourseFactory, GetCoursesByModule, GetRecentCourses, UpdateCourse
 } from '@root/modules/courses'
 import { Alert, Notify } from '@/config/notifications'
 import router from '@/router'
@@ -215,5 +211,33 @@ export const useEditCourse = () => {
 		loading: computed(() => state.loading),
 		factory: computed(() => state.factory),
 		editCourse
+	}
+}
+
+export const useRecentCourses = () => {
+	const state = reactive({
+		loading: false,
+		courses: [] as CourseEntity[],
+		error: ''
+	})
+	const fetchRecentCourse = async () => {
+		let allCourses = Object.values(globalState).reduce((total:CourseEntity[], value) => {
+			if(value.courses[0]) total.push(value.courses[0])
+			return total
+		},[])
+		if(allCourses.length > 0){
+			allCourses = allCourses.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)
+		}else{
+			const courses = await GetRecentCourses.call()
+			courses.forEach(course => unshiftCourse(course.subject, course.module, course))
+			allCourses.push(...courses)
+		}
+		state.courses.push(...allCourses)
+	}
+	fetchRecentCourse().catch(() => state.error = 'Error fetching recent courses')
+	return {
+		loading: computed(() => state.loading),
+		error: computed(() => state.error),
+		courses: computed(() => state.courses)
 	}
 }
