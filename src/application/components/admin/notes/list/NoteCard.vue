@@ -5,60 +5,42 @@
 			<span class="text-success">&dollar;{{ note.price }}</span>
 		</div>
 		<p class="mb-1">{{ note.description }}</p>
-		<p class="mb-1 small">Uploaded {{ note.dates.createdAt | getDateOrTime }}</p>
-		<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
-		<a class="mr-3 text-danger" @click.prevent="removeNote"><i class="fas fa-trash mr-1"></i>Delete</a>
+		<p class="mb-1 small">Uploaded {{ note.createdDate }}</p>
+		<template v-if="isAdmin">
+			<a class="mr-3 text-warning" @click.prevent="openEditModal">
+				<i class="fas fa-pen mr-1"></i>
+				<span>Edit</span>
+			</a>
+			<a class="mr-3 text-danger" @click.prevent="deleteNote">
+				<i class="fas mr-1" :class="loading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+				<span>Delete</span>
+			</a>
+		</template>
 	</div>
 </template>
 
-<script>
-	import { mapActions } from 'vuex'
-	export default {
+<script lang="ts">
+	import { defineComponent, computed } from '@vue/composition-api'
+	import { NoteEntity } from '@root/modules/shop/domain/entities/note'
+	import { setCurrentEditingNote, useDeleteNote } from '@/usecases/shop/useNotes'
+	import store from '@/store'
+	export default defineComponent({
 		props: {
 			note: {
 				required: true,
-				type: Object
+				type: NoteEntity
 			}
 		},
-		methods: {
-			...mapActions(['deleteNote','setEditModalNote','setEditMeta']),
-			async openEditModal(){
-				this.setEditMeta(this.note)
-				this.setEditModalNote()
-			},
-			async removeNote(){
-				try{
-					let result = await new window.SweetAlert({
-						title: 'Delete note',
-						text: 'Are you sure you want to delete this note? This cannot be undone',
-						icon: 'info',
-						showCancelButton: true,
-						cancelButtonColor: '#3085d6',
-						confirmButtonColor: '#d33',
-						confirmButtonText: 'Delete'
-					})
-					if (result.value) {
-						await this.deleteNote(this.note['.key'])
-						window.Fire.$emit('NoteDeleted', this.note)
-						new window.Toast({ icon: 'success', title: 'Note deleted successfully' })
-					}
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-			}
-		},
-		filters: {
-			getDateOrTime(date){
-				date = new Date(date.seconds * 1000)
-				let now = new Date()
-				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
-				if(date > today){
-					return `at ${date.toTimeString().slice(0,5)}`
-				}else if(date > yesterday){
-					return `Yesterday`
-				}else{
-					return `on ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
+		setup(props){
+			const { loading, deleteNote } = useDeleteNote(props.note)
+			return {
+				loading, deleteNote,
+				isAdmin: computed(() => store.getters.isAdmin),
+				openEditModal(){
+					setCurrentEditingNote(props.note)
+					store.dispatch('setEditModalNote')
 				}
 			}
-		},
-	}
+		}
+	})
 </script>

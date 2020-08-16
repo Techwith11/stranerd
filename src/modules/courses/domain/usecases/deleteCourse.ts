@@ -8,9 +8,7 @@ export class DeleteCourseUseCase {
 	}
 
 	public async call (id: string) {
-		await new Promise(resolve => setTimeout(resolve, 3000))
-		console.log('Deleted')
-		// TODO: Uncomment return await this.repository.delete(id)
+		return await this.repository.delete(id)
 	}
 
 }

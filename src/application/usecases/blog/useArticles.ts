@@ -150,6 +150,7 @@ export const useCreateArticle = () => {
 			state.factory.userId = store.getters.getId
 			try{
 				const id = await AddArticle.call(state.factory)
+				await fetchArticle(id)
 				state.factory.reset()
 				await store.dispatch('closeCreateModal')
 				await router.push(`/blog/${id}`)
@@ -188,7 +189,7 @@ export const useEditArticle = () => {
 				state.factory.reset()
 				await router.replace('/blog')
 				await router.replace(`/blog/${newId}`)
-				store.dispatch('closeEditModal')
+				await store.dispatch('closeEditModal')
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
 		}else state.factory.validateAll()
