@@ -15,7 +15,7 @@ export class NoteEntity {
 		this.id = id
 		this.title = title
 		this.description = description
-		this.price = price
+		this.price = Number(price)
 		this.userId = userId
 		this.createdAt = createdAt
 		this.image = image

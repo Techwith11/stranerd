@@ -5,7 +5,7 @@
 			<span class="text-success">&dollar;{{ note.price }}</span>
 		</div>
 		<p class="mb-1">{{ note.description }}</p>
-		<p class="mb-1 small">Uploaded {{ note.dates.createdAt | getDateOrTime }}</p>
+		<p class="mb-1 small">Uploaded {{ note.createdDate }}</p>
 		<div class="d-flex" id="checkoutOptions">
 			<button class="px-3 ml-0 btn-sm rounded mr-2 btn-danger" @click.prevent="removeFromCart(note)" v-if="isInCart(note)">Remove</button>
 			<button class="px-3 ml-0 btn-sm rounded mr-2 btn-info" @click.prevent="addToCart(note)" v-else><i class="fas fa-shopping-basket mr-2"></i>Add to cart</button>
@@ -14,39 +14,29 @@
 	</div>
 </template>
 
-<script>
-	import { mapActions, mapGetters } from 'vuex'
-	export default {
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import { NoteEntity } from '@root/modules/shop/domain/entities/note'
+	import store from '@/store'
+	export default defineComponent({
 		props: {
 			note: {
 				required: true,
-				type: Object
+				type: NoteEntity
 			}
 		},
-		filters: {
-			getDateOrTime(date){
-				date = new Date(date.seconds * 1000)
-				let now = new Date()
-				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
-				if(date > today){
-					return `at ${date.toTimeString().slice(0,5)}`
-				}else if(date > yesterday){
-					return `Yesterday`
-				}else{
-					return `on ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
+		setup(){
+			return {
+				isInCart: (note: NoteEntity) => store.getters.isInCart(note),
+				addToCart: (note: NoteEntity) => store.dispatch('addToCart', note),
+				removeFromCart: (note: NoteEntity) => store.dispatch('removeFromCart', note),
+				checkoutItem: (note: NoteEntity) => {
+					store.dispatch('addToCart', note)
+					store.dispatch('setCartModalPay')
 				}
 			}
-		},
-		computed: mapGetters(['isInCart']),
-		methods: {
-			...mapActions(['addToCart', 'setCartModalPay', 'removeFromCart']),
-			checkoutItem(note){
-				this.addToCart(note)
-				this.setCartModalPay()
-			}
 		}
-	}
+	})
 </script>
 
 <style lang="scss" scoped>

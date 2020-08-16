@@ -15,7 +15,7 @@ const getters = {
 	getCart: state => state.cart,
 	getCartPrice: state => state.cart.map(item => parseFloat(item.price)).reduce((a,b) => a + b),
 	getCartLength: state => state.cart.length,
-	isInCart: state => item => state.cart.some(x => x['.key'] === item['.key']),
+	isInCart: state => item => state.cart.some(x => x.id === item.id),
 
 	isCartModalOpen: state => !!state.cartModal,
 	isCartModalOverview: state => state.cartModal === 'cart-overview',
@@ -25,7 +25,7 @@ const getters = {
 
 const mutations = {
 	addToCart: (state, item) => {
-		if(!state.cart.find(x => x['.key'] === item['.key'])){
+		if(!state.cart.find(x => x.id === item.id)){
 			state.cart.push(item)
 		}
 	},
@@ -33,10 +33,8 @@ const mutations = {
 		state.cart = []
 	},
 	removeFromCart: (state, item) => {
-		state.cart = state.cart.filter(x => x['.key'] !== item['.key'])
-		if(state.cart.length === 0){
-			state.cartModal = null
-		}
+		state.cart = state.cart.filter(x => x.id !== item.id)
+		if(state.cart.length === 0) state.cartModal = null
 	},
 	setCartModal: (state, mode) => state.cartModal = mode,
 }
