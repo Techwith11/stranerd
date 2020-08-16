@@ -5,25 +5,27 @@
 			<h4 class="mb-0">Select Payment Method</h4>
 			<i></i>
 		</div>
-		<p>You are about to pay &dollar;{{ getCartPrice }} for {{ getCartLength }} {{ getCartLength > 1 ? 'items' : 'item' }}. Select payment method to use</p>
-		<helper-make-payment :amount="getCartPrice" :onPaymentSuccessful="onPaymentSuccessful" buttonTitle="Checkout" />
+		<p>You are about to pay &dollar;{{ cartPrice }} for {{ cartLength }} {{ getCartLength > 1 ? 'items' : 'item' }}. Select payment method to use</p>
+		<make-payment :amount="cartPrice" :onPaymentSuccessful="onPaymentSuccessful" buttonTitle="Checkout" />
 	</div>
 </template>
 
-<script>
-	import { mapActions, mapGetters } from 'vuex'
-	import MakePayment from '@/components/helpers/MakePayment'
-	export default {
-		computed: mapGetters(['getId','getCartPrice','getCartLength']),
-		methods: {
-			...mapActions(['setCartModalOverview','checkout']),
-			async onPaymentSuccessful(){
-				new window.Toast({ icon: 'success', title: 'Purchase successful' })
-				await this.checkout()
+<script lang="ts">
+	import { defineComponent } from '@vue/composition-api'
+	import { useCart } from '@/usecases/shop/useCart'
+	import store from '@/store'
+	import { Notify } from '@/config/notifications'
+	export default defineComponent({
+		setup(){
+			const { cartLength, cartPrice } = useCart()
+			return {
+				cartLength, cartPrice,
+				setCartModalOverview: () => store.dispatch('setCartModalOverview'),
+				onPaymentSuccessful: async () => {
+					await Notify({ icon: 'success', title: 'Purchase successful' })
+					await store.dispatch('checkout')
+				}
 			}
-		},
-		components: {
-			'helper-make-payment': MakePayment
 		}
-	}
+	})
 </script>

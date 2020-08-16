@@ -22,6 +22,7 @@ export const useCart = () => {
 
 	return {
 		cart: computed(() => globalState.cart),
+		cartPrice: computed(() => globalState.cart.reduce((total, curr) => total + curr.price, 0)),
 		cartLength: computed(() => globalState.cart.length),
 		isInCart, addToCart, removeFromCart, checkoutNow
 	}
