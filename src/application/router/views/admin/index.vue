@@ -1,9 +1,6 @@
 <template>
 	<Default>
-		<keep-alive v-if="isLoggedIn">
-			<router-view :key="$route.fullPath" />
-		</keep-alive>
-		<router-view v-else />
+		<router-view />
 		<button class="floating-button" @click="setCreateModalOverview"><i class="fas fa-plus"></i></button>
 	</Default>
 </template>
