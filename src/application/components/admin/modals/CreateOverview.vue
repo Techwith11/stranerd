@@ -17,7 +17,7 @@
 <script>
 import { mapActions } from 'vuex'
 export default {
-	name: "CreateOverview",
+	name: 'CreateOverview',
 	methods: {
 		...mapActions(['setCreateModalQuestion','setCreateModalCourse','setCreateModalNote','closeCreateModal']),
 		async goToCreateBlogPage(){

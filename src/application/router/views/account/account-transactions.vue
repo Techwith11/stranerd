@@ -50,7 +50,7 @@ export default {
 				}
 				docs = await docs.get()
 				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.transactions.push({ '.key': doc.id, ...doc.data() }))
+				docs.forEach((doc) => this.transactions.push({ '.key': doc.id, ...doc.data() }))
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching transactions. Try refreshing the page' }) }
 		},
 		async fetchOlderTransactions(){

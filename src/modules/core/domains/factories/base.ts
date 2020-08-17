@@ -21,7 +21,7 @@ export abstract class BaseFactory<E, T> {
 
 	get valid() :boolean {
 		const keys = Object.keys(this.validValues)
-		return keys.map(key => this.isValid(key)).every(valid => valid)
+		return keys.map((key) => this.isValid(key)).every((valid) => valid)
 	}
 
 	public isValid(property: string) :boolean {
@@ -29,7 +29,7 @@ export abstract class BaseFactory<E, T> {
 	}
 
 	public validateAll() :void {
-		Object.keys(this.values).forEach(key => {
+		Object.keys(this.values).forEach((key) => {
 			this.set(key, this.values[key])
 		})
 	}
@@ -40,7 +40,7 @@ export abstract class BaseFactory<E, T> {
 	}
 
 	public reset(){
-		Object.keys(this.values).filter(key => key !== 'userId').forEach(key => {
+		Object.keys(this.values).filter((key) => key !== 'userId').forEach((key) => {
 			this.values[key] = undefined
 			this.validValues[key] = undefined
 			this.errors[key] = undefined

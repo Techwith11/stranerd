@@ -28,7 +28,7 @@ export default {
 	computed: {
 		...mapGetters(['getId','getChattedWith']),
 		getSortedChats(){
-			return Object.entries(this.chats).filter(x => x[1].chat && x[1].chat.from).sort((a,b) => {
+			return Object.entries(this.chats).filter((x) => x[1].chat && x[1].chat.from).sort((a,b) => {
 				if(a[1].chat.dates && b[1].chat.dates){
 					return b[1].chat.dates.sentAt.seconds - a[1].chat.dates.sentAt.seconds
 				}
@@ -38,10 +38,10 @@ export default {
 	},
 	methods:{
 		getChats(){
-			this.chatsListeners = this.getChattedWith.map(id => firestore
+			this.chatsListeners = this.getChattedWith.map((id) => firestore
 				.collection(`chats/${[id, this.getId].sort().join('_')}/chats`)
 				.orderBy('dates.sentAt','desc')
-				.limit(1).onSnapshot(chats => {
+				.limit(1).onSnapshot((chats) => {
 					if(chats.empty){ return null }
 					this.chats[id].chat = {
 						id: chats.docs[0].id,
@@ -51,8 +51,8 @@ export default {
 			)
 		},
 		getUsers(){
-			this.usersListeners = this.getChattedWith.map(id => {
-				return firestore.collection('users').doc(id).onSnapshot(user => {
+			this.usersListeners = this.getChattedWith.map((id) => {
+				return firestore.collection('users').doc(id).onSnapshot((user) => {
 					this.chats[id].user = {
 						id,
 						bio: user.data().bio,
@@ -63,17 +63,17 @@ export default {
 		}
 	},
 	mounted(){
-		this.chats = Object.fromEntries(this.getChattedWith.map(id => [id,{ chat: {}, user:{} }]))
+		this.chats = Object.fromEntries(this.getChattedWith.map((id) => [id,{ chat: {}, user:{} }]))
 		this.getChats()
 		this.getUsers()
 	},
 	beforeDestroy() {
-		this.chatsListeners.forEach(listener => listener())
-		this.usersListeners.forEach(listener => listener())
+		this.chatsListeners.forEach((listener) => listener())
+		this.usersListeners.forEach((listener) => listener())
 	},
 	watch: {
 		getChattedWith(){
-			this.chats = Object.fromEntries(this.getChattedWith.map(id => [id,{ chat: {}, user:{} }]))
+			this.chats = Object.fromEntries(this.getChattedWith.map((id) => [id,{ chat: {}, user:{} }]))
 			this.getChats()
 			this.getUsers()
 		}

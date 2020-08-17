@@ -8,7 +8,7 @@ export class SubjectEntity {
 	constructor({ id, name, modules }: SubjectConstructorArgs) {
 		this.id = id
 		this.name = name
-		this.modules = modules.map(m => new ModuleEntity(m))
+		this.modules = modules.map((m) => new ModuleEntity(m))
 	}
 }
 

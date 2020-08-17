@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import SubjectCard from "@/components/admin/questions/list/SubjectCard"
+import SubjectCard from '@/components/admin/questions/list/SubjectCard'
 import { mapGetters, mapActions } from 'vuex'
 export default {
 	data: () => ({
@@ -16,7 +16,7 @@ export default {
 	}),
 	computed: {
 		...mapGetters(['getAllSubjects']),
-		getAllModules(){ return this.getAllSubjects.map(subject => [subject.name, ...subject.modules.map(m => m.name)]).join() },
+		getAllModules(){ return this.getAllSubjects.map((subject) => [subject.name, ...subject.modules.map((m) => m.name)]).join() },
 	},
 	methods: mapActions(['fetchAllSubjects']),
 	components: {

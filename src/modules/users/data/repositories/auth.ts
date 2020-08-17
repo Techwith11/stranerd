@@ -23,7 +23,7 @@ export class AuthRepository implements IAuthRepository {
 	}
 
 	public async registerWithEmail(user: AuthUser): Promise<string> {
-		return await this.dataSource.registerWithEmail(user);
+		return await this.dataSource.registerWithEmail(user)
 	}
 
 	public registerOnAuthChangedCallback(cb: (user: firebase.User | null) => void): void {

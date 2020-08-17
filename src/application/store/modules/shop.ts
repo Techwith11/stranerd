@@ -2,8 +2,8 @@
 import { firestore, functions } from '@/config/firebase'
 
 const helpers = {
-	sendEmailAfterPurchase: async data => (await functions.httpsCallable('sendEmailAfterPurchase')(data)).data,
-	addMoreQuestions: async data => await firestore.collection('users').doc(data.id).update('account.questions', data.quantity)
+	sendEmailAfterPurchase: async (data) => (await functions.httpsCallable('sendEmailAfterPurchase')(data)).data,
+	addMoreQuestions: async (data) => await firestore.collection('users').doc(data.id).update('account.questions', data.quantity)
 }
 
 const state = {
@@ -12,20 +12,20 @@ const state = {
 }
 
 const getters = {
-	getCart: state => state.cart,
-	getCartPrice: state => state.cart.map(item => parseFloat(item.price)).reduce((a,b) => a + b),
-	getCartLength: state => state.cart.length,
-	isInCart: state => item => state.cart.some(x => x.id === item.id),
+	getCart: (state) => state.cart,
+	getCartPrice: (state) => state.cart.map((item) => parseFloat(item.price)).reduce((a,b) => a + b),
+	getCartLength: (state) => state.cart.length,
+	isInCart: (state) => (item) => state.cart.some((x) => x.id === item.id),
 
-	isCartModalOpen: state => !!state.cartModal,
-	isCartModalOverview: state => state.cartModal === 'cart-overview',
-	isCartModalSelectPayment: state => state.cartModal === 'select-payment-method',
-	isCartModalEmailConfirmation: state => state.cartModal === 'email-confirmation',
+	isCartModalOpen: (state) => !!state.cartModal,
+	isCartModalOverview: (state) => state.cartModal === 'cart-overview',
+	isCartModalSelectPayment: (state) => state.cartModal === 'select-payment-method',
+	isCartModalEmailConfirmation: (state) => state.cartModal === 'email-confirmation',
 }
 
 const mutations = {
 	addToCart: (state, item) => {
-		if(!state.cart.find(x => x.id === item.id)){
+		if(!state.cart.find((x) => x.id === item.id)){
 			state.cart.push(item)
 		}
 	},
@@ -33,7 +33,7 @@ const mutations = {
 		state.cart = []
 	},
 	removeFromCart: (state, item) => {
-		state.cart = state.cart.filter(x => x.id !== item.id)
+		state.cart = state.cart.filter((x) => x.id !== item.id)
 		if(state.cart.length === 0) state.cartModal = null
 	},
 	setCartModal: (state, mode) => state.cartModal = mode,

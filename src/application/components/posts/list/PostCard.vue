@@ -30,7 +30,7 @@ export default defineComponent({
 	},
 	setup(props){
 		const state = reactive({ user: {} })
-		fetchUser(props.post.userId).then(u => state.user = u as object)
+		fetchUser(props.post.userId).then((u) => state.user = u as object)
 		return { user: computed(() => state.user) }
 	}
 })

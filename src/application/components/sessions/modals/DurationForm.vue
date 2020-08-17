@@ -49,7 +49,7 @@ export default {
 		getPrices(){
 			let entries = Object.entries(this.prices)
 			entries.sort((a,b) => a[0] - b[0])
-			return entries.map(arr => ({ time: parseFloat(arr[0]), price: arr[1] }))
+			return entries.map((arr) => ({ time: parseFloat(arr[0]), price: arr[1] }))
 		}
 	},
 	methods: {

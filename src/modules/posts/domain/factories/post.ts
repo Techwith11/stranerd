@@ -49,7 +49,7 @@ export class PostFactory extends BaseFactory<PostEntity, PostToModel> {
 	set userId(value: string){ this.set('userId', value) }
 	get tags(){ return this.values.tags }
 	addTag(value: string){ return !this.values.tags.includes(value) ? this.set('tags', [...this.values.tags, value]) : false }
-	removeTag(value: string){ return this.set('tags', this.values.tags.filter(tag => tag !== value)) }
+	removeTag(value: string){ return this.set('tags', this.values.tags.filter((tag) => tag !== value)) }
 
 	public toModel = async () => {
 		if(this.valid){

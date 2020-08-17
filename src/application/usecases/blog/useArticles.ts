@@ -26,12 +26,12 @@ const globalState = reactive({
 })
 
 const setArticle = (article: ArticleEntity) => {
-	const index = globalState.articles.findIndex(p => p.id === article.id)
+	const index = globalState.articles.findIndex((p) => p.id === article.id)
 	if(index !== -1) globalState.articles[index] = article
 	else globalState.articles.push(article)
 }
 const unshiftArticle = (article: ArticleEntity) => {
-	const index = globalState.articles.findIndex(p => p.id === article.id)
+	const index = globalState.articles.findIndex((p) => p.id === article.id)
 	if(index !== -1) globalState.articles[index] = article
 	else globalState.articles.unshift(article)
 }
@@ -81,7 +81,7 @@ export const useDeleteArticle = (article: ArticleEntity) => {
 			if(result.value) {
 				state.loading = true
 				await DeleteArticle.call(article.id)
-				globalState.articles = globalState.articles.filter(a => a.id !== article.id)
+				globalState.articles = globalState.articles.filter((a) => a.id !== article.id)
 				const { id } = router.currentRoute.params
 				if(id) await router.replace('/blog')
 				state.loading = false
@@ -100,7 +100,7 @@ export const useDeleteArticle = (article: ArticleEntity) => {
 }
 
 const fetchArticle = async (id: string) => {
-	let article = globalState.articles.find(article => article.id === id)
+	let article = globalState.articles.find((article) => article.id === id)
 	if(article) return article
 	article = await FindArticle.call(id)
 	if(article) unshiftArticle(article)

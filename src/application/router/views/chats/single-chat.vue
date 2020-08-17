@@ -58,8 +58,8 @@ export default {
 			}
 			docs = await docs.get()
 			this.hasMore = docs.size >= this.paginationLimit
-			docs.forEach(doc => {
-				let index = this.chats.findIndex(r => r['.key'] === doc.id)
+			docs.forEach((doc) => {
+				let index = this.chats.findIndex((r) => r['.key'] === doc.id)
 				if(index === -1){
 					this.chats.unshift({ '.key': doc.id, ...doc.data() })
 				}else{
@@ -73,9 +73,9 @@ export default {
 			if(lastItem){
 				query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
 			}
-			this.chatsListener = query.onSnapshot(snapshot => {
-				snapshot.docs.forEach(doc => {
-					let index = this.chats.findIndex(r => r['.key'] === doc.id)
+			this.chatsListener = query.onSnapshot((snapshot) => {
+				snapshot.docs.forEach((doc) => {
+					let index = this.chats.findIndex((r) => r['.key'] === doc.id)
 					if(index === -1){
 						this.chats.push({ '.key': doc.id, ...doc.data() })
 					}else{

@@ -37,7 +37,7 @@ const actions = {
 		if(id){
 			const listener = firestore
 				.collection('users')
-				.doc(id).onSnapshot(snapshot => {
+				.doc(id).onSnapshot((snapshot) => {
 					if (snapshot.exists) {
 						const user = snapshot.data()
 						commit('setUser', user)

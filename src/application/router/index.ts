@@ -20,8 +20,8 @@ const router: VueRouter = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
 	addToCachedScrolls(from.fullPath, document.documentElement.scrollTop)
-	const requiresAuth = to.matched.some(route => route.meta.requiresAuth)
-	const requiresAdmin = to.matched.some(route => route.meta.requiresAdmin)
+	const requiresAuth = to.matched.some((route) => route.meta.requiresAuth)
+	const requiresAdmin = to.matched.some((route) => route.meta.requiresAdmin)
 	const isLoggedIn = store.getters.isLoggedIn
 	const isAdmin = store.getters.isAdmin
 	if (requiresAuth && !isLoggedIn) {

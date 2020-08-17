@@ -31,7 +31,7 @@ import router from '@/router'
 import { usePost } from '@/usecases/posts/posts'
 import { useReplies } from '@/usecases/posts/replies'
 export default defineComponent({
-	name: "Post",
+	name: 'Post',
 	setup(){
 		const { id } = router.currentRoute.params
 		const { post, loading, error, user } = usePost(id)

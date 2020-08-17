@@ -32,7 +32,7 @@ export default {
 			let docs = await firestore.collection('sessions').orderBy('dates.createdAt','desc')
 				.where(this.isTutor ? 'tutor' : 'student', '==', this.getId)
 				.limit(3).get()
-			docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
+			docs.forEach((doc) => this.sessions.push({ '.key': doc.id, ...doc.data() }))
 		}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching recent sessions. Try refreshing the page' }) }
 	},
 	components: {

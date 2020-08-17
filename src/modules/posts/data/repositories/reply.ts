@@ -25,7 +25,7 @@ export class ReplyRepository implements IReplyRepository {
 
 	public async listen(postId: string, callback: (entities: ReplyEntity[]) => void, conditions?: GetClauses) {
 		const listenCB = (documents: ReplyFromModel[]) => {
-			const entities = documents.map(doc => this.transformer.fromJSON(doc))
+			const entities = documents.map((doc) => this.transformer.fromJSON(doc))
 			callback(entities)
 		}
 		return await this.dataSource.listen(postId, listenCB, conditions)

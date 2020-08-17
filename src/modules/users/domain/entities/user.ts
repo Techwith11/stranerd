@@ -29,7 +29,7 @@ export class UserEntity{
 
 	get teachableCourses(){
 		if(!this.roles.isTutor) return []
-		return this.tutor?.courses.filter(course => {
+		return this.tutor?.courses.filter((course) => {
 			return this.tutor?.levels?.[course]! > 0
 		}) ?? []
 	}

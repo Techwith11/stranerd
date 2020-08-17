@@ -27,7 +27,7 @@ export class UserRepository implements IUserRepository{
 
 	public async listen(callback: (entities: UserEntity[]) => void, conditions?: GetClauses) {
 		const listenCB = (documents: UserFromModel[]) => {
-			const entities = documents.map(doc => this.transformer.fromJSON(doc))
+			const entities = documents.map((doc) => this.transformer.fromJSON(doc))
 			callback(entities)
 		}
 		return await this.dataSource.listen(listenCB, conditions)

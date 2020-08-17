@@ -71,7 +71,7 @@ export default defineComponent({
 			(tag:string) => factory.addTag(tag),
 			(tag:string) => factory.removeTag(tag)
 		)
-		const modules = computed(() => subjects.value.find(s => s.name === factory.subject)?.modules ?? [])
+		const modules = computed(() => subjects.value.find((s) => s.name === factory.subject)?.modules ?? [])
 		return {
 			factory, tag, splitTag, removeTag,
 			loading, subjectLoading,

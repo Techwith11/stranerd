@@ -7,12 +7,12 @@ const globalState = reactive({
 })
 
 export const useCart = () => {
-	const isInCart = (note: NoteEntity) => globalState.cart.some(n => n.id === note.id)
+	const isInCart = (note: NoteEntity) => globalState.cart.some((n) => n.id === note.id)
 	const addToCart = (note: NoteEntity) => {
-		if(globalState.cart.findIndex(n => n.id === note.id) === -1) globalState.cart.push(note)
+		if(globalState.cart.findIndex((n) => n.id === note.id) === -1) globalState.cart.push(note)
 	}
 	const removeFromCart = async (note: NoteEntity) => {
-		globalState.cart = globalState.cart.filter(n => n.id !== note.id)
+		globalState.cart = globalState.cart.filter((n) => n.id !== note.id)
 		if(globalState.cart.length === 0) await store.dispatch('closeCartModal')
 	}
 	const checkoutNow = async (note: NoteEntity) => {

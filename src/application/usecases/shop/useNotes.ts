@@ -16,12 +16,12 @@ const globalState = reactive({
 })
 
 const setNote = (note: NoteEntity) => {
-	const index = globalState.notes.findIndex(n => n.id === note.id)
+	const index = globalState.notes.findIndex((n) => n.id === note.id)
 	if(index !== -1) globalState.notes[index] = note
 	else globalState.notes.push(note)
 }
 const unshiftNote = (note: NoteEntity) => {
-	const index = globalState.notes.findIndex(n => n.id === note.id)
+	const index = globalState.notes.findIndex((n) => n.id === note.id)
 	if(index !== -1) globalState.notes[index] = note
 	else globalState.notes.unshift(note)
 }
@@ -71,7 +71,7 @@ export const useDeleteNote = (note: NoteEntity) => {
 			if(result.value) {
 				state.loading = true
 				await DeleteNote.call(note.id)
-				globalState.notes = globalState.notes.filter(a => a.id !== note.id)
+				globalState.notes = globalState.notes.filter((a) => a.id !== note.id)
 				state.loading = false
 				await Notify({ icon: 'success', title: 'Note deleted successfully' })
 			}

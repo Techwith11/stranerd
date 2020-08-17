@@ -28,9 +28,9 @@ let helpers = {
 		note.userId = id
 		return await firestore.collection('notes').add(note)
 	},
-	uploadFromEditor: async data => {
+	uploadFromEditor: async (data) => {
 		let res = await uploadFile(data.path, data.file)
-		data.editor.insertEmbed(data.cursorLocation, "image", res.link)
+		data.editor.insertEmbed(data.cursorLocation, 'image', res.link)
 		data.resetUploader()
 	},
 	createBlogPost: async (post, id) => {

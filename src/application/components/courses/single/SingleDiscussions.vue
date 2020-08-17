@@ -60,7 +60,7 @@ export default {
 			}
 			docs = await docs.get()
 			this.hasMore = docs.size >= this.paginationLimit
-			docs.forEach(doc => this.discussions.unshift({ '.key': doc.id, ...doc.data() }))
+			docs.forEach((doc) => this.discussions.unshift({ '.key': doc.id, ...doc.data() }))
 		},
 		setListener(){
 			let lastItem = this.discussions[this.discussions.length - 1]
@@ -68,10 +68,10 @@ export default {
 			if(lastItem){
 				query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
 			}
-			this.listener = query.onSnapshot(snapshot => {
+			this.listener = query.onSnapshot((snapshot) => {
 				this.newDiscussions = []
-				snapshot.docs.forEach(doc => {
-					let index = this.discussions.findIndex(r => r['.key'] === doc.id)
+				snapshot.docs.forEach((doc) => {
+					let index = this.discussions.findIndex((r) => r['.key'] === doc.id)
 					if(index === -1){
 						this.discussions.push({ '.key': doc.id, ...doc.data() })
 					}else{

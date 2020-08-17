@@ -14,7 +14,7 @@
 <script>
 import { firestore } from '@/config/firebase'
 import { mapGetters, mapActions } from 'vuex'
-import PaymentMethodCard from "@/components/account/single/PaymentMethodCard"
+import PaymentMethodCard from '@/components/account/single/PaymentMethodCard'
 export default {
 	data: () => ({
 		paymentMethods: [],
@@ -28,7 +28,7 @@ export default {
 		async fetchPaymentMethods(){
 			try{
 				let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
-				docs.forEach(doc => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
+				docs.forEach((doc) => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching payment methods. Try refreshing the page' }) }
 		},
 		async removeMethod(method){
@@ -45,7 +45,7 @@ export default {
 				try{
 					this.isLoading = true
 					await this.removePaymentMethod(method['.key'])
-					this.paymentMethods = this.paymentMethods.filter(x => x['.key'] !== method['.key'])
+					this.paymentMethods = this.paymentMethods.filter((x) => x['.key'] !== method['.key'])
 				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				this.isLoading = false
 			}

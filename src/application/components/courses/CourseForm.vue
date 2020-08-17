@@ -105,7 +105,7 @@ export default defineComponent({
 	},
 	setup(props) {
 		const { subjects, loading: subjectLoading } = useSubjects()
-		const modules = computed(() => subjects.value.find(s => s.name === props.factory.subject)?.modules ?? [])
+		const modules = computed(() => subjects.value.find((s) => s.name === props.factory.subject)?.modules ?? [])
 		const { catchFiles: catchImage } = useFileInputs(
 			(file:File) => props.factory.image = file
 		)

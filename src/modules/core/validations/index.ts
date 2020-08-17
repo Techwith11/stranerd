@@ -7,8 +7,8 @@ export class ValidatorService {
 			const error = rule(value)
 			return { valid: error === undefined, message: error?.[0] ?? undefined }
 		})
-		const isValid = checks.every(r => r.valid)
-		const message = checks.find(r => !r.valid)?.message ?? undefined
+		const isValid = checks.every((r) => r.valid)
+		const message = checks.find((r) => !r.valid)?.message ?? undefined
 		return { isValid, message }
 	}
 }

@@ -31,7 +31,7 @@ export class PostRepository implements IPostRepository{
 
 	public async listen(callback: (entities: PostEntity[]) => void, conditions?: GetClauses) {
 		const listenCB = (documents: PostFromModel[]) => {
-			const entities = documents.map(doc => this.transformer.fromJSON(doc))
+			const entities = documents.map((doc) => this.transformer.fromJSON(doc))
 			callback(entities)
 		}
 		return await this.dataSource.listen(listenCB, conditions)

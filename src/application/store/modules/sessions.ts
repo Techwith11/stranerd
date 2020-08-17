@@ -1,18 +1,18 @@
 // @ts-nocheck
 import { firestore, functions } from '@/config/firebase'
-import router from "@/router/index"
+import router from '@/router/index'
 
 let setSessionListener = (id, commit, userId) => {
-	let listener = firestore.collection('sessions').doc(id).onSnapshot(snapshot => {
+	let listener = firestore.collection('sessions').doc(id).onSnapshot((snapshot) => {
 		commit('setSession',[ { '.key': snapshot.id, ...snapshot.data() }, userId ])
 		commit('setOtherPersonListener', userId)
 	})
 	commit('setSessionListener', listener)
 }
-let acceptSession = async id => {
+let acceptSession = async (id) => {
 	return await firestore.collection('sessions').doc(id).update('accepted', true)
 }
-let rejectSession = async id => {
+let rejectSession = async (id) => {
 	return await firestore.collection('sessions').doc(id).update('cancelled.tutor', true)
 }
 let submitRating = async (id, session, review) => {
@@ -48,19 +48,19 @@ const state = {
 }
 
 const getters = {
-	getCurrentSession: state => state.session,
-	getSessionForRatings: state => state.sessionForRatings,
-	isSessionModalOpen: state => !!state.sessionModal,
-	getNewSessionData: state => state.newSessionData,
-	getOtherPersonOnSession: state => state.otherPerson,
-	isSessionModalStudentDuration: state => state.sessionModal === 'student-duration',
-	isSessionModalTutorAccept: state => state.sessionModal === 'tutor-accept',
-	isSessionModalStudentWaiting: state => state.sessionModal === 'student-waiting',
-	isSessionModalTutorCancelled: state => state.sessionModal === 'tutor-cancelled',
-	isSessionModalStudentCancelled: state => state.sessionModal === 'student-cancelled',
-	isSessionModalStudentPays: state => state.sessionModal === 'student-pays',
-	isSessionModalTutorWaiting: state => state.sessionModal === 'tutor-waiting',
-	isSessionModalSessionRatings: state => state.sessionModal === 'session-ratings',
+	getCurrentSession: (state) => state.session,
+	getSessionForRatings: (state) => state.sessionForRatings,
+	isSessionModalOpen: (state) => !!state.sessionModal,
+	getNewSessionData: (state) => state.newSessionData,
+	getOtherPersonOnSession: (state) => state.otherPerson,
+	isSessionModalStudentDuration: (state) => state.sessionModal === 'student-duration',
+	isSessionModalTutorAccept: (state) => state.sessionModal === 'tutor-accept',
+	isSessionModalStudentWaiting: (state) => state.sessionModal === 'student-waiting',
+	isSessionModalTutorCancelled: (state) => state.sessionModal === 'tutor-cancelled',
+	isSessionModalStudentCancelled: (state) => state.sessionModal === 'student-cancelled',
+	isSessionModalStudentPays: (state) => state.sessionModal === 'student-pays',
+	isSessionModalTutorWaiting: (state) => state.sessionModal === 'tutor-waiting',
+	isSessionModalSessionRatings: (state) => state.sessionModal === 'session-ratings',
 }
 
 const mutations = {
@@ -75,7 +75,7 @@ const mutations = {
 			else if(studentPaidSessionState(session,id)){
 				let name = state.otherPerson ? state.otherPerson.bio.name : 'Student'
 				new window.Toast({ icon: 'success', title: `${name} has paid for the session` })
-				await router.push(`/sessions/${session['.key']}`).catch(error => error)
+				await router.push(`/sessions/${session['.key']}`).catch((error) => error)
 				state.sessionModal = null
 				state.newSessionData = {}
 				state.sessionListener()
@@ -94,7 +94,7 @@ const mutations = {
 	setOtherPersonListener: (state, auth) => {
 		if(!state.otherPerson){
 			let other = state.session.tutor === auth ? state.session.student : state.session.tutor
-			state.otherPersonListener = firestore.collection('users').doc(other).onSnapshot(snapshot => {
+			state.otherPersonListener = firestore.collection('users').doc(other).onSnapshot((snapshot) => {
 				state.otherPerson = snapshot.data()
 			})
 		}
@@ -112,12 +112,12 @@ const mutations = {
 		state.sessionModal = 'student-duration'
 		state.newSessionData = data
 	},
-	setSessionModalStudentWaiting: state => state.sessionModal = 'student-waiting',
+	setSessionModalStudentWaiting: (state) => state.sessionModal = 'student-waiting',
 	setSessionModalSessionRatings: (state, session) => {
 		state.sessionForRatings = session
 		state.sessionModal = 'session-ratings'
 	},
-	closeSessionModal: state => {
+	closeSessionModal: (state) => {
 		state.sessionModal = null
 		state.newSessionData = {}
 		state.sessionForRatings = null
@@ -127,10 +127,10 @@ const mutations = {
 const actions = {
 	async startSession({ getters, commit }, data){
 		// TODO: After implementing active users, show toast if tutor is not online
-		return await functions.httpsCallable('startSession')(data).then(res => {
+		return await functions.httpsCallable('startSession')(data).then((res) => {
 			setSessionListener(res.data, commit, getters.getId)
 			commit('setSessionModalStudentWaiting')
-		}).catch(error => {
+		}).catch((error) => {
 			new window.Toast({ icon: 'error', title: error.message })
 			commit('setSessionListener', () => {})
 			commit('setSession', [null, null])
@@ -182,7 +182,7 @@ const actions = {
 			.where('paid','==',false)
 			.orderBy('dates.createdAt','desc')
 			.limit(1)
-			.onSnapshot(snapshot => {
+			.onSnapshot((snapshot) => {
 				if(!snapshot.empty){
 					setSessionListener(snapshot.docs[0].id, commit, getters.getId)
 				}

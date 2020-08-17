@@ -15,7 +15,7 @@ const fetchPaymentMethods = async () => {
 }
 
 export const usePaymentMethodsList = () => {
-	if(!globalState.fetched) fetchPaymentMethods().then(() => globalState.fetched = true).catch(e => globalState.error = e.message)
+	if(!globalState.fetched) fetchPaymentMethods().then(() => globalState.fetched = true).catch((e) => globalState.error = e.message)
 	return {
 		loading: computed(() => globalState.loading),
 		error: computed(() => globalState.error),

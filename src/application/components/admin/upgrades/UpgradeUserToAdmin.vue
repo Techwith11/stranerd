@@ -56,7 +56,7 @@ export default {
 			try{
 				this.users = []
 				let docs = await firestore.collection('users').where('bio.email','==',this.email).get()
-				docs.forEach(doc => this.users.push({ '.key': doc.id, ...doc.data() }))
+				docs.forEach((doc) => this.users.push({ '.key': doc.id, ...doc.data() }))
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching users. Try refreshing the page' }) }
 			this.fetchingUsers = false
 		},

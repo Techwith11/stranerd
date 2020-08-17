@@ -10,7 +10,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import SelectPaymentMethod from "@/components/helpers/SelectPaymentMethod";
+import SelectPaymentMethod from '@/components/helpers/SelectPaymentMethod'
 export default {
 	data: () => ({
 		isLoading: false,

@@ -30,7 +30,7 @@ const fetchSubject = async (id: string) => {
 	globalState.loading = true
 	const subject = await FindSubject.call(id)
 	if(subject){
-		const index = globalState.subjects.findIndex(s => s.id === subject.id)
+		const index = globalState.subjects.findIndex((s) => s.id === subject.id)
 		if(index === -1) globalState.subjects.push(subject)
 		else globalState.subjects[index] = subject
 	}
@@ -38,7 +38,7 @@ const fetchSubject = async (id: string) => {
 }
 
 export const useSubjects = () => {
-	if(!globalState.fetched) fetchSubjects().catch(error => globalState.error = error)
+	if(!globalState.fetched) fetchSubjects().catch((error) => globalState.error = error)
 
 	return {
 		subjects: computed(() => globalState.subjects),
@@ -60,11 +60,11 @@ export const useSingleSubject = (name: string) => {
 	if(!globalState.fetched) {
 		state.loading = true
 		fetchSubjects().then(async () => {
-			const subject = globalState.subjects.find(s => s.name.toLowerCase() === name.toLowerCase())
+			const subject = globalState.subjects.find((s) => s.name.toLowerCase() === name.toLowerCase())
 			if(subject) state.subject = subject
 			else await router.replace('/courses')
 			state.loading = false
-		}).catch(error => {
+		}).catch((error) => {
 			state.error = error
 			state.loading = false
 		})
@@ -93,7 +93,7 @@ export const useDeleteSubject = (subject: SubjectEntity) => {
 			try{
 				state.loading = true
 				await DeleteSubject.call(subject.id)
-				globalState.subjects = globalState.subjects.filter(s => s.id !== subject.id)
+				globalState.subjects = globalState.subjects.filter((s) => s.id !== subject.id)
 				state.loading = false
 				await Notify({ title: 'Subject deleted!', icon: 'success' })
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }

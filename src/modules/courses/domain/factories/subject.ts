@@ -34,7 +34,7 @@ export class SubjectFactory extends BaseFactory<SubjectEntity, SubjectToModel> {
 	get modules(){ return this.values.modules }
 	addModule(){
 		const module = { name: this.validValues.moduleName.toLowerCase(), image: this.validValues.moduleImage }
-		if(!this.values.modules.find(m => m.name === module.name)) {
+		if(!this.values.modules.find((m) => m.name === module.name)) {
 			const res = this.set('modules', [...this.values.modules, module])
 			this.validValues.moduleName = this.values.moduleName = ''
 			this.validValues.moduleImage = this.values.moduleImage = undefined
@@ -44,17 +44,17 @@ export class SubjectFactory extends BaseFactory<SubjectEntity, SubjectToModel> {
 		return false
 	}
 	removeModule(module: string){
-		return this.set('modules', this.values.modules.filter(m => m.name.toLowerCase() !== module.toLowerCase()))
+		return this.set('modules', this.values.modules.filter((m) => m.name.toLowerCase() !== module.toLowerCase()))
 	}
 
 	public loadEntity = (entity: SubjectEntity) => {
 		this.name = entity.name
-		this.set('modules', entity.modules.map(m => ({ name: m.name, image: m.imageData })))
+		this.set('modules', entity.modules.map((m) => ({ name: m.name, image: m.imageData })))
 	}
 
 	public toModel = async () => {
 		if(this.valid){
-			const modules = await Promise.all(this.validValues.modules.map(async m => {
+			const modules = await Promise.all(this.validValues.modules.map(async (m) => {
 				if(m.image instanceof File) m.image = await this.uploadFile(`subjects/${this.validValues.name}/modules`, m.image)
 				return m as Module
 			}))

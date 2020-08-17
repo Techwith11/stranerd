@@ -9,7 +9,7 @@
 import UpgradeUserToAdmin from '@/components/admin/upgrades/UpgradeUserToAdmin'
 import UpgradeUserToTutor from '@/components/admin/upgrades/UpgradeUserToTutor'
 export default {
-	name: "Upgrades",
+	name: 'Upgrades',
 	components: {
 		'upgrade-user-to-admin': UpgradeUserToAdmin,
 		'upgrade-user-to-tutor': UpgradeUserToTutor,

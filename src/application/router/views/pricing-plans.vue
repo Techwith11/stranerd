@@ -55,7 +55,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import SelectPaymentMethod from "@/components/helpers/SelectPaymentMethod"
+import SelectPaymentMethod from '@/components/helpers/SelectPaymentMethod'
 export default {
 	data: () => ({
 		annual: false,

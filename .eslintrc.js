@@ -18,10 +18,10 @@ module.exports = {
 		'@typescript-eslint/no-unused-vars': 'error',
 		'indent': ['error', 'tab'],
 		'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
-		/*'semi': ['error', 'never'],
-	    'quotes': ['error', 'single'],
-	    'prefer-const': ['error'],
-	    'arrow-parens': ['error', 'always']*/
+		'semi': ['error', 'never'],
+		'quotes': ['error', 'single'],
+		//'prefer-const': ['error'],
+		'arrow-parens': ['error', 'always']
 	},
 	overrides: [
 		{

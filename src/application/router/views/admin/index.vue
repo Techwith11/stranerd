@@ -8,7 +8,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 export default {
-	name: "Admins",
+	name: 'Admins',
 	methods: mapActions(['setCreateModalOverview']),
 	computed: mapGetters(['isLoggedIn']),
 	meta(){

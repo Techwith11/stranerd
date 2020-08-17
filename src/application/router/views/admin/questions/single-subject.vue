@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import SubjectCard from "@/components/admin/questions/list/SubjectCard"
+import SubjectCard from '@/components/admin/questions/list/SubjectCard'
 import { mapGetters, mapActions } from 'vuex'
 export default {
 	data: () => ({
@@ -30,7 +30,7 @@ export default {
 		if(this.getAllSubjects.length === 0){
 			await this.fetchAllSubjects()
 		}
-		let subject = this.getAllSubjects.find(s => s.name.toLowerCase() === name.toLowerCase())
+		let subject = this.getAllSubjects.find((s) => s.name.toLowerCase() === name.toLowerCase())
 		if(subject){
 			this.subject = subject
 		}else{

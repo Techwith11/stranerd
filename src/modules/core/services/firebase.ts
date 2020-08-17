@@ -5,7 +5,7 @@ const buildQuery = (query: firebase.firestore.Query, conditions?: GetClauses) =>
 	if(conditions) {
 		if(conditions.order) query = query.orderBy(conditions.order.field, conditions.order.desc ? 'desc' : 'asc')
 		if(conditions.where) {
-			conditions.where.forEach(clause => {
+			conditions.where.forEach((clause) => {
 				query = query.where(clause.field, clause.condition, clause.value)
 			})
 		}
@@ -24,13 +24,13 @@ export const FirestoreService =  {
 		let query: firebase.firestore.Query = firestore.collection(collection)
 		query  = buildQuery(query, conditions)
 		const docs = await query.get()
-		return docs.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+		return docs.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
 	},
 	listen: async (callback: (documents: any[]) => void, collection: string, conditions?: GetClauses) => {
 		let query: firebase.firestore.Query = firestore.collection(collection)
 		query = buildQuery(query, conditions)
-		return query.onSnapshot(snapshot => {
-			const documents = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+		return query.onSnapshot((snapshot) => {
+			const documents = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
 			callback(documents)
 		})
 	},

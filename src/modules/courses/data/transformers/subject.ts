@@ -12,7 +12,7 @@ export class SubjectTransformer {
 	public toJSON(entity: SubjectEntity) :SubjectToModel {
 		return {
 			name: entity.name,
-			modules: entity.modules.map(m => ({ name: m.name, image: m.imageData }))
+			modules: entity.modules.map((m) => ({ name: m.name, image: m.imageData }))
 		}
 	}
 

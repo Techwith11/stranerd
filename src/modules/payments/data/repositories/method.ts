@@ -15,7 +15,7 @@ export class MethodRepository implements IMethodRepository {
 
 	public async get(id: string, conditions?: GetClauses): Promise<MethodEntity[]> {
 		const models = await this.dataSource.get(id, conditions)
-		return models.map(model => this.transformer.fromJSON(model))
+		return models.map((model) => this.transformer.fromJSON(model))
 	}
 
 }

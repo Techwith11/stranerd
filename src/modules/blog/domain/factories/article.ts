@@ -39,7 +39,7 @@ export class ArticleFactory extends BaseFactory<ArticleEntity, ArticleToModel> {
 	set userId(value: string){ this.set('userId', value) }
 	get tags(){ return this.values.tags }
 	addTag(value: string){ return !this.values.tags.includes(value) ? this.set('tags', [...this.values.tags, value]) : false }
-	removeTag(value: string){ return this.set('tags', this.values.tags.filter(tag => tag !== value)) }
+	removeTag(value: string){ return this.set('tags', this.values.tags.filter((tag) => tag !== value)) }
 	get image(){ return this.values.image! }
 	set image(file: MediaContent){ this.set('image', file) }
 

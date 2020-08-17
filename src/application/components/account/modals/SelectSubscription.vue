@@ -44,7 +44,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import SelectPaymentMethod from "@/components/helpers/SelectPaymentMethod"
+import SelectPaymentMethod from '@/components/helpers/SelectPaymentMethod'
 export default {
 	data: () => ({
 		page: 1,

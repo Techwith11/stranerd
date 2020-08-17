@@ -34,12 +34,12 @@ export default {
 		await this.getQuestions()
 		this.fetched = true
 		this.isLoading = false
-		window.Fire.$on('QuestionEdited', question => {
-			let index = this.questions.findIndex(q => q['.key'] === question['.key'])
+		window.Fire.$on('QuestionEdited', (question) => {
+			let index = this.questions.findIndex((q) => q['.key'] === question['.key'])
 			this.questions[index] = question
 			this.$forceUpdate()
 		})
-		window.Fire.$on('QuestionDeleted', question => this.questions = this.questions.filter(q => q['.key'] !== question['.key']))
+		window.Fire.$on('QuestionDeleted', (question) => this.questions = this.questions.filter((q) => q['.key'] !== question['.key']))
 	},
 	async activated(){
 		if(this.fetched){
@@ -69,7 +69,7 @@ export default {
 				}
 				docs = await docs.get()
 				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
+				docs.forEach((doc) => this.questions.push({ '.key': doc.id, ...doc.data() }))
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching questions. Try refreshing the page' }) }
 		},
 		async fetchOlderQuestions(){
@@ -86,9 +86,9 @@ export default {
 			if(lastItem){
 				query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
 			}
-			this.listener = query.onSnapshot(snapshot => {
-				snapshot.docs.forEach(doc => {
-					let index = this.questions.findIndex(r => r['.key'] === doc.id)
+			this.listener = query.onSnapshot((snapshot) => {
+				snapshot.docs.forEach((doc) => {
+					let index = this.questions.findIndex((r) => r['.key'] === doc.id)
 					if(index === -1){
 						this.questions.unshift({ '.key': doc.id, ...doc.data() })
 					}else{

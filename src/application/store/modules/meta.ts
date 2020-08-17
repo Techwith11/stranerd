@@ -10,9 +10,9 @@ const state = {
 }
 
 const getters = {
-	getDefaultImage: state => state.defaultImage,
-	getEditMeta: state => state.editMeta,
-	getPlans: state => state.plans
+	getDefaultImage: (state) => state.defaultImage,
+	getEditMeta: (state) => state.editMeta,
+	getPlans: (state) => state.plans
 }
 
 const mutations = {
@@ -26,7 +26,7 @@ const actions = {
 	fetchAllPlans: async ({ commit }) => {
 		try{
 			let docs = await firestore.collection('subscriptions').get()
-			let plans = docs.docs.map(doc => ({ '.key': doc.id, ...doc.data() }))
+			let plans = docs.docs.map((doc) => ({ '.key': doc.id, ...doc.data() }))
 			plans.sort((a, b) => a.questions - b.questions)
 			commit('setPlans', plans)
 		}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching content. Try refreshing the page' }) }

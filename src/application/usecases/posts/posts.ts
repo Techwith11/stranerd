@@ -19,12 +19,12 @@ const globalState = reactive({
 })
 
 const setPost = (post: PostEntity) => {
-	const index = globalState.posts.findIndex(p => p.id === post.id)
+	const index = globalState.posts.findIndex((p) => p.id === post.id)
 	if(index !== -1) globalState.posts[index] = post
 	else globalState.posts.push(post)
 }
 const unshiftPost = (post: PostEntity) => {
-	const index = globalState.posts.findIndex(p => p.id === post.id)
+	const index = globalState.posts.findIndex((p) => p.id === post.id)
 	if(index !== -1) globalState.posts[index] = post
 	else globalState.posts.unshift(post)
 }
@@ -79,7 +79,7 @@ export const useRecentPostsList = () => {
 }
 
 const fetchPost = async (id: string) => {
-	let post = globalState.posts.find(post => post.id === id)
+	let post = globalState.posts.find((post) => post.id === id)
 	if(post) return post
 	post = await FindPost.call(id)
 	if(post) unshiftPost(post)

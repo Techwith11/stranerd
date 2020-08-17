@@ -6,7 +6,7 @@ export const useTags = (addCb: callback, removeCb: callback) => {
 	const tag = ref('')
 	const splitTag = () => {
 		if(tag.value.includes(' ')){
-			tag.value.split(' ').map(tag => {
+			tag.value.split(' ').map((tag) => {
 				if(tag) addCb(tag.toLowerCase())
 			})
 			tag.value = ''

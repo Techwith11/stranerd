@@ -22,11 +22,11 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { firestore } from '@/config/firebase'
-import SessionChatForm from "@/components/sessions/single/SessionChatForm"
-import SessionChatMessage from "@/components/sessions/single/SessionChatMessage"
-import SessionNav from "@/components/sessions/single/SessionNav"
+import SessionChatForm from '@/components/sessions/single/SessionChatForm'
+import SessionChatMessage from '@/components/sessions/single/SessionChatMessage'
+import SessionNav from '@/components/sessions/single/SessionNav'
 export default {
-	name: "SingleSession",
+	name: 'SingleSession',
 	data: () => ({
 		isLoading: true,
 		isOlderChatsLoading: false,
@@ -78,7 +78,7 @@ export default {
 				}
 				docs = await docs.get()
 				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.chats.unshift({ '.key': doc.id, ...doc.data() }))
+				docs.forEach((doc) => this.chats.unshift({ '.key': doc.id, ...doc.data() }))
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching chats. Try refreshing the page' }) }
 		},
 		setChatListener(){
@@ -87,9 +87,9 @@ export default {
 			if(lastItem){
 				query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
 			}
-			this.chatsListener = query.onSnapshot(snapshot => {
-				snapshot.docs.forEach(doc => {
-					let index = this.chats.findIndex(r => r['.key'] === doc.id)
+			this.chatsListener = query.onSnapshot((snapshot) => {
+				snapshot.docs.forEach((doc) => {
+					let index = this.chats.findIndex((r) => r['.key'] === doc.id)
 					if(index === -1){
 						this.chats.push({ '.key': doc.id, ...doc.data() })
 					}else{
@@ -101,7 +101,7 @@ export default {
 		setOtherPersonListener(){
 			let otherPerson = this.session.tutor === this.getId ? this.session.student : this.session.tutor
 			this.otherPersonListener = firestore.collection('users').doc(otherPerson)
-				.onSnapshot(snapshot => this.otherPerson = { '.key': snapshot.id, ...snapshot.data() })
+				.onSnapshot((snapshot) => this.otherPerson = { '.key': snapshot.id, ...snapshot.data() })
 		},
 		async fetchOlderMessages(){
 			this.isOlderChatsLoading = true

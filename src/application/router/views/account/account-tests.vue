@@ -43,7 +43,7 @@ export default {
 	methods: {
 		async getTests(){
 			try{
-				let docs = firestore.collection(`tests/tutors/tests`).where('user','==',this.getId).orderBy('dates.startedAt','desc')
+				let docs = firestore.collection('tests/tutors/tests').where('user','==',this.getId).orderBy('dates.startedAt','desc')
 					.limit(this.paginationLimit)
 				let lastItem = this.tests[this.tests.length - 1]
 				if(lastItem){
@@ -51,7 +51,7 @@ export default {
 				}
 				docs = await docs.get()
 				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.tests.push({ '.key': doc.id, ...doc.data() }))
+				docs.forEach((doc) => this.tests.push({ '.key': doc.id, ...doc.data() }))
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching tests. Try refreshing the page' }) }
 		},
 		async fetchOlderTests(){

@@ -85,7 +85,7 @@ export default {
 		}
 	},
 	mounted(){
-		this.onReloadListener = e => {
+		this.onReloadListener = (e) => {
 			localStorage.setItem('test-data', JSON.stringify(this.getTestData))
 			e.preventDefault()
 			e.returnValue = 'Are you sure you want to reload? This will submit the test'

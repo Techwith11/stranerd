@@ -33,14 +33,14 @@ const globalState = reactive({}) as {
 const setCourse = (subject: string, module: string, course: CourseEntity) => {
 	const key = getKey(subject, module)
 	if(!globalState[key]) globalState[key] = getNewState()
-	const index = globalState[key].courses.findIndex(p => p.id === course.id)
+	const index = globalState[key].courses.findIndex((p) => p.id === course.id)
 	if(index !== -1) globalState[key].courses[index] = course
 	else globalState[key].courses.push(course)
 }
 const unshiftCourse = (subject: string, module: string, course: CourseEntity) => {
 	const key = getKey(subject, module)
 	if(!globalState[key]) globalState[key] = getNewState()
-	const index = globalState[getKey(subject, module)].courses.findIndex(p => p.id === course.id)
+	const index = globalState[getKey(subject, module)].courses.findIndex((p) => p.id === course.id)
 	if(index !== -1) globalState[getKey(subject, module)].courses[index] = course
 	else globalState[getKey(subject, module)].courses.unshift(course)
 }
@@ -49,7 +49,7 @@ const fetchCourses = async (subject: string, module: string) => {
 	const date = globalState[key]?.courses[globalState[key]?.courses?.length - 1]?.createdAt ?? undefined
 	const entities: CourseEntity[] = await GetCoursesByModule.call(subject, module, date)
 	globalState[key].hasMore = entities.length === PAGINATION_LIMIT
-	entities.forEach(entity => setCourse(subject, module, entity))
+	entities.forEach((entity) => setCourse(subject, module, entity))
 }
 const fetchCoursesOnInit = async (subject: string, module: string) => {
 	globalState[getKey(subject, module)].loading = true
@@ -98,7 +98,7 @@ export const useDeleteCourse = (course: CourseEntity) => {
 			try{
 				state.loading = true
 				await DeleteCourse.call(course.id)
-				globalState[key].courses = globalState[key].courses.filter(c => c.id !== course.id)
+				globalState[key].courses = globalState[key].courses.filter((c) => c.id !== course.id)
 				state.loading = false
 				const { id, subject, module } = router.currentRoute.params
 				if(id) await router.replace(`/courses/${subject}/${module}`)
@@ -113,8 +113,8 @@ export const useDeleteCourse = (course: CourseEntity) => {
 const fetchCourse = async (id: string) => {
 	let course: CourseEntity | undefined = undefined
 	const values = Object.values(globalState)
-	values.forEach(state => {
-		const found = state.courses.find(course => course.id === id)
+	values.forEach((state) => {
+		const found = state.courses.find((course) => course.id === id)
 		if(found) course = found
 	})
 	if(course) return course
@@ -230,7 +230,7 @@ export const useRecentCourses = () => {
 			allCourses = allCourses.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1)
 		}else{
 			const courses = await GetRecentCourses.call()
-			courses.forEach(course => unshiftCourse(course.subject, course.module, course))
+			courses.forEach((course) => unshiftCourse(course.subject, course.module, course))
 			allCourses.push(...courses)
 		}
 		state.courses.push(...allCourses)

@@ -17,8 +17,8 @@ const state = {
 }
 
 const getters = {
-	getHoistedFieldsInstance: state => state.hostedFieldsInstance,
-	isThereAHoistedFieldInstance: state => state.hostedFieldsInstance !== null
+	getHoistedFieldsInstance: (state) => state.hostedFieldsInstance,
+	isThereAHoistedFieldInstance: (state) => state.hostedFieldsInstance !== null
 }
 
 const mutations = {

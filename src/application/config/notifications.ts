@@ -1,11 +1,11 @@
-import SweetAlert from "sweetalert2"
+import SweetAlert from 'sweetalert2'
 
 const Toast = SweetAlert.mixin({
 	toast: true,
-	position: "top-end",
+	position: 'top-end',
 	showConfirmButton: false,
 	timer: 3000
-});
+})
 
 type ToastArgs = {
     title: string
@@ -16,7 +16,7 @@ export const Notify = (args: ToastArgs) => Toast.fire({
 	title: args.title,
 	icon: args.icon ?? 'info',
 	toast: true,
-	position: "top-end",
+	position: 'top-end',
 	showConfirmButton: false,
 	timer: 3000
 })

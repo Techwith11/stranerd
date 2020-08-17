@@ -30,8 +30,8 @@ const fetchReplies = async (postId: string) => {
 	const date = postReplies[lastIndex]?.createdAt
 	const entities = await GetReplies.call(postId, date)
 	repliesGlobalState[postId].hasMore = entities.length === PAGINATION_LIMIT
-	entities.forEach(entity => {
-		const index = repliesGlobalState[postId].replies.findIndex(e => e.id === entity.id)
+	entities.forEach((entity) => {
+		const index = repliesGlobalState[postId].replies.findIndex((e) => e.id === entity.id)
 		index !== -1 ? repliesGlobalState[postId].replies[index] = entity : repliesGlobalState[postId].replies.unshift(entity)
 	})
 }
@@ -41,8 +41,8 @@ const startListener = async (postId: string) => {
 	const lastIndex = postReplies.length - 1
 	const date = postReplies[lastIndex]?.createdAt
 	const addReplies = (entities: ReplyEntity[]) => {
-		entities.forEach(entity => {
-			const index = repliesGlobalState[postId].replies.findIndex(e => e.id === entity.id)
+		entities.forEach((entity) => {
+			const index = repliesGlobalState[postId].replies.findIndex((e) => e.id === entity.id)
 			index !== -1 ? repliesGlobalState[postId].replies[index] = entity : repliesGlobalState[postId].replies.push(entity)
 		})
 	}
@@ -121,7 +121,7 @@ export const useSingleReply = (postId: string,reply: ReplyEntity) => {
 	const downvoteReply = async () => {
 		votesAndUsersGlobalState[reply.id].voting = true
 		await DownvoteReply.call(postId, reply, store.getters.getId)
-		votesAndUsersGlobalState[reply.id].votes = votesAndUsersGlobalState[reply.id].votes.filter(id => id !== store.getters.getId)
+		votesAndUsersGlobalState[reply.id].votes = votesAndUsersGlobalState[reply.id].votes.filter((id) => id !== store.getters.getId)
 		votesAndUsersGlobalState[reply.id].voting = false
 	}
 

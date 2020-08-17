@@ -84,7 +84,7 @@ export default {
 			try{
 				this.users = []
 				let docs = await firestore.collection('users').where('bio.email','==',this.email).get()
-				docs.forEach(doc => this.users.push({ '.key': doc.id, ...doc.data() }))
+				docs.forEach((doc) => this.users.push({ '.key': doc.id, ...doc.data() }))
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching users. Try refreshing the page' }) }
 			this.fetchingUsers = false
 		},
@@ -92,7 +92,7 @@ export default {
 			this.upgrading = true
 			let res = await makeTutor({ id: user['.key'], ...this.tutor })
 			if(res) {
-				let x = this.users.find(x => x['.key'] === user['.key'])
+				let x = this.users.find((x) => x['.key'] === user['.key'])
 				new window.Toast({ icon: 'success', title: `${x.bio.name} has been registered as a ${this.tutor.course} tutor successfully` })
 				await this.getUsersByEmail()
 			}

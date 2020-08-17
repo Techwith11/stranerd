@@ -61,7 +61,7 @@ export default {
 				}
 				let docs = await query.get()
 				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
+				docs.forEach((doc) => this.sessions.push({ '.key': doc.id, ...doc.data() }))
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching sessions. Try refreshing the page' }) }
 		},
 		async fetchOlderSessions(){
@@ -78,9 +78,9 @@ export default {
 			if(lastItem){
 				query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
 			}
-			this.listener = query.onSnapshot(snapshot => {
-				snapshot.docs.forEach(doc => {
-					let index = this.sessions.findIndex(r => r['.key'] === doc.id)
+			this.listener = query.onSnapshot((snapshot) => {
+				snapshot.docs.forEach((doc) => {
+					let index = this.sessions.findIndex((r) => r['.key'] === doc.id)
 					if(index === -1){
 						this.sessions.unshift({ '.key': doc.id, ...doc.data() })
 					}else{

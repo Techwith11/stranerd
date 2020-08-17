@@ -64,7 +64,7 @@ export class CourseFactory extends BaseFactory<CourseEntity, CourseToModel> {
 	set video(value: Content) { this.set('video', value) }
 	get documents(){ return this.values.documents }
 	addDocument = (value: Content) => { return this.set('documents', [...this.values.documents, value]) }
-	removeDocument(value: Content){ return this.set('documents', this.values.documents.filter(doc => doc.name !== value.name)) }
+	removeDocument(value: Content){ return this.set('documents', this.values.documents.filter((doc) => doc.name !== value.name)) }
 
 	public loadEntity = (entity: CourseEntity) => {
 		this.title = entity.title
@@ -82,7 +82,7 @@ export class CourseFactory extends BaseFactory<CourseEntity, CourseToModel> {
 		if(this.valid){
 			if(this.image instanceof File) this.image = await this.uploadFile('courses/images', this.image)
 			if(this.video instanceof File) this.video = await this.uploadFile('courses/videos', this.video)
-			const docs = await Promise.all(this.documents.map(async doc => {
+			const docs = await Promise.all(this.documents.map(async (doc) => {
 				if(doc instanceof File) return await this.uploadFile('courses/documents', doc)
 				return doc
 			}))

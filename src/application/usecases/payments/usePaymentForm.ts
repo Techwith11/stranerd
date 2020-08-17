@@ -29,7 +29,7 @@ export const usePaymentForm = () => {
 	})
 	const initializeHostedFields = async () => {
 		state.loading = true
-		await initializeFields().catch(async e => await Notify({ title: e.message, icon: 'error' }))
+		await initializeFields().catch(async (e) => await Notify({ title: e.message, icon: 'error' }))
 		state.loading = false
 	}
 	return {
