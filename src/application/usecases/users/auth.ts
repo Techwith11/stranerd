@@ -47,6 +47,7 @@ export const useLogout = () => {
 		loading: false
 	})
 	const logout = async () => {
+		//TODO: Clear out store of personal information
 		state.loading = true
 		if(store.getters.isTutor) await store.dispatch('closeTutorSessionsListener')
 		await store.dispatch('setId', null)

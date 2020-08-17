@@ -1,16 +1,16 @@
 <template>
 	<div>
 		<helper-spinner v-if="methodLoading"/>
-		<div v-if="showForm">
+		<template v-if="showForm">
 			<a class="text-info d-block my-3 small" @click.prevent="backToPaymentMethods"><i class="fas fa-arrow-left mr-2"></i>Back to payment methods</a>
 			<add-payment-method :onAddMethodSuccessful="refreshPaymentMethods"/>
-		</div>
-		<div v-else>
-			<div v-if="methods.length === 0">
+		</template>
+		<template v-else>
+			<template v-if="methods.length === 0">
 				<p class="">No payment method saved. Click below to add a new payment method</p>
 				<a class="text-info my-3 d-block" @click.prevent="showFormFields">Add a new payment method(Credit cards, Paypal accounts)</a>
-			</div>
-			<div v-else>
+			</template>
+			<template v-else>
 				<div class="py-2 my-2 rounded px-4 d-flex" v-for="method in methods" :key="method.id" @click="selectMethod(method.token)"
 					:class="token === method.token ? 'bg-info text-white' : 'bg-light'">
 					<span>{{ method.cardType }}</span>
@@ -18,11 +18,11 @@
 					<span class="ml-auto"><span class="d-none d-sm-inline">Expires </span>{{ method.expirationDate }}</span>
 				</div>
 				<a class="text-info d-block my-3 small" @click.prevent="showFormFields">Add another card or payment method</a>
-			</div>
+			</template>
 			<div class="d-flex justify-content-center mb-3">
 				<img src="../../assets/images/braintree.png" alt="" width="250px">
 			</div>
-		</div>
+		</template>
 	</div>
 </template>
 
@@ -33,7 +33,7 @@ import { usePaymentMethodsList } from '@/usecases/payments/usePaymentMethods'
 export default defineComponent({
 	setup(props){
 		const state = reactive({
-			token: null as string | null,
+			token: '' as string,
 			showForm: false
 		})
 		const { loading: methodLoading, error, methods, fetchPaymentMethods } = usePaymentMethodsList()
@@ -49,23 +49,23 @@ export default defineComponent({
 			},
 			refreshPaymentMethods: async () => {
 				state.showForm = false
-				state.token = null
+				state.token = ''
 				await fetchPaymentMethods()
 			},
 			backToPaymentMethods(){
 				state.showForm = methodLoading.value
-				state.token = null
+				state.token = ''
 			},
 			async showFormFields(){
 				state.showForm = true
-				props.onMethodSelected(null)
+				props.onMethodSelected('')
 			}
 		}
 	},
 	props: {
 		onMethodSelected: {
 			required: true,
-			type: Function as PropType<(value: string | null) => void>
+			type: Function as PropType<(value: string) => void>
 		},
 		loading: {
 			type: Boolean,

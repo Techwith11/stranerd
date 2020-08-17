@@ -1,21 +1,18 @@
 <template>
 	<div>
-		<select-payment-method :onMethodSelected="setToken" :loading="isLoading"/>
-		<button class="w-100 btn-success" v-if="this.token !== null" @click="pay">
-			<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
+		<select-payment-method :onMethodSelected="setToken" :loading="loading"/>
+		<button class="w-100 btn-success" v-if="token" @click="pay" :disabled="loading">
+			<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
 			{{ buttonTitle }}
 		</button>
 	</div>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-import SelectPaymentMethod from '@/components/helpers/SelectPaymentMethod'
-export default {
-	data: () => ({
-		isLoading: false,
-		token: null
-	}),
+<script lang="ts">
+import { defineComponent, PropType, ref } from '@vue/composition-api'
+import SelectPaymentMethod from '@/components/helpers/SelectPaymentMethod.vue'
+import { usePayment } from '@/usecases/payments/usePayment'
+export default defineComponent({
 	props: {
 		amount: {
 			required: true,
@@ -23,29 +20,25 @@ export default {
 		},
 		onPaymentSuccessful: {
 			required: true,
-			type: Function
+			type: Function as PropType<(successful: boolean) => void>
 		},
 		buttonTitle: {
 			required: true,
 			type: String
 		}
 	},
-	methods: {
-		...mapActions(['makePayment']),
-		setToken(token){ this.token = token },
-		async pay(){
-			this.isLoading = true
-			try{
-				const successful = await this.makePayment({ token: this.token, amount: this.amount })
-				if(successful){
-					await this.onPaymentSuccessful(successful)
-				}
-			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-			this.isLoading = false
-		},
+	setup(props){
+		const token = ref('')
+		const setToken = (t: string) => token.value = t
+		const { loading, makePayment } = usePayment()
+		const pay = async () => {
+			const successful = await makePayment(props.amount,token.value)
+			if(successful) await props.onPaymentSuccessful(successful)
+		}
+		return { loading, pay, token, setToken }
 	},
 	components: {
 		'select-payment-method': SelectPaymentMethod
 	}
-}
+})
 </script>

@@ -11,13 +11,13 @@
 				</div>
 				<div class="row my-3">
 					<div class="col-lg-4 mb-5" v-for="(plan,index) in getPlans" :key="plan['.key']">
-						<div class="text-center alert mb-3" :class="`alert-${colors[index]}`">
+						<div class="text-center alert mb-3 shadow" :class="`alert-${colors[index]}`">
 							<h5 class="text-capitalize mb-4">{{ plan.title }}</h5>
 							<p v-if="annual">save 16%</p>
 							<h1>&dollar;{{ annual ? plan.yearlyPrice : plan.monthlyPrice }}</h1>
 							<p>per {{ annual ? 'year' : 'month' }}</p>
 						</div>
-						<div class="alert" :class="`alert-${colors[index]}`">
+						<div class="alert shadow" :class="`alert-${colors[index]}`">
 							<p class="text-center">{{ plan.description }}</p>
 							<hr class="my-4">
 							<ul class="small list-group">
@@ -30,11 +30,11 @@
 						</div>
 						<div class="d-flex justify-content-center" v-if="annual">
 							<p v-if="isLoggedIn && plan.yearlyId === getCurrentId">Currently on this plan</p>
-							<button class="btn btn-success" @click="setId(plan.yearlyId)" v-else>Select</button>
+							<button class="btn btn-success shadow" @click="setId(plan.yearlyId)" v-else>Select</button>
 						</div>
 						<div class="d-flex justify-content-center" v-else>
 							<p v-if="isLoggedIn && plan.monthlyId === getCurrentId">Currently on this plan</p>
-							<button class="btn btn-success" @click="setId(plan.monthlyId)" v-else>Select</button>
+							<button class="btn btn-success shadow" @click="setId(plan.monthlyId)" v-else>Select</button>
 						</div>
 					</div>
 				</div>

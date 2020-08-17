@@ -33,7 +33,7 @@
 			<p>Select payment method to use to pay for subscription</p>
 			<select-payment-method :onMethodSelected="setToken" :loading="isLoading" />
 			<div class="d-flex justify-content-end">
-				<button class="btn" :class="token ? 'btn-success' : 'btn-secondary opacity-25'" :disabled="token === null" @click="subscribe">
+				<button class="btn btn-success" :class="{'opacity-25': !token}" :disabled="!token" @click="subscribe">
 					<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
 					Subscribe
 				</button>
@@ -49,7 +49,7 @@ export default {
 	data: () => ({
 		page: 1,
 		planId: null,
-		token: null,
+		token: '',
 		isLoading: false
 	}),
 	methods: {
