@@ -1,42 +1,67 @@
 <template>
 	<div>
-		<helper-spinner v-if="isLoading"/>
+		<helper-spinner v-if="methodLoading"/>
 		<div v-if="showForm">
 			<a class="text-info d-block my-3 small" @click.prevent="backToPaymentMethods"><i class="fas fa-arrow-left mr-2"></i>Back to payment methods</a>
 			<add-payment-method :onAddMethodSuccessful="refreshPaymentMethods"/>
 		</div>
 		<div v-else>
-			<div v-if="paymentMethods.length === 0">
+			<div v-if="methods.length === 0">
 				<p class="">No payment method saved. Click below to add a new payment method</p>
 				<a class="text-info my-3 d-block" @click.prevent="showFormFields">Add a new payment method(Credit cards, Paypal accounts)</a>
 			</div>
 			<div v-else>
-				<div class="py-2 my-2 rounded px-4 d-flex" v-for="method in paymentMethods" :key="method['.key']" @click="selectMethod(method.token)"
+				<div class="py-2 my-2 rounded px-4 d-flex" v-for="method in methods" :key="method.id" @click="selectMethod(method.token)"
 					:class="token === method.token ? 'bg-info text-white' : 'bg-light'">
-					<span class="" :for="method.token">{{ method.cardType }}</span>
+					<span>{{ method.cardType }}</span>
 					<span class="ml-3">{{ method.maskedNumber }}</span>
 					<span class="ml-auto"><span class="d-none d-sm-inline">Expires </span>{{ method.expirationDate }}</span>
 				</div>
 				<a class="text-info d-block my-3 small" @click.prevent="showFormFields">Add another card or payment method</a>
 			</div>
-			<div class="d-flex justify-content-center">
+			<div class="d-flex justify-content-center mb-3">
 				<img src="../../assets/images/braintree.png" alt="" width="250px">
 			</div>
 		</div>
 	</div>
 </template>
 
-<script>
-	import { mapGetters } from 'vuex'
-	import { firestore } from '@/config/firebase'
-	import AddPaymentMethod from "@/components/helpers/AddPaymentMethod";
-	export default {
-		data: () => ({
-			isLoading: false,
-			showForm: false,
-			paymentMethods: [],
-			token: null
-		}),
+<script lang="ts">
+	import { defineComponent, reactive, computed } from '@vue/composition-api'
+	import AddPaymentMethod from "@/components/helpers/AddPaymentMethod.vue"
+	import { usePaymentMethodsList } from '@/usecases/payments/usePaymentMethods'
+	export default defineComponent({
+		setup(props){
+			const state = reactive({
+				token: null as string | null,
+				showForm: false
+			})
+			const { loading: methodLoading, error, methods, fetchPaymentMethods } = usePaymentMethodsList()
+			return {
+				methodLoading, error, methods, fetchPaymentMethods,
+				token: computed(() => state.token),
+				showForm: computed(() => state.showForm),
+				selectMethod: (token: string) => {
+					if(!props.loading){
+						props.onMethodSelected(token)
+						state.token = token
+					}
+				},
+				refreshPaymentMethods: async () => {
+					state.showForm = false
+					state.token = null
+					await fetchPaymentMethods()
+				},
+				backToPaymentMethods(){
+					state.showForm = methodLoading.value
+					state.token = null
+				},
+				async showFormFields(){
+					state.showForm = true
+					props.onMethodSelected(null)
+				}
+			}
+		},
 		props: {
 			onMethodSelected: {
 				required: true,
@@ -47,44 +72,8 @@
 				required: true
 			}
 		},
-		computed: {
-			...mapGetters(['getId']),
-		},
-		methods: {
-			selectMethod(token){
-				if(!this.loading){
-					this.onMethodSelected(token)
-					this.token = token
-				}
-			},
-			refreshPaymentMethods(){
-				this.showForm = false
-				this.token = null
-				this.fetchPaymentMethods()
-			},
-			backToPaymentMethods(){
-				this.showForm = this.isLoading
-				this.token = null
-			},
-			async showFormFields(){
-				this.showForm = true
-				this.onMethodSelected(null)
-			},
-			async fetchPaymentMethods(){
-				this.isLoading = true
-				try{
-					this.paymentMethods = []
-					let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
-					docs.forEach(doc => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
-				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching payment methods. Try refreshing the page' }) }
-				this.isLoading = false
-			}
-		},
 		components: {
 			'add-payment-method': AddPaymentMethod
-		},
-		async mounted(){
-			await this.fetchPaymentMethods()
 		}
-	}
+	})
 </script>

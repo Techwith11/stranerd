@@ -19,7 +19,10 @@
 				</div>
 			</div>
 			<div class="text-center">
-				<button class="btn btn-primary btn-block" :disabled="!isThereAHoistedFieldInstance" @click.prevent="addCard">Add Credit Card</button>
+				<button class="btn btn-primary btn-block" :disabled="!isThereAHoistedFieldInstance || createLoading" @click.prevent="addCard">
+					<i class="fas fa-spinner fa-spin mr-2" v-if="createLoading"></i>
+					<span>Add Credit Card</span>
+				</button>
 			</div>
 			<hr />
 			<div class="d-flex justify-content-center">

@@ -8,12 +8,20 @@ import { SubscribeToPlanUsecase } from '@root/modules/payments/domain/usecases/s
 import { CancelSubscriptionUsecase } from '@root/modules/payments/domain/usecases/cancelSubscription'
 import { UpdatePaymentMethodForSubscriptionUsecase } from '@root/modules/payments/domain/usecases/updatePaymentMethodForSubscription'
 import { MakePaymentUsecase } from '@root/modules/payments/domain/usecases/makePayment'
+import { MethodFirebaseDataSource } from '@root/modules/payments/data/datasources/method-firebase'
+import { MethodTransformer } from '@root/modules/payments/data/transformers/method'
+import { MethodRepository } from '@root/modules/payments/data/repositories/method'
+import { GetPaymentMethodsUsecase } from '@root/modules/payments/domain/usecases/getPaymentMethods'
 
 const bottle = new Bottle()
 
 bottle.service('DataSources.Payment', PaymentFirebaseDataSource)
+bottle.service('DataSources.Method', MethodFirebaseDataSource)
+
+bottle.service('Transformers.Method', MethodTransformer)
 
 bottle.service('Repositories.Payment', PaymentRepository, 'DataSources.Payment')
+bottle.service('Repositories.Method', MethodRepository, 'DataSources.Method', 'Transformers.Method')
 
 bottle.service('Usecases.Payment.GetClientToken', GetClientTokenUsecase, 'Repositories.Payment')
 bottle.service('Usecases.Payment.CreatePaymentMethod', CreatePaymentMethodUsecase, 'Repositories.Payment')
@@ -23,6 +31,8 @@ bottle.service('Usecases.Payment.SubscribeToPlan', SubscribeToPlanUsecase, 'Repo
 bottle.service('Usecases.Payment.CancelSubscription', CancelSubscriptionUsecase, 'Repositories.Payment')
 bottle.service('Usecases.Payment.UpdateSubscription', UpdatePaymentMethodForSubscriptionUsecase, 'Repositories.Payment')
 
+bottle.service('Usecases.Method.Get', GetPaymentMethodsUsecase, 'Repositories.Method')
+
 const {
 	GetClientToken, CreatePaymentMethod, RemovePaymentMethod, MakePayment, SubscribeToPlan, UpdateSubscription, CancelSubscription
 } = bottle.container.Usecases.Payment as {
@@ -31,6 +41,13 @@ const {
 	UpdateSubscription: UpdatePaymentMethodForSubscriptionUsecase
 }
 
+const {
+	Get: GetPaymentMethods
+} = bottle.container.Usecases.Method as {
+	Get: GetPaymentMethodsUsecase
+}
+
 export {
-	GetClientToken, CreatePaymentMethod, RemovePaymentMethod, MakePayment, SubscribeToPlan, UpdateSubscription, CancelSubscription
+	GetClientToken, CreatePaymentMethod, RemovePaymentMethod, MakePayment, SubscribeToPlan, UpdateSubscription, CancelSubscription,
+	GetPaymentMethods
 }

@@ -5,7 +5,7 @@
 			<h4 class="mb-0">Select Payment Method</h4>
 			<i></i>
 		</div>
-		<p>You are about to pay &dollar;{{ cartPrice }} for {{ cartLength }} {{ getCartLength > 1 ? 'items' : 'item' }}. Select payment method to use</p>
+		<p>You are about to pay &dollar;{{ cartPrice }} for {{ cartLength }} {{ cartLength > 1 ? 'items' : 'item' }}. Select payment method to use</p>
 		<make-payment :amount="cartPrice" :onPaymentSuccessful="onPaymentSuccessful" buttonTitle="Checkout" />
 	</div>
 </template>
