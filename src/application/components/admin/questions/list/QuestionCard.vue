@@ -33,7 +33,7 @@ export default {
 		},
 		async removeQuestion(){
 			try{
-				let result = await new window.SweetAlert({
+				const result = await new window.SweetAlert({
 					title: 'Delete question',
 					text: 'Are you sure you want to delete these question? This cannot be undone',
 					icon: 'info',

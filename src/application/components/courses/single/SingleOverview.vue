@@ -34,7 +34,7 @@ export default {
 		...mapActions(['deleteCourse','setEditMeta','setEditModalCourse']),
 		async removePost(){
 			try{
-				let result = await new window.SweetAlert({
+				const result = await new window.SweetAlert({
 					title: 'Delete course',
 					text: 'Are you sure you want to delete this course? This cannot be undone',
 					icon: 'info',

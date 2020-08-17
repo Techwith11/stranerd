@@ -34,9 +34,9 @@ export default {
 			if(typeof(date) !== 'object'){
 				date = new Date(date)
 			}
-			let now = new Date()
-			let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-			let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+			const now = new Date()
+			const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+			const yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
 			if(date > today){
 				return `${date.toTimeString().slice(0,5)}`
 			}else if(date > yesterday){
@@ -54,7 +54,7 @@ export default {
 				return this.session.duration === 1 ? `${this.session.duration} hour` : `${this.session.duration} hours`
 			}
 			else{
-				let minutes = Math.floor(this.session.duration * 60)
+				const minutes = Math.floor(this.session.duration * 60)
 				return minutes === 1 ? `${minutes} minute` : `${minutes} minutes`
 			}
 		},
@@ -66,7 +66,7 @@ export default {
 		},
 	},
 	async mounted(){
-		let doc = await firestore.collection('users').doc(this.session.student).get()
+		const doc = await firestore.collection('users').doc(this.session.student).get()
 		this.student = doc.data()
 	}
 }

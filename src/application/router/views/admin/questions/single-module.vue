@@ -35,7 +35,7 @@ export default {
 		this.fetched = true
 		this.isLoading = false
 		window.Fire.$on('QuestionEdited', (question) => {
-			let index = this.questions.findIndex((q) => q['.key'] === question['.key'])
+			const index = this.questions.findIndex((q) => q['.key'] === question['.key'])
 			this.questions[index] = question
 			this.$forceUpdate()
 		})
@@ -63,7 +63,7 @@ export default {
 					.limit(this.paginationLimit)
 					.where('subject','==', this.subject.toLowerCase())
 					.where('module','==', this.module.toLowerCase())
-				let lastItem = this.questions[this.questions.length - 1]
+				const lastItem = this.questions[this.questions.length - 1]
 				if(lastItem){
 					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
 				}
@@ -78,7 +78,7 @@ export default {
 			this.isOlderQuestionsLoading = false
 		},
 		async setQuestionsListeners(){
-			let lastItem = this.questions[this.questions.length - 1]
+			const lastItem = this.questions[this.questions.length - 1]
 			let query = firestore.collection('tests/tutors/questions')
 				.where('subject','==', this.subject.toLowerCase())
 				.where('module','==', this.module.toLowerCase())
@@ -88,7 +88,7 @@ export default {
 			}
 			this.listener = query.onSnapshot((snapshot) => {
 				snapshot.docs.forEach((doc) => {
-					let index = this.questions.findIndex((r) => r['.key'] === doc.id)
+					const index = this.questions.findIndex((r) => r['.key'] === doc.id)
 					if(index === -1){
 						this.questions.unshift({ '.key': doc.id, ...doc.data() })
 					}else{

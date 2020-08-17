@@ -20,7 +20,7 @@ module.exports = {
 		'no-mixed-spaces-and-tabs': ['error', 'smart-tabs'],
 		'semi': ['error', 'never'],
 		'quotes': ['error', 'single'],
-		//'prefer-const': ['error'],
+		'prefer-const': ['error'],
 		'arrow-parens': ['error', 'always']
 	},
 	overrides: [

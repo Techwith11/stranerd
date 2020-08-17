@@ -37,16 +37,16 @@ export default {
 	computed: {
 		...mapGetters(['getId']),
 		getTime(){
-			let hours = Math.floor(this.timer / 3600).toFixed(0)
-			let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
-			let seconds = Math.floor(this.timer % 60).toFixed(0)
+			const hours = Math.floor(this.timer / 3600).toFixed(0)
+			const minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
+			const seconds = Math.floor(this.timer % 60).toFixed(0)
 			return `${hours < 10 ? '0' + hours : hours} : ${minutes < 10 ? '0' + minutes : minutes} : ${seconds < 10 ? '0' + seconds : seconds}`
 		},
 	},
 	methods: {
 		async fetchTest(){
 			try{
-				let doc = await firestore.collection('tests/tutors/tests').doc(this.$route.params.id).get()
+				const doc = await firestore.collection('tests/tutors/tests').doc(this.$route.params.id).get()
 				if(doc.exists){
 					this.test = { '.key': doc.id, ...doc.data() }
 				}else{
@@ -60,7 +60,7 @@ export default {
 				new window.Toast({ icon: 'error', title: 'Test has been submitted already' })
 				await this.$router.replace('/tests/tutors')
 			}else{
-				let endsAt = new Date(this.test.dates.endedAt.seconds * 1000)
+				const endsAt = new Date(this.test.dates.endedAt.seconds * 1000)
 				if(endsAt < new Date()){
 					new window.Toast({ icon: 'error', title: 'This test was exited without submitting' })
 					await submitTest({ id: this.$route.params.id, answers: this.answers })
@@ -74,7 +74,7 @@ export default {
 			this.answers[key] = answer
 		},
 		async submit(){
-			let result = await new window.SweetAlert({
+			const result = await new window.SweetAlert({
 				title: 'Submit test',
 				text: 'Are you sure you want to submit now? This cannot be undone',
 				icon: 'info',
@@ -92,7 +92,7 @@ export default {
 				return this.$router.replace('/tests/tutors')
 			}
 			new window.Toast({ icon: 'info', title: 'Submitting answers' })
-			let score = await submitTest({ id: this.$route.params.id, answers: this.answers })
+			const score = await submitTest({ id: this.$route.params.id, answers: this.answers })
 			new window.Toast({ icon: 'info', title: `You scored ${score}%` })
 			await this.$router.replace('/tests/tutors')
 		},

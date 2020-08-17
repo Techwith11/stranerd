@@ -50,16 +50,16 @@ export default {
 		...mapActions(['showSessionRatingsForm']),
 		async getSessionInfo(){
 			try{
-				let doc = await firestore.collection('sessions').doc(this.$route.params.id).get()
+				const doc = await firestore.collection('sessions').doc(this.$route.params.id).get()
 				if(!doc.exists){ return await this.$router.replace('/sessions') }
-				let session = { '.key': doc.id, ...doc.data() }
+				const session = { '.key': doc.id, ...doc.data() }
 				if(this.getId !== session.tutor && this.getId !== session.student){ return await this.$router.replace('/sessions') }
 				if(session.cancelled.tutor || session.cancelled.student){ return await this.$router.replace('/sessions') }
 				this.session = session
 			}catch(error){ return await this.$router.replace('/sessions') }
 		},
 		initTimer(){
-			let endsAt = new Date(this.session.dates.endedAt.seconds * 1000)
+			const endsAt = new Date(this.session.dates.endedAt.seconds * 1000)
 			if(endsAt < new Date()){
 				this.timer = 0
 			}else{
@@ -73,7 +73,7 @@ export default {
 				let docs = firestore.collection(`sessions/${this.session['.key']}/chats`).orderBy('dates.sentAt','desc')
 					.limit(this.paginationLimit)
 				if(this.chats.length > 0){
-					let lastItem = this.chats[0]
+					const lastItem = this.chats[0]
 					docs = docs.where('dates.sentAt','<',lastItem.dates.sentAt)
 				}
 				docs = await docs.get()
@@ -82,14 +82,14 @@ export default {
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching chats. Try refreshing the page' }) }
 		},
 		setChatListener(){
-			let lastItem = this.chats[this.chats.length - 1]
+			const lastItem = this.chats[this.chats.length - 1]
 			let query = firestore.collection(`sessions/${this.session['.key']}/chats`).orderBy('dates.sentAt')
 			if(lastItem){
 				query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
 			}
 			this.chatsListener = query.onSnapshot((snapshot) => {
 				snapshot.docs.forEach((doc) => {
-					let index = this.chats.findIndex((r) => r['.key'] === doc.id)
+					const index = this.chats.findIndex((r) => r['.key'] === doc.id)
 					if(index === -1){
 						this.chats.push({ '.key': doc.id, ...doc.data() })
 					}else{
@@ -99,7 +99,7 @@ export default {
 			})
 		},
 		setOtherPersonListener(){
-			let otherPerson = this.session.tutor === this.getId ? this.session.student : this.session.tutor
+			const otherPerson = this.session.tutor === this.getId ? this.session.student : this.session.tutor
 			this.otherPersonListener = firestore.collection('users').doc(otherPerson)
 				.onSnapshot((snapshot) => this.otherPerson = { '.key': snapshot.id, ...snapshot.data() })
 		},
@@ -150,9 +150,9 @@ export default {
 	computed: {
 		...mapGetters(['getId']),
 		getTime(){
-			let hours = Math.floor(this.timer / 3600).toFixed(0)
-			let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
-			let seconds = Math.floor(this.timer % 60).toFixed(0)
+			const hours = Math.floor(this.timer / 3600).toFixed(0)
+			const minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
+			const seconds = Math.floor(this.timer % 60).toFixed(0)
 			return `${hours < 10 ? '0' + hours : hours} : ${minutes < 10 ? '0' + minutes : minutes} : ${seconds < 10 ? '0' + seconds : seconds}`
 		}
 	},

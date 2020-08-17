@@ -14,7 +14,7 @@ const mutations = {
 	addSubject: (state, subject) => state.subjects.push(subject),
 	deleteSubject: (state, id) => state.subjects = state.subjects.filter((s) => s['.key'] !== id),
 	editSubject(state, subject){
-		let index = state.subjects.findIndex((s) => s['.key'] === subject['.key'])
+		const index = state.subjects.findIndex((s) => s['.key'] === subject['.key'])
 		state.subjects[index].name = subject.name
 		state.subjects[index].modules = subject.modules.map((m) => m)
 	},
@@ -23,13 +23,13 @@ const mutations = {
 const actions = {
 	async fetchAllSubjects({ commit }){
 		try{
-			let docs = await firestore.collection('subjects').orderBy('name').get()
-			let subjects = docs.docs.map((doc) => ({ ...doc.data(), '.key': doc.id }))
+			const docs = await firestore.collection('subjects').orderBy('name').get()
+			const subjects = docs.docs.map((doc) => ({ ...doc.data(), '.key': doc.id }))
 			commit('setAllSubjects', subjects)
 		}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching content. Try refreshing the page' }) }
 	},
 	async createSubject({ commit }, subject){
-		let doc = await firestore.collection('subjects').add(subject)
+		const doc = await firestore.collection('subjects').add(subject)
 		commit('addSubject',{ ...subject, '.key': doc.id })
 	},
 	async editSubject({ commit }, subject){
@@ -50,7 +50,7 @@ const actions = {
 		if(image.size){
 			updated.image = await uploadFile('subjects', image)
 		}
-		let index = subject.modules.findIndex((m) => m.name === module.name)
+		const index = subject.modules.findIndex((m) => m.name === module.name)
 		subject.modules[index] = updated
 		await firestore.collection('subjects').doc(subject['.key']).set(subject)
 		commit('editSubject', { ...subject })

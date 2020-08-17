@@ -93,7 +93,7 @@ export const useUser = (id: string) => {
 			if(user) {
 				userStates[id].user = user
 				if(user.roles.isTutor && user.tutor?.canTeach){
-					let docs = await firestore.collection('sessions').where('tutor','==',id)
+					const docs = await firestore.collection('sessions').where('tutor','==',id)
 						.where('cancelled.student','==',false)
 						.where('cancelled.tutor','==',false)
 						.orderBy('dates.createdAt','desc')

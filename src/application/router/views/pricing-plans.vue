@@ -92,7 +92,7 @@ export default {
 			this.isLoading = false
 		},
 		checkId(){
-			let id = this.getCurrentId
+			const id = this.getCurrentId
 			this.id = id ? id : null
 		}
 	},
@@ -103,7 +103,7 @@ export default {
 		getUser: {
 			immediate: true,
 			handler(){
-				let id = this.getCurrentId
+				const id = this.getCurrentId
 				this.id = id ? id : null
 			}
 		}

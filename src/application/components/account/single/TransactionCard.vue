@@ -21,10 +21,10 @@ export default {
 	},
 	computed: {
 		getDateOrTime(){
-			let date = new Date(this.transaction.dates.createdAt.seconds * 1000)
-			let now = new Date()
-			let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-			let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+			const date = new Date(this.transaction.dates.createdAt.seconds * 1000)
+			const now = new Date()
+			const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+			const yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
 			if(date > today){
 				return date.toTimeString().slice(0,5)
 			}else if(date > yesterday){

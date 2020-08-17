@@ -45,7 +45,7 @@ export default {
 			try{
 				let docs = firestore.collection('tests/tutors/tests').where('user','==',this.getId).orderBy('dates.startedAt','desc')
 					.limit(this.paginationLimit)
-				let lastItem = this.tests[this.tests.length - 1]
+				const lastItem = this.tests[this.tests.length - 1]
 				if(lastItem){
 					docs = docs.where('dates.startedAt','<',lastItem.dates.createdAt)
 				}

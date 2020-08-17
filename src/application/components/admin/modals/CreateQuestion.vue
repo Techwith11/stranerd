@@ -113,7 +113,7 @@ export default {
 	},
 	watch: {
 		'question.subject'() {
-			let subject = this.getAllSubjects.find((s) => s.name === this.question.subject)
+			const subject = this.getAllSubjects.find((s) => s.name === this.question.subject)
 			if (subject && !subject.modules.find((m) => m.name === this.question.module)) {
 				this.question.module = null
 			}

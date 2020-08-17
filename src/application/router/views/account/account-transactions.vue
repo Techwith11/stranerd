@@ -44,7 +44,7 @@ export default {
 			try{
 				let docs = firestore.collection(`users/${this.getId}/transactions`).orderBy('dates.createdAt','desc')
 					.limit(this.paginationLimit)
-				let lastItem = this.transactions[this.transactions.length - 1]
+				const lastItem = this.transactions[this.transactions.length - 1]
 				if(lastItem){
 					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
 				}

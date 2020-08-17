@@ -55,7 +55,7 @@ export default {
 			let docs = firestore.collection(`courses/${this.$route.params.id}/discussions`).orderBy('dates.createdAt','desc')
 				.limit(this.paginationLimit)
 			if(this.discussions.length > 0){
-				let lastItem = this.discussions[0]
+				const lastItem = this.discussions[0]
 				docs = docs.where('dates.createdAt','<', lastItem.dates.createdAt)
 			}
 			docs = await docs.get()
@@ -63,7 +63,7 @@ export default {
 			docs.forEach((doc) => this.discussions.unshift({ '.key': doc.id, ...doc.data() }))
 		},
 		setListener(){
-			let lastItem = this.discussions[this.discussions.length - 1]
+			const lastItem = this.discussions[this.discussions.length - 1]
 			let query = firestore.collection(`courses/${this.$route.params.id}/discussions`).orderBy('dates.createdAt')
 			if(lastItem){
 				query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
@@ -71,7 +71,7 @@ export default {
 			this.listener = query.onSnapshot((snapshot) => {
 				this.newDiscussions = []
 				snapshot.docs.forEach((doc) => {
-					let index = this.discussions.findIndex((r) => r['.key'] === doc.id)
+					const index = this.discussions.findIndex((r) => r['.key'] === doc.id)
 					if(index === -1){
 						this.discussions.push({ '.key': doc.id, ...doc.data() })
 					}else{
@@ -110,9 +110,9 @@ export default {
 		getDateOrTime(date){
 			if(typeof(date) !== 'number') { return date }
 			date = new Date(date * 1000)
-			let now = new Date()
-			let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-			let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+			const now = new Date()
+			const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+			const yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
 			if(date > today){
 				return date.toTimeString().slice(0,5)
 			}else if(date > yesterday){

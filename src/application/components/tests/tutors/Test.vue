@@ -64,7 +64,7 @@ export default {
 			this.isLoading = true
 			new window.Toast({ icon: 'info', title: 'Submitting test' })
 			try{
-				let res = await this.markTest(testData)
+				const res = await this.markTest(testData)
 				new window.Toast({ icon: 'info', title: `You scored ${res.data.score}%` })
 				window.removeEventListener('beforeunload',this.onReloadListener)
 				await this.$router.push('/my_account')
@@ -72,7 +72,7 @@ export default {
 			this.isLoading = false
 		},
 		async submitTest(){
-			let result = await new window.SweetAlert({
+			const result = await new window.SweetAlert({
 				title: 'Submit test',
 				text: 'Are you sure you want to submit now? This cannot be undone',
 				icon: 'info',

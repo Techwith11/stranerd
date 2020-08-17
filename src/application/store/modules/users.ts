@@ -55,8 +55,8 @@ const actions = {
 	},
 	closeProfileListener: ({ commit }) => commit('setProfileListener', () => {}),
 	async updateProfile({ getters }, data){
-		let bio = data.bio
-		let image = data.image
+		const bio = data.bio
+		const image = data.image
 		if(image) bio.image = await uploadFile('users/images', image)
 		return await firestore.collection('users').doc(getters.getId).set({ bio }, { merge: true })
 	},

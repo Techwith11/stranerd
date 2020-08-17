@@ -37,7 +37,7 @@ export default {
 	computed: {
 		...mapGetters(['getNewSessionData','isSubscribed']),
 		prices(){
-			let sub = this.isSubscribed
+			const sub = this.isSubscribed
 			return {
 				0.25: sub ? 7.5 : 10,
 				0.5: sub ? 15 : 20,
@@ -47,7 +47,7 @@ export default {
 			}
 		},
 		getPrices(){
-			let entries = Object.entries(this.prices)
+			const entries = Object.entries(this.prices)
 			entries.sort((a,b) => a[0] - b[0])
 			return entries.map((arr) => ({ time: parseFloat(arr[0]), price: arr[1] }))
 		}
@@ -57,8 +57,8 @@ export default {
 		setMode(duration){ this.mode = duration },
 		async requestSession(){
 			this.isLoading = true
-			let duration = this.mode
-			let price = this.prices[duration]
+			const duration = this.mode
+			const price = this.prices[duration]
 			try{
 				await this.startSession({ duration, price, secret: this.secret, ...this.getNewSessionData })
 			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }

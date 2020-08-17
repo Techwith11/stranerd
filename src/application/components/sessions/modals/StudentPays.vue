@@ -22,7 +22,7 @@ export default {
 				return this.getCurrentSession.duration === 1 ? `${this.getCurrentSession.duration} hour` : `${this.getCurrentSession.duration} hours`
 			}
 			else{
-				let minutes = Math.floor(this.getCurrentSession.duration * 60)
+				const minutes = Math.floor(this.getCurrentSession.duration * 60)
 				return minutes === 1 ? `${minutes} minute` : `${minutes} minutes`
 			}
 		},

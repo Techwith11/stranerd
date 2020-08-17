@@ -38,11 +38,11 @@ export default {
 		getChatContent(){ return this.chat.media ? this.chat.media.name : this.chat.content },
 		getChatRead(){ return this.chat.dates.readAt != null },
 		getChatTime(){
-			let sentAt = this.chat && this.chat.dates ? this.chat.dates.sentAt : null
-			let date = sentAt ? new Date(sentAt.seconds * 1000) : new Date()
-			let now = new Date()
-			let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-			let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+			const sentAt = this.chat && this.chat.dates ? this.chat.dates.sentAt : null
+			const date = sentAt ? new Date(sentAt.seconds * 1000) : new Date()
+			const now = new Date()
+			const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+			const yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
 			if(date > today){
 				return date.toTimeString().slice(0,5)
 			}else if(date > yesterday){

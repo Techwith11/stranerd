@@ -29,7 +29,7 @@ export default {
 	},
 	async mounted(){
 		try{
-			let docs = await firestore.collection('sessions').orderBy('dates.createdAt','desc')
+			const docs = await firestore.collection('sessions').orderBy('dates.createdAt','desc')
 				.where(this.isTutor ? 'tutor' : 'student', '==', this.getId)
 				.limit(3).get()
 			docs.forEach((doc) => this.sessions.push({ '.key': doc.id, ...doc.data() }))

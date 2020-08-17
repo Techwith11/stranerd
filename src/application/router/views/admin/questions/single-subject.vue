@@ -26,11 +26,11 @@ export default {
 	},
 	async activated(){
 		this.isLoading = true
-		let name = this.$route.params.subject
+		const name = this.$route.params.subject
 		if(this.getAllSubjects.length === 0){
 			await this.fetchAllSubjects()
 		}
-		let subject = this.getAllSubjects.find((s) => s.name.toLowerCase() === name.toLowerCase())
+		const subject = this.getAllSubjects.find((s) => s.name.toLowerCase() === name.toLowerCase())
 		if(subject){
 			this.subject = subject
 		}else{

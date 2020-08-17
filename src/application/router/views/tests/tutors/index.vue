@@ -43,7 +43,7 @@ export default {
 	}),
 	methods: {
 		async beginTest(){
-			let result = await new window.SweetAlert({
+			const result = await new window.SweetAlert({
 				title: 'Start test',
 				text: 'Are you sure you are ready to start?',
 				icon: 'info',
@@ -70,23 +70,23 @@ export default {
 			return d.toTimeString().slice(0,5)
 		},
 		failed(){
-			let courseUpgrade = this.tutor.upgrade[this.course]
-			let upgrade = courseUpgrade[this.getNewLevel]
+			const courseUpgrade = this.tutor.upgrade[this.course]
+			const upgrade = courseUpgrade[this.getNewLevel]
 			if(upgrade && upgrade['passed'] === false){
-				let twoHoursToMs = 7200000
-				let failedTime = new Date(upgrade['takenAt']['seconds'] * 1000)
+				const twoHoursToMs = 7200000
+				const failedTime = new Date(upgrade['takenAt']['seconds'] * 1000)
 				return (new Date() - failedTime) < twoHoursToMs
 			}
 			return false
 		}
 	},
 	created(){
-		let course = this.$route.query.course?.toLowerCase()
+		const course = this.$route.query.course?.toLowerCase()
 		this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
 	},
 	async activated(){
 		if(!this.isTutor){ await this.$router.push('/') }
-		let course = this.$route.query.course?.toLowerCase()
+		const course = this.$route.query.course?.toLowerCase()
 		this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
 		await checkForUnfinishedTests()
 		this.isLoading = false

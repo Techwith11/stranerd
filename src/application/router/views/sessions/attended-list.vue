@@ -51,7 +51,7 @@ export default {
 	methods: {
 		async getSessions(){
 			try{
-				let lastItem = this.sessions[this.sessions.length - 1]
+				const lastItem = this.sessions[this.sessions.length - 1]
 				let query = firestore.collection('sessions')
 					.where('student','==', this.getId)
 					.orderBy('dates.createdAt','desc')
@@ -59,7 +59,7 @@ export default {
 				if(lastItem){
 					query = query.where('dates.createdAt','<',lastItem.dates.createdAt)
 				}
-				let docs = await query.get()
+				const docs = await query.get()
 				this.hasMore = docs.size >= this.paginationLimit
 				docs.forEach((doc) => this.sessions.push({ '.key': doc.id, ...doc.data() }))
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching sessions. Try refreshing the page' }) }
@@ -70,7 +70,7 @@ export default {
 			this.isOlderSessionsLoading = false
 		},
 		async setSessionsListeners(){
-			let lastItem = this.sessions[this.sessions.length - 1]
+			const lastItem = this.sessions[this.sessions.length - 1]
 			let query = firestore.collection('sessions')
 				.where('student','==', this.getId)
 				.orderBy('dates.createdAt')
@@ -80,7 +80,7 @@ export default {
 			}
 			this.listener = query.onSnapshot((snapshot) => {
 				snapshot.docs.forEach((doc) => {
-					let index = this.sessions.findIndex((r) => r['.key'] === doc.id)
+					const index = this.sessions.findIndex((r) => r['.key'] === doc.id)
 					if(index === -1){
 						this.sessions.unshift({ '.key': doc.id, ...doc.data() })
 					}else{

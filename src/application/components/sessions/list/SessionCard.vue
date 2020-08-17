@@ -60,16 +60,16 @@ export default {
 				return this.session.duration === 1 ? `${this.session.duration} hour` : `${this.session.duration} hours`
 			}
 			else{
-				let minutes = Math.floor(this.session.duration * 60)
+				const minutes = Math.floor(this.session.duration * 60)
 				return minutes === 1 ? `${minutes} minute` : `${minutes} minutes`
 			}
 		},
 		wasCancelled(){ return this.session.cancelled.student || this.session.cancelled.tutor },
 		isStillInSession(){ return this.timer > 0 },
 		getTime(){
-			let hours = Math.floor(this.timer / 3600).toFixed(0)
-			let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
-			let seconds = Math.floor(this.timer % 60).toFixed(0)
+			const hours = Math.floor(this.timer / 3600).toFixed(0)
+			const minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
+			const seconds = Math.floor(this.timer % 60).toFixed(0)
 			if(hours > 0){
 				return `return \`Ends in ${hours} hours ${minutes < 10 ? '0' + minutes : minutes} ${minutes > 1 ? 'minutes' : 'minute'}\``
 			}else if(minutes > 0){
@@ -84,9 +84,9 @@ export default {
 			if(typeof(date) !== 'object'){
 				date = new Date(date)
 			}
-			let now = new Date()
-			let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-			let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+			const now = new Date()
+			const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+			const yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
 			if(date > today){
 				return `${date.toTimeString().slice(0,5)}`
 			}else if(date > yesterday){
@@ -98,13 +98,13 @@ export default {
 	},
 	async mounted(){
 		if(!this.wasCancelled){
-			let endsAt = new Date(this.session.dates.endedAt.seconds * 1000)
+			const endsAt = new Date(this.session.dates.endedAt.seconds * 1000)
 			if(endsAt > new Date()){
 				this.timer = Math.floor((endsAt - new Date()) / 1000)
 				this.interval = window.setInterval(() => this.timer > 1 ? this.timer-- : null, 1000)
 			}
 		}
-		let doc = await firestore.collection('users').doc(this.getOtherPerson).get()
+		const doc = await firestore.collection('users').doc(this.getOtherPerson).get()
 		this.user = doc.data()
 	},
 	watch: {

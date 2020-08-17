@@ -1,7 +1,7 @@
 // @ts-nocheck
 import firebase, { firestore, functions, uploadFile } from '@/config/firebase'
 
-let helpers = {
+const helpers = {
 	sendDiscussion: async (userId, id, body) => await firestore.collection(`courses/${id}/discussions`).add({
 		body, userId,
 		dates: { createdAt: firebase.firestore.FieldValue.serverTimestamp() }
@@ -29,7 +29,7 @@ let helpers = {
 		return await firestore.collection('notes').add(note)
 	},
 	uploadFromEditor: async (data) => {
-		let res = await uploadFile(data.path, data.file)
+		const res = await uploadFile(data.path, data.file)
 		data.editor.insertEmbed(data.cursorLocation, 'image', res.link)
 		data.resetUploader()
 	},
@@ -43,29 +43,29 @@ let helpers = {
 	deleteBlogPost: async (id) => await firestore.collection('blog').doc(id).delete(),
 	deleteCourse: async (id) => await firestore.collection('courses').doc(id).delete(),
 	editQuestion: async (question) => {
-		let copy = { ...question }
-		let id = copy['.key']
+		const copy = { ...question }
+		const id = copy['.key']
 		delete copy['.key']
 		copy.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
 		return await firestore.collection('tests/tutors/questions').doc(id).set(copy, { merge: true })
 	},
 	editNote: async (note) => {
-		let copy = { ...note }
-		let id = copy['.key']
+		const copy = { ...note }
+		const id = copy['.key']
 		delete copy['.key']
 		copy.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
 		return await firestore.collection('notes').doc(id).set(copy, { merge: true })
 	},
 	editBlogPost: async (post) => {
-		let copy = { ...post }
-		let id = copy['.key']
+		const copy = { ...post }
+		const id = copy['.key']
 		delete copy['.key']
 		copy.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
 		return await firestore.collection('blog').doc(id).set(copy, { merge: true })
 	},
 	editCourse: async (course) => {
-		let copy = { ...course }
-		let id = copy['.key']
+		const copy = { ...course }
+		const id = copy['.key']
 		delete copy['.key']
 		copy.dates.updatedAt =  firebase.firestore.FieldValue.serverTimestamp()
 		return await firestore.collection('courses').doc(id).set(copy, { merge: true })
@@ -80,25 +80,25 @@ const actions = {
 	downvoteReply: async ({ getters }, data) => await helpers.downvoteReply({ ...data, id: getters.getId }),
 	createQuestion: async ({ getters }, data) => await helpers.createQuestion(data, getters.getId),
 	createCourse: async ({ getters }, data) => {
-		let course = data.course
+		const course = data.course
 		if(course.hasVideo){
 			course.video = await uploadFile('courses/videos', data.video)
 		}
 		course.image = await uploadFile('courses/images', data.image)
 		course.documents = []
 		for (const file of data.documents) {
-			let media = await uploadFile('courses/documents', file)
+			const media = await uploadFile('courses/documents', file)
 			course.documents.push(media)
 		}
 		return await helpers.createCourse(course, getters.getId)
 	},
 	createNote: async ({ getters }, data) => {
-		let note = data.note
+		const note = data.note
 		note.document = await uploadFile('notes', data.document)
 		return await helpers.createNote(note, getters.getId)
 	},
 	createBlogPost: async ({ getters }, data) => {
-		let post = data.post
+		const post = data.post
 		post.image = await uploadFile('blog', data.image)
 		return await helpers.createBlogPost(post, getters.getId)
 	},
@@ -136,7 +136,7 @@ const actions = {
 		course.documents = []
 		for (const file of documents) {
 			if(file.size){
-				let media = await uploadFile('courses/documents', file)
+				const media = await uploadFile('courses/documents', file)
 				course.documents.push(media)
 			}else{
 				course.documents.push(file)

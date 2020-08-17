@@ -3,7 +3,7 @@ import {functions} from '@/config/firebase'
 import {client, hostedFields, /*paypalCheckout*/} from 'braintree-web'
 //import paypal from 'paypal-checkout'
 
-let helpers = {
+const helpers = {
 	getBraintreeClientToken: async () => (await functions.httpsCallable('getClientToken')()).data,
 	createPaymentMethod: async (data) => (await functions.httpsCallable('createPaymentMethod')(data)).data,
 	removePaymentMethod: async (data) => (await functions.httpsCallable('removePaymentMethod')(data)).data,
@@ -28,11 +28,11 @@ const mutations = {
 const actions = {
 	async initPaymentFields({ /*getters,*/ commit }, /*data*/){
 		try{
-			let tokens = await helpers.getBraintreeClientToken()
-			let clientInstance = await client.create({ authorization: tokens.braintree })
-			let month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
-			let year = new Date().getFullYear()
-			let options = {
+			const tokens = await helpers.getBraintreeClientToken()
+			const clientInstance = await client.create({ authorization: tokens.braintree })
+			const month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
+			const year = new Date().getFullYear()
+			const options = {
 				client: clientInstance,
 				styles: { input: { 'font-size': '14px' }},
 				fields: {
@@ -71,8 +71,8 @@ const actions = {
 		}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 	},
 	async createPaymentMethod({ getters }){
-		let payload = await getters.getHoistedFieldsInstance.tokenize()
-		let result = await helpers.createPaymentMethod({
+		const payload = await getters.getHoistedFieldsInstance.tokenize()
+		const result = await helpers.createPaymentMethod({
 			id: getters.getId,
 			nonce: payload.nonce
 		})
@@ -82,7 +82,7 @@ const actions = {
 		return result
 	},
 	async removePaymentMethod({ getters }, id){
-		let result = await helpers.removePaymentMethod({
+		const result = await helpers.removePaymentMethod({
 			user: getters.getId,
 			id
 		})
@@ -93,19 +93,19 @@ const actions = {
 	},
 	async makePayment({ getters }, data){
 		if(Math.ceil(data.amount) < 1){ return new window.Toast({ icon: 'error', title: 'Invalid amount' }) }
-		let result = await helpers.makePayment({ ...data, id: getters.getId })
+		const result = await helpers.makePayment({ ...data, id: getters.getId })
 		if(result === false){
 			throw new Error('An error occurred charging your account')
 		}
 		return result
 	},
 	async subscribeToPlan({ getters }, data){
-		let result = await helpers.subscribeToPlan({ ...data, id: getters.getId })
+		const result = await helpers.subscribeToPlan({ ...data, id: getters.getId })
 		result ? new window.Toast({ icon: 'success', title: 'Subscription successful.' }) : new window.Toast({ icon: 'warning', title: 'Something unexpected happened' })
 		return result
 	},
 	async cancelSubscription({ getters }){
-		let result = await helpers.cancelSubscription({ id: getters.getId })
+		const result = await helpers.cancelSubscription({ id: getters.getId })
 		if(result === false){
 			throw new Error('Error cancelling subscription')
 		}

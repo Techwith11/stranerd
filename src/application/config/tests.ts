@@ -4,7 +4,7 @@ import store from '@/store/index'
 import { Notify } from '@/config/notifications'
 
 export const checkForUnfinishedTests = async () => {
-	let tests = await firestore.collection('tests/tutors/tests')
+	const tests = await firestore.collection('tests/tutors/tests')
 		.where('user','==', store.getters.getId)
 		.where('marked','==',false)
 		.limit(1).get()
@@ -13,9 +13,9 @@ export const checkForUnfinishedTests = async () => {
 	}
 }
 export const startTest = async (course: string) => {
-	let level = 1 + store.getters.getUser?.tutor['levels'][course] ?? 0
-	let user = store.getters.getId
-	let data = { user, course, level }
+	const level = 1 + store.getters.getUser?.tutor['levels'][course] ?? 0
+	const user = store.getters.getId
+	const data = { user, course, level }
 	return functions.httpsCallable('startTutorTest')(data).then(async (res) => {
 		await router.push(`/tests/tutors/${res.data.id}`)
 	}).catch(async (error) => await Notify({ icon: 'error', title: error.message }))

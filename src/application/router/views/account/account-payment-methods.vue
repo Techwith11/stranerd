@@ -27,12 +27,12 @@ export default {
 		...mapActions(['setAccountModalAddPaymentMethod','removePaymentMethod']),
 		async fetchPaymentMethods(){
 			try{
-				let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
+				const docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
 				docs.forEach((doc) => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
 			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching payment methods. Try refreshing the page' }) }
 		},
 		async removeMethod(method){
-			let result = await new window.SweetAlert({
+			const result = await new window.SweetAlert({
 				title: 'Remove method',
 				text: 'Are you sure you want to remove this payment method?',
 				icon: 'info',

@@ -1,19 +1,19 @@
 // @ts-nocheck
 import firebase, { firestore, functions, uploadFile } from '@/config/firebase'
 
-let helpers = {
+const helpers = {
 	createNewChatCollection: async (from, to) => {
 		return functions.httpsCallable('createNewSingleChatCollection')({ from, to })
 	},
 	sendChat: async (from, path, content) => {
-		let chat = {
+		const chat = {
 			from, content,
 			dates: { sentAt: firebase.firestore.FieldValue.serverTimestamp(), readAt: null },
 		}
 		return await firestore.collection(path).add(chat)
 	},
 	sendMediaChat: async (from, path, media) => {
-		let chat = {
+		const chat = {
 			from,
 			dates: { sentAt: firebase.firestore.FieldValue.serverTimestamp(), readAt: null },
 		}
@@ -27,37 +27,37 @@ let helpers = {
 	}
 }
 
-let actions = {
+const actions = {
 	async sendChat({ getters }, data){
-		let chat = [getters.getId, data.id].sort().join('_')
-		let path = `chats/${chat}/chats`
+		const chat = [getters.getId, data.id].sort().join('_')
+		const path = `chats/${chat}/chats`
 		await helpers.sendChat(getters.getId, path, data.content)
 		if(!getters.getChattedWith.includes(data.id)){
 			await helpers.createNewChatCollection(getters.getId, data.id)
 		}
 	},
 	async sendMedia({ getters }, data) {
-		let chat = [getters.getId, data.id].sort().join('_')
-		let path = `chats/${chat}/chats`
+		const chat = [getters.getId, data.id].sort().join('_')
+		const path = `chats/${chat}/chats`
 		await helpers.sendMediaChat(getters.getId, path, data.media)
 		if(!getters.getChattedWith.includes(data.id)){
 			await helpers.createNewChatCollection(getters.getId, data.id)
 		}
 	},
 	async readChat(store, data){
-		let path = `chats/${data.path}/chats/${data.id}`
+		const path = `chats/${data.path}/chats/${data.id}`
 		return await helpers.readChat(path)
 	},
 	async readSessionChat(store, data){
-		let path = `sessions/${data.path}/chats/${data.id}`
+		const path = `sessions/${data.path}/chats/${data.id}`
 		return await helpers.readChat(path)
 	},
 	async sendSessionChat({ getters }, data){
-		let path = `sessions/${data.id}/chats`
+		const path = `sessions/${data.id}/chats`
 		return await helpers.sendChat(getters.getId, path, data.content)
 	},
 	async sendSessionMedia({ getters }, data){
-		let path = `sessions/${data.id}/chats`
+		const path = `sessions/${data.id}/chats`
 		return await helpers.sendMediaChat(getters.getId, path, data.media)
 	},
 }

@@ -51,15 +51,15 @@ export default {
 	methods: {
 		...mapActions(['cancelSubscription']),
 		convertToTitle(string){
-			let res = string.split('_')
+			const res = string.split('_')
 			let plan = res[2]
-			let duration = res[1]
+			const duration = res[1]
 			plan = plan[0].toUpperCase() + plan.slice(1)
 			return `${plan}(${duration})`
 		},
 		async cancelSub(){
 			if(!this.isLoadingCancel){
-				let result = await new window.SweetAlert({
+				const result = await new window.SweetAlert({
 					title: 'Cancel Subscription',
 					text: 'Are you sure you want to cancel your subscription',
 					icon: 'info',
@@ -72,7 +72,7 @@ export default {
 				if (result.value) {
 					try{
 						this.isLoadingCancel = true
-						let res = await this.cancelSubscription()
+						const res = await this.cancelSubscription()
 						if(res){
 							new window.Toast({ icon: 'success', title: 'Subscription cancelled successfully' })
 						}

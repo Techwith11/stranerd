@@ -28,20 +28,20 @@ export const setup = () => {
 }
 
 export const closeNavbar = () => {
-	let collapse = document.getElementById('navbar')
+	const collapse = document.getElementById('navbar')
 	collapse ? collapse.classList.remove('show') : null
 }
 
 export const closeAccountDropdown = () => {
-	let collapse = document.getElementById('accountDropdown')
+	const collapse = document.getElementById('accountDropdown')
 	collapse ? collapse.classList.remove('show') : null
-	let menu = document.getElementById('accountDropdownMenu')
+	const menu = document.getElementById('accountDropdownMenu')
 	menu ? menu.classList.remove('show') : null
 }
 
 export const closeAdminDropdown = () => {
-	let collapse = document.getElementById('adminDropdown')
+	const collapse = document.getElementById('adminDropdown')
 	collapse ? collapse.classList.remove('show') : null
-	let menu = document.getElementById('adminDropdownMenu')
+	const menu = document.getElementById('adminDropdownMenu')
 	menu ? menu.classList.remove('show') : null
 }

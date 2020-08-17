@@ -44,7 +44,7 @@ export default {
 	},
 	methods: {
 		async getUser(){
-			let doc = await firestore.collection('users').doc(this.$route.params.id).get()
+			const doc = await firestore.collection('users').doc(this.$route.params.id).get()
 			if(!doc.exists){ return this.$router.replace('/chats') }
 			this.user = { '.key': doc.id, ...doc.data() }
 			this.isLoading = false
@@ -53,13 +53,13 @@ export default {
 			let docs = firestore.collection(`chats/${this.getChatPath}/chats`).orderBy('dates.sentAt','desc')
 				.limit(this.paginationLimit)
 			if(this.chats.length > 0){
-				let lastItem = this.chats[0]
+				const lastItem = this.chats[0]
 				docs = docs.where('dates.sentAt','<',lastItem.dates.sentAt)
 			}
 			docs = await docs.get()
 			this.hasMore = docs.size >= this.paginationLimit
 			docs.forEach((doc) => {
-				let index = this.chats.findIndex((r) => r['.key'] === doc.id)
+				const index = this.chats.findIndex((r) => r['.key'] === doc.id)
 				if(index === -1){
 					this.chats.unshift({ '.key': doc.id, ...doc.data() })
 				}else{
@@ -68,14 +68,14 @@ export default {
 			})
 		},
 		setListener(){
-			let lastItem = this.chats[this.chats.length - 1]
+			const lastItem = this.chats[this.chats.length - 1]
 			let query = firestore.collection(`chats/${this.getChatPath}/chats`).orderBy('dates.sentAt')
 			if(lastItem){
 				query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
 			}
 			this.chatsListener = query.onSnapshot((snapshot) => {
 				snapshot.docs.forEach((doc) => {
-					let index = this.chats.findIndex((r) => r['.key'] === doc.id)
+					const index = this.chats.findIndex((r) => r['.key'] === doc.id)
 					if(index === -1){
 						this.chats.push({ '.key': doc.id, ...doc.data() })
 					}else{

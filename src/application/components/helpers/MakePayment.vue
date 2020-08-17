@@ -36,7 +36,7 @@ export default {
 		async pay(){
 			this.isLoading = true
 			try{
-				let successful = await this.makePayment({ token: this.token, amount: this.amount })
+				const successful = await this.makePayment({ token: this.token, amount: this.amount })
 				if(successful){
 					await this.onPaymentSuccessful(successful)
 				}

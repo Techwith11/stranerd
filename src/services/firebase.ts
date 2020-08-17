@@ -36,7 +36,7 @@ export const functions = firebase.functions()
 export const storage = firebase.storage()
 
 const uploadToMockServer = async (path: string, file: File) => {
-	let data = new FormData()
+	const data = new FormData()
 	data.set('path', path)
 	data.set('file', file)
 	const res = await fetch('http://localhost:3000/file', {

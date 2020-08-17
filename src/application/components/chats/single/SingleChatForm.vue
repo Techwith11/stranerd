@@ -25,7 +25,7 @@ export default {
 	methods:{
 		...mapActions(['sendChat','sendMedia']),
 		async sendMessage(){
-			let message = this.message
+			const message = this.message
 			this.message = ''
 			this.$v.$reset()
 			try{
@@ -37,7 +37,7 @@ export default {
 			this.uploadFiles()
 		},
 		async uploadFiles(){
-			let result = await new window.SweetAlert({
+			const result = await new window.SweetAlert({
 				title: 'Send Files',
 				text: 'Are you sure you want to send these files',
 				icon: 'info',

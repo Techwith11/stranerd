@@ -90,7 +90,7 @@ export default {
 		...mapActions(['subscribeToMail']),
 		async subscribe(){
 			this.loading = true
-			let email = this.email
+			const email = this.email
 			try{
 				await this.subscribeToMail(email)
 				new window.Toast({ icon: 'success', title: 'Successfully subscribed' })

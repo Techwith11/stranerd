@@ -51,7 +51,7 @@ export default {
 	methods: {
 		...mapActions(['closeAccountModal', 'updateProfile']),
 		catchImage(e){
-			let file = e.target.files[0]
+			const file = e.target.files[0]
 			if(file && file.type.startsWith('image/')){
 				this.image = file
 				this.imageLink = window.URL.createObjectURL(file)
