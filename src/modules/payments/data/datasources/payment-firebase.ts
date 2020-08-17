@@ -14,7 +14,7 @@ export class PaymentFirebaseDataSource implements PaymentBaseDataSource{
 		return await FunctionsService.call('removePaymentMethod', data)
 	}
 
-	public async makePayment(data: { id: string, amount: string, token: string }): Promise<boolean> {
+	public async makePayment(data: { id: string, amount: number, token: string }): Promise<boolean> {
 		return await FunctionsService.call('makePayment', data)
 	}
 

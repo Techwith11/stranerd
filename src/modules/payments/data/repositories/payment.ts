@@ -20,7 +20,7 @@ export class PaymentRepository implements IPaymentRepository {
 		return await this.dataSource.getClientToken()
 	}
 
-	public async makePayment(userId: string, amount: string, token: string): Promise<boolean> {
+	public async makePayment(userId: string, amount: number, token: string): Promise<boolean> {
 		return await this.dataSource.makePayment({ amount, token, id: userId })
 	}
 
