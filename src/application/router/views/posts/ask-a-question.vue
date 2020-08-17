@@ -9,24 +9,24 @@
 
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import CreatePost from '@/components/posts/PostForm.vue'
-	export default defineComponent({
-		name: 'AskAQuestion',
-		components: {
-			'create-post': CreatePost
-		},
-		meta(){
-			return {
-				title: 'Ask A Question',
-				meta: [
-					{
-						vmid: 'robots',
-						name: 'robots',
-						content: 'none'
-					}
-				]
-			}
+import { defineComponent } from '@vue/composition-api'
+import CreatePost from '@/components/posts/PostForm.vue'
+export default defineComponent({
+	name: 'AskAQuestion',
+	components: {
+		'create-post': CreatePost
+	},
+	meta(){
+		return {
+			title: 'Ask A Question',
+			meta: [
+				{
+					vmid: 'robots',
+					name: 'robots',
+					content: 'none'
+				}
+			]
 		}
-	})
+	}
+})
 </script>

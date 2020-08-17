@@ -11,20 +11,20 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	export default {
-        data: () => ({
-            isLoading: false,
-        }),
-		methods: {
-			...mapActions(['cancelSessionAndCloseModal']),
-            async closeModal(){
-                this.isLoading = true
-                await this.cancelSessionAndCloseModal()
-            }
-		},
-        computed: {
-            ...mapGetters(['getOtherPersonOnSession'])
-        }
+import { mapGetters, mapActions } from 'vuex'
+export default {
+	data: () => ({
+		isLoading: false,
+	}),
+	methods: {
+		...mapActions(['cancelSessionAndCloseModal']),
+		async closeModal(){
+			this.isLoading = true
+			await this.cancelSessionAndCloseModal()
+		}
+	},
+	computed: {
+		...mapGetters(['getOtherPersonOnSession'])
 	}
+}
 </script>

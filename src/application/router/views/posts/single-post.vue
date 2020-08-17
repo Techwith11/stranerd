@@ -23,61 +23,61 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, onActivated, onDeactivated } from '@vue/composition-api'
-	import PostInfo from '@/components/posts/single/PostInfo.vue'
-	import ReplyForm from '@/components/posts/single/ReplyForm.vue'
-	import ReplyCard from '@/components/posts/single/ReplyCard.vue'
-	import router from '@/router'
-	import { usePost } from '@/usecases/posts/posts'
-	import { useReplies } from '@/usecases/posts/replies'
-	export default defineComponent({
-		name: "Post",
-		setup(){
-			const { id } = router.currentRoute.params
-			const { post, loading, error, user } = usePost(id)
-			const {
-				replies, loading: replyLoading, fetched, error: replyError,
-				hasMore, olderRepliesLoading, fetchOlderReplies,
-				startListener, closeListener,
-			} = useReplies(id)
-			onActivated(() => fetched.value ? startListener() : null)
-			onDeactivated(closeListener)
-			return {
-				post, loading, error, user,
-				replies, replyLoading, fetched, replyError,
-				hasMore, olderRepliesLoading, fetchOlderReplies
-			}
-		},
-		components: {
-			'post-info': PostInfo,
-			'reply-form': ReplyForm,
-			'reply-card': ReplyCard,
-		},
-		meta(){
-			return {
-				title: (this.post as any)?.title || 'Question Title',
-				meta: [
-					{
-						vmid: 'description',
-						name: 'description',
-						content: ''
-					},
-					{
-						vmid: 'author',
-						name: 'author',
-						content: (this.user as any)?.name ?? 'user'
-					},
-					{
-						vmid: 'keywords',
-						name: 'keywords',
-						content: [
+import { defineComponent, onActivated, onDeactivated } from '@vue/composition-api'
+import PostInfo from '@/components/posts/single/PostInfo.vue'
+import ReplyForm from '@/components/posts/single/ReplyForm.vue'
+import ReplyCard from '@/components/posts/single/ReplyCard.vue'
+import router from '@/router'
+import { usePost } from '@/usecases/posts/posts'
+import { useReplies } from '@/usecases/posts/replies'
+export default defineComponent({
+	name: "Post",
+	setup(){
+		const { id } = router.currentRoute.params
+		const { post, loading, error, user } = usePost(id)
+		const {
+			replies, loading: replyLoading, fetched, error: replyError,
+			hasMore, olderRepliesLoading, fetchOlderReplies,
+			startListener, closeListener,
+		} = useReplies(id)
+		onActivated(() => fetched.value ? startListener() : null)
+		onDeactivated(closeListener)
+		return {
+			post, loading, error, user,
+			replies, replyLoading, fetched, replyError,
+			hasMore, olderRepliesLoading, fetchOlderReplies
+		}
+	},
+	components: {
+		'post-info': PostInfo,
+		'reply-form': ReplyForm,
+		'reply-card': ReplyCard,
+	},
+	meta(){
+		return {
+			title: (this.post as any)?.title || 'Question Title',
+			meta: [
+				{
+					vmid: 'description',
+					name: 'description',
+					content: ''
+				},
+				{
+					vmid: 'author',
+					name: 'author',
+					content: (this.user as any)?.name ?? 'user'
+				},
+				{
+					vmid: 'keywords',
+					name: 'keywords',
+					content: [
 							(this.post as any)?.module,
 							(this.post as any)?.subject,
 							(this.post as any)?.title
-						].join(', ')
-					}
-				]
-			}
+					].join(', ')
+				}
+			]
 		}
-	})
+	}
+})
 </script>

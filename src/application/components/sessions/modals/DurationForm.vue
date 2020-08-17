@@ -27,43 +27,43 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	export default {
-		data: () => ({
-			mode: null,
-			secret: true,
-			isLoading: false
-		}),
-		computed: {
-			...mapGetters(['getNewSessionData','isSubscribed']),
-			prices(){
-				let sub = this.isSubscribed
-				return {
-					0.25: sub ? 7.5 : 10,
-					0.5: sub ? 15 : 20,
-					1.0: sub ? 30 : 40,
-					2.0: sub ? 60 : 80,
-					3.0: sub ? 90 : 120
-				}
-			},
-			getPrices(){
-				let entries = Object.entries(this.prices)
-				entries.sort((a,b) => a[0] - b[0])
-				return entries.map(arr => ({ time: parseFloat(arr[0]), price: arr[1] }))
+import { mapGetters, mapActions } from 'vuex'
+export default {
+	data: () => ({
+		mode: null,
+		secret: true,
+		isLoading: false
+	}),
+	computed: {
+		...mapGetters(['getNewSessionData','isSubscribed']),
+		prices(){
+			let sub = this.isSubscribed
+			return {
+				0.25: sub ? 7.5 : 10,
+				0.5: sub ? 15 : 20,
+				1.0: sub ? 30 : 40,
+				2.0: sub ? 60 : 80,
+				3.0: sub ? 90 : 120
 			}
 		},
-		methods: {
-			...mapActions(['cancelSessionAndCloseModal','startSession']),
-			setMode(duration){ this.mode = duration },
-			async requestSession(){
-				this.isLoading = true
-				let duration = this.mode
-				let price = this.prices[duration]
-				try{
-					await this.startSession({ duration, price, secret: this.secret, ...this.getNewSessionData })
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-				this.isLoading = false
-			}
+		getPrices(){
+			let entries = Object.entries(this.prices)
+			entries.sort((a,b) => a[0] - b[0])
+			return entries.map(arr => ({ time: parseFloat(arr[0]), price: arr[1] }))
+		}
+	},
+	methods: {
+		...mapActions(['cancelSessionAndCloseModal','startSession']),
+		setMode(duration){ this.mode = duration },
+		async requestSession(){
+			this.isLoading = true
+			let duration = this.mode
+			let price = this.prices[duration]
+			try{
+				await this.startSession({ duration, price, secret: this.secret, ...this.getNewSessionData })
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+			this.isLoading = false
 		}
 	}
+}
 </script>

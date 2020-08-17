@@ -6,22 +6,22 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	export default {
-		name: "Admins",
-		methods: mapActions(['setCreateModalOverview']),
-		computed: mapGetters(['isLoggedIn']),
-		meta(){
-			return {
-				title: 'Stranerd Admin',
-				meta: [
-					{
-						vmid: 'robots',
-						name: 'robots',
-						content: 'none'
-					}
-				]
-			}
+import { mapGetters, mapActions } from 'vuex'
+export default {
+	name: "Admins",
+	methods: mapActions(['setCreateModalOverview']),
+	computed: mapGetters(['isLoggedIn']),
+	meta(){
+		return {
+			title: 'Stranerd Admin',
+			meta: [
+				{
+					vmid: 'robots',
+					name: 'robots',
+					content: 'none'
+				}
+			]
 		}
 	}
+}
 </script>

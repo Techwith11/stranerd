@@ -8,14 +8,14 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
-    import SubjectCard from '@/components/courses/list/SubjectCard'
-    export default {
-        components: {
-            'subject-card': SubjectCard,
-        },
-        computed: mapGetters(['getAllSubjects']),
-    }
+import { mapGetters } from 'vuex'
+import SubjectCard from '@/components/courses/list/SubjectCard'
+export default {
+	components: {
+		'subject-card': SubjectCard,
+	},
+	computed: mapGetters(['getAllSubjects']),
+}
 </script>
 
 <style lang="scss" scoped>

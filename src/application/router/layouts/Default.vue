@@ -20,19 +20,19 @@
 </style>
 
 <script lang="ts">
-	import { computed, defineComponent } from '@vue/composition-api'
-	import Navbar from '@/components/app/Navbar.vue'
-	import Sidebar from '@/components/app/Sidebar.vue'
-	import Footer from '@/components/app/Footer.vue'
-	import store from '@/store'
-	export default defineComponent({
-		components: {
-			'app-navbar': Navbar,
-			'app-sidebar': Sidebar,
-			'app-footer': Footer
-		},
-		setup(){
-			return { isLoggedIn: computed(() => store.getters.isLoggedIn) }
-		}
-	})
+import { computed, defineComponent } from '@vue/composition-api'
+import Navbar from '@/components/app/Navbar.vue'
+import Sidebar from '@/components/app/Sidebar.vue'
+import Footer from '@/components/app/Footer.vue'
+import store from '@/store'
+export default defineComponent({
+	components: {
+		'app-navbar': Navbar,
+		'app-sidebar': Sidebar,
+		'app-footer': Footer
+	},
+	setup(){
+		return { isLoggedIn: computed(() => store.getters.isLoggedIn) }
+	}
+})
 </script>

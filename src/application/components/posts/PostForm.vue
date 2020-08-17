@@ -58,26 +58,26 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, computed } from '@vue/composition-api'
-	import { useCreatePost } from '@/usecases/posts/posts'
-	import { useTags } from '@/usecases/core/useForms'
-	import { useSubjects } from '@/usecases/courses/useSubjects'
-	export default defineComponent({
-		name: 'PostForm',
-		setup(){
-			const { subjects, loading: subjectLoading } = useSubjects()
-			const { factory, loading, createPost, isLoggedIn, login } = useCreatePost()
-			const { tag, splitTag, removeTag } = useTags(
-				(tag:string) => factory.addTag(tag),
-				(tag:string) => factory.removeTag(tag)
-			)
-			const modules = computed(() => subjects.value.find(s => s.name === factory.subject)?.modules ?? [])
-			return {
-				factory, tag, splitTag, removeTag,
-				loading, subjectLoading,
-				subjects, modules, createPost,
-				isLoggedIn, login
-			}
+import { defineComponent, computed } from '@vue/composition-api'
+import { useCreatePost } from '@/usecases/posts/posts'
+import { useTags } from '@/usecases/core/useForms'
+import { useSubjects } from '@/usecases/courses/useSubjects'
+export default defineComponent({
+	name: 'PostForm',
+	setup(){
+		const { subjects, loading: subjectLoading } = useSubjects()
+		const { factory, loading, createPost, isLoggedIn, login } = useCreatePost()
+		const { tag, splitTag, removeTag } = useTags(
+			(tag:string) => factory.addTag(tag),
+			(tag:string) => factory.removeTag(tag)
+		)
+		const modules = computed(() => subjects.value.find(s => s.name === factory.subject)?.modules ?? [])
+		return {
+			factory, tag, splitTag, removeTag,
+			loading, subjectLoading,
+			subjects, modules, createPost,
+			isLoggedIn, login
 		}
-	})
+	}
+})
 </script>

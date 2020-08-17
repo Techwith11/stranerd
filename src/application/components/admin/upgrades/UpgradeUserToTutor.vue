@@ -48,62 +48,62 @@
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
-	import { mapGetters } from 'vuex'
-	import { makeTutor } from '@/config/admin/upgrades'
-	import { required } from 'vuelidate/lib/validators'
-	export default {
-		data: () => ({
-			email: '',
-			fetched: false,
-			fetchingUsers: false,
-			upgrading: false,
-			users: [],
-			tutor: {
-				course: null,
-				qualification: null
-			},
-			qualifications: [
-				{ name:'High school graduate', value: 0}, { name: 'Diploma Certificate', value: 1 },
-				{ name: 'Bachelors Degree', value: 2 }, { name: 'Masters Degree', value: 3 }
-			],
-		}),
-		computed: mapGetters(['getAllSubjects']),
-		methods: {
-			clearAll(){
-				this.email = ''
-				this.fetched = false
-				this.fetchingUsers = false
-				this.users = []
-				this.tutor = { course: null, qualification: null, bio: '' }
-				this.$v.$reset()
-			},
-			async getUsersByEmail(){
-				this.fetchingUsers = true
-				this.fetched = true
-				try{
-					this.users = []
-					let docs = await firestore.collection('users').where('bio.email','==',this.email).get()
-					docs.forEach(doc => this.users.push({ '.key': doc.id, ...doc.data() }))
-				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching users. Try refreshing the page' }) }
-				this.fetchingUsers = false
-			},
-			async tutorUser(user){
-				this.upgrading = true
-				let res = await makeTutor({ id: user['.key'], ...this.tutor })
-				if(res) {
-					let x = this.users.find(x => x['.key'] === user['.key'])
-					new window.Toast({ icon: 'success', title: `${x.bio.name} has been registered as a ${this.tutor.course} tutor successfully` })
-					await this.getUsersByEmail()
-				}
-				this.upgrading = false
-			}
+import { firestore } from '@/config/firebase'
+import { mapGetters } from 'vuex'
+import { makeTutor } from '@/config/admin/upgrades'
+import { required } from 'vuelidate/lib/validators'
+export default {
+	data: () => ({
+		email: '',
+		fetched: false,
+		fetchingUsers: false,
+		upgrading: false,
+		users: [],
+		tutor: {
+			course: null,
+			qualification: null
 		},
-		validations:{
-			tutor: {
-				course: { required },
-				qualification: { required }
+		qualifications: [
+			{ name:'High school graduate', value: 0}, { name: 'Diploma Certificate', value: 1 },
+			{ name: 'Bachelors Degree', value: 2 }, { name: 'Masters Degree', value: 3 }
+		],
+	}),
+	computed: mapGetters(['getAllSubjects']),
+	methods: {
+		clearAll(){
+			this.email = ''
+			this.fetched = false
+			this.fetchingUsers = false
+			this.users = []
+			this.tutor = { course: null, qualification: null, bio: '' }
+			this.$v.$reset()
+		},
+		async getUsersByEmail(){
+			this.fetchingUsers = true
+			this.fetched = true
+			try{
+				this.users = []
+				let docs = await firestore.collection('users').where('bio.email','==',this.email).get()
+				docs.forEach(doc => this.users.push({ '.key': doc.id, ...doc.data() }))
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching users. Try refreshing the page' }) }
+			this.fetchingUsers = false
+		},
+		async tutorUser(user){
+			this.upgrading = true
+			let res = await makeTutor({ id: user['.key'], ...this.tutor })
+			if(res) {
+				let x = this.users.find(x => x['.key'] === user['.key'])
+				new window.Toast({ icon: 'success', title: `${x.bio.name} has been registered as a ${this.tutor.course} tutor successfully` })
+				await this.getUsersByEmail()
 			}
+			this.upgrading = false
+		}
+	},
+	validations:{
+		tutor: {
+			course: { required },
+			qualification: { required }
 		}
 	}
+}
 </script>

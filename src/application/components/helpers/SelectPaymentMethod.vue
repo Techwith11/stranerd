@@ -27,53 +27,53 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, reactive, computed } from '@vue/composition-api'
-	import AddPaymentMethod from "@/components/helpers/AddPaymentMethod.vue"
-	import { usePaymentMethodsList } from '@/usecases/payments/usePaymentMethods'
-	export default defineComponent({
-		setup(props){
-			const state = reactive({
-				token: null as string | null,
-				showForm: false
-			})
-			const { loading: methodLoading, error, methods, fetchPaymentMethods } = usePaymentMethodsList()
-			return {
-				methodLoading, error, methods, fetchPaymentMethods,
-				token: computed(() => state.token),
-				showForm: computed(() => state.showForm),
-				selectMethod: (token: string) => {
-					if(!props.loading){
-						props.onMethodSelected(token)
-						state.token = token
-					}
-				},
-				refreshPaymentMethods: async () => {
-					state.showForm = false
-					state.token = null
-					await fetchPaymentMethods()
-				},
-				backToPaymentMethods(){
-					state.showForm = methodLoading.value
-					state.token = null
-				},
-				async showFormFields(){
-					state.showForm = true
-					props.onMethodSelected(null)
+import { defineComponent, reactive, computed, PropType } from '@vue/composition-api'
+import AddPaymentMethod from "@/components/helpers/AddPaymentMethod.vue"
+import { usePaymentMethodsList } from '@/usecases/payments/usePaymentMethods'
+export default defineComponent({
+	setup(props){
+		const state = reactive({
+			token: null as string | null,
+			showForm: false
+		})
+		const { loading: methodLoading, error, methods, fetchPaymentMethods } = usePaymentMethodsList()
+		return {
+			methodLoading, error, methods, fetchPaymentMethods,
+			token: computed(() => state.token),
+			showForm: computed(() => state.showForm),
+			selectMethod: (token: string) => {
+				if(!props.loading){
+					props.onMethodSelected(token)
+					state.token = token
 				}
-			}
-		},
-		props: {
-			onMethodSelected: {
-				required: true,
-				type: Function
 			},
-			loading: {
-				type: Boolean,
-				required: true
+			refreshPaymentMethods: async () => {
+				state.showForm = false
+				state.token = null
+				await fetchPaymentMethods()
+			},
+			backToPaymentMethods(){
+				state.showForm = methodLoading.value
+				state.token = null
+			},
+			async showFormFields(){
+				state.showForm = true
+				props.onMethodSelected(null)
 			}
-		},
-		components: {
-			'add-payment-method': AddPaymentMethod
 		}
-	})
+	},
+	props: {
+		onMethodSelected: {
+			required: true,
+			type: Function as PropType<(value: string | null) => void>
+		},
+		loading: {
+			type: Boolean,
+			required: true
+		}
+	},
+	components: {
+		'add-payment-method': AddPaymentMethod
+	}
+})
 </script>

@@ -15,17 +15,17 @@
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		name: "CreateOverview",
-		methods: {
-			...mapActions(['setCreateModalQuestion','setCreateModalCourse','setCreateModalNote','closeCreateModal']),
-			async goToCreateBlogPage(){
-				this.closeCreateModal()
-				await this.$router.push('/blog/create')
-			}
+import { mapActions } from 'vuex'
+export default {
+	name: "CreateOverview",
+	methods: {
+		...mapActions(['setCreateModalQuestion','setCreateModalCourse','setCreateModalNote','closeCreateModal']),
+		async goToCreateBlogPage(){
+			this.closeCreateModal()
+			await this.$router.push('/blog/create')
 		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>

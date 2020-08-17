@@ -43,34 +43,34 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { ArticleFactory } from '@root/modules/blog/domain/factories/article'
-	import { useFileInputs, useTags } from '@/usecases/core/useForms'
-	export default defineComponent({
-		name: 'ArticleForm',
-		props: {
-			factory: {
-				type: ArticleFactory,
-				required: true
-			},
-			loading: {
-				type: Boolean,
-				required: true
-			},
-			submit: {
-				type: Function,
-				required: true
-			}
+import { defineComponent } from '@vue/composition-api'
+import { ArticleFactory } from '@root/modules/blog/domain/factories/article'
+import { useFileInputs, useTags } from '@/usecases/core/useForms'
+export default defineComponent({
+	name: 'ArticleForm',
+	props: {
+		factory: {
+			type: ArticleFactory,
+			required: true
 		},
-		setup(props) {
-			const { tag, splitTag, removeTag } = useTags(
-				(tag: string) => props.factory.addTag(tag),
-				(tag: string) => props.factory.removeTag(tag)
-			)
-			const { catchFiles: catchImage } = useFileInputs(
-				(file:File) => props.factory.image = file
-			)
-			return { catchImage, tag, removeTag, splitTag }
+		loading: {
+			type: Boolean,
+			required: true
+		},
+		submit: {
+			type: Function,
+			required: true
 		}
-	})
+	},
+	setup(props) {
+		const { tag, splitTag, removeTag } = useTags(
+			(tag: string) => props.factory.addTag(tag),
+			(tag: string) => props.factory.removeTag(tag)
+		)
+		const { catchFiles: catchImage } = useFileInputs(
+			(file:File) => props.factory.image = file
+		)
+		return { catchImage, tag, removeTag, splitTag }
+	}
+})
 </script>

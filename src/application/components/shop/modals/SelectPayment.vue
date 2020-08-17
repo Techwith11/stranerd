@@ -11,21 +11,21 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { useCart } from '@/usecases/shop/useCart'
-	import store from '@/store'
-	import { Notify } from '@/config/notifications'
-	export default defineComponent({
-		setup(){
-			const { cartLength, cartPrice } = useCart()
-			return {
-				cartLength, cartPrice,
-				setCartModalOverview: () => store.dispatch('setCartModalOverview'),
-				onPaymentSuccessful: async () => {
-					await Notify({ icon: 'success', title: 'Purchase successful' })
-					await store.dispatch('checkout')
-				}
+import { defineComponent } from '@vue/composition-api'
+import { useCart } from '@/usecases/shop/useCart'
+import store from '@/store'
+import { Notify } from '@/config/notifications'
+export default defineComponent({
+	setup(){
+		const { cartLength, cartPrice } = useCart()
+		return {
+			cartLength, cartPrice,
+			setCartModalOverview: () => store.dispatch('setCartModalOverview'),
+			onPaymentSuccessful: async () => {
+				await Notify({ icon: 'success', title: 'Purchase successful' })
+				await store.dispatch('checkout')
 			}
 		}
-	})
+	}
+})
 </script>

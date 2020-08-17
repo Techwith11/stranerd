@@ -23,20 +23,20 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { useResetPasswordForm } from '@/usecases/users/auth'
-	import store from '@/store'
-	export default defineComponent({
-		name: 'ForgotPassword',
-		setup(){
-			const { loading, factory, resetPassword } = useResetPasswordForm()
-			return {
-				loading, factory, resetPassword,
-				setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
-				closeAuthModal: () => store.dispatch('closeAuthModal')
-			}
-		},
-	})
+import { defineComponent } from '@vue/composition-api'
+import { useResetPasswordForm } from '@/usecases/users/auth'
+import store from '@/store'
+export default defineComponent({
+	name: 'ForgotPassword',
+	setup(){
+		const { loading, factory, resetPassword } = useResetPasswordForm()
+		return {
+			loading, factory, resetPassword,
+			setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
+			closeAuthModal: () => store.dispatch('closeAuthModal')
+		}
+	},
+})
 </script>
 
 <style lang="scss" scoped>

@@ -29,8 +29,8 @@
 </style>
 
 <script>
-	import { mapGetters } from 'vuex'
-	export default {
-		computed: mapGetters(['isTutor'])
-	}
+import { mapGetters } from 'vuex'
+export default {
+	computed: mapGetters(['isTutor'])
+}
 </script>

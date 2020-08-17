@@ -58,6 +58,6 @@ const { Add: AddReply, Get: GetReplies, Listen: ListenToReplies, GetFactory: Get
 }
 
 export {
-    AddPost, FindPost, GetPosts, ListenToPosts, GetPostFactory,
-    AddReply, GetReplies, ListenToReplies, GetReplyFactory, UpvoteReply, DownvoteReply
+	AddPost, FindPost, GetPosts, ListenToPosts, GetPostFactory,
+	AddReply, GetReplies, ListenToReplies, GetReplyFactory, UpvoteReply, DownvoteReply
 }

@@ -17,47 +17,47 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	import { firestore } from '@/config/firebase'
-	import TransactionCard from '@/components/account/single/TransactionCard'
-	export default {
-		name: 'Transactions',
-		data: () => ({
-			isLoading: true,
-			isOlderTransactionsLoading: false,
-			transactions: [],
-			paginationLimit: 24,
-			hasMore: true
-		}),
-		components: {
-			'transaction-card': TransactionCard
+import { mapGetters } from 'vuex'
+import { firestore } from '@/config/firebase'
+import TransactionCard from '@/components/account/single/TransactionCard'
+export default {
+	name: 'Transactions',
+	data: () => ({
+		isLoading: true,
+		isOlderTransactionsLoading: false,
+		transactions: [],
+		paginationLimit: 24,
+		hasMore: true
+	}),
+	components: {
+		'transaction-card': TransactionCard
+	},
+	async mounted(){
+		await this.getTransactions()
+		this.isLoading = false
+	},
+	computed: {
+		...mapGetters(['getId'])
+	},
+	methods: {
+		async getTransactions(){
+			try{
+				let docs = firestore.collection(`users/${this.getId}/transactions`).orderBy('dates.createdAt','desc')
+					.limit(this.paginationLimit)
+				let lastItem = this.transactions[this.transactions.length - 1]
+				if(lastItem){
+					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
+				}
+				docs = await docs.get()
+				this.hasMore = docs.size >= this.paginationLimit
+				docs.forEach(doc => this.transactions.push({ '.key': doc.id, ...doc.data() }))
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching transactions. Try refreshing the page' }) }
 		},
-		async mounted(){
+		async fetchOlderTransactions(){
+			this.isOlderTransactionsLoading = true
 			await this.getTransactions()
-			this.isLoading = false
-		},
-		computed: {
-			...mapGetters(['getId'])
-		},
-		methods: {
-			async getTransactions(){
-				try{
-					let docs = firestore.collection(`users/${this.getId}/transactions`).orderBy('dates.createdAt','desc')
-						.limit(this.paginationLimit)
-					let lastItem = this.transactions[this.transactions.length - 1]
-					if(lastItem){
-						docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
-					}
-					docs = await docs.get()
-					this.hasMore = docs.size >= this.paginationLimit
-					docs.forEach(doc => this.transactions.push({ '.key': doc.id, ...doc.data() }))
-				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching transactions. Try refreshing the page' }) }
-			},
-			async fetchOlderTransactions(){
-				this.isOlderTransactionsLoading = true
-				await this.getTransactions()
-				this.isOlderTransactionsLoading = false
-			}
+			this.isOlderTransactionsLoading = false
 		}
 	}
+}
 </script>

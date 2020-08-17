@@ -52,23 +52,23 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { useGoogleLogin, useRegisterForm } from '@/usecases/users/auth'
-	import store from '@/store'
-	export default defineComponent({
-		name: 'RegisterStudent',
-		setup(){
-			const { loading: googleLoading, login: googleLogin } = useGoogleLogin()
-			const { loading: regLoading, register, factory: factory } = useRegisterForm()
-			return {
-				googleLoading, googleLogin,
-				regLoading, register, factory,
-				anyLoading: googleLoading || regLoading,
-				setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
-				closeAuthModal: () => store.dispatch('closeAuthModal'),
-			}
+import { defineComponent } from '@vue/composition-api'
+import { useGoogleLogin, useRegisterForm } from '@/usecases/users/auth'
+import store from '@/store'
+export default defineComponent({
+	name: 'RegisterStudent',
+	setup(){
+		const { loading: googleLoading, login: googleLogin } = useGoogleLogin()
+		const { loading: regLoading, register, factory: factory } = useRegisterForm()
+		return {
+			googleLoading, googleLogin,
+			regLoading, register, factory,
+			anyLoading: googleLoading || regLoading,
+			setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
+			closeAuthModal: () => store.dispatch('closeAuthModal'),
 		}
-	})
+	}
+})
 </script>
 
 <style lang="scss" scoped>

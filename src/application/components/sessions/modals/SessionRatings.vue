@@ -21,27 +21,27 @@
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		data: () => ({
-			rating: 0,
-			comment: '',
-			isLoading: false
-		}),
-		methods: {
-			...mapActions([ 'submitSessionRating']),
-			setRatingFor1(){ this.rating === 0.5 ? this.rating = 1 : this.rating = 0.5  },
-			setRatingFor2(){ this.rating === 1.5 ? this.rating = 2 : this.rating = 1.5  },
-			setRatingFor3(){ this.rating === 2.5 ? this.rating = 3 : this.rating = 2.5  },
-			setRatingFor4(){ this.rating === 3.5 ? this.rating = 4 : this.rating = 3.5  },
-			setRatingFor5(){ this.rating === 4.5 ? this.rating = 5 : this.rating = 4.5  },
-			async submitRating(){
-				this.isLoading = true
-				try{
-					await this.submitSessionRating({ rating: this.rating, comment: this.comment })
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-				this.isLoading = false
-			}
+import { mapActions } from 'vuex'
+export default {
+	data: () => ({
+		rating: 0,
+		comment: '',
+		isLoading: false
+	}),
+	methods: {
+		...mapActions([ 'submitSessionRating']),
+		setRatingFor1(){ this.rating === 0.5 ? this.rating = 1 : this.rating = 0.5  },
+		setRatingFor2(){ this.rating === 1.5 ? this.rating = 2 : this.rating = 1.5  },
+		setRatingFor3(){ this.rating === 2.5 ? this.rating = 3 : this.rating = 2.5  },
+		setRatingFor4(){ this.rating === 3.5 ? this.rating = 4 : this.rating = 3.5  },
+		setRatingFor5(){ this.rating === 4.5 ? this.rating = 5 : this.rating = 4.5  },
+		async submitRating(){
+			this.isLoading = true
+			try{
+				await this.submitSessionRating({ rating: this.rating, comment: this.comment })
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+			this.isLoading = false
 		}
 	}
+}
 </script>

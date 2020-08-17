@@ -20,115 +20,115 @@
 </template>
 
 <script>
-	import SingleChatNav from '@/components/chats/single/SingleChatNav'
-	import SingleChatMessage from '@/components/chats/single/SingleChatMessage'
-	import SingleChatForm from '@/components/chats/single/SingleChatForm'
-	import { firestore } from '@/config/firebase'
-	import { mapGetters } from 'vuex'
-	export default {
-		name: 'Chat',
-		data: () => ({
-			user: {},
-			chats: [],
-			fetched: false,
-			isLoading: true,
-			isOlderChatsLoading: false,
-			chatsListener: () => {},
-			paginationLimit: 10,
-			hasMore: false
-		}),
-		computed: {
-			...mapGetters(['getId']),
-            canHaveSession(){ return this.user.roles && this.user.roles.isTutor && this.user['.key'] !== this.getId },
-			getChatPath(){ return [this.$route.params.id, this.getId].sort().join('_') }
+import SingleChatNav from '@/components/chats/single/SingleChatNav'
+import SingleChatMessage from '@/components/chats/single/SingleChatMessage'
+import SingleChatForm from '@/components/chats/single/SingleChatForm'
+import { firestore } from '@/config/firebase'
+import { mapGetters } from 'vuex'
+export default {
+	name: 'Chat',
+	data: () => ({
+		user: {},
+		chats: [],
+		fetched: false,
+		isLoading: true,
+		isOlderChatsLoading: false,
+		chatsListener: () => {},
+		paginationLimit: 10,
+		hasMore: false
+	}),
+	computed: {
+		...mapGetters(['getId']),
+		canHaveSession(){ return this.user.roles && this.user.roles.isTutor && this.user['.key'] !== this.getId },
+		getChatPath(){ return [this.$route.params.id, this.getId].sort().join('_') }
+	},
+	methods: {
+		async getUser(){
+			let doc = await firestore.collection('users').doc(this.$route.params.id).get()
+			if(!doc.exists){ return this.$router.replace('/chats') }
+			this.user = { '.key': doc.id, ...doc.data() }
+			this.isLoading = false
 		},
-		methods: {
-			async getUser(){
-				let doc = await firestore.collection('users').doc(this.$route.params.id).get()
-				if(!doc.exists){ return this.$router.replace('/chats') }
-				this.user = { '.key': doc.id, ...doc.data() }
-				this.isLoading = false
-			},
-			async getChats(){
-				let docs = firestore.collection(`chats/${this.getChatPath}/chats`).orderBy('dates.sentAt','desc')
-					.limit(this.paginationLimit)
-				if(this.chats.length > 0){
-					let lastItem = this.chats[0]
-					docs = docs.where('dates.sentAt','<',lastItem.dates.sentAt)
+		async getChats(){
+			let docs = firestore.collection(`chats/${this.getChatPath}/chats`).orderBy('dates.sentAt','desc')
+				.limit(this.paginationLimit)
+			if(this.chats.length > 0){
+				let lastItem = this.chats[0]
+				docs = docs.where('dates.sentAt','<',lastItem.dates.sentAt)
+			}
+			docs = await docs.get()
+			this.hasMore = docs.size >= this.paginationLimit
+			docs.forEach(doc => {
+				let index = this.chats.findIndex(r => r['.key'] === doc.id)
+				if(index === -1){
+					this.chats.unshift({ '.key': doc.id, ...doc.data() })
+				}else{
+					this.chats[index] = { '.key': doc.id, ...doc.data() }
 				}
-				docs = await docs.get()
-				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach(doc => {
+			})
+		},
+		setListener(){
+			let lastItem = this.chats[this.chats.length - 1]
+			let query = firestore.collection(`chats/${this.getChatPath}/chats`).orderBy('dates.sentAt')
+			if(lastItem){
+				query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
+			}
+			this.chatsListener = query.onSnapshot(snapshot => {
+				snapshot.docs.forEach(doc => {
 					let index = this.chats.findIndex(r => r['.key'] === doc.id)
 					if(index === -1){
-						this.chats.unshift({ '.key': doc.id, ...doc.data() })
+						this.chats.push({ '.key': doc.id, ...doc.data() })
 					}else{
 						this.chats[index] = { '.key': doc.id, ...doc.data() }
 					}
 				})
-			},
-			setListener(){
-				let lastItem = this.chats[this.chats.length - 1]
-				let query = firestore.collection(`chats/${this.getChatPath}/chats`).orderBy('dates.sentAt')
-				if(lastItem){
-					query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
-				}
-				this.chatsListener = query.onSnapshot(snapshot => {
-					snapshot.docs.forEach(doc => {
-						let index = this.chats.findIndex(r => r['.key'] === doc.id)
-						if(index === -1){
-							this.chats.push({ '.key': doc.id, ...doc.data() })
-						}else{
-							this.chats[index] = { '.key': doc.id, ...doc.data() }
-						}
-					})
-				})
-			},
-			async fetchOlderMessages(){
-				this.isOlderChatsLoading = true
-				await this.getChats()
-				this.isOlderChatsLoading = false
-			}
+			})
 		},
-		components: {
-			'single-chat-nav': SingleChatNav,
-			'single-chat-message': SingleChatMessage,
-			'single-chat-form': SingleChatForm,
-		},
-		async mounted(){
-			this.isLoading = true
+		async fetchOlderMessages(){
+			this.isOlderChatsLoading = true
+			await this.getChats()
+			this.isOlderChatsLoading = false
+		}
+	},
+	components: {
+		'single-chat-nav': SingleChatNav,
+		'single-chat-message': SingleChatMessage,
+		'single-chat-form': SingleChatForm,
+	},
+	async mounted(){
+		this.isLoading = true
+		await this.getUser()
+		await this.getChats()
+		await this.setListener()
+		this.fetched = true
+		this.isLoading = false
+	},
+	async activated(){
+		this.isLoading = true
+		if(!this.fetched){
 			await this.getUser()
 			await this.getChats()
-			await this.setListener()
 			this.fetched = true
-			this.isLoading = false
-		},
-		async activated(){
-			this.isLoading = true
-			if(!this.fetched){
-				await this.getUser()
-				await this.getChats()
-				this.fetched = true
-			}
-			await this.setListener()
-			this.isLoading = false
-		},
-		deactivated(){
-			this.chatsListener()
-		},
-		meta(){
-			return {
-				title: this.user.bio ? this.user.bio.name : 'Chat',
-				meta: [
-					{
-						vmid: 'robots',
-						name: 'robots',
-						content: 'none'
-					}
-				]
-			}
+		}
+		await this.setListener()
+		this.isLoading = false
+	},
+	deactivated(){
+		this.chatsListener()
+	},
+	meta(){
+		return {
+			title: this.user.bio ? this.user.bio.name : 'Chat',
+			meta: [
+				{
+					vmid: 'robots',
+					name: 'robots',
+					content: 'none'
+				}
+			]
 		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>

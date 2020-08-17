@@ -52,39 +52,39 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { useFileInputs } from '@/usecases/core/useForms'
-	import { SubjectFactory } from '@root/modules/courses/domain/factories/subject'
-	import { Alert } from '@/config/notifications'
-	export default defineComponent({
-		props: {
-			factory: {
-				type: SubjectFactory,
-				required: true
-			},
-			submit: {
-				type: Function,
-				required: true
-			},
-			loading: {
-				type: Boolean,
-				required: true
-			}
+import { defineComponent } from '@vue/composition-api'
+import { useFileInputs } from '@/usecases/core/useForms'
+import { SubjectFactory } from '@root/modules/courses/domain/factories/subject'
+import { Alert } from '@/config/notifications'
+export default defineComponent({
+	props: {
+		factory: {
+			type: SubjectFactory,
+			required: true
 		},
-		setup(props){
-			const { catchFiles: catchImage } = useFileInputs(
-				(file:File) => props.factory.moduleImage = file
-			)
-			const removeModule = async (module: string) => {
-				const res = await Alert({
-					title: `Delete ${module}`,
-					text: 'Are you sure you want to delete this module',
-					icon: 'info',
-					confirmButtonText: 'Delete'
-				})
-				if(res.value) props.factory.removeModule(module)
-			}
-			return { catchImage, removeModule }
+		submit: {
+			type: Function,
+			required: true
+		},
+		loading: {
+			type: Boolean,
+			required: true
 		}
-	})
+	},
+	setup(props){
+		const { catchFiles: catchImage } = useFileInputs(
+			(file:File) => props.factory.moduleImage = file
+		)
+		const removeModule = async (module: string) => {
+			const res = await Alert({
+				title: `Delete ${module}`,
+				text: 'Are you sure you want to delete this module',
+				icon: 'info',
+				confirmButtonText: 'Delete'
+			})
+			if(res.value) props.factory.removeModule(module)
+		}
+		return { catchImage, removeModule }
+	}
+})
 </script>

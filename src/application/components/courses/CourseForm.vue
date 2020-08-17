@@ -83,39 +83,39 @@
 </template>
 
 <script lang="ts">
-	import { computed, defineComponent } from '@vue/composition-api'
-	import { useFileInputs, useMultipleFileInputs } from '@/usecases/core/useForms'
-	import { CourseFactory } from '@root/modules/courses/domain/factories/course'
-	import { useSubjects } from '@/usecases/courses/useSubjects'
-	export default defineComponent({
-		name: 'ArticleForm',
-		props: {
-			factory: {
-				type: CourseFactory,
-				required: true
-			},
-			loading: {
-				type: Boolean,
-				required: true
-			},
-			submit: {
-				type: Function,
-				required: true
-			}
+import { computed, defineComponent } from '@vue/composition-api'
+import { useFileInputs, useMultipleFileInputs } from '@/usecases/core/useForms'
+import { CourseFactory } from '@root/modules/courses/domain/factories/course'
+import { useSubjects } from '@/usecases/courses/useSubjects'
+export default defineComponent({
+	name: 'ArticleForm',
+	props: {
+		factory: {
+			type: CourseFactory,
+			required: true
 		},
-		setup(props) {
-			const { subjects, loading: subjectLoading } = useSubjects()
-			const modules = computed(() => subjects.value.find(s => s.name === props.factory.subject)?.modules ?? [])
-			const { catchFiles: catchImage } = useFileInputs(
-				(file:File) => props.factory.image = file
-			)
-			const { catchFiles: catchVideo } = useFileInputs(
-				(file:File) => props.factory.video = file
-			)
-			const { catchMultipleFiles: catchDocuments } = useMultipleFileInputs(
-				(files) => files.forEach(props.factory.addDocument)
-			)
-			return { catchImage, catchVideo, catchDocuments, subjects, modules, subjectLoading }
+		loading: {
+			type: Boolean,
+			required: true
+		},
+		submit: {
+			type: Function,
+			required: true
 		}
-	})
+	},
+	setup(props) {
+		const { subjects, loading: subjectLoading } = useSubjects()
+		const modules = computed(() => subjects.value.find(s => s.name === props.factory.subject)?.modules ?? [])
+		const { catchFiles: catchImage } = useFileInputs(
+			(file:File) => props.factory.image = file
+		)
+		const { catchFiles: catchVideo } = useFileInputs(
+			(file:File) => props.factory.video = file
+		)
+		const { catchMultipleFiles: catchDocuments } = useMultipleFileInputs(
+			(files) => files.forEach(props.factory.addDocument)
+		)
+		return { catchImage, catchVideo, catchDocuments, subjects, modules, subjectLoading }
+	}
+})
 </script>

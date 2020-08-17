@@ -12,36 +12,36 @@ import 'jquery'
 import 'bootstrap'
 
 export const setup = () => {
-    Vue.use(VueMeta, { keyName: 'meta', refreshOnceOnNavigation: true })
-    Vue.use(Vuelidate)
-    Vue.use(VueChatScroll)
+	Vue.use(VueMeta, { keyName: 'meta', refreshOnceOnNavigation: true })
+	Vue.use(Vuelidate)
+	Vue.use(VueChatScroll)
 
-    // @ts-ignore
-    window.SweetAlert = SweetAlert
-    // @ts-ignore
-    window.Toast = SweetAlert.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 3000
-    });
+	// @ts-ignore
+	window.SweetAlert = SweetAlert
+	// @ts-ignore
+	window.Toast = SweetAlert.mixin({
+		toast: true,
+		position: "top-end",
+		showConfirmButton: false,
+		timer: 3000
+	});
 }
 
 export const closeNavbar = () => {
-    let collapse = document.getElementById('navbar')
-    collapse ? collapse.classList.remove('show') : null
+	let collapse = document.getElementById('navbar')
+	collapse ? collapse.classList.remove('show') : null
 }
 
 export const closeAccountDropdown = () => {
-    let collapse = document.getElementById('accountDropdown')
-    collapse ? collapse.classList.remove('show') : null
-    let menu = document.getElementById('accountDropdownMenu')
-    menu ? menu.classList.remove('show') : null
+	let collapse = document.getElementById('accountDropdown')
+	collapse ? collapse.classList.remove('show') : null
+	let menu = document.getElementById('accountDropdownMenu')
+	menu ? menu.classList.remove('show') : null
 }
 
 export const closeAdminDropdown = () => {
-    let collapse = document.getElementById('adminDropdown')
-    collapse ? collapse.classList.remove('show') : null
-    let menu = document.getElementById('adminDropdownMenu')
-    menu ? menu.classList.remove('show') : null
+	let collapse = document.getElementById('adminDropdown')
+	collapse ? collapse.classList.remove('show') : null
+	let menu = document.getElementById('adminDropdownMenu')
+	menu ? menu.classList.remove('show') : null
 }

@@ -14,21 +14,21 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import store from '@/store'
-	import { useCreateNote } from '@/usecases/shop/useNotes'
-	import NoteForm from '@/components/admin/notes/NoteForm.vue'
-	export default defineComponent({
-		name: 'CreateNote',
-		components: {
-			'note-form': NoteForm
-		},
-		setup(){
-			const { loading, createNote, factory } = useCreateNote()
-			return {
-				loading, createNote, factory,
-				closeCreateModal: () => store.dispatch('closeCreateModal')
-			}
-		},
-	})
+import { defineComponent } from '@vue/composition-api'
+import store from '@/store'
+import { useCreateNote } from '@/usecases/shop/useNotes'
+import NoteForm from '@/components/admin/notes/NoteForm.vue'
+export default defineComponent({
+	name: 'CreateNote',
+	components: {
+		'note-form': NoteForm
+	},
+	setup(){
+		const { loading, createNote, factory } = useCreateNote()
+		return {
+			loading, createNote, factory,
+			closeCreateModal: () => store.dispatch('closeCreateModal')
+		}
+	},
+})
 </script>

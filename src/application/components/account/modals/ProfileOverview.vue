@@ -18,37 +18,37 @@
 </template>
 
 <script>
-	import { mapActions, mapGetters } from 'vuex'
-	export default {
-		data: () => ({
-			isLoading: false
-		}),
-		methods: {
-			...mapActions(['closeAccountModal','setAccountModalEditProfile','setAccountModalUpdatePassword','setAccountModalSelectSubscription','cancelSubscription']),
-			async cancelSub(){
-				let result = await new window.SweetAlert({
-					title: 'Cancel Subscription',
-					text: 'Are you sure you want to cancel your subscription',
-					icon: 'info',
-					showCancelButton: true,
-					confirmButtonColor: '#3085d6',
-					cancelButtonColor: '#d33',
-					confirmButtonText: 'Yes',
-					cancelButtonText: 'No'
-				})
-				if (result.value) {
-					try{
-						this.isLoading = true
-						let res = await this.cancelSubscription()
-						if(res){
-							new window.Toast({ icon: 'success', title: 'Subscription cancelled successfully' })
-							this.closeAccountModal()
-						}
-					}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-					this.isLoading = false
-				}
+import { mapActions, mapGetters } from 'vuex'
+export default {
+	data: () => ({
+		isLoading: false
+	}),
+	methods: {
+		...mapActions(['closeAccountModal','setAccountModalEditProfile','setAccountModalUpdatePassword','setAccountModalSelectSubscription','cancelSubscription']),
+		async cancelSub(){
+			let result = await new window.SweetAlert({
+				title: 'Cancel Subscription',
+				text: 'Are you sure you want to cancel your subscription',
+				icon: 'info',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Yes',
+				cancelButtonText: 'No'
+			})
+			if (result.value) {
+				try{
+					this.isLoading = true
+					let res = await this.cancelSubscription()
+					if(res){
+						new window.Toast({ icon: 'success', title: 'Subscription cancelled successfully' })
+						this.closeAccountModal()
+					}
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+				this.isLoading = false
 			}
-		},
-		computed: mapGetters(['isSubscribed'])
-	}
+		}
+	},
+	computed: mapGetters(['isSubscribed'])
+}
 </script>

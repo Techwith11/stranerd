@@ -17,35 +17,35 @@
 </template>
 
 <script>
-	export default {
-		data: () => ({
-			answer: null,
-			letters: ['a','b','c','d']
-		}),
-		props: {
-			question: {
-				required: true,
-				type: Object
-			},
-			onSelect: {
-				required: true,
-				type: Function
-			},
-			index: {
-				required: true,
-				type: Number
-			},
-			disabled: {
-				required: true,
-				type: Boolean
-			}
+export default {
+	data: () => ({
+		answer: null,
+		letters: ['a','b','c','d']
+	}),
+	props: {
+		question: {
+			required: true,
+			type: Object
 		},
-		watch:{
-			answer(){
-				if(!this.disabled){
-					this.onSelect(this.question['.key'], this.answer)
-				}
+		onSelect: {
+			required: true,
+			type: Function
+		},
+		index: {
+			required: true,
+			type: Number
+		},
+		disabled: {
+			required: true,
+			type: Boolean
+		}
+	},
+	watch:{
+		answer(){
+			if(!this.disabled){
+				this.onSelect(this.question['.key'], this.answer)
 			}
 		}
 	}
+}
 </script>

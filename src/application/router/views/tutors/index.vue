@@ -22,36 +22,36 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import TutorCard from '@/components/users/list/TutorCard.vue'
-	import { useTutorsList } from '@/usecases/users/users'
-	export default defineComponent({
-		name: 'Tutors',
-		setup(){
-			const { loading, error, filteredTutors, course, name, subjects } = useTutorsList()
-			return {
-				loading, error, filteredTutors, course, name, subjects
-			}
-		},
-		components: {
-			'tutor-card': TutorCard,
-		},
-		meta(){
-			return {
-				title: 'Stranerd Tutors',
-				meta: [
-					{
-						vmid: 'description',
-						name: 'description',
-						content: ''
-					},
-					{
-						vmid: 'keywords',
-						name: 'keywords',
-						content: [].join(', ')
-					}
-				]
-			}
+import { defineComponent } from '@vue/composition-api'
+import TutorCard from '@/components/users/list/TutorCard.vue'
+import { useTutorsList } from '@/usecases/users/users'
+export default defineComponent({
+	name: 'Tutors',
+	setup(){
+		const { loading, error, filteredTutors, course, name, subjects } = useTutorsList()
+		return {
+			loading, error, filteredTutors, course, name, subjects
 		}
-	})
+	},
+	components: {
+		'tutor-card': TutorCard,
+	},
+	meta(){
+		return {
+			title: 'Stranerd Tutors',
+			meta: [
+				{
+					vmid: 'description',
+					name: 'description',
+					content: ''
+				},
+				{
+					vmid: 'keywords',
+					name: 'keywords',
+					content: [].join(', ')
+				}
+			]
+		}
+	}
+})
 </script>

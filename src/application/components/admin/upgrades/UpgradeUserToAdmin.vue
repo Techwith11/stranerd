@@ -33,45 +33,45 @@
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
-	import { makeAdmin, removeAdmin } from '@/config/admin/upgrades'
-	export default {
-		data: () => ({
-			email: '',
-			fetched: false,
-			fetchingUsers: false,
-			upgrading: false,
-			users: []
-		}),
-		methods: {
-			clearAll(){
-				this.email = ''
-				this.fetched = false
-				this.fetchingUsers = false
+import { firestore } from '@/config/firebase'
+import { makeAdmin, removeAdmin } from '@/config/admin/upgrades'
+export default {
+	data: () => ({
+		email: '',
+		fetched: false,
+		fetchingUsers: false,
+		upgrading: false,
+		users: []
+	}),
+	methods: {
+		clearAll(){
+			this.email = ''
+			this.fetched = false
+			this.fetchingUsers = false
+			this.users = []
+		},
+		async getUsersByEmail(){
+			this.fetchingUsers = true
+			this.fetched = true
+			try{
 				this.users = []
-			},
-			async getUsersByEmail(){
-				this.fetchingUsers = true
-				this.fetched = true
-				try{
-					this.users = []
-					let docs = await firestore.collection('users').where('bio.email','==',this.email).get()
-					docs.forEach(doc => this.users.push({ '.key': doc.id, ...doc.data() }))
-				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching users. Try refreshing the page' }) }
-				this.fetchingUsers = false
-			},
-			async adminUser(user){
-				this.upgrading = true
-				await makeAdmin(user['.key'])
-				await this.getUsersByEmail()
-				this.upgrading = false
-			},
-			async deAdminUser(user){
-				this.upgrading = true
-				await removeAdmin(user['.key'])
-				await this.getUsersByEmail()
-				this.upgrading = false
-			}
+				let docs = await firestore.collection('users').where('bio.email','==',this.email).get()
+				docs.forEach(doc => this.users.push({ '.key': doc.id, ...doc.data() }))
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching users. Try refreshing the page' }) }
+			this.fetchingUsers = false
+		},
+		async adminUser(user){
+			this.upgrading = true
+			await makeAdmin(user['.key'])
+			await this.getUsersByEmail()
+			this.upgrading = false
+		},
+		async deAdminUser(user){
+			this.upgrading = true
+			await removeAdmin(user['.key'])
+			await this.getUsersByEmail()
+			this.upgrading = false
 		}
 	}
+}
 </script>

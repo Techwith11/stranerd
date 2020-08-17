@@ -36,24 +36,24 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, onMounted } from '@vue/composition-api'
-	import { useCreatePaymentMethods, usePaymentForm } from '@/usecases/payments/usePaymentForm'
-	export default defineComponent({
-		props: {
-			onAddMethodSuccessful: {
-				type: Function,
-				required: true
-			}
-		},
-		setup(props){
-			const { loading, isThereAHoistedFieldInstance, initializeHostedFields } = usePaymentForm()
-			const { loading: createLoading, createPaymentMethod } = useCreatePaymentMethods()
-			const addCard = async () => {
-				const successful = await createPaymentMethod()
-				if(successful) props.onAddMethodSuccessful()
-			}
-			onMounted(() => initializeHostedFields())
-			return { loading, isThereAHoistedFieldInstance, createLoading, addCard }
+import { defineComponent, onMounted, PropType } from '@vue/composition-api'
+import { useCreatePaymentMethods, usePaymentForm } from '@/usecases/payments/usePaymentForm'
+export default defineComponent({
+	props: {
+		onAddMethodSuccessful: {
+			type: Function as PropType<() => void>,
+			required: true
 		}
-	})
+	},
+	setup(props){
+		const { loading, isThereAHoistedFieldInstance, initializeHostedFields } = usePaymentForm()
+		const { loading: createLoading, createPaymentMethod } = useCreatePaymentMethods()
+		const addCard = async () => {
+			const successful = await createPaymentMethod()
+			if(successful) props.onAddMethodSuccessful()
+		}
+		onMounted(() => initializeHostedFields())
+		return { loading, isThereAHoistedFieldInstance, createLoading, addCard }
+	}
+})
 </script>

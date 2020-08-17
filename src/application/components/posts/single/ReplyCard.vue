@@ -23,29 +23,29 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { PostEntity } from '@root/modules/posts/domain/entities/post'
-	import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
-	import { useSingleReply } from '@/usecases/posts/replies'
-	export default defineComponent({
-		props: {
-			reply: {
-				required: true,
-				type: ReplyEntity
-			},
-			post: {
-				required: true,
-				type: PostEntity
-			}
+import { defineComponent } from '@vue/composition-api'
+import { PostEntity } from '@root/modules/posts/domain/entities/post'
+import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
+import { useSingleReply } from '@/usecases/posts/replies'
+export default defineComponent({
+	props: {
+		reply: {
+			required: true,
+			type: ReplyEntity
 		},
-		setup(props){
-			const {
-				loading, voting, user, votes, hasVoted, canVote,
-				upvoteReply, downvoteReply
-			} = useSingleReply(props.post.id, props.reply)
-			return { loading, voting, user, votes, hasVoted, canVote, upvoteReply, downvoteReply }
+		post: {
+			required: true,
+			type: PostEntity
 		}
-	})
+	},
+	setup(props){
+		const {
+			loading, voting, user, votes, hasVoted, canVote,
+			upvoteReply, downvoteReply
+		} = useSingleReply(props.post.id, props.reply)
+		return { loading, voting, user, votes, hasVoted, canVote, upvoteReply, downvoteReply }
+	}
+})
 </script>
 
 <style lang="scss" scoped>

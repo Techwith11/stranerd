@@ -18,38 +18,38 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import UserInfo from '@/components/users/single/UserInfo.vue'
-	import UserSessionCard from '@/components/users/single/UserSessionCard.vue'
-	import { useUser } from '@/usecases/users/users'
-	import router from '@/router'
-	export default defineComponent({
-		name: 'User',
-		setup(){
-			const { id } = router.currentRoute.params
-			const { loading, user, sessions, error } = useUser(id)
-			return { loading, user, sessions, error }
-		},
-		components: {
-			'user-session-card': UserSessionCard,
-			'user-info': UserInfo,
-		},
-		meta(){
-			return {
-				title: (this.user as any)?.name ?? 'Stranerd User',
-				meta: [
-					{
-						vmid: 'description',
-						name: 'description',
-						content: (this.user as any)?.bio
-					},
-					{
-						vmid: 'keywords',
-						name: 'keywords',
-						content: [(this.user as any)?.name].join(', ')
-					}
-				]
-			}
+import { defineComponent } from '@vue/composition-api'
+import UserInfo from '@/components/users/single/UserInfo.vue'
+import UserSessionCard from '@/components/users/single/UserSessionCard.vue'
+import { useUser } from '@/usecases/users/users'
+import router from '@/router'
+export default defineComponent({
+	name: 'User',
+	setup(){
+		const { id } = router.currentRoute.params
+		const { loading, user, sessions, error } = useUser(id)
+		return { loading, user, sessions, error }
+	},
+	components: {
+		'user-session-card': UserSessionCard,
+		'user-info': UserInfo,
+	},
+	meta(){
+		return {
+			title: (this.user as any)?.name ?? 'Stranerd User',
+			meta: [
+				{
+					vmid: 'description',
+					name: 'description',
+					content: (this.user as any)?.bio
+				},
+				{
+					vmid: 'keywords',
+					name: 'keywords',
+					content: [(this.user as any)?.name].join(', ')
+				}
+			]
 		}
-	})
+	}
+})
 </script>

@@ -1,10 +1,10 @@
 import SweetAlert from "sweetalert2"
 
 const Toast = SweetAlert.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 3000
+	toast: true,
+	position: "top-end",
+	showConfirmButton: false,
+	timer: 3000
 });
 
 type ToastArgs = {
@@ -13,12 +13,12 @@ type ToastArgs = {
 }
 
 export const Notify = (args: ToastArgs) => Toast.fire({
-    title: args.title,
-    icon: args.icon ?? 'info',
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 3000
+	title: args.title,
+	icon: args.icon ?? 'info',
+	toast: true,
+	position: "top-end",
+	showConfirmButton: false,
+	timer: 3000
 })
 
 type AlertArgs = ToastArgs & {
@@ -26,12 +26,12 @@ type AlertArgs = ToastArgs & {
     confirmButtonText: string
 }
 export const Alert = (args: AlertArgs) => SweetAlert.fire({
-    title: args.title,
-    text: args.text,
-    icon: args.icon ?? 'info',
-    showCancelButton: true,
-    cancelButtonColor: '#3085d6',
-    confirmButtonColor: '#d33',
-    confirmButtonText: args.confirmButtonText
+	title: args.title,
+	text: args.text,
+	icon: args.icon ?? 'info',
+	showCancelButton: true,
+	cancelButtonColor: '#3085d6',
+	confirmButtonColor: '#d33',
+	confirmButtonText: args.confirmButtonText
 })
 

@@ -5,11 +5,11 @@ export class AddPostUseCase {
     private repository: IPostRepository
 
     constructor(repository: IPostRepository) {
-        this.repository = repository
+	    this.repository = repository
     }
 
     public async call (factory: PostFactory) :Promise<string> {
-        return await this.repository.add(await factory.toModel())
+	    return await this.repository.add(await factory.toModel())
     }
 
 }

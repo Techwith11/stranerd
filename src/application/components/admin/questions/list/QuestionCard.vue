@@ -17,38 +17,38 @@
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		props: {
-			question: {
-				required: true,
-				type: Object
-			}
+import { mapActions } from 'vuex'
+export default {
+	props: {
+		question: {
+			required: true,
+			type: Object
+		}
+	},
+	methods: {
+		...mapActions(['deleteQuestion','setEditModalQuestion','setEditMeta']),
+		async openEditModal(){
+			this.setEditMeta(this.question)
+			this.setEditModalQuestion()
 		},
-		methods: {
-			...mapActions(['deleteQuestion','setEditModalQuestion','setEditMeta']),
-			async openEditModal(){
-				this.setEditMeta(this.question)
-				this.setEditModalQuestion()
-			},
-			async removeQuestion(){
-				try{
-					let result = await new window.SweetAlert({
-						title: 'Delete question',
-						text: 'Are you sure you want to delete these question? This cannot be undone',
-						icon: 'info',
-						showCancelButton: true,
-						cancelButtonColor: '#3085d6',
-						confirmButtonColor: '#d33',
-						confirmButtonText: 'Delete'
-					})
-					if (result.value) {
-						await this.deleteQuestion(this.question['.key'])
-						window.Fire.$emit('QuestionDeleted', this.question)
-						new window.Toast({ icon: 'success', title: 'Question deleted successfully' })
-					}
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-			}
+		async removeQuestion(){
+			try{
+				let result = await new window.SweetAlert({
+					title: 'Delete question',
+					text: 'Are you sure you want to delete these question? This cannot be undone',
+					icon: 'info',
+					showCancelButton: true,
+					cancelButtonColor: '#3085d6',
+					confirmButtonColor: '#d33',
+					confirmButtonText: 'Delete'
+				})
+				if (result.value) {
+					await this.deleteQuestion(this.question['.key'])
+					window.Fire.$emit('QuestionDeleted', this.question)
+					new window.Toast({ icon: 'success', title: 'Question deleted successfully' })
+				}
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 		}
 	}
+}
 </script>

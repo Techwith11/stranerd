@@ -18,22 +18,22 @@
 </template>
 
 <script lang="ts">
-	import { PostEntity } from '@root/modules/posts/domain/entities/post'
-	import { defineComponent, reactive, computed } from '@vue/composition-api'
-	import { fetchUser } from '@/usecases/users/users'
-	export default defineComponent({
-		props: {
-			post: {
-                type: PostEntity,
-                required: true
-			}
-		},
-		setup(props){
-			const state = reactive({ user: {} })
-            fetchUser(props.post.userId).then(u => state.user = u as object)
-            return { user: computed(() => state.user) }
+import { PostEntity } from '@root/modules/posts/domain/entities/post'
+import { defineComponent, reactive, computed } from '@vue/composition-api'
+import { fetchUser } from '@/usecases/users/users'
+export default defineComponent({
+	props: {
+		post: {
+			type: PostEntity,
+			required: true
 		}
-	})
+	},
+	setup(props){
+		const state = reactive({ user: {} })
+		fetchUser(props.post.userId).then(u => state.user = u as object)
+		return { user: computed(() => state.user) }
+	}
+})
 </script>
 
 <style lang="scss" scoped>

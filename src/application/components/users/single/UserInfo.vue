@@ -18,28 +18,28 @@
 </template>
 
 <script lang="ts">
-	import { computed, defineComponent } from '@vue/composition-api'
-	import RatingStars from '@/components/helpers/RatingStars.vue'
-	import { UserEntity } from '@root/modules/users/domain/entities/user'
-	import store from '@/store'
-	export default defineComponent({
-		props: {
-			user: {
-				required: true,
-				type: UserEntity
-			}
-		},
-		setup(props){
-			return {
-				isTutor: computed(() => props.user.roles.isTutor && props.user.tutor?.canTeach),
-				canHaveSession: computed(() => props.user.tutor?.canTeach && props.user.id !== store.getters.getId),
-				bringUpSessionForm: () => store.dispatch('setSessionModalStudentDuration',{ student: store.getters.getId, tutor: props.user.id })
-			}
-		},
-		components: {
-			'rating-stars': RatingStars
+import { computed, defineComponent } from '@vue/composition-api'
+import RatingStars from '@/components/helpers/RatingStars.vue'
+import { UserEntity } from '@root/modules/users/domain/entities/user'
+import store from '@/store'
+export default defineComponent({
+	props: {
+		user: {
+			required: true,
+			type: UserEntity
 		}
-	})
+	},
+	setup(props){
+		return {
+			isTutor: computed(() => props.user.roles.isTutor && props.user.tutor?.canTeach),
+			canHaveSession: computed(() => props.user.tutor?.canTeach && props.user.id !== store.getters.getId),
+			bringUpSessionForm: () => store.dispatch('setSessionModalStudentDuration',{ student: store.getters.getId, tutor: props.user.id })
+		}
+	},
+	components: {
+		'rating-stars': RatingStars
+	}
+})
 </script>
 
 <style lang="scss" scoped>

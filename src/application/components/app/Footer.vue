@@ -76,29 +76,29 @@
 </style>
 
 <script>
-    import { required, email} from 'vuelidate/lib/validators'
-    import { mapActions } from 'vuex'
-    export default {
-        data: () => ({
-            email: '',
-            loading: false
-        }),
-        validations: {
-            email: { required, email }
-        },
-        methods: {
-            ...mapActions(['subscribeToMail']),
-            async subscribe(){
-                this.loading = true
-                let email = this.email
-                try{
-                    await this.subscribeToMail(email)
-                    new window.Toast({ icon: 'success', title: 'Successfully subscribed' })
-                    this.email = ''
-                    this.$v.$reset()
-                }catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-                this.loading = false
-            }
-        }
-    }
+import { required, email} from 'vuelidate/lib/validators'
+import { mapActions } from 'vuex'
+export default {
+	data: () => ({
+		email: '',
+		loading: false
+	}),
+	validations: {
+		email: { required, email }
+	},
+	methods: {
+		...mapActions(['subscribeToMail']),
+		async subscribe(){
+			this.loading = true
+			let email = this.email
+			try{
+				await this.subscribeToMail(email)
+				new window.Toast({ icon: 'success', title: 'Successfully subscribed' })
+				this.email = ''
+				this.$v.$reset()
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+			this.loading = false
+		}
+	}
+}
 </script>

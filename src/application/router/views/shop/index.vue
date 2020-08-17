@@ -18,43 +18,43 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import store from '@/store'
-	import NoteCard from '@/components/shop/list/NoteCard.vue'
-	import { useNotesList } from '@/usecases/shop/useNotes'
-	import { useCart } from '@/usecases/shop/useCart'
-	export default defineComponent({
-		name: 'Shop',
-		setup(){
-			const { loading, error, notes, hasMore, olderNotesLoading, fetchOlderNotes } = useNotesList()
-			const { cartLength } = useCart()
-			return {
-				loading, error, notes,
-				hasMore, olderNotesLoading, fetchOlderNotes, cartLength,
-				setCartModalOverview: () => store.dispatch('setCartModalOverview')
-			}
-		},
-		components: {
-			'note-card': NoteCard
-		},
-		meta(){
-			return {
-				title: 'Shop on Stranerd',
-				meta: [
-					{
-						vmid: 'description',
-						name: 'description',
-						content: ''
-					},
-					{
-						vmid: 'keywords',
-						name: 'keywords',
-						content: [].join(', ')
-					}
-				]
-			}
+import { defineComponent } from '@vue/composition-api'
+import store from '@/store'
+import NoteCard from '@/components/shop/list/NoteCard.vue'
+import { useNotesList } from '@/usecases/shop/useNotes'
+import { useCart } from '@/usecases/shop/useCart'
+export default defineComponent({
+	name: 'Shop',
+	setup(){
+		const { loading, error, notes, hasMore, olderNotesLoading, fetchOlderNotes } = useNotesList()
+		const { cartLength } = useCart()
+		return {
+			loading, error, notes,
+			hasMore, olderNotesLoading, fetchOlderNotes, cartLength,
+			setCartModalOverview: () => store.dispatch('setCartModalOverview')
 		}
-	})
+	},
+	components: {
+		'note-card': NoteCard
+	},
+	meta(){
+		return {
+			title: 'Shop on Stranerd',
+			meta: [
+				{
+					vmid: 'description',
+					name: 'description',
+					content: ''
+				},
+				{
+					vmid: 'keywords',
+					name: 'keywords',
+					content: [].join(', ')
+				}
+			]
+		}
+	}
+})
 </script>
 
 <style lang="scss" scoped>

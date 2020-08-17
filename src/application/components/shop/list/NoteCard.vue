@@ -18,21 +18,21 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { NoteEntity } from '@root/modules/shop/domain/entities/note'
-	import { useCart } from '@/usecases/shop/useCart'
-	export default defineComponent({
-		props: {
-			note: {
-				required: true,
-				type: NoteEntity
-			}
-		},
-		setup(){
-			const { isInCart, addToCart, removeFromCart, checkoutNow } = useCart()
-			return { isInCart, addToCart, removeFromCart, checkoutNow }
+import { defineComponent } from '@vue/composition-api'
+import { NoteEntity } from '@root/modules/shop/domain/entities/note'
+import { useCart } from '@/usecases/shop/useCart'
+export default defineComponent({
+	props: {
+		note: {
+			required: true,
+			type: NoteEntity
 		}
-	})
+	},
+	setup(){
+		const { isInCart, addToCart, removeFromCart, checkoutNow } = useCart()
+		return { isInCart, addToCart, removeFromCart, checkoutNow }
+	}
+})
 </script>
 
 <style lang="scss" scoped>

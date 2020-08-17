@@ -28,101 +28,101 @@
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
-	import { required, minLength } from 'vuelidate/lib/validators'
-    import { mapActions, mapGetters } from 'vuex'
-	export default {
-		data: () => ({
-			content: '',
-			isLoading: false,
-            isOlderDiscussionsLoading: false,
-			discussions: [],
-			listener: false,
-			paginationLimit: 24,
-            hasMore: true
-		}),
-		validations:{ content: { required, minLength: minLength(1) } },
-		props: {
-			course: {
-				required: true,
-				type: Object
+import { firestore } from '@/config/firebase'
+import { required, minLength } from 'vuelidate/lib/validators'
+import { mapActions, mapGetters } from 'vuex'
+export default {
+	data: () => ({
+		content: '',
+		isLoading: false,
+		isOlderDiscussionsLoading: false,
+		discussions: [],
+		listener: false,
+		paginationLimit: 24,
+		hasMore: true
+	}),
+	validations:{ content: { required, minLength: minLength(1) } },
+	props: {
+		course: {
+			required: true,
+			type: Object
+		}
+	},
+	computed: mapGetters(['getId','isSubscribed']),
+	methods:{
+		...mapActions(['sendDiscussion']),
+		async fetchDiscussions(){
+			let docs = firestore.collection(`courses/${this.$route.params.id}/discussions`).orderBy('dates.createdAt','desc')
+				.limit(this.paginationLimit)
+			if(this.discussions.length > 0){
+				let lastItem = this.discussions[0]
+				docs = docs.where('dates.createdAt','<', lastItem.dates.createdAt)
 			}
+			docs = await docs.get()
+			this.hasMore = docs.size >= this.paginationLimit
+			docs.forEach(doc => this.discussions.unshift({ '.key': doc.id, ...doc.data() }))
 		},
-		computed: mapGetters(['getId','isSubscribed']),
-		methods:{
-			...mapActions(['sendDiscussion']),
-			async fetchDiscussions(){
-                let docs = firestore.collection(`courses/${this.$route.params.id}/discussions`).orderBy('dates.createdAt','desc')
-                    .limit(this.paginationLimit)
-                if(this.discussions.length > 0){
-                    let lastItem = this.discussions[0]
-                    docs = docs.where('dates.createdAt','<', lastItem.dates.createdAt)
-                }
-                docs = await docs.get()
-                this.hasMore = docs.size >= this.paginationLimit
-                docs.forEach(doc => this.discussions.unshift({ '.key': doc.id, ...doc.data() }))
-            },
-            setListener(){
-                let lastItem = this.discussions[this.discussions.length - 1]
-                let query = firestore.collection(`courses/${this.$route.params.id}/discussions`).orderBy('dates.createdAt')
-                if(lastItem){
-                    query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
-                }
-                this.listener = query.onSnapshot(snapshot => {
-                    this.newDiscussions = []
-                    snapshot.docs.forEach(doc => {
-						let index = this.discussions.findIndex(r => r['.key'] === doc.id)
-						if(index === -1){
-							this.discussions.push({ '.key': doc.id, ...doc.data() })
-						}else{
-							this.discussions[index] = { '.key': doc.id, ...doc.data() }
-						}
-                    })
+		setListener(){
+			let lastItem = this.discussions[this.discussions.length - 1]
+			let query = firestore.collection(`courses/${this.$route.params.id}/discussions`).orderBy('dates.createdAt')
+			if(lastItem){
+				query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
+			}
+			this.listener = query.onSnapshot(snapshot => {
+				this.newDiscussions = []
+				snapshot.docs.forEach(doc => {
+					let index = this.discussions.findIndex(r => r['.key'] === doc.id)
+					if(index === -1){
+						this.discussions.push({ '.key': doc.id, ...doc.data() })
+					}else{
+						this.discussions[index] = { '.key': doc.id, ...doc.data() }
+					}
+				})
 
-                })
-            },
-			async fetchOlderDiscussions(){
-                this.isOlderDiscussionsLoading = true
-                await this.fetchDiscussions()
-                this.isOlderDiscussionsLoading = false
-			},
-			async submit(){
-				this.isLoading = true
-				try{
-					await this.sendDiscussion({ id: this.course['.key'], body: this.content })
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-                this.content = ''
-                this.$v.$reset()
-                this.isLoading = false
-			}
+			})
 		},
-		async mounted(){
+		async fetchOlderDiscussions(){
+			this.isOlderDiscussionsLoading = true
 			await this.fetchDiscussions()
-			this.setListener()
+			this.isOlderDiscussionsLoading = false
 		},
-		activated(){
-			this.setListener()
-		},
-		deactivated(){
-			this.listener()
-		},
-        filters: {
-            getDateOrTime(date){
-                if(typeof(date) !== 'number') { return date }
-                date = new Date(date * 1000)
-                let now = new Date()
-                let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-                let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
-                if(date > today){
-                    return date.toTimeString().slice(0,5)
-                }else if(date > yesterday){
-                    return 'Yesterday'
-                }else{
-                    return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
-                }
-            }
-        }
+		async submit(){
+			this.isLoading = true
+			try{
+				await this.sendDiscussion({ id: this.course['.key'], body: this.content })
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+			this.content = ''
+			this.$v.$reset()
+			this.isLoading = false
+		}
+	},
+	async mounted(){
+		await this.fetchDiscussions()
+		this.setListener()
+	},
+	activated(){
+		this.setListener()
+	},
+	deactivated(){
+		this.listener()
+	},
+	filters: {
+		getDateOrTime(date){
+			if(typeof(date) !== 'number') { return date }
+			date = new Date(date * 1000)
+			let now = new Date()
+			let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+			let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+			if(date > today){
+				return date.toTimeString().slice(0,5)
+			}else if(date > yesterday){
+				return 'Yesterday'
+			}else{
+				return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
+			}
+		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>

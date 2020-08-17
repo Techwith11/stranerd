@@ -26,29 +26,29 @@
 </template>
 
 <script lang="ts">
-	import { computed, defineComponent } from '@vue/composition-api'
-	import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-	import store from '@/store'
-	import { setCurrentEditingCourse, useDeleteCourse } from '@/usecases/courses/useCourses'
-    export default defineComponent({
-        props: {
-            course: {
-                type: CourseEntity,
-                required: true
-            }
-        },
-		setup(props){
-			const { loading: delLoading, deleteCourse } = useDeleteCourse(props.course)
-			return {
-				isAdmin: computed(() => store.getters.isAdmin),
-				deleteCourse, delLoading,
-				openEditModal: () => {
-					setCurrentEditingCourse(props.course)
-					store.dispatch('setEditModalCourse')
-				}
+import { computed, defineComponent } from '@vue/composition-api'
+import { CourseEntity } from '@root/modules/courses/domain/entities/course'
+import store from '@/store'
+import { setCurrentEditingCourse, useDeleteCourse } from '@/usecases/courses/useCourses'
+export default defineComponent({
+	props: {
+		course: {
+			type: CourseEntity,
+			required: true
+		}
+	},
+	setup(props){
+		const { loading: delLoading, deleteCourse } = useDeleteCourse(props.course)
+		return {
+			isAdmin: computed(() => store.getters.isAdmin),
+			deleteCourse, delLoading,
+			openEditModal: () => {
+				setCurrentEditingCourse(props.course)
+				store.dispatch('setEditModalCourse')
 			}
 		}
-    })
+	}
+})
 </script>
 
 <style lang="scss" scoped>

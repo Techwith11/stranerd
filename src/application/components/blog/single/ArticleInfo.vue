@@ -25,36 +25,36 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, computed } from '@vue/composition-api'
-	import { setCurrentEditingArticle, useDeleteArticle } from '@/usecases/blog/useArticles'
-	import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
-	import store from '@/store'
-	import { capitalizeText } from '@root/modules/core/validations/sanitizers'
-	import { UserEntity } from '@root/modules/users/domain/entities/user'
-	export default defineComponent({
-		props: {
-			article: {
-				required: true,
-				type: ArticleEntity
-			},
-			user: {
-				required: true,
-				type: UserEntity
-			}
+import { defineComponent, computed } from '@vue/composition-api'
+import { setCurrentEditingArticle, useDeleteArticle } from '@/usecases/blog/useArticles'
+import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
+import store from '@/store'
+import { capitalizeText } from '@root/modules/core/validations/sanitizers'
+import { UserEntity } from '@root/modules/users/domain/entities/user'
+export default defineComponent({
+	props: {
+		article: {
+			required: true,
+			type: ArticleEntity
 		},
-		setup(props){
-			const { loading: delLoading, deleteArticle } = useDeleteArticle(props.article)
-			return {
-				isAdmin: computed(() => store.getters.isAdmin),
-				openEditModal: () => {
-					setCurrentEditingArticle(props.article)
-					store.dispatch('setEditModalBlog')
-				},
-				delLoading, deleteArticle,
-				tags: computed(() => props.article.tags.map(capitalizeText).join(', '))
-			}
+		user: {
+			required: true,
+			type: UserEntity
 		}
-	})
+	},
+	setup(props){
+		const { loading: delLoading, deleteArticle } = useDeleteArticle(props.article)
+		return {
+			isAdmin: computed(() => store.getters.isAdmin),
+			openEditModal: () => {
+				setCurrentEditingArticle(props.article)
+				store.dispatch('setEditModalBlog')
+			},
+			delLoading, deleteArticle,
+			tags: computed(() => props.article.tags.map(capitalizeText).join(', '))
+		}
+	}
+})
 </script>
 
 <style lang="scss" scoped>

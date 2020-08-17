@@ -14,16 +14,16 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { useRecentPostsList } from '@/usecases/posts/posts'
-	import PostCard from '@/components/posts/list/PostCard.vue'
-	export default defineComponent({
-		components: {
-			'post-card': PostCard
-		},
-		setup(){
-			const { loading, error, posts } = useRecentPostsList()
-			return { loading, error, posts }
-		}
-	})
+import { defineComponent } from '@vue/composition-api'
+import { useRecentPostsList } from '@/usecases/posts/posts'
+import PostCard from '@/components/posts/list/PostCard.vue'
+export default defineComponent({
+	components: {
+		'post-card': PostCard
+	},
+	setup(){
+		const { loading, error, posts } = useRecentPostsList()
+		return { loading, error, posts }
+	}
+})
 </script>

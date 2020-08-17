@@ -17,21 +17,21 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { PostEntity } from '@root/modules/posts/domain/entities/post'
-	import { UserEntity } from '@root/modules/users/domain/entities/user'
-	export default defineComponent({
-		props: {
-			post: {
-				required: true,
-				type: PostEntity
-			},
-			user: {
-				required: true,
-				type: UserEntity
-			}
+import { defineComponent } from '@vue/composition-api'
+import { PostEntity } from '@root/modules/posts/domain/entities/post'
+import { UserEntity } from '@root/modules/users/domain/entities/user'
+export default defineComponent({
+	props: {
+		post: {
+			required: true,
+			type: PostEntity
+		},
+		user: {
+			required: true,
+			type: UserEntity
 		}
-	})
+	}
+})
 </script>
 
 <style lang="scss" scoped>

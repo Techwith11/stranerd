@@ -15,10 +15,10 @@
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	export default {
-		methods: {
-			...mapActions(['closeAccountModal','setAccountModalSelectSubscription']),
-		}
+import { mapActions } from 'vuex'
+export default {
+	methods: {
+		...mapActions(['closeAccountModal','setAccountModalSelectSubscription']),
 	}
+}
 </script>

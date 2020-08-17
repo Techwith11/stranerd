@@ -21,38 +21,38 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import CourseCard from '@/components/courses/list/CourseCard.vue'
-	import { useCoursesList } from '@/usecases/courses/useCourses'
-	import router from '@/router'
-	import { capitalizeText } from '@root/modules/core/validations/sanitizers'
-	export default defineComponent({
-		name: 'Courses',
-		components: {
-			'course-card': CourseCard,
-		},
-		setup(){
-			const { subject, module } = router.currentRoute.params
-			const { courses, loading, error, hasMore, olderCoursesLoading, fetchOlderCourses } = useCoursesList(subject, module)
-			return { courses, loading, error, hasMore, olderCoursesLoading, fetchOlderCourses }
-		},
-		meta(){
-			const { module } = router.currentRoute.params
-			return {
-				title: capitalizeText(module) ?? 'Module Name',
-				meta: [
-					{
-						vmid: 'description',
-						name: 'description',
-						content: ''
-					},
-					{
-						vmid: 'keywords',
-						name: 'keywords',
-						content: [].join(', ')
-					}
-				]
-			}
+import { defineComponent } from '@vue/composition-api'
+import CourseCard from '@/components/courses/list/CourseCard.vue'
+import { useCoursesList } from '@/usecases/courses/useCourses'
+import router from '@/router'
+import { capitalizeText } from '@root/modules/core/validations/sanitizers'
+export default defineComponent({
+	name: 'Courses',
+	components: {
+		'course-card': CourseCard,
+	},
+	setup(){
+		const { subject, module } = router.currentRoute.params
+		const { courses, loading, error, hasMore, olderCoursesLoading, fetchOlderCourses } = useCoursesList(subject, module)
+		return { courses, loading, error, hasMore, olderCoursesLoading, fetchOlderCourses }
+	},
+	meta(){
+		const { module } = router.currentRoute.params
+		return {
+			title: capitalizeText(module) ?? 'Module Name',
+			meta: [
+				{
+					vmid: 'description',
+					name: 'description',
+					content: ''
+				},
+				{
+					vmid: 'keywords',
+					name: 'keywords',
+					content: [].join(', ')
+				}
+			]
 		}
-	})
+	}
+})
 </script>

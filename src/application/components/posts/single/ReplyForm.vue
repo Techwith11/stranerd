@@ -14,14 +14,14 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { useCreateReply } from '@/usecases/posts/replies'
-    import router from '@/router/'
-	export default defineComponent({
-		setup(){
-			const { id } = router.currentRoute.params
-			const { factory, loading, createReply, isLoggedIn } = useCreateReply(id)
-			return { factory, loading, createReply, isLoggedIn }
-		}
-	})
+import { defineComponent } from '@vue/composition-api'
+import { useCreateReply } from '@/usecases/posts/replies'
+import router from '@/router/'
+export default defineComponent({
+	setup(){
+		const { id } = router.currentRoute.params
+		const { factory, loading, createReply, isLoggedIn } = useCreateReply(id)
+		return { factory, loading, createReply, isLoggedIn }
+	}
+})
 </script>

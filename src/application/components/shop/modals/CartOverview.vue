@@ -28,17 +28,17 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { useCart } from '@/usecases/shop/useCart'
-	import store from '@/store'
-	export default defineComponent({
-		setup(){
-			const { cart, removeFromCart } = useCart()
-			return {
-				cart, removeFromCart,
-				closeCartModal: () => store.dispatch('closeCartModal'),
-				setCartModalPay: () => store.dispatch('setCartModalPay'),
-			}
+import { defineComponent } from '@vue/composition-api'
+import { useCart } from '@/usecases/shop/useCart'
+import store from '@/store'
+export default defineComponent({
+	setup(){
+		const { cart, removeFromCart } = useCart()
+		return {
+			cart, removeFromCart,
+			closeCartModal: () => store.dispatch('closeCartModal'),
+			setCartModalPay: () => store.dispatch('setCartModalPay'),
 		}
-	})
+	}
+})
 </script>

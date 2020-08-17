@@ -23,34 +23,34 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, ref } from '@vue/composition-api'
-	import store from '@/store'
-	import { setCurrentEditingSubject, useDeleteSubject } from '@/usecases/courses/useSubjects'
-	import { SubjectEntity } from '@root/modules/courses/domain/entities/subject'
-	export default defineComponent({
-		props: {
-			subject: {
-				required: true,
-				type: SubjectEntity
-			}
-		},
-		setup(props){
-			const { loading: deleteLoading, deleteSubject } = useDeleteSubject(props.subject)
-			const show = ref(false)
-			const toggleCollapse = () => {
+import { defineComponent, ref } from '@vue/composition-api'
+import store from '@/store'
+import { setCurrentEditingSubject, useDeleteSubject } from '@/usecases/courses/useSubjects'
+import { SubjectEntity } from '@root/modules/courses/domain/entities/subject'
+export default defineComponent({
+	props: {
+		subject: {
+			required: true,
+			type: SubjectEntity
+		}
+	},
+	setup(props){
+		const { loading: deleteLoading, deleteSubject } = useDeleteSubject(props.subject)
+		const show = ref(false)
+		const toggleCollapse = () => {
 				document.getElementById(props.subject.id)!.classList.toggle('show')
 				show.value = !show.value
-			}
-			const openSubjectEditModal = () => {
-				setCurrentEditingSubject(props.subject)
-				store.dispatch('setEditModalSubject')
-			}
-			return {
-				deleteLoading, deleteSubject,
-				show, toggleCollapse, openSubjectEditModal
-			}
 		}
-	})
+		const openSubjectEditModal = () => {
+			setCurrentEditingSubject(props.subject)
+			store.dispatch('setEditModalSubject')
+		}
+		return {
+			deleteLoading, deleteSubject,
+			show, toggleCollapse, openSubjectEditModal
+		}
+	}
+})
 </script>
 
 <style lang="scss" scoped>

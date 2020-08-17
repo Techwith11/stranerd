@@ -8,14 +8,14 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	import QuestionsLeftNotify from '@/components/posts/modals/QuestionsLeftNotify'
-	import BuyMoreQuestions from '@/components/posts/modals/BuyMoreQuestions'
-	export default {
-		components: {
-			'questions-left-notify': QuestionsLeftNotify,
-			'buy-more-questions': BuyMoreQuestions
-		},
-		computed: mapGetters(['isPostModalCreate','isPostModalNotify','isPostModalBuyMore'])
-	}
+import { mapGetters } from 'vuex'
+import QuestionsLeftNotify from '@/components/posts/modals/QuestionsLeftNotify'
+import BuyMoreQuestions from '@/components/posts/modals/BuyMoreQuestions'
+export default {
+	components: {
+		'questions-left-notify': QuestionsLeftNotify,
+		'buy-more-questions': BuyMoreQuestions
+	},
+	computed: mapGetters(['isPostModalCreate','isPostModalNotify','isPostModalBuyMore'])
+}
 </script>

@@ -19,49 +19,49 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	export default {
-		props: {
-			chat: {
-				required: true,
-				type: Object
+import { mapGetters, mapActions } from 'vuex'
+export default {
+	props: {
+		chat: {
+			required: true,
+			type: Object
+		}
+	},
+	computed: {
+		...mapGetters(['getId']),
+		isByMe(){ return this.chat.from === this.getId },
+		isChatRead(){ return this.chat.dates.readAt !== null },
+		getChatTime(){
+			let sentAt = this.chat && this.chat.dates ? this.chat.dates.sentAt : null
+			let date = sentAt ? new Date(sentAt.seconds * 1000) : new Date()
+			let now = new Date()
+			let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+			let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+			if(date > today){
+				return date.toTimeString().slice(0,5)
+			}else if(date > yesterday){
+				return 'Yesterday'
+			}else{
+				return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
 			}
-		},
-		computed: {
-			...mapGetters(['getId']),
-			isByMe(){ return this.chat.from === this.getId },
-			isChatRead(){ return this.chat.dates.readAt !== null },
-			getChatTime(){
-				let sentAt = this.chat && this.chat.dates ? this.chat.dates.sentAt : null
-				let date = sentAt ? new Date(sentAt.seconds * 1000) : new Date()
-				let now = new Date()
-				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
-				if(date > today){
-					return date.toTimeString().slice(0,5)
-				}else if(date > yesterday){
-					return 'Yesterday'
-				}else{
-					return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
-				}
-			}
-		},
-		async mounted(){
-			if(!this.isByMe && !this.isChatRead){
-				if(document.visibilityState === 'visible'){
-					await this.readSessionChat({ id: this.chat['.key'], path: this.$route.params.id })
-				}else{
-					document.onvisibilitychange = async () => {
-						if(document.visibilityState === 'visible'){
-							await this.readSessionChat({ id: this.chat['.key'], path: this.$route.params.id })
-						}
+		}
+	},
+	async mounted(){
+		if(!this.isByMe && !this.isChatRead){
+			if(document.visibilityState === 'visible'){
+				await this.readSessionChat({ id: this.chat['.key'], path: this.$route.params.id })
+			}else{
+				document.onvisibilitychange = async () => {
+					if(document.visibilityState === 'visible'){
+						await this.readSessionChat({ id: this.chat['.key'], path: this.$route.params.id })
 					}
 				}
 			}
-		},
-		methods: mapActions(['readSessionChat']),
-		beforeDestroy(){ document.onvisibilitychange = undefined }
-	}
+		}
+	},
+	methods: mapActions(['readSessionChat']),
+	beforeDestroy(){ document.onvisibilitychange = undefined }
+}
 </script>
 
 <style lang="scss" scoped>

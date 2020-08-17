@@ -63,61 +63,61 @@
 </template>
 
 <script>
-	import { mapActions, mapGetters } from 'vuex'
-	import { required, minLength, minValue } from 'vuelidate/lib/validators'
-	export default {
-		name: 'CreateQuestion',
-		data: () => ({
-			question: {
-				title: '',
-				subject: null,
-				module: null,
-				a: '',
-				b: '',
-				c: '',
-				d: '',
-				answer: null,
-				level: 1
-			},
-			isLoading: false,
-			answers: ['a','b','c','d'],
-		}),
-		computed: {
-			...mapGetters(['getAllSubjects']),
-			getModules(){ return this.question.subject ? this.getAllSubjects.find(s => s.name === this.question.subject).modules : [] }
+import { mapActions, mapGetters } from 'vuex'
+import { required, minLength, minValue } from 'vuelidate/lib/validators'
+export default {
+	name: 'CreateQuestion',
+	data: () => ({
+		question: {
+			title: '',
+			subject: null,
+			module: null,
+			a: '',
+			b: '',
+			c: '',
+			d: '',
+			answer: null,
+			level: 1
 		},
-		methods:{
-			...mapActions(['setCreateModalOverview', 'closeCreateModal', 'createQuestion']),
-			async submitQuestion() {
-				this.isLoading = true
-				try{
-					await this.createQuestion(this.question)
-					this.closeCreateModal()
-					new window.Toast({icon: 'success', title: 'Question created successfully'})
-				}catch(error){ new window.Toast({icon: 'error', title: error.message}) }
-				this.isLoading = false
-			}
-		},
-		validations:{
-			question: {
-				title: { required },
-				subject: { required, minLength: minLength(1) },
-				module: { required, minLength: minLength(1) },
-				a: { required, minLength: minLength(1) },
-				b: { required, minLength: minLength(1) },
-				c: { required, minLength: minLength(1) },
-				d: { required, minLength: minLength(1) },
-				answer: { required },
-				level: { required, minValue: minValue(1) }
-			}
-		},
-		watch: {
-			'question.subject'() {
-				let subject = this.getAllSubjects.find(s => s.name === this.question.subject)
-				if (subject && !subject.modules.find(m => m.name === this.question.module)) {
-					this.question.module = null
-				}
+		isLoading: false,
+		answers: ['a','b','c','d'],
+	}),
+	computed: {
+		...mapGetters(['getAllSubjects']),
+		getModules(){ return this.question.subject ? this.getAllSubjects.find(s => s.name === this.question.subject).modules : [] }
+	},
+	methods:{
+		...mapActions(['setCreateModalOverview', 'closeCreateModal', 'createQuestion']),
+		async submitQuestion() {
+			this.isLoading = true
+			try{
+				await this.createQuestion(this.question)
+				this.closeCreateModal()
+				new window.Toast({icon: 'success', title: 'Question created successfully'})
+			}catch(error){ new window.Toast({icon: 'error', title: error.message}) }
+			this.isLoading = false
+		}
+	},
+	validations:{
+		question: {
+			title: { required },
+			subject: { required, minLength: minLength(1) },
+			module: { required, minLength: minLength(1) },
+			a: { required, minLength: minLength(1) },
+			b: { required, minLength: minLength(1) },
+			c: { required, minLength: minLength(1) },
+			d: { required, minLength: minLength(1) },
+			answer: { required },
+			level: { required, minValue: minValue(1) }
+		}
+	},
+	watch: {
+		'question.subject'() {
+			let subject = this.getAllSubjects.find(s => s.name === this.question.subject)
+			if (subject && !subject.modules.find(m => m.name === this.question.module)) {
+				this.question.module = null
 			}
 		}
 	}
+}
 </script>

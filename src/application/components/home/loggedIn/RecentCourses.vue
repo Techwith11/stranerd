@@ -13,16 +13,16 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import CourseCard from '@/components/courses/list/CourseCard.vue'
-	import { useRecentCourses } from '@/usecases/courses/useCourses'
-	export default defineComponent({
-		setup(){
-			const { loading, error, courses } = useRecentCourses()
-			return { loading, error, courses }
-		},
-		components: {
-			'course-card': CourseCard
-		}
-	})
+import { defineComponent } from '@vue/composition-api'
+import CourseCard from '@/components/courses/list/CourseCard.vue'
+import { useRecentCourses } from '@/usecases/courses/useCourses'
+export default defineComponent({
+	setup(){
+		const { loading, error, courses } = useRecentCourses()
+		return { loading, error, courses }
+	},
+	components: {
+		'course-card': CourseCard
+	}
+})
 </script>

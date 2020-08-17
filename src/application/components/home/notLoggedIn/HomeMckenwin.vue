@@ -19,10 +19,10 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
-    export default {
-        computed: mapGetters(['getImages'])
-    }
+import { mapGetters } from 'vuex'
+export default {
+	computed: mapGetters(['getImages'])
+}
 </script>
 
 <style lang="scss" scoped>

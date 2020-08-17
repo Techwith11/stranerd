@@ -23,7 +23,7 @@ export class ResetPasswordFactory extends BaseFactory<null, { email: string }> {
 	}
 
 	public loadEntity = (entity: null) => {
-		throw Error('Cannot load an entity into this factory')
+		throw Error(`Cannot load an entity into this factory, ${entity}`)
 	}
 
 }

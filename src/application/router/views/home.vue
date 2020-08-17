@@ -36,56 +36,56 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	import CTA from '@/components/home/notLoggedIn/HomeCTA'
-	import WhyUs from '@/components/home/notLoggedIn/HomeWhyUs'
-	import AskQuestion from '@/components/home/notLoggedIn/HomeAskQuestion'
-	import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay'
-	import WhatMakesUsDifferent from '@/components/home/notLoggedIn/HomeWhatMakesUsDifferent'
-	import Mckenwin from '@/components/home/notLoggedIn/HomeMckenwin'
-	import Pricing from '@/components/home/notLoggedIn/HomePricing'
-	import ShowAskQuestion from '@/components/home/loggedIn/AskQuestion'
-	import RecentPosts from '@/components/home/loggedIn/RecentPosts'
-	import RecentCourses from '@/components/home/loggedIn/RecentCourses'
-	import RecentSessions from '@/components/home/loggedIn/RecentSessions'
-	import TopTutors from '@/components/home/loggedIn/TopTutors'
-	import SubscribeCard from '@/components/home/loggedIn/SubscribeCard'
-	export default {
-		name: 'Home',
-		components: {
-			'cta': CTA,
-			'why-us': WhyUs,
-			'ask-question': AskQuestion,
-			'students-says': StudentsSay,
-			'what-makes-us-different': WhatMakesUsDifferent,
-			'mckenwin': Mckenwin,
-			'pricing': Pricing,
-			'show-ask-question': ShowAskQuestion,
-			'recent-posts': RecentPosts,
-			'recent-courses': RecentCourses,
-			'recent-sessions': RecentSessions,
-			'top-tutors': TopTutors,
-			'subscribe-card': SubscribeCard,
-		},
-		computed: mapGetters(['isLoggedIn','getUser','isSubscribed']),
-		meta(){
-			return {
-				title: this.isLoggedIn ? `Stranerd Dashboard - ${this.getUser.bio && this.getUser.bio.name}` : 'Stranerd Home Page',
-				meta: [
-					{
-						vmid: 'description',
-						name: 'description',
-						content: this.isLoggedIn ? this.getUser.bio && this.getUser.bio.bio : 'Welcome to the home of the top upcoming tutoring service worldwide. Feel free to access from our wide range of courses, tutors, notes, questions etc'
-					},
-					{
-						vmid: 'keywords',
-						name: 'keywords',
-						content: ['stranerd','tutors','courses','questions','notes'].join(', ')
-					}
-				]
-			}
+import { mapGetters } from 'vuex'
+import CTA from '@/components/home/notLoggedIn/HomeCTA'
+import WhyUs from '@/components/home/notLoggedIn/HomeWhyUs'
+import AskQuestion from '@/components/home/notLoggedIn/HomeAskQuestion'
+import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay'
+import WhatMakesUsDifferent from '@/components/home/notLoggedIn/HomeWhatMakesUsDifferent'
+import Mckenwin from '@/components/home/notLoggedIn/HomeMckenwin'
+import Pricing from '@/components/home/notLoggedIn/HomePricing'
+import ShowAskQuestion from '@/components/home/loggedIn/AskQuestion'
+import RecentPosts from '@/components/home/loggedIn/RecentPosts'
+import RecentCourses from '@/components/home/loggedIn/RecentCourses'
+import RecentSessions from '@/components/home/loggedIn/RecentSessions'
+import TopTutors from '@/components/home/loggedIn/TopTutors'
+import SubscribeCard from '@/components/home/loggedIn/SubscribeCard'
+export default {
+	name: 'Home',
+	components: {
+		'cta': CTA,
+		'why-us': WhyUs,
+		'ask-question': AskQuestion,
+		'students-says': StudentsSay,
+		'what-makes-us-different': WhatMakesUsDifferent,
+		'mckenwin': Mckenwin,
+		'pricing': Pricing,
+		'show-ask-question': ShowAskQuestion,
+		'recent-posts': RecentPosts,
+		'recent-courses': RecentCourses,
+		'recent-sessions': RecentSessions,
+		'top-tutors': TopTutors,
+		'subscribe-card': SubscribeCard,
+	},
+	computed: mapGetters(['isLoggedIn','getUser','isSubscribed']),
+	meta(){
+		return {
+			title: this.isLoggedIn ? `Stranerd Dashboard - ${this.getUser.bio && this.getUser.bio.name}` : 'Stranerd Home Page',
+			meta: [
+				{
+					vmid: 'description',
+					name: 'description',
+					content: this.isLoggedIn ? this.getUser.bio && this.getUser.bio.bio : 'Welcome to the home of the top upcoming tutoring service worldwide. Feel free to access from our wide range of courses, tutors, notes, questions etc'
+				},
+				{
+					vmid: 'keywords',
+					name: 'keywords',
+					content: ['stranerd','tutors','courses','questions','notes'].join(', ')
+				}
+			]
 		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>

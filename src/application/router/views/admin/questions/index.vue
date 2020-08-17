@@ -8,38 +8,38 @@
 </template>
 
 <script>
-	import SubjectCard from "@/components/admin/questions/list/SubjectCard"
-	import { mapGetters, mapActions } from 'vuex'
-	export default {
-		data: () => ({
-			isLoading: true
-		}),
-		computed: {
-			...mapGetters(['getAllSubjects']),
-			getAllModules(){ return this.getAllSubjects.map(subject => [subject.name, ...subject.modules.map(m => m.name)]).join() },
-		},
-		methods: mapActions(['fetchAllSubjects']),
-		components: {
-			'subject-card': SubjectCard
-		},
-		async activated(){
-			this.isLoading = true
-			if(this.getAllSubjects.length === 0){
-				await this.fetchAllSubjects()
-			}
-			this.isLoading = false
-		},
-		meta(){
-			return {
-				title: 'Tutors Tests Questions',
-				meta: [
-					{
-						vmid: 'robots',
-						name: 'robots',
-						content: 'none'
-					}
-				]
-			}
+import SubjectCard from "@/components/admin/questions/list/SubjectCard"
+import { mapGetters, mapActions } from 'vuex'
+export default {
+	data: () => ({
+		isLoading: true
+	}),
+	computed: {
+		...mapGetters(['getAllSubjects']),
+		getAllModules(){ return this.getAllSubjects.map(subject => [subject.name, ...subject.modules.map(m => m.name)]).join() },
+	},
+	methods: mapActions(['fetchAllSubjects']),
+	components: {
+		'subject-card': SubjectCard
+	},
+	async activated(){
+		this.isLoading = true
+		if(this.getAllSubjects.length === 0){
+			await this.fetchAllSubjects()
+		}
+		this.isLoading = false
+	},
+	meta(){
+		return {
+			title: 'Tutors Tests Questions',
+			meta: [
+				{
+					vmid: 'robots',
+					name: 'robots',
+					content: 'none'
+				}
+			]
 		}
 	}
+}
 </script>

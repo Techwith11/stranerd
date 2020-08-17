@@ -9,7 +9,7 @@ import { addToCachedScrolls, getCachedScroll, saveIntendedRoute } from '@/usecas
 
 Vue.use(VueRouter)
 
-const router = new VueRouter({
+const router: VueRouter = new VueRouter({
 	mode: 'history',
 	base: process.env.BASE_URL,
 	routes,

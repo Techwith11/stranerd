@@ -17,26 +17,26 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	import { firestore } from '@/config/firebase'
-	import SessionCard from '@/components/sessions/list/SessionCard'
-	export default {
-		data: () => ({
-			sessions: [],
-		}),
-		computed: {
-			...mapGetters(['getId','isTutor']),
-		},
-		async mounted(){
-			try{
-				let docs = await firestore.collection('sessions').orderBy('dates.createdAt','desc')
-					.where(this.isTutor ? 'tutor' : 'student', '==', this.getId)
-					.limit(3).get()
-				docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
-			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching recent sessions. Try refreshing the page' }) }
-		},
-		components: {
-			'session-card': SessionCard
-		}
+import { mapGetters } from 'vuex'
+import { firestore } from '@/config/firebase'
+import SessionCard from '@/components/sessions/list/SessionCard'
+export default {
+	data: () => ({
+		sessions: [],
+	}),
+	computed: {
+		...mapGetters(['getId','isTutor']),
+	},
+	async mounted(){
+		try{
+			let docs = await firestore.collection('sessions').orderBy('dates.createdAt','desc')
+				.where(this.isTutor ? 'tutor' : 'student', '==', this.getId)
+				.limit(3).get()
+			docs.forEach(doc => this.sessions.push({ '.key': doc.id, ...doc.data() }))
+		}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching recent sessions. Try refreshing the page' }) }
+	},
+	components: {
+		'session-card': SessionCard
 	}
+}
 </script>

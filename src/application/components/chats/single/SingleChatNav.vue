@@ -19,23 +19,23 @@
 </template>
 
 <script>
-	import { mapActions, mapGetters } from 'vuex'
-	export default {
-		props: {
-			user: {
-				required: true
-			}
-		},
-		computed: {
-			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
-			canHaveSession(){ return this.user.roles.isTutor && this.user['.key'] !== this.getId },
-			...mapGetters(['getId','getDefaultImage']),
-		},
-		methods:{
-			...mapActions(['setSessionModalStudentDuration']),
-			bringUpSessionForm(){
-				this.setSessionModalStudentDuration({ student: this.getId, tutor: this.user['.key'] })
-			}
+import { mapActions, mapGetters } from 'vuex'
+export default {
+	props: {
+		user: {
+			required: true
+		}
+	},
+	computed: {
+		getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
+		canHaveSession(){ return this.user.roles.isTutor && this.user['.key'] !== this.getId },
+		...mapGetters(['getId','getDefaultImage']),
+	},
+	methods:{
+		...mapActions(['setSessionModalStudentDuration']),
+		bringUpSessionForm(){
+			this.setSessionModalStudentDuration({ student: this.getId, tutor: this.user['.key'] })
 		}
 	}
+}
 </script>

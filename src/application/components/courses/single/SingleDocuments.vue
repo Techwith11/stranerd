@@ -17,20 +17,20 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, computed } from '@vue/composition-api'
-	import store from '@/store'
-	import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-	export default defineComponent({
-		props: {
-			course: {
-				required: true,
-				type: CourseEntity
-			}
-		},
-		setup(){
-			return {
-				isSubscribed: computed(() => store.getters.isSubscribed)
-			}
+import { defineComponent, computed } from '@vue/composition-api'
+import store from '@/store'
+import { CourseEntity } from '@root/modules/courses/domain/entities/course'
+export default defineComponent({
+	props: {
+		course: {
+			required: true,
+			type: CourseEntity
 		}
-	})
+	},
+	setup(){
+		return {
+			isSubscribed: computed(() => store.getters.isSubscribed)
+		}
+	}
+})
 </script>

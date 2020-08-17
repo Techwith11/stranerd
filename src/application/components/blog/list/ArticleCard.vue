@@ -23,31 +23,31 @@
 </template>
 
 <script lang="ts">
-	import { computed, defineComponent, reactive } from '@vue/composition-api'
-	import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
-	import store from '@root/application/store'
-	import { setCurrentEditingArticle, useDeleteArticle } from '@root/application/usecases/blog/useArticles'
-	import { fetchUser } from '@root/application/usecases/users/users'
-	export default defineComponent({
-		props: {
-			article: {
-				required: true,
-				type: ArticleEntity
-			}
-		},
-		setup(props){
-			const state = reactive({ user: {} as any })
-			fetchUser(props.article.userId).then((user) => state.user = user )
-			const { loading: delLoading, deleteArticle } = useDeleteArticle(props.article)
-			return {
-				isAdmin: computed(() => store.getters.isAdmin),
-				openEditModal: () => {
-					setCurrentEditingArticle(props.article)
-					store.dispatch('setEditModalBlog')
-				},
-				delLoading, deleteArticle,
-				user: computed(() => state.user)
-			}
-		},
-	})
+import { computed, defineComponent, reactive } from '@vue/composition-api'
+import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
+import store from '@root/application/store'
+import { setCurrentEditingArticle, useDeleteArticle } from '@root/application/usecases/blog/useArticles'
+import { fetchUser } from '@root/application/usecases/users/users'
+export default defineComponent({
+	props: {
+		article: {
+			required: true,
+			type: ArticleEntity
+		}
+	},
+	setup(props){
+		const state = reactive({ user: {} as any })
+		fetchUser(props.article.userId).then((user) => state.user = user )
+		const { loading: delLoading, deleteArticle } = useDeleteArticle(props.article)
+		return {
+			isAdmin: computed(() => store.getters.isAdmin),
+			openEditModal: () => {
+				setCurrentEditingArticle(props.article)
+				store.dispatch('setEditModalBlog')
+			},
+			delLoading, deleteArticle,
+			user: computed(() => state.user)
+		}
+	},
+})
 </script>

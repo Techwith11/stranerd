@@ -51,22 +51,22 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	import RatingStars from '@/components/helpers/RatingStars'
-	export default {
-		computed: {
-			...mapGetters(['getUser', 'getDefaultImage']),
-			getUserImageLink() {
-				return this.getUser && this.getUser.bio.image ? this.getUser.bio.image.link : this.getDefaultImage
-			}
-		},
-		methods: {
-			...mapActions(['setAccountModalEditProfile'])
-		},
-		components: {
-			'rating-stars': RatingStars
+import { mapGetters, mapActions } from 'vuex'
+import RatingStars from '@/components/helpers/RatingStars'
+export default {
+	computed: {
+		...mapGetters(['getUser', 'getDefaultImage']),
+		getUserImageLink() {
+			return this.getUser && this.getUser.bio.image ? this.getUser.bio.image.link : this.getDefaultImage
 		}
+	},
+	methods: {
+		...mapActions(['setAccountModalEditProfile'])
+	},
+	components: {
+		'rating-stars': RatingStars
 	}
+}
 </script>
 
 <style lang="scss" scoped>

@@ -15,40 +15,40 @@
 </template>
 
 <script lang="ts">
-    import { defineComponent } from '@vue/composition-api'
-    import PostCard from '@/components/posts/list/PostCard.vue'
-    import { usePostsList } from '@/usecases/posts/posts'
-	export default defineComponent({
-        name: 'Posts',
-        components: {
-            'post-card': PostCard,
-        },
-		setup(){
-            const {
-                loading, olderPostsLoading, hasMore, error,
-				posts, fetchOlderPosts
-            } =  usePostsList()
-			return {
-                loading, olderPostsLoading, hasMore, error,
-                posts, fetchOlderPosts
-			}
-		},
-        meta(){
-            return {
-                title: 'Recent Questions',
-                meta: [
-                    {
-                        vmid: 'description',
-                        name: 'description',
-                        content: ''
-                    },
-                    {
-                        vmid: 'keywords',
-                        name: 'keywords',
-                        content: [].join(', ')
-                    }
-                ]
-            }
-        }
-	})
+import { defineComponent } from '@vue/composition-api'
+import PostCard from '@/components/posts/list/PostCard.vue'
+import { usePostsList } from '@/usecases/posts/posts'
+export default defineComponent({
+	name: 'Posts',
+	components: {
+		'post-card': PostCard,
+	},
+	setup(){
+		const {
+			loading, olderPostsLoading, hasMore, error,
+			posts, fetchOlderPosts
+		} =  usePostsList()
+		return {
+			loading, olderPostsLoading, hasMore, error,
+			posts, fetchOlderPosts
+		}
+	},
+	meta(){
+		return {
+			title: 'Recent Questions',
+			meta: [
+				{
+					vmid: 'description',
+					name: 'description',
+					content: ''
+				},
+				{
+					vmid: 'keywords',
+					name: 'keywords',
+					content: [].join(', ')
+				}
+			]
+		}
+	}
+})
 </script>

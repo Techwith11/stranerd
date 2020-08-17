@@ -11,33 +11,33 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import SubjectCard from '@/components/admin/subjects/list/SubjectCard.vue'
-	import { useSubjects } from '@/usecases/courses/useSubjects'
-	import store from '@/store'
-	export default defineComponent({
-		name: 'Subjects',
-		components: {
-			'subject-card': SubjectCard
-		},
-		setup(){
-			const { loading, subjects, error } = useSubjects()
-			return {
-				loading, subjects, error,
-				setCreateModalSubject: () => store.dispatch('setCreateModalSubject')
-			}
-		},
-		meta(){
-			return {
-				title: 'Subjects',
-				meta: [
-					{
-						vmid: 'robots',
-						name: 'robots',
-						content: 'none'
-					}
-				]
-			}
+import { defineComponent } from '@vue/composition-api'
+import SubjectCard from '@/components/admin/subjects/list/SubjectCard.vue'
+import { useSubjects } from '@/usecases/courses/useSubjects'
+import store from '@/store'
+export default defineComponent({
+	name: 'Subjects',
+	components: {
+		'subject-card': SubjectCard
+	},
+	setup(){
+		const { loading, subjects, error } = useSubjects()
+		return {
+			loading, subjects, error,
+			setCreateModalSubject: () => store.dispatch('setCreateModalSubject')
 		}
-	})
+	},
+	meta(){
+		return {
+			title: 'Subjects',
+			meta: [
+				{
+					vmid: 'robots',
+					name: 'robots',
+					content: 'none'
+				}
+			]
+		}
+	}
+})
 </script>

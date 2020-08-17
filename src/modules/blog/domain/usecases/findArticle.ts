@@ -2,14 +2,14 @@ import { IArticleRepository } from '@root/modules/blog/domain/irepositories/iart
 import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
 
 export class FindArticleUseCase {
-    private repository: IArticleRepository
+	private repository: IArticleRepository
 
-    constructor(repository: IArticleRepository) {
-        this.repository = repository
-    }
+	constructor(repository: IArticleRepository) {
+		this.repository = repository
+	}
 
-    public async call (id: string) : Promise<ArticleEntity | undefined> {
-        return await this.repository.find(id)
-    }
+	public async call (id: string) : Promise<ArticleEntity | undefined> {
+		return await this.repository.find(id)
+	}
 
 }

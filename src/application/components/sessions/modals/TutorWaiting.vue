@@ -6,13 +6,13 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	export default {
-        data: () => ({
-            isLoading: false,
-        }),
-        computed: {
-            ...mapGetters(['getOtherPersonOnSession'])
-        }
+import { mapGetters } from 'vuex'
+export default {
+	data: () => ({
+		isLoading: false,
+	}),
+	computed: {
+		...mapGetters(['getOtherPersonOnSession'])
 	}
+}
 </script>

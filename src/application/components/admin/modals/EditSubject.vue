@@ -14,21 +14,21 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import SubjectForm from '@/components/admin/subjects/SubjectForm.vue'
-	import { useEditSubject } from '@/usecases/courses/useSubjects'
-	import store from '@/store'
-	export default defineComponent({
-		name: 'EditSubject',
-		components: {
-			'subject-form': SubjectForm
-		},
-		setup(){
-			const { loading, factory, editSubject } = useEditSubject()
-			return {
-				loading, factory, editSubject,
-				closeEditModal: () => store.dispatch('closeEditModal')
-			}
+import { defineComponent } from '@vue/composition-api'
+import SubjectForm from '@/components/admin/subjects/SubjectForm.vue'
+import { useEditSubject } from '@/usecases/courses/useSubjects'
+import store from '@/store'
+export default defineComponent({
+	name: 'EditSubject',
+	components: {
+		'subject-form': SubjectForm
+	},
+	setup(){
+		const { loading, factory, editSubject } = useEditSubject()
+		return {
+			loading, factory, editSubject,
+			closeEditModal: () => store.dispatch('closeEditModal')
 		}
-	})
+	}
+})
 </script>

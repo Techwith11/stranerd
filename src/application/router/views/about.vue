@@ -7,23 +7,23 @@
 </template>
 
 <script>
-	export default {
-		meta(){
-			return {
-				title: 'About Stranerd',
-				meta: [
-					{
-						vmid: 'description',
-						name: 'description',
-						content: ''
-					},
-					{
-						vmid: 'keywords',
-						name: 'keywords',
-						content: [].join(', ')
-					}
-				]
-			}
+export default {
+	meta(){
+		return {
+			title: 'About Stranerd',
+			meta: [
+				{
+					vmid: 'description',
+					name: 'description',
+					content: ''
+				},
+				{
+					vmid: 'keywords',
+					name: 'keywords',
+					content: [].join(', ')
+				}
+			]
 		}
 	}
+}
 </script>

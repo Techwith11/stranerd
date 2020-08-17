@@ -12,51 +12,51 @@
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
-	import { mapGetters, mapActions } from 'vuex'
-	import PaymentMethodCard from "@/components/account/single/PaymentMethodCard"
-	export default {
-		data: () => ({
-			paymentMethods: [],
-			isLoading: true
-		}),
-		computed: {
-			...mapGetters(['getId']),
+import { firestore } from '@/config/firebase'
+import { mapGetters, mapActions } from 'vuex'
+import PaymentMethodCard from "@/components/account/single/PaymentMethodCard"
+export default {
+	data: () => ({
+		paymentMethods: [],
+		isLoading: true
+	}),
+	computed: {
+		...mapGetters(['getId']),
+	},
+	methods: {
+		...mapActions(['setAccountModalAddPaymentMethod','removePaymentMethod']),
+		async fetchPaymentMethods(){
+			try{
+				let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
+				docs.forEach(doc => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching payment methods. Try refreshing the page' }) }
 		},
-		methods: {
-			...mapActions(['setAccountModalAddPaymentMethod','removePaymentMethod']),
-			async fetchPaymentMethods(){
+		async removeMethod(method){
+			let result = await new window.SweetAlert({
+				title: 'Remove method',
+				text: 'Are you sure you want to remove this payment method?',
+				icon: 'info',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Remove'
+			})
+			if (result.value) {
 				try{
-					let docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
-					docs.forEach(doc => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
-				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching payment methods. Try refreshing the page' }) }
-			},
-			async removeMethod(method){
-				let result = await new window.SweetAlert({
-					title: 'Remove method',
-					text: 'Are you sure you want to remove this payment method?',
-					icon: 'info',
-					showCancelButton: true,
-					confirmButtonColor: '#3085d6',
-					cancelButtonColor: '#d33',
-					confirmButtonText: 'Remove'
-				})
-				if (result.value) {
-					try{
-						this.isLoading = true
-						await this.removePaymentMethod(method['.key'])
-						this.paymentMethods = this.paymentMethods.filter(x => x['.key'] !== method['.key'])
-					}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-					this.isLoading = false
-				}
+					this.isLoading = true
+					await this.removePaymentMethod(method['.key'])
+					this.paymentMethods = this.paymentMethods.filter(x => x['.key'] !== method['.key'])
+				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+				this.isLoading = false
 			}
-		},
-		async mounted() {
-			await this.fetchPaymentMethods()
-			this.isLoading = false
-		},
-		components: {
-			'payment-method-card': PaymentMethodCard
 		}
+	},
+	async mounted() {
+		await this.fetchPaymentMethods()
+		this.isLoading = false
+	},
+	components: {
+		'payment-method-card': PaymentMethodCard
 	}
+}
 </script>

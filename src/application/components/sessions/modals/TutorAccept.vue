@@ -15,31 +15,31 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	export default {
-		data: () => ({
-			mode: '',
-			isLoading: false
-		}),
-		methods: {
-			...mapActions(['rejectSession', 'acceptSession']),
-            async requestSession(){
-				this.isLoading = true
-				this.mode = 'accept'
-				try{
-					await this.acceptSession()
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-			},
-			async cancelSession(){
-                this.isLoading = true
-                this.mode = 'reject'
-				try{
-					await this.rejectSession()
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-			}
+import { mapGetters, mapActions } from 'vuex'
+export default {
+	data: () => ({
+		mode: '',
+		isLoading: false
+	}),
+	methods: {
+		...mapActions(['rejectSession', 'acceptSession']),
+		async requestSession(){
+			this.isLoading = true
+			this.mode = 'accept'
+			try{
+				await this.acceptSession()
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 		},
-		computed: {
-			...mapGetters(['getCurrentSession','getOtherPersonOnSession'])
+		async cancelSession(){
+			this.isLoading = true
+			this.mode = 'reject'
+			try{
+				await this.rejectSession()
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 		}
+	},
+	computed: {
+		...mapGetters(['getCurrentSession','getOtherPersonOnSession'])
 	}
+}
 </script>

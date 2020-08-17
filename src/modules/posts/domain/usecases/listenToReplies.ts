@@ -6,26 +6,26 @@ export class ListenToRepliesUseCase {
     private repository: IReplyRepository
 
     constructor(repository: IReplyRepository) {
-        this.repository = repository
+	    this.repository = repository
     }
 
     public async call (postId: string, callback: (entities: ReplyEntity[]) => void, date?: Date) :Promise<() => void > {
-        const conditions: GetClauses = {
-            order: {
-                field: 'dates.createdAt',
-                desc: true
-            }
-        }
-        if(date){
-            conditions.where = [
-                {
-                    field: 'dates.createdAt',
-                    condition: '>',
-                    value: date
-                }
-            ]
-        }
-        return await this.repository.listen(postId,callback, conditions)
+	    const conditions: GetClauses = {
+		    order: {
+			    field: 'dates.createdAt',
+			    desc: true
+		    }
+	    }
+	    if(date){
+		    conditions.where = [
+			    {
+				    field: 'dates.createdAt',
+				    condition: '>',
+				    value: date
+			    }
+		    ]
+	    }
+	    return await this.repository.listen(postId,callback, conditions)
     }
 
 }

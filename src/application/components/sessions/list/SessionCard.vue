@@ -25,94 +25,94 @@
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
-	import RatingStars from '@/components/helpers/RatingStars'
-	import { mapGetters } from 'vuex'
-	export default {
-		data: () => ({
-			user: {},
-			timer: 0,
-			interval: null,
-		}),
-		props: {
-			session: {
-				required: true,
-				type: Object
+import { firestore } from '@/config/firebase'
+import RatingStars from '@/components/helpers/RatingStars'
+import { mapGetters } from 'vuex'
+export default {
+	data: () => ({
+		user: {},
+		timer: 0,
+		interval: null,
+	}),
+	props: {
+		session: {
+			required: true,
+			type: Object
+		}
+	},
+	components: {
+		'rating-stars': RatingStars
+	},
+	computed: {
+		...mapGetters(['getId','getDefaultImage']),
+		getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
+		getRating(){
+			if(!this.session.reviews){ return 0 }
+			if(this.getId === this.session.tutor){
+				return this.session.reviews.tutor && this.session.reviews.tutor.rating ? this.session.reviews.tutor.rating : 0
+			}else{
+				return this.session.reviews.student && this.session.reviews.student.rating ? this.session.reviews.student.rating : 0
 			}
 		},
-		components: {
-			'rating-stars': RatingStars
-		},
-		computed: {
-			...mapGetters(['getId','getDefaultImage']),
-			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
-			getRating(){
-				if(!this.session.reviews){ return 0 }
-				if(this.getId === this.session.tutor){
-					return this.session.reviews.tutor && this.session.reviews.tutor.rating ? this.session.reviews.tutor.rating : 0
-				}else{
-					return this.session.reviews.student && this.session.reviews.student.rating ? this.session.reviews.student.rating : 0
-				}
-			},
-			getOtherPerson(){ return this.getId === this.session.tutor ? this.session.student : this.session.tutor },
-			getLength(){
-				if(this.session.duration >= 1){
-					return this.session.duration === 1 ? `${this.session.duration} hour` : `${this.session.duration} hours`
-				}
-				else{
-					let minutes = Math.floor(this.session.duration * 60)
-					return minutes === 1 ? `${minutes} minute` : `${minutes} minutes`
-				}
-			},
-			wasCancelled(){ return this.session.cancelled.student || this.session.cancelled.tutor },
-			isStillInSession(){ return this.timer > 0 },
-			getTime(){
-				let hours = Math.floor(this.timer / 3600).toFixed(0)
-				let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
-				let seconds = Math.floor(this.timer % 60).toFixed(0)
-				if(hours > 0){
-					return `return \`Ends in ${hours} hours ${minutes < 10 ? '0' + minutes : minutes} ${minutes > 1 ? 'minutes' : 'minute'}\``
-				}else if(minutes > 0){
-					return `Ends in ${minutes} ${minutes > 1 ? 'minutes' : 'minute'} ${seconds < 10 ? '0' + seconds : seconds} ${seconds > 1 ? 'seconds' : 'second'}`
-				}else{
-					return `Ends in ${seconds} ${seconds > 1 ? 'seconds' : 'second'}`
-				}
-			},
-		},
-		filters: {
-			getDateOrTime(date){
-				if(typeof(date) !== 'object'){
-					date = new Date(date)
-				}
-				let now = new Date()
-				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
-				if(date > today){
-					return `${date.toTimeString().slice(0,5)}`
-				}else if(date > yesterday){
-					return 'yesterday'
-				}else{
-					return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
-				}
+		getOtherPerson(){ return this.getId === this.session.tutor ? this.session.student : this.session.tutor },
+		getLength(){
+			if(this.session.duration >= 1){
+				return this.session.duration === 1 ? `${this.session.duration} hour` : `${this.session.duration} hours`
+			}
+			else{
+				let minutes = Math.floor(this.session.duration * 60)
+				return minutes === 1 ? `${minutes} minute` : `${minutes} minutes`
 			}
 		},
-		async mounted(){
-			if(!this.wasCancelled){
-				let endsAt = new Date(this.session.dates.endedAt.seconds * 1000)
-				if(endsAt > new Date()){
-					this.timer = Math.floor((endsAt - new Date()) / 1000)
-					this.interval = window.setInterval(() => this.timer > 1 ? this.timer-- : null, 1000)
-				}
+		wasCancelled(){ return this.session.cancelled.student || this.session.cancelled.tutor },
+		isStillInSession(){ return this.timer > 0 },
+		getTime(){
+			let hours = Math.floor(this.timer / 3600).toFixed(0)
+			let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
+			let seconds = Math.floor(this.timer % 60).toFixed(0)
+			if(hours > 0){
+				return `return \`Ends in ${hours} hours ${minutes < 10 ? '0' + minutes : minutes} ${minutes > 1 ? 'minutes' : 'minute'}\``
+			}else if(minutes > 0){
+				return `Ends in ${minutes} ${minutes > 1 ? 'minutes' : 'minute'} ${seconds < 10 ? '0' + seconds : seconds} ${seconds > 1 ? 'seconds' : 'second'}`
+			}else{
+				return `Ends in ${seconds} ${seconds > 1 ? 'seconds' : 'second'}`
 			}
-			let doc = await firestore.collection('users').doc(this.getOtherPerson).get()
-			this.user = doc.data()
 		},
-		watch: {
-			timer(){
-				if(Math.floor(this.timer) === 0){
-					window.clearInterval(this.interval)
-				}
+	},
+	filters: {
+		getDateOrTime(date){
+			if(typeof(date) !== 'object'){
+				date = new Date(date)
+			}
+			let now = new Date()
+			let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+			let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+			if(date > today){
+				return `${date.toTimeString().slice(0,5)}`
+			}else if(date > yesterday){
+				return 'yesterday'
+			}else{
+				return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
+			}
+		}
+	},
+	async mounted(){
+		if(!this.wasCancelled){
+			let endsAt = new Date(this.session.dates.endedAt.seconds * 1000)
+			if(endsAt > new Date()){
+				this.timer = Math.floor((endsAt - new Date()) / 1000)
+				this.interval = window.setInterval(() => this.timer > 1 ? this.timer-- : null, 1000)
+			}
+		}
+		let doc = await firestore.collection('users').doc(this.getOtherPerson).get()
+		this.user = doc.data()
+	},
+	watch: {
+		timer(){
+			if(Math.floor(this.timer) === 0){
+				window.clearInterval(this.interval)
 			}
 		}
 	}
+}
 </script>

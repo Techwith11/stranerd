@@ -33,56 +33,56 @@
 </template>
 
 <script>
-	import { required, minLength } from 'vuelidate/lib/validators'
-	import { mapActions, mapGetters } from 'vuex'
-	export default {
-		data: () => ({
-			bio: {
-				name: '',
-				bio: ''
-			},
-			image: null,
-			imageLink: null,
-			isLoading: false
-		}),
-		computed: {
-			...mapGetters(['getUser','getDefaultImage'])
+import { required, minLength } from 'vuelidate/lib/validators'
+import { mapActions, mapGetters } from 'vuex'
+export default {
+	data: () => ({
+		bio: {
+			name: '',
+			bio: ''
 		},
-		methods: {
-			...mapActions(['closeAccountModal', 'updateProfile']),
-			catchImage(e){
-				let file = e.target.files[0]
-				if(file && file.type.startsWith('image/')){
-					this.image = file
-					this.imageLink = window.URL.createObjectURL(file)
-				}else{ new window.Toast({ icon:'error', title: 'File is not an image'}) }
-			},
-			async update(){
-				this.isLoading = true
-				try{
-					await this.updateProfile({ bio: this.bio, image: this.image })
-					this.closeAccountModal()
-					new window.Toast({ icon: 'success', title: 'Profile updated successfully' })
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-				this.isLoading = false
-			}
+		image: null,
+		imageLink: null,
+		isLoading: false
+	}),
+	computed: {
+		...mapGetters(['getUser','getDefaultImage'])
+	},
+	methods: {
+		...mapActions(['closeAccountModal', 'updateProfile']),
+		catchImage(e){
+			let file = e.target.files[0]
+			if(file && file.type.startsWith('image/')){
+				this.image = file
+				this.imageLink = window.URL.createObjectURL(file)
+			}else{ new window.Toast({ icon:'error', title: 'File is not an image'}) }
 		},
-		mounted(){
-			this.bio.name = this.getUser.bio.name
-			this.bio.bio = this.getUser.bio.bio
-			if(this.getUser.bio.image && this.getUser.bio.image.link){
-				this.imageLink = this.getUser.bio.image.link
-			}else{
-				this.imageLink = this.getDefaultImage
-			}
-		},
-		validations:{
-			bio: {
-				name: { required, minLength: minLength(3) },
-				bio: { required, minLength: minLength(3) }
-			}
+		async update(){
+			this.isLoading = true
+			try{
+				await this.updateProfile({ bio: this.bio, image: this.image })
+				this.closeAccountModal()
+				new window.Toast({ icon: 'success', title: 'Profile updated successfully' })
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+			this.isLoading = false
+		}
+	},
+	mounted(){
+		this.bio.name = this.getUser.bio.name
+		this.bio.bio = this.getUser.bio.bio
+		if(this.getUser.bio.image && this.getUser.bio.image.link){
+			this.imageLink = this.getUser.bio.image.link
+		}else{
+			this.imageLink = this.getDefaultImage
+		}
+	},
+	validations:{
+		bio: {
+			name: { required, minLength: minLength(3) },
+			bio: { required, minLength: minLength(3) }
 		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>

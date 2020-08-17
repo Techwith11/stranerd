@@ -3,32 +3,32 @@ import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 
 export class GetRepliesUseCase {
-    private repository: IReplyRepository
+	private repository: IReplyRepository
 
-    constructor(repository: IReplyRepository) {
-        this.repository = repository
-    }
+	constructor(repository: IReplyRepository) {
+		this.repository = repository
+	}
 
 
-    public async call (postId: string, date?: Date) :Promise<ReplyEntity[]> {
-        const conditions: GetClauses = {
-            order: {
-                field: 'dates.createdAt',
-                desc: true
-            },
-            limit: parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
-        }
-        if(date){
-            conditions.where = [
-                {
-                    field: 'dates.createdAt',
-                    condition: '<',
-                    value: date
-                }
-            ]
-        }
-        return await this.repository.get(postId, conditions)
-    }
+	public async call (postId: string, date?: Date) :Promise<ReplyEntity[]> {
+		const conditions: GetClauses = {
+			order: {
+				field: 'dates.createdAt',
+				desc: true
+			},
+			limit: parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
+		}
+		if(date){
+			conditions.where = [
+				{
+					field: 'dates.createdAt',
+					condition: '<',
+					value: date
+				}
+			]
+		}
+		return await this.repository.get(postId, conditions)
+	}
 }
 
 

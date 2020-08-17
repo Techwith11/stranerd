@@ -9,12 +9,12 @@
 </template>
 
 <script>
-	export default {
-		props: {
-			rating: {
-				type: Number,
-				required: true
-			}
+export default {
+	props: {
+		rating: {
+			type: Number,
+			required: true
 		}
 	}
+}
 </script>

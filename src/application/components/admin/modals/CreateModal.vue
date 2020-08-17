@@ -12,22 +12,22 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	import CreateOverview from '@/components/admin/modals/CreateOverview'
-	import CreateCourse from '@/components/admin/modals/CreateCourse'
-	import CreateQuestion from '@/components/admin/modals/CreateQuestion'
-	import CreateNote from '@/components/admin/modals/CreateNote'
-	import CreateArticle from '@/components/admin/modals/CreateArticle'
-	import CreateSubject from '@/components/admin/modals/CreateSubject'
-	export default {
-		computed: mapGetters(['isCreateModalOverview','isCreateModalCourse','isCreateModalQuestion','isCreateModalNote','isCreateModalBlog','isCreateModalSubject']),
-		components: {
-			'create-overview': CreateOverview,
-			'create-course': CreateCourse,
-			'create-question': CreateQuestion,
-			'create-note': CreateNote,
-			'create-article': CreateArticle,
-			'create-subject': CreateSubject,
-		}
+import { mapGetters } from 'vuex'
+import CreateOverview from '@/components/admin/modals/CreateOverview'
+import CreateCourse from '@/components/admin/modals/CreateCourse'
+import CreateQuestion from '@/components/admin/modals/CreateQuestion'
+import CreateNote from '@/components/admin/modals/CreateNote'
+import CreateArticle from '@/components/admin/modals/CreateArticle'
+import CreateSubject from '@/components/admin/modals/CreateSubject'
+export default {
+	computed: mapGetters(['isCreateModalOverview','isCreateModalCourse','isCreateModalQuestion','isCreateModalNote','isCreateModalBlog','isCreateModalSubject']),
+	components: {
+		'create-overview': CreateOverview,
+		'create-course': CreateCourse,
+		'create-question': CreateQuestion,
+		'create-note': CreateNote,
+		'create-article': CreateArticle,
+		'create-subject': CreateSubject,
 	}
+}
 </script>

@@ -10,16 +10,16 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import TutorCard from '@/components/users/list/TutorCard.vue'
-	import { useTopTutorsList } from '@/usecases/users/users'
-	export default defineComponent({
-		setup(){
-			const { loading, error, tutors } = useTopTutorsList()
-			return { loading, error, tutors }
-		},
-		components: {
-			'tutor-card': TutorCard
-		}
-	})
+import { defineComponent } from '@vue/composition-api'
+import TutorCard from '@/components/users/list/TutorCard.vue'
+import { useTopTutorsList } from '@/usecases/users/users'
+export default defineComponent({
+	setup(){
+		const { loading, error, tutors } = useTopTutorsList()
+		return { loading, error, tutors }
+	},
+	components: {
+		'tutor-card': TutorCard
+	}
+})
 </script>

@@ -9,43 +9,43 @@
 </template>
 
 <script>
-	import { mapActions } from 'vuex'
-	import SelectPaymentMethod from "@/components/helpers/SelectPaymentMethod";
-	export default {
-		data: () => ({
-			isLoading: false,
-			token: null
-		}),
-		props: {
-			amount: {
-				required: true,
-				type: Number
-			},
-			onPaymentSuccessful: {
-				required: true,
-				type: Function
-			},
-			buttonTitle: {
-				required: true,
-				type: String
-			}
+import { mapActions } from 'vuex'
+import SelectPaymentMethod from "@/components/helpers/SelectPaymentMethod";
+export default {
+	data: () => ({
+		isLoading: false,
+		token: null
+	}),
+	props: {
+		amount: {
+			required: true,
+			type: Number
 		},
-		methods: {
-			...mapActions(['makePayment']),
-			setToken(token){ this.token = token },
-			async pay(){
-				this.isLoading = true
-				try{
-					let successful = await this.makePayment({ token: this.token, amount: this.amount })
-					if(successful){
-						await this.onPaymentSuccessful(successful)
-					}
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-				this.isLoading = false
-			},
+		onPaymentSuccessful: {
+			required: true,
+			type: Function
 		},
-		components: {
-			'select-payment-method': SelectPaymentMethod
+		buttonTitle: {
+			required: true,
+			type: String
 		}
+	},
+	methods: {
+		...mapActions(['makePayment']),
+		setToken(token){ this.token = token },
+		async pay(){
+			this.isLoading = true
+			try{
+				let successful = await this.makePayment({ token: this.token, amount: this.amount })
+				if(successful){
+					await this.onPaymentSuccessful(successful)
+				}
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+			this.isLoading = false
+		},
+	},
+	components: {
+		'select-payment-method': SelectPaymentMethod
 	}
+}
 </script>

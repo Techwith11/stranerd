@@ -33,75 +33,75 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	import { checkForUnfinishedTests, startTest } from '@/config/tests'
-	export default {
-		name: 'TestsTutors',
-		data: () => ({
-			isLoading: true,
-			course: null
-		}),
-		methods: {
-			async beginTest(){
-				let result = await new window.SweetAlert({
-					title: 'Start test',
-					text: 'Are you sure you are ready to start?',
-					icon: 'info',
-					showCancelButton: true,
-					confirmButtonColor: '#3085d6',
-					cancelButtonColor: '#d33',
-					confirmButtonText: 'Start'
-				})
-				if(result.value){
-					this.isLoading = true
-					await startTest(this.course)
-					this.isLoading = false
-				}
-			}
-		},
-		computed: {
-			...mapGetters(['getId','getUser','isTutor']),
-			tutor(){ return this.getUser.tutor || {} },
-			getNewLevel(){ return this.tutor['levels'][this.course] + 1},
-			getRetakeTime(){
-				let d = this.tutor.upgrade[this.course][this.getNewLevel]['takenAt']
-				d = new Date(d.seconds * 1000)
-				d.setHours(d.getHours() + 2)
-				return d.toTimeString().slice(0,5)
-			},
-			failed(){
-                let courseUpgrade = this.tutor.upgrade[this.course]
-                let upgrade = courseUpgrade[this.getNewLevel]
-                if(upgrade && upgrade['passed'] === false){
-                    let twoHoursToMs = 7200000
-                    let failedTime = new Date(upgrade['takenAt']['seconds'] * 1000)
-                    return (new Date() - failedTime) < twoHoursToMs
-                }
-                return false
-			}
-		},
-		created(){
-			let course = this.$route.query.course?.toLowerCase()
-			this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
-		},
-		async activated(){
-			if(!this.isTutor){ await this.$router.push('/') }
-			let course = this.$route.query.course?.toLowerCase()
-			this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
-			await checkForUnfinishedTests()
-			this.isLoading = false
-		},
-		meta(){
-			return {
-				title: 'Tutors Tests',
-				meta: [
-					{
-						vmid: 'robots',
-						name: 'robots',
-						content: 'none'
-					}
-				]
+import { mapGetters } from 'vuex'
+import { checkForUnfinishedTests, startTest } from '@/config/tests'
+export default {
+	name: 'TestsTutors',
+	data: () => ({
+		isLoading: true,
+		course: null
+	}),
+	methods: {
+		async beginTest(){
+			let result = await new window.SweetAlert({
+				title: 'Start test',
+				text: 'Are you sure you are ready to start?',
+				icon: 'info',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Start'
+			})
+			if(result.value){
+				this.isLoading = true
+				await startTest(this.course)
+				this.isLoading = false
 			}
 		}
+	},
+	computed: {
+		...mapGetters(['getId','getUser','isTutor']),
+		tutor(){ return this.getUser.tutor || {} },
+		getNewLevel(){ return this.tutor['levels'][this.course] + 1},
+		getRetakeTime(){
+			let d = this.tutor.upgrade[this.course][this.getNewLevel]['takenAt']
+			d = new Date(d.seconds * 1000)
+			d.setHours(d.getHours() + 2)
+			return d.toTimeString().slice(0,5)
+		},
+		failed(){
+			let courseUpgrade = this.tutor.upgrade[this.course]
+			let upgrade = courseUpgrade[this.getNewLevel]
+			if(upgrade && upgrade['passed'] === false){
+				let twoHoursToMs = 7200000
+				let failedTime = new Date(upgrade['takenAt']['seconds'] * 1000)
+				return (new Date() - failedTime) < twoHoursToMs
+			}
+			return false
+		}
+	},
+	created(){
+		let course = this.$route.query.course?.toLowerCase()
+		this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
+	},
+	async activated(){
+		if(!this.isTutor){ await this.$router.push('/') }
+		let course = this.$route.query.course?.toLowerCase()
+		this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
+		await checkForUnfinishedTests()
+		this.isLoading = false
+	},
+	meta(){
+		return {
+			title: 'Tutors Tests',
+			meta: [
+				{
+					vmid: 'robots',
+					name: 'robots',
+					content: 'none'
+				}
+			]
+		}
 	}
+}
 </script>

@@ -1,7 +1,6 @@
 import { BaseFactory } from '@root/modules/core/domains/factories/base'
 import {
-	hasLessThan, hasMoreThan, isExtractedHTMLLongerThan,
-	isLongerThan, isImageOrMedia, isRequired, isMoreThan, isMedia
+	isExtractedHTMLLongerThan, isLongerThan, isImageOrMedia, isRequired, isMoreThan, isMedia
 } from '@root/modules/core/validations/rules'
 import { NoteToModel } from '@root/modules/shop/data/models/note'
 import { Media } from '@root/modules/core/data/models/base'

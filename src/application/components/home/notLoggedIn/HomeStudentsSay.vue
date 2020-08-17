@@ -25,28 +25,28 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
-    export default {
-        data: () => ({
-            testimonials: [
-                {
-                    name: 'Elah Ajene',
-                    testimonial: 'Stranerd not only exhibited standard and professional attributes, but quick and guaranteed responses, quality tutors, and assured understanding of the desired course.\n' +
+import { mapGetters } from 'vuex'
+export default {
+	data: () => ({
+		testimonials: [
+			{
+				name: 'Elah Ajene',
+				testimonial: 'Stranerd not only exhibited standard and professional attributes, but quick and guaranteed responses, quality tutors, and assured understanding of the desired course.\n' +
                         'Stranerd aided me in science courses ranging from Calculus, Physics to Chemistry, across various academic levels. With step by step in-detail explanations, to diagrammatic problem solving techniques, Stranerd puts the understanding of students as their topmost priority. For extra academic aid, and success in future courses, Stranerd should be your primary option.'
-                },
-                {
-                    name: 'Barakat Yusuf',
-                    testimonial: 'They have great customer service, they’re very fast and efficient and also they ensure you get good grades! Totally recommend. If there was a rating higher than a 5 star I’d totally give them! ⭐️'
-                },
-                {
-                    name: 'Ajani Hafsat',
-                    testimonial: ' I took a physics course last semester that was giving me a seriously hard time, I told a friend and they recommended that I message stranerd. They helped me solve problems that I could not and they helped me with assignments. They tutored me for my exams as well. I had a whopping 96% percent In my finals and I could not be happier.\n' +
+			},
+			{
+				name: 'Barakat Yusuf',
+				testimonial: 'They have great customer service, they’re very fast and efficient and also they ensure you get good grades! Totally recommend. If there was a rating higher than a 5 star I’d totally give them! ⭐️'
+			},
+			{
+				name: 'Ajani Hafsat',
+				testimonial: ' I took a physics course last semester that was giving me a seriously hard time, I told a friend and they recommended that I message stranerd. They helped me solve problems that I could not and they helped me with assignments. They tutored me for my exams as well. I had a whopping 96% percent In my finals and I could not be happier.\n' +
                         'I recommend Stranerd to students that are having issues finding solutions for difficult problems. They take their time to explain and ensure that you know what you are supposed to know'
-                }
-            ]
-        }),
-        computed: mapGetters(['getImages'])
-    }
+			}
+		]
+	}),
+	computed: mapGetters(['getImages'])
+}
 </script>
 
 <style lang="scss" scoped>

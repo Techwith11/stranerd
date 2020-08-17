@@ -18,47 +18,47 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	import { firestore } from '@/config/firebase'
-	import TestCard from '@/components/account/single/TestCard'
-	export default {
-		name: 'Tests',
-		data: () => ({
-			isLoading: true,
-			isOlderTestsLoading: false,
-			tests: [],
-			paginationLimit: 24,
-			hasMore: true
-		}),
-		components: {
-			'test-card': TestCard
+import { mapGetters } from 'vuex'
+import { firestore } from '@/config/firebase'
+import TestCard from '@/components/account/single/TestCard'
+export default {
+	name: 'Tests',
+	data: () => ({
+		isLoading: true,
+		isOlderTestsLoading: false,
+		tests: [],
+		paginationLimit: 24,
+		hasMore: true
+	}),
+	components: {
+		'test-card': TestCard
+	},
+	async mounted(){
+		await this.getTests()
+		this.isLoading = false
+	},
+	computed: {
+		...mapGetters(['getId'])
+	},
+	methods: {
+		async getTests(){
+			try{
+				let docs = firestore.collection(`tests/tutors/tests`).where('user','==',this.getId).orderBy('dates.startedAt','desc')
+					.limit(this.paginationLimit)
+				let lastItem = this.tests[this.tests.length - 1]
+				if(lastItem){
+					docs = docs.where('dates.startedAt','<',lastItem.dates.createdAt)
+				}
+				docs = await docs.get()
+				this.hasMore = docs.size >= this.paginationLimit
+				docs.forEach(doc => this.tests.push({ '.key': doc.id, ...doc.data() }))
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching tests. Try refreshing the page' }) }
 		},
-		async mounted(){
+		async fetchOlderTests(){
+			this.isOlderTestsLoading = true
 			await this.getTests()
-			this.isLoading = false
-		},
-		computed: {
-			...mapGetters(['getId'])
-		},
-		methods: {
-			async getTests(){
-				try{
-					let docs = firestore.collection(`tests/tutors/tests`).where('user','==',this.getId).orderBy('dates.startedAt','desc')
-						.limit(this.paginationLimit)
-					let lastItem = this.tests[this.tests.length - 1]
-					if(lastItem){
-						docs = docs.where('dates.startedAt','<',lastItem.dates.createdAt)
-					}
-					docs = await docs.get()
-					this.hasMore = docs.size >= this.paginationLimit
-					docs.forEach(doc => this.tests.push({ '.key': doc.id, ...doc.data() }))
-				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching tests. Try refreshing the page' }) }
-			},
-			async fetchOlderTests(){
-				this.isOlderTestsLoading = true
-				await this.getTests()
-				this.isOlderTestsLoading = false
-			}
+			this.isOlderTestsLoading = false
 		}
 	}
+}
 </script>

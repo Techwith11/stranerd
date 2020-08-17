@@ -17,98 +17,98 @@
 </template>
 
 <script>
-	import { firestore } from '@/config/firebase'
-	import QuestionCard from '@/components/admin/questions/list/QuestionCard'
-	export default {
-		name: 'Questions',
-		data: () => ({
-			questions: [],
-			isLoading: true,
-			isOlderQuestionsLoading: false,
-			fetched: false,
-			listener: () => {},
-			paginationLimit: 24,
-			hasMore: true
-		}),
-		async mounted() {
-			await this.getQuestions()
-			this.fetched = true
-			this.isLoading = false
-			window.Fire.$on('QuestionEdited', question => {
-				let index = this.questions.findIndex(q => q['.key'] === question['.key'])
-				this.questions[index] = question
-				this.$forceUpdate()
-			})
-			window.Fire.$on('QuestionDeleted', question => this.questions = this.questions.filter(q => q['.key'] !== question['.key']))
-		},
-		async activated(){
-			if(this.fetched){
-				await this.setQuestionsListeners()
-			}
-		},
-		deactivated(){
-			this.listener()
-		},
-		components: {
-			'question-card': QuestionCard,
-		},
-		computed: {
-			subject(){ return this.$route.params.subject || '' },
-			module(){ return this.$route.params.module || '' }
-		},
-		methods: {
-			async getQuestions(){
-				try{
-					let docs = firestore.collection('tests/tutors/questions').orderBy('dates.createdAt','desc')
-						.limit(this.paginationLimit)
-						.where('subject','==', this.subject.toLowerCase())
-						.where('module','==', this.module.toLowerCase())
-					let lastItem = this.questions[this.questions.length - 1]
-					if(lastItem){
-						docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
-					}
-					docs = await docs.get()
-					this.hasMore = docs.size >= this.paginationLimit
-					docs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
-				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching questions. Try refreshing the page' }) }
-			},
-			async fetchOlderQuestions(){
-				this.isOlderQuestionsLoading = true
-				await this.getQuestions()
-				this.isOlderQuestionsLoading = false
-			},
-			async setQuestionsListeners(){
-				let lastItem = this.questions[this.questions.length - 1]
-				let query = firestore.collection('tests/tutors/questions')
+import { firestore } from '@/config/firebase'
+import QuestionCard from '@/components/admin/questions/list/QuestionCard'
+export default {
+	name: 'Questions',
+	data: () => ({
+		questions: [],
+		isLoading: true,
+		isOlderQuestionsLoading: false,
+		fetched: false,
+		listener: () => {},
+		paginationLimit: 24,
+		hasMore: true
+	}),
+	async mounted() {
+		await this.getQuestions()
+		this.fetched = true
+		this.isLoading = false
+		window.Fire.$on('QuestionEdited', question => {
+			let index = this.questions.findIndex(q => q['.key'] === question['.key'])
+			this.questions[index] = question
+			this.$forceUpdate()
+		})
+		window.Fire.$on('QuestionDeleted', question => this.questions = this.questions.filter(q => q['.key'] !== question['.key']))
+	},
+	async activated(){
+		if(this.fetched){
+			await this.setQuestionsListeners()
+		}
+	},
+	deactivated(){
+		this.listener()
+	},
+	components: {
+		'question-card': QuestionCard,
+	},
+	computed: {
+		subject(){ return this.$route.params.subject || '' },
+		module(){ return this.$route.params.module || '' }
+	},
+	methods: {
+		async getQuestions(){
+			try{
+				let docs = firestore.collection('tests/tutors/questions').orderBy('dates.createdAt','desc')
+					.limit(this.paginationLimit)
 					.where('subject','==', this.subject.toLowerCase())
 					.where('module','==', this.module.toLowerCase())
-					.orderBy('dates.createdAt')
+				let lastItem = this.questions[this.questions.length - 1]
 				if(lastItem){
-					query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
+					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
 				}
-				this.listener = query.onSnapshot(snapshot => {
-					snapshot.docs.forEach(doc => {
-						let index = this.questions.findIndex(r => r['.key'] === doc.id)
-						if(index === -1){
-							this.questions.unshift({ '.key': doc.id, ...doc.data() })
-						}else{
-							this.questions[index] = { '.key': doc.id, ...doc.data() }
-						}
-					})
-				})
-			},
+				docs = await docs.get()
+				this.hasMore = docs.size >= this.paginationLimit
+				docs.forEach(doc => this.questions.push({ '.key': doc.id, ...doc.data() }))
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching questions. Try refreshing the page' }) }
 		},
-		meta(){
-			return {
-				title: `${this.module && this.module[0].toUpperCase() + this.module.slice(1).toLowerCase()} Tutors Tests Questions`,
-				meta: [
-					{
-						vmid: 'robots',
-						name: 'robots',
-						content: 'none'
-					}
-				]
+		async fetchOlderQuestions(){
+			this.isOlderQuestionsLoading = true
+			await this.getQuestions()
+			this.isOlderQuestionsLoading = false
+		},
+		async setQuestionsListeners(){
+			let lastItem = this.questions[this.questions.length - 1]
+			let query = firestore.collection('tests/tutors/questions')
+				.where('subject','==', this.subject.toLowerCase())
+				.where('module','==', this.module.toLowerCase())
+				.orderBy('dates.createdAt')
+			if(lastItem){
+				query = query.where('dates.createdAt','>',lastItem.dates.createdAt)
 			}
+			this.listener = query.onSnapshot(snapshot => {
+				snapshot.docs.forEach(doc => {
+					let index = this.questions.findIndex(r => r['.key'] === doc.id)
+					if(index === -1){
+						this.questions.unshift({ '.key': doc.id, ...doc.data() })
+					}else{
+						this.questions[index] = { '.key': doc.id, ...doc.data() }
+					}
+				})
+			})
+		},
+	},
+	meta(){
+		return {
+			title: `${this.module && this.module[0].toUpperCase() + this.module.slice(1).toLowerCase()} Tutors Tests Questions`,
+			meta: [
+				{
+					vmid: 'robots',
+					name: 'robots',
+					content: 'none'
+				}
+			]
 		}
 	}
+}
 </script>

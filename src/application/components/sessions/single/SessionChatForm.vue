@@ -8,54 +8,54 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters} from 'vuex'
-	import { required } from 'vuelidate/lib/validators'
-	export default {
-		data: () => ({
-			message: '',
-			media: []
-		}),
-		validations: {
-			message: { required }
+import { mapActions, mapGetters} from 'vuex'
+import { required } from 'vuelidate/lib/validators'
+export default {
+	data: () => ({
+		message: '',
+		media: []
+	}),
+	validations: {
+		message: { required }
+	},
+	computed: {
+		...mapGetters(['getId']),
+		getChatPath(){ return [this.getId, this.$route.params.id].sort().join('_') }
+	},
+	methods:{
+		...mapActions(['sendSessionChat','sendSessionMedia']),
+		async sendMessage(){
+			let message = this.message
+			this.message = ''
+			this.$v.$reset()
+			try{
+				this.sendSessionChat({ id: this.$route.params.id, content: message })
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 		},
-		computed: {
-			...mapGetters(['getId']),
-			getChatPath(){ return [this.getId, this.$route.params.id].sort().join('_') }
+		captureFiles(e){
+			this.media = [ ...e.target.files ]
+			this.uploadFiles()
 		},
-		methods:{
-			...mapActions(['sendSessionChat','sendSessionMedia']),
-			async sendMessage(){
-				let message = this.message
-				this.message = ''
-				this.$v.$reset()
-				try{
-					this.sendSessionChat({ id: this.$route.params.id, content: message })
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-			},
-			captureFiles(e){
-				this.media = [ ...e.target.files ]
-				this.uploadFiles()
-			},
-			async uploadFiles(){
-				let result = await new window.SweetAlert({
-					title: 'Send Files',
-					text: 'Are you sure you want to send these files',
-					icon: 'info',
-					showCancelButton: true,
-					confirmButtonColor: '#3085d6',
-					cancelButtonColor: '#d33',
-					confirmButtonText: 'Send'
-				})
-				if (result.value) {
-					for (const file of this.media) {
-						try{
-							this.sendSessionMedia({ id: this.$route.params.id, media: file })
-						}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-					}
+		async uploadFiles(){
+			let result = await new window.SweetAlert({
+				title: 'Send Files',
+				text: 'Are you sure you want to send these files',
+				icon: 'info',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Send'
+			})
+			if (result.value) {
+				for (const file of this.media) {
+					try{
+						this.sendSessionMedia({ id: this.$route.params.id, media: file })
+					}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				}
 			}
 		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>

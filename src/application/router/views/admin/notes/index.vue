@@ -17,31 +17,31 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import NoteCard from '@/components/admin/notes/list/NoteCard.vue'
-	import { useNotesList } from '@/usecases/shop/useNotes'
-	export default defineComponent({
-		name: 'Notes',
-		setup(){
-			const { loading, notes, error, hasMore, olderNotesLoading, fetchOlderNotes } = useNotesList()
-			return { loading, notes, error, hasMore, olderNotesLoading, fetchOlderNotes }
-		},
-		components: {
-			'note-card': NoteCard,
-		},
-		meta(){
-			return {
-				title: 'Shop Notes',
-				meta: [
-					{
-						vmid: 'robots',
-						name: 'robots',
-						content: 'none'
-					}
-				]
-			}
+import { defineComponent } from '@vue/composition-api'
+import NoteCard from '@/components/admin/notes/list/NoteCard.vue'
+import { useNotesList } from '@/usecases/shop/useNotes'
+export default defineComponent({
+	name: 'Notes',
+	setup(){
+		const { loading, notes, error, hasMore, olderNotesLoading, fetchOlderNotes } = useNotesList()
+		return { loading, notes, error, hasMore, olderNotesLoading, fetchOlderNotes }
+	},
+	components: {
+		'note-card': NoteCard,
+	},
+	meta(){
+		return {
+			title: 'Shop Notes',
+			meta: [
+				{
+					vmid: 'robots',
+					name: 'robots',
+					content: 'none'
+				}
+			]
 		}
-	})
+	}
+})
 </script>
 
 <style lang="scss" scoped>

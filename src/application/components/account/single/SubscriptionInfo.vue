@@ -40,49 +40,49 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	export default {
-		data: () => ({
-			isLoadingCancel: false,
-		}),
-		computed: {
-			...mapGetters(['getUser','isSubscribed']),
+import { mapGetters, mapActions } from 'vuex'
+export default {
+	data: () => ({
+		isLoadingCancel: false,
+	}),
+	computed: {
+		...mapGetters(['getUser','isSubscribed']),
+	},
+	methods: {
+		...mapActions(['cancelSubscription']),
+		convertToTitle(string){
+			let res = string.split('_')
+			let plan = res[2]
+			let duration = res[1]
+			plan = plan[0].toUpperCase() + plan.slice(1)
+			return `${plan}(${duration})`
 		},
-		methods: {
-			...mapActions(['cancelSubscription']),
-			convertToTitle(string){
-				let res = string.split('_')
-				let plan = res[2]
-				let duration = res[1]
-				plan = plan[0].toUpperCase() + plan.slice(1)
-				return `${plan}(${duration})`
-			},
-			async cancelSub(){
-				if(!this.isLoadingCancel){
-					let result = await new window.SweetAlert({
-						title: 'Cancel Subscription',
-						text: 'Are you sure you want to cancel your subscription',
-						icon: 'info',
-						showCancelButton: true,
-						confirmButtonColor: '#3085d6',
-						cancelButtonColor: '#d33',
-						confirmButtonText: 'Yes',
-						cancelButtonText: 'No'
-					})
-					if (result.value) {
-						try{
-							this.isLoadingCancel = true
-							let res = await this.cancelSubscription()
-							if(res){
-								new window.Toast({ icon: 'success', title: 'Subscription cancelled successfully' })
-							}
-						}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-						this.isLoadingCancel = false
-					}
+		async cancelSub(){
+			if(!this.isLoadingCancel){
+				let result = await new window.SweetAlert({
+					title: 'Cancel Subscription',
+					text: 'Are you sure you want to cancel your subscription',
+					icon: 'info',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					confirmButtonText: 'Yes',
+					cancelButtonText: 'No'
+				})
+				if (result.value) {
+					try{
+						this.isLoadingCancel = true
+						let res = await this.cancelSubscription()
+						if(res){
+							new window.Toast({ icon: 'success', title: 'Subscription cancelled successfully' })
+						}
+					}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+					this.isLoadingCancel = false
 				}
 			}
 		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>

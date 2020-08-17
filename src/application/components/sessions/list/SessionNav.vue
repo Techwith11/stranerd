@@ -12,13 +12,13 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	export default {
-		computed: {
-			...mapGetters(['isTutor']),
-			isRouteMyTaughtSessions(){ return this.$route.path.includes('taught') }
-		}
+import { mapGetters } from 'vuex'
+export default {
+	computed: {
+		...mapGetters(['isTutor']),
+		isRouteMyTaughtSessions(){ return this.$route.path.includes('taught') }
 	}
+}
 </script>
 
 <style lang="scss" scoped>

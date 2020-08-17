@@ -14,12 +14,12 @@
 </template>
 
 <script>
-	import CreatePost from '@/components/posts/PostForm'
-	export default {
-		components: {
-			'create-post': CreatePost
-		}
+import CreatePost from '@/components/posts/PostForm'
+export default {
+	components: {
+		'create-post': CreatePost
 	}
+}
 </script>
 
 <style lang="scss" scoped>

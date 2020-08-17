@@ -13,36 +13,36 @@
 </template>
 
 <script>
-	export default {
-		props: {
-			method: {
-				required: true,
-				type: Object
-			},
-			onRemove: {
-				required: true,
-				type: Function
-			}
+export default {
+	props: {
+		method: {
+			required: true,
+			type: Object
 		},
-		computed: {
-			getDateOrTime(){
-				let date = new Date(this.method.dates.createdAt.seconds * 1000)
-				let now = new Date()
-				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
-				if(date > today){
-					return date.toTimeString().slice(0,5)
-				}else if(date > yesterday){
-					return 'Yesterday'
-				}else{
-					return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
-				}
-			}
-		},
-		methods: {
-			async remove(){
-				await this.onRemove(this.method)
+		onRemove: {
+			required: true,
+			type: Function
+		}
+	},
+	computed: {
+		getDateOrTime(){
+			let date = new Date(this.method.dates.createdAt.seconds * 1000)
+			let now = new Date()
+			let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+			let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+			if(date > today){
+				return date.toTimeString().slice(0,5)
+			}else if(date > yesterday){
+				return 'Yesterday'
+			}else{
+				return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
 			}
 		}
+	},
+	methods: {
+		async remove(){
+			await this.onRemove(this.method)
+		}
 	}
+}
 </script>

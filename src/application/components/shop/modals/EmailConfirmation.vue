@@ -8,16 +8,16 @@
 </template>
 
 <script>
-	import { mapActions, mapGetters } from 'vuex'
-	export default {
-		data: () => ({
-			isLoading: true
-		}),
-		methods: {
-			...mapActions(['closeCartModal'])
-		},
-		computed: {
-			...mapGetters(['getUser'])
-		}
+import { mapActions, mapGetters } from 'vuex'
+export default {
+	data: () => ({
+		isLoading: true
+	}),
+	methods: {
+		...mapActions(['closeCartModal'])
+	},
+	computed: {
+		...mapGetters(['getUser'])
 	}
+}
 </script>

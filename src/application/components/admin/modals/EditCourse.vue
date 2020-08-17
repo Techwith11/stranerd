@@ -14,21 +14,21 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import store from '@/store'
-	import { useEditCourse } from '@/usecases/courses/useCourses'
-	import CourseForm from '@/components/courses/CourseForm.vue'
-	export default defineComponent({
-		name: 'EditCourse',
-		components: {
-			'course-form': CourseForm
-		},
-		setup(){
-			const { loading, editCourse, factory } = useEditCourse()
-			return {
-				loading, editCourse, factory,
-				closeEditModal: () => store.dispatch('closeEditModal')
-			}
-		},
-	})
+import { defineComponent } from '@vue/composition-api'
+import store from '@/store'
+import { useEditCourse } from '@/usecases/courses/useCourses'
+import CourseForm from '@/components/courses/CourseForm.vue'
+export default defineComponent({
+	name: 'EditCourse',
+	components: {
+		'course-form': CourseForm
+	},
+	setup(){
+		const { loading, editCourse, factory } = useEditCourse()
+		return {
+			loading, editCourse, factory,
+			closeEditModal: () => store.dispatch('closeEditModal')
+		}
+	},
+})
 </script>

@@ -11,31 +11,31 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	import MakePayment from '@/components/helpers/MakePayment'
-	export default {
-		computed: {
-			...mapGetters(['getId','getCurrentSession']),
-			getAmount(){ return this.getCurrentSession.price },
-			getLength(){
-				if(this.getCurrentSession.duration >= 1){
-					return this.getCurrentSession.duration === 1 ? `${this.getCurrentSession.duration} hour` : `${this.getCurrentSession.duration} hours`
-				}
-				else{
-					let minutes = Math.floor(this.getCurrentSession.duration * 60)
-					return minutes === 1 ? `${minutes} minute` : `${minutes} minutes`
-				}
-			},
-		},
-		methods: {
-			...mapActions(['cancelSessionAndCloseModal','payForSession']),
-			async onPaymentSuccessful(){
-				new window.Toast({ icon: 'success', title: 'Payment successful' })
-				await this.payForSession()
+import { mapGetters, mapActions } from 'vuex'
+import MakePayment from '@/components/helpers/MakePayment'
+export default {
+	computed: {
+		...mapGetters(['getId','getCurrentSession']),
+		getAmount(){ return this.getCurrentSession.price },
+		getLength(){
+			if(this.getCurrentSession.duration >= 1){
+				return this.getCurrentSession.duration === 1 ? `${this.getCurrentSession.duration} hour` : `${this.getCurrentSession.duration} hours`
+			}
+			else{
+				let minutes = Math.floor(this.getCurrentSession.duration * 60)
+				return minutes === 1 ? `${minutes} minute` : `${minutes} minutes`
 			}
 		},
-		components: {
-			'helper-make-payment': MakePayment
+	},
+	methods: {
+		...mapActions(['cancelSessionAndCloseModal','payForSession']),
+		async onPaymentSuccessful(){
+			new window.Toast({ icon: 'success', title: 'Payment successful' })
+			await this.payForSession()
 		}
+	},
+	components: {
+		'helper-make-payment': MakePayment
 	}
+}
 </script>

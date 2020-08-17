@@ -120,29 +120,29 @@
 </style>
 
 <script lang="ts">
-    import { defineComponent, computed } from '@vue/composition-api'
-    import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
-    import { useLogout } from '@/usecases/users/auth'
-    import store from '@root/application/store'
-    import { useCart } from '@/usecases/shop/useCart'
-    export default defineComponent({
-        setup(){
-            const { loading, logout } = useLogout()
-            const { cartLength } = useCart()
-            return {
-                loading, logout, cartLength,
-                isLoggedIn: computed(() => store.getters.isLoggedIn),
-                isAdmin: computed(() => store.getters.isAdmin),
-                setAuthModalRegisterStudent: () => store.dispatch('setAuthModalRegisterStudent'),
-                setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
-                setCartModalOverview: () => store.dispatch('setCartModalOverview'),
-                toggleAccountDropDown: () => closeAdminDropdown(),
-                toggleAdminDropDown: () => closeAccountDropdown(),
-                showCartModal: () => {
-                    closeNavbar()
-                    store.dispatch('setCartModalOverview')
-                },
-            }
-        }
-    })
+import { defineComponent, computed } from '@vue/composition-api'
+import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
+import { useLogout } from '@/usecases/users/auth'
+import store from '@root/application/store'
+import { useCart } from '@/usecases/shop/useCart'
+export default defineComponent({
+	setup(){
+		const { loading, logout } = useLogout()
+		const { cartLength } = useCart()
+		return {
+			loading, logout, cartLength,
+			isLoggedIn: computed(() => store.getters.isLoggedIn),
+			isAdmin: computed(() => store.getters.isAdmin),
+			setAuthModalRegisterStudent: () => store.dispatch('setAuthModalRegisterStudent'),
+			setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
+			setCartModalOverview: () => store.dispatch('setCartModalOverview'),
+			toggleAccountDropDown: () => closeAdminDropdown(),
+			toggleAdminDropDown: () => closeAccountDropdown(),
+			showCartModal: () => {
+				closeNavbar()
+				store.dispatch('setCartModalOverview')
+			},
+		}
+	}
+})
 </script>

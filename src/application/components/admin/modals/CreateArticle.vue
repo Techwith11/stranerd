@@ -14,21 +14,21 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { useCreateArticle } from '@/usecases/blog/useArticles'
-	import ArticleForm from '@/components/blog/ArticleForm.vue'
-	import store from '@/store'
-	export default defineComponent({
-		name: 'CreateArticle',
-		components: {
-			'article-form': ArticleForm
-		},
-		setup(){
-			const { loading, createArticle, factory } = useCreateArticle()
-			return {
-				loading, createArticle, factory,
-				closeCreateModal: () => store.dispatch('closeCreateModal')
-			}
+import { defineComponent } from '@vue/composition-api'
+import { useCreateArticle } from '@/usecases/blog/useArticles'
+import ArticleForm from '@/components/blog/ArticleForm.vue'
+import store from '@/store'
+export default defineComponent({
+	name: 'CreateArticle',
+	components: {
+		'article-form': ArticleForm
+	},
+	setup(){
+		const { loading, createArticle, factory } = useCreateArticle()
+		return {
+			loading, createArticle, factory,
+			closeCreateModal: () => store.dispatch('closeCreateModal')
 		}
-	})
+	}
+})
 </script>

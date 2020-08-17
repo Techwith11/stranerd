@@ -21,9 +21,9 @@
 </template>
 
 <script>
-	import { mapActions, mapGetters } from 'vuex'
-	export default {
-		methods: mapActions(['setPostModalBuyMore','setPostModalCreate','closePostModal','setAccountModalSelectSubscription']),
-		computed: mapGetters(['isLoggedIn','isSubscribed','questionsLeft'])
-	}
+import { mapActions, mapGetters } from 'vuex'
+export default {
+	methods: mapActions(['setPostModalBuyMore','setPostModalCreate','closePostModal','setAccountModalSelectSubscription']),
+	computed: mapGetters(['isLoggedIn','isSubscribed','questionsLeft'])
+}
 </script>

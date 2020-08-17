@@ -19,38 +19,38 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	export default {
-		props: {
-			chat: {
-				required: true,
-			},
-			user: {
-				required: true,
-			}
+import { mapGetters } from 'vuex'
+export default {
+	props: {
+		chat: {
+			required: true,
 		},
-		computed: {
-			...mapGetters(['getId','getDefaultImage']),
-			getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
-			isByMe(){ return this.chat.from === this.getId  },
-			getUserId(){ return this.user.id },
-			getUserName(){ return this.user.bio ? this.user.bio.name : '' },
-			getChatContent(){ return this.chat.media ? this.chat.media.name : this.chat.content },
-			getChatRead(){ return this.chat.dates.readAt != null },
-			getChatTime(){
-				let sentAt = this.chat && this.chat.dates ? this.chat.dates.sentAt : null
-				let date = sentAt ? new Date(sentAt.seconds * 1000) : new Date()
-				let now = new Date()
-				let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-				let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
-				if(date > today){
-					return date.toTimeString().slice(0,5)
-				}else if(date > yesterday){
-					return 'Yesterday'
-				}else{
-					return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
-				}
+		user: {
+			required: true,
+		}
+	},
+	computed: {
+		...mapGetters(['getId','getDefaultImage']),
+		getImageLink(){ return this.user.bio && this.user.bio.image && this.user.bio.image.link ? this.user.bio.image.link : this.getDefaultImage },
+		isByMe(){ return this.chat.from === this.getId  },
+		getUserId(){ return this.user.id },
+		getUserName(){ return this.user.bio ? this.user.bio.name : '' },
+		getChatContent(){ return this.chat.media ? this.chat.media.name : this.chat.content },
+		getChatRead(){ return this.chat.dates.readAt != null },
+		getChatTime(){
+			let sentAt = this.chat && this.chat.dates ? this.chat.dates.sentAt : null
+			let date = sentAt ? new Date(sentAt.seconds * 1000) : new Date()
+			let now = new Date()
+			let today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+			let yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
+			if(date > today){
+				return date.toTimeString().slice(0,5)
+			}else if(date > yesterday){
+				return 'Yesterday'
+			}else{
+				return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
 			}
 		}
 	}
+}
 </script>

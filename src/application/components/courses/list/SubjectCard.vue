@@ -12,16 +12,16 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { SubjectEntity } from '@root/modules/courses/domain/entities/subject'
-	export default defineComponent({
-		props: {
-			subject: {
-				required: true,
-				type: SubjectEntity
-			}
-		},
-	})
+import { defineComponent } from '@vue/composition-api'
+import { SubjectEntity } from '@root/modules/courses/domain/entities/subject'
+export default defineComponent({
+	props: {
+		subject: {
+			required: true,
+			type: SubjectEntity
+		}
+	},
+})
 </script>
 
 <style lang="scss" scoped>

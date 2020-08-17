@@ -13,27 +13,27 @@
 </template>
 
 <script>
-	import { mapActions, mapGetters } from 'vuex'
-	import MakePayment from '@/components/helpers/MakePayment'
-	export default {
-		data: () => ({
-			price: 10.00,
-			quantity: 3
-		}),
-		computed: mapGetters(['getId','getCartPrice','getCartLength']),
-		methods: {
-			...mapActions(['closePostModal','addMoreQuestions','setPostModalNotify']),
-			async onPaymentSuccessful(){
-				new window.Toast({ icon: 'success', title: 'Purchase successful' })
-				try{
-					await this.addMoreQuestions(this.quantity)
-					new window.Toast({ type: 'success', title: 'Questions added to profile.' })
-					this.setPostModalNotify()
-				}catch(error){ new window.Toast({ type: 'error', title: 'Failed adding questions to profile.' }) }
-			}
-		},
-		components: {
-			'helper-make-payment': MakePayment
+import { mapActions, mapGetters } from 'vuex'
+import MakePayment from '@/components/helpers/MakePayment'
+export default {
+	data: () => ({
+		price: 10.00,
+		quantity: 3
+	}),
+	computed: mapGetters(['getId','getCartPrice','getCartLength']),
+	methods: {
+		...mapActions(['closePostModal','addMoreQuestions','setPostModalNotify']),
+		async onPaymentSuccessful(){
+			new window.Toast({ icon: 'success', title: 'Purchase successful' })
+			try{
+				await this.addMoreQuestions(this.quantity)
+				new window.Toast({ type: 'success', title: 'Questions added to profile.' })
+				this.setPostModalNotify()
+			}catch(error){ new window.Toast({ type: 'error', title: 'Failed adding questions to profile.' }) }
 		}
+	},
+	components: {
+		'helper-make-payment': MakePayment
 	}
+}
 </script>

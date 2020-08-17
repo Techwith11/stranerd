@@ -54,59 +54,59 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	import SelectPaymentMethod from "@/components/helpers/SelectPaymentMethod"
-	export default {
-		data: () => ({
-			annual: false,
-			page: 1,
-			isLoading: false,
-			id: null,
-			token: null,
-			colors: ['danger','info','success']
-		}),
-		computed: {
-			...mapGetters(['getPlans','isLoggedIn','isSubscribed','getUser']),
-			getCurrentId(){ return this.getUser?.account?.subscription?.planId }
+import { mapGetters, mapActions } from 'vuex'
+import SelectPaymentMethod from "@/components/helpers/SelectPaymentMethod"
+export default {
+	data: () => ({
+		annual: false,
+		page: 1,
+		isLoading: false,
+		id: null,
+		token: null,
+		colors: ['danger','info','success']
+	}),
+	computed: {
+		...mapGetters(['getPlans','isLoggedIn','isSubscribed','getUser']),
+		getCurrentId(){ return this.getUser?.account?.subscription?.planId }
+	},
+	methods: {
+		...mapActions(['setAuthModalLogin','subscribeToPlan']),
+		setId(id){
+			if(this.isLoggedIn){
+				this.id = id
+				this.page = 2
+				document.getElementsByTagName('body')[0].scrollIntoView()
+			}else{
+				this.setAuthModalLogin()
+				new window.Toast({ icon: 'warning', title: 'Login to continue' })
+			}
 		},
-		methods: {
-			...mapActions(['setAuthModalLogin','subscribeToPlan']),
-			setId(id){
-				if(this.isLoggedIn){
-					this.id = id
-					this.page = 2
-					document.getElementsByTagName('body')[0].scrollIntoView()
-				}else{
-					this.setAuthModalLogin()
-					new window.Toast({ icon: 'warning', title: 'Login to continue' })
-				}
-			},
-			setToken(token){ this.token = token },
-			async subscribe(){
-				this.isLoading = true
-				try{
-					await this.subscribeToPlan({token: this.token, planId: this.id })
-					await this.$router.push('/')
-					new window.Toast({ icon: 'success', title: 'Subscription created successfully' })
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-				this.isLoading = false
-			},
-			checkId(){
+		setToken(token){ this.token = token },
+		async subscribe(){
+			this.isLoading = true
+			try{
+				await this.subscribeToPlan({token: this.token, planId: this.id })
+				await this.$router.push('/')
+				new window.Toast({ icon: 'success', title: 'Subscription created successfully' })
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+			this.isLoading = false
+		},
+		checkId(){
+			let id = this.getCurrentId
+			this.id = id ? id : null
+		}
+	},
+	components: {
+		'select-payment-method': SelectPaymentMethod
+	},
+	watch: {
+		getUser: {
+			immediate: true,
+			handler(){
 				let id = this.getCurrentId
 				this.id = id ? id : null
 			}
-		},
-		components: {
-			'select-payment-method': SelectPaymentMethod
-		},
-		watch: {
-			getUser: {
-				immediate: true,
-				handler(){
-					let id = this.getCurrentId
-					this.id = id ? id : null
-				}
-			}
 		}
 	}
+}
 </script>

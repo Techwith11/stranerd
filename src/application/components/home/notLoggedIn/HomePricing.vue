@@ -38,35 +38,35 @@
 </template>
 
 <script>
-    import { mapGetters } from 'vuex'
-    export default {
-        data: () => ({
-            plans: [
-                {
-                    title: 'Amateur',
-                    description: 'Perfect for newbies and those just looking to stay for a short while.',
-                    price: 9.99,
-                    yearly: 100,
-                    questions: 5
-                },
-                {
-                    title: 'Intermediate',
-                    description: 'Perfect for those trying to get the best while saving a few dollars as well.',
-                    price: 19.99,
-                    yearly: 200,
-                    questions: 9
-                },
-                {
-                    title: 'Master',
-                    description: 'Perfect for those that believe they are going to be with us a while.',
-                    price: 49.99,
-                    yearly: 500,
-                    questions: 15
-                }
-            ]
-        }),
-        computed: mapGetters(['getPlans'])
-    }
+import { mapGetters } from 'vuex'
+export default {
+	data: () => ({
+		plans: [
+			{
+				title: 'Amateur',
+				description: 'Perfect for newbies and those just looking to stay for a short while.',
+				price: 9.99,
+				yearly: 100,
+				questions: 5
+			},
+			{
+				title: 'Intermediate',
+				description: 'Perfect for those trying to get the best while saving a few dollars as well.',
+				price: 19.99,
+				yearly: 200,
+				questions: 9
+			},
+			{
+				title: 'Master',
+				description: 'Perfect for those that believe they are going to be with us a while.',
+				price: 49.99,
+				yearly: 500,
+				questions: 15
+			}
+		]
+	}),
+	computed: mapGetters(['getPlans'])
+}
 </script>
 
 <style lang="scss" scoped>

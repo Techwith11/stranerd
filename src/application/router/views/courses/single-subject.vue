@@ -14,35 +14,35 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import SubjectCard from "@/components/courses/list/SubjectCard.vue"
-	import { useSingleSubject } from '@/usecases/courses/useSubjects'
-	import router from '@/router'
-	export default defineComponent({
-		components: {
-			'subject-card': SubjectCard,
-		},
-		setup(){
-			const { subject } = router.currentRoute.params
-			const { subject: currSubject, loading, error } = useSingleSubject(subject)
-			return { subject: currSubject, loading, error }
-		},
-		meta(){
-			return {
-				title: (this.subject as any)?.name ?? 'Subject Name',
-				meta: [
-					{
-						vmid: 'description',
-						name: 'description',
-						content: ''
-					},
-					{
-						vmid: 'keywords',
-						name: 'keywords',
-						content: [ (this.subject as any)?.name ?? '', ...(this.subject as any)?.modules?.map((m: any) => m.name) ?? []].join(', ')
-					}
-				]
-			}
+import { defineComponent } from '@vue/composition-api'
+import SubjectCard from "@/components/courses/list/SubjectCard.vue"
+import { useSingleSubject } from '@/usecases/courses/useSubjects'
+import router from '@/router'
+export default defineComponent({
+	components: {
+		'subject-card': SubjectCard,
+	},
+	setup(){
+		const { subject } = router.currentRoute.params
+		const { subject: currSubject, loading, error } = useSingleSubject(subject)
+		return { subject: currSubject, loading, error }
+	},
+	meta(){
+		return {
+			title: (this.subject as any)?.name ?? 'Subject Name',
+			meta: [
+				{
+					vmid: 'description',
+					name: 'description',
+					content: ''
+				},
+				{
+					vmid: 'keywords',
+					name: 'keywords',
+					content: [ (this.subject as any)?.name ?? '', ...(this.subject as any)?.modules?.map((m: any) => m.name) ?? []].join(', ')
+				}
+			]
 		}
-	})
+	}
+})
 </script>

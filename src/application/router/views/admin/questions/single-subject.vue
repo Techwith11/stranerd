@@ -12,43 +12,43 @@
 </template>
 
 <script>
-	import SubjectCard from "@/components/admin/questions/list/SubjectCard"
-	import { mapGetters, mapActions } from 'vuex'
-	export default {
-		data: () => ({
-			subject: {},
-			isLoading: true
-		}),
-		computed: mapGetters(['getAllSubjects']),
-		methods: mapActions(['fetchAllSubjects']),
-		components: {
-			'subject-card': SubjectCard,
-		},
-		async activated(){
-			this.isLoading = true
-			let name = this.$route.params.subject
-			if(this.getAllSubjects.length === 0){
-				await this.fetchAllSubjects()
-			}
-			let subject = this.getAllSubjects.find(s => s.name.toLowerCase() === name.toLowerCase())
-			if(subject){
-				this.subject = subject
-			}else{
-				await this.$router.replace('/admins/questions')
-			}
-			this.isLoading = false
-		},
-		meta(){
-			return {
-				title: `${this.subject.name && this.subject.name[0].toUpperCase() + this.subject.name.slice(1).toLowerCase()} Tutors Tests Questions`,
-				meta: [
-					{
-						vmid: 'robots',
-						name: 'robots',
-						content: 'none'
-					}
-				]
-			}
+import SubjectCard from "@/components/admin/questions/list/SubjectCard"
+import { mapGetters, mapActions } from 'vuex'
+export default {
+	data: () => ({
+		subject: {},
+		isLoading: true
+	}),
+	computed: mapGetters(['getAllSubjects']),
+	methods: mapActions(['fetchAllSubjects']),
+	components: {
+		'subject-card': SubjectCard,
+	},
+	async activated(){
+		this.isLoading = true
+		let name = this.$route.params.subject
+		if(this.getAllSubjects.length === 0){
+			await this.fetchAllSubjects()
+		}
+		let subject = this.getAllSubjects.find(s => s.name.toLowerCase() === name.toLowerCase())
+		if(subject){
+			this.subject = subject
+		}else{
+			await this.$router.replace('/admins/questions')
+		}
+		this.isLoading = false
+	},
+	meta(){
+		return {
+			title: `${this.subject.name && this.subject.name[0].toUpperCase() + this.subject.name.slice(1).toLowerCase()} Tutors Tests Questions`,
+			meta: [
+				{
+					vmid: 'robots',
+					name: 'robots',
+					content: 'none'
+				}
+			]
 		}
 	}
+}
 </script>

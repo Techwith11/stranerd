@@ -43,41 +43,41 @@
 </template>
 
 <script>
-	import { mapActions, mapGetters } from 'vuex'
-	import SelectPaymentMethod from "@/components/helpers/SelectPaymentMethod"
-	export default {
-		data: () => ({
-			page: 1,
-			planId: null,
-			token: null,
-			isLoading: false
-		}),
-		methods: {
-			...mapActions(['closeAccountModal','subscribeToPlan']),
-			goToNextPage(){ this.page = 2 },
-			setToken(token){ this.token = token },
-			async subscribe(){
-				this.isLoading = true
-				try{
-					await this.subscribeToPlan({token: this.token, planId: this.planId })
-					new window.Toast({ icon: 'success', title: 'Subscription created successfully' })
-					this.closeAccountModal()
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-				this.isLoading = false
-			}
-		},
-		computed: {
-			...mapGetters(['getUser','isSubscribed','getPlans'])
-		},
-		mounted(){
-			if(this.isSubscribed){
-				this.planId = this.getUser.account.subscription.planId
-			}
-		},
-		components: {
-			'select-payment-method': SelectPaymentMethod
+import { mapActions, mapGetters } from 'vuex'
+import SelectPaymentMethod from "@/components/helpers/SelectPaymentMethod"
+export default {
+	data: () => ({
+		page: 1,
+		planId: null,
+		token: null,
+		isLoading: false
+	}),
+	methods: {
+		...mapActions(['closeAccountModal','subscribeToPlan']),
+		goToNextPage(){ this.page = 2 },
+		setToken(token){ this.token = token },
+		async subscribe(){
+			this.isLoading = true
+			try{
+				await this.subscribeToPlan({token: this.token, planId: this.planId })
+				new window.Toast({ icon: 'success', title: 'Subscription created successfully' })
+				this.closeAccountModal()
+			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+			this.isLoading = false
 		}
+	},
+	computed: {
+		...mapGetters(['getUser','isSubscribed','getPlans'])
+	},
+	mounted(){
+		if(this.isSubscribed){
+			this.planId = this.getUser.account.subscription.planId
+		}
+	},
+	components: {
+		'select-payment-method': SelectPaymentMethod
 	}
+}
 </script>
 
 <style lang="scss" scoped>

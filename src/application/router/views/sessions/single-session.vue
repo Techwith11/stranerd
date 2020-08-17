@@ -20,155 +20,155 @@
 </template>
 
 <script>
-	import { mapGetters, mapActions } from 'vuex'
-	import { firestore } from '@/config/firebase'
-    import SessionChatForm from "@/components/sessions/single/SessionChatForm"
-    import SessionChatMessage from "@/components/sessions/single/SessionChatMessage"
-    import SessionNav from "@/components/sessions/single/SessionNav"
-	export default {
-		name: "SingleSession",
-		data: () => ({
-			isLoading: true,
-			isOlderChatsLoading: false,
-			timer: 600,
-			interval: null,
-			session: {},
-			otherPerson: {},
-			chats: [],
-			fetched: false,
-			paginationLimit: 10,
-			hasMore: true,
-            otherPersonListener: () => {},
-			chatsListener: () => {}
-		}),
-		components: {
-			'session-nav': SessionNav,
-			'session-chat-form': SessionChatForm,
-			'session-chat-message': SessionChatMessage,
-        },
-		methods:{
-			...mapActions(['showSessionRatingsForm']),
-			async getSessionInfo(){
-				try{
-					let doc = await firestore.collection('sessions').doc(this.$route.params.id).get()
-					if(!doc.exists){ return await this.$router.replace('/sessions') }
-					let session = { '.key': doc.id, ...doc.data() }
-					if(this.getId !== session.tutor && this.getId !== session.student){ return await this.$router.replace('/sessions') }
-					if(session.cancelled.tutor || session.cancelled.student){ return await this.$router.replace('/sessions') }
-					this.session = session
-				}catch(error){ return await this.$router.replace('/sessions') }
-			},
-            initTimer(){
-                let endsAt = new Date(this.session.dates.endedAt.seconds * 1000)
-                if(endsAt < new Date()){
-                    this.timer = 0
-                }else{
-                    this.timer = Math.floor((endsAt - new Date()) / 1000)
-                    this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
-                }
-                window.addEventListener('beforeunload',() => { this.cleanUp() })
-			},
-            async getChats(){
-				try{
-					let docs = firestore.collection(`sessions/${this.session['.key']}/chats`).orderBy('dates.sentAt','desc')
-						.limit(this.paginationLimit)
-					if(this.chats.length > 0){
-						let lastItem = this.chats[0]
-						docs = docs.where('dates.sentAt','<',lastItem.dates.sentAt)
-					}
-					docs = await docs.get()
-					this.hasMore = docs.size >= this.paginationLimit
-					docs.forEach(doc => this.chats.unshift({ '.key': doc.id, ...doc.data() }))
-				}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching chats. Try refreshing the page' }) }
-            },
-            setChatListener(){
-                let lastItem = this.chats[this.chats.length - 1]
-                let query = firestore.collection(`sessions/${this.session['.key']}/chats`).orderBy('dates.sentAt')
-                if(lastItem){
-                    query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
-                }
-                this.chatsListener = query.onSnapshot(snapshot => {
-					snapshot.docs.forEach(doc => {
-						let index = this.chats.findIndex(r => r['.key'] === doc.id)
-						if(index === -1){
-							this.chats.push({ '.key': doc.id, ...doc.data() })
-						}else{
-							this.chats[index] = { '.key': doc.id, ...doc.data() }
-						}
-					})
-                })
-            },
-			setOtherPersonListener(){
-				let otherPerson = this.session.tutor === this.getId ? this.session.student : this.session.tutor
-                this.otherPersonListener = firestore.collection('users').doc(otherPerson)
-					.onSnapshot(snapshot => this.otherPerson = { '.key': snapshot.id, ...snapshot.data() })
-            },
-            async fetchOlderMessages(){
-                this.isOlderChatsLoading = true
-                await this.getChats()
-                this.isOlderChatsLoading = false
-            },
-            cleanUp(){
-                this.otherPersonListener()
-                this.chatsListener()
-                window.clearInterval(this.interval)
-			}
+import { mapGetters, mapActions } from 'vuex'
+import { firestore } from '@/config/firebase'
+import SessionChatForm from "@/components/sessions/single/SessionChatForm"
+import SessionChatMessage from "@/components/sessions/single/SessionChatMessage"
+import SessionNav from "@/components/sessions/single/SessionNav"
+export default {
+	name: "SingleSession",
+	data: () => ({
+		isLoading: true,
+		isOlderChatsLoading: false,
+		timer: 600,
+		interval: null,
+		session: {},
+		otherPerson: {},
+		chats: [],
+		fetched: false,
+		paginationLimit: 10,
+		hasMore: true,
+		otherPersonListener: () => {},
+		chatsListener: () => {}
+	}),
+	components: {
+		'session-nav': SessionNav,
+		'session-chat-form': SessionChatForm,
+		'session-chat-message': SessionChatMessage,
+	},
+	methods:{
+		...mapActions(['showSessionRatingsForm']),
+		async getSessionInfo(){
+			try{
+				let doc = await firestore.collection('sessions').doc(this.$route.params.id).get()
+				if(!doc.exists){ return await this.$router.replace('/sessions') }
+				let session = { '.key': doc.id, ...doc.data() }
+				if(this.getId !== session.tutor && this.getId !== session.student){ return await this.$router.replace('/sessions') }
+				if(session.cancelled.tutor || session.cancelled.student){ return await this.$router.replace('/sessions') }
+				this.session = session
+			}catch(error){ return await this.$router.replace('/sessions') }
 		},
-        watch:{
-            timer(){
-                if(Math.floor(this.timer) === 0){
-					this.cleanUp()
-                }
-                if(Math.floor(this.timer) === 1){
-					window.setTimeout(() => {
-						new window.Toast({ icon: 'info', title: 'The session has ended.' })
-						this.showSessionRatingsForm(this.session)
-					},1000)
+		initTimer(){
+			let endsAt = new Date(this.session.dates.endedAt.seconds * 1000)
+			if(endsAt < new Date()){
+				this.timer = 0
+			}else{
+				this.timer = Math.floor((endsAt - new Date()) / 1000)
+				this.interval = setInterval(() => this.timer > 0 ? this.timer-- : null, 1000)
+			}
+			window.addEventListener('beforeunload',() => { this.cleanUp() })
+		},
+		async getChats(){
+			try{
+				let docs = firestore.collection(`sessions/${this.session['.key']}/chats`).orderBy('dates.sentAt','desc')
+					.limit(this.paginationLimit)
+				if(this.chats.length > 0){
+					let lastItem = this.chats[0]
+					docs = docs.where('dates.sentAt','<',lastItem.dates.sentAt)
 				}
-                if(Math.floor(this.timer) === 10){ new window.Toast({ icon: 'warning', title: 'This session will end in 10 seconds.' }) }
-            }
-        },
-		async mounted(){
-			this.isLoading = true
-			await this.getSessionInfo()
-			this.initTimer()
+				docs = await docs.get()
+				this.hasMore = docs.size >= this.paginationLimit
+				docs.forEach(doc => this.chats.unshift({ '.key': doc.id, ...doc.data() }))
+			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching chats. Try refreshing the page' }) }
+		},
+		setChatListener(){
+			let lastItem = this.chats[this.chats.length - 1]
+			let query = firestore.collection(`sessions/${this.session['.key']}/chats`).orderBy('dates.sentAt')
+			if(lastItem){
+				query = query.where('dates.sentAt','>',lastItem.dates.sentAt)
+			}
+			this.chatsListener = query.onSnapshot(snapshot => {
+				snapshot.docs.forEach(doc => {
+					let index = this.chats.findIndex(r => r['.key'] === doc.id)
+					if(index === -1){
+						this.chats.push({ '.key': doc.id, ...doc.data() })
+					}else{
+						this.chats[index] = { '.key': doc.id, ...doc.data() }
+					}
+				})
+			})
+		},
+		setOtherPersonListener(){
+			let otherPerson = this.session.tutor === this.getId ? this.session.student : this.session.tutor
+			this.otherPersonListener = firestore.collection('users').doc(otherPerson)
+				.onSnapshot(snapshot => this.otherPerson = { '.key': snapshot.id, ...snapshot.data() })
+		},
+		async fetchOlderMessages(){
+			this.isOlderChatsLoading = true
 			await this.getChats()
+			this.isOlderChatsLoading = false
+		},
+		cleanUp(){
+			this.otherPersonListener()
+			this.chatsListener()
+			window.clearInterval(this.interval)
+		}
+	},
+	watch:{
+		timer(){
+			if(Math.floor(this.timer) === 0){
+				this.cleanUp()
+			}
+			if(Math.floor(this.timer) === 1){
+				window.setTimeout(() => {
+					new window.Toast({ icon: 'info', title: 'The session has ended.' })
+					this.showSessionRatingsForm(this.session)
+				},1000)
+			}
+			if(Math.floor(this.timer) === 10){ new window.Toast({ icon: 'warning', title: 'This session will end in 10 seconds.' }) }
+		}
+	},
+	async mounted(){
+		this.isLoading = true
+		await this.getSessionInfo()
+		this.initTimer()
+		await this.getChats()
+		this.setChatListener()
+		this.setOtherPersonListener()
+		this.fetched = true
+		this.isLoading = false
+	},
+	async activated(){
+		if(this.fetched){
 			this.setChatListener()
 			this.setOtherPersonListener()
-			this.fetched = true
-			this.isLoading = false
-		},
-		async activated(){
-			if(this.fetched){
-				this.setChatListener()
-				this.setOtherPersonListener()
-			}
-		},
-		deactivated(){
-			this.cleanUp()
-		},
-		computed: {
-			...mapGetters(['getId']),
-            getTime(){
-                let hours = Math.floor(this.timer / 3600).toFixed(0)
-                let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
-                let seconds = Math.floor(this.timer % 60).toFixed(0)
-                return `${hours < 10 ? '0' + hours : hours} : ${minutes < 10 ? '0' + minutes : minutes} : ${seconds < 10 ? '0' + seconds : seconds}`
-            }
-		},
-		meta(){
-			return {
-				title: `Session with ${this.otherPerson.bio ? this.otherPerson.bio.name : 'user'}`,
-				meta: [
-					{
-						vmid: 'robots',
-						name: 'robots',
-						content: 'none'
-					}
-				]
-			}
+		}
+	},
+	deactivated(){
+		this.cleanUp()
+	},
+	computed: {
+		...mapGetters(['getId']),
+		getTime(){
+			let hours = Math.floor(this.timer / 3600).toFixed(0)
+			let minutes = Math.floor((this.timer % 3600) / 60).toFixed(0)
+			let seconds = Math.floor(this.timer % 60).toFixed(0)
+			return `${hours < 10 ? '0' + hours : hours} : ${minutes < 10 ? '0' + minutes : minutes} : ${seconds < 10 ? '0' + seconds : seconds}`
+		}
+	},
+	meta(){
+		return {
+			title: `Session with ${this.otherPerson.bio ? this.otherPerson.bio.name : 'user'}`,
+			meta: [
+				{
+					vmid: 'robots',
+					name: 'robots',
+					content: 'none'
+				}
+			]
 		}
 	}
+}
 </script>
 
 <style lang="scss" scoped>

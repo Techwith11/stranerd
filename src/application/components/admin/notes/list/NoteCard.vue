@@ -23,29 +23,29 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent, computed } from '@vue/composition-api'
-	import { NoteEntity } from '@root/modules/shop/domain/entities/note'
-	import { setCurrentEditingNote, useDeleteNote } from '@/usecases/shop/useNotes'
-	import store from '@/store'
-	export default defineComponent({
-		props: {
-			note: {
-				required: true,
-				type: NoteEntity
-			}
-		},
-		setup(props){
-			const { loading, deleteNote } = useDeleteNote(props.note)
-			return {
-				loading, deleteNote,
-				isAdmin: computed(() => store.getters.isAdmin),
-				openEditModal(){
-					setCurrentEditingNote(props.note)
-					store.dispatch('setEditModalNote')
-				}
+import { defineComponent, computed } from '@vue/composition-api'
+import { NoteEntity } from '@root/modules/shop/domain/entities/note'
+import { setCurrentEditingNote, useDeleteNote } from '@/usecases/shop/useNotes'
+import store from '@/store'
+export default defineComponent({
+	props: {
+		note: {
+			required: true,
+			type: NoteEntity
+		}
+	},
+	setup(props){
+		const { loading, deleteNote } = useDeleteNote(props.note)
+		return {
+			loading, deleteNote,
+			isAdmin: computed(() => store.getters.isAdmin),
+			openEditModal(){
+				setCurrentEditingNote(props.note)
+				store.dispatch('setEditModalNote')
 			}
 		}
-	})
+	}
+})
 </script>
 
 <style lang="scss" scoped>

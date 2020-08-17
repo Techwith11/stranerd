@@ -41,7 +41,7 @@ export class RegisterFactory extends BaseFactory<null, AuthUser> {
 	}
 
 	public loadEntity = (entity: null) => {
-		throw Error('Cannot load an entity into this factory')
+		throw Error(`Cannot load an entity into this factory, ${entity}`)
 	}
 
 }

@@ -54,32 +54,32 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { useFileInputs } from '@/usecases/core/useForms'
-	import { NoteFactory } from '@root/modules/shop/domain/factories/note'
-	export default defineComponent({
-		props: {
-			factory: {
-				type: NoteFactory,
-				required: true
-			},
-			submit: {
-				type: Function,
-				required: true
-			},
-			loading: {
-				type: Boolean,
-				required: true
-			}
+import { defineComponent } from '@vue/composition-api'
+import { useFileInputs } from '@/usecases/core/useForms'
+import { NoteFactory } from '@root/modules/shop/domain/factories/note'
+export default defineComponent({
+	props: {
+		factory: {
+			type: NoteFactory,
+			required: true
 		},
-		setup(props){
-			const { catchFiles: catchImage } = useFileInputs(
-				(file:File) => props.factory.image = file
-			)
-			const { catchFiles: catchDocument } = useFileInputs(
-				(file:File) => props.factory.document = file
-			)
-			return { catchImage, catchDocument }
+		submit: {
+			type: Function,
+			required: true
+		},
+		loading: {
+			type: Boolean,
+			required: true
 		}
-	})
+	},
+	setup(props){
+		const { catchFiles: catchImage } = useFileInputs(
+			(file:File) => props.factory.image = file
+		)
+		const { catchFiles: catchDocument } = useFileInputs(
+			(file:File) => props.factory.document = file
+		)
+		return { catchImage, catchDocument }
+	}
+})
 </script>

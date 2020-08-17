@@ -20,27 +20,27 @@
 </template>
 
 <script>
-	import { mapGetters } from 'vuex'
-	export default {
-		data: () => ({
-			index: 0,
-			colors: ['danger','info','success']
-		}),
-		computed: {
-			...mapGetters(['getPlans']),
-			plan(){ return this.getPlans[this.index]}
+import { mapGetters } from 'vuex'
+export default {
+	data: () => ({
+		index: 0,
+		colors: ['danger','info','success']
+	}),
+	computed: {
+		...mapGetters(['getPlans']),
+		plan(){ return this.getPlans[this.index]}
+	},
+	methods: {
+		increment(){
+			if(this.index < this.getPlans.length -1){
+				this.index++
+			}
 		},
-		methods: {
-			increment(){
-				if(this.index < this.getPlans.length -1){
-					this.index++
-				}
-			},
-			decrement(){
-				if(this.index > 0){
-					this.index--
-				}
+		decrement(){
+			if(this.index > 0){
+				this.index--
 			}
 		}
 	}
+}
 </script>

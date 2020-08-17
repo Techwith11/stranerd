@@ -12,14 +12,14 @@
 </template>
 
 <script>
-	export default {
-		props: {
-			subject: {
-				required: true,
-				type: Object
-			}
-		},
-	}
+export default {
+	props: {
+		subject: {
+			required: true,
+			type: Object
+		}
+	},
+}
 </script>
 
 <style lang="scss" scoped>

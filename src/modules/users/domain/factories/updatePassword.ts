@@ -1,7 +1,6 @@
 import { BaseFactory } from '@root/modules/core/domains/factories/base'
-import { isRequired, isEmail, isEqualTo, isLongerThan, isNotLongerThan } from '@root/modules/core/validations/rules'
+import { isRequired, isEqualTo, isLongerThan, isNotLongerThan } from '@root/modules/core/validations/rules'
 
-const isLongerThan3 = (value:string) => isLongerThan(3, value)
 const isLongerThan6 = (value:string) => isLongerThan(6, value)
 const isNotLongerThan16 = (value:string) => isNotLongerThan(16, value)
 
@@ -30,7 +29,7 @@ export class UpdatePasswordFactory extends BaseFactory<null, { password: string 
 	}
 
 	public loadEntity = (entity: null) => {
-		throw Error('Cannot load an entity into this factory')
+		throw Error(`Cannot load an entity into this factory, ${entity}`)
 	}
 
 }

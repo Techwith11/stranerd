@@ -9,20 +9,20 @@
 </template>
 
 <script>
-    import { mapActions, mapGetters } from 'vuex'
-    export default {
-        data: () => ({
-			isLoading: false,
-		}),
-        methods: {
-            ...mapActions(['cancelSessionAndCloseModal']),
-			async closeModal(){
-                this.isLoading = true
-                await this.cancelSessionAndCloseModal()
-			}
-        },
-		computed: {
-            ...mapGetters(['getOtherPersonOnSession'])
+import { mapActions, mapGetters } from 'vuex'
+export default {
+	data: () => ({
+		isLoading: false,
+	}),
+	methods: {
+		...mapActions(['cancelSessionAndCloseModal']),
+		async closeModal(){
+			this.isLoading = true
+			await this.cancelSessionAndCloseModal()
 		}
-    }
+	},
+	computed: {
+		...mapGetters(['getOtherPersonOnSession'])
+	}
+}
 </script>

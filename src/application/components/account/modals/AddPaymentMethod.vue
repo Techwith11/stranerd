@@ -10,17 +10,17 @@
 </template>
 
 <script>
-	import AddPaymentMethod from '@/components/helpers/AddPaymentMethod'
-	import { mapActions } from 'vuex'
-	export default {
-		components: {
-			'add-payment-method': AddPaymentMethod
-		},
-		methods: {
-			...mapActions(['closeAccountModal']),
-			onAddMethodSuccessful(){
-				new window.Toast({ icon: 'success', title: 'Refresh to see payment method details' })
-			}
+import AddPaymentMethod from '@/components/helpers/AddPaymentMethod'
+import { mapActions } from 'vuex'
+export default {
+	components: {
+		'add-payment-method': AddPaymentMethod
+	},
+	methods: {
+		...mapActions(['closeAccountModal']),
+		onAddMethodSuccessful(){
+			new window.Toast({ icon: 'success', title: 'Refresh to see payment method details' })
 		}
 	}
+}
 </script>

@@ -58,26 +58,26 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import { useDevLogin, useGoogleLogin, useLoginForm } from '@/usecases/users/auth'
-	import store from '@root/application/store'
-	export default defineComponent({
-		name: 'Login',
-		setup(){
-			const { loading: emailLoading, login: emailLogin, factory: emailFactory } = useLoginForm()
-			const { loading: googleLoading, login: googleLogin } = useGoogleLogin()
-			const { loading: devLoading, login: devLogin, id: devId, devs, isDev } = useDevLogin()
-			return {
-				emailLoading, emailLogin, emailFactory,
-				googleLoading, googleLogin,
-				devLoading, devLogin, devId, devs, isDev,
-				anyLoading: emailLoading || devLoading || googleLoading,
-				setAuthModalForgotPassword: () => store.dispatch('setAuthModalForgotPassword'),
-				setAuthModalRegisterStudent: () => store.dispatch('setAuthModalRegisterStudent'),
-				closeAuthModal: () => store.dispatch('closeAuthModal'),
-			}
+import { defineComponent } from '@vue/composition-api'
+import { useDevLogin, useGoogleLogin, useLoginForm } from '@/usecases/users/auth'
+import store from '@root/application/store'
+export default defineComponent({
+	name: 'Login',
+	setup(){
+		const { loading: emailLoading, login: emailLogin, factory: emailFactory } = useLoginForm()
+		const { loading: googleLoading, login: googleLogin } = useGoogleLogin()
+		const { loading: devLoading, login: devLogin, id: devId, devs, isDev } = useDevLogin()
+		return {
+			emailLoading, emailLogin, emailFactory,
+			googleLoading, googleLogin,
+			devLoading, devLogin, devId, devs, isDev,
+			anyLoading: emailLoading || devLoading || googleLoading,
+			setAuthModalForgotPassword: () => store.dispatch('setAuthModalForgotPassword'),
+			setAuthModalRegisterStudent: () => store.dispatch('setAuthModalRegisterStudent'),
+			closeAuthModal: () => store.dispatch('closeAuthModal'),
 		}
-	})
+	}
+})
 </script>
 
 <style lang="scss" scoped>

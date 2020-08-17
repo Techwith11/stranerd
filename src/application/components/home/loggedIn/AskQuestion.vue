@@ -6,11 +6,11 @@
 </template>
 
 <script lang="ts">
-	import { defineComponent } from '@vue/composition-api'
-	import CreatePost from '@/components/posts/PostForm.vue'
-	export default defineComponent({
-		components: {
-			'create-post': CreatePost
-		}
-	})
+import { defineComponent } from '@vue/composition-api'
+import CreatePost from '@/components/posts/PostForm.vue'
+export default defineComponent({
+	components: {
+		'create-post': CreatePost
+	}
+})
 </script>
