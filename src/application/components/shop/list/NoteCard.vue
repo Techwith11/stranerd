@@ -1,15 +1,18 @@
 <template>
-	<div class="my-3 alert border border-secondary">
-		<div class="mb-1 font-weight-bold d-flex justify-content-between">
-			<span>{{ note.title }}</span>
-			<span class="text-success">&dollar;{{ note.price }}</span>
-		</div>
-		<p class="mb-1">{{ note.description }}</p>
-		<p class="mb-1 small">Uploaded {{ note.createdDate }}</p>
-		<div class="d-flex" id="checkoutOptions">
-			<button class="px-3 ml-0 btn-sm rounded mr-2 btn-danger" @click.prevent="removeFromCart(note)" v-if="isInCart(note)">Remove</button>
-			<button class="px-3 ml-0 btn-sm rounded mr-2 btn-info" @click.prevent="addToCart(note)" v-else><i class="fas fa-shopping-basket mr-2"></i>Add to cart</button>
-			<button class="px-3 ml-0 btn-sm rounded btn-success" @click.prevent="checkoutNow(note)"><i class="fas fa-money-bill mr-2"></i>Checkout now</button>
+	<div class="rounded-xl shadow-sm d-flex flex-column flex-md-row align-items-start p-2">
+		<img :src="note.imageLink" alt="">
+		<div class="px-2">
+			<h5 class="d-flex justify-content-between mb-1">
+				<span>{{ note.title }}</span>
+				<span class="text-success">${{ note.price }}</span>
+			</h5>
+			<div class="d-flex small my-1">
+				<a class="mr-3 text-danger" @click.prevent="removeFromCart(note)" v-if="isInCart(note)"><i class="fas fa-cart-arrow-down mr-1"></i>Remove</a>
+				<a class="mr-3 text-info" @click.prevent="addToCart(note)" v-else><i class="fas fa-cart-plus mr-1"></i>Add to cart</a>
+				<a class="text-success" @click.prevent="checkoutNow(note)"><i class="fas fa-shopping-bag mr-1"></i>Checkout now</a>
+			</div>
+			<p class="small mb-1">{{ note.description }}</p>
+			<p class="small mb-1">Uploaded {{ note.createdDate }}</p>
 		</div>
 	</div>
 </template>
@@ -33,37 +36,8 @@
 </script>
 
 <style lang="scss" scoped>
-	@media (max-width: 435px){
-		button{
-			font-size: 0.80rem;
-		}
-	}
-	@media (max-width: 394px){
-		button{
-			font-size: 0.75rem;
-		}
-	}
-	@media (max-width: 382px){
-		button{
-			font-size: 0.70rem;
-		}
-	}
-	@media (max-width: 370px){
-		button{
-			font-size: 0.65rem;
-		}
-	}
-	@media (max-width: 358px){
-		button{
-			font-size: 0.60rem;
-		}
-	}
-	@media (max-width: 350px){
-		button{
-			font-size: 0.65rem;
-		}
-		i{
-			display: none;
-		}
+	img{ width: 100%; }
+	@media (min-width: $md) {
+		img{ width: 33.33%; }
 	}
 </style>

@@ -1,21 +1,24 @@
 <template>
-	<div class="alert alert-warning my-3" role="alert">
-		<div class="mb-1 font-weight-bold d-flex justify-content-between">
-			<span>{{ note.title }}</span>
-			<span class="text-success">&dollar;{{ note.price }}</span>
+	<div class="rounded-xl shadow-sm d-flex flex-column flex-md-row align-items-start p-2">
+		<img :src="note.imageLink" alt="">
+		<div class="px-2">
+			<h5 class="d-flex justify-content-between mb-1">
+				<span>{{ note.title }}</span>
+				<span class="text-success">${{ note.price }}</span>
+			</h5>
+			<p class="small mb-1">{{ note.description }}</p>
+			<p class="small mb-1">Uploaded {{ note.createdDate }}</p>
+			<template v-if="isAdmin">
+				<a class="mr-3 text-warning" @click.prevent="openEditModal">
+					<i class="fas fa-pen mr-1"></i>
+					<span>Edit</span>
+				</a>
+				<a class="mr-3 text-danger" @click.prevent="deleteNote">
+					<i class="fas mr-1" :class="loading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+					<span>Delete</span>
+				</a>
+			</template>
 		</div>
-		<p class="mb-1">{{ note.description }}</p>
-		<p class="mb-1 small">Uploaded {{ note.createdDate }}</p>
-		<template v-if="isAdmin">
-			<a class="mr-3 text-warning" @click.prevent="openEditModal">
-				<i class="fas fa-pen mr-1"></i>
-				<span>Edit</span>
-			</a>
-			<a class="mr-3 text-danger" @click.prevent="deleteNote">
-				<i class="fas mr-1" :class="loading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
-				<span>Delete</span>
-			</a>
-		</template>
 	</div>
 </template>
 
@@ -44,3 +47,10 @@
 		}
 	})
 </script>
+
+<style lang="scss" scoped>
+	img{ width: 100%; }
+	@media (min-width: $md) {
+		img{ width: 33.33%; }
+	}
+</style>

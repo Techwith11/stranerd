@@ -3,7 +3,7 @@
 		<helper-spinner v-if="loading"/>
 		<div v-else>
 			<helper-message :message="error" v-if="error" />
-			<div v-else class="container-fluid py-3">
+			<div v-else class="container-fluid grid py-3">
 				<note-card :note="note" v-for="note in notes" :key="note.id" />
 				<div class="d-flex justify-content-end mb-3" v-if="hasMore">
 					<button class="btn-success" @click="fetchOlderNotes">
@@ -43,3 +43,17 @@
 		}
 	})
 </script>
+
+<style lang="scss" scoped>
+	.grid{
+		display: grid;
+		grid-template-columns: repeat(1, 1fr);
+		grid-column-gap: 1rem;
+		grid-row-gap: 1rem;
+	}
+	@media (min-width: $lg) {
+		.grid{
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+</style>
