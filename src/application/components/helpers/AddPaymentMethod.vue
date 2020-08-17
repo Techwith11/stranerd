@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<helper-spinner v-if="isLoading"/>
+		<helper-spinner v-if="loading"/>
 		<form>
 			<div class="form-group">
 				<label>Credit Card Number</label>
@@ -32,36 +32,25 @@
 	</div>
 </template>
 
-<script>
-	import { mapActions, mapGetters } from 'vuex'
-	export default {
-		data: () => ({
-			isLoading: true,
-		}),
+<script lang="ts">
+	import { defineComponent, onMounted } from '@vue/composition-api'
+	import { useCreatePaymentMethods, usePaymentForm } from '@/usecases/payments/usePaymentForm'
+	export default defineComponent({
 		props: {
 			onAddMethodSuccessful: {
 				type: Function,
 				required: true
 			}
 		},
-		computed: mapGetters(['isThereAHoistedFieldInstance']),
-		methods: {
-			...mapActions(['initPaymentFields','createPaymentMethod']),
-			async addCard(){
-				this.isLoading = true
-				try{
-					let successful = await this.createPaymentMethod()
-					if(successful){
-						new window.Toast({ icon: 'success', title: 'Card added successfully' })
-						this.onAddMethodSuccessful()
-					}
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-				this.isLoading = false
-			},
-		},
-		async mounted(){
-			await this.initPaymentFields({ onPayPalAuthorization: this.onAddMethodSuccessful })
-			this.isLoading = false
+		setup(props){
+			const { loading, isThereAHoistedFieldInstance, initializeHostedFields } = usePaymentForm()
+			const { loading: createLoading, createPaymentMethod } = useCreatePaymentMethods()
+			const addCard = async () => {
+				const successful = await createPaymentMethod()
+				if(successful) props.onAddMethodSuccessful()
+			}
+			onMounted(() => initializeHostedFields())
+			return { loading, isThereAHoistedFieldInstance, createLoading, addCard }
 		}
-	}
+	})
 </script>
