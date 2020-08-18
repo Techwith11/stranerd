@@ -1,7 +1,7 @@
 import { computed, reactive } from '@vue/composition-api'
 import { Notify } from '@/config/notifications'
 import { MakePayment } from '@root/modules/payments'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 
 export const usePayment = () => {
 	const state = reactive({
@@ -11,8 +11,7 @@ export const usePayment = () => {
 	const makePayment = async (amount: number, token: string) => {
 		state.loading = true
 		try{
-			console.log('payment')
-			const res = await MakePayment.call(store.getters.getId, amount, token)
+			const res = await MakePayment.call(useStore().auth.getId.value, amount, token)
 			return res
 		}catch(e) { await Notify({ title: e.message, icon: 'error' }) }
 		state.loading = false

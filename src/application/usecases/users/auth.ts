@@ -1,4 +1,3 @@
-import store from '@/store'
 import router from '@/router'
 import { Notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
@@ -8,12 +7,13 @@ import {
 } from '@root/modules/users'
 import { computed, reactive } from '@vue/composition-api'
 import { getIntendedRoute } from '@/usecases/core/router'
+import { useStore } from '@/usecases/store'
 
 const afterAuthHook = async () => {
 	const route = getIntendedRoute()
 	if(route) await router.push(route)
 	closeNavbar()
-	await store.dispatch('closeAuthModal')
+	await useStore().modals.closeAuthModal()
 }
 
 export const useRegisterForm = () => {
@@ -26,7 +26,7 @@ export const useRegisterForm = () => {
 			state.loading = true
 			try{
 				const userId = await RegisterWithEmail.call(state.factory)
-				await store.dispatch('setId', userId)
+				await useStore().auth.setId(userId)
 				state.factory.reset()
 				await afterAuthHook()
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
@@ -49,8 +49,8 @@ export const useLogout = () => {
 	const logout = async () => {
 		//TODO: Clear out store of personal information
 		state.loading = true
-		if(store.getters.isTutor) await store.dispatch('closeTutorSessionsListener')
-		await store.dispatch('setId', null)
+		if(useStore().auth.isTutor.value) await useStore().sessions.closeTutorSessionsListener()
+		await useStore().auth.setId(null)
 		if(router.currentRoute.meta.requiresAuth) await router.push('/')
 		await Logout.call()
 		closeNavbar()
@@ -75,7 +75,7 @@ export const useLoginForm = () => {
 			state.loading = true
 			try{
 				const userId = await LoginWithEmail.call(state.factory)
-				await store.dispatch('setId', userId)
+				await useStore().auth.setId(userId)
 				state.factory.reset()
 				await afterAuthHook()
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
@@ -99,7 +99,7 @@ export const useGoogleLogin = () => {
 		state.loading = true
 		try{
 			const userId = await LoginWithGoogle.call()
-			await store.dispatch('setId', userId)
+			await useStore().auth.setId(userId)
 			await afterAuthHook()
 		}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 		state.loading = false
@@ -119,7 +119,7 @@ export const useDevLogin = () => {
 	const login = async () => {
 		state.loading = true
 		if(state.id){
-			await store.dispatch('setId', state.id)
+			await useStore().auth.setId(state.id)
 			await afterAuthHook()
 		}else await Notify({ title: 'Select a dev id first', icon: 'error' })
 		state.loading = false
@@ -168,7 +168,7 @@ export const useUpdatePasswordForm = () => {
 			try{
 				await UpdatePassword.call(state.factory)
 				state.factory.reset()
-				store.dispatch('closeAccountModal')
+				await useStore().modals.closeAccountModal()
 				await Notify({ icon: 'success', title: 'Password updated successfully' })
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false

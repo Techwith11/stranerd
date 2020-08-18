@@ -1,6 +1,6 @@
 import { computed, reactive } from '@vue/composition-api'
 import { NoteEntity } from '@root/modules/shop/domain/entities/note'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 
 const globalState = reactive({
 	cart: reactive([]) as NoteEntity[]
@@ -13,11 +13,11 @@ export const useCart = () => {
 	}
 	const removeFromCart = async (note: NoteEntity) => {
 		globalState.cart = globalState.cart.filter((n) => n.id !== note.id)
-		if(globalState.cart.length === 0) await store.dispatch('closeCartModal')
+		if(globalState.cart.length === 0) await useStore().modals.closeCartModal()
 	}
 	const checkoutNow = async (note: NoteEntity) => {
 		addToCart(note)
-		await store.dispatch('setCartModalPay')
+		await useStore().modals.setCartModalPay()
 	}
 
 	return {

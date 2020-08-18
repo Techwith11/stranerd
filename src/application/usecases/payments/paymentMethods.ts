@@ -1,7 +1,7 @@
 import { computed, reactive } from '@vue/composition-api'
 import { MethodEntity } from '@root/modules/payments/domain/entities/method'
 import { GetPaymentMethods } from '@root/modules/payments'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 
 const globalState = reactive({
 	methods: [] as MethodEntity[],
@@ -11,7 +11,7 @@ const globalState = reactive({
 })
 
 const fetchPaymentMethods = async () => {
-	globalState.methods = await GetPaymentMethods.call(store.getters.getId)
+	globalState.methods = await GetPaymentMethods.call(useStore().auth.getId.value)
 }
 
 export const usePaymentMethodsList = () => {

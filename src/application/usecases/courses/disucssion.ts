@@ -1,8 +1,8 @@
 import { DiscussionEntity } from '@root/modules/courses/domain/entities/discussion'
 import { computed, reactive, watch } from '@vue/composition-api'
 import { AddDiscussion, GetDiscussions, GetDiscussionFactory, ListenToDiscussions } from '@root/modules/courses'
-import store from '@/store/'
 import { Notify } from '@/config/notifications'
+import { useStore } from '@/usecases/store'
 
 const PAGINATION_LIMIT = process.env.VUE_APP_PAGINATION_LIMIT
 const discussionsGlobalState: { [key: string]: {
@@ -89,12 +89,12 @@ export const useCreateDiscussion = (courseId: string) => {
 		loading: false,
 		factory: GetDiscussionFactory.call()
 	})
-	state.factory.userId = store.getters.getId
+	state.factory.userId = useStore().auth.getId.value
 
 	const createDiscussion = async () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
-			state.factory.userId = store.getters.getId
+			state.factory.userId = useStore().auth.getId.value
 			try {
 				await AddDiscussion.call(courseId, state.factory)
 				state.factory.reset()
@@ -103,7 +103,7 @@ export const useCreateDiscussion = (courseId: string) => {
 		}else state.factory.validateAll()
 	}
 
-	watch(() => store.getters.getId, () => state.factory.userId = store.getters.getId)
+	watch(() => useStore().auth.getId, () => state.factory.userId = useStore().auth.getId.value)
 
 	return {
 		factory: state.factory,

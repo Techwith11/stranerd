@@ -10,7 +10,7 @@ import {
 } from '@root/modules/courses'
 import router from '@/router'
 import { Alert, Notify } from '@/config/notifications'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 
 const globalState = reactive({
 	subjects: reactive([]) as SubjectEntity[],
@@ -115,7 +115,7 @@ export const useCreateSubject = () => {
 				const id = await AddSubject.call(state.factory)
 				state.factory.reset()
 				await fetchSubject(id)
-				await store.dispatch('closeCreateModal')
+				await useStore().modals.closeCreateModal()
 				await Notify({ title: 'Subject added successfully!', icon: 'success' })
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }
 			state.loading = false
@@ -145,7 +145,7 @@ export const useEditSubject = () => {
 				const id = await UpdateSubject.call(currentEdit!.id ,state.factory)
 				state.factory.reset()
 				await fetchSubject(id)
-				await store.dispatch('closeEditModal')
+				await useStore().modals.closeEditModal()
 				await Notify({ title: 'Subject updated successfully!', icon: 'success' })
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }
 			state.loading = false

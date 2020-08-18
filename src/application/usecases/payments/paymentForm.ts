@@ -2,7 +2,7 @@ import { computed, reactive, Ref, ref } from '@vue/composition-api'
 import braintree, { client, hostedFields } from 'braintree-web'
 import { CreatePaymentMethod, GetClientToken } from '@root/modules/payments'
 import { Notify } from '@/config/notifications'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 
 const hostedFieldsInstance: Ref<braintree.HostedFields | undefined> = ref(undefined)
 
@@ -48,7 +48,7 @@ export const useCreatePaymentMethods = () => {
 		if(hostedFieldsInstance.value !== undefined){
 			state.loading = true
 			const { nonce } = await hostedFieldsInstance.value.tokenize()
-			const res = await CreatePaymentMethod.call(store.getters.getId, nonce)
+			const res = await CreatePaymentMethod.call(useStore().auth.getId.value, nonce)
 			if(res) await Notify({ title: 'Payment method saved', icon: 'success' })
 			else await Notify({ title: 'Error saving payment method', icon: 'error' })
 			state.loading = false

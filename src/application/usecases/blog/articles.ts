@@ -12,7 +12,7 @@ import { Alert, Notify } from '@/config/notifications'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
 import { fetchUser } from '@/usecases/users/users'
 import router from '@/router'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 
@@ -142,17 +142,17 @@ export const useCreateArticle = () => {
 		factory: GetArticleFactory.call()
 	})
 
-	state.factory.userId = store.getters.getId
+	state.factory.userId = useStore().auth.getId.value
 
 	const createArticle = async () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
-			state.factory.userId = store.getters.getId
+			state.factory.userId = useStore().auth.getId.value
 			try{
 				const id = await AddArticle.call(state.factory)
 				await fetchArticle(id)
 				state.factory.reset()
-				await store.dispatch('closeCreateModal')
+				await useStore().modals.closeCreateModal()
 				await router.push(`/blog/${id}`)
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
@@ -181,7 +181,7 @@ export const useEditArticle = () => {
 	const editArticle = async () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
-			state.factory.userId = store.getters.getId
+			state.factory.userId = useStore().auth.getId.value
 			try{
 				const newId = await UpdateArticle.call(currentEdit!.id, state.factory)
 				const article = await FindArticle.call(newId)
@@ -189,7 +189,7 @@ export const useEditArticle = () => {
 				state.factory.reset()
 				if(router.currentRoute.params.id) await router.replace('/blog')
 				await router.replace(`/blog/${newId}`)
-				await store.dispatch('closeEditModal')
+				await useStore().modals.closeEditModal()
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
 		}else state.factory.validateAll()

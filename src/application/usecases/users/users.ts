@@ -1,7 +1,6 @@
 import { computed, reactive, ref } from '@vue/composition-api'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
 import { FindUser, GetTutors } from '@root/modules/users'
-import store from '@/store'
 import router from '@/router'
 import { Notify } from '@/config/notifications'
 import { firestore } from '@root/services/firebase'
@@ -44,8 +43,6 @@ export const useTutorsList = () => {
 		error: computed(() => globalState.error),
 
 		course, name,
-
-		subjects: computed(() => store.getters.getAllSubjects),
 
 		filteredTutors: computed(() => {
 			let filtered = globalState.tutors

@@ -2,7 +2,7 @@ import { computed, reactive } from '@vue/composition-api'
 import { NoteEntity } from '@root/modules/shop/domain/entities/note'
 import { FindNote, GetNotes, AddNote, GetNoteFactory, UpdateNote, DeleteNote } from '@root/modules/shop'
 import { Alert, Notify } from '@/config/notifications'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 
@@ -93,18 +93,18 @@ export const useCreateNote = () => {
 		factory: GetNoteFactory.call()
 	})
 
-	state.factory.userId = store.getters.getId
+	state.factory.userId = useStore().auth.getId.value
 
 	const createNote = async () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
-			state.factory.userId = store.getters.getId
+			state.factory.userId = useStore().auth.getId.value
 			try{
 				const id = await AddNote.call(state.factory)
 				const note = await FindNote.call(id)
 				if(note) unshiftNote(note)
 				state.factory.reset()
-				await store.dispatch('closeCreateModal')
+				await useStore().modals.closeCreateModal()
 				await Notify({ icon: 'success', title: 'Note created successfully' })
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
@@ -136,7 +136,7 @@ export const useEditNote = () => {
 				const note = await FindNote.call(id)
 				if(note) unshiftNote(note) //TODO: Figure out cause of un-reactivity
 				state.factory.reset()
-				await store.dispatch('closeEditModal')
+				await useStore().modals.closeEditModal()
 				await Notify({ title: 'Note updated successfully!', icon: 'success' })
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }
 			state.loading = false

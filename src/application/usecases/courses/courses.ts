@@ -6,7 +6,7 @@ import {
 } from '@root/modules/courses'
 import { Alert, Notify } from '@/config/notifications'
 import router from '@/router'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const getKey = (subject: string, module: string) => `${subject}_${module}`
@@ -152,12 +152,12 @@ export const useCreateCourse = () => {
 		factory: GetCourseFactory.call()
 	})
 
-	state.factory.userId = store.getters.getId
+	state.factory.userId = useStore().auth.getId.value
 
 	const createCourse = async () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
-			state.factory.userId = store.getters.getId
+			state.factory.userId = useStore().auth.getId.value
 			try{
 				const id = await AddCourse.call(state.factory)
 				const course = await fetchCourse(id)
@@ -166,7 +166,7 @@ export const useCreateCourse = () => {
 					await router.push(`/courses/${course.subject}/${course.module}/${course.id}`)
 				}
 				state.factory.reset()
-				await store.dispatch('closeCreateModal')
+				await useStore().modals.closeCreateModal()
 				await Notify({ icon: 'success', title: 'Course created successfully' })
 			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
 			state.loading = false
@@ -202,7 +202,7 @@ export const useEditCourse = () => {
 					await router.push(`/courses/${course.subject}/${course.module}/${course.id}`)
 				}
 				state.factory.reset()
-				await store.dispatch('closeEditModal')
+				await useStore().modals.closeEditModal()
 				await Notify({ title: 'Course updated successfully!', icon: 'success' })
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }
 			state.loading = false

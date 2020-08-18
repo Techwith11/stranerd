@@ -22,15 +22,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 import TutorCard from '@/components/users/list/TutorCard.vue'
 import { useTutorsList } from '@/usecases/users/users'
+import { useSubjects } from '@/usecases/courses/subjects'
 export default defineComponent({
 	name: 'Tutors',
 	setup(){
-		const { loading, error, filteredTutors, course, name, subjects } = useTutorsList()
+		const { subjects, loading: subjectLoading } = useSubjects()
+		const { loading: tutorLoading, error, filteredTutors, course, name } = useTutorsList()
 		return {
-			loading, error, filteredTutors, course, name, subjects
+			error, filteredTutors, course, name, subjects,
+			loading: computed(() => subjectLoading.value || tutorLoading.value)
 		}
 	},
 	components: {

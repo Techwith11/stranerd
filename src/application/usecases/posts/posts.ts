@@ -4,8 +4,8 @@ import { GetPosts, FindPost, ListenToPosts, GetPostFactory, AddPost } from '@roo
 import router from '@/router'
 import { Notify } from '@/config/notifications'
 import { fetchUser } from '@/usecases/users/users'
-import store from '@/store'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
+import { useStore } from '@/usecases/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const globalState = reactive({
@@ -122,38 +122,35 @@ export const useCreatePost = () => {
 		factory
 	})
 
-	state.factory.userId = store.getters.getId
+	state.factory.userId = useStore().auth.getId.value
 
 	const createPost = async () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
-			state.factory.userId = store.getters.getId
-			if(store.getters.questionsLeft){
+			state.factory.userId = useStore().auth.getId.value
+			if(useStore().auth.questionsLeft){
 				try{
 					const id = await AddPost.call(state.factory)
 					state.factory.reset()
 					await router.push(`/posts/${id}`)
 				}catch(error){ await Notify({ icon: 'error', title: error.message }) }
-			}else await store.dispatch('setPostModalNotify')
+			}else await useStore().modals.setPostModalNotify()
 			state.loading = false
 		}else state.factory.validateAll()
 	}
 
-	watch(() => store.getters.getId, () => state.factory.userId = store.getters.getId)
+	watch(() => useStore().auth.getId, () => state.factory.userId = useStore().auth.getId.value)
 	const login = async () => {
-		await store.dispatch('setAuthModalLogin')
+		await useStore().modals.setAuthModalLogin()
 		await router.push('/ask-a-question')
 	}
 
 	return {
 		factory: state.factory,
 
-		isLoggedIn: computed(() => store.getters.isLoggedIn),
+		isLoggedIn: useStore().auth.isLoggedIn,
 		loading: computed(() => state.loading),
 
 		createPost, login,
-
-		subjects: computed(() => store.getters.getAllSubjects),
-		modules: computed(() => store.getters.getAllSubjects.find((s: {name: string, modules: object[]}) => s.name === state.factory.subject)?.modules ?? [])
 	}
 }

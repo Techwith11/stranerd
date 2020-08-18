@@ -1,11 +1,11 @@
 import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
 import { computed, reactive, watch } from '@vue/composition-api'
 import { AddReply, DownvoteReply, GetReplies, GetReplyFactory, ListenToReplies, UpvoteReply } from '@root/modules/posts'
-import store from '@/store/'
 import { Notify } from '@/config/notifications'
 import { fetchUser } from '@/usecases/users/users'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
 import { FirestoreService } from '@root/modules/core/services/firebase'
+import { useStore } from '@/usecases/store'
 
 const PAGINATION_LIMIT = process.env.VUE_APP_PAGINATION_LIMIT
 const repliesGlobalState: { [key: string]: {
@@ -113,23 +113,23 @@ export const useSingleReply = (postId: string,reply: ReplyEntity) => {
 
 	const upvoteReply = async () => {
 		votesAndUsersGlobalState[reply.id].voting = true
-		await UpvoteReply.call(postId, reply, store.getters.getId)
-		votesAndUsersGlobalState[reply.id].votes.push(store.getters.getId)
+		await UpvoteReply.call(postId, reply, useStore().auth.getId.value)
+		votesAndUsersGlobalState[reply.id].votes.push(useStore().auth.getId.value)
 		votesAndUsersGlobalState[reply.id].voting = false
 	}
 
 	const downvoteReply = async () => {
 		votesAndUsersGlobalState[reply.id].voting = true
-		await DownvoteReply.call(postId, reply, store.getters.getId)
-		votesAndUsersGlobalState[reply.id].votes = votesAndUsersGlobalState[reply.id].votes.filter((id) => id !== store.getters.getId)
+		await DownvoteReply.call(postId, reply, useStore().auth.getId.value)
+		votesAndUsersGlobalState[reply.id].votes = votesAndUsersGlobalState[reply.id].votes.filter((id) => id !== useStore().auth.getId.value)
 		votesAndUsersGlobalState[reply.id].voting = false
 	}
 
 	return {
 		loading: computed(() => votesAndUsersGlobalState[reply.id].loading),
 		voting: computed(() => votesAndUsersGlobalState[reply.id].voting),
-		hasVoted: computed(() => votesAndUsersGlobalState[reply.id].votes.includes(store.getters.getId)),
-		canVote: computed(() => reply.userId !== store.getters.getId && !votesAndUsersGlobalState[reply.id].voting),
+		hasVoted: computed(() => votesAndUsersGlobalState[reply.id].votes.includes(useStore().auth.getId.value)),
+		canVote: computed(() => reply.userId !== useStore().auth.getId.value && !votesAndUsersGlobalState[reply.id].voting),
 		votes: computed(() => votesAndUsersGlobalState[reply.id].votes.length),
 		user: computed(() => votesAndUsersGlobalState[reply.id].user),
 		upvoteReply, downvoteReply
@@ -141,12 +141,12 @@ export const useCreateReply = (postId: string) => {
 		loading: false,
 		factory: GetReplyFactory.call()
 	})
-	state.factory.userId = store.getters.getId
+	state.factory.userId = useStore().auth.getId.value
 
 	const createReply = async () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
-			state.factory.userId = store.getters.getId
+			state.factory.userId = useStore().auth.getId.value
 			try {
 				await AddReply.call(postId, state.factory)
 				state.factory.reset()
@@ -155,12 +155,12 @@ export const useCreateReply = (postId: string) => {
 		}else state.factory.validateAll()
 	}
 
-	watch(() => store.getters.getId, () => state.factory.userId = store.getters.getId)
+	watch(() => useStore().auth.getId, () => state.factory.userId = useStore().auth.getId.value)
 
 	return {
 		factory: state.factory,
 		loading: computed(() => state.loading),
-		isLoggedIn: computed(() => store.getters.isLoggedIn),
+		isLoggedIn: computed(() => useStore().auth.isLoggedIn.value),
 		createReply
 	}
 }
