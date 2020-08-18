@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { computed, defineComponent } from '@vue/composition-api'
 import { useGoogleLogin, useRegisterForm } from '@/usecases/users/auth'
 import store from '@/store'
 export default defineComponent({
@@ -63,7 +63,7 @@ export default defineComponent({
 		return {
 			googleLoading, googleLogin,
 			regLoading, register, factory,
-			anyLoading: googleLoading || regLoading,
+			anyLoading: computed(() => googleLoading || regLoading),
 			setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
 			closeAuthModal: () => store.dispatch('closeAuthModal'),
 		}

@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<div class="container">
-			<helper-spinner v-if="loading" />
+			<helper-spinner v-if="tutorLoading || subjectLoading" />
 			<div v-else>
 				<div class="row my-2">
 					<div class="col-7 pr-2">
@@ -22,7 +22,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import TutorCard from '@/components/users/list/TutorCard.vue'
 import { useTutorsList } from '@/usecases/users/users'
 import { useSubjects } from '@/usecases/courses/subjects'
@@ -33,7 +33,7 @@ export default defineComponent({
 		const { loading: tutorLoading, error, filteredTutors, course, name } = useTutorsList()
 		return {
 			error, filteredTutors, course, name, subjects,
-			loading: computed(() => subjectLoading.value || tutorLoading.value)
+			subjectLoading, tutorLoading
 		}
 	},
 	components: {

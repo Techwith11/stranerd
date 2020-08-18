@@ -20,11 +20,11 @@
 </style>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import Navbar from '@/components/app/Navbar.vue'
 import Sidebar from '@/components/app/Sidebar.vue'
 import Footer from '@/components/app/Footer.vue'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	components: {
 		'app-navbar': Navbar,
@@ -32,7 +32,7 @@ export default defineComponent({
 		'app-footer': Footer
 	},
 	setup(){
-		return { isLoggedIn: computed(() => store.getters.isLoggedIn) }
+		return { isLoggedIn: useStore().auth.isLoggedIn }
 	}
 })
 </script>

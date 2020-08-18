@@ -5,8 +5,9 @@
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+export default defineComponent({
 	props: {
 		message: {
 			type: String,
@@ -17,7 +18,7 @@ export default {
 			required: false
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

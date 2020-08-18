@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
+import { defineComponent, computed } from '@vue/composition-api'
 import { useDevLogin, useGoogleLogin, useLoginForm } from '@/usecases/users/auth'
 import store from '@/store'
 export default defineComponent({
@@ -71,7 +71,7 @@ export default defineComponent({
 			emailLoading, emailLogin, emailFactory,
 			googleLoading, googleLogin,
 			devLoading, devLogin, devId, devs, isDev,
-			anyLoading: emailLoading || devLoading || googleLoading,
+			anyLoading: computed(() => emailLoading.value || devLoading.value || googleLoading.value),
 			setAuthModalForgotPassword: () => store.dispatch('setAuthModalForgotPassword'),
 			setAuthModalRegisterStudent: () => store.dispatch('setAuthModalRegisterStudent'),
 			closeAuthModal: () => store.dispatch('closeAuthModal'),
