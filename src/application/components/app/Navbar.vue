@@ -124,7 +124,7 @@ import { defineComponent, computed } from '@vue/composition-api'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
 import { useLogout } from '@/usecases/users/auth'
 import store from '@root/application/store'
-import { useCart } from '@/usecases/shop/useCart'
+import { useCart } from '@/usecases/shop/cart'
 export default defineComponent({
 	setup(){
 		const { loading, logout } = useLogout()

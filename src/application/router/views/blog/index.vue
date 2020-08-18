@@ -24,7 +24,7 @@
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
 import ArticleCard from '@/components/blog/list/ArticleCard.vue'
-import { useArticlesList } from '@/usecases/blog/useArticles'
+import { useArticlesList } from '@/usecases/blog/articles'
 import store from '@root/application/store'
 export default defineComponent({
 	name: 'Posts',

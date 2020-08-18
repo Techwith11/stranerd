@@ -29,7 +29,7 @@
 <script lang="ts">
 import { defineComponent, reactive, computed, PropType } from '@vue/composition-api'
 import AddPaymentMethod from '@/components/helpers/AddPaymentMethod.vue'
-import { usePaymentMethodsList } from '@/usecases/payments/usePaymentMethods'
+import { usePaymentMethodsList } from '@/usecases/payments/paymentMethods'
 export default defineComponent({
 	setup(props){
 		const state = reactive({

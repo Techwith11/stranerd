@@ -23,7 +23,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import CourseCard from '@/components/courses/list/CourseCard.vue'
-import { useCoursesList } from '@/usecases/courses/useCourses'
+import { useCoursesList } from '@/usecases/courses/courses'
 import router from '@/router'
 import { capitalizeText } from '@root/modules/core/validations/sanitizers'
 export default defineComponent({

@@ -21,8 +21,8 @@
 import { defineComponent } from '@vue/composition-api'
 import store from '@/store'
 import NoteCard from '@/components/shop/list/NoteCard.vue'
-import { useNotesList } from '@/usecases/shop/useNotes'
-import { useCart } from '@/usecases/shop/useCart'
+import { useNotesList } from '@/usecases/shop/notes'
+import { useCart } from '@/usecases/shop/cart'
 export default defineComponent({
 	name: 'Shop',
 	setup(){

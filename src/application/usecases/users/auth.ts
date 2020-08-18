@@ -7,7 +7,7 @@ import {
 	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword, UpdatePassword
 } from '@root/modules/users'
 import { computed, reactive } from '@vue/composition-api'
-import { getIntendedRoute } from '@/usecases/core/useRouter'
+import { getIntendedRoute } from '@/usecases/core/router'
 
 const afterAuthHook = async () => {
 	const route = getIntendedRoute()

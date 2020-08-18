@@ -16,7 +16,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import SubjectCard from '@/components/courses/list/SubjectCard.vue'
-import { useSingleSubject } from '@/usecases/courses/useSubjects'
+import { useSingleSubject } from '@/usecases/courses/subjects'
 import router from '@/router'
 export default defineComponent({
 	components: {

@@ -5,7 +5,7 @@ import { Notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
 
 import store from '@/store/'
-import { addToCachedScrolls, getCachedScroll, saveIntendedRoute } from '@/usecases/core/useRouter'
+import { addToCachedScrolls, getCachedScroll, saveIntendedRoute } from '@/usecases/core/router'
 
 Vue.use(VueRouter)
 

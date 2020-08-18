@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
-import { setCurrentEditingArticle, useDeleteArticle } from '@/usecases/blog/useArticles'
+import { setCurrentEditingArticle, useDeleteArticle } from '@/usecases/blog/articles'
 import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
 import store from '@/store'
 import { capitalizeText } from '@root/modules/core/validations/sanitizers'

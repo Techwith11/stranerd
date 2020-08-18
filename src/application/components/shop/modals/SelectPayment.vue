@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCart } from '@/usecases/shop/useCart'
+import { useCart } from '@/usecases/shop/cart'
 import store from '@/store'
 import { Notify } from '@/config/notifications'
 export default defineComponent({

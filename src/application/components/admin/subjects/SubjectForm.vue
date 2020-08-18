@@ -53,7 +53,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useFileInputs } from '@/usecases/core/useForms'
+import { useFileInputs } from '@/usecases/core/forms'
 import { SubjectFactory } from '@root/modules/courses/domain/factories/subject'
 import { Alert } from '@/config/notifications'
 export default defineComponent({

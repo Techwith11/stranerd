@@ -19,7 +19,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 import { CourseEntity } from '@root/modules/courses/domain/entities/course'
 import store from '@/store'
-import { setCurrentEditingCourse, useDeleteCourse } from '@/usecases/courses/useCourses'
+import { setCurrentEditingCourse, useDeleteCourse } from '@/usecases/courses/courses'
 export default defineComponent({
 	props: {
 		course: {

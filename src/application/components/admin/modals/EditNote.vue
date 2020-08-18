@@ -16,7 +16,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import store from '@/store'
-import { useEditNote } from '@/usecases/shop/useNotes'
+import { useEditNote } from '@/usecases/shop/notes'
 import NoteForm from '@/components/admin/notes/NoteForm.vue'
 export default defineComponent({
 	name: 'EditNote',

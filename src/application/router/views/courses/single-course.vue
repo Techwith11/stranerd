@@ -21,7 +21,7 @@ import SingleNav from '@/components/courses/single/SingleNav.vue'
 import SingleOverview from '@/components/courses/single/SingleOverview.vue'
 import SingleDiscussions from '@/components/courses/single/SingleDiscussions.vue'
 import SingleDocuments from '@/components/courses/single/SingleDocuments.vue'
-import { useSingleCourse } from '@/usecases/courses/useCourses'
+import { useSingleCourse } from '@/usecases/courses/courses'
 import router from '@/router'
 export default defineComponent({
 	name: 'Course',

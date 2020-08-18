@@ -19,7 +19,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import NoteCard from '@/components/admin/notes/list/NoteCard.vue'
-import { useNotesList } from '@/usecases/shop/useNotes'
+import { useNotesList } from '@/usecases/shop/notes'
 export default defineComponent({
 	name: 'Notes',
 	setup(){

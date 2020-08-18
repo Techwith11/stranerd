@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import SubjectCard from '@/components/courses/list/SubjectCard.vue'
-import { useSubjects } from '@/usecases/courses/useSubjects'
+import { useSubjects } from '@/usecases/courses/subjects'
 export default defineComponent({
 	setup(){
 		const { subjects, error, loading, modules } = useSubjects()

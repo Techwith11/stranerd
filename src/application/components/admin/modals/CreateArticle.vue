@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCreateArticle } from '@/usecases/blog/useArticles'
+import { useCreateArticle } from '@/usecases/blog/articles'
 import ArticleForm from '@/components/blog/ArticleForm.vue'
 import store from '@/store'
 export default defineComponent({
