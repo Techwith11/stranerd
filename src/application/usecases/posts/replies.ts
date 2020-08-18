@@ -1,11 +1,11 @@
 import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
 import { computed, reactive, watch } from '@vue/composition-api'
 import { AddReply, DownvoteReply, GetReplies, GetReplyFactory, ListenToReplies, UpvoteReply } from '@root/modules/posts'
-import { firestore } from '@root/services/firebase'
 import store from '@/store/'
 import { Notify } from '@/config/notifications'
 import { fetchUser } from '@/usecases/users/users'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
+import { FirestoreService } from '@root/modules/core/services/firebase'
 
 const PAGINATION_LIMIT = process.env.VUE_APP_PAGINATION_LIMIT
 const repliesGlobalState: { [key: string]: {
@@ -97,8 +97,8 @@ export const useSingleReply = (postId: string,reply: ReplyEntity) => {
 	const fetchUserAndVotes = async () => {
 		votesAndUsersGlobalState[reply.id].loading = true
 		votesAndUsersGlobalState[reply.id].user = await fetchUser(reply.userId)
-		const doc = await firestore.doc(`posts/${postId}/replies/${reply.id}/votes/votes`).get()
-		votesAndUsersGlobalState[reply.id].votes = doc?.data()?.votes ?? []
+		const doc = await FirestoreService.find(`posts/${postId}/replies/${reply.id}/votes`, 'votes') as { id: string, votes: string[] }
+		votesAndUsersGlobalState[reply.id].votes = doc?.votes ?? []
 		votesAndUsersGlobalState[reply.id].loading = false
 	}
 	if(votesAndUsersGlobalState[reply.id] === undefined){

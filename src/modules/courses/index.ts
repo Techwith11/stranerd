@@ -78,7 +78,7 @@ const {
 
 const {
 	Get: GetDiscussions, GetFactory: GetDiscussionFactory, Add: AddDiscussion, Listen: ListenToDiscussions
-} = bottle.container.Usecases.Subject as {
+} = bottle.container.Usecases.Discussion as {
 	Get: GetDiscussionsUsecase, GetFactory: GetDiscussionFactoryUsecase, Add: AddDiscussionUsecase, Listen: ListenToDiscussionsUsecase
 }
 

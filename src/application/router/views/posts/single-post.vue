@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onActivated, onDeactivated } from '@vue/composition-api'
+import { defineComponent, onMounted, onUnmounted } from '@vue/composition-api'
 import PostInfo from '@/components/posts/single/PostInfo.vue'
 import ReplyForm from '@/components/posts/single/ReplyForm.vue'
 import ReplyCard from '@/components/posts/single/ReplyCard.vue'
@@ -40,8 +40,8 @@ export default defineComponent({
 			hasMore, olderRepliesLoading, fetchOlderReplies,
 			startListener, closeListener,
 		} = useReplies(id)
-		onActivated(() => fetched.value ? startListener() : null)
-		onDeactivated(closeListener)
+		onMounted(() => fetched.value ? startListener() : null)
+		onUnmounted(closeListener)
 		return {
 			post, loading, error, user,
 			replies, replyLoading, fetched, replyError,
