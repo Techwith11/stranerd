@@ -21,7 +21,7 @@
 import { computed, defineComponent } from '@vue/composition-api'
 import RatingStars from '@/components/helpers/RatingStars.vue'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	props: {
 		user: {
@@ -32,8 +32,8 @@ export default defineComponent({
 	setup(props){
 		return {
 			isTutor: computed(() => props.user.roles.isTutor && props.user.tutor?.canTeach),
-			canHaveSession: computed(() => props.user.tutor?.canTeach && props.user.id !== store.getters.getId),
-			bringUpSessionForm: () => store.dispatch('setSessionModalStudentDuration',{ student: store.getters.getId, tutor: props.user.id })
+			canHaveSession: computed(() => props.user.tutor?.canTeach && props.user.id !== useStore().auth.getId.value),
+			bringUpSessionForm: () => useStore().modals.setSessionModalStudentDuration({ student: useStore().auth.getId.value, tutor: props.user.id })
 		}
 	},
 	components: {

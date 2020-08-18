@@ -17,7 +17,7 @@
 import { defineComponent } from '@vue/composition-api'
 import { useEditArticle } from '@/usecases/blog/articles'
 import ArticleForm from '@/components/blog/ArticleForm.vue'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	name: 'EditArticle',
 	components: {
@@ -27,7 +27,7 @@ export default defineComponent({
 		const { loading: editLoading, editArticle, factory } = useEditArticle()
 		return {
 			editArticle, factory, editLoading,
-			closeEditModal: () => store.dispatch('closeEditModal')
+			closeEditModal: useStore().modals.closeEditModal
 		}
 	}
 })

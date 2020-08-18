@@ -15,9 +15,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import store from '@/store'
 import { useCreateNote } from '@/usecases/shop/notes'
 import NoteForm from '@/components/admin/notes/NoteForm.vue'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	name: 'CreateNote',
 	components: {
@@ -27,7 +27,7 @@ export default defineComponent({
 		const { loading, createNote, factory } = useCreateNote()
 		return {
 			loading, createNote, factory,
-			closeCreateModal: () => store.dispatch('closeCreateModal')
+			closeCreateModal: useStore().modals.closeCreateModal
 		}
 	},
 })

@@ -19,10 +19,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import store from '@/store'
 import NoteCard from '@/components/shop/list/NoteCard.vue'
 import { useNotesList } from '@/usecases/shop/notes'
 import { useCart } from '@/usecases/shop/cart'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	name: 'Shop',
 	setup(){
@@ -31,7 +31,7 @@ export default defineComponent({
 		return {
 			loading, error, notes,
 			hasMore, olderNotesLoading, fetchOlderNotes, cartLength,
-			setCartModalOverview: () => store.dispatch('setCartModalOverview')
+			setCartModalOverview: useStore().modals.setCartModalOverview
 		}
 	},
 	components: {

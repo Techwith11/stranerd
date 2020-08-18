@@ -30,14 +30,14 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { useCart } from '@/usecases/shop/cart'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	setup(){
 		const { cart, removeFromCart } = useCart()
 		return {
 			cart, removeFromCart,
-			closeCartModal: () => store.dispatch('closeCartModal'),
-			setCartModalPay: () => store.dispatch('setCartModalPay'),
+			closeCartModal: useStore().modals.closeCartModal,
+			setCartModalPay: useStore().modals.setCartModalPay,
 		}
 	}
 })

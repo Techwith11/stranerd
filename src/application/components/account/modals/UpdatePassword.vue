@@ -27,13 +27,13 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { useUpdatePasswordForm } from '@/usecases/users/auth'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	setup(){
 		const { loading, factory, updatePassword } = useUpdatePasswordForm()
 		return {
 			loading, factory, updatePassword,
-			closeAccountModal: () => store.dispatch('closeAccountModal')
+			closeAccountModal: useStore().modals.closeAccountModal
 		}
 	}
 })

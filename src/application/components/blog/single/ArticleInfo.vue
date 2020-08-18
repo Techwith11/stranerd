@@ -28,9 +28,9 @@
 import { defineComponent, computed } from '@vue/composition-api'
 import { setCurrentEditingArticle, useDeleteArticle } from '@/usecases/blog/articles'
 import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
-import store from '@/store'
 import { capitalizeText } from '@root/modules/core/validations/sanitizers'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	props: {
 		article: {
@@ -45,10 +45,10 @@ export default defineComponent({
 	setup(props){
 		const { loading: delLoading, deleteArticle } = useDeleteArticle(props.article)
 		return {
-			isAdmin: computed(() => store.getters.isAdmin),
+			isAdmin: useStore().auth.isAdmin,
 			openEditModal: () => {
 				setCurrentEditingArticle(props.article)
-				store.dispatch('setEditModalBlog')
+				useStore().modals.setEditModalArticle()
 			},
 			delLoading, deleteArticle,
 			tags: computed(() => props.article.tags.map(capitalizeText).join(', '))

@@ -23,10 +23,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { NoteEntity } from '@root/modules/shop/domain/entities/note'
 import { setCurrentEditingNote, useDeleteNote } from '@/usecases/shop/notes'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	props: {
 		note: {
@@ -38,10 +38,10 @@ export default defineComponent({
 		const { loading, deleteNote } = useDeleteNote(props.note)
 		return {
 			loading, deleteNote,
-			isAdmin: computed(() => store.getters.isAdmin),
+			isAdmin: useStore().auth.isAdmin,
 			openEditModal(){
 				setCurrentEditingNote(props.note)
-				store.dispatch('setEditModalNote')
+				useStore().modals.setEditModalNote()
 			}
 		}
 	}

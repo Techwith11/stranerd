@@ -17,7 +17,7 @@
 import { defineComponent } from '@vue/composition-api'
 import SubjectForm from '@/components/admin/subjects/SubjectForm.vue'
 import { useEditSubject } from '@/usecases/courses/subjects'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	name: 'EditSubject',
 	components: {
@@ -27,7 +27,7 @@ export default defineComponent({
 		const { loading, factory, editSubject } = useEditSubject()
 		return {
 			loading, factory, editSubject,
-			closeEditModal: () => store.dispatch('closeEditModal')
+			closeEditModal: useStore().modals.closeEditModal
 		}
 	}
 })

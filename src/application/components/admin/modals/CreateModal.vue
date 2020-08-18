@@ -12,15 +12,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import CreateOverview from '@/components/admin/modals/CreateOverview'
 import CreateCourse from '@/components/admin/modals/CreateCourse'
 import CreateQuestion from '@/components/admin/modals/CreateQuestion'
 import CreateNote from '@/components/admin/modals/CreateNote'
 import CreateArticle from '@/components/admin/modals/CreateArticle'
 import CreateSubject from '@/components/admin/modals/CreateSubject'
+import { useStore } from '@/usecases/store'
 export default {
-	computed: mapGetters(['isCreateModalOverview','isCreateModalCourse','isCreateModalQuestion','isCreateModalNote','isCreateModalBlog','isCreateModalSubject']),
 	components: {
 		'create-overview': CreateOverview,
 		'create-course': CreateCourse,
@@ -28,6 +27,16 @@ export default {
 		'create-note': CreateNote,
 		'create-article': CreateArticle,
 		'create-subject': CreateSubject,
+	},
+	setup(){
+		return {
+			isCreateModalOverview: useStore().modals.isCreateModalOverview,
+			isCreateModalCourse: useStore().modals.isCreateModalCourse,
+			isCreateModalQuestion: useStore().modals.isCreateModalQuestion,
+			isCreateModalNote: useStore().modals.isCreateModalNote,
+			isCreateModalBlog: useStore().modals.isCreateModalBlog,
+			isCreateModalSubject: useStore().modals.isCreateModalSubject,
+		}
 	}
 }
 </script>

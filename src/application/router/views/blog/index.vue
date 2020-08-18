@@ -14,7 +14,7 @@
 					</button>
 				</div>
 			</div>
-			<button class="floating-button" v-if="isAdmin" @click="setCreateModalBlog">
+			<button class="floating-button" v-if="isAdmin" @click="setCreateModalArticle">
 				<i class="fas fa-plus text-white"></i>
 			</button>
 		</div>
@@ -22,10 +22,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import ArticleCard from '@/components/blog/list/ArticleCard.vue'
 import { useArticlesList } from '@/usecases/blog/articles'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	name: 'Posts',
 	components: {
@@ -35,8 +35,8 @@ export default defineComponent({
 		const { loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles } = useArticlesList()
 		return {
 			loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles,
-			isAdmin: computed(() => store.getters.isAdmin),
-			setCreateModalBlog: () => store.dispatch('setCreateModalBlog')
+			isAdmin: useStore().auth.isAdmin,
+			setCreateModalArticle: useStore().modals.setCreateModalArticle
 		}
 	},
 	meta(){

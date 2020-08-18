@@ -17,7 +17,7 @@
 import { defineComponent } from '@vue/composition-api'
 import { useCreateArticle } from '@/usecases/blog/articles'
 import ArticleForm from '@/components/blog/ArticleForm.vue'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	name: 'CreateArticle',
 	components: {
@@ -27,7 +27,7 @@ export default defineComponent({
 		const { loading, createArticle, factory } = useCreateArticle()
 		return {
 			loading, createArticle, factory,
-			closeCreateModal: () => store.dispatch('closeCreateModal')
+			closeCreateModal: useStore().modals.closeCreateModal
 		}
 	}
 })

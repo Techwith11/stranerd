@@ -9,20 +9,22 @@
 			<button class="btn-success" @click="setCreateModalCourse">Create Course</button>
 			<button class="btn-success" @click="setCreateModalQuestion">Create Question</button>
 			<button class="btn-success" @click="setCreateModalNote">Upload Note to Shop</button>
-			<button class="btn-success" @click="goToCreateBlogPage">Create Blog Post</button>
+			<button class="btn-success" @click="setCreateModalArticle">Create Article</button>
 		</div>
 	</div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { useStore } from '@/usecases/store'
 export default {
 	name: 'CreateOverview',
-	methods: {
-		...mapActions(['setCreateModalQuestion','setCreateModalCourse','setCreateModalNote','closeCreateModal']),
-		async goToCreateBlogPage(){
-			this.closeCreateModal()
-			await this.$router.push('/blog/create')
+	setup(){
+		return {
+			closeCreateModal: useStore().modals.closeEditModal,
+			setCreateModalQuestion: useStore().modals.setCreateModalQuestion,
+			setCreateModalCourse: useStore().modals.setCreateModalCourse,
+			setCreateModalNote: useStore().modals.setCreateModalNote,
+			setCreateModalArticle: useStore().modals.setCreateModalArticle
 		}
 	}
 }

@@ -24,9 +24,9 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
-import store from '@/store'
 import { setCurrentEditingSubject, useDeleteSubject } from '@/usecases/courses/subjects'
 import { SubjectEntity } from '@root/modules/courses/domain/entities/subject'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	props: {
 		subject: {
@@ -43,7 +43,7 @@ export default defineComponent({
 		}
 		const openSubjectEditModal = () => {
 			setCurrentEditingSubject(props.subject)
-			store.dispatch('setEditModalSubject')
+			useStore().modals.setEditModalSubject()
 		}
 		return {
 			deleteLoading, deleteSubject,

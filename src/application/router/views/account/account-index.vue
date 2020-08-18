@@ -7,10 +7,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
-import store from '@/store'
+import { defineComponent } from '@vue/composition-api'
 import ProfileInfo from '@/components/account/single/ProfileInfo.vue'
 import SubscriptionInfo from '@/components/account/single/SubscriptionInfo.vue'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	components: {
 		'profile-info': ProfileInfo,
@@ -18,8 +18,8 @@ export default defineComponent({
 	},
 	setup(){
 		return {
-			isLoggedIn: computed(() => store.getters.isLoggedIn),
-			setAccountModalOverview: () => store.dispatch('setAccountModalOverview')
+			isLoggedIn: useStore().auth.isLoggedIn,
+			setAccountModalOverview: useStore().modals.setAccountModalOverview
 		}
 	},
 })

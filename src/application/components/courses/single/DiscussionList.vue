@@ -13,10 +13,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, onUnmounted } from '@vue/composition-api'
+import { defineComponent, onMounted, onUnmounted } from '@vue/composition-api'
 import { useDiscussions } from '@/usecases/courses/disucssion'
 import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	props: {
 		course: {
@@ -33,7 +33,7 @@ export default defineComponent({
 		onUnmounted(closeListener)
 		return {
 			loading, discussions, hasMore, olderDiscussionsLoading, fetchOlderDiscussions, error,
-			getId: computed(() => store.getters.getId)
+			getId: useStore().auth.getId
 		}
 	}
 })

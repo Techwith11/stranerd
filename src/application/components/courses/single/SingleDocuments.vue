@@ -17,9 +17,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
-import store from '@/store'
+import { defineComponent } from '@vue/composition-api'
 import { CourseEntity } from '@root/modules/courses/domain/entities/course'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	props: {
 		course: {
@@ -29,7 +29,7 @@ export default defineComponent({
 	},
 	setup(){
 		return {
-			isSubscribed: computed(() => store.getters.isSubscribed)
+			isSubscribed: useStore().auth.isSubscribed
 		}
 	}
 })

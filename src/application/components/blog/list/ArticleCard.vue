@@ -25,9 +25,9 @@
 <script lang="ts">
 import { computed, defineComponent, reactive } from '@vue/composition-api'
 import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
-import store from '@/store'
 import { setCurrentEditingArticle, useDeleteArticle } from '@/usecases/blog/articles'
 import { fetchUser } from '@root/application/usecases/users/users'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	props: {
 		article: {
@@ -40,10 +40,10 @@ export default defineComponent({
 		fetchUser(props.article.userId).then((user) => state.user = user )
 		const { loading: delLoading, deleteArticle } = useDeleteArticle(props.article)
 		return {
-			isAdmin: computed(() => store.getters.isAdmin),
+			isAdmin: useStore().auth.isAdmin,
 			openEditModal: () => {
 				setCurrentEditingArticle(props.article)
-				store.dispatch('setEditModalBlog')
+				useStore().modals.setEditModalArticle()
 			},
 			delLoading, deleteArticle,
 			user: computed(() => state.user)

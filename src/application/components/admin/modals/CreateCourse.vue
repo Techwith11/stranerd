@@ -15,9 +15,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import store from '@/store'
 import { useCreateCourse } from '@/usecases/courses/courses'
 import CourseForm from '@/components/courses/CourseForm.vue'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	name: 'CreateCourse',
 	components: {
@@ -27,7 +27,7 @@ export default defineComponent({
 		const { loading, createCourse, factory } = useCreateCourse()
 		return {
 			loading, createCourse, factory,
-			closeCreateModal: () => store.dispatch('closeCreateModal')
+			closeCreateModal: useStore().modals.closeCreateModal
 		}
 	},
 })

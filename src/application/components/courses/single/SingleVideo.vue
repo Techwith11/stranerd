@@ -16,10 +16,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-import store from '@/store'
 import { setCurrentEditingCourse, useDeleteCourse } from '@/usecases/courses/courses'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	props: {
 		course: {
@@ -31,10 +31,10 @@ export default defineComponent({
 		const { loading: delLoading, deleteCourse } = useDeleteCourse(props.course)
 		return {
 			delLoading, deleteCourse,
-			isAdmin: computed(() => store.getters.isAdmin),
+			isAdmin: useStore().auth.isAdmin,
 			openEditModal: () => {
 				setCurrentEditingCourse(props.course)
-				store.dispatch('setEditModalCourse')
+				useStore().modals.setEditModalCourse()
 			}
 		}
 	}

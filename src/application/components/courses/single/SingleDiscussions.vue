@@ -12,11 +12,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
-import store from '@/store'
+import { defineComponent } from '@vue/composition-api'
 import { CourseEntity } from '@root/modules/courses/domain/entities/course'
 import DiscussionList from '@/components/courses/single/DiscussionList.vue'
 import DiscussionForm from '@/components/courses/single/DiscussionForm.vue'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	components: {
 		'discussion-list': DiscussionList,
@@ -30,7 +30,7 @@ export default defineComponent({
 	},
 	setup(){
 		return {
-			isSubscribed: computed(() => store.getters.isSubscribed)
+			isSubscribed: useStore().auth.isSubscribed
 		}
 	}
 })

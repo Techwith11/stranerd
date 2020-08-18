@@ -54,7 +54,7 @@
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
 import { useGoogleLogin, useRegisterForm } from '@/usecases/users/auth'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	name: 'RegisterStudent',
 	setup(){
@@ -64,8 +64,8 @@ export default defineComponent({
 			googleLoading, googleLogin,
 			regLoading, register, factory,
 			anyLoading: computed(() => googleLoading || regLoading),
-			setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
-			closeAuthModal: () => store.dispatch('closeAuthModal'),
+			setAuthModalLogin: useStore().modals.setAuthModalLogin,
+			closeAuthModal: useStore().modals.closeAuthModal
 		}
 	}
 })

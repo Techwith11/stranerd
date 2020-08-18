@@ -17,7 +17,7 @@
 import { defineComponent } from '@vue/composition-api'
 import { useCreateSubject } from '@/usecases/courses/subjects'
 import SubjectForm from '@/components/admin/subjects/SubjectForm.vue'
-import store from '@/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	name: 'CreateSubject',
 	components: {
@@ -27,7 +27,7 @@ export default defineComponent({
 		const { loading, createSubject, factory } = useCreateSubject()
 		return {
 			loading, createSubject, factory, module,
-			closeCreateModal: () => store.dispatch('closeCreateModal')
+			closeCreateModal: useStore().modals.closeCreateModal
 		}
 	}
 })

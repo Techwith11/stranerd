@@ -120,27 +120,27 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
 import { useLogout } from '@/usecases/users/auth'
-import store from '@/store'
 import { useCart } from '@/usecases/shop/cart'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	setup(){
 		const { loading, logout } = useLogout()
 		const { cartLength } = useCart()
+		const {
+		    auth: { isLoggedIn, isAdmin },
+			modals: { setAuthModalRegisterStudent, setAuthModalLogin, setCartModalOverview  }
+		} = useStore()
 		return {
 			loading, logout, cartLength,
-			isLoggedIn: computed(() => store.getters.isLoggedIn),
-			isAdmin: computed(() => store.getters.isAdmin),
-			setAuthModalRegisterStudent: () => store.dispatch('setAuthModalRegisterStudent'),
-			setAuthModalLogin: () => store.dispatch('setAuthModalLogin'),
-			setCartModalOverview: () => store.dispatch('setCartModalOverview'),
-			toggleAccountDropDown: () => closeAdminDropdown(),
-			toggleAdminDropDown: () => closeAccountDropdown(),
+			isLoggedIn, isAdmin,
+			setAuthModalRegisterStudent, setAuthModalLogin, setCartModalOverview,
+			toggleAccountDropDown: closeAdminDropdown, toggleAdminDropDown: closeAccountDropdown,
 			showCartModal: () => {
 				closeNavbar()
-				store.dispatch('setCartModalOverview')
+				setCartModalOverview()
 			},
 		}
 	}

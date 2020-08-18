@@ -9,18 +9,22 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import Login from '@/components/auth/Login'
 import ForgotPassword from '@/components/auth/ForgotPassword'
 import RegisterStudent from '@/components/auth/RegisterStudent'
+import { useStore } from '@/usecases/store'
 export default {
 	components: {
 		'login': Login,
 		'forgot-password': ForgotPassword,
 		'register-student': RegisterStudent,
 	},
-	computed: {
-		...mapGetters(['isAuthModalLogin','isAuthModalRegisterStudent','isAuthModalForgotPassword'])
+	setup(){
+		return {
+			isAuthModalLogin: useStore().modals.isAuthModalLogin,
+			isAuthModalRegisterStudent: useStore().modals.isAuthModalRegisterStudent,
+			isAuthModalForgotPassword: useStore().modals.isAuthModalForgotPassword,
+		}
 	}
 }
 </script>
