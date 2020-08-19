@@ -57,18 +57,16 @@ export const useSingleSubject = (name: string) => {
 		subject: undefined as SubjectEntity | undefined,
 		error: ''
 	})
-	if(!globalState.fetched) {
+	const fetchSubject = async () => {
 		state.loading = true
-		fetchSubjects().then(async () => {
-			const subject = globalState.subjects.find((s) => s.name.toLowerCase() === name.toLowerCase())
-			if(subject) state.subject = subject
-			else await router.replace('/courses')
-			state.loading = false
-		}).catch((error) => {
-			state.error = error
-			state.loading = false
-		})
+		if(!globalState.fetched) await fetchSubjects()
+		const subject = globalState.subjects.find((s) => s.name.toLowerCase() === name.toLowerCase())
+		if(subject) state.subject = subject
+		else await router.replace('/courses')
+		state.loading = false
 	}
+
+	fetchSubject().catch(e => state.error = e)
 
 	return {
 		loading: computed(() => state.loading),

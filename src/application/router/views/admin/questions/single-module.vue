@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<Default>
 		<helper-spinner v-if="isLoading"/>
 		<div class="container-fluid py-3" v-else>
 			<helper-message message="No questions available at the moment. Try adding some new ones." v-if="questions.length === 0" />
@@ -13,7 +13,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>

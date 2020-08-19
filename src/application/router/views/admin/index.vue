@@ -1,8 +1,8 @@
 <template>
-	<Default>
+	<div>
 		<router-view />
 		<button class="floating-button" @click="setCreateModalOverview"><i class="fas fa-plus"></i></button>
-	</Default>
+	</div>
 </template>
 
 <script>

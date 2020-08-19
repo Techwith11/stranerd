@@ -1,8 +1,10 @@
 <template>
-	<div class="container-fluid py-3">
-		<upgrade-user-to-admin />
-		<upgrade-user-to-tutor />
-	</div>
+	<Default>
+		<div class="container-fluid py-3">
+			<upgrade-user-to-admin />
+			<upgrade-user-to-tutor />
+		</div>
+	</Default>
 </template>
 
 <script>

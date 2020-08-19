@@ -2,13 +2,13 @@
 	<Default>
 		<div class="container-fluid py-3">
 			<helper-spinner v-if="loading" />
-			<div v-else>
+			<template v-else>
 				<router-link class="text-muted h5 text-decoration-none my-3 d-inline-block text-capitalize" :to="`/courses`">
 					<i class="fas fa-arrow-left mr-2"></i>
 					<span>All</span>
 				</router-link>
 				<subject-card :subject="subject"/>
-			</div>
+			</template>
 		</div>
 	</Default>
 </template>
