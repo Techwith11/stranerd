@@ -14,7 +14,7 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import MakePayment from '@/components/helpers/MakePayment'
+import MakePayment from '@/components/helpers/payments/MakePayment'
 export default {
 	data: () => ({
 		price: 10.00,

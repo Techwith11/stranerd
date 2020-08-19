@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import AddPaymentMethod from '@/components/helpers/AddPaymentMethod'
+import AddPaymentMethod from '@/components/helpers/payments/AddPaymentMethod'
 import { mapActions } from 'vuex'
 export default {
 	components: {
