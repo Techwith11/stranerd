@@ -12,16 +12,23 @@ import { MethodFirebaseDataSource } from '@root/modules/payments/data/datasource
 import { MethodTransformer } from '@root/modules/payments/data/transformers/method'
 import { MethodRepository } from '@root/modules/payments/data/repositories/method'
 import { GetPaymentMethodsUsecase } from '@root/modules/payments/domain/usecases/getPaymentMethods'
+import { PlanFirebaseDataSource } from '@root/modules/payments/data/datasources/plan-firebase'
+import { PlanTransformer } from '@root/modules/payments/data/transformers/plan'
+import { PlanRepository } from '@root/modules/payments/data/repositories/plan'
+import { GetSubscriptionPlansUsecase } from '@root/modules/payments/domain/usecases/getSubscriptionPlans'
 
 const bottle = new Bottle()
 
 bottle.service('DataSources.Payment', PaymentFirebaseDataSource)
 bottle.service('DataSources.Method', MethodFirebaseDataSource)
+bottle.service('DataSources.Plan', PlanFirebaseDataSource)
 
 bottle.service('Transformers.Method', MethodTransformer)
+bottle.service('Transformers.Plan', PlanTransformer)
 
 bottle.service('Repositories.Payment', PaymentRepository, 'DataSources.Payment')
 bottle.service('Repositories.Method', MethodRepository, 'DataSources.Method', 'Transformers.Method')
+bottle.service('Repositories.Plan', PlanRepository, 'DataSources.Plan', 'Transformers.Plan')
 
 bottle.service('Usecases.Payment.GetClientToken', GetClientTokenUsecase, 'Repositories.Payment')
 bottle.service('Usecases.Payment.CreatePaymentMethod', CreatePaymentMethodUsecase, 'Repositories.Payment')
@@ -32,6 +39,8 @@ bottle.service('Usecases.Payment.CancelSubscription', CancelSubscriptionUsecase,
 bottle.service('Usecases.Payment.UpdateSubscription', UpdatePaymentMethodForSubscriptionUsecase, 'Repositories.Payment')
 
 bottle.service('Usecases.Method.Get', GetPaymentMethodsUsecase, 'Repositories.Method')
+
+bottle.service('Usecases.Plan.Get', GetSubscriptionPlansUsecase, 'Repositories.Plan')
 
 const {
 	GetClientToken, CreatePaymentMethod, RemovePaymentMethod, MakePayment, SubscribeToPlan, UpdateSubscription, CancelSubscription
@@ -47,7 +56,14 @@ const {
 	Get: GetPaymentMethodsUsecase
 }
 
+const {
+	Get: GetSubscriptionPlans
+} = bottle.container.Usecases.Plan as {
+	Get: GetSubscriptionPlansUsecase
+}
+
 export {
 	GetClientToken, CreatePaymentMethod, RemovePaymentMethod, MakePayment, SubscribeToPlan, UpdateSubscription, CancelSubscription,
-	GetPaymentMethods
+	GetPaymentMethods,
+	GetSubscriptionPlans
 }

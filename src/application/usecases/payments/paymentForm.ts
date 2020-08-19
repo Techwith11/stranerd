@@ -35,7 +35,6 @@ export const usePaymentForm = () => {
 	return {
 		loading: computed(() => state.loading),
 		isThereAHoistedFieldInstance: computed(() => hostedFieldsInstance.value !== undefined),
-		hoistedFieldInstance: computed(() => hostedFieldsInstance.value),
 		initializeHostedFields
 	}
 }
