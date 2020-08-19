@@ -88,21 +88,25 @@ export default [
 				path: '/account',
 				name: 'AccountIndex',
 				component: () => import(/* webpackChunkName: "account_index" */ '@/router/views/account/account-index.vue'),
+				meta: { requiresAuth: true }
 			},
 			{
 				path: '/account/tests',
 				name: 'AccountTests',
 				component: () => import(/* webpackChunkName: "account_tests" */ '@/router/views/account/account-tests.vue'),
+				meta: { requiresAuth: true }
 			},
 			{
 				path: '/account/paymentMethods',
 				name: 'AccountPaymentMethods',
 				component: () => import(/* webpackChunkName: "account_payment_methods" */ '@/router/views/account/account-payment-methods.vue'),
+				meta: { requiresAuth: true }
 			},
 			{
 				path: '/account/transactions',
 				name: 'AccountTransactions',
 				component: () => import(/* webpackChunkName: "account_transactions" */ '@/router/views/account/account-transactions.vue'),
+				meta: { requiresAuth: true }
 			},
 		],
 		meta: { requiresAuth: true }
@@ -141,39 +145,45 @@ export default [
 		path: '/admins',
 		name: 'Admins',
 		component: () => import(/* webpackChunkName: "admins" */ '@/router/views/admin/index.vue'),
+		meta: { requiresAuth: true, requiresAdmin: true },
 		children: [
 			{
 				path: '/admins/upgrades',
 				name: 'Upgrades',
 				component: () => import(/* webpackChunkName: "upgrades" */ '@/router/views/admin/upgrades/index.vue'),
+				meta: { requiresAuth: true, requiresAdmin: true }
 			},
 			{
 				path: '/admins/questions',
 				name: 'Questions',
 				component: () => import(/* webpackChunkName: "questions" */ '@/router/views/admin/questions/index.vue'),
+				meta: { requiresAuth: true, requiresAdmin: true }
 			},
 			{
 				path: '/admins/questions/:subject',
 				name: 'QuestionSubject',
 				component: () => import(/* webpackChunkName: "question-subject" */ '@/router/views/admin/questions/single-subject.vue'),
+				meta: { requiresAuth: true, requiresAdmin: true }
 			},
 			{
 				path: '/admins/questions/:subject/:module',
 				name: 'QuestionModule',
 				component: () => import(/* webpackChunkName: "question-module" */ '@/router/views/admin/questions/single-module.vue'),
+				meta: { requiresAuth: true, requiresAdmin: true }
 			},
 			{
 				path: '/admins/subjects',
 				name: 'Subjects',
 				component: () => import(/* webpackChunkName: "subjects" */ '@/router/views/admin/subjects/index.vue'),
+				meta: { requiresAuth: true, requiresAdmin: true }
 			},
 			{
 				path: '/admins/notes',
 				name: 'Notes',
 				component: () => import(/* webpackChunkName: "notes" */ '@/router/views/admin/notes/index.vue'),
+				meta: { requiresAuth: true, requiresAdmin: true }
 			}
-		],
-		meta: { requiresAuth: true, requiresAdmin: true }
+		]
 	},
 	{
 		path: '*',
