@@ -1,16 +1,16 @@
 import Bottle from 'bottlejs'
 import { TutorQuestionFirebaseDataSource } from '@root/modules/tests/data/datasources/tutorQuestion-firebase'
-import { TutorQuestionTransformer } from '@root/modules/tests/data/transformers/tutorQuestion'
-import { TutorQuestionRepository } from '@root/modules/tests/data/repositories/tutorQuestions'
+import { QuestionTransformer } from '@root/modules/tests/data/transformers/question'
+import { QuestionRepository } from '@root/modules/tests/data/repositories/question'
 import { GetTutorQuestionsByModuleUseCase } from '@root/modules/tests/domain/usecases/getTutorQuestionsByModule'
 
 const bottle = new Bottle()
 
 bottle.service('DataSources.TutorQuestion', TutorQuestionFirebaseDataSource)
 
-bottle.service('Transformers.TutorQuestion', TutorQuestionTransformer)
+bottle.service('Transformers.Question', QuestionTransformer)
 
-bottle.service('Repositories.TutorQuestion', TutorQuestionRepository, 'DataSources.TutorQuestion','Transformers.TutorQuestion')
+bottle.service('Repositories.TutorQuestion', QuestionRepository, 'DataSources.TutorQuestion','Transformers.Question')
 
 bottle.service('Usecases.TutorQuestion.GetByModule', GetTutorQuestionsByModuleUseCase, 'Repositories.TutorQuestion')
 

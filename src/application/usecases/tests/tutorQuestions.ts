@@ -1,5 +1,5 @@
 import { computed, reactive } from '@vue/composition-api'
-import { TutorQuestionEntity } from '@root/modules/tests/domain/entities/tutorQuestion'
+import { QuestionEntity } from '@root/modules/tests/domain/entities/question'
 import {
 	GetTutorQuestionsByModule
 } from '@root/modules/tests'
@@ -18,7 +18,7 @@ const getNewState = () => reactive({
 
 const globalState = reactive({}) as {
 	[key: string]: {
-		questions: TutorQuestionEntity[],
+		questions: QuestionEntity[],
 		fetched: boolean,
 		loading: boolean,
 		error: string,
@@ -27,7 +27,7 @@ const globalState = reactive({}) as {
 	}
 }
 
-const setTutorQuestion = (subject: string, module: string, question: TutorQuestionEntity) => {
+const setTutorQuestion = (subject: string, module: string, question: QuestionEntity) => {
 	const key = getKey(subject, module)
 	if(!globalState[key]) globalState[key] = getNewState()
 	const index = globalState[key].questions.findIndex((p) => p.id === question.id)
@@ -44,7 +44,7 @@ const setTutorQuestion = (subject: string, module: string, question: TutorQuesti
 const fetchTutorQuestions = async (subject: string, module: string) => {
 	const key = getKey(subject, module)
 	const date = globalState[key]?.questions[globalState[key]?.questions?.length - 1]?.createdAt ?? undefined
-	const entities: TutorQuestionEntity[] = await GetTutorQuestionsByModule.call(subject, module, date)
+	const entities: QuestionEntity[] = await GetTutorQuestionsByModule.call(subject, module, date)
 	globalState[key].hasMore = entities.length === PAGINATION_LIMIT
 	entities.forEach((entity) => setTutorQuestion(subject, module, entity))
 }
@@ -78,7 +78,7 @@ export const useTutorQuestionsList = (subject: string, module: string) => {
 	}
 }
 
-export const useDeleteTutorQuestion = (question: TutorQuestionEntity) => {
+export const useDeleteTutorQuestion = (question: QuestionEntity) => {
 	const key = getKey(question.subject, question.module)
 	const state = reactive({
 		loading: false

@@ -22,13 +22,13 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { useStore } from '@/usecases/store'
-import { TutorQuestionEntity } from '@root/modules/tests/domain/entities/tutorQuestion'
+import { QuestionEntity } from '@root/modules/tests/domain/entities/question'
 import { useDeleteTutorQuestion } from '@/usecases/tests/tutorQuestions'
 export default defineComponent({
 	props: {
 		question: {
 			required: true,
-			type: TutorQuestionEntity
+			type: QuestionEntity
 		}
 	},
 	setup(props){

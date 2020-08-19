@@ -1,11 +1,11 @@
-import { TutorQuestionFromModel, TutorQuestionToModel } from '@root/modules/tests/data/models/tutorQuestion'
-import { TutorQuestionEntity } from '@root/modules/tests/domain/entities/tutorQuestion'
+import { QuestionFromModel, QuestionToModel } from '@root/modules/tests/data/models/question'
+import { QuestionEntity } from '@root/modules/tests/domain/entities/question'
 import { timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
 
-export class TutorQuestionTransformer {
-	public fromJSON(model: TutorQuestionFromModel) {
+export class QuestionTransformer {
+	public fromJSON(model: QuestionFromModel) {
 		const { id, title, subject, module, level, a, b, c, d, answer, dates: { createdAt }, userId } = model
-		return new TutorQuestionEntity({
+		return new QuestionEntity({
 			id,
 			title, subject, module, userId, level,
 			a, b, c, d, answer,
@@ -13,7 +13,7 @@ export class TutorQuestionTransformer {
 		})
 	}
 
-	public toJSON(entity: TutorQuestionEntity) :TutorQuestionToModel {
+	public toJSON(entity: QuestionEntity) :QuestionToModel {
 		return {
 			title: entity.title,
 			subject: entity.subject,

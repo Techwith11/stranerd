@@ -1,6 +1,6 @@
 import firebase from '@root/services/firebase'
 
-export interface TutorQuestionFromModel {
+export interface QuestionFromModel {
 	id: string
 	title: string
 	subject: string
@@ -17,7 +17,7 @@ export interface TutorQuestionFromModel {
 	}
 }
 
-export interface TutorQuestionToModel {
+export interface QuestionToModel {
 	title: string
 	subject: string
 	module: string

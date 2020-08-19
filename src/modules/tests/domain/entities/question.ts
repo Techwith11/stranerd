@@ -1,6 +1,6 @@
 import { trimToLength, extractTextFromHTML } from '@root/modules/core/validations/sanitizers'
 
-export class TutorQuestionEntity{
+export class QuestionEntity{
 	public readonly id: string
 	public readonly title: string
 	public readonly level: number
@@ -14,7 +14,7 @@ export class TutorQuestionEntity{
 	public readonly userId: string
 	public readonly createdAt: Date
 
-	constructor({ id, title, level, subject, module, a, b, c, d, answer, createdAt, userId }: TutorQuestionConstructorArgs) {
+	constructor({ id, title, level, subject, module, a, b, c, d, answer, createdAt, userId }: QuestionConstructorArgs) {
 		this.id = id
 		this.title = title
 		this.subject = subject
@@ -32,7 +32,7 @@ export class TutorQuestionEntity{
 	get trimmedQuestion(){ return trimToLength(extractTextFromHTML(this.title), 200) }
 }
 
-type TutorQuestionConstructorArgs = {
+type QuestionConstructorArgs = {
 	id: string, title: string, subject: string, module: string, level: number
 	a: string, b: string, c: string, d: string, answer: string,
 	createdAt: Date, userId: string
