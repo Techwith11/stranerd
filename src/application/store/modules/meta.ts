@@ -5,24 +5,19 @@ const url = `https://firebasestorage.googleapis.com/v0/b/stranerd-13084.appspot.
 
 const state = {
 	defaultImage: process.env.NODE_ENV === 'production' ? url : '/img/user_profile.png',
-	editMeta: null,
 	plans: []
 }
 
 const getters = {
 	getDefaultImage: (state) => state.defaultImage,
-	getEditMeta: (state) => state.editMeta,
 	getPlans: (state) => state.plans
 }
 
 const mutations = {
-	setEditMeta: (state, meta) => state.editMeta = { ...meta },
 	setPlans: (state, plans) => state.plans = plans,
 }
 
 const actions = {
-	setEditMeta: ({ commit }, meta) => commit('setEditMeta', meta),
-	clearEditMeta: ({ commit }) => commit('setEditMeta', null),
 	fetchAllPlans: async ({ commit }) => {
 		try{
 			const docs = await firestore.collection('subscriptions').get()

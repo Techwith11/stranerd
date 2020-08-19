@@ -2,7 +2,6 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import chats from './modules/chats'
-import contents from './modules/contents'
 import meta from './modules/meta'
 import modal from './modules/modal'
 import payments from './modules/payments'
@@ -16,7 +15,6 @@ Vue.use(Vuex)
 export const Store = new Vuex.Store({
 	modules: {
 		chats,
-		contents,
 		meta,
 		modal,
 		payments,

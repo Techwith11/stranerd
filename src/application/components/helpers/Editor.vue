@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<vue-editor :value="model" @input="$emit('update:model',$event)" useCustomImageHandler @image-added="handleImageAdded"
+		<vue-editor :value="model" @input="$emit('update:model',$event)" useCustomImageHandler @image-added="handleImageUpload"
 			:placeholder="placeholder" :class="{'border border-danger': error, 'border border-success': valid }"
 			:editor-toolbar="customToolBar"
 		/>
@@ -8,9 +8,12 @@
 	</div>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+//@ts-ignore
 import { VueEditor } from 'vue2-editor'
+import { Notify } from '@root/application/config/notifications'
+import { Uploader } from '@root/modules/core/services/uploader'
 
 const customToolBar = [
 	[{size:['small',false,'large','huge']}],
@@ -22,9 +25,8 @@ const customToolBar = [
 	/*[{color:[]},{background:[]}],*/ ['link','image',/*'video','formula'*/],['clean']
 ]
 
-export default {
+export default defineComponent({
 	components: { 'vue-editor': VueEditor },
-	data: () => ({ customToolBar }),
 	props: {
 		model: {
 			required: true
@@ -44,16 +46,17 @@ export default {
 			required: true
 		}
 	},
-	methods: {
-		...mapActions(['uploadFromEditor']),
-		async handleImageAdded(file, editor, cursorLocation, resetUploader) {
-			try{
-				await this.uploadFromEditor({
-					file, editor, cursorLocation, resetUploader,
-					path: `editor/${this.path}`
-				})
-			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+	setup(props){
+		return {
+			customToolBar,
+			handleImageUpload: async (file: File, editor: any, cursorLocation: any, resetUploader: any) => {
+				try{
+					const res = await Uploader.call(props.path, file)
+					editor.insertEmbed(cursorLocation, 'image', res.link)
+					resetUploader()
+				}catch(e){ await Notify({ title: e, icon: 'error' }) }
+			}
 		}
 	}
-}
+})
 </script>
