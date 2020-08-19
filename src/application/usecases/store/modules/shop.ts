@@ -1,7 +1,7 @@
-import store from '@/store'
+import { Store } from '@/store'
 
 const actions = {
-	checkout: () => store.dispatch('checkout')
+	checkout: () => Store.dispatch('checkout')
 }
 
 export const Shop = {

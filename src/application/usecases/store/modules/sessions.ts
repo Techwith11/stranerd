@@ -1,7 +1,7 @@
-import store from '@/store'
+import { Store } from '@/store'
 
 const actions = {
-	closeTutorSessionsListener: () => store.dispatch('closeTutorSessionsListener')
+	closeTutorSessionsListener: () => Store.dispatch('closeTutorSessionsListener')
 }
 
 export const Sessions = {

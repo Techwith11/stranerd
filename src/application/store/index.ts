@@ -13,7 +13,7 @@ import users from './modules/users'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
+export const Store = new Vuex.Store({
 	modules: {
 		chats,
 		contents,

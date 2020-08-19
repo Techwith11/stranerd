@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { firestore, uploadFile } from '@/config/firebase'
-import store from '@/store/index'
+import { Store } from '@/store'
 import { checkForUnfinishedTests } from '@/config/tests'
 
 const state = {
@@ -33,7 +33,7 @@ const actions = {
 	setId: async({ commit }, id) => {
 		commit('setId', id)
 		commit('setUser', {})
-		await store.dispatch('closeProfileListener')
+		await Store.dispatch('closeProfileListener')
 		if(id){
 			const listener = firestore
 				.collection('users')
