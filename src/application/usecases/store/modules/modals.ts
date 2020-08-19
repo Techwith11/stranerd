@@ -37,11 +37,13 @@ const actions = {
 	setCreateModalQuestion: () => store.dispatch('setCreateModalQuestion'),
 	setCreateModalCourse: () => store.dispatch('setCreateModalCourse'),
 	setCreateModalNote: () => store.dispatch('setCreateModalNote'),
+	setCreateModalSubject: () => store.dispatch('setCreateModalSubject'),
 
 	setEditModalCourse: () => store.dispatch('setEditModalCourse'),
 	setEditModalNote: () => store.dispatch('setEditModalNote'),
 	setEditModalSubject: () => store.dispatch('setEditModalSubject'),
 	setEditModalArticle: () => store.dispatch('setEditModalBlog'),
+	setEditModalQuestion: () => store.dispatch('setEditModalQuestion'),
 
 	setSessionModalStudentDuration: (data: { student: string, tutor: string }) => store.dispatch('setSessionModalStudentDuration', data),
 

@@ -4,8 +4,8 @@ import routes from '@/router/routes'
 import { Notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
 
-import store from '@/store/'
 import { addToCachedScrolls, getCachedScroll, saveIntendedRoute } from '@/usecases/core/router'
+import { useStore } from '@/usecases/store'
 
 Vue.use(VueRouter)
 
@@ -22,10 +22,10 @@ router.beforeEach(async (to, from, next) => {
 	addToCachedScrolls(from.fullPath, document.documentElement.scrollTop)
 	const requiresAuth = to.matched.some((route) => route.meta.requiresAuth)
 	const requiresAdmin = to.matched.some((route) => route.meta.requiresAdmin)
-	const isLoggedIn = store.getters.isLoggedIn
-	const isAdmin = store.getters.isAdmin
+	const isLoggedIn = useStore().auth.isLoggedIn.value
+	const isAdmin = useStore().auth.isAdmin.value
 	if (requiresAuth && !isLoggedIn) {
-		store.dispatch('setAuthModalLogin')
+		await useStore().modals.setAuthModalLogin()
 		saveIntendedRoute(to.fullPath)
 		await Notify({ icon: 'error', 'title': 'Login to continue' })
 		return next('/')
