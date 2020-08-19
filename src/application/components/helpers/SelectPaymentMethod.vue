@@ -52,11 +52,11 @@ export default defineComponent({
 				state.token = ''
 				await fetchPaymentMethods()
 			},
-			backToPaymentMethods(){
+			backToPaymentMethods: () => {
 				state.showForm = methodLoading.value
 				state.token = ''
 			},
-			async showFormFields(){
+			showFormFields: () => {
 				state.showForm = true
 				props.onMethodSelected('')
 			}
