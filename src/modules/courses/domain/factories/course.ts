@@ -46,11 +46,11 @@ export class CourseFactory extends BaseFactory<CourseEntity, CourseToModel> {
 	set description(value: string) { this.set('description', value) }
 	get subject(){ return this.values.subject }
 	set subject(value: string) {
-		this.set('subject', value)
+		this.set('subject', value?.toLowerCase())
 		this.set('module', '')
 	}
 	get module(){ return this.values.module }
-	set module(value: string) { this.set('module', value) }
+	set module(value: string) { this.set('module', value?.toLowerCase()) }
 	get userId(){ return this.values.userId }
 	set userId(value: string) { this.set('userId', value) }
 	get image(){ return this.values.image! }

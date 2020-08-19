@@ -1,6 +1,6 @@
 import { computed, reactive } from '@vue/composition-api'
 import { QuestionEntity } from '@root/modules/tests/domain/entities/question'
-import { DeleteTutorQuestion, GetTutorQuestionsByModule, FindTutorQuestion, AddTutorQuestion, GetQuestionFactory } from '@root/modules/tests'
+import { DeleteTutorQuestion, GetTutorQuestionsByModule, FindTutorQuestion, AddTutorQuestion, GetQuestionFactory, UpdateTutorQuestion } from '@root/modules/tests'
 import { Alert, Notify } from '@/config/notifications'
 import { useStore } from '@/usecases/store'
 
@@ -105,16 +105,16 @@ export const useDeleteTutorQuestion = (question: QuestionEntity) => {
 }
 
 const fetchTutorQuestion = async (id: string) => {
-	let course: QuestionEntity | undefined = undefined
+	let question: QuestionEntity | undefined = undefined
 	const values = Object.values(globalState)
 	values.forEach((state) => {
 		const found = state.questions.find((q) => q.id === id)
-		if(found) course = found
+		if(found) question = found
 	})
-	if(course) return course
-	course = await FindTutorQuestion.call(id)
-	if(course) unshiftQuestion(course.subject, course.module, course)
-	return course
+	if(question) return question
+	question = await FindTutorQuestion.call(id)
+	if(question) unshiftQuestion(question.subject, question.module, question)
+	return question
 }
 
 export const useCreateTutorQuestion = () => {
@@ -131,8 +131,8 @@ export const useCreateTutorQuestion = () => {
 			state.factory.userId = useStore().auth.getId.value
 			try{
 				const id = await AddTutorQuestion.call(state.factory)
-				const course = await fetchTutorQuestion(id)
-				if(course) unshiftQuestion(course.subject, course.module, course)
+				const question = await fetchTutorQuestion(id)
+				if(question) unshiftQuestion(question.subject, question.module, question)
 				state.factory.reset()
 				await useStore().modals.closeCreateModal()
 				await Notify({ icon: 'success', title: 'Question created successfully' })
@@ -145,5 +145,36 @@ export const useCreateTutorQuestion = () => {
 		factory: state.factory,
 		loading: computed(() => state.loading),
 		createQuestion,
+	}
+}
+
+let currentEdit = undefined as QuestionEntity | undefined
+
+export const setCurrentEditingTutorQuestion = (question: QuestionEntity) => currentEdit = question
+
+export const useEditTutorQuestion = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetQuestionFactory.call()
+	})
+	if(currentEdit !== undefined) state.factory.loadEntity(currentEdit)
+	const editQuestion = async () => {
+		if(state.factory.valid && !state.loading) {
+			state.loading = true
+			try{
+				const id = await UpdateTutorQuestion.call(currentEdit!.id ,state.factory)
+				const question = await FindTutorQuestion.call(id)
+				if(question) unshiftQuestion(question.subject, question.module, question)
+				state.factory.reset()
+				await useStore().modals.closeEditModal()
+				await Notify({ title: 'Question updated successfully!', icon: 'success' })
+			}catch(error){ await Notify({ title: error, icon: 'error' }) }
+			state.loading = false
+		}else state.factory.validateAll()
+	}
+	return {
+		loading: computed(() => state.loading),
+		factory: computed(() => state.factory),
+		editQuestion
 	}
 }

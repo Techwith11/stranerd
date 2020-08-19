@@ -23,7 +23,7 @@
 import { defineComponent } from '@vue/composition-api'
 import { useStore } from '@/usecases/store'
 import { QuestionEntity } from '@root/modules/tests/domain/entities/question'
-import { useDeleteTutorQuestion } from '@/usecases/tests/tutorQuestions'
+import { setCurrentEditingTutorQuestion, useDeleteTutorQuestion } from '@/usecases/tests/tutorQuestions'
 export default defineComponent({
 	props: {
 		question: {
@@ -37,8 +37,8 @@ export default defineComponent({
 			isAdmin: useStore().auth.isAdmin,
 			deleteTutorQuestion, delLoading,
 			openEditModal: () => {
-				//setCurrentEditingCourse(props.course)
-				//useStore().modals.setEditModalCourse()
+				setCurrentEditingTutorQuestion(props.question)
+				useStore().modals.setEditModalQuestion()
 			}
 		}
 	}
