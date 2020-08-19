@@ -9,46 +9,29 @@
 			<button class="btn btn-warning text-white" @click="setAccountModalEditProfile">Edit Profile</button>
 			<button class="btn btn-warning text-white" @click="setAccountModalUpdatePassword">Update Password</button>
 			<button class="btn btn-success" @click="setAccountModalSelectSubscription">{{ isSubscribed ? 'Change subscription' : 'Subscribe now' }}</button>
-			<button class="btn btn-danger" @click="cancelSub" v-if="isSubscribed">
-				<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
-				Cancel subscription
+			<button class="btn btn-danger" @click="cancelSubscription" v-if="isSubscribed" :disabled="loading">
+				<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+				<span>Cancel subscription</span>
 			</button>
 		</div>
 	</div>
 </template>
 
-<script>
-import { mapActions, mapGetters } from 'vuex'
-export default {
-	data: () => ({
-		isLoading: false
-	}),
-	methods: {
-		...mapActions(['closeAccountModal','setAccountModalEditProfile','setAccountModalUpdatePassword','setAccountModalSelectSubscription','cancelSubscription']),
-		async cancelSub(){
-			const result = await new window.SweetAlert({
-				title: 'Cancel Subscription',
-				text: 'Are you sure you want to cancel your subscription',
-				icon: 'info',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: 'Yes',
-				cancelButtonText: 'No'
-			})
-			if (result.value) {
-				try{
-					this.isLoading = true
-					const res = await this.cancelSubscription()
-					if(res){
-						new window.Toast({ icon: 'success', title: 'Subscription cancelled successfully' })
-						this.closeAccountModal()
-					}
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-				this.isLoading = false
-			}
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import { useCancelSubscription } from '@/usecases/payments/subscription'
+import { useStore } from '@/usecases/store'
+export default defineComponent({
+	setup(){
+		const { loading, cancelSubscription } = useCancelSubscription()
+		return {
+			loading, cancelSubscription,
+			isSubscribed: useStore().auth.isSubscribed,
+			closeAccountModal: useStore().modals.closeAccountModal,
+			setAccountModalEditProfile: useStore().modals.setAccountModalEditProfile,
+			setAccountModalUpdatePassword: useStore().modals.setAccountModalUpdatePassword,
+			setAccountModalSelectSubscription: useStore().modals.setAccountModalSelectSubscription,
 		}
-	},
-	computed: mapGetters(['isSubscribed'])
-}
+	}
+})
 </script>

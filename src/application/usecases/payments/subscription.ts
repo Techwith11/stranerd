@@ -1,8 +1,8 @@
 import { computed, reactive } from '@vue/composition-api'
 import { PlanEntity } from '@root/modules/payments/domain/entities/plan'
-import { GetSubscriptionPlans, SubscribeToPlan } from '@root/modules/payments'
+import { CancelSubscription, GetSubscriptionPlans, SubscribeToPlan } from '@root/modules/payments'
 import { useStore } from '@/usecases/store'
-import { Notify } from '@/config/notifications'
+import { Alert, Notify } from '@/config/notifications'
 import router from '@/router'
 
 const globalState = reactive({
@@ -47,5 +47,36 @@ export const useCreateSubscription = () => {
 	return {
 		loading: computed(() => state.loading),
 		subscribe
+	}
+}
+
+export const useCancelSubscription = () => {
+	const state = reactive({ loading: false })
+	const cancelSubscription = async () => {
+		if(!state.loading){
+			const result = await Alert({
+				title: 'Cancel Subscription',
+				text: 'Are you sure you want to cancel your subscription',
+				icon: 'info',
+				confirmButtonText: 'Yes',
+				cancelButtonText: 'No'
+			})
+			if (result.value) {
+				state.loading = true
+				try{
+					const res = await CancelSubscription.call(useStore().auth.getId.value)
+					if(res){
+						await useStore().modals.closeAccountModal()
+						await Notify({ icon: 'success', title: 'Subscription cancelled successfully' })
+					} else await Notify({ icon: 'error', title: 'Error cancelling subscription' })
+				}catch(error){ await Notify({ icon: 'error', title: error.message }) }
+				state.loading = false
+			}
+		}
+	}
+
+	return {
+		loading: computed(() => state.loading),
+		cancelSubscription
 	}
 }

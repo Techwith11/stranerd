@@ -24,6 +24,7 @@ export const Notify = (args: ToastArgs) => Toast.fire({
 type AlertArgs = ToastArgs & {
     text: string
     confirmButtonText: string
+	cancelButtonText?: string
 }
 export const Alert = (args: AlertArgs) => SweetAlert.fire({
 	title: args.title,
@@ -32,6 +33,7 @@ export const Alert = (args: AlertArgs) => SweetAlert.fire({
 	showCancelButton: true,
 	cancelButtonColor: '#3085d6',
 	confirmButtonColor: '#d33',
-	confirmButtonText: args.confirmButtonText
+	confirmButtonText: args.confirmButtonText,
+	cancelButtonText: args.cancelButtonText ?? 'Cancel'
 })
 

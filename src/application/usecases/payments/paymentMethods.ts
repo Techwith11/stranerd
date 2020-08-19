@@ -41,8 +41,11 @@ export const useDeletePaymentMethod = (method: MethodEntity) => {
 			if (result.value) {
 				state.loading = true
 				try {
-					await RemovePaymentMethod.call(useStore().auth.getId.value, method.id)
-					globalState.methods = globalState.methods.filter((m) => m.id !== method.id)
+					const res = await RemovePaymentMethod.call(useStore().auth.getId.value, method.id)
+					if(res){
+						globalState.methods = globalState.methods.filter((m) => m.id !== method.id)
+						await Notify({ title: 'Payment method removed successfully', icon: 'success' })
+					}else await Notify({ title: 'Error removing payment method', icon: 'error' })
 				} catch(e) {
 					await Notify({ title: e.message, icon: 'error' })
 				}

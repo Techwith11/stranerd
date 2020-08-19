@@ -34,7 +34,6 @@ const getters = {
 	isAccountModalUpdatePassword: (state) => state.accountModal === 'update-password',
 	isAccountModalAddPaymentMethod: (state) => state.accountModal === 'add-payment-method',
 	isAccountModalSelectSubscription: (state) => state.accountModal === 'select-subscription',
-	isAccountModalMustSubscribeWarning: (state) => state.accountModal === 'must-subscribe-warning',
 
 	isPostModalOpen: (state) => !!state.postModal,
 	isPostModalNotify: (state) => state.postModal === 'post-notify',
@@ -75,7 +74,6 @@ const actions = {
 	setAccountModalUpdatePassword: ({ commit }) => commit('setAccountModal', 'update-password'),
 	setAccountModalAddPaymentMethod: ({ commit }) => commit('setAccountModal', 'add-payment-method'),
 	setAccountModalSelectSubscription: ({ commit }) => commit('setAccountModal', 'select-subscription'),
-	setAccountModalMustSubscribeWarning: ({ commit }) => commit('setAccountModal', 'must-subscribe-warning'),
 	closeAccountModal: ({ commit }) => commit('setAccountModal', null),
 
 	setPostModalNotify: ({ commit }) => commit('setPostModal','post-notify'),

@@ -4,7 +4,6 @@ import Vuex from 'vuex'
 import chats from './modules/chats'
 import meta from './modules/meta'
 import modal from './modules/modal'
-import payments from './modules/payments'
 import sessions from './modules/sessions'
 import shop from './modules/shop'
 import users from './modules/users'
@@ -16,7 +15,6 @@ export const Store = new Vuex.Store({
 		chats,
 		meta,
 		modal,
-		payments,
 		sessions,
 		shop,
 		users

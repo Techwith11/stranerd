@@ -24,8 +24,8 @@
 			</div>
 			<div class="col-sm-4 d-flex flex-column justify-content-between mb-3">
 				<router-link class="text-info" to="/account/transactions">View transactions</router-link>
-				<a class="text-info" @click.prevent="cancelSub">
-					<i class="fas fa-spinner fa-spin mr-2" v-if="isLoadingCancel"></i>
+				<a class="text-info" @click.prevent="cancelSubscription">
+					<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
 					<span>Cancel subscription</span>
 				</a>
 			</div>
@@ -39,50 +39,29 @@
 	</div>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
-export default {
-	data: () => ({
-		isLoadingCancel: false,
-	}),
-	computed: {
-		...mapGetters(['getUser','isSubscribed']),
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import { useCancelSubscription } from '@/usecases/payments/subscription'
+import { useStore } from '@/usecases/store'
+export default defineComponent({
+	setup(){
+		const { loading, cancelSubscription } = useCancelSubscription()
+		return {
+			loading, cancelSubscription,
+			getUser: useStore().auth.getUser,
+			isSubscribed: useStore().auth.isSubscribed,
+		}
 	},
 	methods: {
-		...mapActions(['cancelSubscription']),
-		convertToTitle(string){
+		convertToTitle(string: string){
 			const res = string.split('_')
 			let plan = res[2]
 			const duration = res[1]
 			plan = plan[0].toUpperCase() + plan.slice(1)
 			return `${plan}(${duration})`
 		},
-		async cancelSub(){
-			if(!this.isLoadingCancel){
-				const result = await new window.SweetAlert({
-					title: 'Cancel Subscription',
-					text: 'Are you sure you want to cancel your subscription',
-					icon: 'info',
-					showCancelButton: true,
-					confirmButtonColor: '#3085d6',
-					cancelButtonColor: '#d33',
-					confirmButtonText: 'Yes',
-					cancelButtonText: 'No'
-				})
-				if (result.value) {
-					try{
-						this.isLoadingCancel = true
-						const res = await this.cancelSubscription()
-						if(res){
-							new window.Toast({ icon: 'success', title: 'Subscription cancelled successfully' })
-						}
-					}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-					this.isLoadingCancel = false
-				}
-			}
-		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>
