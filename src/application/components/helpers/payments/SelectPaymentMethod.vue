@@ -36,7 +36,7 @@ export default defineComponent({
 			token: '' as string,
 			showForm: false
 		})
-		const { loading: methodLoading, error, methods, fetchPaymentMethods } = usePaymentMethodsList()
+		const { loading: methodLoading, error, validMethods: methods, fetchPaymentMethods } = usePaymentMethodsList()
 		return {
 			methodLoading, error, methods, fetchPaymentMethods,
 			token: computed(() => state.token),
