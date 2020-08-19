@@ -4,10 +4,10 @@ import { timestampToDate } from '@root/modules/core/data/transformers/converters
 
 export class TutorQuestionTransformer {
 	public fromJSON(model: TutorQuestionFromModel) {
-		const { id, title, subject, module, a, b, c, d, answer, dates: { createdAt }, userId } = model
+		const { id, title, subject, module, level, a, b, c, d, answer, dates: { createdAt }, userId } = model
 		return new TutorQuestionEntity({
 			id,
-			title, subject, module, userId,
+			title, subject, module, userId, level,
 			a, b, c, d, answer,
 			createdAt: timestampToDate(createdAt)!
 		})
@@ -18,6 +18,7 @@ export class TutorQuestionTransformer {
 			title: entity.title,
 			subject: entity.subject,
 			module: entity.module,
+			level: entity.level,
 			a: entity.a,
 			b: entity.b,
 			c: entity.c,

@@ -5,6 +5,7 @@ export interface TutorQuestionFromModel {
 	title: string
 	subject: string
 	module: string
+	level: number
 	a: string
 	b: string
 	c: string
@@ -20,6 +21,7 @@ export interface TutorQuestionToModel {
 	title: string
 	subject: string
 	module: string
+	level: number
 	a: string
 	b: string
 	c: string

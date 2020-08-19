@@ -2,53 +2,45 @@
 	<div class="alert alert-warning" role="alert">
 		<div v-html="question.title" class="editor-container"></div>
 		<p>
-			<span class="mr-3">A. {{ question.a }}</span>
-			<span class="mr-3">B. {{ question.b }}</span>
-			<span class="mr-3">C. {{ question.c }}</span>
-			<span class="mr-3">D. {{ question.d }}</span>
+			<span class="d-block my-1">A. {{ question.a }}</span>
+			<span class="d-block my-1">B. {{ question.b }}</span>
+			<span class="d-block my-1">C. {{ question.c }}</span>
+			<span class="d-block my-1">D. {{ question.d }}</span>
 		</p>
 		<span class="d-block">Answer: {{ question.answer }}</span>
 		<span class="d-block">Level {{ question.level }} {{ question.subject }}</span>
-		<div class="mt-3">
+		<div class="ml-auto" v-if="isAdmin">
 			<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
-			<a class="mr-3 text-danger" @click.prevent="removeQuestion"><i class="fas fa-trash mr-1"></i>Delete</a>
+			<a class="text-danger" @click.prevent="deleteTutorQuestion">
+				<i class="fas mr-1" :class="delLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+				<span>Delete</span>
+			</a>
 		</div>
 	</div>
 </template>
 
-<script>
-import { mapActions } from 'vuex'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import { useStore } from '@/usecases/store'
+import { TutorQuestionEntity } from '@root/modules/tests/domain/entities/tutorQuestion'
+import { useDeleteTutorQuestion } from '@/usecases/tests/tutorQuestions'
+export default defineComponent({
 	props: {
 		question: {
 			required: true,
-			type: Object
+			type: TutorQuestionEntity
 		}
 	},
-	methods: {
-		...mapActions(['deleteQuestion','setEditModalQuestion','setEditMeta']),
-		async openEditModal(){
-			this.setEditMeta(this.question)
-			this.setEditModalQuestion()
-		},
-		async removeQuestion(){
-			try{
-				const result = await new window.SweetAlert({
-					title: 'Delete question',
-					text: 'Are you sure you want to delete these question? This cannot be undone',
-					icon: 'info',
-					showCancelButton: true,
-					cancelButtonColor: '#3085d6',
-					confirmButtonColor: '#d33',
-					confirmButtonText: 'Delete'
-				})
-				if (result.value) {
-					await this.deleteQuestion(this.question['.key'])
-					window.Fire.$emit('QuestionDeleted', this.question)
-					new window.Toast({ icon: 'success', title: 'Question deleted successfully' })
-				}
-			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
+	setup(props){
+		const { loading: delLoading, deleteTutorQuestion } = useDeleteTutorQuestion(props.question)
+		return {
+			isAdmin: useStore().auth.isAdmin,
+			deleteTutorQuestion, delLoading,
+			openEditModal: () => {
+				//setCurrentEditingCourse(props.course)
+				//useStore().modals.setEditModalCourse()
+			}
 		}
 	}
-}
+})
 </script>
