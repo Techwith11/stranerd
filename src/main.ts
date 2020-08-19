@@ -12,7 +12,6 @@ Vue.config.productionTip = true
 setup()
 
 if(process.env.NODE_ENV === 'production') RegisterAuthChangedCB.call((user) => useStore().auth.setId(user?.uid ?? null))
-store.dispatch('fetchAllSubjects')
 store.dispatch('fetchAllPlans')
 
 new Vue({

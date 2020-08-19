@@ -7,7 +7,6 @@ import modal from './modules/modal'
 import payments from './modules/payments'
 import sessions from './modules/sessions'
 import shop from './modules/shop'
-import subjects from './modules/subjects'
 import users from './modules/users'
 
 Vue.use(Vuex)
@@ -20,7 +19,6 @@ export const Store = new Vuex.Store({
 		payments,
 		sessions,
 		shop,
-		subjects,
 		users
 	}
 })
