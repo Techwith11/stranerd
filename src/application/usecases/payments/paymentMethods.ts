@@ -11,7 +11,9 @@ const globalState = reactive({
 })
 
 const fetchPaymentMethods = async () => {
+	globalState.loading = true
 	globalState.methods = await GetPaymentMethods.call(useStore().auth.getId.value)
+	globalState.loading = false
 }
 
 export const usePaymentMethodsList = () => {

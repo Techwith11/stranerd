@@ -1,6 +1,7 @@
 <template>
 	<Default>
-		<div class="container py-5">
+		<helper-spinner v-if="plansLoading" />
+		<div class="container py-5" v-else>
 			<div v-if="page === 1">
 				<div class="d-flex justify-content-center align-items-center mb-5">
 					<span class="mr-2">Monthly</span>
@@ -10,7 +11,7 @@
 					</div>
 				</div>
 				<div class="row my-3">
-					<div class="col-lg-4 mb-5" v-for="(plan,index) in getPlans" :key="plan['.key']">
+					<div class="col-lg-4 mb-5" v-for="(plan,index) in plans" :key="plan.id">
 						<div class="text-center alert mb-3 shadow" :class="`alert-${colors[index]}`">
 							<h5 class="text-capitalize mb-4">{{ plan.title }}</h5>
 							<p v-if="annual">save 16%</p>
@@ -29,11 +30,11 @@
 							</ul>
 						</div>
 						<div class="d-flex justify-content-center" v-if="annual">
-							<p v-if="isLoggedIn && plan.yearlyId === getCurrentId">Currently on this plan</p>
+							<p v-if="isLoggedIn && plan.yearlyId === planId">Currently on this plan</p>
 							<button class="btn btn-success shadow" @click="setId(plan.yearlyId)" v-else>Select</button>
 						</div>
 						<div class="d-flex justify-content-center" v-else>
-							<p v-if="isLoggedIn && plan.monthlyId === getCurrentId">Currently on this plan</p>
+							<p v-if="isLoggedIn && plan.monthlyId === planId">Currently on this plan</p>
 							<button class="btn btn-success shadow" @click="setId(plan.monthlyId)" v-else>Select</button>
 						</div>
 					</div>
@@ -41,11 +42,11 @@
 			</div>
 			<div v-else>
 				<h5 class="mb-5 text-center">Select payment method to use to pay for subscription</h5>
-				<select-payment-method :onMethodSelected="setToken" :loading="isLoading" />
+				<select-payment-method :onMethodSelected="setToken" :loading="loading" />
 				<div class="d-flex justify-content-end">
-					<button class="btn" :class="token ? 'btn-success' : 'btn-secondary opacity-25'" :disabled="!token" @click="subscribe">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
-						Subscribe
+					<button class="btn btn-success" :class="{'opacity-25': !token}" :disabled="!token || loading" @click="createSubscription">
+						<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+						<span>Subscribe</span>
 					</button>
 				</div>
 			</div>
@@ -53,60 +54,48 @@
 	</Default>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
-import SelectPaymentMethod from '@/components/helpers/SelectPaymentMethod'
-export default {
-	data: () => ({
-		annual: false,
-		page: 1,
-		isLoading: false,
-		id: null,
-		token: null,
-		colors: ['danger','info','success']
-	}),
-	computed: {
-		...mapGetters(['getPlans','isLoggedIn','isSubscribed','getUser']),
-		getCurrentId(){ return this.getUser?.account?.subscription?.planId }
-	},
-	methods: {
-		...mapActions(['setAuthModalLogin','subscribeToPlan']),
-		setId(id){
-			if(this.isLoggedIn){
-				this.id = id
-				this.page = 2
+<script lang="ts">
+import { defineComponent, reactive, watch, computed } from '@vue/composition-api'
+import SelectPaymentMethod from '@/components/helpers/SelectPaymentMethod.vue'
+import { useCreateSubscription, useSubscriptionPlansList } from '@/usecases/payments/subscription'
+import { useStore } from '@root/application/usecases/store'
+export default defineComponent({
+	setup(){
+		const { loading: plansLoading, plans } = useSubscriptionPlansList()
+		const { loading, subscribe } = useCreateSubscription()
+		const isLoggedIn = useStore().auth.isLoggedIn
+
+		const state = reactive({
+			annual: false, page: 1,
+			id: null as string | null, token: null as string | null
+		})
+
+		const setToken = (token: string) => state.token = token
+		const setId = (id: string) => {
+			if(isLoggedIn.value){
+				state.id = id
+				state.page = 2
 				document.getElementsByTagName('body')[0].scrollIntoView()
-			}else{
-				this.setAuthModalLogin()
-				new window.Toast({ icon: 'warning', title: 'Login to continue' })
-			}
-		},
-		setToken(token){ this.token = token },
-		async subscribe(){
-			this.isLoading = true
-			try{
-				await this.subscribeToPlan({token: this.token, planId: this.id })
-				await this.$router.push('/')
-				new window.Toast({ icon: 'success', title: 'Subscription created successfully' })
-			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-			this.isLoading = false
-		},
-		checkId(){
-			const id = this.getCurrentId
-			this.id = id ? id : null
+			}else useStore().modals.setAuthModalLogin()
+		}
+		const createSubscription = () => state.id && state.token ? subscribe(state.id, state.token) : null
+
+		const planId = computed(() => useStore().auth.getUser.value?.account?.subscription?.planId ?? null)
+		watch(() => planId.value, () => state.id = planId.value)
+
+		return {
+			plansLoading, plans, loading, createSubscription,
+			colors: ['danger','info','success'],
+			isLoggedIn, isSubscribed: useStore().auth.isSubscribed,
+
+			planId, setId, setToken,
+			annual: computed({ get: () => state.annual, set: (val: boolean) => state.annual = val }),
+			page: computed(() => state.page),
+			token: computed(() => state.token),
 		}
 	},
 	components: {
 		'select-payment-method': SelectPaymentMethod
-	},
-	watch: {
-		getUser: {
-			immediate: true,
-			handler(){
-				const id = this.getCurrentId
-				this.id = id ? id : null
-			}
-		}
 	}
-}
+})
 </script>
