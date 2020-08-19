@@ -2,7 +2,8 @@ import validate from 'validate.js'
 import { extractTextFromHTML } from '@root/modules/core/validations/sanitizers'
 
 export const isRequired = (value: any) => {
-	return validate.single(value, { presence: true })
+	if(value === undefined || value === null || value === '') return [ 'is required' ]
+	return undefined
 }
 
 export const isNotRequired = (value: any) => {

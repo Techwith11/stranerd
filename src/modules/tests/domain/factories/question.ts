@@ -36,9 +36,9 @@ export class QuestionFactory extends BaseFactory<QuestionEntity, QuestionToModel
 	get title(){ return this.values.title }
 	set title(value: string){ this.set('title', value) }
 	get subject(){ return this.values.subject }
-	set subject(value: string){ this.set('subject', value) }
+	set subject(value: string){ this.set('subject', value.toLowerCase()) }
 	get module(){ return this.values.module }
-	set module(value: string){ this.set('module', value) }
+	set module(value: string){ this.set('module', value.toLowerCase()) }
 	get level(){ return this.values.level }
 	set level(value: number){ this.set('level', value) }
 	get a(){ return this.values.a }

@@ -7,6 +7,7 @@ import { DeleteTutorQuestionUseCase } from '@root/modules/tests/domain/usecases/
 import { GetQuestionFactoryUseCase } from '@root/modules/tests/domain/usecases/getQuestionFactory'
 import { AddTutorQuestionUseCase } from '@root/modules/tests/domain/usecases/addTutorQuestion'
 import { UpdateTutorQuestionUseCase } from '@root/modules/tests/domain/usecases/updateTutorQuestion'
+import { FindTutorQuestionUsecase } from '@root/modules/tests/domain/usecases/findTutorQuestion'
 
 const bottle = new Bottle()
 
@@ -22,6 +23,7 @@ bottle.service('Usecases.TutorQuestion.GetByModule', GetTutorQuestionsByModuleUs
 bottle.service('Usecases.TutorQuestion.Delete', DeleteTutorQuestionUseCase, 'Repositories.TutorQuestion')
 bottle.service('Usecases.TutorQuestion.Add', AddTutorQuestionUseCase, 'Repositories.TutorQuestion')
 bottle.service('Usecases.TutorQuestion.Update', UpdateTutorQuestionUseCase, 'Repositories.TutorQuestion')
+bottle.service('Usecases.TutorQuestion.Find', FindTutorQuestionUsecase, 'Repositories.TutorQuestion')
 
 const { GetFactory: GetQuestionFactory } = bottle.container.Usecases.Question as {
 	GetFactory: GetQuestionFactoryUseCase
@@ -29,13 +31,13 @@ const { GetFactory: GetQuestionFactory } = bottle.container.Usecases.Question as
 
 const {
 	GetByModule: GetTutorQuestionsByModule, Delete: DeleteTutorQuestion,
-	Add: AddTutorQuestion, Update: UpdateTutorQuestion
+	Add: AddTutorQuestion, Update: UpdateTutorQuestion, Find: FindTutorQuestion
 } = bottle.container.Usecases.TutorQuestion as {
 	GetByModule: GetTutorQuestionsByModuleUseCase, Delete: DeleteTutorQuestionUseCase,
-	Add: AddTutorQuestionUseCase, Update: UpdateTutorQuestionUseCase
+	Add: AddTutorQuestionUseCase, Update: UpdateTutorQuestionUseCase, Find: FindTutorQuestionUsecase
 }
 
 export {
 	GetQuestionFactory,
-	GetTutorQuestionsByModule, DeleteTutorQuestion, AddTutorQuestion, UpdateTutorQuestion
+	GetTutorQuestionsByModule, DeleteTutorQuestion, AddTutorQuestion, UpdateTutorQuestion, FindTutorQuestion
 }
