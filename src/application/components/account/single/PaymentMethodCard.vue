@@ -3,46 +3,29 @@
 		<div class="d-flex">
 			<span>{{ method.cardType }}</span>
 			<span class="ml-3">{{ method.maskedNumber }}</span>
-			<span class="ml-auto"><span class="d-none d-sm-inline">Expires </span>{{ method.expirationDate }}</span>
 		</div>
-		<div class="d-flex justify-content-between small">
-			<span>Added {{ getDateOrTime }}</span>
-			<a class="text-info" @click.prevent="remove">Remove</a>
-		</div>
+		<p class="small mb-2">Expires {{ method.expirationDate }}</p>
+		<a class="text-info small" @click.prevent="deleteMethod">
+			<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+			<span>Delete</span>
+		</a>
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import { MethodEntity } from '@root/modules/payments/domain/entities/method'
+import { useDeletePaymentMethod } from '@/usecases/payments/paymentMethods'
+export default defineComponent({
 	props: {
 		method: {
 			required: true,
-			type: Object
-		},
-		onRemove: {
-			required: true,
-			type: Function
+			type: MethodEntity
 		}
 	},
-	computed: {
-		getDateOrTime(){
-			const date = new Date(this.method.dates.createdAt.seconds * 1000)
-			const now = new Date()
-			const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-			const yesterday = new Date(now.getFullYear(),now.getMonth(), now.getDate() - 1)
-			if(date > today){
-				return date.toTimeString().slice(0,5)
-			}else if(date > yesterday){
-				return 'Yesterday'
-			}else{
-				return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear().toString().slice(2)}`
-			}
-		}
+	setup(props){
+		const { loading, deleteMethod } = useDeletePaymentMethod(props.method)
+		return { loading, deleteMethod }
 	},
-	methods: {
-		async remove(){
-			await this.onRemove(this.method)
-		}
-	}
-}
+})
 </script>

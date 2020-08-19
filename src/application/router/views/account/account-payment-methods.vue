@@ -1,62 +1,31 @@
 <template>
 	<div>
-		<helper-spinner v-if="isLoading"/>
+		<helper-spinner v-if="loading"/>
 		<div v-else>
-			<helper-message message="You dont have any payment method saved. Try adding one now" v-if="paymentMethods.length === 0" />
+			<helper-message :message="error" v-if="error" />
 			<div v-else>
-				<payment-method-card :method="method" v-for="method in paymentMethods" :key="method['.key']"  :onRemove="removeMethod"/>
+				<payment-method-card :method="method" v-for="method in methods" :key="method.id"/>
 			</div>
 			<button class="floating-button" @click="setAccountModalAddPaymentMethod"><i class="fas fa-plus"></i></button>
 		</div>
 	</div>
 </template>
 
-<script>
-import { firestore } from '@/config/firebase'
-import { mapGetters, mapActions } from 'vuex'
-import PaymentMethodCard from '@/components/account/single/PaymentMethodCard'
-export default {
-	data: () => ({
-		paymentMethods: [],
-		isLoading: true
-	}),
-	computed: {
-		...mapGetters(['getId']),
-	},
-	methods: {
-		...mapActions(['setAccountModalAddPaymentMethod','removePaymentMethod']),
-		async fetchPaymentMethods(){
-			try{
-				const docs = await firestore.collection(`users/${this.getId}/paymentMethods`).orderBy('dates.createdAt').get()
-				docs.forEach((doc) => this.paymentMethods.push({ '.key': doc.id, ...doc.data() }))
-			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching payment methods. Try refreshing the page' }) }
-		},
-		async removeMethod(method){
-			const result = await new window.SweetAlert({
-				title: 'Remove method',
-				text: 'Are you sure you want to remove this payment method?',
-				icon: 'info',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: 'Remove'
-			})
-			if (result.value) {
-				try{
-					this.isLoading = true
-					await this.removePaymentMethod(method['.key'])
-					this.paymentMethods = this.paymentMethods.filter((x) => x['.key'] !== method['.key'])
-				}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-				this.isLoading = false
-			}
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import PaymentMethodCard from '@/components/account/single/PaymentMethodCard.vue'
+import { usePaymentMethodsList } from '@/usecases/payments/paymentMethods'
+import { useStore } from '@/usecases/store'
+export default defineComponent({
+	setup(){
+		const { loading, methods, error } = usePaymentMethodsList()
+		return {
+			loading, methods, error,
+			setAccountModalAddPaymentMethod: useStore().modals.setAccountModalAddPaymentMethod
 		}
-	},
-	async mounted() {
-		await this.fetchPaymentMethods()
-		this.isLoading = false
 	},
 	components: {
 		'payment-method-card': PaymentMethodCard
 	}
-}
+})
 </script>

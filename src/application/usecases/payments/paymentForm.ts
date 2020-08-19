@@ -59,3 +59,30 @@ export const useCreatePaymentMethods = () => {
 		createPaymentMethod
 	}
 }
+
+/*let paypalInstance = await paypalCheckout.create({ client: clientInstance, client_id: tokens.paypal })
+			paypal.Button.render({
+				env: 'sandbox',
+				style: { label: 'paypal', size: 'large', shape: 'rect' },
+				payment: () => paypalInstance.createPayment({
+					flow: 'vault',
+					displayName: 'Stranerd',
+					currency: 'USD'
+				}),
+				onAuthorize: async (info, options) => {
+					let payload = await paypalInstance.tokenizePayment(options)
+					let result = await helpers.createPaymentMethod({
+						id: getters.getId,
+						nonce: payload.nonce
+					})
+					if(result === true){
+						new window.Toast({ icon: 'success', title: 'Paypal account added successfully' })
+						data.onPayPalAuthorization(result)
+					}else {
+						new window.Toast({icon: 'error', title: 'Error adding paypal account'})
+					}
+					data.onPayPalAuthorization(result)
+				},
+				onCancel: () => new window.Toast({ icon: 'warning', title: 'Account addition cancelled.' }),
+				onError: error => new window.Toast({ icon: 'error', title: error.message })
+			}, '#paypalButton')*/

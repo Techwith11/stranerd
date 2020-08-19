@@ -1,7 +1,8 @@
 import { computed, reactive } from '@vue/composition-api'
 import { MethodEntity } from '@root/modules/payments/domain/entities/method'
-import { GetPaymentMethods } from '@root/modules/payments'
+import { GetPaymentMethods, RemovePaymentMethod } from '@root/modules/payments'
 import { useStore } from '@/usecases/store'
+import { Alert, Notify } from '@/config/notifications'
 
 const globalState = reactive({
 	methods: [] as MethodEntity[],
@@ -23,5 +24,34 @@ export const usePaymentMethodsList = () => {
 		error: computed(() => globalState.error),
 		methods: computed(() => globalState.methods),
 		fetchPaymentMethods
+	}
+}
+
+export const useDeletePaymentMethod = (method: MethodEntity) => {
+	const state = reactive({ loading: false })
+	const deleteMethod = async () => {
+		if(!state.loading){
+			const result = await Alert({
+				title: 'Remove method',
+				text: 'Are you sure you want to remove this payment method?',
+				icon: 'info',
+				confirmButtonText: 'Remove'
+			})
+			if (result.value) {
+				state.loading = true
+				try {
+					await RemovePaymentMethod.call(useStore().auth.getId.value, method.id)
+					globalState.methods = globalState.methods.filter((m) => m.id !== method.id)
+				} catch(e) {
+					await Notify({ title: e.message, icon: 'error' })
+				}
+				state.loading = false
+			}
+
+		}
+	}
+	return {
+		loading: computed(() => state.loading),
+		deleteMethod
 	}
 }

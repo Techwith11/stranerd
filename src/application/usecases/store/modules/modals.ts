@@ -32,6 +32,7 @@ const actions = {
 	setCartModalOverview: () => Store.dispatch('setCartModalOverview'),
 
 	setAccountModalOverview: () => Store.dispatch('setAccountModalOverview'),
+	setAccountModalAddPaymentMethod: () => Store.dispatch('setAccountModalAddPaymentMethod'),
 
 	setCreateModalOverview: () => Store.dispatch('setCreateModalOverview'),
 	setCreateModalArticle: () => Store.dispatch('setCreateModalBlog'),

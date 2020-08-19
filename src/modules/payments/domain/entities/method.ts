@@ -16,6 +16,8 @@ export class MethodEntity {
 	}
 
 	get expirationDate() { return extractDate(this.expires) }
+
+	get expired() { return this.expires < new Date() }
 }
 
 type MethodConstructorArgs = {
