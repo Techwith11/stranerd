@@ -87,9 +87,3 @@ export default {
 	}
 }
 </script>
-
-<style lang="scss" scoped>
-	.mw-40{ width: 40% !important; }
-	.flex-grow-5{ flex-grow: 5; }
-	.flex-grow-7{ flex-grow: 7; }
-</style>
