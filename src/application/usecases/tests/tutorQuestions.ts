@@ -1,8 +1,6 @@
 import { computed, reactive } from '@vue/composition-api'
 import { QuestionEntity } from '@root/modules/tests/domain/entities/question'
-import {
-	GetTutorQuestionsByModule
-} from '@root/modules/tests'
+import { DeleteTutorQuestion, GetTutorQuestionsByModule } from '@root/modules/tests'
 import { Alert, Notify } from '@/config/notifications'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
@@ -94,10 +92,10 @@ export const useDeleteTutorQuestion = (question: QuestionEntity) => {
 		if(res.value){
 			try{
 				state.loading = true
-				//await DeleteTutorQuestion.call(question.id)
-				globalState[key].questions = globalState[key].questions.filter((c) => c.id !== question.id)
+				await DeleteTutorQuestion.call(question.id)
+				globalState[key].questions = globalState[key].questions.filter((q) => q.id !== question.id)
 				state.loading = false
-				await Notify({ title: 'Subject deleted!', icon: 'success' })
+				await Notify({ title: 'Question deleted!', icon: 'success' })
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }
 		}
 	}

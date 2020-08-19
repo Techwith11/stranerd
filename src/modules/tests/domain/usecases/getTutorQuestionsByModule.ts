@@ -1,4 +1,4 @@
-import { IQuestionRepository } from '@root/modules/tests/domain/irepositories/iQuestion'
+import { IQuestionRepository } from '@root/modules/tests/domain/irepositories/iquestion'
 import { QuestionEntity } from '@root/modules/tests/domain/entities/question'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 

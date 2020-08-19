@@ -102,7 +102,7 @@ export const useDeleteCourse = (course: CourseEntity) => {
 				state.loading = false
 				const { id, subject, module } = router.currentRoute.params
 				if(id) await router.replace(`/courses/${subject}/${module}`)
-				await Notify({ title: 'Subject deleted!', icon: 'success' })
+				await Notify({ title: 'Course deleted!', icon: 'success' })
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }
 		}
 	}
