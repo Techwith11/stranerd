@@ -66,7 +66,7 @@ export const useSingleSubject = (name: string) => {
 		state.loading = false
 	}
 
-	fetchSubject().catch(e => state.error = e)
+	fetchSubject().catch((e) => state.error = e)
 
 	return {
 		loading: computed(() => state.loading),
