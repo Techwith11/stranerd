@@ -1,6 +1,8 @@
 import { computed, reactive } from '@vue/composition-api'
 import { NoteEntity } from '@root/modules/shop/domain/entities/note'
 import { useStore } from '@/usecases/store'
+import { SendCartToEmail } from '@root/modules/shop'
+import { Notify } from '@/config/notifications'
 
 const globalState = reactive({
 	cart: reactive([]) as NoteEntity[]
@@ -25,5 +27,23 @@ export const useCart = () => {
 		cartPrice: computed(() => globalState.cart.reduce((total, curr) => total + curr.price, 0)),
 		cartLength: computed(() => globalState.cart.length),
 		isInCart, addToCart, removeFromCart, checkoutNow
+	}
+}
+
+export const useCheckout = () => {
+	const state = reactive({ loading: false })
+	const checkout = async () => {
+		state.loading = true
+		try{
+			await SendCartToEmail.call(useStore().auth.getId.value, globalState.cart)
+			globalState.cart = []
+			await useStore().modals.setCartModalEmailConfirmation()
+		}catch(e){ await Notify({ title: 'Error sending cart details to email', icon: 'error' }) }
+		state.loading = false
+	}
+
+	return {
+		loading: computed(() => state.loading),
+		checkout
 	}
 }

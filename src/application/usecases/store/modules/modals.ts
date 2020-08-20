@@ -28,8 +28,8 @@ const actions = {
 	setPostModalNotify: () => Store.dispatch('setPostModalNotify'),
 
 	setCartModalPay: () => Store.dispatch('setCartModalPay'),
-
 	setCartModalOverview: () => Store.dispatch('setCartModalOverview'),
+	setCartModalEmailConfirmation: () => Store.dispatch('setCartModalEmailConfirmation'),
 
 	setAccountModalOverview: () => Store.dispatch('setAccountModalOverview'),
 	setAccountModalAddPaymentMethod: () => Store.dispatch('setAccountModalAddPaymentMethod'),

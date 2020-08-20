@@ -4,7 +4,8 @@ const state = {
 	createModal: null,
 	editModal: null,
 	accountModal: null,
-	postModal: null
+	postModal: null,
+	cartModal: null
 }
 
 const getters = {
@@ -38,6 +39,11 @@ const getters = {
 	isPostModalOpen: (state) => !!state.postModal,
 	isPostModalNotify: (state) => state.postModal === 'post-notify',
 	isPostModalBuyMore: (state) => state.postModal === 'buy-more',
+
+	isCartModalOpen: (state) => !!state.cartModal,
+	isCartModalOverview: (state) => state.cartModal === 'cart-overview',
+	isCartModalSelectPayment: (state) => state.cartModal === 'select-payment-method',
+	isCartModalEmailConfirmation: (state) => state.cartModal === 'email-confirmation',
 }
 
 const mutations = {
@@ -45,7 +51,8 @@ const mutations = {
 	setCreateModal: (state,mode) => state.createModal = mode,
 	setEditModal: (state,mode) => state.editModal = mode,
 	setAccountModal: (state, mode) => state.accountModal = mode,
-	setPostModal: (state, mode) => state.postModal = mode
+	setPostModal: (state, mode) => state.postModal = mode,
+	setCartModal: (state, mode) => state.cartModal = mode,
 }
 
 const actions = {
@@ -78,7 +85,12 @@ const actions = {
 
 	setPostModalNotify: ({ commit }) => commit('setPostModal','post-notify'),
 	setPostModalBuyMore: ({ commit }) => commit('setPostModal','buy-more'),
-	closePostModal: ({ commit }) =>  commit('setPostModal', null)
+	closePostModal: ({ commit }) =>  commit('setPostModal', null),
+
+	setCartModalOverview({ commit }){ commit('setCartModal', 'cart-overview') },
+	setCartModalPay({ commit }){ commit('setCartModal', 'select-payment-method') },
+	setCartModalEmailConfirmation({ commit }){ commit('setCartModal', 'email-confirmation') },
+	closeCartModal({ commit }){ commit('setCartModal', null) },
 }
 
 export default { state, getters, mutations, actions }

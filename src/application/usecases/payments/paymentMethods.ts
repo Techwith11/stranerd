@@ -23,7 +23,7 @@ export const usePaymentMethodsList = () => {
 		loading: computed(() => globalState.loading),
 		error: computed(() => globalState.error),
 		methods: computed(() => globalState.methods),
-		validMethods: computed(() => globalState.methods.filter((m) => !m.expired)),
+		validMethods: computed(() => globalState.methods/*.filter((m) => !m.expired)*/),//TODO: Reset definition of valid cards
 		fetchPaymentMethods
 	}
 }
