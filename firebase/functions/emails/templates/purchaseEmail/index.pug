@@ -1,7 +1,7 @@
 doctype(html)
 html(lang="en")
     head
-        title
+        title Stranerd Shop
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
     body(style="font-family: Roboto;margin:0;padding:1rem;width:100vw;min-height:100vh;box-sizing: border-box;")
         img(src=meta.logo, alt="", style="height:50px;")
@@ -10,7 +10,7 @@ html(lang="en")
         p Your cart contains the following items:
         ul
             each item in cart
-                li(style="border:#555555 1px solid;border-radius:1rem; padding:0 1rem; margin: 0.5rem 0;")
+                li(style="padding:0 1rem; margin: 0.5rem 0;")
                     h4 #{item.title}
                     p #{item.description}
                     p
