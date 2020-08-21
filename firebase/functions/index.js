@@ -45,11 +45,11 @@ exports.resendEmailAfterError = require('./onCall/errors/emails')
 
 // Firestore Triggers
 // On Create
-exports.firestoreSessionCreated = require('./firestore/onCreate/sessions')
 exports.firestoreBlogPostCreated = require('./firestore/onCreate/blog')
 exports.firestoreCourseCreated = require('./firestore/onCreate/courses')
 exports.firestoreNoteCreated = require('./firestore/onCreate/notes')
 exports.firestorePostCreated = require('./firestore/onCreate/posts')
+exports.firestoreSessionCreated = require('./firestore/onCreate/sessions')
 exports.firestoreUserCreated = require('./firestore/onCreate/users')
 
 // On Update

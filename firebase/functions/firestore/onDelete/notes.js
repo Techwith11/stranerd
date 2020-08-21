@@ -6,4 +6,5 @@ module.exports = functions.firestore.document('/notes/{id}').onDelete(async (sna
 	await deleteFromAlgolia('notes', snap.id)
 
 	await deleteFromStorage(snap.data().document.link)
+	await deleteFromStorage(snap.data().image.link)
 })
