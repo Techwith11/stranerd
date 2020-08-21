@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<Default>
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<helper-message message="You haven't made any transaction on Stranerd" v-if="transactions.length === 0" />
@@ -13,7 +13,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script>
