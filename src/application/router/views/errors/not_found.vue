@@ -11,12 +11,16 @@
 	</Default>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import router from '@/router'
+export default defineComponent({
 	name: 'NotFound',
-	methods: {
-		goBack(){ this.$router.back() },
-		goHome(){ this.$router.replace('/') }
+	setup(){
+		return {
+			goBack: () => router.back(),
+			goHome: () => router.replace('/')
+		}
 	},
 	meta(){
 		return {
@@ -30,5 +34,5 @@ export default {
 			]
 		}
 	}
-}
+})
 </script>

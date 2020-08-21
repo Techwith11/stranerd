@@ -5,12 +5,17 @@
 	</div>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import { useStore } from '@/usecases/store'
+export default defineComponent({
 	name: 'Admins',
-	methods: mapActions(['setCreateModalOverview']),
-	computed: mapGetters(['isLoggedIn']),
+	setup(){
+		return {
+			isLoggedIn: useStore().auth.isLoggedIn,
+			setCreateModalOverview: useStore().modals.setCreateModalOverview
+		}
+	},
 	meta(){
 		return {
 			title: 'Stranerd Admin',
@@ -23,5 +28,5 @@ export default {
 			]
 		}
 	}
-}
+})
 </script>
