@@ -41,9 +41,11 @@ exports.sendEmailAfterPurchase = require('./onCall/shop/sendEmailAfterPurchase')
 
 exports.subscribeToMailingList = require('./onCall/mailing/subscribeToMailingList')
 
+exports.resendEmailAfterError = require('./onCall/errors/emails')
+
 // Firestore Triggers
 // On Create
-exports.firestoreErrorEmailCreated = require('./firestore/onCreate/errors_emails')
+exports.firestoreSessionCreated = require('./firestore/onCreate/sessions')
 exports.firestoreBlogPostCreated = require('./firestore/onCreate/blog')
 exports.firestoreCourseCreated = require('./firestore/onCreate/courses')
 exports.firestoreNoteCreated = require('./firestore/onCreate/notes')
