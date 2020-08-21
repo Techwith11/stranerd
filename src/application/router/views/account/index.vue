@@ -1,10 +1,12 @@
 <template>
-	<div id="background">
-		<div class="p-3">
-			<account-nav />
-			<router-view />
+	<Default>
+		<div id="background">
+			<div class="p-3">
+				<account-nav />
+				<router-view />
+			</div>
 		</div>
-	</div>
+	</Default>
 </template>
 
 <script lang="ts">

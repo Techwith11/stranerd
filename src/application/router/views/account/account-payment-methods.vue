@@ -1,5 +1,5 @@
 <template>
-	<Default>
+	<div>
 		<helper-spinner v-if="loading"/>
 		<div v-else>
 			<helper-message :message="error" v-if="error" />
@@ -8,7 +8,7 @@
 			</div>
 			<button class="floating-button" @click="setAccountModalAddPaymentMethod"><i class="fas fa-plus"></i></button>
 		</div>
-	</Default>
+	</div>
 </template>
 
 <script lang="ts">

@@ -1,5 +1,5 @@
 <template>
-	<Default>
+	<div>
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
 			<helper-message message="You have not taken any tests yet. Click the floating button below to go to the test page" v-if="tests.length === 0" />
@@ -14,7 +14,7 @@
 			</div>
 		</div>
 		<button class="floating-button"><router-link to="/tests/tutors"><i class="fas fa-sticky-note text-white"></i></router-link></button>
-	</Default>
+	</div>
 </template>
 
 <script>

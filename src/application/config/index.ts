@@ -7,7 +7,6 @@ import SweetAlert from 'sweetalert2'
 import '@/config/components'
 import '@/config/registerServiceWorker'
 import '@/style/index.scss'
-import 'jquery'
 import 'bootstrap'
 
 export const setup = () => {
