@@ -6,7 +6,7 @@
 	</Default>
 </template>
 
-<script>
+<script lang="ts">
 export default {
 	meta(){
 		return {
