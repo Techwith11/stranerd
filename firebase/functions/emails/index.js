@@ -13,7 +13,7 @@ const meta = {
 }
 
 
-export const sendMail = async (to, subject ,content) => {
+exports.sendMail = async (to, subject ,content) => {
 	const transporter = nodemailer.createTransport({ service: 'gmail', auth: { user: email, pass } })
 	await transporter.sendMail({
 		from: `Stranerd`,

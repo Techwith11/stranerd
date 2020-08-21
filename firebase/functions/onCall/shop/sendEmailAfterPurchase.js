@@ -1,6 +1,6 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-const mailer = require('../../emails/index')
+const { sendPurchaseEmail } = require('../../emails/index')
 
 module.exports = functions.https.onCall(async (data, context) => {
 	if (functions.config().environment.mode === 'production' && !context.auth) {
@@ -11,6 +11,6 @@ module.exports = functions.https.onCall(async (data, context) => {
 		let user = (await admin.firestore().collection('users').doc(id).get()).data()
 		let email = user.bio.email
 		let cart = data.cart
-		return await mailer.sendPurchaseEmail(email, user.bio, cart)
+		return await sendPurchaseEmail(email, user.bio, cart)
 	}catch(error){ throw new functions.https.HttpsError('unknown', error.message) }
 })

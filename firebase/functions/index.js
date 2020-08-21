@@ -41,7 +41,7 @@ exports.sendEmailAfterPurchase = require('./onCall/shop/sendEmailAfterPurchase')
 
 exports.subscribeToMailingList = require('./onCall/mailing/subscribeToMailingList')
 
-exports.resendEmailAfterError = require('./onCall/errors/emails')
+exports.resendEmailAfterError = require('./onCall/errors/resendEmailAfterError')
 
 // Firestore Triggers
 // On Create

@@ -1,9 +1,10 @@
+const functions = require('firebase-functions')
 const algoliaSearch = require('algoliasearch')
 const environment = functions.config().environment.mode
 const algolia = functions.config().algolia[environment]
+const client = algoliaSearch(algolia.app_id, algolia.api_key)
 
-export const saveToAlgolia = async (collection, id ,data) => {
-	const client = algoliaSearch(algolia.app_id, algolia.api_key)
+exports.saveToAlgolia = async (collection, id ,data) => {
 	const index = client.initIndex(collection)
 	try{
 		data.objectID = id
@@ -13,8 +14,7 @@ export const saveToAlgolia = async (collection, id ,data) => {
 	}
 }
 
-export const deleteFromAlgolia = async (collection, id) => {
-	const client = algoliaSearch(algolia.app_id, algolia.api_key)
+exports.deleteFromAlgolia = async (collection, id) => {
 	const index = client.initIndex(collection)
 	try{
 		await index.deleteObject(id)

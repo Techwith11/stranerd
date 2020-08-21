@@ -1,6 +1,6 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-const mailer = require('../../emails/index')
+const { sendMail } = require('../../emails/index')
 
 module.exports = functions.https.onCall(async (data) => {
 	const { id } = data
@@ -9,11 +9,12 @@ module.exports = functions.https.onCall(async (data) => {
 	if(!doc.exists) return true
 	const { subject, to, content } = doc.data()
 	try{
-		await mailer.sendMail(to, subject, content)
+		await sendMail(to, subject, content)
 		return true
-	}catch {
+	}catch(e) {
 		await ref.set({
-			dates: { triedAt: admin.firestore.FieldValue.serverTimestamp() }
+			dates: { triedAt: admin.firestore.FieldValue.serverTimestamp() },
+			error: e.message
 		}, { merge: true })
 		return false
 	}
