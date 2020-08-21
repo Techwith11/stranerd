@@ -1,15 +1,6 @@
 const functions = require('firebase-functions')
-const algoliaSearch = require('algoliasearch')
-const environment = functions.config().environment.mode
-const algolia = functions.config().algolia[environment]
+const { saveToAlgolia } = require('../../helpers/algolia')
 
-module.exports = functions.firestore.document('/courses/{id}').onCreate(async (snap, context) => {
-	try{
-		const client = algoliaSearch(algolia.app_id, algolia.api_key)
-		const index = client.initIndex('courses')
-		let data = { objectID: snap.id, ...snap.data() }
-		return await index.saveObject(data)
-	}catch(error){
-		return console.warn(error)
-	}
+module.exports = functions.firestore.document('/courses/{id}').onCreate(async (snap) => {
+	await saveToAlgolia('courses', snap.id, snap.data())
 })

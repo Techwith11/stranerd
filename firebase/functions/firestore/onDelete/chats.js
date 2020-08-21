@@ -1,8 +1,8 @@
 const functions = require('firebase-functions')
-const admin = require('firebase-admin')
+const { deleteFromStorage } = require('../../helpers/storage')
 
-module.exports = functions.firestore.document('/chats/{id}').onDelete(async (snap, context) => {
+module.exports = functions.firestore.document('/chats/{id}').onDelete(async (snap) => {
 	if(snap.data().media){
-		admin.storage().bucket(snap.data().media.name).delete()
+		await deleteFromStorage(snap.data().media.link)
 	}
 })

@@ -1,20 +1,13 @@
 const functions = require('firebase-functions')
-const algoliaSearch = require('algoliasearch')
-const environment = functions.config().environment.mode
-const algolia = functions.config().algolia[environment]
+const { deleteFromAlgolia } = require('../../helpers/algolia')
 
-module.exports = functions.firestore.document('/posts/{id}').onDelete(async (snap, context) => {
+module.exports = functions.firestore.document('/posts/{id}').onDelete(async (snap) => {
+	await deleteFromAlgolia('posts', snap.id)
 	try{
-		let postReplies = await admin.firestore().collection('posts').doc(snap.id).collection('replies').get()
+		const postReplies = await admin.firestore().collection('posts').doc(snap.id).collection('replies').get()
+		//Delete votes as well as replies
 		postReplies.docs.forEach(reply => reply.ref.delete())
 	}catch(error){
 		console.warn(error)
-	}
-	try{
-		const client = algoliaSearch(algolia.app_id, algolia.api_key)
-		const index = client.initIndex('posts')
-		return await index.deleteObject(snap.id)
-	}catch(error){
-		return console.warn(error)
 	}
 })
