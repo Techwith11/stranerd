@@ -31,9 +31,7 @@ export default defineComponent({
 	setup(){
 		const { id } = router.currentRoute.params
 		const { post, loading, error, user } = usePost(id)
-		const {
-			replies, loading: replyLoading, error: replyError, closeListener,
-		} = useReplies(id)
+		const { replies, loading: replyLoading, error: replyError, closeListener, } = useReplies(id)
 		onUnmounted(closeListener)
 		return {
 			post, loading, error, user,
