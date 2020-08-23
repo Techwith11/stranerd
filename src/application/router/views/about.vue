@@ -6,8 +6,9 @@
 	</Default>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+export default defineComponent({
 	meta(){
 		return {
 			title: 'About Stranerd',
@@ -25,5 +26,5 @@ export default {
 			]
 		}
 	}
-}
+})
 </script>

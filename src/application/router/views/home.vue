@@ -35,22 +35,23 @@
 	</Default>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import CTA from '@/components/home/notLoggedIn/HomeCTA'
-import WhyUs from '@/components/home/notLoggedIn/HomeWhyUs'
-import AskQuestion from '@/components/home/notLoggedIn/HomeAskQuestion'
-import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay'
-import WhatMakesUsDifferent from '@/components/home/notLoggedIn/HomeWhatMakesUsDifferent'
-import Mckenwin from '@/components/home/notLoggedIn/HomeMckenwin'
-import Pricing from '@/components/home/notLoggedIn/HomePricing'
-import ShowAskQuestion from '@/components/home/loggedIn/AskQuestion'
-import RecentPosts from '@/components/home/loggedIn/RecentPosts'
-import RecentCourses from '@/components/home/loggedIn/RecentCourses'
-import RecentSessions from '@/components/home/loggedIn/RecentSessions'
-import TopTutors from '@/components/home/loggedIn/TopTutors'
-import SubscribeCard from '@/components/home/loggedIn/SubscribeCard'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import CTA from '@/components/home/notLoggedIn/HomeCTA.vue'
+import WhyUs from '@/components/home/notLoggedIn/HomeWhyUs.vue'
+import AskQuestion from '@/components/home/notLoggedIn/HomeAskQuestion.vue'
+import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay.vue'
+import WhatMakesUsDifferent from '@/components/home/notLoggedIn/HomeWhatMakesUsDifferent.vue'
+import Mckenwin from '@/components/home/notLoggedIn/HomeMckenwin.vue'
+import Pricing from '@/components/home/notLoggedIn/HomePricing.vue'
+import ShowAskQuestion from '@/components/home/loggedIn/AskQuestion.vue'
+import RecentPosts from '@/components/home/loggedIn/RecentPosts.vue'
+import RecentCourses from '@/components/home/loggedIn/RecentCourses.vue'
+import RecentSessions from '@/components/home/loggedIn/RecentSessions.vue'
+import TopTutors from '@/components/home/loggedIn/TopTutors.vue'
+import SubscribeCard from '@/components/home/loggedIn/SubscribeCard.vue'
+import { useStore } from '@/usecases/store'
+export default defineComponent({
 	name: 'Home',
 	components: {
 		'cta': CTA,
@@ -67,15 +68,18 @@ export default {
 		'top-tutors': TopTutors,
 		'subscribe-card': SubscribeCard,
 	},
-	computed: mapGetters(['isLoggedIn','getUser','isSubscribed']),
+	setup(){
+		const { isLoggedIn, getUser, isSubscribed } = useStore().auth
+		return { isLoggedIn, getUser, isSubscribed }
+	},
 	meta(){
 		return {
-			title: this.isLoggedIn ? `Stranerd Dashboard - ${this.getUser.bio && this.getUser.bio.name}` : 'Stranerd Home Page',
+			title: this.isLoggedIn ? `Stranerd Dashboard - ${(this.getUser as any).bio?.name ?? ''}` : 'Stranerd Home Page',
 			meta: [
 				{
 					vmid: 'description',
 					name: 'description',
-					content: this.isLoggedIn ? this.getUser.bio && this.getUser.bio.bio : 'Welcome to the home of the top upcoming tutoring service worldwide. Feel free to access from our wide range of courses, tutors, notes, questions etc'
+					content: this.isLoggedIn ? ((this.getUser as any).bio?.bio ?? '') : 'Welcome to the home of the top upcoming tutoring service worldwide. Feel free to access from our wide range of courses, tutors, notes, questions etc'
 				},
 				{
 					vmid: 'keywords',
@@ -85,5 +89,5 @@ export default {
 			]
 		}
 	}
-}
+})
 </script>

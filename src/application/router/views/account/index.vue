@@ -1,24 +1,29 @@
 <template>
-	<Default id="background">
-		<div class="p-3">
-			<account-nav />
-			<router-view />
+	<Default>
+		<div id="background">
+			<div class="p-3">
+				<account-nav />
+				<router-view />
+			</div>
 		</div>
 	</Default>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import AccountNav from '@/components/account/single/AccountNav'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import AccountNav from '@/components/account/single/AccountNav.vue'
+import { useStore } from '@/usecases/store'
+export default defineComponent({
 	name: 'Account',
-	computed: mapGetters(['getUser']),
 	components: {
 		'account-nav': AccountNav
 	},
+	setup(){
+		return { getUser: useStore().auth.getUser }
+	},
 	meta(){
 		return {
-			title: `${this.getUser.bio ? this.getUser.bio.name : 'User'} Profile`,
+			title: `${(this.getUser as any).bio?.name ?? 'User'} Profile`,
 			meta: [
 				{
 					vmid: 'robots',
@@ -28,7 +33,7 @@ export default {
 			]
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

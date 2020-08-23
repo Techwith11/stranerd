@@ -1,5 +1,6 @@
 import firebase from 'firebase/app'
 import 'firebase/auth'
+import 'firebase/database'
 import 'firebase/firestore'
 import 'firebase/functions'
 import 'firebase/storage'
@@ -7,7 +8,7 @@ import 'firebase/storage'
 const config = {
 	apiKey: 'AIzaSyCk6CnAF1mcdp9jOh2r1zDQS67-cHVpqZY',
 	authDomain: 'stranerd.com',
-	databaseURL: 'https://stranerd-13084.firebaseio.com',
+	databaseURL: process.env.NODE_ENV === 'production' ? 'https://stranerd-13084.firebaseio.com' : 'http://localhost:5003/?ns=stranerd-13084',
 	projectId: 'stranerd-13084',
 	storageBucket: 'stranerd-13084.appspot.com',
 	messagingSenderId: '506823871526',
@@ -31,6 +32,7 @@ firebase.firestore().enablePersistence({ synchronizeTabs: true }).catch(() => {
 
 export default firebase
 export const auth = firebase.auth()
+export const database = firebase.database()
 export const firestore = firebase.firestore()
 export const functions = firebase.functions()
 export const storage = firebase.storage()

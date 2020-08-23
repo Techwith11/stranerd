@@ -1,8 +1,10 @@
 <template>
-	<div v-if="isLoggedIn">
-		<profile-info />
-		<subscription-info />
-		<button class="btn-success floating-button" @click="setAccountModalOverview"><i class="fas fa-cog"></i></button>
+	<div>
+		<template v-if="isLoggedIn">
+			<profile-info />
+			<subscription-info />
+			<button class="btn-success floating-button" @click="setAccountModalOverview"><i class="fas fa-cog"></i></button>
+		</template>
 	</div>
 </template>
 
