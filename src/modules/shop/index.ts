@@ -11,6 +11,7 @@ import { UpdateNoteUseCase } from '@root/modules/shop/domain/usecases/updateNote
 import { CartFirebaseDataSource } from '@root/modules/shop/data/datasources/cart-firebase'
 import { CartRepository } from '@root/modules/shop/data/repositories/cart'
 import { SendCartToEmailUseCase } from '@root/modules/shop/domain/usecases/sendCartToEmail'
+import { BuyMoreQuestionsUseCase } from '@root/modules/shop/domain/usecases/buyMoreQuestions'
 
 const bottle = new Bottle()
 
@@ -30,6 +31,7 @@ bottle.service('Usecases.Note.Delete', DeleteNoteUsecase, 'Repositories.Note')
 bottle.service('Usecases.Note.GetFactory', GetNoteFactoryUseCase)
 
 bottle.service('Usecases.Cart.SendCartToEmail', SendCartToEmailUseCase, 'Repositories.Cart')
+bottle.service('Usecases.Cart.BuyMoreQuestions', BuyMoreQuestionsUseCase, 'Repositories.Cart')
 
 const {
 	Get: GetNotes, Find: FindNote, Delete: DeleteNote, GetFactory: GetNoteFactory,
@@ -40,12 +42,12 @@ const {
 }
 
 const {
-	SendCartToEmail
+	SendCartToEmail, BuyMoreQuestions
 } = bottle.container.Usecases.Cart as {
-	SendCartToEmail: SendCartToEmailUseCase
+	SendCartToEmail: SendCartToEmailUseCase, BuyMoreQuestions: BuyMoreQuestionsUseCase
 }
 
 export {
 	GetNotes, FindNote, DeleteNote, GetNoteFactory, AddNote, UpdateNote,
-	SendCartToEmail
+	SendCartToEmail, BuyMoreQuestions
 }

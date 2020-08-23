@@ -128,7 +128,7 @@ export const useCreatePost = () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
 			state.factory.userId = useStore().auth.getId.value
-			if(useStore().auth.questionsLeft){
+			if(useStore().auth.questionsLeft.value > 0){
 				try{
 					const id = await AddPost.call(state.factory)
 					state.factory.reset()

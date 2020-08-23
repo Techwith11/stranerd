@@ -69,8 +69,8 @@ export default defineComponent({
 		'subscribe-card': SubscribeCard,
 	},
 	setup(){
-		const { isLoggedIn, getUser, isSubscribed } = useStore().auth
-		return { isLoggedIn, getUser, isSubscribed }
+		const { isLoggedIn, getUser, isSubscribed, questionsLeft } = useStore().auth
+		return { isLoggedIn, getUser, isSubscribed, questionsLeft }
 	},
 	meta(){
 		return {

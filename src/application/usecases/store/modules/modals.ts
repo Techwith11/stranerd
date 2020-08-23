@@ -21,21 +21,22 @@ const getters = {
 }
 
 const actions = {
-	setAuthModalLogin: () => Store.dispatch('setAuthModalLogin'),
-	setAuthModalRegisterStudent: () => Store.dispatch('setAuthModalRegisterStudent'),
-	setAuthModalForgotPassword: () => Store.dispatch('setAuthModalForgotPassword'),
-
-	setPostModalNotify: () => Store.dispatch('setPostModalNotify'),
-
-	setCartModalPay: () => Store.dispatch('setCartModalPay'),
-	setCartModalOverview: () => Store.dispatch('setCartModalOverview'),
-	setCartModalEmailConfirmation: () => Store.dispatch('setCartModalEmailConfirmation'),
-
 	setAccountModalOverview: () => Store.dispatch('setAccountModalOverview'),
 	setAccountModalAddPaymentMethod: () => Store.dispatch('setAccountModalAddPaymentMethod'),
 	setAccountModalEditProfile: () => Store.dispatch('setAccountModalEditProfile'),
 	setAccountModalUpdatePassword: () => Store.dispatch('setAccountModalUpdatePassword'),
 	setAccountModalSelectSubscription: () => Store.dispatch('setAccountModalSelectSubscription'),
+	closeAccountModal: () => Store.dispatch('closeAccountModal'),
+
+	setAuthModalLogin: () => Store.dispatch('setAuthModalLogin'),
+	setAuthModalRegisterStudent: () => Store.dispatch('setAuthModalRegisterStudent'),
+	setAuthModalForgotPassword: () => Store.dispatch('setAuthModalForgotPassword'),
+	closeAuthModal: () => Store.dispatch('closeAuthModal'),
+
+	setCartModalPay: () => Store.dispatch('setCartModalPay'),
+	setCartModalOverview: () => Store.dispatch('setCartModalOverview'),
+	setCartModalEmailConfirmation: () => Store.dispatch('setCartModalEmailConfirmation'),
+	closeCartModal: () => Store.dispatch('closeCartModal'),
 
 	setCreateModalOverview: () => Store.dispatch('setCreateModalOverview'),
 	setCreateModalArticle: () => Store.dispatch('setCreateModalBlog'),
@@ -43,20 +44,20 @@ const actions = {
 	setCreateModalCourse: () => Store.dispatch('setCreateModalCourse'),
 	setCreateModalNote: () => Store.dispatch('setCreateModalNote'),
 	setCreateModalSubject: () => Store.dispatch('setCreateModalSubject'),
+	closeCreateModal: () => Store.dispatch('closeCreateModal'),
 
 	setEditModalCourse: () => Store.dispatch('setEditModalCourse'),
 	setEditModalNote: () => Store.dispatch('setEditModalNote'),
 	setEditModalSubject: () => Store.dispatch('setEditModalSubject'),
 	setEditModalArticle: () => Store.dispatch('setEditModalBlog'),
 	setEditModalQuestion: () => Store.dispatch('setEditModalQuestion'),
+	closeEditModal: () => Store.dispatch('closeEditModal'),
+
+	setPostModalNotify: () => Store.dispatch('setPostModalNotify'),
+	setPostModalBuyMore: () => Store.dispatch('setPostModalBuyMore'),
+	closePostModal: () => Store.dispatch('closePostModal'),
 
 	setSessionModalStudentDuration: (data: { student: string, tutor: string }) => Store.dispatch('setSessionModalStudentDuration', data),
-
-	closeAccountModal: () => Store.dispatch('closeAccountModal'),
-	closeAuthModal: () => Store.dispatch('closeAuthModal'),
-	closeCartModal: () => Store.dispatch('closeCartModal'),
-	closeCreateModal: () => Store.dispatch('closeCreateModal'),
-	closeEditModal: () => Store.dispatch('closeEditModal'),
 }
 
 export const Modals = {
