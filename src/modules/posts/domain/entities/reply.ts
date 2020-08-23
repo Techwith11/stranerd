@@ -16,6 +16,8 @@ export class ReplyEntity{
 	}
 
 	get createdDate(){return extractDate(this.createdAt) }
+
+	get votesCount(){ return Object.values(this.votes).filter((v) => v).length }
 }
 
 type ReplyConstructorArgs = { id: string, body: string, createdAt: Date, userId: string, votes: { [key: string]: boolean } }

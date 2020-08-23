@@ -4,7 +4,6 @@ import { AddReply, DownvoteReply, GetReplyFactory, ListenToReplies, UpvoteReply 
 import { Notify } from '@/config/notifications'
 import { fetchUser } from '@/usecases/users/users'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
-import { FirestoreService } from '@root/modules/core/services/firebase'
 import { useStore } from '@/usecases/store'
 
 const repliesGlobalState: { [key: string]: {
@@ -13,10 +12,9 @@ const repliesGlobalState: { [key: string]: {
 	replies: ReplyEntity[],
 	listener: () => void
 } } = {}
-const votesAndUsersGlobalState: { [key: string]: {
+const singleReplyGlobalState: { [key: string]: {
 	loading: boolean,
 	voting: boolean,
-	votes: string[],
 	user: UserEntity | undefined
 }} = {}
 
@@ -60,44 +58,42 @@ export const useReplies = (postId: string) => {
 }
 
 export const useSingleReply = (postId: string,reply: ReplyEntity) => {
-	const fetchUserAndVotes = async () => {
-		votesAndUsersGlobalState[reply.id].loading = true
-		votesAndUsersGlobalState[reply.id].user = await fetchUser(reply.userId)
-		const doc = await FirestoreService.find(`posts/${postId}/replies/${reply.id}/votes`, 'votes') as { id: string, votes: string[] }
-		votesAndUsersGlobalState[reply.id].votes = doc?.votes ?? []
-		votesAndUsersGlobalState[reply.id].loading = false
+	const fetchReplyUser = async () => {
+		singleReplyGlobalState[reply.id].loading = true
+		singleReplyGlobalState[reply.id].user = await fetchUser(reply.userId)
+		singleReplyGlobalState[reply.id].loading = false
 	}
-	if(votesAndUsersGlobalState[reply.id] === undefined){
-		votesAndUsersGlobalState[reply.id] = reactive({
+	if(singleReplyGlobalState[reply.id] === undefined){
+		singleReplyGlobalState[reply.id] = reactive({
 			loading: false,
 			voting: false,
 			votes: [],
 			user: undefined
 		})
-		fetchUserAndVotes()
+		fetchReplyUser()
 	}
 
 	const upvoteReply = async () => {
-		votesAndUsersGlobalState[reply.id].voting = true
-		await UpvoteReply.call(postId, reply, useStore().auth.getId.value)
-		votesAndUsersGlobalState[reply.id].votes.push(useStore().auth.getId.value)
-		votesAndUsersGlobalState[reply.id].voting = false
+		const id = useStore().auth.getId.value
+		singleReplyGlobalState[reply.id].voting = true
+		await UpvoteReply.call(postId, reply, id)
+		repliesGlobalState[postId].replies.find((r) => r.id === reply.id)!.votes[id] = true
+		singleReplyGlobalState[reply.id].voting = false
 	}
 
 	const downvoteReply = async () => {
-		votesAndUsersGlobalState[reply.id].voting = true
-		await DownvoteReply.call(postId, reply, useStore().auth.getId.value)
-		votesAndUsersGlobalState[reply.id].votes = votesAndUsersGlobalState[reply.id].votes.filter((id) => id !== useStore().auth.getId.value)
-		votesAndUsersGlobalState[reply.id].voting = false
+		const id = useStore().auth.getId.value
+		singleReplyGlobalState[reply.id].voting = true
+		await DownvoteReply.call(postId, reply, id)
+		repliesGlobalState[postId].replies.find((r) => r.id === reply.id)!.votes[id] = false
+		singleReplyGlobalState[reply.id].voting = false
 	}
 
 	return {
-		loading: computed(() => votesAndUsersGlobalState[reply.id].loading),
-		voting: computed(() => votesAndUsersGlobalState[reply.id].voting),
-		hasVoted: computed(() => votesAndUsersGlobalState[reply.id].votes.includes(useStore().auth.getId.value)),
-		canVote: computed(() => reply.userId !== useStore().auth.getId.value && !votesAndUsersGlobalState[reply.id].voting),
-		votes: computed(() => votesAndUsersGlobalState[reply.id].votes.length),
-		user: computed(() => votesAndUsersGlobalState[reply.id].user),
+		loading: computed(() => singleReplyGlobalState[reply.id].loading),
+		voting: computed(() => singleReplyGlobalState[reply.id].voting),
+		user: computed(() => singleReplyGlobalState[reply.id].user),
+		canVote: computed(() => reply.userId !== useStore().auth.getId.value && !singleReplyGlobalState[reply.id].voting),
 		upvoteReply, downvoteReply
 	}
 }
