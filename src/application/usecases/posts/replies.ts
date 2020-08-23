@@ -19,12 +19,7 @@ const singleReplyGlobalState: { [key: string]: {
 }} = {}
 
 const startListener = async (postId: string) => {
-	const addReplies = (entities: ReplyEntity[]) => {
-		entities.forEach((entity) => {
-			const index = repliesGlobalState[postId].replies.findIndex((e) => e.id === entity.id)
-			index !== -1 ? repliesGlobalState[postId].replies[index] = entity : repliesGlobalState[postId].replies.push(entity)
-		})
-	}
+	const addReplies = (entities: ReplyEntity[]) => repliesGlobalState[postId].replies = entities
 	repliesGlobalState[postId].listener = await ListenToReplies.call(postId, addReplies)
 }
 
