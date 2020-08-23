@@ -7,16 +7,17 @@ const isExtractedHTMLLongerThan3 = (value: string) => isExtractedHTMLLongerThan(
 export class ReplyFactory extends BaseFactory<ReplyEntity, ReplyToModel> {
 	readonly rules = {
 		body: [isRequired,isExtractedHTMLLongerThan3],
-		userId: [isRequired]
+		userId: [isRequired],
+		votes: []
 	}
 	public values = {
-		body: '', userId: ''
+		body: '', userId: '', votes: {}
 	}
 	public validValues = {
-		body: '', userId: ''
+		body: '', userId: '', votes: {}
 	}
 	public errors = {
-		body: undefined, userId: undefined
+		body: undefined, userId: undefined, votes: undefined
 	}
 
 	get body(){ return this.values.body }
@@ -29,6 +30,7 @@ export class ReplyFactory extends BaseFactory<ReplyEntity, ReplyToModel> {
 			return {
 				body: this.validValues.body,
 				userId: this.validValues.userId,
+				votes: this.validValues.votes,
 			}
 		}else{
 			throw new Error('Validation errors')
@@ -37,6 +39,15 @@ export class ReplyFactory extends BaseFactory<ReplyEntity, ReplyToModel> {
 
 	public loadEntity = (entity: ReplyEntity) => {
 		throw Error(`Cannot load an entity into this factory, ${entity}`)
+	}
+
+	public reset(){
+		this.values.body = ''
+		this.validValues.body = ''
+		this.errors.body = undefined
+		this.values.votes = {}
+		this.validValues.votes = {}
+		this.errors.votes = undefined
 	}
 
 }

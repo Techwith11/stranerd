@@ -4,10 +4,9 @@ import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
 
 export class ReplyTransformer {
 	public fromJSON(model: ReplyFromModel) {
-		const { id, body, dates: { createdAt }, userId } = model
+		const { id, body, dates: { createdAt }, votes, userId } = model
 		return new ReplyEntity({
-			id,
-			body, userId,
+			id, body, userId, votes,
 			createdAt: timestampToDate(createdAt)!
 		})
 	}
@@ -15,7 +14,8 @@ export class ReplyTransformer {
 	public toJSON(entity: ReplyEntity) :ReplyToModel {
 		return {
 			body: entity.body,
-			userId: entity.userId
+			userId: entity.userId,
+			votes: entity.votes
 		}
 	}
 
