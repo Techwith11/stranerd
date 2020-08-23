@@ -7,10 +7,6 @@
 				<div class="my-3">
 					<p class="text-muted" v-if="replies.length === 0">No replies yet. Consider leaving one</p>
 					<div v-else>
-						<div class="text-center small text-muted my-2" v-if="hasMore">
-							<i class="fas text-info fa-spinner fa-spin mr-1" v-if="olderRepliesLoading"></i>
-							<span @click="fetchOlderReplies">Fetch Older Replies</span>
-						</div>
 						<div class="pl-4">
 							<reply-card v-for="reply in replies" :key="reply.id" :reply="reply" :post="post"/>
 						</div>
@@ -23,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted } from '@vue/composition-api'
+import { defineComponent, onUnmounted } from '@vue/composition-api'
 import PostInfo from '@/components/posts/single/PostInfo.vue'
 import ReplyForm from '@/components/posts/single/ReplyForm.vue'
 import ReplyCard from '@/components/posts/single/ReplyCard.vue'
@@ -36,16 +32,12 @@ export default defineComponent({
 		const { id } = router.currentRoute.params
 		const { post, loading, error, user } = usePost(id)
 		const {
-			replies, loading: replyLoading, fetched, error: replyError,
-			hasMore, olderRepliesLoading, fetchOlderReplies,
-			startListener, closeListener,
+			replies, loading: replyLoading, error: replyError, closeListener,
 		} = useReplies(id)
-		onMounted(() => fetched.value ? startListener() : null)
 		onUnmounted(closeListener)
 		return {
 			post, loading, error, user,
-			replies, replyLoading, fetched, replyError,
-			hasMore, olderRepliesLoading, fetchOlderReplies
+			replies, replyLoading, replyError
 		}
 	},
 	components: {
