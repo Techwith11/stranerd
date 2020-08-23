@@ -1,4 +1,4 @@
-import firebase, { firestore, functions } from '@root/services/firebase'
+import firebase, { database, firestore, functions } from '@root/services/firebase'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 
 const buildQuery = (query: firebase.firestore.Query, conditions?: GetClauses) => {
@@ -57,5 +57,26 @@ export const FunctionsService = {
 		const callable =  functions.httpsCallable(name)
 		const result = await callable(data)
 		return result.data
+	}
+}
+
+export const DatabaseService = {
+	get: async (path: string) => {
+		const doc = await database.ref(path).once('value')
+		return doc.val()
+	},
+	listen: async (path: string, callback: (doc: any) => void) => {
+		const ref = database.ref(path)
+		const listener = ref.on('value', (snapshot) => {
+			callback(snapshot.val())
+		})
+		return () => ref.off('value', listener)
+	},
+	create: async (path: string, data: any) => {
+		const doc = await database.ref(path).push(data)
+		return doc.key
+	},
+	delete: async (path: string) => {
+		await database.ref(path).remove()
 	}
 }
