@@ -1,7 +1,7 @@
 import firebase, { database, firestore, functions } from '@root/services/firebase'
 import { GetClauses } from '@root/modules/core/data/datasources/base'
 
-const buildQuery = (query: firebase.firestore.Query, conditions?: GetClauses) => {
+const buildFirestoreQuery = (query: firebase.firestore.Query, conditions?: GetClauses) => {
 	if(conditions) {
 		if(conditions.order) query = query.orderBy(conditions.order.field, conditions.order.desc ? 'desc' : 'asc')
 		if(conditions.where) {
@@ -14,6 +14,17 @@ const buildQuery = (query: firebase.firestore.Query, conditions?: GetClauses) =>
 	return query
 }
 
+const buildDatabaseQuery = (ref: firebase.database.Query, conditions?: GetClauses) => {
+	if(conditions) {
+		if(conditions.order) ref = ref.orderByChild(conditions.order?.field)
+		else ref = ref.orderByKey()
+		if(conditions.limit) ref = ref.limitToFirst(conditions.limit)
+	}
+	return ref
+}
+
+
+
 export const FirestoreService =  {
 	find: async (collection: string, id: string) => {
 		const doc = await firestore.collection(collection).doc(id).get()
@@ -22,13 +33,13 @@ export const FirestoreService =  {
 	},
 	get: async (collection: string, conditions?: GetClauses) => {
 		let query: firebase.firestore.Query = firestore.collection(collection)
-		query  = buildQuery(query, conditions)
+		query  = buildFirestoreQuery(query, conditions)
 		const docs = await query.get()
 		return docs.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
 	},
 	listen: async (callback: (documents: any[]) => void, collection: string, conditions?: GetClauses) => {
 		let query: firebase.firestore.Query = firestore.collection(collection)
-		query = buildQuery(query, conditions)
+		query = buildFirestoreQuery(query, conditions)
 		return query.onSnapshot((snapshot) => {
 			const documents = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
 			callback(documents)
@@ -61,20 +72,24 @@ export const FunctionsService = {
 }
 
 export const DatabaseService = {
-	get: async (path: string) => {
-		const doc = await database.ref(path).once('value')
+	get: async (path: string, conditions?: GetClauses) => {
+		let ref: firebase.database.Query = database.ref(path)
+		ref = buildDatabaseQuery(ref, conditions)
+		const doc = await ref.once('value')
 		return doc.val()
 	},
-	listen: async (path: string, callback: (doc: any) => void) => {
-		const ref = database.ref(path)
+	listen: async (path: string, callback: (doc: any) => void, conditions?: GetClauses) => {
+		let ref: firebase.database.Query = database.ref(path)
+		ref = buildDatabaseQuery(ref, conditions)
 		const listener = ref.on('value', (snapshot) => {
 			callback(snapshot.val())
 		})
 		return () => ref.off('value', listener)
 	},
 	create: async (path: string, data: any) => {
+		data.dates = { createdAt: firebase.database.ServerValue.TIMESTAMP }
 		const doc = await database.ref(path).push(data)
-		return doc.key
+		return doc.key!
 	},
 	delete: async (path: string) => {
 		await database.ref(path).remove()

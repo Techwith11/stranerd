@@ -1,6 +1,5 @@
 import { IReplyRepository } from '@root/modules/posts/domain/irepositories/ireply'
 import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
 
 export class ListenToRepliesUseCase {
     private repository: IReplyRepository
@@ -9,24 +8,8 @@ export class ListenToRepliesUseCase {
 	    this.repository = repository
     }
 
-    public async call (postId: string, callback: (entities: ReplyEntity[]) => void, date?: Date) :Promise<() => void > {
-	    const conditions: GetClauses = {
-		    order: {
-			    field: 'dates.createdAt',
-			    desc: true
-		    }
-	    }
-	    if(date){
-		    conditions.where = [
-			    {
-				    field: 'dates.createdAt',
-				    condition: '>',
-				    value: date
-			    }
-		    ]
-	    }
-	    return await this.repository.listen(postId,callback, conditions)
+    public async call (postId: string, callback: (entities: ReplyEntity[]) => void) :Promise<() => void > {
+	    return await this.repository.listen(postId,callback)
     }
 
 }
-

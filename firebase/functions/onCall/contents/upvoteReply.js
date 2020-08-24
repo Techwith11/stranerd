@@ -3,16 +3,12 @@ const admin = require('firebase-admin')
 
 module.exports = functions.https.onCall(async (data, context) => {
 	try{
-		if (functions.config().environment.mode === 'production' && !context.auth) {
-			throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can upvote replies')
-		}
+		if (functions.config().environment.mode === 'production' && !context.auth) throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can upvote replies')
 		let { id, user, post, reply } = data
 		if(functions.config().environment.mode === 'production'){ id = context.auth.uid }
-		if (id === user) {
-			throw new functions.https.HttpsError('failed-precondition', 'You cannot upvote your own replies')
-		}
+		if (id === user) throw new functions.https.HttpsError('failed-precondition', 'You cannot upvote your own replies')
 
-		await admin.firestore().doc(`posts/${post}/replies/${reply}/votes/votes`).set({ votes: admin.firestore.FieldValue.arrayUnion(id) }, { merge: true })
+		await admin.database().ref(`posts/${post}/replies/${reply}/votes/${id}`).set(true)
 
 		let userRef = await admin.firestore().collection('users').doc(user)
 		let userData = (await userRef.get()).data()

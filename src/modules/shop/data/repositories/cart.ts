@@ -16,4 +16,8 @@ export class CartRepository implements ICartRepository{
 		return await this.dataSource.sendCartToEmail({ id, cart: cart.map(this.transformer.toJSON) })
 	}
 
+	public async buyMoreQuestions(id: string, quantity: number): Promise<void> {
+		return await this.dataSource.buyMoreQuestions({ id, quantity })
+	}
+
 }

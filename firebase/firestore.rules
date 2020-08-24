@@ -37,14 +37,6 @@ service cloud.firestore {
             allow update, delete: if isMine(resource.data.userId)
 		}
 
-		match /posts/{post}/replies/{id} {
-	        allow read, write: if isAuthenticated();
-	    }
-
-	    match /posts/{post}/replies/{id}/votes/votes {
-	        allow read, write: if isAuthenticated();
-	    }
-
 		match /sessions/{id} {
 			allow read, create: if isAuthenticated();
 			allow update: if hasAccessToSession(id);

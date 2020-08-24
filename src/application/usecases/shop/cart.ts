@@ -1,7 +1,7 @@
 import { computed, reactive } from '@vue/composition-api'
 import { NoteEntity } from '@root/modules/shop/domain/entities/note'
 import { useStore } from '@/usecases/store'
-import { SendCartToEmail } from '@root/modules/shop'
+import { BuyMoreQuestions, SendCartToEmail } from '@root/modules/shop'
 import { Notify } from '@/config/notifications'
 
 const globalState = reactive({
@@ -45,5 +45,30 @@ export const useCheckout = () => {
 	return {
 		loading: computed(() => state.loading),
 		checkout
+	}
+}
+
+export const useMoreQuestions = () => {
+	const state = reactive({
+		price: 10.00,
+		quantity: 3,
+		loading: false
+	})
+
+	const addQuestions = async () => {
+		state.loading = true
+		try{
+			await BuyMoreQuestions.call(useStore().auth.getId.value, state.quantity)
+			await Notify({ icon: 'success', title: 'Questions added to profile.' })
+			await useStore().modals.closePostModal()
+		}catch(e) { await Notify({ icon: 'error', title: 'Error buying more questions' }) }
+		state.loading = false
+	}
+
+	return {
+		price: computed(() => state.price),
+		quantity: computed(() => state.quantity),
+		loading: computed(() => state.loading),
+		addQuestions
 	}
 }

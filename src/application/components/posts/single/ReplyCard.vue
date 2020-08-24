@@ -1,11 +1,11 @@
 <template>
 	<div class="d-flex my-3 align-items-end" v-if="!loading">
 		<div class="d-flex flex-column align-items-center mr-2">
-			<span class="small">{{ votes }}</span>
-			<span class="small">{{ votes === 1 ? 'vote' : 'votes' }}</span>
+			<span class="small">{{ reply.votesCount }}</span>
+			<span class="small">{{ reply.votesCount === 1 ? 'vote' : 'votes' }}</span>
 			<i class="fas fa-spinner fa-spin text-info" v-if="voting"></i>
 			<div v-if="canVote">
-				<a v-if="hasVoted" @click.prevent="downvoteReply"><i class="fas fa-thumbs-down text-danger"></i></a>
+				<a v-if="reply.votes[getId]" @click.prevent="downvoteReply"><i class="fas fa-thumbs-down text-danger"></i></a>
 				<a v-else @click.prevent="upvoteReply"><i class="fas fa-thumbs-up text-success"></i></a>
 			</div>
 		</div>
@@ -27,6 +27,7 @@ import { defineComponent } from '@vue/composition-api'
 import { PostEntity } from '@root/modules/posts/domain/entities/post'
 import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
 import { useSingleReply } from '@/usecases/posts/replies'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	props: {
 		reply: {
@@ -40,10 +41,13 @@ export default defineComponent({
 	},
 	setup(props){
 		const {
-			loading, voting, user, votes, hasVoted, canVote,
+			loading, voting, user, canVote,
 			upvoteReply, downvoteReply
 		} = useSingleReply(props.post.id, props.reply)
-		return { loading, voting, user, votes, hasVoted, canVote, upvoteReply, downvoteReply }
+		return {
+			loading, voting, user, upvoteReply, downvoteReply, canVote,
+			getId: useStore().auth.getId
+		}
 	}
 })
 </script>
