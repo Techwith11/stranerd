@@ -18,7 +18,7 @@ export class PostFirebaseDataSource implements PostBaseDataSource{
 	}
 
 	public async listen(callback: (documents: PostFromModel[]) => void, conditions?: GetClauses): Promise<() => void> {
-		return await FirestoreService.listen(callback, 'posts', conditions)
+		return await FirestoreService.listenToMany(callback, 'posts', conditions)
 	}
 
 }

@@ -14,7 +14,7 @@ export class DiscussionFirebaseDataSource implements DiscussionBaseDataSource{
 	}
 
 	public async listen(courseId: string, callback: (documents: DiscussionFromModel[]) => void, conditions?: GetClauses): Promise<() => void> {
-		return await FirestoreService.listen(callback, `courses/${courseId}/discussions`, conditions)
+		return await FirestoreService.listenToMany(callback, `courses/${courseId}/discussions`, conditions)
 	}
 
 }
