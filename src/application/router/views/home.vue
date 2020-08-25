@@ -28,8 +28,8 @@
 			<why-us />
 			<ask-question />
 			<what-makes-us-different />
-			<students-says />
 			<mckenwin />
+			<students-says />
 			<pricing />
 		</div>
 	</Default>
@@ -37,13 +37,13 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import CTA from '@/components/home/notLoggedIn/HomeCTA.vue'
-import WhyUs from '@/components/home/notLoggedIn/HomeWhyUs.vue'
-import AskQuestion from '@/components/home/notLoggedIn/HomeAskQuestion.vue'
-import StudentsSay from '@/components/home/notLoggedIn/HomeStudentsSay.vue'
-import WhatMakesUsDifferent from '@/components/home/notLoggedIn/HomeWhatMakesUsDifferent.vue'
-import Mckenwin from '@/components/home/notLoggedIn/HomeMckenwin.vue'
-import Pricing from '@/components/home/notLoggedIn/HomePricing.vue'
+import CTA from '@/components/home/notLoggedIn/CTA.vue'
+import WhyUs from '@/components/home/notLoggedIn/WhyUs.vue'
+import AskQuestion from '@/components/home/notLoggedIn/AskQuestion.vue'
+import StudentsSay from '@/components/home/notLoggedIn/StudentsSay.vue'
+import WhatMakesUsDifferent from '@/components/home/notLoggedIn/WhatMakesUsDifferent.vue'
+import Mckenwin from '@/components/home/notLoggedIn/Mckenwin.vue'
+import Pricing from '@/components/home/notLoggedIn/Pricing.vue'
 import ShowAskQuestion from '@/components/home/loggedIn/AskQuestion.vue'
 import RecentPosts from '@/components/home/loggedIn/RecentPosts.vue'
 import RecentCourses from '@/components/home/loggedIn/RecentCourses.vue'
@@ -57,9 +57,9 @@ export default defineComponent({
 		'cta': CTA,
 		'why-us': WhyUs,
 		'ask-question': AskQuestion,
-		'students-says': StudentsSay,
 		'what-makes-us-different': WhatMakesUsDifferent,
 		'mckenwin': Mckenwin,
+		'students-says': StudentsSay,
 		'pricing': Pricing,
 		'show-ask-question': ShowAskQuestion,
 		'recent-posts': RecentPosts,

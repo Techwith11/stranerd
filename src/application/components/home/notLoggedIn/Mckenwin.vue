@@ -1,5 +1,6 @@
 <template>
     <div>
+	    <div class="bg-gold" style="height: 1rem;"></div>
 		<div id="background">
 			<div id="overlay">
 				<div class="container text-white">
@@ -15,15 +16,9 @@
 				<p>McKenwin is an International Education Agency founded in 2014 with over 1583 successful student placement and visa counseling service experience representing and placing students into Bachelor study in Europe without IELTS, Masters degree in Europe without IELTS at top and world-ranked institutions around the world mainly in Cyprus, Turkey and other European countries.</p>
 			</div>
 		</div>
+	    <div class="bg-gold" style="height: 1rem;"></div>
 	</div>
 </template>
-
-<script>
-import { mapGetters } from 'vuex'
-export default {
-	computed: mapGetters(['getImages'])
-}
-</script>
 
 <style lang="scss" scoped>
     #background{
