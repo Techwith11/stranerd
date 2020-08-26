@@ -1,6 +1,9 @@
 <template>
 	<Default>
-		<helper-spinner v-if="loading"/>
+    <Banner>
+      <h1>Buy Books and eTextbooks</h1>
+    </Banner>
+    <helper-spinner v-if="loading"/>
 		<div v-else class="my-3">
 			<helper-message message="No notes currently in the shop. Check again later" v-if="notes.length === 0" />
 			<div class="container-fluid grid" v-else>

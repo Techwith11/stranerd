@@ -20,7 +20,7 @@ export default {
 	name: 'CreateOverview',
 	setup(){
 		return {
-			closeCreateModal: useStore().modals.closeEditModal,
+			closeCreateModal: useStore().modals.closeCreateModal,
 			setCreateModalQuestion: useStore().modals.setCreateModalQuestion,
 			setCreateModalCourse: useStore().modals.setCreateModalCourse,
 			setCreateModalNote: useStore().modals.setCreateModalNote,

@@ -1,14 +1,19 @@
 <template>
-	<div class="mt-3 mb-5">
-		<router-link class="text-muted h6 text-decoration-none mb-3 d-inline-block text-capitalize" :to="`/admins/questions/${subject.name.toLowerCase()}`">{{ subject.name }}</router-link>
-		<div class="d-flex scrolling-nav">
-			<router-link :to="`/admins/questions/${subject.name}/${module.name}`" v-for="module in subject.modules" :key="module.name"
-	             class="text-decoration-none bg-dark rounded d-flex flex-column justify-content-center mr-3 p-3 module border border-dark"
-	             :style="module.image ? `background: url('${module.image}')` : null">
-				<span class="h5 mb-0 text-wrap text-truncate text-center text-light text-capitalize font-weight-bold" :class="{'overlay': module.image}">{{ module.name }}</span>
-			</router-link>
-		</div>
-	</div>
+  <div class="mt-3 mb-7">
+    <router-link class="text-muted h4 text-decoration-none mb-3 d-inline-block text-capitalize" :to="`/admins/questions/${subject.name.toLowerCase()}`">{{ subject.name }}</router-link>
+    <div class="row">
+      <div class="col-sm-6 col-md-4 col-lg-3 mb-3 d-flex flex-column" v-for="module in subject.modules" :key="module.name">
+        <div class="bg-light" style="height: 150px;">
+          <router-link :to="`/admins/questions/${subject.name}/${module.name}`">
+            <img :src="module.image" alt="" class="h-100 w-100" v-if="module.image">
+          </router-link>
+        </div>
+        <div class="bg-gold-light text-center">
+          <router-link :to="`/admins/questions/${subject.name}/${module.name}`" class="text-muted  text-capitalize lead">{{ module.name }}</router-link>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

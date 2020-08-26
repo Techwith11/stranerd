@@ -1,13 +1,18 @@
 <template>
 	<Default>
+    <Banner>
+      <h1 class="text-capitalize">All modules under {{ subject.name }}</h1>
+    </Banner>
 		<div class="container-fluid py-3">
 			<helper-spinner v-if="loading" />
 			<template v-else>
-				<router-link class="text-muted h6 text-decoration-none my-3 d-inline-block text-capitalize" :to="`/admins/questions`">
-					<i class="fas fa-arrow-left mr-2"></i>
-					<span>All</span>
-				</router-link>
 				<subject-card :subject="subject"/>
+        <h5 class="mt-5 text-capitalize">
+          <router-link class="text-muted" :to="`/admins/questions`">
+            <span>Back to all courses</span>
+            <i class="fas fa-arrow-left ml-2"></i>
+          </router-link>
+        </h5>
 			</template>
 		</div>
 	</Default>
