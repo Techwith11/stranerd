@@ -1,24 +1,24 @@
 <template>
-	<div class="rounded-xl shadow-sm d-flex flex-column flex-md-row align-items-start p-2">
-		<img :src="note.imageLink" alt="">
-		<div class="px-2">
-			<h5 class="d-flex justify-content-between mb-1">
-				<span>{{ note.title }}</span>
-				<span class="text-success">${{ note.price }}</span>
-			</h5>
-			<p class="small mb-1">{{ note.description }}</p>
-			<p class="small mb-1">Uploaded {{ note.createdDate }}</p>
-			<template v-if="isAdmin">
-				<a class="mr-3 text-warning" @click.prevent="openEditModal">
-					<i class="fas fa-pen mr-1"></i>
-					<span>Edit</span>
-				</a>
-				<a class="mr-3 text-danger" @click.prevent="deleteNote">
-					<i class="fas mr-1" :class="loading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
-					<span>Delete</span>
-				</a>
-			</template>
+	<div class="p-2">
+		<div class="d-flex flex-column flex-md-row mb-3">
+			<img :src="note.imageLink" alt="">
+			<div class="p-2">
+				<p class="font-weight-500 lead">Buy for &dollar;{{ note.price }}</p>
+				<h3 class="font-weight-500">{{ note.title }}</h3>
+
+				<div class="d-flex flex-column" v-if="isAdmin">
+					<button class="my-1 btn btn-outline-warning" @click.prevent="openEditModal">
+						<i class="fas fa-pen mr-1"></i>
+						<span>Edit</span>
+					</button>
+					<button class="my-1 btn btn-outline-danger" @click.prevent="deleteNote">
+						<i class="fas mr-1" :class="loading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+						<span>Delete</span>
+					</button>
+				</div>
+			</div>
 		</div>
+		<p class="small">{{ note.description }}</p>
 	</div>
 </template>
 
