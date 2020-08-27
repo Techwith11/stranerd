@@ -16,11 +16,10 @@
     </Banner>
 		<div class="container">
 			<helper-spinner v-if="tutorLoading || subjectLoading" />
-			<div v-else class="grid mb-3">
-          <tutor-card :user="tutor" v-for="tutor in filteredTutors" :key="tutor.id" />
-          <tutor-card :user="tutor" v-for="tutor in filteredTutors" :key="tutor.id" />
-          <tutor-card :user="tutor" v-for="tutor in filteredTutors" :key="tutor.id" />
-          <tutor-card :user="tutor" v-for="tutor in filteredTutors" :key="tutor.id" />
+			<div v-else class="grid my-4">
+        <div v-for="tutor in filteredTutors" :key="tutor.id" class="shadow-sm p-3" >
+          <tutor-card :user="tutor" />
+        </div>
 			</div>
       <helper-message :message="error" v-if="error" />
     </div>

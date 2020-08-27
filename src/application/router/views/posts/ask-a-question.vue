@@ -1,9 +1,11 @@
 <template>
 	<Default>
-		<div class="container py-5">
-			<h3 class="text-center mb-4">Ask A Question</h3>
-			<create-post />
-		</div>
+    <Banner>
+      <h1>Post a Question</h1>
+    </Banner>
+    <div class="shadow-sm rounded-xl p-3 mx-auto my-4" style="max-width: 600px">
+      <create-post />
+    </div>
 	</Default>
 </template>
 

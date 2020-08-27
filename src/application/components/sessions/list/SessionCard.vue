@@ -5,7 +5,7 @@
 		<div>
 			<p class="mb-0">
 				<span v-if="wasCancelled">{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}</span>
-				<router-link :to="`/sessions/${session['.key']}`" class="text-black" v-else>
+				<router-link :to="`/sessions/${session['.key']}`" class="text-dark" v-else>
 					{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}
 				</router-link>
 			</p>

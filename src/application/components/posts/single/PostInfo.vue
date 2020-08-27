@@ -5,11 +5,10 @@
 			<span class="text-capitalize">{{ post.module }}, </span>
 			<span class="text-capitalize">{{ post.subject }}</span>
 		</p>
-		<div v-html="post.body" class="lead editor-container"></div>
 		<div class="d-flex align-items-center">
 			<img :src="user.image" class="profile-image" id="ownerImage" alt="">
 			<div>
-				<p class="mb-0">Posted by <router-link class="text-info" :to="`/users/${user.id}`">{{ user.name }}</router-link></p>
+				<p class="mb-0"><router-link class="text-white" :to="`/users/${user.id}`">{{ user.name }}</router-link></p>
 				<p class="mb-0">{{ post.createdDate }}</p>
 			</div>
 		</div>

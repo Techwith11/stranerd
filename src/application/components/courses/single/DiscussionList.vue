@@ -7,7 +7,7 @@
 		<li class="alert alert-warning py-1 border my-1" v-for="discussion in discussions" :key="discussion.id"
 		    :class="discussion.userId === getId ? 'ml-auto' : 'mr-auto'">
 			<span class="d-block">{{ discussion.body }}</span>
-			<small class="small text-black">{{ discussion.createdDate }}</small>
+			<small class="small text-dark">{{ discussion.createdDate }}</small>
 		</li>
 	</ul>
 </template>

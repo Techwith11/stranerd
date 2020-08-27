@@ -10,7 +10,7 @@
 
  <style lang="scss" scoped>
  .head{
-   background: url('../../assets/images/shop/header.svg') bottom no-repeat;
+   background: url('../../assets/images/courses/header.svg') bottom no-repeat;
    color: $white;
    display: flex;
    justify-content: center;

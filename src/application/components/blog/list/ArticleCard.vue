@@ -8,7 +8,7 @@
 			<p v-if="user.id" class="d-flex align-items-center">
 				<span>
 					<img :src="user.image" alt="" class="mr-2 border border-dark rounded-circle" width="40" height="40">
-					<router-link :to="`/users/${user.id}`" class="bolder text-black">by {{ user.name }}</router-link>
+					<router-link :to="`/users/${user.id}`" class="bolder text-dark">by {{ user.name }}</router-link>
 				</span>
 				<span v-if="isAdmin" class="ml-auto d-inline-block">
 					<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
