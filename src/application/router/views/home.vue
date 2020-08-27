@@ -1,27 +1,21 @@
 <template>
 	<Default>
-		<div v-if="isLoggedIn" class="container-fluid p-0 p-lg-3">
-			<div class="d-flex flex-column flex-xl-row">
-				<div class="d-none d-xl-block mb-3 mr-xl-1 col-xl-5 p-0">
-					<show-ask-question />
-				</div>
-				<div class="mb-3 mr-xl-1 col-xl-7 p-0">
-					<recent-posts />
-				</div>
-				<router-link class="d-xl-none floating-button text-white" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
-			</div>
-			<div class="py-3"></div>
-			<div class="d-flex flex-column flex-lg-row">
-				<div class="flex-grow-1 mb-3 mr-lg-1">
-					<recent-sessions />
-				</div>
-				<div class="flex-grow-1 mb-3 mr-lg-1">
-					<top-tutors />
-					<subscribe-card v-if="!isSubscribed" />
-				</div>
-			</div>
-			<div class="py-3"></div>
-			<recent-courses class="mb-3" />
+		<div v-if="isLoggedIn">
+      <Banner></Banner>
+      <div class="container-fluid p-0 p-lg-3 mt-4">
+        <show-ask-question class="d-none d-lg-block mb-4" />
+        <router-link class="d-lg-none floating-button text-white" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
+        <div class="d-flex flex-column flex-lg-row">
+          <div style="flex-grow: 2;">
+            <recent-posts class="mb-4"  />
+          </div>
+          <div class="flex-grow-1 ml-lg-3">
+            <recent-sessions class="mb-4" />
+            <top-tutors class="mb-4" />
+            <subscribe-card v-if="!isSubscribed" />
+          </div>
+        </div>
+      </div>
 		</div>
 		<div v-else class="">
 			<cta />
@@ -46,7 +40,6 @@ import Mckenwin from '@/components/home/notLoggedIn/Mckenwin.vue'
 import Pricing from '@/components/home/notLoggedIn/Pricing.vue'
 import ShowAskQuestion from '@/components/home/loggedIn/AskQuestion.vue'
 import RecentPosts from '@/components/home/loggedIn/RecentPosts.vue'
-import RecentCourses from '@/components/home/loggedIn/RecentCourses.vue'
 import RecentSessions from '@/components/home/loggedIn/RecentSessions.vue'
 import TopTutors from '@/components/home/loggedIn/TopTutors.vue'
 import SubscribeCard from '@/components/home/loggedIn/SubscribeCard.vue'
@@ -63,7 +56,6 @@ export default defineComponent({
 		'pricing': Pricing,
 		'show-ask-question': ShowAskQuestion,
 		'recent-posts': RecentPosts,
-		'recent-courses': RecentCourses,
 		'recent-sessions': RecentSessions,
 		'top-tutors': TopTutors,
 		'subscribe-card': SubscribeCard,

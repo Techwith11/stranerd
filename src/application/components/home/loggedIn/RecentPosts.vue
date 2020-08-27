@@ -1,5 +1,5 @@
 <template>
-	<div class="p-3 shadow-sm white" v-if="!loading">
+	<div class="p-3 shadow white" v-if="!loading">
 		<p class="text-muted txt-shadow">Recent Questions</p>
 		<div v-if="error">
 			<p class="lead">No questions available at the moment. Try asking one <router-link to="/ask-a-question">here</router-link></p>

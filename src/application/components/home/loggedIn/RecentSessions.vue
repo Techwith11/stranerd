@@ -1,5 +1,5 @@
 <template>
-	<div class="p-3 white shadow-sm">
+	<div class="p-3 white shadow">
 		<p class="text-muted txt-shadow">Recent Sessions</p>
 		<div v-if="sessions.length > 0">
 			<session-card v-for="session in sessions" :key="session['.key']" :session="session" />

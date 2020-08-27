@@ -1,5 +1,5 @@
 <template>
-	<div class="p-3 white">
+	<div class="p-3 shadow white">
 		<p class="text-muted txt-shadow">Top Tutors</p>
 		<tutor-card class="my-2" v-for="tutor in tutors" :user="tutor" :key="tutor.id" />
 		<p class="lead" v-if="error">{{ error }}</p>
