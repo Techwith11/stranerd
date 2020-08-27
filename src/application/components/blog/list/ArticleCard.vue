@@ -1,5 +1,5 @@
 <template>
-	<div class="card rounded-xl shadow">
+	<div class="card rounded-xl shadow-sm">
 		<img :src="article.image" class="card-img-top" alt="">
 		<div class="card-body">
 			<p class="small">Published {{ article.createdDate }}</p>

@@ -1,7 +1,10 @@
 <template>
 	<Default>
+    <Banner>
+      <h1 class="mx-auto my-5" style="max-width: 400px;">Stay up to date with the latest from Stranerd</h1>
+    </Banner>
 		<helper-spinner v-if="loading"/>
-		<div v-else class="container py-3">
+		<div v-else class="px-2 my-4">
 			<helper-message :message="error" v-if="error" />
 			<div v-else>
 				<div class="grid">
