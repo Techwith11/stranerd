@@ -1,5 +1,5 @@
 <template>
-	<div class="alert d-flex align-items-center my-2 shadow-sm" role="alert"
+	<div class="alert d-flex align-items-center my-2" role="alert"
         :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
 		<img :src="getImageLink" class="profile-image" alt="">
 		<div>

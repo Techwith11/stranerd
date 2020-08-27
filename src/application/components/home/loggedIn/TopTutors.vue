@@ -1,10 +1,10 @@
 <template>
-	<div class="p-3 white shadow-sm">
+	<div class="p-3 white">
 		<p class="text-muted txt-shadow">Top Tutors</p>
 		<tutor-card class="my-2" v-for="tutor in tutors" :user="tutor" :key="tutor.id" />
 		<p class="lead" v-if="error">{{ error }}</p>
 		<div class="d-flex justify-content-end my-3" v-else>
-			<router-link class="text-decoration-none txt-shadow" to="/tutors">See More</router-link>
+			<router-link class="text-white btn btn-gold" to="/tutors">See More</router-link>
 		</div>
 	</div>
 </template>

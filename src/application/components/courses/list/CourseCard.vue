@@ -1,5 +1,5 @@
 <template>
-	<div class="mb-5 shadow-sm white">
+	<div class="mb-5 white">
 		<router-link :to="`/courses/${course.subject}/${course.module}/${course.id}`">
 			<img :src="course.imageLink" class="card-img-top w-100" alt="">
 		</router-link>
