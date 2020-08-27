@@ -1,4 +1,3 @@
-import Bottle from 'bottlejs'
 import { TutorQuestionFirebaseDataSource } from '@root/modules/tests/data/datasources/tutorQuestion-firebase'
 import { QuestionTransformer } from '@root/modules/tests/data/transformers/question'
 import { QuestionRepository } from '@root/modules/tests/data/repositories/question'
@@ -9,35 +8,16 @@ import { AddTutorQuestionUseCase } from '@root/modules/tests/domain/usecases/add
 import { UpdateTutorQuestionUseCase } from '@root/modules/tests/domain/usecases/updateTutorQuestion'
 import { FindTutorQuestionUsecase } from '@root/modules/tests/domain/usecases/findTutorQuestion'
 
-const bottle = new Bottle()
+const tutorQuestionDataSource = new TutorQuestionFirebaseDataSource()
 
-bottle.service('DataSources.TutorQuestion', TutorQuestionFirebaseDataSource)
+const questionTransformer = new QuestionTransformer()
 
-bottle.service('Transformers.Question', QuestionTransformer)
+const tutorQuestionRepository = new QuestionRepository(tutorQuestionDataSource, questionTransformer)
 
-bottle.service('Repositories.TutorQuestion', QuestionRepository, 'DataSources.TutorQuestion','Transformers.Question')
+export const GetQuestionFactory = new GetQuestionFactoryUseCase()
 
-
-bottle.service('Usecases.Question.GetFactory', GetQuestionFactoryUseCase)
-bottle.service('Usecases.TutorQuestion.GetByModule', GetTutorQuestionsByModuleUseCase, 'Repositories.TutorQuestion')
-bottle.service('Usecases.TutorQuestion.Delete', DeleteTutorQuestionUseCase, 'Repositories.TutorQuestion')
-bottle.service('Usecases.TutorQuestion.Add', AddTutorQuestionUseCase, 'Repositories.TutorQuestion')
-bottle.service('Usecases.TutorQuestion.Update', UpdateTutorQuestionUseCase, 'Repositories.TutorQuestion')
-bottle.service('Usecases.TutorQuestion.Find', FindTutorQuestionUsecase, 'Repositories.TutorQuestion')
-
-const { GetFactory: GetQuestionFactory } = bottle.container.Usecases.Question as {
-	GetFactory: GetQuestionFactoryUseCase
-}
-
-const {
-	GetByModule: GetTutorQuestionsByModule, Delete: DeleteTutorQuestion,
-	Add: AddTutorQuestion, Update: UpdateTutorQuestion, Find: FindTutorQuestion
-} = bottle.container.Usecases.TutorQuestion as {
-	GetByModule: GetTutorQuestionsByModuleUseCase, Delete: DeleteTutorQuestionUseCase,
-	Add: AddTutorQuestionUseCase, Update: UpdateTutorQuestionUseCase, Find: FindTutorQuestionUsecase
-}
-
-export {
-	GetQuestionFactory,
-	GetTutorQuestionsByModule, DeleteTutorQuestion, AddTutorQuestion, UpdateTutorQuestion, FindTutorQuestion
-}
+export const GetTutorQuestionsByModule = new GetTutorQuestionsByModuleUseCase(tutorQuestionRepository)
+export const DeleteTutorQuestion = new DeleteTutorQuestionUseCase(tutorQuestionRepository)
+export const AddTutorQuestion = new AddTutorQuestionUseCase(tutorQuestionRepository)
+export const UpdateTutorQuestion = new UpdateTutorQuestionUseCase(tutorQuestionRepository)
+export const FindTutorQuestion = new FindTutorQuestionUsecase(tutorQuestionRepository)

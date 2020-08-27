@@ -1,4 +1,3 @@
-import Bottle from 'bottlejs'
 import { UserFirebaseDataSource } from '@root/modules/users/data/datasources/user-firebase'
 import { UserTransformer } from '@root/modules/users/data/transformers/user'
 import { UserRepository } from '@root/modules/users/data/repositories/user'
@@ -18,51 +17,25 @@ import { ResetPasswordUseCase } from '@root/modules/users/domain/usecases/resetP
 import { UpdatePasswordUseCase } from '@root/modules/users/domain/usecases/updatePassword'
 import { GetUpdatePasswordFactoryUseCase } from '@root/modules/users/domain/usecases/getUpdatePasswordFactory'
 
-const bottle = new Bottle()
+const userDataSource = new UserFirebaseDataSource()
+const authDataSource = new AuthFirebaseDataSource()
 
-bottle.service('DataSources.User', UserFirebaseDataSource)
-bottle.service('DataSources.Auth', AuthFirebaseDataSource)
+const userTransformer = new UserTransformer()
 
-bottle.service('Transformers.User', UserTransformer)
+const userRepository = new UserRepository(userDataSource, userTransformer)
+const authRepository = new AuthRepository(authDataSource)
 
-bottle.service('Repositories.User', UserRepository, 'DataSources.User', 'Transformers.User')
-bottle.service('Repositories.Auth', AuthRepository, 'DataSources.Auth')
+export const FindUser = new FindUserUseCase(userRepository)
+export const GetTutors = new GetTutorsUseCase(userRepository)
 
-bottle.service('Usecases.User.Find', FindUserUseCase, 'Repositories.User')
-bottle.service('Usecases.User.GetTutors', GetTutorsUseCase, 'Repositories.User')
-bottle.service('Usecases.Auth.LoginWithEmail', LoginWithEmailUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.LoginWithGoogle', LoginWithGoogleUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.Logout', LogoutUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.RegisterWithEmail', RegisterWithEmailUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.RegisterAuthChangedCB', RegisterAuthChangedCallbackUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.ResetPassword', ResetPasswordUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.UpdatePassword', UpdatePasswordUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.GetLoginFactory', GetLoginFactoryUseCase)
-bottle.service('Usecases.Auth.GetRegisterFactory', GetRegisterFactoryUseCase)
-bottle.service('Usecases.Auth.GetResetPasswordFactory', GetResetPasswordFactoryUseCase)
-bottle.service('Usecases.Auth.GetUpdatePasswordFactory', GetUpdatePasswordFactoryUseCase)
-
-const { Find: FindUser, GetTutors } = bottle.container.Usecases.User as {
-	Find: FindUserUseCase, GetTutors: GetTutorsUseCase
-}
-
-const {
-	LoginWithEmail, LoginWithGoogle, Logout,
-	RegisterWithEmail, RegisterAuthChangedCB,
-	GetLoginFactory, GetRegisterFactory,
-	ResetPassword, GetResetPasswordFactory,
-	UpdatePassword, GetUpdatePasswordFactory,
-} = bottle.container.Usecases.Auth as {
-	LoginWithEmail: LoginWithEmailUseCase, LoginWithGoogle: LoginWithGoogleUseCase, Logout: LogoutUseCase,
-	RegisterWithEmail: RegisterWithEmailUseCase, RegisterAuthChangedCB: RegisterAuthChangedCallbackUseCase
-	GetLoginFactory: GetLoginFactoryUseCase, GetRegisterFactory: GetRegisterFactoryUseCase,
-	ResetPassword: ResetPasswordUseCase, GetResetPasswordFactory: GetResetPasswordFactoryUseCase,
-	UpdatePassword: UpdatePasswordUseCase, GetUpdatePasswordFactory: GetUpdatePasswordFactoryUseCase,
-}
-
-export {
-	FindUser, GetTutors,
-	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, RegisterAuthChangedCB,
-	GetLoginFactory, GetRegisterFactory, ResetPassword, GetResetPasswordFactory,
-	UpdatePassword, GetUpdatePasswordFactory,
-}
+export const LoginWithEmail = new LoginWithEmailUseCase(authRepository)
+export const LoginWithGoogle = new LoginWithGoogleUseCase(authRepository)
+export const Logout = new LogoutUseCase(authRepository)
+export const RegisterWithEmail = new RegisterWithEmailUseCase(authRepository)
+export const RegisterAuthChangedCB = new RegisterAuthChangedCallbackUseCase(authRepository)
+export const ResetPassword = new ResetPasswordUseCase(authRepository)
+export const UpdatePassword = new UpdatePasswordUseCase(authRepository)
+export const GetLoginFactory = new GetLoginFactoryUseCase()
+export const GetRegisterFactory = new GetRegisterFactoryUseCase()
+export const GetResetPasswordFactory = new GetResetPasswordFactoryUseCase()
+export const GetUpdatePasswordFactory = new GetUpdatePasswordFactoryUseCase()
