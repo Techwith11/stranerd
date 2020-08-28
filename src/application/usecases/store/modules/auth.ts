@@ -1,6 +1,6 @@
 import { computed, ComputedRef } from '@vue/composition-api'
 import { Store } from '@/store'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
+import { UserFromModel } from '@root/modules/users/data/models/user'
 
 const getters = {
 	isLoggedIn: computed(() => Store.getters.isLoggedIn) as ComputedRef<boolean>,
@@ -8,8 +8,9 @@ const getters = {
 	isTutor: computed(() => Store.getters.isTutor) as ComputedRef<boolean>,
 	isSubscribed: computed(() => Store.getters.isSubscribed) as ComputedRef<boolean>,
 	getId: computed(() => Store.getters.getId) as ComputedRef<string>,
-	getUser: computed(() => Store.getters.getUser) as ComputedRef<UserEntity>,
+	getUser: computed(() => Store.getters.getUser) as ComputedRef<UserFromModel>,
 	questionsLeft: computed(() => Store.getters.questionsLeft) as ComputedRef<number>,
+	getDefaultImage: computed(() => Store.getters.getDefaultImage) as ComputedRef<string>,
 }
 
 const actions = {

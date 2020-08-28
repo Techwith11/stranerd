@@ -81,33 +81,11 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { required, email} from 'vuelidate/lib/validators'
-import { mapActions } from 'vuex'
 import { useMailingList } from '@/usecases/users/role'
 export default defineComponent({
-	data: () => ({
-		email: '',
-	}),
 	setup(){
 		const { loading, factory, subscribeToMailingList } = useMailingList()
 		return { loading, factory, subscribeToMailingList }
-	},
-	validations: {
-		email: { required, email }
-	},
-	methods: {
-		...mapActions(['subscribeToMail']),
-		async subscribe(){
-			this.loading = true
-			const email = this.email
-			try{
-				await this.subscribeToMail(email)
-				new window.Toast({ icon: 'success', title: 'Successfully subscribed' })
-				this.email = ''
-				this.$v.$reset()
-			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-			this.loading = false
-		}
 	}
 })
 </script>

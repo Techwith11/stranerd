@@ -37,13 +37,13 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import RatingStars from '@/components/helpers/RatingStars'
-import TestsList from '@/components/account/single/TestsList'
+import RatingStars from '@/components/helpers/RatingStars.vue'
+import TestsList from '@/components/account/single/TestsList.vue'
 import { useStore } from '@/usecases/store'
 export default defineComponent({
 	setup(){
-	  return {
-	    getUser: useStore().auth.getUser,
+		return {
+			getUser: useStore().auth.getUser,
 		}
 	},
 	components: {

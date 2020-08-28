@@ -20,19 +20,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from '@vue/composition-api'
-import { mapGetters } from 'vuex'
+import { defineComponent, computed } from '@vue/composition-api'
 import { useStore } from '@/usecases/store'
 export default defineComponent({
-	computed: {
-		...mapGetters(['getDefaultImage']),
-		getUserImageLink() {
-			return this.getUser && this.getUser.bio.image ? this.getUser.bio.image.link : this.getDefaultImage
-		}
-	},
 	setup(){
-	  return {
-	    getUser: useStore().auth.getUser,
+		const getUser = useStore().auth.getUser
+		return {
+			getUser,
+			getUserImageLink: computed(() => getUser.value.bio?.image?.link ?? useStore().auth.getDefaultImage),
 			setAccountModalEditProfile: useStore().modals.setAccountModalEditProfile,
 		}
 	}
