@@ -7,9 +7,6 @@
 			<router-link class="nav-link" to="/account/tests">Tests</router-link>
 		</li>
 		<li class="nav-item text-center">
-			<router-link class="nav-link" to="/account/paymentMethods">Payment Methods</router-link>
-		</li>
-		<li class="nav-item text-center">
 			<router-link class="nav-link" to="/account/transactions">Transactions</router-link>
 		</li>
 	</ul>

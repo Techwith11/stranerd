@@ -1,12 +1,12 @@
 <template>
   <div class="row">
-    <div class="col-md-6 d-flex align-items-center justify-content-md-center">
+    <div class="col-md-6 d-flex align-items-center justify-content-center flex-wrap">
       <div class="mb-3 mb-md-0">
         <img :src="getUserImageLink" alt="" class="profile-image">
       </div>
-      <div class="">
-        <h4 class="my-2">{{ getUser.bio.name }}</h4>
-        <h6 class="mb-1">{{ getUser.bio.email }}</h6>
+      <div class="mb-3">
+        <h4 class="my-2 text-truncate">{{ getUser.bio.name }}</h4>
+        <h6 class="mb-1 text-truncate">{{ getUser.bio.email }}</h6>
         <a class="text-info" @click.prevent="setAccountModalEditProfile">Edit profile info</a>
       </div>
     </div>
@@ -33,7 +33,7 @@ export default defineComponent({
 	setup(){
 	  return {
 	    getUser: useStore().auth.getUser,
-			setAccountModalEditProfile: useStore().auth.setAccountModalEditProfile,
+			setAccountModalEditProfile: useStore().modals.setAccountModalEditProfile,
 		}
 	}
 })

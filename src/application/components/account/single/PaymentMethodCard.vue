@@ -4,11 +4,13 @@
 			<span>{{ method.cardType }}</span>
 			<span class="ml-3">{{ method.maskedNumber }}</span>
 		</div>
-		<p class="small mb-2">Expires {{ method.expirationDate }}</p>
-		<a class="text-info small" @click.prevent="deleteMethod">
-			<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
-			<span>Delete</span>
-		</a>
+		<div class="d-flex justify-content-between flex-wrap small">
+      <p class="mb-2">{{ method.expired ? 'Expired' : 'Expires' }} {{ method.expirationDate }}</p>
+      <a class="text-info mb-2" @click.prevent="deleteMethod">
+        <i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+        <span>Remove</span>
+      </a>
+    </div>
 	</div>
 </template>
 
