@@ -6,7 +6,6 @@
 @import '~@fortawesome/fontawesome-free/css/all.min.css';
 
 body{
-	background: $primary-light;
 	font-size: $font-base-size;
 	font-family: Poppins, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -117,7 +116,7 @@ a{
 
 img.profile-image{
 	border-radius: 10rem;
-	border: 1.5px solid rgba(0,0,0,0.1);
+	border: 1.5px solid rgba(0,0,0,0.25);
 	width: 80px;
 	height: 80px;
 	margin-right: 0.75rem;

@@ -1,13 +1,16 @@
 <template>
 	<Default>
+    <Banner>
+      <h1>Create, Modify & Delete Subjects</h1>
+    </Banner>
 		<div class="container-fluid py-3">
 			<helper-spinner v-if="loading" />
 			<template v-else>
-				<div class="d-flex justify-content-end">
-					<button class="btn btn-success my-3" @click="setCreateModalSubject">Add New Subject</button>
-				</div>
 				<subject-card :subject="subject" v-for="subject in subjects" :key="subject.id" />
-			</template>
+        <div class="d-flex justify-content-end mt-5">
+          <button class="btn btn-success" @click="setCreateModalSubject">Add New Subject</button>
+        </div>
+      </template>
 		</div>
 	</Default>
 </template>

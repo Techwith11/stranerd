@@ -1,10 +1,16 @@
 <template>
 	<Default>
+    <Banner></Banner>
 		<helper-spinner v-if="loading"/>
 		<div class="container-fluid py-3" v-else>
 			<helper-message :message=error v-if="error" />
 			<div v-else>
-				<post-card v-for="post in posts" :key="post.id" :post="post" />
+        <div class="grid my-4">
+          <div v-for="post in posts" :key="post.id" class="shadow-sm p-3" >
+            <post-card :post="post" />
+          </div>
+        </div>
+        <router-link class="floating-button text-white" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
 				<div class="text-center small text-muted mb-2" v-if="hasMore">
 					<i class="fas text-info fa-spinner fa-spin mr-1" v-if="olderPostsLoading"></i>
 					<span @click="fetchOlderPosts">Fetch Older</span>
@@ -52,3 +58,17 @@ export default defineComponent({
 	}
 })
 </script>
+
+<style lang="scss" scoped>
+.grid{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-column-gap: 1rem;
+  grid-row-gap: 1.5rem;
+}
+@media (min-width: $md) {
+  .grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>

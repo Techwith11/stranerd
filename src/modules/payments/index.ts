@@ -1,4 +1,3 @@
-import Bottle from 'bottlejs'
 import { PaymentFirebaseDataSource } from '@root/modules/payments/data/datasources/payment-firebase'
 import { PaymentRepository } from '@root/modules/payments/data/repositories/payment'
 import { GetClientTokenUsecase } from '@root/modules/payments/domain/usecases/getClientToken'
@@ -17,53 +16,26 @@ import { PlanTransformer } from '@root/modules/payments/data/transformers/plan'
 import { PlanRepository } from '@root/modules/payments/data/repositories/plan'
 import { GetSubscriptionPlansUsecase } from '@root/modules/payments/domain/usecases/getSubscriptionPlans'
 
-const bottle = new Bottle()
+const paymentDataSource = new PaymentFirebaseDataSource()
+const methodDataSource = new MethodFirebaseDataSource()
+const planDataSource = new PlanFirebaseDataSource()
 
-bottle.service('DataSources.Payment', PaymentFirebaseDataSource)
-bottle.service('DataSources.Method', MethodFirebaseDataSource)
-bottle.service('DataSources.Plan', PlanFirebaseDataSource)
+const methodTransformer = new MethodTransformer()
+const planTransformer = new PlanTransformer()
 
-bottle.service('Transformers.Method', MethodTransformer)
-bottle.service('Transformers.Plan', PlanTransformer)
+const paymentRepository = new PaymentRepository(paymentDataSource)
+const methodRepository = new MethodRepository(methodDataSource, methodTransformer)
+const planRepository = new PlanRepository(planDataSource, planTransformer)
 
-bottle.service('Repositories.Payment', PaymentRepository, 'DataSources.Payment')
-bottle.service('Repositories.Method', MethodRepository, 'DataSources.Method', 'Transformers.Method')
-bottle.service('Repositories.Plan', PlanRepository, 'DataSources.Plan', 'Transformers.Plan')
 
-bottle.service('Usecases.Payment.GetClientToken', GetClientTokenUsecase, 'Repositories.Payment')
-bottle.service('Usecases.Payment.CreatePaymentMethod', CreatePaymentMethodUsecase, 'Repositories.Payment')
-bottle.service('Usecases.Payment.RemovePaymentMethod', RemovePaymentMethodUsecase, 'Repositories.Payment')
-bottle.service('Usecases.Payment.MakePayment', MakePaymentUsecase, 'Repositories.Payment')
-bottle.service('Usecases.Payment.SubscribeToPlan', SubscribeToPlanUsecase, 'Repositories.Payment')
-bottle.service('Usecases.Payment.CancelSubscription', CancelSubscriptionUsecase, 'Repositories.Payment')
-bottle.service('Usecases.Payment.UpdateSubscription', UpdatePaymentMethodForSubscriptionUsecase, 'Repositories.Payment')
+export const GetClientToken = new GetClientTokenUsecase(paymentRepository)
+export const CreatePaymentMethod = new CreatePaymentMethodUsecase(paymentRepository)
+export const RemovePaymentMethod = new RemovePaymentMethodUsecase(paymentRepository)
+export const MakePayment = new MakePaymentUsecase(paymentRepository)
+export const SubscribeToPlan = new SubscribeToPlanUsecase(paymentRepository)
+export const UpdateSubscription = new UpdatePaymentMethodForSubscriptionUsecase(paymentRepository)
+export const CancelSubscription = new CancelSubscriptionUsecase(paymentRepository)
 
-bottle.service('Usecases.Method.Get', GetPaymentMethodsUsecase, 'Repositories.Method')
+export const GetPaymentMethods = new GetPaymentMethodsUsecase(methodRepository)
 
-bottle.service('Usecases.Plan.Get', GetSubscriptionPlansUsecase, 'Repositories.Plan')
-
-const {
-	GetClientToken, CreatePaymentMethod, RemovePaymentMethod, MakePayment, SubscribeToPlan, UpdateSubscription, CancelSubscription
-} = bottle.container.Usecases.Payment as {
-	GetClientToken: GetClientTokenUsecase, CreatePaymentMethod: CreatePaymentMethodUsecase, RemovePaymentMethod: RemovePaymentMethodUsecase,
-	MakePayment: MakePaymentUsecase, SubscribeToPlan: SubscribeToPlanUsecase, CancelSubscription: CancelSubscriptionUsecase,
-	UpdateSubscription: UpdatePaymentMethodForSubscriptionUsecase
-}
-
-const {
-	Get: GetPaymentMethods
-} = bottle.container.Usecases.Method as {
-	Get: GetPaymentMethodsUsecase
-}
-
-const {
-	Get: GetSubscriptionPlans
-} = bottle.container.Usecases.Plan as {
-	Get: GetSubscriptionPlansUsecase
-}
-
-export {
-	GetClientToken, CreatePaymentMethod, RemovePaymentMethod, MakePayment, SubscribeToPlan, UpdateSubscription, CancelSubscription,
-	GetPaymentMethods,
-	GetSubscriptionPlans
-}
+export const GetSubscriptionPlans = new GetSubscriptionPlansUsecase(planRepository)

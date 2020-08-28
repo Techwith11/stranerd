@@ -1,14 +1,19 @@
 <template>
 	<Default>
+    <Banner>
+      <h1 class="text-capitalize">All courses for {{ subject.name }}</h1>
+    </Banner>
 		<div class="container-fluid py-3">
 			<helper-spinner v-if="loading" />
 			<template v-else>
-				<router-link class="text-muted h5 text-decoration-none my-3 d-inline-block text-capitalize" :to="`/courses`">
-					<i class="fas fa-arrow-left mr-2"></i>
-					<span>All</span>
-				</router-link>
 				<subject-card :subject="subject"/>
-			</template>
+        <h5 class="mt-5 text-capitalize">
+          <router-link class="text-muted" :to="`/courses`">
+            <span>Back to all courses</span>
+            <i class="fas fa-arrow-left ml-2"></i>
+          </router-link>
+        </h5>
+      </template>
 		</div>
 	</Default>
 </template>

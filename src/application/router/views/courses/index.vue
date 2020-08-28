@@ -1,5 +1,8 @@
 <template>
 	<Default>
+		<Banner>
+      <h1>Courses Tailor-fit for Everyone</h1>
+    </Banner>
 		<div class="container-fluid py-3">
 			<helper-spinner v-if="loading" />
 			<div v-else>

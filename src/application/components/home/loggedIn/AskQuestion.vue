@@ -1,5 +1,5 @@
 <template>
-	<div class="p-3 white shadow-sm">
+	<div class="p-3 white shadow">
 		<p class="text-muted">Ask a Question</p>
 		<create-post />
 	</div>

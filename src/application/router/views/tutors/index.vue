@@ -1,23 +1,28 @@
 <template>
 	<Default>
+    <Banner>
+      <h1>Find Certified Tutors</h1>
+      <div class="row my-2">
+        <div class="col-8 pl-0 pr-2">
+          <input type="text" class="form-control" placeholder="Search by name" v-model="name">
+        </div>
+        <div class="col-4 px-0">
+          <select class="form-control text-capitalize" v-model="course">
+            <option value="">All</option>
+            <option :value="subject.name" v-for="subject in subjects" :key="subject['.key']">{{ subject.name }}</option>
+          </select>
+        </div>
+      </div>
+    </Banner>
 		<div class="container">
 			<helper-spinner v-if="tutorLoading || subjectLoading" />
-			<div v-else>
-				<div class="row my-2">
-					<div class="col-7 pr-2">
-						<input type="text" class="form-control" placeholder="Search by name" v-model="name">
-					</div>
-					<div class="col-5 pl-0">
-						<select class="form-control text-capitalize" v-model="course">
-							<option value="">All</option>
-							<option :value="subject.name" v-for="subject in subjects" :key="subject['.key']">{{ subject.name }}</option>
-						</select>
-					</div>
-				</div>
-				<tutor-card class="my-2" :user="tutor" v-for="tutor in filteredTutors" :key="tutor.id" />
-				<helper-message :message="error" v-if="error" />
+			<div v-else class="grid my-4">
+        <div v-for="tutor in filteredTutors" :key="tutor.id" class="shadow-sm p-3" >
+          <tutor-card :user="tutor" />
+        </div>
 			</div>
-		</div>
+      <helper-message :message="error" v-if="error" />
+    </div>
 	</Default>
 </template>
 
@@ -58,3 +63,17 @@ export default defineComponent({
 	}
 })
 </script>
+
+<style lang="scss" scoped>
+.grid{
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  grid-column-gap: 1rem;
+  grid-row-gap: 1.5rem;
+}
+@media (min-width: $md) {
+  .grid{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+</style>

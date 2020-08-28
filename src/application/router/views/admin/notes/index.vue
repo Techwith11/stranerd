@@ -1,5 +1,8 @@
 <template>
 	<Default>
+    <Banner>
+      <h1>Create, Modify & Delete Shop Notes</h1>
+    </Banner>
 		<helper-spinner v-if="loading"/>
 		<div v-else>
 			<helper-message :message="error" v-if="error" />
@@ -51,7 +54,7 @@ export default defineComponent({
 		grid-column-gap: 1rem;
 		grid-row-gap: 1rem;
 	}
-	@media (min-width: $lg) {
+	@media (min-width: $md) {
 		.grid{
 			grid-template-columns: repeat(2, 1fr);
 		}

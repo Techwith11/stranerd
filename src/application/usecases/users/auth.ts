@@ -8,6 +8,8 @@ import {
 import { computed, reactive } from '@vue/composition-api'
 import { getIntendedRoute } from '@/usecases/core/router'
 import { useStore } from '@/usecases/store'
+import { resetPaymentMethods } from '@/usecases/payments/paymentMethods'
+import { clearCart } from '@/usecases/shop/cart'
 
 const afterAuthHook = async () => {
 	const route = getIntendedRoute()
@@ -56,6 +58,8 @@ export const useLogout = () => {
 		closeNavbar()
 		closeAccountDropdown()
 		closeAdminDropdown()
+		resetPaymentMethods()
+		clearCart()
 		state.loading = false
 	}
 

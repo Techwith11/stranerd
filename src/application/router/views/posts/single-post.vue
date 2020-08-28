@@ -1,20 +1,27 @@
 <template>
 	<Default>
-		<div class="container-fluid py-3">
-			<helper-spinner v-if="loading || replyLoading"/>
-			<div v-else>
-				<post-info :post="post" :user="user" />
-				<div class="my-3">
-					<p class="text-muted" v-if="replies.length === 0">No replies yet. Consider leaving one</p>
-					<div v-else>
-						<div class="pl-4">
-							<reply-card v-for="reply in replies" :key="reply.id" :reply="reply" :post="post"/>
-						</div>
-					</div>
-				</div>
-				<reply-form class="mt-auto" />
-			</div>
-		</div>
+    <helper-spinner v-if="loading || replyLoading"/>
+   <div v-else>
+     <Banner>
+       <post-info :post="post" :user="user" />
+     </Banner>
+     <div class="container my-4 ">
+       <div class="mx-auto" style="max-width: 75ch;">
+         <div class="shadow-sm p-3 rounded-xl">
+           <div v-html="post && post.body" class="lead editor-container"></div>
+         </div>
+         <hr class="my-4">
+         <div class="mb-3">
+           <h5 class="text-muted mb-3">Answers</h5>
+           <p class="text-muted" v-if="replies.length === 0">No answers found for this question. Consider leaving one</p>
+           <div v-else>
+             <reply-card v-for="reply in replies" :key="reply.id" :reply="reply" :post="post"/>
+           </div>
+         </div>
+         <reply-form class="mt-auto" />
+       </div>
+     </div>
+   </div>
 	</Default>
 </template>
 

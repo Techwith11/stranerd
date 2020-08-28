@@ -97,12 +97,6 @@ export default [
 				meta: { requiresAuth: true }
 			},
 			{
-				path: '/account/paymentMethods',
-				name: 'AccountPaymentMethods',
-				component: () => import(/* webpackChunkName: "account_payment_methods" */ '@/router/views/account/account-payment-methods.vue'),
-				meta: { requiresAuth: true }
-			},
-			{
 				path: '/account/transactions',
 				name: 'AccountTransactions',
 				component: () => import(/* webpackChunkName: "account_transactions" */ '@/router/views/account/account-transactions.vue'),

@@ -1,5 +1,8 @@
 <template>
 	<Default>
+    <Banner>
+      <h1 class="text-capitalize">All courses for {{ $route.params.module }}</h1>
+    </Banner>
 		<helper-spinner v-if="loading"/>
 		<div class="container-fluid py-3" v-else>
 			<helper-message :message="error" v-if="error" />

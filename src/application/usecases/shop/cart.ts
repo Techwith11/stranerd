@@ -8,6 +8,8 @@ const globalState = reactive({
 	cart: reactive([]) as NoteEntity[]
 })
 
+export const clearCart = () => globalState.cart = reactive([])
+
 export const useCart = () => {
 	const isInCart = (note: NoteEntity) => globalState.cart.some((n) => n.id === note.id)
 	const addToCart = (note: NoteEntity) => {
