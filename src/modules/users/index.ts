@@ -23,6 +23,7 @@ import { MakeTutorUsecase } from '@root/modules/users/domain/usecases/makeTutor'
 import { RemoveAdminUsecase } from '@root/modules/users/domain/usecases/removeAdmin'
 import { GetMailingListFactoryUsecase } from '@root/modules/users/domain/usecases/getMailingListFactory'
 import { SubscribeToMailingListUsecase } from '@root/modules/users/domain/usecases/subscribeToMailingList'
+import { FindUsersByEmailUseCase } from '@root/modules/users/domain/usecases/findUsersByEmail'
 
 const userDataSource = new UserFirebaseDataSource()
 const authDataSource = new AuthFirebaseDataSource()
@@ -35,6 +36,7 @@ const authRepository = new AuthRepository(authDataSource)
 const roleRepository = new RoleRepository(roleDataSource)
 
 export const FindUser = new FindUserUseCase(userRepository)
+export const FindUsersByEmail = new FindUsersByEmailUseCase(userRepository)
 export const GetTutors = new GetTutorsUseCase(userRepository)
 
 export const LoginWithEmail = new LoginWithEmailUseCase(authRepository)
