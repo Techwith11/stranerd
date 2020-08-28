@@ -6,6 +6,7 @@
 			<update-password v-if="isAccountModalUpdatePassword" />
 			<add-payment-method v-if="isAccountModalAddPaymentMethod" />
 			<select-subscription v-if="isAccountModalSelectSubscription" />
+			<transactions v-if="isAccountModalTransactions" />
 		</div>
 	</div>
 </template>
@@ -17,14 +18,20 @@ import EditProfile from '@/components/account/modals/EditProfile'
 import UpdatePassword from '@/components/account/modals/UpdatePassword'
 import AddPaymentMethod from '@/components/account/modals/AddPaymentMethod'
 import SelectSubscription from '@/components/account/modals/SelectSubscription'
+import Transactions from '@/components/account/modals/Transactions'
 export default {
 	components: {
 		'profile-overview': ProfileOverview,
 		'edit-profile': EditProfile,
 		'update-password': UpdatePassword,
 		'add-payment-method': AddPaymentMethod,
-		'select-subscription': SelectSubscription
+		'select-subscription': SelectSubscription,
+		'transactions': Transactions,
 	},
-	computed: mapGetters(['isAccountModalOverview','isAccountModalEditProfile','isAccountModalUpdatePassword','isAccountModalAddPaymentMethod','isAccountModalSelectSubscription'])
+	computed: mapGetters([
+	    'isAccountModalOverview','isAccountModalEditProfile',
+		'isAccountModalUpdatePassword','isAccountModalAddPaymentMethod',
+		'isAccountModalSelectSubscription', 'isAccountModalTransactions'
+	])
 }
 </script>

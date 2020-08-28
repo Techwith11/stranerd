@@ -11,7 +11,7 @@
               <payment-method-card :method="method" v-for="method in methods" :key="method.id"/>
             </div>
             <div class="d-flex justify-content-between flex-wrap align-items-center" v-if="!methodsLoading">
-              <router-link class="text-info mr-2" to="/account/transactions">View transactions</router-link>
+              <a class="text-info mr-2" @click.prevent="setAccountModalTransactions">View all transactions</a>
               <button class="btn btn-success" @click="setAccountModalAddPaymentMethod"><i class="fas fa-plus mr-1"></i>Add Card</button>
             </div>
           </div>
@@ -74,6 +74,7 @@ export default defineComponent({
 		return {
 			methodsLoading, methods, methodsError,
 			setAccountModalAddPaymentMethod: useStore().modals.setAccountModalAddPaymentMethod,
+			setAccountModalTransactions: useStore().modals.setAccountModalTransactions,
 
 			loading, cancelSubscription,
 			getUser: useStore().auth.getUser,
