@@ -7,7 +7,7 @@
           <session-nav class="h-100" :user="otherPerson" :timer="timer" />
         </div>
         <div class="flex-grow-2 h-100" id="background">
-          <div class="px-3 mb-3" :id="timer > 0 ? 'smaller-height' : 'longer-height'">
+          <div class="px-3" :id="timer > 0 ? 'smaller-height' : 'longer-height'">
             <helper-message v-if="chats.length < 1" :message="timer > 0 ? 'No messages. Send a message now' : 'Session has ended and no message was sent.'" />
             <ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}" v-if="chats.length > 0">
               <li class="d-block text-center small text-muted mb-2" v-if="hasMore">
@@ -191,10 +191,10 @@ export default {
 	}
 	#smaller-height{
 		height: calc(100vh - 76px - 106px);
-		ul{ height: calc(100vh - 76px - 106px - 54px); }
+		ul{ height: calc(100vh - 76px - 106px - 50px); }
     @media (min-width: $lg){
       height: calc(100vh - 76px);
-      ul{ height: calc(100vh - 76px - 54px) }
+      ul{ height: calc(100vh - 76px - 50px) }
     }
 	}
 	#longer-height{

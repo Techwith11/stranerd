@@ -4,7 +4,7 @@
       <p class="mb-0">Chat Session <br> with</p>
     </div>
     <div class="d-flex flex-column align-items-center mb-lg-4">
-      <img :src="getImageLink" width="50px" alt="" />
+      <img class="profile-image" :src="getImageLink" alt="" />
       <router-link :to="`/users/${user['.key']}`" class="text-truncate text-white">{{ user.bio ? user.bio.name : '' }}</router-link>
     </div>
     <h4 class="my-0 text-nowrap" v-if="timer > 0" :class="timer < 300 ? 'text-danger' : 'text-white'">{{ getTime }}</h4>
@@ -39,4 +39,14 @@ export default {
 
 <style lang="scss" scoped>
   .bg-accent{ background: $accent; }
+  .profile-image{
+    width: 50px;
+    height: 50px;
+    @media (min-width: $lg){
+      .profile-image{
+        width: 100px;
+        height: 100px;
+      }
+    }
+  }
 </style>
