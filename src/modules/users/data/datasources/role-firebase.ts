@@ -6,7 +6,7 @@ export class RoleFirebaseDataSource implements RoleBaseDataSource{
 		return await FunctionsService.call('makeAdmin', data)
 	}
 
-	public async makeTutor(data: { id: string; course: string }) {
+	public async makeTutor(data: { id: string, course: string }) {
 		return await FunctionsService.call('makeTutor', data)
 	}
 
