@@ -1,25 +1,25 @@
 <template>
-	<div class="my-3 bg-white rounded-xl p-3">
-		<p class="text-center small font-weight-bold">Subscription</p>
+	<div class="my-3 bg-white rounded-lg shadow-sm p-3">
+		<p class="text-center font-weight-500 mb-4 text-muted">Subscription</p>
 		<div class="row" v-if="isSubscribed">
 			<div class="col-sm-4 d-flex flex-sm-column justify-content-between mb-3">
-				<span class="mr-3 text-primary-dark">Current Plan</span>
+				<span class="mr-3 text-gold-dark font-weight-500">Current Plan</span>
 				<span>{{ convertToTitle(getUser.account.subscription.planId) }}</span>
 			</div>
 			<div class="col-sm-4 d-flex flex-sm-column justify-content-between mb-3">
-				<span class="mr-3 text-primary-dark">Status</span>
+				<span class="mr-3 text-gold-dark font-weight-500">Status</span>
 				<span>{{ getUser.account.subscription.status }}</span>
 			</div>
 			<div class="col-sm-4 d-flex flex-sm-column justify-content-between mb-3">
-				<span class="mr-3 text-primary-dark">Next Billing Date</span>
+				<span class="mr-3 text-gold-dark font-weight-500">Next Billing Date</span>
 				<span>{{ getUser.account.subscription.nextBillingDate }}</span>
 			</div>
 			<div class="col-sm-4 d-flex flex-sm-column justify-content-between mb-3">
-				<span class="mr-3 text-primary-dark">Plan Price</span>
+				<span class="mr-3 text-gold-dark font-weight-500">Plan Price</span>
 				<span>{{ getUser.account.subscription.price }}</span>
 			</div>
 			<div class="col-sm-4 d-flex flex-sm-column justify-content-between mb-3">
-				<span class="mr-3 text-primary-dark">Questions Left</span>
+				<span class="mr-3 text-gold-dark font-weight-500">Questions Left</span>
 				<span>{{ getUser.account.questions }} questions</span>
 			</div>
 			<div class="col-sm-4 d-flex flex-column justify-content-between mb-3">
@@ -32,8 +32,9 @@
 		</div>
 		<div v-else>
 			<p class="lead">
-				<span>You are currently not subscribed. </span>
-				<router-link to="/pricing-plans" class="text-decoration-none text-info">See our pricing plans</router-link>
+				<span>You are currently not subscribed. You have {{ getUser.account.questions }} questions left. </span>
+				<router-link to="/pricing-plans" class="text-decoration-none text-info">Upgrade to one of our pricing plans </router-link>
+        <span>to continue to ask more questions and much more access.</span>
 			</p>
 		</div>
 	</div>
@@ -50,24 +51,14 @@ export default defineComponent({
 			loading, cancelSubscription,
 			getUser: useStore().auth.getUser,
 			isSubscribed: useStore().auth.isSubscribed,
+			convertToTitle: (string: string) => {
+				const res = string.split('_')
+				let plan = res[2]
+				const duration = res[1]
+				plan = plan[0].toUpperCase() + plan.slice(1)
+				return `${plan}(${duration})`
+			}
 		}
-	},
-	methods: {
-		convertToTitle(string: string){
-			const res = string.split('_')
-			let plan = res[2]
-			const duration = res[1]
-			plan = plan[0].toUpperCase() + plan.slice(1)
-			return `${plan}(${duration})`
-		},
 	}
 })
 </script>
-
-<style lang="scss" scoped>
-	.rounded-xl{
-		border-radius: 2.0rem !important;
-		box-shadow: 0 1px 2px $text-black;
-	}
-	.text-primary-dark{ color: $primary-dark }
-</style>

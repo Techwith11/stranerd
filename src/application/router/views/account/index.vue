@@ -35,7 +35,3 @@ export default defineComponent({
 	}
 })
 </script>
-
-<style lang="scss" scoped>
-	#background{ background: $primary-light; min-height: 100vh; }
-</style>
