@@ -16,10 +16,6 @@ module.exports = functions.auth.user().onCreate(async (user) => {
 		dates:{
 			registeredAt: admin.firestore.FieldValue.serverTimestamp()
 		},
-		status: {
-			online: true,
-			lastSeen: admin.firestore.FieldValue.serverTimestamp()
-		},
 		account: {
 			questions: 3
 		}

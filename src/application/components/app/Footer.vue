@@ -10,14 +10,18 @@
                         <a href="https://instagram.com/officialstranerd" target="_blank"><i class="fab fa-instagram"></i></a>
                         <a href="https://twitter.com/stranerds" target="_blank"><i class="fab fa-twitter"></i></a>
                     </p>
-                    <div class="form-group">
+                    <form @submit.prevent="subscribeToMailingList" class="mb-5">
                         <h6>Subscribe to our Newsletter</h6>
-                        <input type="email" class="form-control" v-model.trim="$v.email.$model" :class="{'is-invalid': $v.email.$error, 'is-valid': !$v.email.$invalid}">
-                        <button class="btn btn-primary mx-0 mt-3 mb-5" :disabled="loading || $v.$invalid" @click.prevent="subscribe">
-                            <i class="fas fa-spin fa-spinner mr-2" v-if="loading"></i>
+	                    <div class="form-group">
+		                    <input type="email" class="form-control" v-model.trim="factory.email" placeholder="Email Address"
+		                           :class="{'is-invalid': factory.errors.email, 'is-valid': factory.isValid('email') }">
+		                    <span class="small text-danger" v-if="factory.errors.email">{{ factory.errors.email }}</span>
+	                    </div>
+                        <button class="btn btn-primary mx-0" type="submit" :disabled="loading">
+                            <i class="fas fa-spin fa-spinner my-0 mr-1" v-if="loading"></i>
                             <span>Subscribe</span>
                         </button>
-                    </div>
+                    </form>
                 </div>
                 <div class="col-4 col-md-2">
                     <h6>Quick Links</h6>
@@ -75,14 +79,19 @@
     }
 </style>
 
-<script>
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
 import { required, email} from 'vuelidate/lib/validators'
 import { mapActions } from 'vuex'
-export default {
+import { useMailingList } from '@/usecases/users/role'
+export default defineComponent({
 	data: () => ({
 		email: '',
-		loading: false
 	}),
+	setup(){
+		const { loading, factory, subscribeToMailingList } = useMailingList()
+		return { loading, factory, subscribeToMailingList }
+	},
 	validations: {
 		email: { required, email }
 	},
@@ -100,5 +109,5 @@ export default {
 			this.loading = false
 		}
 	}
-}
+})
 </script>
