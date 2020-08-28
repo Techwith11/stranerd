@@ -1,6 +1,7 @@
 import { computed, reactive } from '@vue/composition-api'
-import { FindUsersByEmail, GetMailingListFactory, SubscribeToMailingList,
-	MakeAdmin, RemoveAdmin
+import {
+	FindUsersByEmail, GetMailingListFactory, SubscribeToMailingList,
+	MakeAdmin, RemoveAdmin, MakeTutor
 } from '@root/modules/users'
 import { Notify } from '@/config/notifications'
 import { UserEntity } from '@root/modules/users/domain/entities/user'
@@ -81,5 +82,54 @@ export const useAdminRoles = () => {
 		users: computed(() => state.users),
 		email: computed({ get: () => state.email, set: (value: string) => state.email = value }),
 		getUsersByEmail, adminUser, deAdminUser, reset
+	}
+}
+
+export const useTutorRoles = () => {
+	const state = reactive({
+		loading: false,
+		fetched: false,
+		upgrading: false,
+		email: '',
+		course: null as string | null,
+		users: reactive([]) as UserEntity[]
+	})
+
+	const getUsersByEmail = async () => {
+		if(state.email){
+			state.loading = true
+			state.users = reactive(await FindUsersByEmail.call(state.email))
+			state.fetched = true
+			state.loading = false
+		}
+	}
+
+	const makeTutor = async (user: UserEntity) => {
+		if(state.course){
+			state.upgrading = true
+			try{
+				await MakeTutor.call(user.id, state.course)
+				state.users.find((u) => u.id === user.id)!.tutor?.courses.push(state.course)
+			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
+			state.upgrading = false
+		}
+	}
+
+	const reset = () => {
+		state.email = ''
+		state.course = null
+		state.users = reactive([])
+		state.fetched = false
+	}
+
+
+	return {
+		loading: computed(() => state.loading),
+		fetched: computed(() => state.fetched),
+		upgrading: computed(() => state.upgrading),
+		users: computed(() => state.users),
+		email: computed({ get: () => state.email, set: (value: string) => state.email = value }),
+		course: computed({ get: () => state.course!, set: (value: string) => state.course = value }),
+		getUsersByEmail, makeTutor, reset
 	}
 }
