@@ -1,10 +1,10 @@
 <template>
-	<div class="alert" role="alert" :class="test.score < 70 ? 'alert-danger' : 'alert-success'">
-		<div class="d-flex justify-content-between">
-			<span>{{ test.course }} Level {{ test.level }}</span>
-			<h5>{{ test.score }}%</h5>
+	<div class="alert" role="alert">
+		<div class="d-flex justify-content-between align-items-center mb-1">
+			<span class="text-wrap">{{ test.course }} Lv.{{ test.level }}</span>
+			<h5 class="mb-0" :class="test.score < 70 ? 'text-danger' : 'text-success'">{{ test.score }}%</h5>
 		</div>
-		<span>Taken {{ getDateOrTime }}</span>
+		<span class="text-secondary small">taken {{ getDateOrTime }}</span>
 	</div>
 </template>
 

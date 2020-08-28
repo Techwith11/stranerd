@@ -1,23 +1,14 @@
 <template>
 	<Default>
-		<div id="background">
-			<div class="p-3">
-				<account-nav />
-				<router-view />
-			</div>
-		</div>
+		<router-view />
 	</Default>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import AccountNav from '@/components/account/single/AccountNav.vue'
 import { useStore } from '@/usecases/store'
 export default defineComponent({
 	name: 'Account',
-	components: {
-		'account-nav': AccountNav
-	},
 	setup(){
 		return { getUser: useStore().auth.getUser }
 	},
