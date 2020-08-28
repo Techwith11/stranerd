@@ -10,12 +10,12 @@ module.exports = functions.https.onCall(async (data, context) => {
 	}
 	try{
 		if (functions.config().environment.mode === 'production'){
-			await admin.auth().setCustomUserClaims(data, { isAdmin: true })
+			await admin.auth().setCustomUserClaims(data.id, { isAdmin: true })
 		}
 		await admin
 			.firestore()
 			.collection('users')
-			.doc(data)
+			.doc(data.id)
 			.set({
 				roles: { isAdmin: true }
 			}, { merge: true })

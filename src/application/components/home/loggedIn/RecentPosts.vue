@@ -5,7 +5,10 @@
 			<p class="lead">No questions available at the moment. Try asking one <router-link to="/ask-a-question">here</router-link></p>
 		</div>
 		<div v-else>
-			<post-card v-for="post in posts" :key="post.id" :post="post" />
+			<div v-for="post in posts" :key="post.id">
+				<post-card  :post="post" />
+				<hr class="mt-2 mb-5">
+			</div>
 			<div class="d-flex justify-content-end mb-3">
 				<router-link class="txt-shadow text-decoration-none" to="/posts">See More</router-link>
 			</div>

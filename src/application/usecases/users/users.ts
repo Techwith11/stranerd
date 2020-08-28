@@ -72,7 +72,7 @@ export const fetchUser = async (id: string) => {
 		const user = await FindUser.call(id)
 		if(user) addToUsersList(user)
 	}
-	return computed(() => users.find((user) => user.id === id)).value
+	return users.find((user) => user.id === id)
 }
 
 const userStates: {[key:string]: {loading:boolean,error:string, user: UserEntity | undefined, sessions: object[]}} = {}
