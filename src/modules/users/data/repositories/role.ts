@@ -20,4 +20,8 @@ export class RoleRepository implements IRoleRepository{
 		return await this.dataSource.removeAdmin({ id })
 	}
 
+	public async subscribeToMailingList(data: { email: string }) {
+		return await this.dataSource.subscribeToMailingList(data)
+	}
+
 }

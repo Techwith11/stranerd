@@ -21,6 +21,8 @@ import { RoleRepository } from '@root/modules/users/data/repositories/role'
 import { MakeAdminUsecase } from '@root/modules/users/domain/usecases/makeAdmin'
 import { MakeTutorUsecase } from '@root/modules/users/domain/usecases/makeTutor'
 import { RemoveAdminUsecase } from '@root/modules/users/domain/usecases/removeAdmin'
+import { GetMailingListFactoryUsecase } from '@root/modules/users/domain/usecases/getMailingListFactory'
+import { SubscribeToMailingListUsecase } from '@root/modules/users/domain/usecases/subscribeToMailingList'
 
 const userDataSource = new UserFirebaseDataSource()
 const authDataSource = new AuthFirebaseDataSource()
@@ -50,3 +52,5 @@ export const GetUpdatePasswordFactory = new GetUpdatePasswordFactoryUseCase()
 export const MakeAdmin = new MakeAdminUsecase(roleRepository)
 export const RemoveAdmin = new RemoveAdminUsecase(roleRepository)
 export const MakeTutor = new MakeTutorUsecase(roleRepository)
+export const SubscribeToMailingList = new SubscribeToMailingListUsecase(roleRepository)
+export const GetMailingListFactory = new GetMailingListFactoryUsecase()
