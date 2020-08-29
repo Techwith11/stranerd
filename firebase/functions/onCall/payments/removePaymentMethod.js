@@ -1,6 +1,6 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-const braintree = require('braintree')
+const { removePaymentMethod } = require('../../helpers/braintree')
 const { isProduction } = require('../../helpers/environment')
 
 module.exports = functions.https.onCall(async (data, context) => {
@@ -14,18 +14,13 @@ module.exports = functions.https.onCall(async (data, context) => {
 	if(!method.exists){ throw new functions.https.HttpsError('invalid-argument', 'Method doesn\'t exist') }
 	let token = method.data().token
 	try{
-		let environment = functions.config().environment.mode
-		let gateway = braintree.connect({
-			environment: braintree.Environment[environment === 'production' ? 'Production' : 'Sandbox'],
-			merchantId: functions.config().braintree[environment]['merchant_id'],
-			publicKey: functions.config().braintree[environment]['public_key'],
-			privateKey: functions.config().braintree[environment]['private_key']
-		})
-		let result = await gateway.paymentMethod.delete(token)
+		let result = await removePaymentMethod(token)
+
 		if(result.success){
 			await method.ref.delete()
 		}
 		return result.success
+
 	}catch(error){
 		throw new functions.https.HttpsError('unknown', error.message)
 	}

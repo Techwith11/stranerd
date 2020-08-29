@@ -1,5 +1,5 @@
 const functions = require('firebase-functions')
-const braintree = require('braintree')
+const { getClientToken } = require('../../helpers/braintree')
 const { isProduction } = require('../../helpers/environment')
 
 module.exports = functions.https.onCall(async (data, context) => {
@@ -8,14 +8,9 @@ module.exports = functions.https.onCall(async (data, context) => {
 	}
 	try{
 		let environment = functions.config().environment.mode
-		let gateway = braintree.connect({
-			environment: braintree.Environment[environment === 'production' ? 'Production' : 'Sandbox'],
-			merchantId: functions.config().braintree[environment]['merchant_id'],
-			publicKey: functions.config().braintree[environment]['public_key'],
-			privateKey: functions.config().braintree[environment]['private_key']
-		})
 		let paypalToken = functions.config().paypal[environment]['client_id']
-		let token = await gateway.clientToken.generate()
+
+		let token = await getClientToken()
 		return {
 			braintree: token.clientToken,
 			paypal: paypalToken

@@ -1,6 +1,6 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-const braintree = require('braintree')
+const { createPaymentMethod } = require('../../helpers/braintree')
 const { isProduction } = require('../../helpers/environment')
 
 module.exports = functions.https.onCall(async (data, context) => {
@@ -12,17 +12,7 @@ module.exports = functions.https.onCall(async (data, context) => {
 	let customerId = ref.data().account.customer_id
 	if(!customerId){ throw new functions.https.HttpsError('invalid-argument', 'User doesn\'t have a valid customer id') }
 	try{
-		let environment = functions.config().environment.mode
-		let gateway = braintree.connect({
-			environment: braintree.Environment[environment === 'production' ? 'Production' : 'Sandbox'],
-			merchantId: functions.config().braintree[environment]['merchant_id'],
-			publicKey: functions.config().braintree[environment]['public_key'],
-			privateKey: functions.config().braintree[environment]['private_key']
-		})
-		let result = await gateway.paymentMethod.create({
-			customerId,
-			paymentMethodNonce: data.nonce
-		})
+		let result = await createPaymentMethod(customerId, data.nonce)
 		if(result.success){
 			let details = JSON.parse(JSON.stringify(result.paymentMethod))
 			await admin.firestore().collection(`users/${data.id}/paymentMethods`).add({
