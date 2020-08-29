@@ -9,17 +9,22 @@ let plans = {
 
 module.exports = functions.https.onRequest(async (request, response) => {
 	try {
-		let parsed = await parseNotification(request.body)
+		const parsed = await parseNotification(request.body)
 		let { subscription, kind } = parsed
 		if(subscription){
 			subscription = JSON.parse(JSON.stringify(subscription))
-			let docs = await admin.firestore().collection('users').where('account.subscription.id','==', subscription.id).limit(1).get()
+
+			const docs = await admin.firestore().collection('users')
+				.where('account.subscription.id','==', subscription.id)
+				.limit(1).get()
 			if(!docs.size){ return response.json('No user with such subscription. Skipping web hook').end() }
-			let account = { subscription }
+
+			const account = { subscription }
 			if(kind === 'subscription_charged_successfully'){
-				let planId = subscription.planId || 'stranerd_monthly_amateur_plan'
+				const planId = subscription.planId || 'stranerd_monthly_amateur_plan'
 				account.questions = plans[planId] || 5
 			}
+
 			await docs.docs[0].ref.set({ account }, { merge: true })
 		}
 		return response.json({ message: 'Updated successfully' }).end()

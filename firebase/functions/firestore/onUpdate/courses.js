@@ -16,8 +16,6 @@ module.exports = functions.firestore.document('/courses/{id}').onUpdate(async (s
 	const newDocuments = snap.after.data().documents
 	oldDocuments.map(async document => {
 		const wasNotRemoved = newDocuments.find(doc => equal(doc, document))
-		if(!wasNotRemoved){
-			await deleteFromStorage(document.link)
-		}
+		if(!wasNotRemoved) await deleteFromStorage(document.link)
 	})
 })
