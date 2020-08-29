@@ -1,12 +1,13 @@
 import { BaseFactory } from '@root/modules/core/domains/factories/base'
 import { isRequired, isLongerThan } from '@root/modules/core/validations/rules'
 import { Media } from '@root/modules/core/data/models/base'
+import { UserFromModel } from '@root/modules/users/data/models/user'
 
 type Profile = { name: string, bio: string, image?: Media }
 type MediaContent = File | Media
 const isLongerThan3 = (value:string) => isLongerThan(3, value)
 
-export class UpdateProfileFactory extends BaseFactory<null, Profile> {
+export class UpdateProfileFactory extends BaseFactory<UserFromModel, Profile> {
 	public readonly rules = {
 		name: [isRequired, isLongerThan3],
 		bio: [isRequired, isLongerThan3],
@@ -43,8 +44,11 @@ export class UpdateProfileFactory extends BaseFactory<null, Profile> {
 		}
 	}
 
-	public loadEntity = (entity: null) => {
-		throw Error(`Cannot load an entity into this factory, ${entity}`)
+	public loadEntity = (entity: UserFromModel) => {
+		//TODO: Replace type UserFromModel with UserEntity on implementing user listener as UserEntity
+		this.name = entity.bio.name
+		this.bio = entity.bio.bio
+		this.image = entity.bio.image
 	}
 
 }

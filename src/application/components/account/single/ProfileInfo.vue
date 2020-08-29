@@ -28,7 +28,7 @@ export default defineComponent({
 		const getUser = useStore().auth.getUser
 		return {
 			getUser,
-			getUserImageLink: computed(() => getUser.value.bio?.image?.link ?? useStore().auth.getDefaultImage),
+			getUserImageLink: computed(() => getUser.value.bio?.image?.link ?? useStore().auth.getDefaultImage.value),
 			setAccountModalEditProfile: useStore().modals.setAccountModalEditProfile,
 			setAccountModalUpdatePassword: useStore().modals.setAccountModalUpdatePassword,
 		}
