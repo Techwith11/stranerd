@@ -24,6 +24,8 @@ import { RemoveAdminUsecase } from '@root/modules/users/domain/usecases/removeAd
 import { GetMailingListFactoryUsecase } from '@root/modules/users/domain/usecases/getMailingListFactory'
 import { SubscribeToMailingListUsecase } from '@root/modules/users/domain/usecases/subscribeToMailingList'
 import { FindUsersByEmailUseCase } from '@root/modules/users/domain/usecases/findUsersByEmail'
+import { UpdateProfileUseCase } from '@root/modules/users/domain/usecases/updateProfile'
+import { GetUpdateProfileFactoryUseCase } from '@root/modules/users/domain/usecases/getUpdateProfileFactory'
 
 const userDataSource = new UserFirebaseDataSource()
 const authDataSource = new AuthFirebaseDataSource()
@@ -46,10 +48,12 @@ export const RegisterWithEmail = new RegisterWithEmailUseCase(authRepository)
 export const RegisterAuthChangedCB = new RegisterAuthChangedCallbackUseCase(authRepository)
 export const ResetPassword = new ResetPasswordUseCase(authRepository)
 export const UpdatePassword = new UpdatePasswordUseCase(authRepository)
+export const UpdateProfile = new UpdateProfileUseCase(authRepository)
 export const GetLoginFactory = new GetLoginFactoryUseCase()
 export const GetRegisterFactory = new GetRegisterFactoryUseCase()
 export const GetResetPasswordFactory = new GetResetPasswordFactoryUseCase()
 export const GetUpdatePasswordFactory = new GetUpdatePasswordFactoryUseCase()
+export const GetUpdateProfileFactory = new GetUpdateProfileFactoryUseCase()
 
 export const MakeAdmin = new MakeAdminUsecase(roleRepository)
 export const RemoveAdmin = new RemoveAdminUsecase(roleRepository)
