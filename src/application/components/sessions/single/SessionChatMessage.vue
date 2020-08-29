@@ -66,19 +66,41 @@ export default {
 
 <style lang="scss" scoped>
 	.chat{
+		min-width: 6rem;
 		max-width: 75%;
-    padding: 1rem;
-    margin: 0.25rem 0;
+	    padding: 1rem;
+	    margin: 0.25rem 0;
 	}
-  .mine{
-    border-radius: 1.5rem 1.5rem 0 1.5rem;
-    border: 1px solid $text-black;
-    background: $white;
-    color: $text-black;
-  }
-  .not-mine{
-    border-radius: 1.5rem 1.5rem 1.5rem 0;
-    background: #707070;
-    color: $white;
-  }
+	.mine{
+		border-radius: 1.5rem 1.5rem 0 1.5rem;
+		background: $primary-light;
+		color: $text-black;
+		position: relative;
+		&::after{
+		    content: '';
+			top: 100%;
+			right:0;
+		    position: absolute;
+			width: 2.5rem;
+			height: 2.5rem;
+			border-top-right-radius: 50%;
+			box-shadow: 0 -1.25rem 0 0 $primary-light;
+		}
+	}
+	.not-mine{
+		border-radius: 1.5rem 1.5rem 1.5rem 0;
+		background: #707070;
+		color: $white;
+		position: relative;
+		&::after{
+			content: '';
+			top: 100%;
+			left: 0;
+			position: absolute;
+			width: 2.5rem;
+			height: 2.5rem;
+			border-top-left-radius: 50%;
+			box-shadow: -1.25rem 0 0 #707070;
+		}
+	}
 </style>
