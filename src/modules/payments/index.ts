@@ -15,16 +15,23 @@ import { PlanFirebaseDataSource } from '@root/modules/payments/data/datasources/
 import { PlanTransformer } from '@root/modules/payments/data/transformers/plan'
 import { PlanRepository } from '@root/modules/payments/data/repositories/plan'
 import { GetSubscriptionPlansUsecase } from '@root/modules/payments/domain/usecases/getSubscriptionPlans'
+import { TransactionFirebaseDataSource } from '@root/modules/payments/data/datasources/transaction-firebase'
+import { TransactionTransformer } from '@root/modules/payments/data/transformers/transaction'
+import { TransactionRepository } from '@root/modules/payments/data/repositories/transaction'
+import { GetTransactionsUsecase } from '@root/modules/payments/domain/usecases/getTransactions'
 
 const paymentDataSource = new PaymentFirebaseDataSource()
 const methodDataSource = new MethodFirebaseDataSource()
+const transactionDataSource = new TransactionFirebaseDataSource()
 const planDataSource = new PlanFirebaseDataSource()
 
 const methodTransformer = new MethodTransformer()
+const transactionTransformer = new TransactionTransformer()
 const planTransformer = new PlanTransformer()
 
 const paymentRepository = new PaymentRepository(paymentDataSource)
 const methodRepository = new MethodRepository(methodDataSource, methodTransformer)
+const transactionRepository = new TransactionRepository(transactionDataSource, transactionTransformer)
 const planRepository = new PlanRepository(planDataSource, planTransformer)
 
 
@@ -37,5 +44,7 @@ export const UpdateSubscription = new UpdatePaymentMethodForSubscriptionUsecase(
 export const CancelSubscription = new CancelSubscriptionUsecase(paymentRepository)
 
 export const GetPaymentMethods = new GetPaymentMethodsUsecase(methodRepository)
+
+export const GetTransactions = new GetTransactionsUsecase(transactionRepository)
 
 export const GetSubscriptionPlans = new GetSubscriptionPlansUsecase(planRepository)
