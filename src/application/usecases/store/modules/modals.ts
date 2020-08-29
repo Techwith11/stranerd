@@ -21,12 +21,10 @@ const getters = {
 }
 
 const actions = {
-	setAccountModalOverview: () => Store.dispatch('setAccountModalOverview'),
 	setAccountModalAddPaymentMethod: () => Store.dispatch('setAccountModalAddPaymentMethod'),
 	setAccountModalTransactions: () => Store.dispatch('setAccountModalTransactions'),
 	setAccountModalEditProfile: () => Store.dispatch('setAccountModalEditProfile'),
 	setAccountModalUpdatePassword: () => Store.dispatch('setAccountModalUpdatePassword'),
-	setAccountModalSelectSubscription: () => Store.dispatch('setAccountModalSelectSubscription'),
 	closeAccountModal: () => Store.dispatch('closeAccountModal'),
 
 	setAuthModalLogin: () => Store.dispatch('setAuthModalLogin'),

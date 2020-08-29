@@ -30,11 +30,9 @@ const getters = {
 	isEditModalSubject: (state) => state.editModal === 'edit-subject',
 
 	isAccountModalOpen: (state) => !!state.accountModal,
-	isAccountModalOverview: (state) => state.accountModal === 'profile-overview',
 	isAccountModalEditProfile: (state) => state.accountModal === 'edit-profile',
 	isAccountModalUpdatePassword: (state) => state.accountModal === 'update-password',
 	isAccountModalAddPaymentMethod: (state) => state.accountModal === 'add-payment-method',
-	isAccountModalSelectSubscription: (state) => state.accountModal === 'select-subscription',
 	isAccountModalTransactions: (state) => state.accountModal === 'transactions',
 
 	isPostModalOpen: (state) => !!state.postModal,
@@ -77,11 +75,9 @@ const actions = {
 	setEditModalSubject: ({ commit }) => commit('setEditModal', 'edit-subject'),
 	closeEditModal: ({ commit }) => commit('setEditModal', null),
 
-	setAccountModalOverview: ({ commit }) => commit('setAccountModal', 'profile-overview'),
 	setAccountModalEditProfile: ({ commit }) => commit('setAccountModal', 'edit-profile'),
 	setAccountModalUpdatePassword: ({ commit }) => commit('setAccountModal', 'update-password'),
 	setAccountModalAddPaymentMethod: ({ commit }) => commit('setAccountModal', 'add-payment-method'),
-	setAccountModalSelectSubscription: ({ commit }) => commit('setAccountModal', 'select-subscription'),
 	setAccountModalTransactions: ({ commit }) => commit('setAccountModal', 'transactions'),
 	closeAccountModal: ({ commit }) => commit('setAccountModal', null),
 

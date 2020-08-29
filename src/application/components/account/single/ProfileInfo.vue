@@ -7,7 +7,8 @@
       <div class="mb-3">
         <h4 class="my-2 text-truncate">{{ getUser.bio.name }}</h4>
         <h6 class="mb-1 text-truncate">{{ getUser.bio.email }}</h6>
-        <a class="text-info" @click.prevent="setAccountModalEditProfile">Edit profile info</a>
+        <a class="text-info d-block" @click.prevent="setAccountModalEditProfile">Edit profile info</a>
+        <a class="text-info" @click.prevent="setAccountModalUpdatePassword">Update Password</a>
       </div>
     </div>
     <div class="col-md-6">
@@ -29,6 +30,7 @@ export default defineComponent({
 			getUser,
 			getUserImageLink: computed(() => getUser.value.bio?.image?.link ?? useStore().auth.getDefaultImage),
 			setAccountModalEditProfile: useStore().modals.setAccountModalEditProfile,
+			setAccountModalUpdatePassword: useStore().modals.setAccountModalUpdatePassword,
 		}
 	}
 })

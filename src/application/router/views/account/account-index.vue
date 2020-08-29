@@ -1,10 +1,9 @@
 <template>
-	<div class="container">
+	<div class="container py-3">
 		<template v-if="isLoggedIn">
 			<profile-info />
 			<payment-info />
 			<tutor-info />
-			<button class="btn-success floating-button" @click="setAccountModalOverview"><i class="fas fa-cog"></i></button>
 		</template>
 	</div>
 </template>
@@ -23,8 +22,7 @@ export default defineComponent({
 	},
 	setup(){
 		return {
-			isLoggedIn: useStore().auth.isLoggedIn,
-			setAccountModalOverview: useStore().modals.setAccountModalOverview
+			isLoggedIn: useStore().auth.isLoggedIn
 		}
 	},
 })

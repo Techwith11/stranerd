@@ -10,10 +10,9 @@
 						<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderTestsLoading"></i>
 						<span>Fetch More</span>
 					</button>
-			</div>
-		  </div>
+				</div>
+		    </div>
 		</div>
-		<button class="floating-button"><router-link to="/tests/tutors"><i class="fas fa-sticky-note text-white"></i></router-link></button>
 	</div>
 </template>
 
