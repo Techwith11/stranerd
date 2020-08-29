@@ -12,7 +12,7 @@
 				</div>
 				<div class="form-group my-3">
 					<h6>Level</h6>
-					<input class="form-control" type="number" min="1" placeholder="Level" v-model.trim="factory.level"
+					<input class="form-control" type="number" min="1" placeholder="Level" v-model="factory.level"
 					       :class="{'is-invalid': factory.errors.level, 'is-valid': factory.isValid('level')}">
 					<small class="small text-danger d-block" v-if="factory.errors.level">{{ factory.errors.level }}</small>
 				</div>
@@ -35,25 +35,25 @@
 				<hr>
 				<div class="form-group my-3">
 					<h6>Option A</h6>
-					<input class="form-control" placeholder="Option A" v-model.trim="factory.a"
+					<input class="form-control" placeholder="Option A" v-model="factory.a"
 						:class="{'is-invalid': factory.errors.a, 'is-valid': factory.isValid('a')}">
 					<small class="small text-danger d-block" v-if="factory.errors.a">{{ factory.errors.a }}</small>
 				</div>
 				<div class="form-group my-3">
 					<h6>Option B</h6>
-					<input class="form-control" placeholder="Option B" v-model.trim="factory.b"
+					<input class="form-control" placeholder="Option B" v-model="factory.b"
 					       :class="{'is-invalid': factory.errors.b, 'is-valid': factory.isValid('b')}">
 					<small class="small text-danger d-block" v-if="factory.errors.b">{{ factory.errors.b }}</small>
 				</div>
 				<div class="form-group my-3">
 					<h6>Option C</h6>
-					<input class="form-control" placeholder="Option C" v-model.trim="factory.c"
+					<input class="form-control" placeholder="Option C" v-model="factory.c"
 					       :class="{'is-invalid': factory.errors.c, 'is-valid': factory.isValid('c')}">
 					<small class="small text-danger d-block" v-if="factory.errors.c">{{ factory.errors.c }}</small>
 				</div>
 				<div class="form-group my-3">
 					<h6>Option D</h6>
-					<input class="form-control" placeholder="Option D" v-model.trim="factory.d"
+					<input class="form-control" placeholder="Option D" v-model="factory.d"
 					       :class="{'is-invalid': factory.errors.d, 'is-valid': factory.isValid('d')}">
 					<small class="small text-danger d-block" v-if="factory.errors.d">{{ factory.errors.d }}</small>
 				</div>

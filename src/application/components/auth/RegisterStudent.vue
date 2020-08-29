@@ -8,22 +8,22 @@
 		<p class="small text-center mb-4">Create an account to gain access to millions of ready made courses fit for everyone.</p>
 		<form class="mx-2" @submit.prevent="register">
 			<div class="form-group">
-				<input type="text" id="name" class="form-control" placeholder="Full name" v-model.trim="factory.name"
+				<input type="text" id="name" class="form-control" placeholder="Full name" v-model="factory.name"
 					:class="{'is-invalid': factory.errors.name, 'is-valid': factory.isValid('name')}" autocomplete="name">
 				<span class="small text-danger" v-if="factory.errors.name">{{ factory.errors.name }}</span>
 			</div>
 			<div class="form-group">
-				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="factory.email"
+				<input type="email" id="email" class="form-control" placeholder="Email address" v-model="factory.email"
 					:class="{'is-invalid': factory.errors.email, 'is-valid': factory.isValid('email')}" autocomplete="email">
 				<span class="small text-danger" v-if="factory.errors.email">{{ factory.errors.email }}</span>
 			</div>
 			<div class="form-group">
-				<input type="password" id="password" class="form-control" placeholder="Password" v-model.trim="factory.password"
+				<input type="password" id="password" class="form-control" placeholder="Password" v-model="factory.password"
 					:class="{'is-invalid': factory.errors.password, 'is-valid': factory.isValid('password')}" autocomplete="password">
 				<span class="small text-danger" v-if="factory.errors.password">{{ factory.errors.password }}</span>
 			</div>
 			<div class="form-group">
-				<input type="password" id="c_password" class="form-control" placeholder="Confirm Password" v-model.trim="factory.c_password"
+				<input type="password" id="c_password" class="form-control" placeholder="Confirm Password" v-model="factory.c_password"
 					:class="{'is-invalid': factory.errors.c_password, 'is-valid': factory.isValid('c_password')}" autocomplete="password">
 				<span class="small text-danger" v-if="factory.errors.c_password">passwords don't match</span>
 			</div>

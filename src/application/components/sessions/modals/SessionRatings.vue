@@ -9,7 +9,7 @@
 			<a @click.prevent="setRatingFor5()"><i class="fas fa-3x mx-1" :class="{'fa-star text-warning': rating > 4.5, 'fa-star-half-alt text-warning': rating > 4 && rating < 5, 'fa-star text-secondary': rating < 4.5 }"></i></a>
 		</div>
 		<div class="form-group my-3">
-			<textarea rows="5" class="form-control" placeholder="Please leave a comment ..." v-model.trim="comment"></textarea>
+			<textarea rows="5" class="form-control" placeholder="Please leave a comment ..." v-model="comment"></textarea>
 		</div>
 		<div class="d-flex justify-content-end my-3">
 			<button class="btn-success" :disabled="isLoading" @click="submitRating">

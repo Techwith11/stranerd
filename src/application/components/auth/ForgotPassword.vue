@@ -8,7 +8,7 @@
 		<p class="small text-center my-4">Provide the email address associated with your previously created account.</p>
 		<form class="mx-2" @submit.prevent="resetPassword">
 			<div class="form-group">
-				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="factory.email"
+				<input type="email" id="email" class="form-control" placeholder="Email address" v-model="factory.email"
 					:class="{'is-invalid': factory.errors.email, 'is-valid': factory.isValid('email')}" autocomplete="email">
 				<span class="small text-danger" v-if="factory.errors.email">{{ factory.errors.email }}</span>
 			</div>

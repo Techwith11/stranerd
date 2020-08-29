@@ -4,7 +4,7 @@
 		<form class="mx-2" @submit.prevent="submit">
 			<div class="form-group my-3">
 				<h6>Name</h6>
-				<input class="form-control" placeholder="Subject name" v-model.trim="factory.name"
+				<input class="form-control" placeholder="Subject name" v-model="factory.name"
 					:class="{'is-invalid': factory.errors.name, 'is-valid': factory.isValid('name')}">
 				<small class="small text-danger d-block" v-if="factory.errors.name">{{ factory.errors.name }}</small>
 			</div>
@@ -24,7 +24,7 @@
 				<div class="mt-5">
 					<div class="form-group">
 						<h6>New module</h6>
-						<input class="form-control" placeholder="Module name" v-model.trim="factory.moduleName"
+						<input class="form-control" placeholder="Module name" v-model="factory.moduleName"
 							:class="{'is-invalid': factory.errors.moduleName, 'is-valid': factory.isValid('moduleName')}">
 						<small class="small text-danger d-block" v-if="factory.errors.moduleName">{{ factory.errors.moduleName }}</small>
 					</div>

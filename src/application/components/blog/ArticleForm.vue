@@ -10,7 +10,7 @@
 				</a>
 			</div>
 			<div class="form-group my-3">
-				<input class="form-control" placeholder="Title" v-model.trim="factory.title"
+				<input class="form-control" placeholder="Title" v-model="factory.title"
 					:class="{'is-invalid': factory.errors.title, 'is-valid': factory.isValid('title')}">
 				<span class="small" v-if="factory.errors.title">{{ factory.errors.title }}</span>
 			</div>
