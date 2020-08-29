@@ -1,19 +1,13 @@
-const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 const nodemailer = require('nodemailer')
 const Template = require('email-templates')
+const { environmentVariables } = require('../helpers/environment')
 
-const environment = functions.config().environment.mode
-const data = functions.config().admin[environment]
-const { email, pass } = data.email
-const { domain, color } = data.meta
-const meta = {
-	logo: `${domain}/img/stranerd_logo.png`,
-	color, domain
-}
+const { email: { email, pass }, meta: { domain } } = environmentVariables.admin
+const meta = { domain, logo: `${domain}/img/stranerd_logo.png` }
 
 
-exports.sendMail = async (to, subject ,content) => {
+const sendMail = async (to, subject ,content) => {
 	const transporter = nodemailer.createTransport({ service: 'gmail', auth: { user: email, pass } })
 	await transporter.sendMail({
 		from: `Stranerd`,
@@ -21,6 +15,7 @@ exports.sendMail = async (to, subject ,content) => {
 		html: content
 	})
 }
+module.exports.sendMail = sendMail
 
 const sendMailAndCatchErrors = async (to, subject ,content) => {
 	try{
@@ -36,13 +31,13 @@ const sendMailAndCatchErrors = async (to, subject ,content) => {
 	}
 }
 
-exports.sendPurchaseEmail = async (to, user, cart) => {
+module.exports.sendPurchaseEmail = async (to, user, cart) => {
 	const content = await new Template().render('templates/purchaseEmail/index.pug',
 		{ user, cart, meta })
 	return await sendMailAndCatchErrors(to, `Recent Purchase at ${domain}`, content)
 }
 
-exports.sendSessionRequestEmail = async (to, student, time) => {
+module.exports.sendSessionRequestEmail = async (to, student, time) => {
 	const content = await new Template().render('templates/sendSessionRequestEmail/index.pug',
 		{ student, meta, time })
 	return await sendMailAndCatchErrors(to, 'Session Request', content)

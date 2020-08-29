@@ -1,8 +1,7 @@
-const functions = require('firebase-functions')
 const algoliaSearch = require('algoliasearch')
-const environment = functions.config().environment.mode
-const algolia = functions.config().algolia[environment]
-const client = algoliaSearch(algolia.app_id, algolia.api_key)
+const { environmentVariables } = require('./environment')
+const { appId, apiKey } = environmentVariables.algolia
+const client = algoliaSearch(appId, apiKey)
 
 exports.saveToAlgolia = async (collection, id ,data) => {
 	const index = client.initIndex(collection)

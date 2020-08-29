@@ -1,5 +1,5 @@
-const functions = require('firebase-functions')
 const axios = require('axios')
+const { environmentVariables } = require('./environment')
 
 module.exports.subscribeToMailchimpList = async email => {
 	let body = {
@@ -9,7 +9,7 @@ module.exports.subscribeToMailchimpList = async email => {
 	}
 	let bodyJSON = JSON.stringify(body)
 	let url = 'https://us10.api.mailchimp.com/3.0/lists/f630d749d7'
-	let apiKey = functions.config().mailchimp.api_key
+	let apiKey = environmentVariables.mailchimp.apiKey
 
 	try{
 		return await axios.post(url, bodyJSON, { headers: { Authorization: `auth ${apiKey}` } })

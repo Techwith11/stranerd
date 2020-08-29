@@ -1,13 +1,12 @@
-const functions = require('firebase-functions')
 const braintree = require('braintree')
+const { environmentVariables } = require('./environment')
 const { isProduction } = require('./environment')
-const environment = functions.config().environment.mode
 
 const getGateway = () => braintree.connect({
 	environment: braintree.Environment[isProduction ? 'Production' : 'Sandbox'],
-	merchantId: functions.config().braintree[environment]['merchant_id'],
-	publicKey: functions.config().braintree[environment]['public_key'],
-	privateKey: functions.config().braintree[environment]['private_key']
+	merchantId: environmentVariables.braintree.merchantId,
+	publicKey: environmentVariables.braintree.publicKey,
+	privateKey: environmentVariables.braintree.privateKey
 })
 
 module.exports.createCustomer = async (name, email) => await getGateway().customer.create({
