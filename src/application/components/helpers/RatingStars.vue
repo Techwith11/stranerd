@@ -8,13 +8,14 @@
 	</div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+export default defineComponent({
 	props: {
 		rating: {
 			type: Number,
 			required: true
 		}
 	}
-}
+})
 </script>

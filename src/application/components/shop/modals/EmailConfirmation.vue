@@ -7,17 +7,15 @@
 	</div>
 </template>
 
-<script>
-import { mapActions, mapGetters } from 'vuex'
-export default {
-	data: () => ({
-		isLoading: true
-	}),
-	methods: {
-		...mapActions(['closeCartModal'])
-	},
-	computed: {
-		...mapGetters(['getUser'])
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import { useStore } from '@/usecases/store'
+export default defineComponent({
+	setup(){
+		return {
+			closeCartModal: useStore().modals.closeCartModal,
+			getUser: useStore().auth.getUser
+		}
 	}
-}
+})
 </script>

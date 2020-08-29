@@ -4,7 +4,7 @@ import { computed, ComputedRef } from '@vue/composition-api'
 const getters = {
 	isAuthModalLogin: computed(() => Store.getters.isAuthModalLogin) as ComputedRef<boolean>,
 	isAuthModalForgotPassword: computed(() => Store.getters.isAuthModalForgotPassword) as ComputedRef<boolean>,
-	isAuthModalRegisterStudent: computed(() => Store.getters.isAuthModalRegisterStudent) as ComputedRef<boolean>,
+	isAuthModalRegister: computed(() => Store.getters.isAuthModalRegister) as ComputedRef<boolean>,
 
 	isCreateModalOverview: computed(() => Store.getters.isCreateModalOverview) as ComputedRef<boolean>,
 	isCreateModalCourse: computed(() => Store.getters.isCreateModalCourse) as ComputedRef<boolean>,
@@ -18,6 +18,18 @@ const getters = {
 	isEditModalNote: computed(() => Store.getters.isEditModalNote) as ComputedRef<boolean>,
 	isEditModalBlog: computed(() => Store.getters.isEditModalBlog) as ComputedRef<boolean>,
 	isEditModalSubject: computed(() => Store.getters.isEditModalSubject) as ComputedRef<boolean>,
+
+	isAccountModalEditProfile: computed(() => Store.getters.isAccountModalEditProfile) as ComputedRef<boolean>,
+	isAccountModalTransactions: computed(() => Store.getters.isAccountModalTransactions) as ComputedRef<boolean>,
+	isAccountModalUpdatePassword: computed(() => Store.getters.isAccountModalUpdatePassword) as ComputedRef<boolean>,
+	isAccountModalAddPaymentMethod: computed(() => Store.getters.isAccountModalAddPaymentMethod) as ComputedRef<boolean>,
+
+	isPostModalNotify: computed(() => Store.getters.isPostModalNotify) as ComputedRef<boolean>,
+	isPostModalBuyMore: computed(() => Store.getters.isPostModalBuyMore) as ComputedRef<boolean>,
+
+	isCartModalOverview: computed(() => Store.getters.isCartModalOverview) as ComputedRef<boolean>,
+	isCartModalSelectPayment: computed(() => Store.getters.isCartModalSelectPayment) as ComputedRef<boolean>,
+	isCartModalEmailConfirmation: computed(() => Store.getters.isCartModalEmailConfirmation) as ComputedRef<boolean>,
 }
 
 const actions = {
@@ -28,7 +40,7 @@ const actions = {
 	closeAccountModal: () => Store.dispatch('closeAccountModal'),
 
 	setAuthModalLogin: () => Store.dispatch('setAuthModalLogin'),
-	setAuthModalRegisterStudent: () => Store.dispatch('setAuthModalRegisterStudent'),
+	setAuthModalRegister: () => Store.dispatch('setAuthModalRegister'),
 	setAuthModalForgotPassword: () => Store.dispatch('setAuthModalForgotPassword'),
 	closeAuthModal: () => Store.dispatch('closeAuthModal'),
 

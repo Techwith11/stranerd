@@ -9,22 +9,27 @@
 	</div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import EditProfile from '@/components/account/modals/EditProfile'
-import UpdatePassword from '@/components/account/modals/UpdatePassword'
-import AddPaymentMethod from '@/components/account/modals/AddPaymentMethod'
-import Transactions from '@/components/account/modals/Transactions'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import EditProfile from '@/components/account/modals/EditProfile.vue'
+import UpdatePassword from '@/components/account/modals/UpdatePassword.vue'
+import AddPaymentMethod from '@/components/account/modals/AddPaymentMethod.vue'
+import Transactions from '@/components/account/modals/Transactions.vue'
+import { useStore } from '@/usecases/store'
+export default defineComponent({
 	components: {
 		'edit-profile': EditProfile,
 		'update-password': UpdatePassword,
 		'add-payment-method': AddPaymentMethod,
 		'transactions': Transactions,
 	},
-	computed: mapGetters([
-	    'isAccountModalEditProfile', 'isAccountModalTransactions',
-		'isAccountModalUpdatePassword','isAccountModalAddPaymentMethod'
-	])
-}
+	setup(){
+		return {
+			isAccountModalEditProfile: useStore().modals.isAccountModalEditProfile,
+			isAccountModalTransactions: useStore().modals.isAccountModalTransactions,
+			isAccountModalUpdatePassword: useStore().modals.isAccountModalUpdatePassword,
+			isAccountModalAddPaymentMethod: useStore().modals.isAccountModalAddPaymentMethod,
+		}
+	}
+})
 </script>

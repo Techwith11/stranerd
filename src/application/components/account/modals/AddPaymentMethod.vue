@@ -9,18 +9,22 @@
 	</div>
 </template>
 
-<script>
-import AddPaymentMethod from '@/components/helpers/payments/AddPaymentMethod'
-import { mapActions } from 'vuex'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import AddPaymentMethod from '@/components/helpers/payments/AddPaymentMethod.vue'
+import { Notify } from '@/config/notifications'
+import { useStore } from '@/usecases/store'
+export default defineComponent({
 	components: {
 		'add-payment-method': AddPaymentMethod
 	},
-	methods: {
-		...mapActions(['closeAccountModal']),
-		onAddMethodSuccessful(){
-			new window.Toast({ icon: 'success', title: 'Refresh to see payment method details' })
+	setup(){
+		return {
+			closeAccountModal: useStore().modals.closeAccountModal,
+			onAddMethodSuccessful: async () => {
+				await Notify({ icon: 'success', title: 'Refresh to see payment method details' })
+			}
 		}
 	}
-}
+})
 </script>

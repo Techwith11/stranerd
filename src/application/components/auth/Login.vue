@@ -23,10 +23,10 @@
 					<span>Sign In with email</span>
 				</button>
 			</div>
-			<div class="d-flex justify-content-between text-wrap align-items-center small">
+			<div class="d-flex justify-content-between text-wrap align-items-center small mt-2">
 				<span>
 					Don't have an account?
-					<a class="text-info" @click.prevent="setAuthModalRegisterStudent">Sign Up</a>
+					<a class="text-info" @click.prevent="setAuthModalRegister">Sign Up</a>
 				</span>
 				<span>
 					Forgot Password?
@@ -73,7 +73,7 @@ export default defineComponent({
 			devLoading, devLogin, devId, devs, isDev,
 			anyLoading: computed(() => emailLoading.value || devLoading.value || googleLoading.value),
 			setAuthModalForgotPassword: useStore().modals.setAuthModalForgotPassword,
-			setAuthModalRegisterStudent: useStore().modals.setAuthModalRegisterStudent,
+			setAuthModalRegister: useStore().modals.setAuthModalRegister,
 			closeAuthModal: useStore().modals.closeAuthModal,
 		}
 	}

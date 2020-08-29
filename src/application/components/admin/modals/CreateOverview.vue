@@ -14,9 +14,10 @@
 	</div>
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
 import { useStore } from '@/usecases/store'
-export default {
+export default defineComponent({
 	name: 'CreateOverview',
 	setup(){
 		return {
@@ -27,7 +28,7 @@ export default {
 			setCreateModalArticle: useStore().modals.setCreateModalArticle
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>
