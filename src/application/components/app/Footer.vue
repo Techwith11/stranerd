@@ -13,7 +13,7 @@
                     <form @submit.prevent="subscribeToMailingList" class="mb-5">
                         <h6>Subscribe to our Newsletter</h6>
 	                    <div class="form-group">
-		                    <input type="email" class="form-control" v-model.trim="factory.email" placeholder="Email Address"
+		                    <input type="email" class="form-control" v-model="factory.email" placeholder="Email Address"
 		                           :class="{'is-invalid': factory.errors.email, 'is-valid': factory.isValid('email') }">
 		                    <span class="small text-danger" v-if="factory.errors.email">{{ factory.errors.email }}</span>
 	                    </div>

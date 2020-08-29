@@ -2,6 +2,7 @@ import { AuthBaseDataSource } from '@root/modules/users/data/datasources/auth-ba
 import { AuthUser } from '@root/modules/users/domain/entities/auth'
 import firebase, { auth } from '@root/services/firebase'
 import { FirestoreService } from '@root/modules/core/services/firebase'
+import { Media } from '@root/modules/core/data/models/base'
 
 export class AuthFirebaseDataSource implements AuthBaseDataSource{
 	public async loginWithEmail({ email, password }: AuthUser): Promise<string> {
@@ -41,6 +42,10 @@ export class AuthFirebaseDataSource implements AuthBaseDataSource{
 	public async updatePassword(user: { password: string }): Promise<void> {
 		await auth.currentUser?.updatePassword(user.password)
 		//TODO: catch possible errors
+	}
+
+	public async updateProfile(id: string, bio: { name: string; bio: string; image?: Media }): Promise<void> {
+		await FirestoreService.update('users', id, { bio })
 	}
 
 }

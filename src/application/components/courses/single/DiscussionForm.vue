@@ -1,7 +1,7 @@
 <template>
 	<form class="d-flex flex-column flex-lg-row align-items-lg-center" @submit.prevent="createDiscussion">
 		<div class="form-group flex-grow-1">
-			<textarea rows="3" class="form-control my-2 mr-lg-4" placeholder="Comment ..." v-model.trim="factory.body"></textarea>
+			<textarea rows="3" class="form-control my-2 mr-lg-4" placeholder="Comment ..." v-model="factory.body"></textarea>
 			<small class="small text-danger" v-if="factory.errors.body">{{ factory.errors.body }}</small>
 		</div>
 		<button class="btn-success" type="submit" :disabled="!factory.valid|| loading">

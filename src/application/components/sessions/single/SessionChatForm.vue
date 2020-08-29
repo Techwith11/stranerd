@@ -1,7 +1,7 @@
 <template>
 	<div class="mt-auto mb-3 d-flex align-items-center">
-		<textarea rows="1" class="form-control" placeholder="Enter message" v-model.trim="$v.message.$model"></textarea>
-		<a v-if="!$v.$invalid" @click.prevent="sendMessage"><i class="fas fa-paper-plane ml-3 text-success"></i></a>
+		<textarea rows="1" class="form-control" placeholder="Enter message" v-model="message"></textarea>
+		<a v-if="message" @click.prevent="sendMessage"><i class="fas fa-paper-plane ml-3 text-success"></i></a>
 		<a v-else @click.prevent="() => { $refs.mediaInput.value= ''; $refs.mediaInput.click() }"><i class="fas fa-upload ml-3 text-success"></i></a>
 		<input type="file" multiple @change="captureFiles" class="d-none" ref="mediaInput">
 	</div>
@@ -9,15 +9,11 @@
 
 <script>
 import { mapActions, mapGetters} from 'vuex'
-import { required } from 'vuelidate/lib/validators'
 export default {
 	data: () => ({
 		message: '',
 		media: []
 	}),
-	validations: {
-		message: { required }
-	},
 	computed: {
 		...mapGetters(['getId']),
 		getChatPath(){ return [this.getId, this.$route.params.id].sort().join('_') }
@@ -27,9 +23,8 @@ export default {
 		async sendMessage(){
 			const message = this.message
 			this.message = ''
-			this.$v.$reset()
 			try{
-				this.sendSessionChat({ id: this.$route.params.id, content: message })
+				await this.sendSessionChat({ id: this.$route.params.id, content: message })
 			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 		},
 		captureFiles(e){
@@ -49,7 +44,7 @@ export default {
 			if (result.value) {
 				for (const file of this.media) {
 					try{
-						this.sendSessionMedia({ id: this.$route.params.id, media: file })
+						await this.sendSessionMedia({ id: this.$route.params.id, media: file })
 					}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
 				}
 			}

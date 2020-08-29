@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueMeta from 'vue-meta'
-import Vuelidate from 'vuelidate'
 // @ts-ignore
 import VueChatScroll from 'vue-chat-scroll'
 import SweetAlert from 'sweetalert2'
@@ -11,7 +10,6 @@ import 'bootstrap'
 
 export const setup = () => {
 	Vue.use(VueMeta, { keyName: 'meta', refreshOnceOnNavigation: true })
-	Vue.use(Vuelidate)
 	Vue.use(VueChatScroll)
 
 	// @ts-ignore

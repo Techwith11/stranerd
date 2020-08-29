@@ -2,6 +2,7 @@ import { IAuthRepository } from '@root/modules/users/domain/irepositories/iauth'
 import { AuthBaseDataSource } from '@root/modules/users/data/datasources/auth-base'
 import { AuthUser } from '@root/modules/users/domain/entities/auth'
 import firebase from '@root/services/firebase'
+import { Media } from '@root/modules/core/data/models/base'
 
 export class AuthRepository implements IAuthRepository {
 	private dataSource: AuthBaseDataSource
@@ -36,6 +37,10 @@ export class AuthRepository implements IAuthRepository {
 
 	public async updatePassword(user: { password: string }): Promise<void> {
 		return await this.dataSource.updatePassword(user)
+	}
+
+	public async updateProfile(id: string, user: { name: string; bio: string; image?: Media }): Promise<void> {
+		return await this.dataSource.updateProfile(id, user)
 	}
 
 }

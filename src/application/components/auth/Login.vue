@@ -8,12 +8,12 @@
 		<p class="small mb-4 text-center">Sign In to allow us serve you personalized content.</p>
 		<form @submit.prevent="emailLogin">
 			<div class="form-group">
-				<input type="email" id="email" class="form-control" placeholder="Email address" v-model.trim="emailFactory.email"
+				<input type="email" id="email" class="form-control" placeholder="Email address" v-model="emailFactory.email"
 					:class="{'is-invalid': emailFactory.errors.email, 'is-valid': emailFactory.isValid('email')}" autocomplete="email">
 				<span class="small text-danger" v-if="emailFactory.errors.email">{{ emailFactory.errors.email }}</span>
 			</div>
 			<div class="form-group">
-				<input type="password" id="password" class="form-control" placeholder="Password" v-model.trim="emailFactory.password"
+				<input type="password" id="password" class="form-control" placeholder="Password" v-model="emailFactory.password"
 					:class="{'is-invalid': emailFactory.errors.password, 'is-valid': emailFactory.isValid('password')}" autocomplete="password">
 				<span class="small text-danger" v-if="emailFactory.errors.password">{{ emailFactory.errors.password }}</span>
 			</div>

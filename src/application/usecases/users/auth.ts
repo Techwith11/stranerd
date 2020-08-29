@@ -2,8 +2,8 @@ import router from '@/router'
 import { Notify } from '@/config/notifications'
 import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
 import {
-	GetLoginFactory, GetRegisterFactory, GetResetPasswordFactory, GetUpdatePasswordFactory,
-	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword, UpdatePassword
+	GetLoginFactory, GetRegisterFactory, GetResetPasswordFactory, GetUpdatePasswordFactory, GetUpdateProfileFactory,
+	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword, UpdatePassword, UpdateProfile
 } from '@root/modules/users'
 import { computed, reactive } from '@vue/composition-api'
 import { getIntendedRoute } from '@/usecases/core/router'
@@ -184,5 +184,34 @@ export const useUpdatePasswordForm = () => {
 		loading: computed(() => state.loading),
 		factory: state.factory,
 		updatePassword
+	}
+}
+
+export const useUpdateProfileForm = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetUpdateProfileFactory.call(),
+	})
+
+	state.factory.loadEntity(useStore().auth.getUser.value)
+
+	const updateProfile = async () => {
+		if(state.factory.valid && !state.loading){
+			state.loading = true
+			try{
+				await UpdateProfile.call(useStore().auth.getId.value, state.factory)
+				state.factory.reset()
+				await useStore().modals.closeAccountModal()
+				await Notify({ icon: 'success', title: 'Profile updated successfully' })
+			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
+			state.loading = false
+		}else{
+			state.factory.validateAll()
+		}
+	}
+	return {
+		loading: computed(() => state.loading),
+		factory: state.factory,
+		updateProfile
 	}
 }
