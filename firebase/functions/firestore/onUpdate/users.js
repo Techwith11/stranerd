@@ -8,9 +8,7 @@ module.exports = functions.firestore.document('/users/{id}').onUpdate(async (sna
 	const { bio: newBio, tutor: newTutor } = snap.after.data()
 	if(!equal(oldBio, newBio) || !equal(oldTutor, newTutor)){
 		const data = { bio: newBio }
-		if(snap.after.data().roles.isTutor){
-			data.tutor = snap.after.data().tutor
-		}
+		if(snap.after.data().roles.isTutor) data.tutor = snap.after.data().tutor
 		await saveToAlgolia('users', snap.after.id, data)
 	}
 

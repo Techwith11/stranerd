@@ -1,6 +1,8 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 const braintree = require('braintree')
+const { subscribeToPlan, cancelSubscription } = require('../../helpers/braintree')
+const { isProduction } = require('../../helpers/environment')
 
 let planIds = [
 	'stranerd_monthly_amateur_plan', 'stranerd_monthly_intermediate_plan', 'stranerd_monthly_master_plan',
@@ -8,18 +10,11 @@ let planIds = [
 ]
 
 module.exports = functions.https.onCall(async (data, context) => {
-	if (functions.config().environment.mode === 'production' && !context.auth) {
+	if (isProduction && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can invoke payments')
 	}
 	if(!planIds.includes(data.planId)){ throw new functions.https.HttpsError('invalid-argument', 'Invalid plan id') }
 	try{
-		let environment = functions.config().environment.mode
-		let gateway = braintree.connect({
-			environment: braintree.Environment[environment === 'production' ? 'Production' : 'Sandbox'],
-			merchantId: functions.config().braintree[environment]['merchant_id'],
-			publicKey: functions.config().braintree[environment]['public_key'],
-			privateKey: functions.config().braintree[environment]['private_key']
-		})
 		let ref = admin.firestore().collection('users').doc(data.id)
 		let user = await ref.get()
 		let account = user.data().account
@@ -27,20 +22,19 @@ module.exports = functions.https.onCall(async (data, context) => {
 			if(account.subscription.planId === data.planId){
 				throw new functions.https.HttpsError('invalid-argument', 'You are already on this plan')
 			}
-			let result = await gateway.subscription.cancel(account.subscription.id)
+			let result = await cancelSubscription(account.subscription.id)
 			if(result.success){
 				await ref.update('account.subscription', {})
 			}
 		}
-		let result = await gateway.subscription.create({
-			planId: data.planId,
-			paymentMethodToken: data.token,
-		})
+		let result = await subscribeToPlan(data.planId, data.token)
+
 		if(result.success){
 			let subscription = JSON.parse(JSON.stringify(result.subscription))
 			await ref.set({ account: { subscription }}, { merge: true })
 		}
 		return result.success
+
 	}catch(error){
 		throw new functions.https.HttpsError('unknown', error.message)
 	}

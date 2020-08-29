@@ -1,5 +1,5 @@
 import { Rules, ValidatorService } from '@root/modules/core/validations'
-import { Uploader } from '@root/modules/core/services/uploader'
+import { UploaderService } from '@root/modules/core/services/uploader'
 import { Media } from '@root/modules/core/data/models/base'
 
 export abstract class BaseFactory<E, T> {
@@ -48,6 +48,6 @@ export abstract class BaseFactory<E, T> {
 	}
 
 	public async uploadFile(link: string, file: File) :Promise<Media> {
-		return await Uploader.call(link, file)
+		return await UploaderService.call(link, file)
 	}
 }

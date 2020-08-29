@@ -2,7 +2,7 @@ const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 
 module.exports = functions.https.onRequest(async (request, response) => {
-	let user = await admin.auth().getUserByEmail('kevinfizu@gmail.com')
+	const user = await admin.auth().getUserByEmail('kevinfizu@gmail.com')
 	if(user){
 		await admin.auth().setCustomUserClaims(user.uid, { isAdmin: true })
 		await admin.firestore()
