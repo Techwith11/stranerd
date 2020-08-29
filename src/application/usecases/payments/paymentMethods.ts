@@ -24,8 +24,23 @@ const fetchPaymentMethods = async () => {
 	globalState.loading = false
 }
 
+const checkForNewPaymentMethods = async () => {
+	globalState.loading = true
+	const date = globalState.methods[0]?.createdAt ?? undefined
+	const methods = await GetPaymentMethods.call(useStore().auth.getId.value, date)
+	globalState.methods.unshift(...methods)
+	globalState.loading = false
+}
+
 export const usePaymentMethodsList = () => {
-	if(!globalState.fetched) fetchPaymentMethods().then(() => globalState.fetched = true).catch((e) => globalState.error = e.message)
+	if(!globalState.fetched) fetchPaymentMethods()
+		.then(() => {
+			globalState.fetched = true
+			if(globalState.methods.length === 0) globalState.error = 'No methods available at the moment'
+		})
+		.catch((e) => globalState.error = e.message)
+	else checkForNewPaymentMethods()
+
 	return {
 		loading: computed(() => globalState.loading),
 		error: computed(() => globalState.error),

@@ -23,8 +23,21 @@ const fetchTransactions = async () => {
 	globalState.loading = false
 }
 
+const checkForNewTransactions = async () => {
+	globalState.loading = true
+	const date = globalState.transactions[0]?.createdAt ?? undefined
+	const transactions = await GetTransactions.call(useStore().auth.getId.value, date)
+	globalState.transactions.unshift(...transactions)
+	globalState.loading = false
+}
+
 export const useTransactionsList = () => {
-	if(!globalState.fetched) fetchTransactions().then(() => globalState.fetched = true).catch((e) => globalState.error = e.message)
+	if(!globalState.fetched) fetchTransactions()
+		.then(() => {
+			globalState.fetched = true
+			if(globalState.transactions.length === 0) globalState.error = 'No transactions made at the moment'
+		}).catch((e) => globalState.error = e.message)
+	else checkForNewTransactions()
 	return {
 		loading: computed(() => globalState.loading),
 		error: computed(() => globalState.error),

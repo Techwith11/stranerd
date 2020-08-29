@@ -41,7 +41,7 @@ import { useStore } from '@/usecases/store'
 import { useFileInputs } from '@/usecases/core/forms'
 export default defineComponent({
 	setup(){
-		const link = useStore().auth.getUser?.bio?.image?.link ?? useStore().auth.getDefaultImage.value
+		const link = useStore().auth.getUser.value?.bio?.image?.link ?? useStore().auth.getDefaultImage.value
 		const imageLink = ref(link)
 		const { loading, factory, updateProfile } = useUpdateProfileForm()
 		const { catchFiles: catchImage } = useFileInputs((file) => {

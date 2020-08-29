@@ -5,64 +5,31 @@
       <h4 class="mb-0">All Transactions</h4>
       <a @click.prevent="closeAccountModal"><i class="fas fa-times text-danger"></i></a>
     </div>
-    <helper-spinner v-if="isLoading"/>
-    <div v-else>
-      <helper-message message="You haven't made any transaction on Stranerd" v-if="transactions.length === 0" />
+    <helper-spinner v-if="loading"/>
+    <template v-else>
+      <helper-message :message="error" v-if="error" />
       <div v-else>
-        <transaction-card v-for="transaction in transactions" :key="transaction['.key']" :transaction="transaction" />
-        <div class="d-flex justify-content-end my-3" v-if="hasMore">
-          <button class="btn-success" @click="fetchOlderTransactions">
-            <i class="fas fa-spinner fa-spin mr-2" v-if="isOlderTransactionsLoading"></i>
-            <span>Fetch More</span>
-          </button>
-        </div>
+        <transaction-card v-for="transaction in transactions" :key="transaction.id" :transaction="transaction" />
       </div>
-    </div>
+    </template>
   </div>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
-import { firestore } from '@/config/firebase'
-import TransactionCard from '@/components/account/single/TransactionCard'
-export default {
-	data: () => ({
-		isLoading: true,
-		isOlderTransactionsLoading: false,
-		transactions: [],
-		paginationLimit: 24,
-		hasMore: true
-	}),
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import TransactionCard from '@/components/account/single/TransactionCard.vue'
+import { useStore } from '@/usecases/store'
+import { useTransactionsList } from '@/usecases/payments/transactions'
+export default defineComponent({
+	setup(){
+		const { loading, transactions, error } = useTransactionsList()
+		return {
+			loading, transactions, error,
+			closeAccountModal: useStore().modals.closeAccountModal
+		}
+	},
 	components: {
 		'transaction-card': TransactionCard
-	},
-	async mounted(){
-		await this.getTransactions()
-		this.isLoading = false
-	},
-	computed: {
-		...mapGetters(['getId'])
-	},
-	methods: {
-	  ...mapActions(['closeAccountModal']),
-		async getTransactions(){
-			try{
-				let docs = firestore.collection(`users/${this.getId}/transactions`).orderBy('dates.createdAt','desc')
-					.limit(this.paginationLimit)
-				const lastItem = this.transactions[this.transactions.length - 1]
-				if(lastItem){
-					docs = docs.where('dates.createdAt','<',lastItem.dates.createdAt)
-				}
-				docs = await docs.get()
-				this.hasMore = docs.size >= this.paginationLimit
-				docs.forEach((doc) => this.transactions.push({ '.key': doc.id, ...doc.data() }))
-			}catch(error){ new window.Toast({ icon: 'error', title: 'Error fetching transactions. Try refreshing the page' }) }
-		},
-		async fetchOlderTransactions(){
-			this.isOlderTransactionsLoading = true
-			await this.getTransactions()
-			this.isOlderTransactionsLoading = false
-		}
 	}
-}
+})
 </script>

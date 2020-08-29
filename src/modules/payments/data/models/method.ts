@@ -1,3 +1,5 @@
+import firebase from '@root/services/firebase'
+
 export interface MethodFromModel {
 	id: string
 	token: string
@@ -5,4 +7,7 @@ export interface MethodFromModel {
 	maskedNumber: string
 	expirationMonth: string
 	expirationYear: string
+	dates: {
+		createdAt: firebase.firestore.Timestamp
+	}
 }
