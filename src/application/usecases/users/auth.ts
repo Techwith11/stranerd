@@ -10,6 +10,7 @@ import { getIntendedRoute } from '@/usecases/core/router'
 import { useStore } from '@/usecases/store'
 import { resetPaymentMethods } from '@/usecases/payments/paymentMethods'
 import { clearCart } from '@/usecases/shop/cart'
+import { resetTransactions } from '@/usecases/payments/transactions'
 
 const afterAuthHook = async () => {
 	const route = getIntendedRoute()
@@ -49,7 +50,6 @@ export const useLogout = () => {
 		loading: false
 	})
 	const logout = async () => {
-		//TODO: Clear out store of personal information
 		state.loading = true
 		if(useStore().auth.isTutor.value) await useStore().sessions.closeTutorSessionsListener()
 		await useStore().auth.setId(null)
@@ -59,6 +59,7 @@ export const useLogout = () => {
 		closeAccountDropdown()
 		closeAdminDropdown()
 		resetPaymentMethods()
+		resetTransactions()
 		clearCart()
 		state.loading = false
 	}
