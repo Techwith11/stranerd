@@ -1,5 +1,6 @@
 import { Media } from '@root/modules/core/data/models/base'
 import firebase from '@root/services/firebase'
+import { DEFAULT_IMAGE_URL } from '@root/modules/core/services/uploader'
 
 export class UserEntity{
 	public readonly id: string
@@ -83,6 +84,3 @@ export interface Subscription {
 	planId: string
 	status: string
 }
-
-const url = `https://firebasestorage.googleapis.com/v0/b/stranerd-13084.appspot.com/o/${encodeURIComponent('users/images/user_profile.png')}?alt=media`
-const DEFAULT_IMAGE_URL = process.env.NODE_ENV === 'production' ? url : '/img/user_profile.png'

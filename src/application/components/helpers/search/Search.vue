@@ -14,12 +14,14 @@
 			<template v-slot="{ state: { query }, results: { hits } }">
 				<ais-hits v-if="query.length > 0 && hits.length > 0" :transform-items="transformResults">
 					<template v-slot="{ items }">
-						<ul class="list-group position-absolute rounded-xl shadow-sm m-1" style="z-index: 3;">
-							<li class="list-group-item border-0" v-for="(item, index) in items" :key="item.objectID">
-								<slot name="item" :item="item" :index="index"></slot>
-							</li>
+						<div class="position-absolute rounded-xl shadow-sm m-1 bg-white" style="z-index: 3;">
+							<ul class="list-group">
+								<li class="list-group-item border-0" v-for="(item, index) in items" :key="item.objectID">
+									<slot name="item" :item="item" :index="index"></slot>
+								</li>
+							</ul>
 							<ais-powered-by class="m-3" :theme="theme" />
-						</ul>
+						</div>
 					</template>
 				</ais-hits>
 				<p v-if="!hits.length">No results found for <q>{{ query }}</q></p>
