@@ -5,7 +5,7 @@
 			     slot-scope="{ currentRefinement, isSearchStalled, refine }">
 				<input placeholder="Search" type="search" class="form-control"
 				       :value="currentRefinement" @input="refine($event.currentTarget.value)">
-				<span v-if="isSearchStalled" class="ml-2"><i class="fas fa-spinner fa-spin text-info"></i></span>
+				<i class="fas fa-spin fa-spinner fa-spin ml-2 text-info" :class="isSearchStalled ? 'opacity-100' : 'opacity-0'"></i>
 			</div>
 			<div slot="submit-icon"><i class="fas fa-search text-dark"></i></div>
 			<div slot="reset-icon"><i class="fas fa-trash text-danger"></i></div>
@@ -14,9 +14,9 @@
 			<template v-slot="{ state: { query }, results: { hits } }">
 				<ais-hits v-if="query.length > 0 && hits.length > 0" :transform-items="transformResults">
 					<template v-slot="{ items }">
-						<div class="position-absolute rounded-xl shadow-sm m-1 bg-white" style="z-index: 3;">
-							<ul class="list-group">
-								<li class="list-group-item border-0" v-for="(item, index) in items" :key="item.objectID">
+						<div class="position-absolute rounded-xl shadow-sm m-1 bg-white resultContainer">
+							<ul class="list-group text-wrap">
+								<li class="list-group-item text-wrap border-0" v-for="(item, index) in items" :key="item.objectID">
 									<slot name="item" :item="item" :index="index"></slot>
 								</li>
 							</ul>
@@ -24,7 +24,7 @@
 						</div>
 					</template>
 				</ais-hits>
-				<p v-if="!hits.length">No results found for <q>{{ query }}</q></p>
+				<p v-if="query.length && !hits.length">No results found for <q>{{ query }}</q></p>
 			</template>
 		</ais-state-results>
 	</ais-instant-search>
@@ -56,3 +56,15 @@ export default defineComponent({
 	}
 })
 </script>
+
+<style lang="scss" scoped>
+.opacity-100{ opacity: 1; }
+.opacity-0{ opacity: 0; }
+.resultContainer{
+	z-index: 3;
+	max-width: calc(100vw - 2rem);
+}
+@media (max-width: 500px){
+	.resultContainer{ right: 0.25rem }
+}
+</style>

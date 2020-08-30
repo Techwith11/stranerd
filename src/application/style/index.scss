@@ -12,13 +12,9 @@ body{
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.bolder, .font-weight-500{
-	font-weight: 500;
-}
+.bolder, .font-weight-500{ font-weight: 500; }
 
-.rounded-xl{
-	border-radius: 0.75rem;
-}
+.rounded-xl{ border-radius: 0.75rem; }
 
 a:hover {
 	color: $link-blue !important;
