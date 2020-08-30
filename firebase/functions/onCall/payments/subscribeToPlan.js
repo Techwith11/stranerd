@@ -1,6 +1,5 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-const braintree = require('braintree')
 const { subscribeToPlan, cancelSubscription } = require('../../helpers/braintree')
 const { isProduction } = require('../../helpers/environment')
 
