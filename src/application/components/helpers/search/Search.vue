@@ -14,17 +14,15 @@
 			<template v-slot="{ state: { query }, results: { hits } }">
 				<ais-hits v-if="query.length > 0 && hits.length > 0" :transform-items="transformResults">
 					<template v-slot="{ items }">
-						<ul v-for="(item, index) in items" :key="item.objectID"
-						    class="list-group position-absolute rounded-xl shadow-sm m-1" style="z-index: 1;">
-							<li class="list-group-item border-0">
+						<ul class="list-group position-absolute rounded-xl shadow-sm m-1" style="z-index: 3;">
+							<li class="list-group-item border-0" v-for="(item, index) in items" :key="item.objectID">
 								<slot name="item" :item="item" :index="index"></slot>
 							</li>
+							<ais-powered-by class="m-3" :theme="theme" />
 						</ul>
-						<ais-powered-by class="mx-3" :theme="theme" />
 					</template>
 				</ais-hits>
 				<p v-if="!hits.length">No results found for <q>{{ query }}</q></p>
-				<ais-current-refinements></ais-current-refinements>
 			</template>
 		</ais-state-results>
 	</ais-instant-search>
@@ -45,7 +43,7 @@ export default defineComponent({
 			validator: (value: string) => ['light', 'dark'].indexOf(value) !== -1
 		},
 		transformResults: {
-			type: Function as PropType<((items: any[]) => items)>,
+			type: Function as PropType<((items: any[]) => any[])>,
 			default: (items: any[]) => items
 		}
 	},
