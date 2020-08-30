@@ -58,8 +58,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.opacity-100{ opacity: 1; }
-.opacity-0{ opacity: 0; }
 .resultContainer{
 	z-index: 3;
 	max-width: calc(100vw - 2rem);
