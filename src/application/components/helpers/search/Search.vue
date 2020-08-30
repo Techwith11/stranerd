@@ -46,7 +46,7 @@ export default defineComponent({
 		},
 		transformResults: {
 			type: Function as PropType<((items: any[]) => any[])>,
-			default: (items: any[]) => items
+			required: true
 		}
 	},
 	setup(){

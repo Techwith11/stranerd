@@ -26,19 +26,19 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { DEFAULT_IMAGE_URL } from '@root/modules/core/services/uploader'
-import { TutorInfo, UserBio } from '@root/modules/users/domain/entities/user'
+import { UserFromModel } from '@root/modules/users/data/models/user'
 export default defineComponent({
 	setup(){
 		return {
 			transformResults: (items: any[]) => items
 				.filter((item) => item.tutor !== undefined)
 				.map((item) => {
-					const { objectID, bio, tutor } = item as { objectID: string, bio: UserBio, tutor: TutorInfo }
+					const { objectID, bio, tutor } = item as UserFromModel & { objectID: string }
 					item.tutor = {
 						id: objectID,
 						image: bio?.image?.link ?? DEFAULT_IMAGE_URL,
-						rating: tutor.rating ?? 0,
-						courses: tutor.courses?.filter((course) => tutor.levels?.[course]! > 0) ?? []
+						rating: tutor?.rating ?? 0,
+						courses: tutor?.courses?.filter((course) => (tutor?.levels?.[course] ?? 0) > 0) ?? []
 					}
 					return item
 				})
