@@ -1,8 +1,8 @@
 <template>
 	<Default>
-    <Banner>
+    <banner>
       <h1>Buy Books and eTextbooks</h1>
-    </Banner>
+    </banner>
     <helper-spinner v-if="loading"/>
 		<div v-else class="my-3">
 			<helper-message message="No notes currently in the shop. Check again later" v-if="notes.length === 0" />

@@ -1,8 +1,8 @@
 <template>
 	<Default>
-    <Banner>
+    <banner>
       <h1>Post a Question</h1>
-    </Banner>
+    </banner>
     <div class="shadow-sm rounded-xl p-3 mx-auto my-4" style="max-width: 600px">
       <create-post />
     </div>

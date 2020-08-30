@@ -1,6 +1,6 @@
 <template>
 	<Default>
-    <Banner></Banner>
+    <banner></banner>
 		<helper-spinner v-if="loading"/>
 		<div class="container-fluid py-3" v-else>
 			<helper-message :message=error v-if="error" />

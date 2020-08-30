@@ -2,9 +2,9 @@
 	<Default>
     <helper-spinner v-if="loading || replyLoading"/>
    <div v-else>
-     <Banner>
+     <banner>
        <post-info :post="post" :user="user" />
-     </Banner>
+     </banner>
      <div class="container my-4 ">
        <div class="mx-auto" style="max-width: 75ch;">
          <div class="shadow-sm p-3 rounded-xl">

@@ -1,8 +1,8 @@
 <template>
 	<Default>
-    <Banner>
+    <banner>
       <h1 class="text-capitalize">Modify courses under each subject</h1>
-    </Banner>
+    </banner>
 		<div class="container-fluid py-3">
 			<helper-spinner v-if="loading" />
 			<div v-else>

@@ -1,8 +1,8 @@
 <template>
 	<Default>
-    <Banner>
+    <banner>
       <h1 class="mx-auto my-5" style="max-width: 400px;">Stay up to date with the latest from Stranerd</h1>
-    </Banner>
+    </banner>
 		<helper-spinner v-if="loading"/>
 		<div v-else class="px-2 my-4">
 			<helper-message :message="error" v-if="error" />

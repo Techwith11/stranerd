@@ -1,6 +1,6 @@
 <template>
 	<Default>
-    <Banner>
+    <banner>
       <h1>Find Certified Tutors</h1>
       <div class="row my-2">
         <div class="col-8 pl-0 pr-2">
@@ -13,7 +13,7 @@
           </select>
         </div>
       </div>
-    </Banner>
+    </banner>
 		<div class="container">
 			<helper-spinner v-if="tutorLoading || subjectLoading" />
 			<div v-else class="grid my-4">

@@ -1,6 +1,6 @@
 <template>
 	<Default>
-    <Banner />
+    <banner />
 		<helper-spinner v-if="plansLoading" />
 		<div class="container py-5" v-else>
 			<div v-if="page === 1">

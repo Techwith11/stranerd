@@ -1,8 +1,8 @@
 <template>
 	<Default>
-    <Banner>
+    <banner>
       <h1 class="text-capitalize">All courses for {{ subject.name }}</h1>
-    </Banner>
+    </banner>
 		<div class="container-fluid py-3">
 			<helper-spinner v-if="loading" />
 			<template v-else>

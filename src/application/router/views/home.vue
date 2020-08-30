@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<div v-if="isLoggedIn">
-      <Banner></Banner>
+      <banner></banner>
       <div class="container-fluid p-0 p-lg-3 mt-4">
         <show-ask-question class="d-none d-lg-block mb-4" />
         <router-link class="d-lg-none floating-button text-white" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
