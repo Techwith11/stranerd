@@ -1,9 +1,12 @@
 <template>
 	<Default>
-    <banner>
-      <h1>Buy Books and eTextbooks</h1>
-    </banner>
-    <helper-spinner v-if="loading"/>
+		<banner>
+			<div class="w-75 mx-auto">
+				<h1>Buy Books and eTextbooks</h1>
+				<note-search class="my-2" />
+			</div>
+		</banner>
+	    <helper-spinner v-if="loading"/>
 		<div v-else class="my-3">
 			<helper-message message="No notes currently in the shop. Check again later" v-if="notes.length === 0" />
 			<div class="container-fluid grid" v-else>
@@ -26,6 +29,7 @@ import NoteCard from '@/components/shop/list/NoteCard.vue'
 import { useNotesList } from '@/usecases/shop/notes'
 import { useCart } from '@/usecases/shop/cart'
 import { useStore } from '@/usecases/store'
+import NoteSearch from '@/components/helpers/search/NoteSearch.vue'
 export default defineComponent({
 	name: 'Shop',
 	setup(){
@@ -38,7 +42,8 @@ export default defineComponent({
 		}
 	},
 	components: {
-		'note-card': NoteCard
+		'note-card': NoteCard,
+		'note-search': NoteSearch
 	},
 	meta(){
 		return {

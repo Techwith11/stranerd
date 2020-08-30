@@ -1,21 +1,26 @@
 <template>
 	<Default>
 		<div v-if="isLoggedIn">
-      <banner></banner>
-      <div class="container-fluid p-0 p-lg-3 mt-4">
-        <show-ask-question class="d-none d-lg-block mb-4" />
-        <router-link class="d-lg-none floating-button text-white" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
-        <div class="d-flex flex-column flex-lg-row">
-          <div style="flex-grow: 2;">
-            <recent-posts class="mb-4"  />
-          </div>
-          <div class="flex-grow-1 ml-lg-3">
-            <recent-sessions class="mb-4" />
-            <top-tutors class="mb-4" />
-            <subscribe-card v-if="!isSubscribed" />
-          </div>
-        </div>
-      </div>
+			<banner>
+				<div class="w-75 mx-auto">
+					<h1>Strive For <span class="font-weight-bold">Progress</span> Not <span class="font-weight-bold">Perfection</span></h1>
+					<post-search class="my-2" />
+				</div>
+			</banner>
+			<div class="container-fluid p-0 p-lg-3 mt-4">
+				<show-ask-question class="d-none d-lg-block mb-4" />
+				<router-link class="d-lg-none floating-button text-white" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
+				<div class="d-flex flex-column flex-lg-row">
+					<div style="flex-grow: 2;">
+						<recent-posts class="mb-4"  />
+					</div>
+					<div class="flex-grow-1 ml-lg-3">
+						<recent-sessions class="mb-4" />
+						<top-tutors class="mb-4" />
+						<subscribe-card v-if="!isSubscribed" />
+					</div>
+				</div>
+			</div>
 		</div>
 		<div v-else class="">
 			<cta />
@@ -44,6 +49,7 @@ import RecentSessions from '@/components/home/loggedIn/RecentSessions.vue'
 import TopTutors from '@/components/home/loggedIn/TopTutors.vue'
 import SubscribeCard from '@/components/home/loggedIn/SubscribeCard.vue'
 import { useStore } from '@/usecases/store'
+import PostSearch from '@/components/helpers/search/PostSearch.vue'
 export default defineComponent({
 	name: 'Home',
 	components: {
@@ -59,6 +65,7 @@ export default defineComponent({
 		'recent-sessions': RecentSessions,
 		'top-tutors': TopTutors,
 		'subscribe-card': SubscribeCard,
+		'post-search': PostSearch,
 	},
 	setup(){
 		const { isLoggedIn, getUser, isSubscribed, questionsLeft } = useStore().auth

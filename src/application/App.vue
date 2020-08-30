@@ -27,7 +27,7 @@ export default {
 	},
 	beforeDestroy(){ this.closeAllListeners() },
 	watch: {
-		isTutor(){ return this.isTutor ? this.initializeTutorSessionsListener() : null }
+		isTutor(){ return this.isTutor && this.initializeTutorSessionsListener() }
 	}
 }
 </script>

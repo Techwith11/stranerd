@@ -7,7 +7,8 @@ import Spinner from '@/components/helpers/Spinner.vue'
 import Message from '@/components/helpers/Message.vue'
 import MakePayment from '@/components/helpers/payments/MakePayment.vue'
 import Banner from '@/components/helpers/Banner.vue'
-import Search from '@/components/helpers/Search.vue'
+import Search from '@/components/helpers/search/Search.vue'
+import RatingStars from '@/components/helpers/RatingStars.vue'
 
 Vue.component('Default', Default)
 
@@ -17,3 +18,4 @@ Vue.component('helper-message', Message)
 Vue.component('make-payment', MakePayment)
 Vue.component('banner', Banner)
 Vue.component('search', Search)
+Vue.component('rating-stars', RatingStars)

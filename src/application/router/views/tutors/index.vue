@@ -1,34 +1,35 @@
 <template>
 	<Default>
-    <banner>
-      <h1>Find Certified Tutors</h1>
-      <div class="row my-2">
-        <div class="col-8 pl-0 pr-2">
-          <input type="text" class="form-control" placeholder="Search by name" v-model="name">
-        </div>
-        <div class="col-4 px-0">
-          <select class="form-control text-capitalize" v-model="course">
-            <option value="">All</option>
-            <option :value="subject.name" v-for="subject in subjects" :key="subject['.key']">{{ subject.name }}</option>
-          </select>
-        </div>
-      </div>
-    </banner>
+	    <banner>
+			<h1>Find Certified Tutors</h1>
+			<div class="row my-2">
+				<div class="col-8 pl-0 pr-2">
+				    <tutor-search></tutor-search>
+				</div>
+				<div class="col-4 px-0">
+					<select class="form-control text-capitalize" v-model="course">
+					    <option value="">All</option>
+					    <option :value="subject.name" v-for="subject in subjects" :key="subject.id">{{ subject.name }}</option>
+					</select>
+				</div>
+			</div>
+	    </banner>
 		<div class="container">
 			<helper-spinner v-if="tutorLoading || subjectLoading" />
 			<div v-else class="grid my-4">
-        <div v-for="tutor in filteredTutors" :key="tutor.id" class="shadow-sm p-3" >
-          <tutor-card :user="tutor" />
-        </div>
+		        <div v-for="tutor in filteredTutors" :key="tutor.id" class="shadow-sm p-3" >
+					<tutor-card :user="tutor" />
+		        </div>
 			</div>
-      <helper-message :message="error" v-if="error" />
-    </div>
+	        <helper-message :message="error" v-if="error" />
+	    </div>
 	</Default>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import TutorCard from '@/components/users/list/TutorCard.vue'
+import TutorSearch from '@/components/helpers/search/TutorSearch.vue'
 import { useTutorsList } from '@/usecases/users/users'
 import { useSubjects } from '@/usecases/courses/subjects'
 export default defineComponent({
@@ -43,6 +44,7 @@ export default defineComponent({
 	},
 	components: {
 		'tutor-card': TutorCard,
+		'tutor-search': TutorSearch,
 	},
 	meta(){
 		return {

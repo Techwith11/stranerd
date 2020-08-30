@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "start:firebase": "cross-env NODE_ENV=development firebase emulators:start --import ./docs/exports",
+    "save:firebase": "firebase emulators:export ./docs/exports",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
@@ -12,6 +14,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@vue/composition-api": "^1.0.0-beta.6",
+    "algoliasearch": "^4.4.0",
     "bootstrap": "^4.4.1",
     "braintree-web": "^3.62.0",
     "core-js": "^3.6.4",

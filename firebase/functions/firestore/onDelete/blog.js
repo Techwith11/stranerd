@@ -3,7 +3,7 @@ const { deleteFromAlgolia } = require('../../helpers/algolia')
 const { deleteFromStorage } = require('../../helpers/storage')
 
 module.exports = functions.firestore.document('/blog/{id}').onDelete(async (snap) => {
-	await deleteFromAlgolia('blog', snap.id)
+	await deleteFromAlgolia('articles', snap.id)
 
 	await deleteFromStorage(snap.data().image.link)
 })

@@ -1,8 +1,11 @@
 <template>
 	<Default>
 		<banner>
-      <h1>Courses Tailor-fit for Everyone</h1>
-    </banner>
+			<div class="w-75 mx-auto">
+				<h1>Courses Tailor-fit for Everyone</h1>
+				<course-search class="my-2" />
+			</div>
+		</banner>
 		<div class="container-fluid py-3">
 			<helper-spinner v-if="loading" />
 			<div v-else>
@@ -16,6 +19,7 @@
 import { defineComponent } from '@vue/composition-api'
 import SubjectCard from '@/components/courses/list/SubjectCard.vue'
 import { useSubjects } from '@/usecases/courses/subjects'
+import CourseSearch from '@/components/helpers/search/CourseSearch.vue'
 export default defineComponent({
 	setup(){
 		const { subjects, error, loading, modules } = useSubjects()
@@ -23,6 +27,7 @@ export default defineComponent({
 	},
 	components: {
 		'subject-card': SubjectCard,
+		'course-search': CourseSearch,
 	},
 	meta(){
 		return {
