@@ -1,8 +1,11 @@
 <template>
 	<Default>
-    <banner>
-      <h1 class="mx-auto my-5" style="max-width: 400px;">Stay up to date with the latest from Stranerd</h1>
-    </banner>
+		<banner>
+			<div class="w-75 mx-auto">
+				<h1 class="mx-auto my-5" style="max-width: 400px;">Stay up to date with the latest from Stranerd</h1>
+				<article-search class="my-2" />
+			</div>
+		</banner>
 		<helper-spinner v-if="loading"/>
 		<div v-else class="px-2 my-4">
 			<helper-message :message="error" v-if="error" />
@@ -29,10 +32,12 @@ import { defineComponent } from '@vue/composition-api'
 import ArticleCard from '@/components/blog/list/ArticleCard.vue'
 import { useArticlesList } from '@/usecases/blog/articles'
 import { useStore } from '@/usecases/store'
+import ArticleSearch from '@/components/helpers/search/ArticleSearch.vue'
 export default defineComponent({
 	name: 'Posts',
 	components: {
-		'article-card': ArticleCard
+		'article-card': ArticleCard,
+		'article-search': ArticleSearch,
 	},
 	setup(){
 		const { loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles } = useArticlesList()
