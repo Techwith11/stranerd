@@ -37,7 +37,8 @@ export default defineComponent({
 	props: {
 		collection: {
 			type: String,
-			required: true
+			required: true,
+			validator: (value: string) => ['articles','courses','notes','posts','users'].indexOf(value) !== -1
 		},
 		theme: {
 			type: String,
