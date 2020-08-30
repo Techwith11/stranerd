@@ -1,8 +1,11 @@
 <template>
 	<Default>
-    <banner>
-      <h1 class="text-capitalize">All courses for {{ subject.name }}</h1>
-    </banner>
+		<banner>
+			<div class="w-75 mx-auto">
+				<h1 class="text-capitalize">All courses for {{ subject.name }}</h1>
+				<course-search class="my-2" />
+			</div>
+		</banner>
 		<div class="container-fluid py-3">
 			<helper-spinner v-if="loading" />
 			<template v-else>
@@ -23,9 +26,11 @@ import { defineComponent } from '@vue/composition-api'
 import SubjectCard from '@/components/courses/list/SubjectCard.vue'
 import { useSingleSubject } from '@/usecases/courses/subjects'
 import router from '@/router'
+import CourseSearch from '@/components/helpers/search/CourseSearch.vue'
 export default defineComponent({
 	components: {
 		'subject-card': SubjectCard,
+		'course-search': CourseSearch
 	},
 	setup(){
 		const { subject } = router.currentRoute.params

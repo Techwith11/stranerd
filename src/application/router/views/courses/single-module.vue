@@ -1,8 +1,11 @@
 <template>
 	<Default>
-    <banner>
-      <h1 class="text-capitalize">All courses for {{ $route.params.module }}</h1>
-    </banner>
+		<banner>
+			<div class="w-75 mx-auto">
+				<h1 class="text-capitalize">All courses for {{ $route.params.module }}</h1>
+				<course-search class="my-2" />
+			</div>
+		</banner>
 		<helper-spinner v-if="loading"/>
 		<div class="container-fluid py-3" v-else>
 			<helper-message :message="error" v-if="error" />
@@ -29,10 +32,12 @@ import CourseCard from '@/components/courses/list/CourseCard.vue'
 import { useCoursesList } from '@/usecases/courses/courses'
 import router from '@/router'
 import { capitalizeText } from '@root/modules/core/validations/sanitizers'
+import CourseSearch from '@/components/helpers/search/CourseSearch.vue'
 export default defineComponent({
 	name: 'Courses',
 	components: {
 		'course-card': CourseCard,
+		'course-search': CourseSearch
 	},
 	setup(){
 		const { subject, module } = router.currentRoute.params
