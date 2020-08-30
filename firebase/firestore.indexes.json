@@ -37,6 +37,24 @@
       ]
     },
     {
+      "collectionGroup": "questions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "subject",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "module",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "dates.createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "sessions",
       "queryScope": "COLLECTION",
       "fields": [
@@ -94,6 +112,28 @@
       "fields": [
         {
           "fieldPath": "student",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "dates.createdAt",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "sessions",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "tutor",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "cancelled.student",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "cancelled.tutor",
           "order": "ASCENDING"
         },
         {
