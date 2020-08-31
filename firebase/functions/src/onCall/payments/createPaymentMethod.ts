@@ -1,5 +1,5 @@
-import functions from 'firebase-functions'
-import admin from'firebase-admin'
+import * as functions from 'firebase-functions'
+import * as admin from'firebase-admin'
 import { isProduction } from '../../helpers/environment'
 import { createPaymentMethod } from '../../helpers/braintree'
 

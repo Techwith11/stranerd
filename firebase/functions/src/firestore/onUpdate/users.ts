@@ -1,4 +1,4 @@
-import functions from 'firebase-functions'
+import * as functions from 'firebase-functions'
 import { saveToAlgolia } from '../../helpers/algolia'
 import equal from 'deep-equal'
 import { deleteFromStorage } from '../../helpers/storage'

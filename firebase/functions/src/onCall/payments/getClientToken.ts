@@ -1,4 +1,4 @@
-import functions from 'firebase-functions'
+import * as functions from 'firebase-functions'
 import { isProduction, environmentVariables } from '../../helpers/environment'
 import { getClientToken } from '../../helpers/braintree'
 

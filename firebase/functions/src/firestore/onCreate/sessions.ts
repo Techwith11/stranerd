@@ -1,5 +1,5 @@
-import functions from 'firebase-functions'
-import admin from 'firebase-admin'
+import * as functions from 'firebase-functions'
+import * as admin from 'firebase-admin'
 import { sendSessionRequestEmail } from '../../helpers/email'
 
 export default functions.firestore.document('/sessions/{id}').onCreate(async (snap) => {
