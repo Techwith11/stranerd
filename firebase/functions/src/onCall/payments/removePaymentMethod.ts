@@ -1,9 +1,9 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { isProduction } from '../../helpers/environment'
-import { removePaymentMethod } from '../../helpers/braintree'
+import * as braintree from '../../helpers/braintree'
 
-export default functions.https.onCall(async ({ user, id }, context) => {
+export const removePaymentMethod = functions.https.onCall(async ({ user, id }, context) => {
 	if (isProduction && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can delete payment methods')
 	}
@@ -14,7 +14,7 @@ export default functions.https.onCall(async ({ user, id }, context) => {
 	if(!method.exists){ throw new functions.https.HttpsError('invalid-argument', 'Method doesn\'t exist') }
 	const token = method.data()?.token ?? ''
 	try{
-		await removePaymentMethod(token)
+		await braintree.removePaymentMethod(token)
 		await method.ref.delete()
 		return true
 

@@ -1,14 +1,14 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { isProduction } from '../../helpers/environment'
-import { cancelSubscription, subscribeToPlan } from '../../helpers/braintree'
+import * as braintree from '../../helpers/braintree'
 
 const planIds = [
 	'stranerd_monthly_amateur_plan', 'stranerd_monthly_intermediate_plan', 'stranerd_monthly_master_plan',
 	'stranerd_yearly_amateur_plan', 'stranerd_yearly_intermediate_plan', 'stranerd_yearly_master_plan'
 ]
 
-export default functions.https.onCall(async (data, context) => {
+export const subscribeToPlan = functions.https.onCall(async (data, context) => {
 	if (isProduction && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can invoke payments')
 	}
@@ -21,10 +21,10 @@ export default functions.https.onCall(async (data, context) => {
 			if(account.subscription.planId === data.planId){
 				throw new functions.https.HttpsError('invalid-argument', 'You are already on this plan')
 			}
-			await cancelSubscription(account.subscription.id)
+			await braintree.cancelSubscription(account.subscription.id)
 			await ref.update('account.subscription', {})
 		}
-		const result = await subscribeToPlan(data.planId, data.token)
+		const result = await braintree.subscribeToPlan(data.planId, data.token)
 
 		if(result.success){
 			const subscription = JSON.parse(JSON.stringify(result.subscription))

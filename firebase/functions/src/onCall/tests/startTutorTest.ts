@@ -21,7 +21,7 @@ const getQuestions = async (course: string, level: number) => {
 	return randoms.map(x => ({  '.key': questions.docs[x].id, ...questions.docs[x].data() }))
 }
 
-export default functions.https.onCall(async ({ level, course, user }, context) => {
+export const startTutorTest = functions.https.onCall(async ({ level, course, user }, context) => {
 	try{
 		if (isProduction && !context.auth) {
 			throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can take tests')

@@ -1,9 +1,9 @@
 import * as functions from 'firebase-functions'
 import * as admin from'firebase-admin'
 import { isProduction } from '../../helpers/environment'
-import { createPaymentMethod } from '../../helpers/braintree'
+import * as braintree from '../../helpers/braintree'
 
-export default functions.https.onCall(async ({ id, nonce }, context) => {
+export const createPaymentMethod = functions.https.onCall(async ({ id, nonce }, context) => {
 	if (isProduction && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can create payment methods')
 	}
@@ -15,7 +15,7 @@ export default functions.https.onCall(async ({ id, nonce }, context) => {
 	if(!customerId){ throw new functions.https.HttpsError('invalid-argument', 'User doesn\'t have a valid customer id') }
 
 	try{
-		const result = await createPaymentMethod(customerId, nonce)
+		const result = await braintree.createPaymentMethod(customerId, nonce)
 
 		if(result.success){
 			const details = JSON.parse(JSON.stringify(result.paymentMethod))

@@ -16,43 +16,40 @@ export { requestMakeAdmin, braintreeWebhookSubscriptionStateChanged }
 
 
 // On Call Triggers
-import startTutorTest from './onCall/tests/startTutorTest'
-import markTutorTest from './onCall/tests/markTutorTest'
+import { startTutorTest } from './onCall/tests/startTutorTest'
+import { markTutorTest } from './onCall/tests/markTutorTest'
 export { startTutorTest, markTutorTest }
 
-import startSession from './onCall/sessions/startSession'
-import payForSession from './onCall/sessions/payForSession'
-import addRatingToTutor from './onCall/sessions/addRatingToTutor'
+import { startSession } from './onCall/sessions/startSession'
+import { payForSession } from './onCall/sessions/payForSession'
+import { addRatingToTutor } from './onCall/sessions/addRatingToTutor'
 export { startSession, payForSession, addRatingToTutor }
 
-import getClientToken from './onCall/payments/getClientToken'
-import createPaymentMethod from './onCall/payments/createPaymentMethod'
-import removePaymentMethod from './onCall/payments/removePaymentMethod'
-import makePayment from './onCall/payments/makePayment'
-import subscribeToPlan from './onCall/payments/subscribeToPlan'
-import updatePaymentMethodForSubscription from './onCall/payments/updatePaymentMethodForSubscription'
-import cancelSubscription from './onCall/payments/cancelSubscription'
+import { getClientToken } from './onCall/payments/getClientToken'
+import { createPaymentMethod } from './onCall/payments/createPaymentMethod'
+import { removePaymentMethod } from './onCall/payments/removePaymentMethod'
+import { makePayment } from './onCall/payments/makePayment'
+import { subscribeToPlan } from './onCall/payments/subscribeToPlan'
+import { updatePaymentMethodForSubscription } from './onCall/payments/updatePaymentMethodForSubscription'
+import { cancelSubscription } from './onCall/payments/cancelSubscription'
 export {
 	getClientToken, createPaymentMethod, removePaymentMethod, makePayment,
 	subscribeToPlan, updatePaymentMethodForSubscription, cancelSubscription
 }
 
-import makeTutor from './onCall/roles/makeTutor'
-import makeAdmin from './onCall/roles/makeAdmin'
-import removeAdmin from './onCall/roles/removeAdmin'
+import { makeTutor } from './onCall/roles/makeTutor'
+import { makeAdmin } from './onCall/roles/makeAdmin'
+import { removeAdmin } from './onCall/roles/removeAdmin'
 export { makeTutor, makeAdmin, removeAdmin }
 
-import createPost from './onCall/contents/createPost'
-import upvoteReply from './onCall/contents/upvoteReply'
-import downvoteReply from './onCall/contents/downvoteReply'
+import { createPost } from './onCall/contents/createPost'
+import { upvoteReply } from './onCall/contents/upvoteReply'
+import { downvoteReply } from './onCall/contents/downvoteReply'
 export { createPost, upvoteReply, downvoteReply }
 
-import sendEmailAfterPurchase from './onCall/shop/sendEmailAfterPurchase'
-
-import subscribeToMailingList from './onCall/mailing/subscribeToMailingList'
-
-import resendEmailAfterError from './onCall/errors/resendEmailAfterError'
-
+import { sendEmailAfterPurchase } from './onCall/shop/sendEmailAfterPurchase'
+import { subscribeToMailingList } from './onCall/mailing/subscribeToMailingList'
+import { resendEmailAfterError } from './onCall/errors/resendEmailAfterError'
 export { sendEmailAfterPurchase, subscribeToMailingList, resendEmailAfterError }
 
 

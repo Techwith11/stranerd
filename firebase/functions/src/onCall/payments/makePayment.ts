@@ -1,14 +1,14 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { isProduction } from '../../helpers/environment'
-import { makePayment } from '../../helpers/braintree'
+import * as braintree from '../../helpers/braintree'
 
-export default functions.https.onCall(async ({ id, amount, token }, context) => {
+export const makePayment = functions.https.onCall(async ({ id, amount, token }, context) => {
 	if (isProduction && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can invoke payments')
 	}
 	try{
-		const result = await makePayment(amount, token)
+		const result = await braintree.makePayment(amount, token)
 
 		if(result.success) {
 			const transaction = JSON.parse(JSON.stringify(result.transaction))

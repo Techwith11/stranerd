@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions'
 import * as admin from'firebase-admin'
 import { isProduction } from '../../helpers/environment'
 
-export default functions.https.onCall(async ({ id }, context) => {
+export const removeAdmin = functions.https.onCall(async ({ id }, context) => {
 	if (isProduction && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can upgrade accounts')
 	}
