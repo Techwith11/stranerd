@@ -1,6 +1,6 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
-const { sendSessionRequestEmail } = require('../../emails')
+const { sendSessionRequestEmail } = require('../../helpers/email')
 
 module.exports = functions.firestore.document('/sessions/{id}').onCreate(async (snap) => {
 	const { student, tutor, duration } = snap.data()
