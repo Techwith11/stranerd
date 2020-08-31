@@ -1,11 +1,11 @@
-import { https } from 'firebase-functions'
-import { auth, firestore } from 'firebase-admin'
+import functions from 'firebase-functions'
+import admin from 'firebase-admin'
 
-module.exports = https.onRequest(async (request, response) => {
-	const user = await auth().getUserByEmail('kevinfizu@gmail.com')
+module.exports = functions.https.onRequest(async (request, response) => {
+	const user = await admin.auth().getUserByEmail('kevinfizu@gmail.com')
 	if(user){
-		await auth().setCustomUserClaims(user.uid, { isAdmin: true })
-		await firestore()
+		await admin.auth().setCustomUserClaims(user.uid, { isAdmin: true })
+		await admin.firestore()
 			.collection('users')
 			.doc(user.uid)
 			.set({

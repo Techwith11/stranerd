@@ -1,4 +1,4 @@
-const admin = require('firebase-admin')
+import admin from 'firebase-admin'
 admin.initializeApp()
 
 // Auth Triggers
@@ -12,8 +12,6 @@ export const braintreeWebhookSubscriptionStateChanged = require('./requests/brai
 
 
 // On Call Triggers
-export const createNewSingleChatCollection = require('./onCall/createNewSingleChatCollection')
-
 export const startTutorTest = require('./onCall/tests/startTutorTest')
 export const markTutorTest = require('./onCall/tests/markTutorTest')
 

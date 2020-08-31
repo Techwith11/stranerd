@@ -1,7 +1,7 @@
-const functions = require('firebase-functions')
-const equal = require('deep-equal')
-const { saveToAlgolia } = require('../../helpers/algolia')
-const { deleteFromStorage } = require('../../helpers/storage')
+import functions from 'firebase-functions'
+import { saveToAlgolia } from '../../helpers/algolia'
+import equal from 'deep-equal'
+import { deleteFromStorage } from '../../helpers/storage'
 
 module.exports = functions.firestore.document('/notes/{id}').onUpdate(async (snap) => {
 	await saveToAlgolia('notes', snap.after.id, snap.after.data())

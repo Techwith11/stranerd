@@ -1,5 +1,5 @@
-const functions = require('firebase-functions')
-const { saveToAlgolia } = require('../../helpers/algolia')
+import functions from 'firebase-functions'
+import { saveToAlgolia } from '../../helpers/algolia'
 
 module.exports = functions.firestore.document('/blog/{id}').onCreate(async (snap) => {
 	await saveToAlgolia('articles', snap.id, snap.data())

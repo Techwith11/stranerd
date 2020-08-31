@@ -1,9 +1,9 @@
-import { auth } from 'firebase-functions'
-import { firestore } from 'firebase-admin'
+import functions from 'firebase-functions'
+import admin from 'firebase-admin'
 
-module.exports = auth.user().onDelete(async (user) => {
-	await firestore().collection('users').doc(user.uid)
+module.exports = functions.auth.user().onDelete(async (user) => {
+	await admin.firestore().collection('users').doc(user.uid)
 		.set({
-			dates: { deletedAt: firestore.FieldValue.serverTimestamp() },
+			dates: { deletedAt: admin.firestore.FieldValue.serverTimestamp() },
 		},{ merge: true })
 })

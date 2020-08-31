@@ -1,6 +1,6 @@
-const functions = require('firebase-functions')
-const { deleteFromAlgolia } = require('../../helpers/algolia')
-const { deleteFromStorage } = require('../../helpers/storage')
+import functions from 'firebase-functions'
+import { deleteFromAlgolia } from '../../helpers/algolia'
+import { deleteFromStorage } from '../../helpers/storage'
 
 module.exports = functions.firestore.document('/notes/{id}').onDelete(async (snap) => {
 	await deleteFromAlgolia('notes', snap.id)

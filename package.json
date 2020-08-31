@@ -4,14 +4,15 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit",
+    "test:e2e": "vue-cli-service test:e2e",
     "start:firebase": "npm run build:functions && cross-env NODE_ENV=development firebase emulators:start --import ./docs/exports",
     "save:firebase": "firebase emulators:export ./docs/exports",
     "deploy:firebase": "firebase deploy",
-    "build": "vue-cli-service build",
-    "build:functions": " npm run build --prefix ./firebase/functions",
-    "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
-    "lint": "vue-cli-service lint"
+    "build:functions": "npm run build --prefix ./firebase/functions",
+    "lint:functions": "npm run lint --prefix ./firebase/functions"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
@@ -42,6 +43,7 @@
   },
   "devDependencies": {
     "@types/braintree-web": "^3.47.2",
+    "@types/deep-equal": "^1.0.1",
     "@types/jest": "^24.0.19",
     "@types/vue2-editor": "^2.6.0",
     "@typescript-eslint/eslint-plugin": "^2.18.0",

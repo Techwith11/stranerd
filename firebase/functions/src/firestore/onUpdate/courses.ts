@@ -1,7 +1,7 @@
-const functions = require('firebase-functions')
-const equal = require('deep-equal')
-const { saveToAlgolia } = require('../../helpers/algolia')
-const { deleteFromStorage } = require('../../helpers/storage')
+import functions from 'firebase-functions'
+import { saveToAlgolia } from '../../helpers/algolia'
+import equal from 'deep-equal'
+import { deleteFromStorage } from '../../helpers/storage'
 
 module.exports = functions.firestore.document('/courses/{id}').onUpdate(async (snap) => {
 	await saveToAlgolia('courses', snap.after.id, snap.after.data())
@@ -12,8 +12,8 @@ module.exports = functions.firestore.document('/courses/{id}').onUpdate(async (s
 	if(!equal(snap.before.data().video, snap.after.data().video)){
 		await deleteFromStorage(snap.before.data().video?.link)
 	}
-	const oldDocuments = snap.before.data().documents
-	const newDocuments = snap.after.data().documents
+	const oldDocuments = snap.before.data().documents as any[]
+	const newDocuments = snap.after.data().documents as any[]
 	oldDocuments.map(async document => {
 		const wasNotRemoved = newDocuments.find(doc => equal(doc, document))
 		if(!wasNotRemoved) await deleteFromStorage(document.link)

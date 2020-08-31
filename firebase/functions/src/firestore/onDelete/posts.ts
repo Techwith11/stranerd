@@ -1,6 +1,6 @@
-const functions = require('firebase-functions')
-const admin = require('firebase-admin')
-const { deleteFromAlgolia } = require('../../helpers/algolia')
+import functions from 'firebase-functions'
+import admin from 'firebase-admin'
+import { deleteFromAlgolia } from '../../helpers/algolia'
 
 module.exports = functions.firestore.document('/posts/{id}').onDelete(async (snap) => {
 	await deleteFromAlgolia('posts', snap.id)
