@@ -7,10 +7,8 @@
     "sourceMap": false,
     "strict": true,
     "target": "es2017",
-    "allowJs": true,
-    "checkJs": false,
     "removeComments": true,
-    "noImplicitAny": false
+    "noImplicitAny": true
   },
   "compileOnSave": true,
   "include": [
