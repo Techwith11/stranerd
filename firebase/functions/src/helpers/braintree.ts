@@ -1,4 +1,4 @@
-import { connect, Environment } from 'braintree'
+import { connect, Environment, SubscriptionNotification } from 'braintree'
 import { environmentVariables } from './environment'
 import { isProduction } from './environment'
 
@@ -34,4 +34,4 @@ export const cancelSubscription = async (id: string) => await getGateway().subsc
 
 type Notification = { bt_signature: string, bt_payload: string }
 export const parseNotification = async ({ bt_signature, bt_payload }: Notification) => await getGateway()
-	.webhookNotification.parse(bt_signature, bt_payload)
+	.webhookNotification.parse(bt_signature, bt_payload) as SubscriptionNotification
