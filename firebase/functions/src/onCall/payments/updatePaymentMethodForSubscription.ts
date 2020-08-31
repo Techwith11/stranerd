@@ -3,7 +3,7 @@ import admin from 'firebase-admin'
 import { isProduction } from '../../helpers/environment'
 import { updatePaymentMethodForSubscription } from '../../helpers/braintree'
 
-module.exports = functions.https.onCall(async (data, context) => {
+export default functions.https.onCall(async (data, context) => {
 	if (isProduction && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can update subscriptions')
 	}
