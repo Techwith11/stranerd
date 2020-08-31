@@ -22,7 +22,6 @@ import { DiscussionTransformer } from '@root/modules/courses/data/transformers/d
 import { DiscussionRepository } from '@root/modules/courses/data/repositories/discussion'
 import { GetDiscussionFactoryUsecase } from '@root/modules/courses/domain/usecases/getDiscussionFactory'
 import { AddDiscussionUsecase } from '@root/modules/courses/domain/usecases/addDiscussion'
-import { GetDiscussionsUsecase } from '@root/modules/courses/domain/usecases/getDiscussions'
 import { ListenToDiscussionsUsecase } from '@root/modules/courses/domain/usecases/listenToDiscussions'
 
 const subjectDataSource = new SubjectFirebaseDataSource()
@@ -52,7 +51,6 @@ export const UpdateCourse = new UpdateCourseUsecase(courseRepository)
 export const GetRecentCourses = new GetRecentCoursesUsecase(courseRepository)
 export const GetCourseFactory = new GetCourseFactoryUsecase()
 
-export const GetDiscussions = new GetDiscussionsUsecase(discussionRepository)
 export const AddDiscussion = new AddDiscussionUsecase(discussionRepository)
 export const ListenToDiscussions = new ListenToDiscussionsUsecase(discussionRepository)
 export const GetDiscussionFactory = new GetDiscussionFactoryUsecase()

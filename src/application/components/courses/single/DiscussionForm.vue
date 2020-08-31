@@ -14,7 +14,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-import { useCreateDiscussion } from '@/usecases/courses/disucssion'
+import { useCreateDiscussion } from '@/usecases/courses/discussion'
 export default defineComponent({
 	props: {
 		course: {
