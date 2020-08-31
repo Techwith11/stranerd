@@ -1,22 +1,22 @@
-const functions = require('firebase-functions')
-const admin = require('firebase-admin')
-const { isProduction } = require('../../helpers/environment')
+import functions from 'firebase-functions'
+import admin from'firebase-admin'
+import { isProduction } from '../../helpers/environment'
 
-module.exports = functions.https.onCall(async (data, context) => {
+module.exports = functions.https.onCall(async ({ id }, context) => {
 	if (isProduction && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can upgrade accounts')
 	}
-	if (isProduction && !context.auth.token.isAdmin) {
+	if (isProduction && !context.auth?.token.isAdmin) {
 		throw new functions.https.HttpsError('failed-precondition', 'Only admins can downgrade users')
 	}
 	try{
 		if (isProduction){
-			await admin.auth().setCustomUserClaims(data.id, { isAdmin: false })
+			await admin.auth().setCustomUserClaims(id, { isAdmin: false })
 		}
 		await admin
 			.firestore()
 			.collection('users')
-			.doc(data.id)
+			.doc(id)
 			.set({
 				roles: { isAdmin: false }
 			}, { merge: true })
