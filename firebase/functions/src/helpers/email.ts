@@ -1,6 +1,6 @@
 import { firestore } from'firebase-admin'
 import { createTransport } from 'nodemailer'
-import * as Template from 'email-templates'
+import Template from 'email-templates'
 import { environmentVariables } from './environment'
 
 const { email: { email, pass }, meta: { domain } } = environmentVariables.admin

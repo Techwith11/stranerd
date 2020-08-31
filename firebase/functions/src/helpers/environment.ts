@@ -1,4 +1,4 @@
-const functions = require('firebase-functions')
+import functions from 'firebase-functions'
 
 export const isProduction = functions.config().environment.mode === 'production'
 export const isDev = functions.config().environment.mode === 'development'
