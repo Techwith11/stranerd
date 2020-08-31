@@ -1,14 +1,11 @@
 const functions = require('firebase-functions')
 
-const isProduction = functions.config().environment.mode === 'production'
-const isDev = functions.config().environment.mode === 'development'
-
-module.exports.isProduction = isProduction
-module.exports.isDev = isDev
+export const isProduction = functions.config().environment.mode === 'production'
+export const isDev = functions.config().environment.mode === 'development'
 
 const environment = isProduction ? 'production' : 'development'
 
-module.exports.environmentVariables = {
+export const environmentVariables = {
 	paypal: {
 		clientId: functions.config().paypal[environment]['client_id']
 	},

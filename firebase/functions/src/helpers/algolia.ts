@@ -1,8 +1,9 @@
-const algoliaSearch = require('algoliasearch')
-const { environmentVariables } = require('./environment')
+import algoliaSearch from 'algoliasearch'
+import { environmentVariables } from './environment'
+
 const { appId, apiKey } = environmentVariables.algolia
 
-exports.saveToAlgolia = async (collection, id ,data) => {
+export const saveToAlgolia = async (collection: string, id: string ,data: any) => {
 	try{
 		await algoliaSearch(appId, apiKey).initIndex(collection).saveObject({ ...data, objectID: id })
 	}catch (e) {
@@ -10,7 +11,7 @@ exports.saveToAlgolia = async (collection, id ,data) => {
 	}
 }
 
-exports.deleteFromAlgolia = async (collection, id) => {
+export const deleteFromAlgolia = async (collection: string, id: string) => {
 	try{
 		await algoliaSearch(appId, apiKey).initIndex(collection).deleteObject(id)
 	}catch (e) {

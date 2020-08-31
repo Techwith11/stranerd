@@ -1,7 +1,7 @@
-const axios = require('axios')
-const { environmentVariables } = require('./environment')
+import axios from 'axios'
+import { environmentVariables } from './environment'
 
-module.exports.subscribeToMailchimpList = async (email) => {
+export const subscribeToMailchimpList = async (email: string) => {
 	const body = {
 		members: [
 			{ email_address: email, status: 'subscribed' }
