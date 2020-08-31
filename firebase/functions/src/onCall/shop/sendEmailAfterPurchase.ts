@@ -3,7 +3,7 @@ import admin from'firebase-admin'
 import { isProduction } from '../../helpers/environment'
 import { sendPurchaseEmail } from '../../helpers/email'
 
-module.exports = functions.https.onCall(async ({ id, cart }, context) => {
+export default functions.https.onCall(async ({ id, cart }, context) => {
 	if (isProduction && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can receive purchase emails')
 	}

@@ -7,7 +7,7 @@ const plans = {
 	'stranerd_yearly_amateur_plan': 60, 'stranerd_yearly_intermediate_plan': 120, 'stranerd_yearly_master_plan': 180
 }
 
-module.exports = functions.https.onRequest(async (request, response) => {
+export default functions.https.onRequest(async (request, response) => {
 	try {
 		const { subscription, kind } = await parseNotification(request.body)
 		if(subscription){

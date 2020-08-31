@@ -2,7 +2,7 @@ import functions from 'firebase-functions'
 import admin from 'firebase-admin'
 import { sendSessionRequestEmail } from '../../helpers/email'
 
-module.exports = functions.firestore.document('/sessions/{id}').onCreate(async (snap) => {
+export default functions.firestore.document('/sessions/{id}').onCreate(async (snap) => {
 	const { student, tutor, duration } = snap.data()
 
 	const timeFormatted = duration < 1 ? `${duration} minutes` : `${duration} ${duration === 1 ? 'hour': 'hours'}`

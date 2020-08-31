@@ -2,7 +2,7 @@ import functions from 'firebase-functions'
 import admin from 'firebase-admin'
 import { deleteFromAlgolia } from '../../helpers/algolia'
 
-module.exports = functions.firestore.document('/posts/{id}').onDelete(async (snap) => {
+export default functions.firestore.document('/posts/{id}').onDelete(async (snap) => {
 	await deleteFromAlgolia('posts', snap.id)
 
 	try{

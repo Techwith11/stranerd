@@ -1,7 +1,7 @@
 import functions from 'firebase-functions'
 import { subscribeToMailchimpList } from '../../helpers/subscribeToMailchimpList'
 
-module.exports = functions.https.onCall(async ({ email }) => {
+export default functions.https.onCall(async ({ email }) => {
 	try{
 		await subscribeToMailchimpList(email)
 	}catch(error){

@@ -2,7 +2,7 @@ import functions from 'firebase-functions'
 import admin from'firebase-admin'
 import { sendMail } from '../../helpers/email'
 
-module.exports = functions.https.onCall(async ({ id }) => {
+export default functions.https.onCall(async ({ id }) => {
 	const ref = admin.firestore().collection('errors/types/emails').doc(id)
 	const doc = await ref.get()
 	if(!doc.exists) return true

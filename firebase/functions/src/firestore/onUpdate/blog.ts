@@ -3,7 +3,7 @@ import { saveToAlgolia } from '../../helpers/algolia'
 import equal from 'deep-equal'
 import { deleteFromStorage } from '../../helpers/storage'
 
-module.exports = functions.firestore.document('/blog/{id}').onUpdate(async (snap) => {
+export default functions.firestore.document('/blog/{id}').onUpdate(async (snap) => {
 	await saveToAlgolia('articles', snap.after.id, snap.after.data())
 
 	if(!equal(snap.before.data().image, snap.after.data().image)){

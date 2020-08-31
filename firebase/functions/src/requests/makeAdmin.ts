@@ -1,7 +1,7 @@
 import functions from 'firebase-functions'
 import admin from 'firebase-admin'
 
-module.exports = functions.https.onRequest(async (request, response) => {
+export default functions.https.onRequest(async (request, response) => {
 	const user = await admin.auth().getUserByEmail('kevinfizu@gmail.com')
 	if(user){
 		await admin.auth().setCustomUserClaims(user.uid, { isAdmin: true })

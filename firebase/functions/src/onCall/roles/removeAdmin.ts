@@ -2,7 +2,7 @@ import functions from 'firebase-functions'
 import admin from'firebase-admin'
 import { isProduction } from '../../helpers/environment'
 
-module.exports = functions.https.onCall(async ({ id }, context) => {
+export default functions.https.onCall(async ({ id }, context) => {
 	if (isProduction && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can upgrade accounts')
 	}
