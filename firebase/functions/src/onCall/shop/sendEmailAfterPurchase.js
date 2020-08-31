@@ -1,7 +1,7 @@
 const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 const { isProduction } = require('../../helpers/environment')
-const { sendPurchaseEmail } = require('../../emails/index')
+const { sendPurchaseEmail } = require('../../emails')
 
 module.exports = functions.https.onCall(async (data, context) => {
 	if (isProduction && !context.auth) {
