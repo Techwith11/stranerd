@@ -1,13 +1,12 @@
-const functions = require('firebase-functions')
-const admin = require('firebase-admin')
-const { sendMail } = require('../../helpers/email')
+import functions from 'firebase-functions'
+import admin from'firebase-admin'
+import { sendMail } from '../../helpers/email'
 
-module.exports = functions.https.onCall(async (data) => {
-	const { id } = data
+module.exports = functions.https.onCall(async ({ id }) => {
 	const ref = admin.firestore().collection('errors/types/emails').doc(id)
 	const doc = await ref.get()
 	if(!doc.exists) return true
-	const { subject, to, content } = doc.data()
+	const { subject, to, content } = doc.data() as { subject: string, to: string, content: string }
 	try{
 		await sendMail(to, subject, content)
 		return true
