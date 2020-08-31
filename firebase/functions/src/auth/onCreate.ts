@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin'
 import { createCustomer } from '../helpers/braintree'
 import { subscribeToMailchimpList } from '../helpers/subscribeToMailchimpList'
 
-export default functions.auth.user().onCreate(async (user) => {
+export const authUserCreated = functions.auth.user().onCreate(async (user) => {
 	await admin.auth().setCustomUserClaims(user.uid, { isStudent: true })
 
 	const data: any = {

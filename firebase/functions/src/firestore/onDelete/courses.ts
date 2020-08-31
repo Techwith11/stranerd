@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin'
 import { deleteFromAlgolia } from '../../helpers/algolia'
 import { deleteFromStorage } from '../../helpers/storage'
 
-export default functions.firestore.document('/courses/{id}').onDelete(async (snap) => {
+export const firestoreCourseDeleted = functions.firestore.document('/courses/{id}').onDelete(async (snap) => {
 	await deleteFromAlgolia('courses', snap.id)
 
 	await deleteFromStorage(snap.data().video.link)

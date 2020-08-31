@@ -1,9 +1,9 @@
 import * as functions from 'firebase-functions'
 import { saveToAlgolia } from '../../helpers/algolia'
-import equal from 'deep-equal'
 import { deleteFromStorage } from '../../helpers/storage'
+const equal = require('deep-equal')
 
-export default functions.firestore.document('/courses/{id}').onUpdate(async (snap) => {
+export const firestoreCourseUpdated = functions.firestore.document('/courses/{id}').onUpdate(async (snap) => {
 	await saveToAlgolia('courses', snap.after.id, snap.after.data())
 
 	if(!equal(snap.before.data().image, snap.after.data().image)){

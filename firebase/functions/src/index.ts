@@ -2,15 +2,15 @@ import * as admin from 'firebase-admin'
 admin.initializeApp()
 
 // Auth Triggers
-import authUserCreated from './auth/onCreate'
-import authUserDeleted from './auth/onDelete'
+import { authUserCreated } from './auth/onCreate'
+import { authUserDeleted } from './auth/onDelete'
 export { authUserCreated, authUserDeleted }
 
 
 
 // Request Triggers
-import requestMakeAdmin from './requests/makeAdmin'
-import braintreeWebhookSubscriptionStateChanged from './requests/braintreeWebhookSubscriptionStateChanged'
+import { requestMakeAdmin } from './requests/makeAdmin'
+import { braintreeWebhookSubscriptionStateChanged } from './requests/braintreeWebhookSubscriptionStateChanged'
 export { requestMakeAdmin, braintreeWebhookSubscriptionStateChanged }
 
 
@@ -59,33 +59,33 @@ export { sendEmailAfterPurchase, subscribeToMailingList, resendEmailAfterError }
 
 // Firestore Triggers
 // On Create
-import firestoreBlogPostCreated from './firestore/onCreate/blog'
-import firestoreCourseCreated from './firestore/onCreate/courses'
-import firestoreNoteCreated from './firestore/onCreate/notes'
-import firestorePostCreated from './firestore/onCreate/posts'
-import firestoreSessionCreated from './firestore/onCreate/sessions'
-import firestoreUserCreated from './firestore/onCreate/users'
+import { firestoreArticleCreated } from './firestore/onCreate/article'
+import { firestoreCourseCreated } from './firestore/onCreate/courses'
+import { firestoreNoteCreated } from './firestore/onCreate/notes'
+import { firestorePostCreated } from './firestore/onCreate/posts'
+import { firestoreSessionCreated } from './firestore/onCreate/sessions'
+import { firestoreUserCreated } from './firestore/onCreate/users'
 export {
-	firestoreBlogPostCreated, firestoreCourseCreated, firestoreNoteCreated,
+	firestoreArticleCreated, firestoreCourseCreated, firestoreNoteCreated,
 	firestorePostCreated, firestoreSessionCreated, firestoreUserCreated
 }
 
 // On Update
-import firestoreBlogPostUpdated from './firestore/onUpdate/blog'
-import firestoreCourseUpdated from './firestore/onUpdate/courses'
-import firestoreNoteUpdated from './firestore/onUpdate/notes'
-import firestorePostUpdated from './firestore/onUpdate/posts'
-import firestoreUserUpdated from './firestore/onUpdate/users'
+import { firestoreArticleUpdated } from './firestore/onUpdate/articles'
+import { firestoreCourseUpdated } from './firestore/onUpdate/courses'
+import { firestoreNoteUpdated } from './firestore/onUpdate/notes'
+import { firestorePostUpdated } from './firestore/onUpdate/posts'
+import { firestoreUserUpdated } from './firestore/onUpdate/users'
 export {
-	firestoreBlogPostUpdated, firestoreCourseUpdated, firestoreNoteUpdated, firestorePostUpdated, firestoreUserUpdated
+	firestoreArticleUpdated, firestoreCourseUpdated, firestoreNoteUpdated, firestorePostUpdated, firestoreUserUpdated
 }
 
 // On Delete
-import firestoreBlogPostDeleted from './firestore/onDelete/blog'
-import firestoreCourseDeleted from './firestore/onDelete/courses'
-import firestoreNoteDeleted from './firestore/onDelete/notes'
-import firestorePostDeleted from './firestore/onDelete/posts'
-import firestoreUserDeleted from './firestore/onDelete/users'
+import { firestoreArticleDeleted } from './firestore/onDelete/article'
+import { firestoreCourseDeleted } from './firestore/onDelete/courses'
+import { firestoreNoteDeleted } from './firestore/onDelete/notes'
+import { firestorePostDeleted } from './firestore/onDelete/posts'
+import { firestoreUserDeleted } from './firestore/onDelete/users'
 export {
-	firestoreBlogPostDeleted, firestoreCourseDeleted, firestoreNoteDeleted, firestorePostDeleted, firestoreUserDeleted
+	firestoreArticleDeleted, firestoreCourseDeleted, firestoreNoteDeleted, firestorePostDeleted, firestoreUserDeleted
 }

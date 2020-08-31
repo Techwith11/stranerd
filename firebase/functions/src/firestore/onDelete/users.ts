@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin'
 import { deleteFromAlgolia } from '../../helpers/algolia'
 import { deleteFromStorage } from '../../helpers/storage'
 
-export default functions.firestore.document('/users/{id}').onDelete(async (snap) => {
+export const firestoreUserDeleted = functions.firestore.document('/users/{id}').onDelete(async (snap) => {
 	await deleteFromAlgolia('users', snap.id)
 
 	await deleteFromStorage(snap.data().bio.image?.link)

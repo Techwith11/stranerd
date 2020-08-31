@@ -1,9 +1,9 @@
 import * as functions from 'firebase-functions'
 import { saveToAlgolia } from '../../helpers/algolia'
-import equal from 'deep-equal'
 import { deleteFromStorage } from '../../helpers/storage'
+const equal = require('deep-equal')
 
-export default functions.firestore.document('/users/{id}').onUpdate(async (snap) => {
+export const firestoreUserUpdated = functions.firestore.document('/users/{id}').onUpdate(async (snap) => {
 	const { bio: oldBio, tutor: oldTutor } = snap.before.data()
 	const { bio: newBio, tutor: newTutor } = snap.after.data()
 	if(!equal(oldBio, newBio) || !equal(oldTutor, newTutor)){
