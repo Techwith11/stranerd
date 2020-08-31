@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "start:firebase": "cross-env NODE_ENV=development firebase emulators:start --import ./docs/exports",
+    "start:firebase": "npm run build:functions && cross-env NODE_ENV=development firebase emulators:start --import ./docs/exports",
     "save:firebase": "firebase emulators:export ./docs/exports",
     "deploy:firebase": "firebase deploy",
     "build": "vue-cli-service build",
+    "build:functions": " npm run build --prefix ./firebase/functions",
     "test:unit": "vue-cli-service test:unit",
     "test:e2e": "vue-cli-service test:e2e",
     "lint": "vue-cli-service lint"
