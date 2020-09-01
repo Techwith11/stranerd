@@ -26,7 +26,7 @@ export class UserEntity{
 	get name(){ return this.userBio.name }
 	get email(){ return this.userBio.email }
 	get bio(){ return this.userBio.bio }
-	get image(){ return this.userBio.image?.link ?? DEFAULT_IMAGE_URL }
+	get image(){ return this.userBio.image?.link ||  DEFAULT_IMAGE_URL }
 
 	get teachableCourses(){
 		if(!this.roles.isTutor) return []
