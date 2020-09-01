@@ -5,7 +5,7 @@
         <p class="text-center font-weight-500 mb-4 text-muted">Payment Methods</p>
         <div>
           <helper-spinner v-if="methodsLoading"/>
-          <div>
+          <div class="position-relative">
             <helper-message :message="methodsError" v-if="methodsError" />
             <div v-else>
               <payment-method-card :method="method" v-for="method in methods" :key="method.id"/>
