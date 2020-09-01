@@ -6,7 +6,7 @@
         <div class="flex-grow-1">
           <session-nav class="h-100" :user="otherPerson" :timer="timer" />
         </div>
-        <div class="flex-grow-2 h-100" id="background">
+        <div class="flex-grow-2 h-100 position-relative" id="background">
           <div class="px-3" :id="timer > 0 ? 'smaller-height' : 'longer-height'">
             <helper-message v-if="chats.length < 1" :message="timer > 0 ? 'No messages. Send a message now' : 'Session has ended and no message was sent.'" />
             <ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}" v-if="chats.length > 0">
@@ -178,10 +178,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  .flex-grow-2{ flex-grow: 2; }
-  #background{
-    background: url('../../../assets/images/sessions/background.svg') center repeat;
-  }
+	.flex-grow-2{ flex-grow: 2; }
+	#background{
+		background: url('../../../assets/images/sessions/background.svg') center repeat;
+	}
 	ul{
 		overflow: auto;
 		-ms-overflow-style: none;
@@ -191,16 +191,16 @@ export default {
 	}
 	#smaller-height{
 		height: calc(100vh - 76px - 106px);
-		ul{ height: calc(100vh - 76px - 106px - 50px); }
-    @media (min-width: $lg){
-      height: calc(100vh - 76px);
-      ul{ height: calc(100vh - 76px - 50px) }
-    }
+		ul{ height: calc(100vh - 76px - 106px - 50px - 1rem); }
+		@media (min-width: $lg){
+			height: calc(100vh - 76px);
+			ul{ height: calc(100vh - 76px - 50px - 1rem) }
+		}
 	}
 	#longer-height{
-		ul{ height: calc(100vh - 106px - 76px); }
-    @media (min-width: $lg){
-      ul{ height: calc(100vh - 76px) }
-    }
+		ul{ height: calc(100vh - 106px - 76px - 1rem); }
+		@media (min-width: $lg){
+	        ul{ height: calc(100vh - 76px - 1rem) }
+		}
 	}
 </style>
