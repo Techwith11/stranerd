@@ -26,6 +26,7 @@ export class AuthFirebaseDataSource implements AuthBaseDataSource{
 	public async registerWithEmail({ name, email, password }: AuthUser): Promise<string> {
 		const record = await auth.createUserWithEmailAndPassword(email, password)
 		//TODO: catch possible errors
+		await record.user?.updateProfile({ displayName: name })
 		await FirestoreService.update('users', record.user?.uid ?? '', { bio: { name } })
 		return record.user?.uid ?? ''
 	}
