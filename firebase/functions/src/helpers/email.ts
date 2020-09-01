@@ -1,4 +1,4 @@
-import { firestore } from'firebase-admin'
+import * as admin from 'firebase-admin'
 import { createTransport } from 'nodemailer'
 import * as Template from 'email-templates'
 import { environmentVariables } from './environment'
@@ -20,10 +20,10 @@ export const sendMailAndCatchErrors = async (to: string, subject: string ,conten
 		await sendMail(to, subject, content)
 		return true
 	}catch(e){
-		await firestore().collection('errors/types/emails').add({
+		await admin.firestore().collection('errors/types/emails').add({
 			error: e.message,
 			subject, to, content,
-			dates: { triedAt: firestore.FieldValue.serverTimestamp() }
+			dates: { triedAt: admin.firestore.FieldValue.serverTimestamp() }
 		})
 		return false
 	}

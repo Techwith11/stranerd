@@ -26,12 +26,9 @@ const startListener = async (postId: string) => {
 export const useReplies = (postId: string) => {
 	if(repliesGlobalState[postId] === undefined){
 		repliesGlobalState[postId] = reactive({
-			fetched: false,
 			loading: false,
 			replies: [] as ReplyEntity[],
 			error: '',
-			hasMore: false,
-			olderRepliesLoading: false,
 			listener: () => {},
 		})
 	}

@@ -23,10 +23,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 	.center{
-		position: absolute;
+		/*position: absolute;
 		left: 50%;
-		top: 50%;
+		top: 50%;*/
 		text-align: center;
-		transform: translate(-50%,-50%);
+		//transform: translate(-50%,-50%);
 	}
 </style>

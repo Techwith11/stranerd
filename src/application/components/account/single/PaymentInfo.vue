@@ -5,11 +5,9 @@
         <p class="text-center font-weight-500 mb-4 text-muted">Payment Methods</p>
         <div>
           <helper-spinner v-if="methodsLoading"/>
-          <div>
+          <div class="position-relative">
             <helper-message :message="methodsError" v-if="methodsError" />
-            <div v-else>
               <payment-method-card :method="method" v-for="method in methods" :key="method.id"/>
-            </div>
             <div class="d-flex justify-content-between flex-wrap align-items-center" v-if="!methodsLoading">
               <a class="text-info mr-2" @click.prevent="setAccountModalTransactions">View all transactions</a>
               <button class="btn btn-success" @click="setAccountModalAddPaymentMethod"><i class="fas fa-plus mr-1"></i>Add Card</button>

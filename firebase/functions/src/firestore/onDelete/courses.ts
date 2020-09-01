@@ -11,8 +11,7 @@ export const firestoreCourseDeleted = functions.firestore.document('/courses/{id
 	snap.data().documents.map(async (document: any) => await deleteFromStorage(document.link))
 
 	try{
-		const courseDiscussions = await admin.firestore().collection('courses').doc(snap.id).collection('discussions').get()
-		courseDiscussions.docs.forEach(discussion => discussion.ref.delete())
+		await admin.database().ref(`courses/${snap.id}`).remove()
 	}catch(error){
 		console.warn(error)
 	}

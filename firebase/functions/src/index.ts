@@ -60,11 +60,9 @@ import { firestoreArticleCreated } from './firestore/onCreate/article'
 import { firestoreCourseCreated } from './firestore/onCreate/courses'
 import { firestoreNoteCreated } from './firestore/onCreate/notes'
 import { firestorePostCreated } from './firestore/onCreate/posts'
-import { firestoreSessionCreated } from './firestore/onCreate/sessions'
 import { firestoreUserCreated } from './firestore/onCreate/users'
 export {
-	firestoreArticleCreated, firestoreCourseCreated, firestoreNoteCreated,
-	firestorePostCreated, firestoreSessionCreated, firestoreUserCreated
+	firestoreArticleCreated, firestoreCourseCreated, firestoreNoteCreated, firestorePostCreated, firestoreUserCreated
 }
 
 // On Update
