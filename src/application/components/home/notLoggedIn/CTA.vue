@@ -10,32 +10,32 @@
                 <div class="carousel-item active" data-interval="3000">
                     <img src="@/assets/images/slides_1.jpg" class="d-block w-100" alt="">
                     <div class="carousel-caption">
-                        <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
-                        <p class="subhead">Premium access to loads of resources ranging from courses, tests e.t.c.</p>
+                        <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Anywhere, Anytime!</h1>
+                        <p class="subhead">Premium access to loads of resources ranging from courses, materials, tests and more.</p>
                         <button class="btn btn-gold-dark px-4"><router-link class="text-decoration-none text-white" to="/courses">Get Access</router-link></button>
                     </div>
                 </div>
                 <div class="carousel-item" data-interval="3000">
                     <img src="@/assets/images/slides_2.jpg" class="d-block w-100" alt="">
                     <div class="carousel-caption">
-                        <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
-                        <p class="subhead">Premium access to loads of resources ranging from courses, tests e.t.c.</p>
+                        <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Anywhere, Anytime!</h1>
+                        <p class="subhead">Premium access to loads of resources ranging from courses, materials, tests and more.</p>
                         <button class="btn btn-gold-dark px-4"><router-link class="text-decoration-none text-white" to="/courses">Get Access</router-link></button>
                     </div>
                 </div>
                 <div class="carousel-item" data-interval="3000">
                     <img src="@/assets/images/slides_3.jpg" class="d-block w-100" alt="">
                     <div class="carousel-caption">
-                        <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
-                        <p class="subhead">Premium access to loads of resources ranging from courses, tests e.t.c.</p>
+                        <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Anywhere, Anytime!</h1>
+                        <p class="subhead">Premium access to loads of resources ranging from courses, materials, tests and more.</p>
                         <button class="btn btn-gold-dark px-4"><router-link class="text-decoration-none text-white" to="/courses">Get Access</router-link></button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="d-sm-none p-4 text-center cta-sm bg-gold-light">
-            <h1 class="header">Get Access to Unlimited Educational Resources. Everywhere, Every time!</h1>
-            <p class="subhead px-2">Premium access to loads of resources ranging from courses, tests e.t.c.</p>
+            <h1 class="header">Get Access to Unlimited Educational Resources. Anywhere, Anytime!</h1>
+            <p class="subhead px-2">Premium access to loads of resources ranging from courses, materials, tests and more.</p>
             <button class="btn btn-gold-dark px-4"><router-link class="text-decoration-none text-white" to="/courses">Get Access</router-link></button>
         </div>
         <div class="bg-gold" style="height: 1rem;"></div>

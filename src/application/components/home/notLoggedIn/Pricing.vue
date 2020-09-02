@@ -4,7 +4,7 @@
 		<div class="container py-8">
 			<div class="mb-5 text-center">
 				<h2 class="font-weight-bold text-gold-dark mr-1">Our Pricing Plans</h2>
-				<p class="small">Stranerd is an online educational platform that offers academic assistance to students worldwide.</p>
+				<p class="small">Stranerd’s Pricing Plans are carefully structured to give you the best deal no matter what your budget is.</p>
 				<router-link class="btn btn-gold text-white" to="/pricing-plans">See more details</router-link>
 			</div>
 			<div class="d-flex flex-sm-row flex-column">
@@ -33,7 +33,7 @@
 							<span>Save 16% for ${{ plan.yearlyPrice }}/year</span>
 						</li>
 					</ul>
-					<router-link class="mx-auto small" to="/pricing-plans">read more...</router-link>
+					<router-link class="mx-auto small" to="/pricing-plans">See more details...</router-link>
 				</div>
 			</div>
 		</div>

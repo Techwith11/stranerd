@@ -54,7 +54,7 @@ const fetchCourses = async (subject: string, module: string) => {
 const fetchCoursesOnInit = async (subject: string, module: string) => {
 	globalState[getKey(subject, module)].loading = true
 	await fetchCourses(subject, module).catch(() => globalState[getKey(subject, module)].error = 'Failed to fetch courses')
-	if(globalState[getKey(subject, module)].courses.length === 0) globalState[getKey(subject, module)].error = `No courses found for ${module} at the moment. Check again later`
+	if(globalState[getKey(subject, module)].courses.length === 0) globalState[getKey(subject, module)].error = `There were no courses found for ${module} at the moment. Please check again later`
 	globalState[getKey(subject, module)].loading = false
 }
 const fetchOlderCourses = async (subject: string, module: string) => {

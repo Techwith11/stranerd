@@ -3,7 +3,7 @@
 		<helper-spinner v-if="isLoading" />
 		<div class="container" v-else>
 			<session-nav />
-			<helper-message message="No sessions taught yet." v-if="sessions.length === 0" />
+			<helper-message message="You haven’t taught any session yet. " v-if="sessions.length === 0" />
 			<div v-else>
 				<session-card :session="session" v-for="session in sessions" :key="session['.key']" />
 				<div class="text-center small my-3" v-if="hasMore">

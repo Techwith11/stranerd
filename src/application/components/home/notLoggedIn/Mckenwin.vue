@@ -6,14 +6,17 @@
 				<div class="container text-white">
 					<h2>Study In Europe</h2>
 					<p class="lead mb-3">Get admission to study in the best universities in Europe without IELTS or TOEFL</p>
-					<a class="btn btn-lg btn-outline-light" href="https://mckenwin.com/" target="_blank">Visit site</a>
+					<a class="btn btn-lg btn-outline-light" href="https://mckenwin.com/" target="_blank">Secure your admission now</a>
 				</div>
 			</div>
 		</div>
 		<div class="container my-4 d-flex justify-content-center align-items-center flex-column flex-md-row">
-			<h3 class="col-md-6 text-left text-md-right">Admission to study abroad</h3>
+			<h3 class="col-md-6 text-left text-md-right">Secure your admission to study abroad</h3>
 			<div class="col-md-6">
-				<p>McKenwin is an International Education Agency founded in 2014 with over 1583 successful student placement and visa counseling service experience representing and placing students into Bachelor study in Europe without IELTS, Masters degree in Europe without IELTS at top and world-ranked institutions around the world mainly in Cyprus, Turkey and other European countries.</p>
+				<p>
+					McKenwin is an International Education Agency founded in 2014 with over 1583 successful student placements and Visa counseling service experience.
+					We have represented and placed students into Bachelor study in Europe without IELTS as well as Masters degree in Europe without IELTS at top and world-ranked institutions around the world mainly in Cyprus,Turkey and other European countries.
+				</p>
 			</div>
 		</div>
 	    <div class="bg-gold" style="height: 1rem;"></div>

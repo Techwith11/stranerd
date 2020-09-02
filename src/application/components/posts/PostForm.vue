@@ -7,14 +7,14 @@
 				<input type="text" class="form-control" placeholder="eg What is the result of integrating 2x" v-model="factory.title"
 					:class="{'is-invalid': factory.errors.title,'is-valid': factory.isValid('title')}">
 				<small class="small text-danger d-block" v-if="factory.errors.title">{{ factory.errors.title }}</small>
-				<small class="small text-muted">One quick sentence summary of your question</small>
+				<small class="small text-muted">One sentence title of your question</small>
 			</div>
 			<div class="form-group my-3">
 				<h6>Body</h6>
 				<editor :model.sync="factory.body" path='posts/body'
 					:valid="factory.isValid('body')" :error="factory.errors.body" placeholder=""
 				/>
-				<small class="small text-muted">Include all information necessary for someone to answer your question</small>
+				<small class="small text-muted">Please include all necessary information for proper understanding and response to your question</small>
 			</div>
 			<div class="form-group my-3">
 				<h6>Related Subject</h6>

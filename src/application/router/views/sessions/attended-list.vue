@@ -3,7 +3,12 @@
 		<helper-spinner v-if="isLoading" />
 		<div class="container" v-else>
 			<session-nav />
-			<helper-message message="No sessions attended yet." v-if="sessions.length === 0" />
+			<div v-if="sessions.length === 0">
+				<helper-message message="You haven’t attended any session yet."  />
+				<button class="floating-button btn-success">
+					<router-link to="/tutors" class="text-white"><i class="fas fa-plus"></i></router-link>
+				</button>
+			</div>
 			<div v-else>
 				<session-card :session="session" v-for="session in sessions" :key="session['.key']" />
 				<div class="text-center small my-3" v-if="hasMore">

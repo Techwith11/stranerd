@@ -36,7 +36,7 @@ export const usePaymentMethodsList = () => {
 	if(!globalState.fetched) fetchPaymentMethods()
 		.then(() => {
 			globalState.fetched = true
-			if(globalState.methods.length === 0) globalState.error = 'No methods available at the moment'
+			if(globalState.methods.length === 0) globalState.error = 'You do not have any payment method saved. Try adding one now.'
 		})
 		.catch((e) => globalState.error = e.message)
 	else checkForNewPaymentMethods()
@@ -45,7 +45,7 @@ export const usePaymentMethodsList = () => {
 		loading: computed(() => globalState.loading),
 		error: computed(() => globalState.error),
 		methods: computed(() => globalState.methods),
-		validMethods: computed(() => globalState.methods/*.filter((m) => !m.expired)*/),//TODO: Reset definition of valid cards
+		validMethods: computed(() => globalState.methods.filter((m) => !m.expired)),//TODO: Reset definition of valid cards
 		fetchPaymentMethods
 	}
 }

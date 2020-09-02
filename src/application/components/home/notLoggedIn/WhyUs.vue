@@ -21,7 +21,7 @@
                         <img src="@/assets/images/icons/Study Anywhere.svg" alt="" />
                     </div>
                     <h3 class="icon-title">Study Anywhere</h3>
-                    <p class="icon-subtitle">Improve your academic performance with courses made by experts..</p>
+                    <p class="icon-subtitle">Improve your academic performance with on-the-spot access to course materials no matter your location.</p>
                 </div>
                 <div class="col-sm-6 col-md-4 mb-7">
                     <div class="icons">

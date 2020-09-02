@@ -10,10 +10,8 @@
 		<div class="container-fluid py-3" v-else>
 			<helper-message :message="error" v-if="error" />
 			<div v-else>
-				<div class="row">
-					<div class="col-lg-6" v-for="course in courses" :key="course.id">
-						<course-card :course="course"/>
-					</div>
+				<div class="grid">
+					<course-card :course="course" v-for="course in courses" :key="course.id"/>
 				</div>
 				<div class="d-flex justify-content-end my-3" v-if="hasMore">
 					<button class="btn-success" @click="fetchOlderCourses">
@@ -64,3 +62,17 @@ export default defineComponent({
 	}
 })
 </script>
+
+<style lang="scss" scoped>
+.grid{
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	grid-column-gap: 1rem;
+	grid-row-gap: 2rem;
+}
+@media (min-width: $md) {
+	.grid{
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+</style>

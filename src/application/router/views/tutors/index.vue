@@ -71,7 +71,7 @@ export default defineComponent({
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   grid-column-gap: 1rem;
-  grid-row-gap: 1.5rem;
+  grid-row-gap: 2rem;
 }
 @media (min-width: $md) {
   .grid{

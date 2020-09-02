@@ -14,7 +14,7 @@
                     <li class="mb-3">
                         <h4>Prompt service delivery</h4>
                         <span class="d-inline-block">We work well with your deadlines</span>
-                        <span class="d-inline-block">Got an assignment due in a hour, we got you</span>
+                        <span class="d-inline-block">Got an assignment due in an hour? We got you!</span>
                     </li>
                 </ul>
                 <img src="@/assets/images/what_makes_us_different.svg" alt="" class="col-md-6 mb-3">
