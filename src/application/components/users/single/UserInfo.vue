@@ -8,7 +8,7 @@
 		<p class="lead font-weight-bold">{{ user.name }}</p>
 		<p class="text-center w-75">{{ user.bio }}</p>
 		<div v-if="isTutor">
-			<p class="text-capitalize">Courses: {{ user.teachableCourses.join(',') }}</p>
+			<p class="text-capitalize">Courses: {{ user.teachableCourses.join(', ') }}</p>
 			<p class="text-center">
 				<rating-stars class="d-inline ml-1" :rating="user.tutor.rating"/>
 			</p>
