@@ -191,16 +191,16 @@ export default {
 	}
 	#smaller-height{
 		height: calc(100vh - 76px - 106px);
-		ul{ height: calc(100vh - 76px - 106px - 50px - 1rem); }
+		ul{ height: calc(100vh - 76px - 106px - 50px); }
 		@media (min-width: $lg){
 			height: calc(100vh - 76px);
-			ul{ height: calc(100vh - 76px - 50px - 1rem) }
+			ul{ height: calc(100vh - 76px - 50px) }
 		}
 	}
 	#longer-height{
-		ul{ height: calc(100vh - 106px - 76px - 1rem); }
+		ul{ height: calc(100vh - 106px - 76px); }
 		@media (min-width: $lg){
-	        ul{ height: calc(100vh - 76px - 1rem) }
+	        ul{ height: calc(100vh - 76px) }
 		}
 	}
 </style>

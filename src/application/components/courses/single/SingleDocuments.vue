@@ -9,7 +9,7 @@
 				</a>
 			</div>
 		</div>
-		<p v-else>
+		<p class="small" v-else>
 			<span>You need an active subscription to gain access to this course's documents. </span>
 			<router-link to="/pricing-plans">Subscribe Now</router-link>
 		</p>

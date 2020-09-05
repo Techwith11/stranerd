@@ -4,7 +4,7 @@
 			<textarea rows="3" class="form-control my-2 mr-lg-4" placeholder="Comment ..." v-model="factory.body"></textarea>
 			<small class="small text-danger" v-if="factory.errors.body">{{ factory.errors.body }}</small>
 		</div>
-		<button class="btn-success ml-2" type="submit" :disabled="!factory.valid|| loading">
+		<button class="btn-success ml-lg-2" type="submit" :disabled="!factory.valid|| loading">
 			<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
 			<span>Send</span>
 		</button>

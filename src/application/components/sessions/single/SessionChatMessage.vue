@@ -1,5 +1,5 @@
 <template>
-	<li class="d-flex" :class="{'justify-content-end': isByMe}" v-if="chat['.key']">
+	<li class="d-flex small" :class="{'justify-content-end': isByMe}" v-if="chat['.key']">
 		<div class="chat" :class="isByMe ? 'mine' : 'not-mine'">
 			<p class="m-0" v-if="!chat.media">{{ chat.content }}</p>
 			<div class="d-flex justify-content-between align-items-center" v-if="chat.media">
@@ -8,11 +8,11 @@
 					<i class="fas fa-download text-info"></i>
 				</a>
 			</div>
-			<div class="d-flex justify-content-between small mt-2">
+			<div class="d-flex justify-content-between small mt-1">
 				<span class="mr-2" :class="{'d-none':!isByMe, 'text-primary': !isChatRead, 'text-success': isChatRead }">
 					<i class="fas fa-check"></i><i class="fas fa-check ml-n2"></i>
 				</span>
-        <span>{{ getChatTime }}</span>
+                <span>{{ getChatTime }}</span>
 			</div>
 		</div>
 	</li>
