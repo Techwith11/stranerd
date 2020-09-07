@@ -12,7 +12,9 @@
     "save:firebase": "firebase emulators:export ./docs/exports",
     "deploy:firebase": "firebase deploy",
     "build:functions": "npm run build --prefix ./firebase/functions",
-    "lint:functions": "npm run lint --prefix ./firebase/functions"
+    "lint:functions": "npm run lint --prefix ./firebase/functions",
+    "config:functions:get": "firebase functions:config:get > firebase/functions/.runtimeconfig.json",
+    "config:functions:set": "firebase functions:config:set"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",

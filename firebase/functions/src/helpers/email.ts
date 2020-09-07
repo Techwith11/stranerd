@@ -1,13 +1,22 @@
 import * as admin from 'firebase-admin'
+import * as googleapis from 'googleapis'
 import { createTransport } from 'nodemailer'
 import * as Template from 'email-templates'
 import { environmentVariables } from './environment'
 
-const { email: { email, pass }, meta: { domain } } = environmentVariables.admin
+const { email: { email, clientId, clientSecret, refreshToken }, meta: { domain } } = environmentVariables.admin
 const meta = { domain, logo: `${domain}/img/stranerd_logo.png` }
 
 export const sendMail = async (to: string, subject: string ,content: string) => {
-	const transporter = createTransport({ service: 'gmail', auth: { user: email, pass } })
+	const oauth2Client = new googleapis.google.auth.OAuth2(clientId, clientSecret, 'https://developers.google.com/oauthplayground')
+	oauth2Client.setCredentials({ refresh_token: refreshToken })
+	const accessToken = (await oauth2Client.getAccessToken()).token!
+
+	const transporter = createTransport({
+		service: 'gmail',
+		auth: { type: 'OAuth2', user: email, clientId, clientSecret, refreshToken, accessToken, },
+		tls: { rejectUnauthorized: false, }
+	})
 	await transporter.sendMail({
 		from: `Stranerd`,
 		to, subject,
