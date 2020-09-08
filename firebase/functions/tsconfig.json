@@ -6,12 +6,16 @@
     "outDir": "lib",
     "sourceMap": false,
     "strict": true,
+    "baseUrl": ".",
     "target": "es2017",
     "removeComments": true,
     "noImplicitAny": true
   },
   "compileOnSave": true,
   "include": [
-    "../functions/src"
+    "./src"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }
