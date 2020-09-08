@@ -9,7 +9,7 @@ const planIds = [
 ]
 
 export const subscribeToPlan = functions.https.onCall(async (data, context) => {
-	if (isProduction && !context.auth) {
+	if (isProduction() && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can invoke payments')
 	}
 	if(!planIds.includes(data.planId)){ throw new functions.https.HttpsError('invalid-argument', 'Invalid plan id') }

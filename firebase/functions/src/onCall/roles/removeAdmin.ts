@@ -3,14 +3,14 @@ import * as admin from'firebase-admin'
 import { isProduction } from '../../helpers/environment'
 
 export const removeAdmin = functions.https.onCall(async ({ id }, context) => {
-	if (isProduction && !context.auth) {
+	if (isProduction() && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can upgrade accounts')
 	}
-	if (isProduction && !context.auth?.token.isAdmin) {
+	if (isProduction() && !context.auth?.token.isAdmin) {
 		throw new functions.https.HttpsError('failed-precondition', 'Only admins can downgrade users')
 	}
 	try{
-		if (isProduction){
+		if (isProduction()){
 			await admin.auth().setCustomUserClaims(id, { isAdmin: false })
 		}
 		await admin

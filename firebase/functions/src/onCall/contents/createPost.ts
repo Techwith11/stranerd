@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin'
 import { isProduction } from '../../helpers/environment'
 
 export const createPost = functions.https.onCall(async ({ post }, context) => {
-	if (isProduction && !context.auth) {
+	if (isProduction() && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can create posts')
 	}
 	try{

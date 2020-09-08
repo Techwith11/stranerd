@@ -4,7 +4,7 @@ import { isProduction } from '../../helpers/environment'
 import { sendSessionRequestEmail } from '../../helpers/email'
 
 export const startSession = functions.https.onCall(async ({ tutor, student, price, duration }, context) => {
-	if (isProduction && !context.auth) {
+	if (isProduction() && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can start sessions')
 	}
 	const createdAt = admin.firestore.Timestamp.now()

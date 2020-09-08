@@ -4,7 +4,7 @@ import { isProduction } from '../../helpers/environment'
 import * as braintree from '../../helpers/braintree'
 
 export const makePayment = functions.https.onCall(async ({ id, amount, token }, context) => {
-	if (isProduction && !context.auth) {
+	if (isProduction() && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can invoke payments')
 	}
 	try{

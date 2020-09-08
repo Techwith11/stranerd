@@ -23,7 +23,7 @@ const getQuestions = async (course: string, level: number) => {
 
 export const startTutorTest = functions.https.onCall(async ({ level, course, user }, context) => {
 	try{
-		if (isProduction && !context.auth) {
+		if (isProduction() && !context.auth) {
 			throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can take tests')
 		}
 		const questions = await getQuestions(course, level)

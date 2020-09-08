@@ -3,7 +3,7 @@ import { isProduction, environmentVariables } from '../../helpers/environment'
 import * as braintree from '../../helpers/braintree'
 
 export const getClientToken = functions.https.onCall(async (data, context) => {
-	if (isProduction && !context.auth) {
+	if (isProduction() && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can invoke payments')
 	}
 

@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin'
 import { isProduction } from '../../helpers/environment'
 
 export const payForSession = functions.https.onCall(async ({ id }, context) => {
-	if (isProduction && !context.auth) {
+	if (isProduction() && !context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can pay for sessions')
 	}
 	const ref = admin.firestore().collection('sessions').doc(id)

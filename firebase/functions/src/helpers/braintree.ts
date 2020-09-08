@@ -3,7 +3,7 @@ import { environmentVariables } from './environment'
 import { isProduction } from './environment'
 
 const getGateway = () => connect({
-	environment: Environment[isProduction ? 'Production' : 'Sandbox'],
+	environment: Environment[isProduction() ? 'Production' : 'Sandbox'],
 	merchantId: environmentVariables.braintree.merchantId,
 	publicKey: environmentVariables.braintree.publicKey,
 	privateKey: environmentVariables.braintree.privateKey
