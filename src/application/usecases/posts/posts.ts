@@ -123,6 +123,9 @@ export const useCreatePost = () => {
 	})
 
 	state.factory.userId = useStore().auth.getId.value
+	watch(() => useStore().auth.getId.value, () => {
+		state.factory.userId = useStore().auth.getId.value
+	})
 
 	const createPost = async () => {
 		if(state.factory.valid && !state.loading){
