@@ -18,14 +18,16 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
+    "@paypal/checkout-components": "^5.0.112",
     "@vue/composition-api": "^1.0.0-beta.6",
     "algoliasearch": "^4.4.0",
     "bootstrap": "^4.4.1",
-    "braintree-web": "^3.62.0",
+    "braintree-web": "^3.65.0",
     "core-js": "^3.6.4",
     "firebase": "^7.14.0",
     "jquery": "^3.5.1",
     "paypal-checkout": "^4.0.314",
+    "paypal-checkout-components": "^4.1.35",
     "popper.js": "^1.16.1",
     "register-service-worker": "^1.6.2",
     "sweetalert2": "^9.10.10",
@@ -44,7 +46,7 @@
     "workbox-webpack-plugin": "^5.1.3"
   },
   "devDependencies": {
-    "@types/braintree-web": "^3.47.2",
+    "@types/braintree-web": "^3.62.0",
     "@types/deep-equal": "^1.0.1",
     "@types/jest": "^24.0.19",
     "@types/vue2-editor": "^2.6.0",

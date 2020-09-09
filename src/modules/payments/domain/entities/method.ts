@@ -1,5 +1,3 @@
-import { extractDate } from '@root/modules/core/validations/sanitizers'
-
 export class MethodEntity {
 	public readonly id: string
 	public readonly token: string
@@ -17,7 +15,12 @@ export class MethodEntity {
 		this.createdAt = createdAt
 	}
 
-	get expirationDate() { return extractDate(this.expires) }
+	get expirationDate() {
+		const year = this.expires.getFullYear()
+		const month = this.expires.getMonth() + 1
+		const formattedMonth = `${month > 9 ? '' : '0'}${month}`
+		return `${formattedMonth}/${year}`
+	}
 
 	get expired() { return this.expires < new Date() }
 }

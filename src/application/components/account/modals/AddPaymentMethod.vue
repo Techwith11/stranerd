@@ -5,7 +5,7 @@
 			<h4 class="mb-0">Add Method</h4>
 			<a @click.prevent="closeAccountModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
-		<add-payment-method  :onAddMethodSuccessful="onAddMethodSuccessful"/>
+		<add-payment-method :onAddMethodSuccessful="onAddMethodSuccessful"/>
 	</div>
 </template>
 

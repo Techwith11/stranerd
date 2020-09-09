@@ -25,11 +25,11 @@
 				</button>
 			</div>
 			<hr />
-			<div class="d-flex justify-content-center">
-				<img src="../../../assets/images/4_cards.png" alt="" width="200px">
-			</div>
 			<div class="form-group text-center">
 				<div id="paypalButton"></div>
+			</div>
+			<div class="d-flex mt-3 justify-content-center">
+				<img src="../../../assets/images/4_cards.png" alt="" width="200px">
 			</div>
 		</form>
 	</div>
@@ -46,7 +46,7 @@ export default defineComponent({
 		}
 	},
 	setup(props){
-		const { loading, isThereAHoistedFieldInstance, initializeHostedFields } = usePaymentForm()
+		const { loading, isThereAHoistedFieldInstance, initializeHostedFields } = usePaymentForm(props.onAddMethodSuccessful)
 		const { loading: createLoading, createPaymentMethod } = useCreatePaymentMethods()
 		const addCard = async () => {
 			const successful = await createPaymentMethod()

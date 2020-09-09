@@ -11,7 +11,7 @@ export const getClientToken = functions.https.onCall(async (data, context) => {
 		const token = await braintree.getClientToken()
 		return {
 			braintree: token.clientToken,
-			paypal: environmentVariables.paypal.clientId
+			paypal: environmentVariables.paypal.clientSecret
 		}
 	}catch(error){
 		throw new functions.https.HttpsError('unknown', error.message)

@@ -7,7 +7,8 @@ const environment = () => isProduction() ? 'production' : 'development'
 
 export const environmentVariables = {
 	paypal: {
-		clientId: functions.config().paypal[environment()]['client_id']
+		clientId: functions.config().paypal[environment()]['client_id'],
+		clientSecret: functions.config().paypal[environment()]['client_secret'],
 	},
 	braintree: {
 		merchantId: functions.config().braintree[environment()]['merchant_id'],
