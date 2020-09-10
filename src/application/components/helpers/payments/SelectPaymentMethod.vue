@@ -6,21 +6,46 @@
 			<add-payment-method :onAddMethodSuccessful="refreshPaymentMethods"/>
 		</template>
 		<template v-else>
-			<template v-if="methods.length === 0">
+			<template v-if="!(cards.length && accounts.length)">
 				<p class="">No payment method saved. Click below to add a new payment method</p>
 				<a class="text-info my-3 d-block" @click.prevent="showFormFields">Add a new payment method(Credit cards, Paypal accounts)</a>
 			</template>
 			<template v-else>
-				<div class="py-2 my-2 rounded px-4 d-flex" v-for="method in methods" :key="method.id" @click="selectMethod(method.token)"
-					:class="token === method.token ? 'bg-info text-white' : 'bg-light'">
-					<span>{{ method.cardType }}</span>
-					<span class="ml-3">{{ method.maskedNumber }}</span>
-					<span class="ml-auto"><span class="d-none d-sm-inline">Expires </span>{{ method.expirationDate }}</span>
+				<div v-if="cards.length > 0">
+					<h5>Saved Cards</h5>
+					<div class="d-flex flex-wrap align-items-center">
+						<div class="p-3 m-2 rounded" v-for="card in cards" :key="card.id" @click="selectMethod(card.token)"
+						     :class="token === card.token ? 'bg-info text-white' : 'bg-light'" style="max-width:180px">
+							<p class="text-capitalize font-weight-500 mb-0">
+								<img :src="card.image" alt="" width="50px">
+								<span class="ml-2">{{ card.type }}</span>
+							</p>
+							<p class="mb-0">
+								<span>Token: {{ card.token }}</span><br>
+								<span class="small">{{ card.maskedNumber }}</span><br>
+								<span class="small">Expires: {{ card.expirationDate }}</span><br>
+							</p>
+						</div>
+					</div>
+					<hr>
 				</div>
-				<a class="text-info d-block my-3 small" @click.prevent="showFormFields">Add another card or payment method</a>
+				<div v-if="accounts.length > 0">
+					<h5>Saved Accounts</h5>
+					<div class="d-flex flex-wrap align-items-center">
+						<div class="p-3 m-2 rounded" v-for="account in accounts" :key="account.id" @click="selectMethod(account.token)"
+						     :class="token === account.token ? 'bg-info text-white' : 'bg-light'" style="width:180px">
+							<p class="text-capitalize font-weight-500 mb-0">
+								<img :src="account.image" alt="" width="50px">
+								<span class="ml-2">{{ account.type }}</span>
+							</p>
+							<p class="mb-2">Token: {{ account.token }}</p>
+						</div>
+					</div>
+				</div>
+				<a class="text-info d-block my-4" @click.prevent="showFormFields">Add another card or payment method</a>
 			</template>
 			<div class="d-flex justify-content-center mb-3">
-				<img src="../../../assets/images/braintree.png" alt="" width="250px">
+				<img src="@/assets/images/braintree.png" alt="" width="250px">
 			</div>
 		</template>
 	</div>
@@ -36,9 +61,9 @@ export default defineComponent({
 			token: '' as string,
 			showForm: false
 		})
-		const { loading: methodLoading, error, validMethods: methods, fetchPaymentMethods } = usePaymentMethodsList()
+		const { loading: methodLoading, error, validCards: cards, validAccounts: accounts, fetchPaymentMethods } = usePaymentMethodsList()
 		return {
-			methodLoading, error, methods, fetchPaymentMethods,
+			methodLoading, error, cards, accounts, fetchPaymentMethods,
 			token: computed(() => state.token),
 			showForm: computed(() => state.showForm),
 			selectMethod: (token: string) => {

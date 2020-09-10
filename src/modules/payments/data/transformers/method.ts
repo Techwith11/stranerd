@@ -4,9 +4,9 @@ import { timestampToDate } from '@root/modules/core/data/transformers/converters
 
 export class MethodTransformer {
 	public fromJSON(model: MethodFromModel){
-		const { id, cardType, token, maskedNumber, expirationMonth, expirationYear, dates: { createdAt }} = model
+		const { id, token, imageUrl, maskedNumber, expirationMonth, expirationYear, dates: { createdAt }} = model
 		return new MethodEntity({
-			id, cardType, token, maskedNumber,
+			id, token, maskedNumber, imageUrl,
 			expirationDate: new Date(Number(expirationYear), Number(expirationMonth)),
 			createdAt: timestampToDate(createdAt)!
 		})
