@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div id="content">
 		<router-view />
 		<modals />
 	</div>
@@ -34,6 +34,7 @@ export default {
 
 <style lang="scss" scoped>
 	#content{
-		min-height: 95vh;
+		max-width: 1800px;
+		margin: 0 auto;
 	}
 </style>
