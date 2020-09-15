@@ -9,6 +9,15 @@
 				<small class="small text-danger d-block" v-if="factory.errors.name">{{ factory.errors.name }}</small>
 			</div>
 			<div class="form-group my-3">
+				<input type="file" @change="catchImage" class="d-none" ref="imageInput" accept="image/*">
+				<a @click.prevent="() => { $refs.imageInput.value= ''; $refs.imageInput.click() }">
+					<span v-if="factory.image">{{ factory.image.name }} </span>
+					<span class="text-info">{{ factory.image ? 'Change' : 'Upload' }} subject preview image</span>
+				</a>
+				<small class="small text-danger d-block" v-if="factory.errors.image">{{ factory.errors.image }}</small>
+			</div>
+			<hr>
+			<div class="form-group my-3">
 				<h6>Modules</h6>
 				<small class="small text-muted" v-if="factory.modules && factory.modules.length === 0">Add modules for the subject. At least one module is required.</small>
 				<small class="small text-danger d-block" v-else-if="factory.errors.modules">{{ factory.errors.modules }}</small>
@@ -21,7 +30,7 @@
 						<a class="cursor-pointer text-danger" @click.prevent="removeModule(module.name)"><i class="fas fa-trash"></i></a>
 					</div>
 				</div>
-				<div class="mt-5">
+				<div class="mt-5 pl-5">
 					<div class="form-group">
 						<h6>New module</h6>
 						<input class="form-control" placeholder="Module name" v-model="factory.moduleName"
@@ -29,8 +38,8 @@
 						<small class="small text-danger d-block" v-if="factory.errors.moduleName">{{ factory.errors.moduleName }}</small>
 					</div>
 					<div class="form-group">
-						<input type="file" @change="catchImage" class="d-none" ref="imageInput" accept="image/*">
-						<a @click.prevent="() => { $refs.imageInput.value= ''; $refs.imageInput.click() }">
+						<input type="file" @change="catchModuleImage" class="d-none" ref="mImageInput" accept="image/*">
+						<a @click.prevent="() => { $refs.mImageInput.value= ''; $refs.mImageInput.click() }">
 							<span v-if="factory.moduleImage">{{ factory.moduleImage.name }} </span>
 							<span class="text-info">Upload preview image</span>
 						</a>
@@ -38,8 +47,9 @@
 					</div>
 				</div>
 			</div>
+			<hr>
 			<div class="d-flex justify-content-end my-3">
-				<button class="btn btn-outline-gold" @click.prevent="factory.addModule" :disabled="loading || !factory.moduleValid">
+				<button class="btn btn-outline-gold mr-3" @click.prevent="factory.addModule" :disabled="loading || !factory.moduleValid">
 					<span>Add module</span>
 				</button>
 				<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid">
@@ -73,6 +83,9 @@ export default defineComponent({
 	},
 	setup(props){
 		const { catchFiles: catchImage } = useFileInputs(
+			(file:File) => props.factory.image = file
+		)
+		const { catchFiles: catchModuleImage } = useFileInputs(
 			(file:File) => props.factory.moduleImage = file
 		)
 		const removeModule = async (module: string) => {
@@ -84,7 +97,7 @@ export default defineComponent({
 			})
 			if(res.value) props.factory.removeModule(module)
 		}
-		return { catchImage, removeModule }
+		return { catchImage, catchModuleImage, removeModule }
 	}
 })
 </script>

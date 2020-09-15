@@ -1,7 +1,7 @@
 <template>
 	<Default>
     <banner>
-      <h1 class="text-capitalize">Modify courses under {{ $route.params.module }}</h1>
+      <h1 class="text-capitalize">Modify questions under {{ $route.params.module }}</h1>
     </banner>
 		<helper-spinner v-if="loading"/>
 		<div class="container-fluid py-3" v-else>
