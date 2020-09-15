@@ -72,10 +72,14 @@ export default defineComponent({
 					state.token = token
 				}
 			},
-			refreshPaymentMethods: async () => {
+			refreshPaymentMethods: async (token: string | undefined) => {
 				state.showForm = false
-				state.token = ''
+				state.token = token ?? ''
 				await fetchPaymentMethods()
+				if(token){
+					const isTokenValid = [...cards.value, ...accounts.value].some((c) => c.token === token)
+					isTokenValid ? props.onMethodSelected(token) : null
+				}
 			},
 			backToPaymentMethods: () => {
 				state.showForm = methodLoading.value

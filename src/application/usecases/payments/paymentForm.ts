@@ -7,7 +7,7 @@ import { Notify } from '@/config/notifications'
 import { useStore } from '@/usecases/store'
 
 const hostedFieldsInstance: Ref<braintree.HostedFields | undefined> = ref(undefined)
-const initializeFields = async (onPayPalAuthorization: () => void) => {
+const initializeFields = async (onPayPalAuthorization: (token: string | undefined) => void) => {
 	const { braintree: braintreeToken, paypal: paypalToken } = await GetClientToken.call()
 	const clientInstance = await client.create({ authorization: braintreeToken })
 	const month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
@@ -34,9 +34,9 @@ const initializeFields = async (onPayPalAuthorization: () => void) => {
 		onAuthorize: async (info: AuthorizationData) => {
 			const response = await paypalInstance.tokenizePayment(info)
 			const result = await CreatePaymentMethod.call(useStore().auth.getId.value, response.nonce)
-			if(result){
+			if(result.success){
 				await Notify({ icon: 'success', title: 'Paypal account added successfully' })
-				onPayPalAuthorization()
+				onPayPalAuthorization(result.token)
 			}else {
 				await Notify({ icon: 'error', title: 'Error adding paypal account' })
 			}
@@ -47,7 +47,7 @@ const initializeFields = async (onPayPalAuthorization: () => void) => {
 	}, '#paypalButton')
 }
 
-export const usePaymentForm = (onPayPalAuthorization: () => void) => {
+export const usePaymentForm = (onPayPalAuthorization: (token: string | undefined) => void) => {
 	const state = reactive({
 		loading: false
 	})
@@ -72,7 +72,7 @@ export const useCreatePaymentMethods = () => {
 			state.loading = true
 			const { nonce } = await hostedFieldsInstance.value.tokenize()
 			const res = await CreatePaymentMethod.call(useStore().auth.getId.value, nonce)
-			if(res) await Notify({ title: 'Payment method saved', icon: 'success' })
+			if(res.success) await Notify({ title: 'Payment method saved', icon: 'success' })
 			else await Notify({ title: 'Error saving payment method', icon: 'error' })
 			state.loading = false
 			return res

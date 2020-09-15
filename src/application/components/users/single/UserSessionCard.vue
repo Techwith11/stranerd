@@ -59,10 +59,10 @@ export default {
 			}
 		},
 		getRating(){
-			return this.session.reviews && this.session.reviews.student ? Number(this.session.reviews.student.rating.toFixed(1)) : 0
+			return parseFloat(Number(this.session?.reviews?.student?.rating ?? 0).toFixed(1))
 		},
 		getComment(){
-			return this.session.reviews && this.session.reviews.student ? this.session.reviews.student.comment : 'None'
+			return this.session?.reviews?.student?.comment ?? 'None'
 		},
 	},
 	async mounted(){

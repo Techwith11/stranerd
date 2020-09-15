@@ -41,7 +41,7 @@ import { useCreatePaymentMethods, usePaymentForm } from '@/usecases/payments/pay
 export default defineComponent({
 	props: {
 		onAddMethodSuccessful: {
-			type: Function as PropType<() => void>,
+			type: Function as PropType<(token: string | undefined) => void>,
 			required: true
 		}
 	},
@@ -49,8 +49,8 @@ export default defineComponent({
 		const { loading, isThereAHoistedFieldInstance, initializeHostedFields } = usePaymentForm(props.onAddMethodSuccessful)
 		const { loading: createLoading, createPaymentMethod } = useCreatePaymentMethods()
 		const addCard = async () => {
-			const successful = await createPaymentMethod()
-			if(successful) props.onAddMethodSuccessful()
+			const res = await createPaymentMethod()
+			if(res?.success) props.onAddMethodSuccessful(res?.token)
 		}
 		onMounted(() => initializeHostedFields())
 		return { loading, isThereAHoistedFieldInstance, createLoading, addCard }

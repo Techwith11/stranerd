@@ -19,13 +19,18 @@ export const createPaymentMethod = functions.https.onCall(async ({ id, nonce }, 
 
 		if(result.success){
 			const details = JSON.parse(JSON.stringify(result.paymentMethod))
-			await admin.firestore().collection(`users/${id}/paymentMethods`).add({
-				...details,
-				dates: { createdAt: admin.firestore.FieldValue.serverTimestamp() }
-			})
+			const methods = await admin.firestore().collection(`users/${id}/paymentMethods`)
+				.where('token','==', result.paymentMethod?.token ?? '')
+				.limit(1).get()
+			if(methods.empty){
+				await admin.firestore().collection(`users/${id}/paymentMethods`).add({
+					...details,
+					dates: { createdAt: admin.firestore.FieldValue.serverTimestamp() }
+				})
+			}
 		}
 
-		return result.success
+		return { success: result.success, token: result.paymentMethod.token }
 	}catch(error){
 		throw new functions.https.HttpsError('unknown', error.message)
 	}

@@ -12,7 +12,7 @@ export class PaymentRepository implements IPaymentRepository {
 		return await this.dataSource.cancelSubscription({ id: userId })
 	}
 
-	public async createMethod(userId: string, nonce: string): Promise<boolean> {
+	public async createMethod(userId: string, nonce: string): Promise<{ success: boolean, token: string | undefined }> {
 		return await this.dataSource.createMethod({ id: userId, nonce })
 	}
 

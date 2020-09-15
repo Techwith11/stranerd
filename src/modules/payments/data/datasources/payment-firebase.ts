@@ -6,7 +6,7 @@ export class PaymentFirebaseDataSource implements PaymentBaseDataSource{
 		return await FunctionsService.call('getClientToken', {})
 	}
 
-	public async createMethod(data: { id: string, nonce: string }): Promise<boolean> {
+	public async createMethod(data: { id: string, nonce: string }): Promise<{  success: boolean, token: string | undefined}> {
 		return await FunctionsService.call('createPaymentMethod', data)
 	}
 
