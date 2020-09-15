@@ -10,13 +10,15 @@
 		<div v-else class="my-3">
 			<helper-message message="No notes currently in the shop. Check again later" v-if="notes.length === 0" />
 			<div class="container-fluid grid" v-else>
-				<note-card v-for="note in notes" :key="note.id" :note="note" />
-				<div class="d-flex justify-content-end my-3" v-if="hasMore">
-					<button class="btn-success" @click="fetchOlderNotes">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="olderNotesLoading"></i>
-						<span>Fetch More</span>
-					</button>
+				<div class="card rounded-xl shadow-sm" v-for="note in notes" :key="note.id">
+					<note-card :note="note" />
 				</div>
+			</div>
+			<div class="d-flex justify-content-end my-3" v-if="hasMore">
+				<button class="btn-success" @click="fetchOlderNotes">
+					<i class="fas fa-spinner fa-spin mr-2" v-if="olderNotesLoading"></i>
+					<span>Fetch More</span>
+				</button>
 			</div>
 			<button class="floating-button" @click="setCartModalOverview" v-if="cartLength"><i class="fas fa-shopping-basket"></i></button>
 		</div>

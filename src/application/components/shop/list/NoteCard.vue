@@ -1,5 +1,5 @@
 <template>
-	<div class="p-2">
+	<div class="p-3">
 		<div class="d-flex flex-column flex-md-row mb-3">
 			<img :src="note.imageLink" alt="">
 			<div class="p-2">

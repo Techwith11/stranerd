@@ -1,9 +1,9 @@
 <template>
-	<div class="mb-5 white">
+	<div>
 		<router-link :to="`/courses/${course.subject}/${course.module}/${course.id}`">
 			<img :src="course.imageLink" class="card-img-top w-100" alt="">
 		</router-link>
-		<div class="mt-3 p-3">
+		<div class="mt-3">
 			<h4 class="card-title">
 				<router-link :to="`/courses/${course.subject}/${course.module}/${course.id}`">{{ course.title }}</router-link>
 			</h4>

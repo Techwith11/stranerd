@@ -11,7 +11,9 @@
 			<helper-message :message="error" v-if="error" />
 			<div v-else>
 				<div class="grid">
-					<course-card :course="course" v-for="course in courses" :key="course.id"/>
+					<div class="card rounded-xl shadow-sm p-3" v-for="course in courses" :key="course.id">
+						<course-card :course="course"/>
+					</div>
 				</div>
 				<div class="d-flex justify-content-end my-3" v-if="hasMore">
 					<button class="btn-success" @click="fetchOlderCourses">
