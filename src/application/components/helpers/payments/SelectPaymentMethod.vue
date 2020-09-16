@@ -6,7 +6,7 @@
 			<add-payment-method :onAddMethodSuccessful="refreshPaymentMethods"/>
 		</template>
 		<template v-else>
-			<template v-if="!(cards.length && accounts.length)">
+			<template v-if="cards.length === 0 && accounts.length === 0">
 				<p class="">No payment method saved. Click below to add a new payment method</p>
 				<a class="text-info my-3 d-block" @click.prevent="showFormFields">Add a new payment method(Credit cards, Paypal accounts)</a>
 			</template>

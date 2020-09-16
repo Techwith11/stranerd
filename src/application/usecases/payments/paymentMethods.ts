@@ -41,9 +41,8 @@ export const usePaymentMethodsList = () => {
 		.catch((e) => globalState.error = e.message)
 	else checkForNewPaymentMethods().catch((e) => globalState.error = e.message)
 
-	const validMethods = computed(() => globalState.methods.filter((m) => !m.expired))
-	const validCards = computed(() => validMethods.value.filter((m) => m.isCard))
-	const validAccounts = computed(() => validMethods.value.filter((m) => !m.isCard))
+	const validCards = computed(() => globalState.methods.filter((m) => !m.expired && m.isCard))
+	const validAccounts = computed(() => globalState.methods.filter((m) => !m.expired && !m.isCard))
 
 	return {
 		loading: computed(() => globalState.loading),
