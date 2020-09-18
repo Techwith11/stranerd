@@ -4,8 +4,6 @@ import { createCustomer } from '../helpers/braintree'
 import { subscribeToMailchimpList } from '../helpers/subscribeToMailchimpList'
 
 export const authUserCreated = functions.auth.user().onCreate(async (user) => {
-	await admin.auth().setCustomUserClaims(user.uid, { isStudent: true })
-
 	const data: any = {
 		bio: { email: user.email, image: {} },
 		roles: { isStudent: true },

@@ -10,9 +10,8 @@ export const removeAdmin = functions.https.onCall(async ({ id }, context) => {
 		throw new functions.https.HttpsError('failed-precondition', 'Only admins can downgrade users')
 	}
 	try{
-		if (isProduction()){
-			await admin.auth().setCustomUserClaims(id, { isAdmin: false })
-		}
+		if (isProduction()) await admin.auth().setCustomUserClaims(id, { isAdmin: false })
+
 		await admin
 			.firestore()
 			.collection('users')

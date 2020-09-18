@@ -10,10 +10,6 @@ export const makeTutor = functions.https.onCall(async ({ id, course }, context) 
 		throw new functions.https.HttpsError('failed-precondition', 'Only admins can be upgrade users')
 	}
 	try{
-		if(isProduction()){
-			await admin.auth().setCustomUserClaims(id, { isTutor: true })
-		}
-
 		const ref = admin.firestore().collection('users').doc(id)
 
 		const user = (await ref.get()).data() as any
