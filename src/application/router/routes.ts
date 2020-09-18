@@ -5,11 +5,6 @@ export default [
 		component: () => import(/* webpackChunkName: "home" */ '@/router/views/home.vue')
 	},
 	{
-		path: '/pricing-plans',
-		name: 'Pricing Plan',
-		component: () => import(/* webpackChunkName: "pricing_plans" */ '@/router/views/pricing-plans.vue')
-	},
-	{
 		path: '/account',
 		name: 'Account',
 		component: () => import(/* webpackChunkName: "account" */ '@/router/views/account/index.vue'),

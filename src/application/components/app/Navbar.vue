@@ -54,9 +54,9 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto align-items-md-center" v-else>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <router-link class="nav-link" to="/pricing-plans">Pricing Plans</router-link>
-                    </li>
+                    </li>-->
                     <li class="nav-item">
                         <router-link class="nav-link" to="/ask-a-question">Ask a Question</router-link>
                     </li>

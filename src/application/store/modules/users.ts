@@ -16,7 +16,7 @@ const getters = {
 	isLoggedIn: (state) => !!(state.id && state.user.bio),
 	isAdmin: (state) => state.user?.roles?.isAdmin ?? false,
 	isTutor: (state) => state.user?.roles?.isTutor ?? false,
-	isSubscribed: (state) => (state.user?.account?.subscription?.id && state.user.account?.subscription?.status === 'Active') ?? false,
+	isSubscribed: () => false,//(state) => (state.user?.account?.subscription?.id && state.user.account?.subscription?.status === 'Active') ?? false,
 	questionsLeft: (state) => state.user?.account?.questions ?? 0
 }
 

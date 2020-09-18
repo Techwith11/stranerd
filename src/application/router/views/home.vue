@@ -17,7 +17,6 @@
 					<div class="flex-grow-1 ml-lg-3">
 						<recent-sessions class="mb-4" />
 						<top-tutors class="mb-4" />
-						<subscribe-card v-if="!isSubscribed" />
 					</div>
 				</div>
 			</div>
@@ -29,7 +28,6 @@
 			<what-makes-us-different />
 			<mckenwin />
 			<students-says />
-			<pricing />
 		</div>
 	</Default>
 </template>
@@ -42,7 +40,6 @@ import AskQuestion from '@/components/home/notLoggedIn/AskQuestion.vue'
 import StudentsSay from '@/components/home/notLoggedIn/StudentsSay.vue'
 import WhatMakesUsDifferent from '@/components/home/notLoggedIn/WhatMakesUsDifferent.vue'
 import Mckenwin from '@/components/home/notLoggedIn/Mckenwin.vue'
-import Pricing from '@/components/home/notLoggedIn/Pricing.vue'
 import ShowAskQuestion from '@/components/home/loggedIn/AskQuestion.vue'
 import RecentPosts from '@/components/home/loggedIn/RecentPosts.vue'
 import RecentSessions from '@/components/home/loggedIn/RecentSessions.vue'
@@ -59,7 +56,6 @@ export default defineComponent({
 		'what-makes-us-different': WhatMakesUsDifferent,
 		'mckenwin': Mckenwin,
 		'students-says': StudentsSay,
-		'pricing': Pricing,
 		'show-ask-question': ShowAskQuestion,
 		'recent-posts': RecentPosts,
 		'recent-sessions': RecentSessions,
@@ -68,8 +64,8 @@ export default defineComponent({
 		'post-search': PostSearch,
 	},
 	setup(){
-		const { isLoggedIn, getUser, isSubscribed, questionsLeft } = useStore().auth
-		return { isLoggedIn, getUser, isSubscribed, questionsLeft }
+		const { isLoggedIn, getUser, questionsLeft } = useStore().auth
+		return { isLoggedIn, getUser, questionsLeft }
 	},
 	meta(){
 		return {
