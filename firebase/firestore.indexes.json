@@ -5,11 +5,11 @@
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "module",
+          "fieldPath": "subject",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "subject",
+          "fieldPath": "module",
           "order": "ASCENDING"
         },
         {
