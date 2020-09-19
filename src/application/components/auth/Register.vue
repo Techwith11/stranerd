@@ -63,7 +63,7 @@ export default defineComponent({
 		return {
 			googleLoading, googleLogin,
 			regLoading, register, factory,
-			anyLoading: computed(() => googleLoading || regLoading),
+			anyLoading: computed(() => googleLoading.value || regLoading.value),
 			setAuthModalLogin: useStore().modals.setAuthModalLogin,
 			closeAuthModal: useStore().modals.closeAuthModal
 		}
