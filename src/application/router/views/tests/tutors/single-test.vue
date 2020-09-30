@@ -111,7 +111,7 @@ export default {
 			if(Math.floor(this.timer) === 0){ this.endTest() }
 		}
 	},
-	deactivated(){ window.clearInterval(this.interval) },
+	beforeDestroy(){ window.clearInterval(this.interval) },
 	meta(){
 		return {
 			title: `Level ${this.test.level} ${this.test.course}`,

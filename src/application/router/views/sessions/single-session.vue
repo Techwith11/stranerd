@@ -144,13 +144,7 @@ export default {
 		this.fetched = true
 		this.isLoading = false
 	},
-	async activated(){
-		if(this.fetched){
-			this.setChatListener()
-			this.setOtherPersonListener()
-		}
-	},
-	deactivated(){
+	beforeDestroy(){
 		this.cleanUp()
 	},
 	computed: {

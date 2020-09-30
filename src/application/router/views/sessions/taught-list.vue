@@ -38,14 +38,10 @@ export default {
 	async mounted(){
 		await this.getSessions()
 		this.fetched = true
+		await this.setSessionsListeners()
 		this.isLoading = false
 	},
-	async activated(){
-		if(this.fetched){
-			await this.setSessionsListeners()
-		}
-	},
-	deactivated(){
+	beforeDestroy(){
 		this.listener()
 	},
 	methods: {
