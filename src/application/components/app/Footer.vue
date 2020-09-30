@@ -36,6 +36,7 @@
                 </div>
                 <div class="col-4 col-md-2">
                     <h6>Others</h6>
+                    <router-link class="links" to="/legal/privacy-policy">Privacy Policy</router-link>
                     <router-link class="links" to="/legal/terms-of-use">Terms of Use</router-link>
                     <router-link class="links" to="/legal/terms-and-conditions/users">Terms and Conditions</router-link>
                     <router-link class="links" to="/legal/terms-and-conditions/tutors">Terms and Conditions for Tutors</router-link>

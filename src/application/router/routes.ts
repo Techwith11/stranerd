@@ -170,6 +170,11 @@ export default [
 		component: () => import(/* webpackChunkName: "terms-of-use" */ '@/router/views/legal/terms-of-use.vue'),
 	},
 	{
+		path: '/legal/privacy-policy',
+		name: 'Privacy Policy',
+		component: () => import(/* webpackChunkName: "privacy-policy" */ '@/router/views/legal/privacy-policy.vue'),
+	},
+	{
 		path: '/legal/terms-and-conditions/users',
 		name: 'Users Terms and Conditions',
 		component: () => import(/* webpackChunkName: "terms-of-conditions-users" */ '@/router/views/legal/terms-and-conditions/users.vue'),

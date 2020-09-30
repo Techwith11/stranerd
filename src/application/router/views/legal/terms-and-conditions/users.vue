@@ -235,6 +235,29 @@
 	</Default>
 </template>
 
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+export default defineComponent({
+	meta(){
+		return {
+			title: 'Users - Terms And Conditions',
+			meta: [
+				{
+					vmid: 'description',
+					name: 'description',
+					content: ''
+				},
+				{
+					vmid: 'keywords',
+					name: 'keywords',
+					content: 'terms, conditions'
+				}
+			]
+		}
+	}
+})
+</script>
+
 <style lang="scss" scoped>
 h1, h2, h3, h4 {
 	margin: 3rem 0 1rem;
