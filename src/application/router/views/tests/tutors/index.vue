@@ -84,7 +84,7 @@ export default {
 		const course = this.$route.query.course?.toLowerCase()
 		this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
 	},
-	async activated(){
+	async mounted(){
 		if(!this.isTutor){ await this.$router.push('/') }
 		const course = this.$route.query.course?.toLowerCase()
 		this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]

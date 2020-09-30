@@ -27,12 +27,12 @@ service cloud.firestore {
 
 		match /sessions/{id} {
 			allow read, create: if isAuthenticated();
-			allow update: if hasAccessToSession(id);
+			allow update: if request.auth.uid == resource.data.tutor || request.auth.uid == resource.data.student;
 			allow delete: if isAdmin();
 		}
 
 		match /sessions/{session}/chats/{id} {
-			allow read, create, update: if hasAccessToSession(session);
+			allow read, create, update: if isAuthenticated();
 			allow delete: if isAdmin();
 		}
 
@@ -84,11 +84,6 @@ service cloud.firestore {
 
 		function isMine(id) {
 			return request.auth.uid == id;
-		}
-
-		function hasAccessToSession(session) {
-			let sessionData = get(/databases/$(database)/documents/sessions/$(session)).data;
-			return request.auth.uid == sessionData.tutor || request.auth.uid == sessionData.student;
 		}
 	}
 }

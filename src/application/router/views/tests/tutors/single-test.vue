@@ -100,13 +100,8 @@ export default {
 	async mounted(){
 		await this.fetchTest()
 		await this.validateTest()
+		window.addEventListener('beforeunload', () => window.clearInterval(this.interval))
 		this.isLoading = false
-	},
-	async activated(){
-		if(this.test['.key']){
-			await this.validateTest()
-			window.addEventListener('beforeunload', () => window.clearInterval(this.interval))
-		}
 	},
 	components: {
 		'question': Question,

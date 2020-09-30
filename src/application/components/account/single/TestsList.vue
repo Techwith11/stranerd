@@ -2,7 +2,7 @@
 	<div>
 		<helper-spinner v-if="isLoading"/>
 		<div v-else>
-			<helper-message message="You have not taken any tests yet. Click the floating button below to go to the test page" v-if="tests.length === 0" />
+			<helper-message message="You have not taken any tests yet." v-if="tests.length === 0" />
 			<div v-else>
 				<test-card v-for="test in tests" :key="test['.key']" :test="test" />
 				<div class="d-flex justify-content-end my-3" v-if="hasMore">
