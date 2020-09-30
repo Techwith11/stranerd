@@ -30,13 +30,15 @@
                 </div>
                 <div class="col-4 col-md-2">
                     <h6>Contact Us</h6>
-                    <a class="links" href="tel:+14040435611">Call us</a>
-                    <a class="links" href="mailto:officialstranerd@gmail.com">Mail us</a>
+	                <p class="links">Mailing Address: 651 N, Broad Street, Suite 206, Middletown Delaware 19709</p>
+                    <p class="links">Call us: <a href="tel:+14040435611">+14040435611</a></p>
+                    <p class="links">Mail us: <a href="mailto:support@stranerd.com">support@stranerd.com</a></p>
                 </div>
                 <div class="col-4 col-md-2">
                     <h6>Others</h6>
-                    <router-link class="links" to="/privacy_policy">Privacy Policy</router-link>
-                    <router-link class="links" to="terms_and_conditions/">Terms And Conditions</router-link>
+                    <router-link class="links" to="/legal/terms-of-use">Terms of Use</router-link>
+                    <router-link class="links" to="/legal/terms-and-conditions/users">Terms and Conditions</router-link>
+                    <router-link class="links" to="/legal/terms-and-conditions/tutors">Terms and Conditions for Tutors</router-link>
                 </div>
             </div>
         </div>

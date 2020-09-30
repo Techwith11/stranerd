@@ -164,7 +164,21 @@ export default [
 			}
 		]
 	},
-
+	{
+		path: '/legal/terms-of-use',
+		name: 'Terms of Use',
+		component: () => import(/* webpackChunkName: "terms-of-use" */ '@/router/views/legal/terms-of-use.vue'),
+	},
+	{
+		path: '/legal/terms-and-conditions/users',
+		name: 'Users Terms and Conditions',
+		component: () => import(/* webpackChunkName: "terms-of-conditions-users" */ '@/router/views/legal/terms-and-conditions/users.vue'),
+	},
+	{
+		path: '/legal/terms-and-conditions/tutors',
+		name: 'Tutors Terms and Conditions',
+		component: () => import(/* webpackChunkName: "terms-of-conditions-tutors" */ '@/router/views/legal/terms-and-conditions/tutors.vue'),
+	},
 	{
 		path: '*',
 		name: 'Not Found',
