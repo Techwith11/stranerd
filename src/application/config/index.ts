@@ -9,6 +9,7 @@ import '@/config/components'
 import '@/config/registerServiceWorker'
 import '@/style/index.scss'
 import 'bootstrap'
+import { acceptUpdate, addWaitingListener } from '@/config/registerServiceWorker'
 
 export const setup = () => {
 	Vue.use(VueMeta, { keyName: 'meta', refreshOnceOnNavigation: true })
@@ -23,6 +24,10 @@ export const setup = () => {
 		position: 'top-end',
 		showConfirmButton: false,
 		timer: 3000
+	})
+	addWaitingListener(() => {
+		//alert('New content has been detected.')
+		acceptUpdate(() => true)//confirm('Press OK to load the content or CANCEL to ignore.'))
 	})
 }
 
