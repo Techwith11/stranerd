@@ -187,6 +187,6 @@ export default [
 	{
 		path: '*',
 		name: 'Not Found',
-		component: () => import(/* webpackChunkName: "not_found" */ '@/router/views/errors/not_found.vue')
+		redirect: '/'
 	}
 ]
