@@ -2,7 +2,7 @@
 	<Default>
 		<div class="container py-3">
 			<h1>Privacy Policy for Stranerd LLC</h1>
-			<p class="text-info my-4"><a download target="_blank" href="/legal/Privacy Policy For Stranerd LLC.pdf">Download this as a pdf</a> <i class="fas fa-download ml-2"></i></p>
+			<p class="text-info my-4"><a target="_blank" href="/legal/Privacy Policy For Stranerd LLC.pdf">Download this as a pdf</a> <i class="fas fa-download ml-2"></i></p>
 			<p>At Stranerd, accessible from stranerd.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document
 				contains types of information that is collected and recorded by Stranerd and how we use it.
 				If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us.

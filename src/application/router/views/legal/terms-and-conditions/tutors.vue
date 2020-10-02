@@ -3,7 +3,7 @@
 		<div class="container py-3">
 			<h1>Stranerd Tutor Terms and Conditions</h1>
 			<p>For students and general users, kindly check out <router-link to="/legal/terms-and-conditions/users">Terms and Conditions for Users</router-link></p>
-			<p class="text-info my-4"><a download target="_blank" href="/legal/Stranerd Tutor Terms and Conditions.pdf">Download this as a pdf</a> <i class="fas fa-download ml-2"></i></p>
+			<p class="text-info my-4"><a target="_blank" href="/legal/Stranerd Tutor Terms and Conditions.pdf">Download this as a pdf</a> <i class="fas fa-download ml-2"></i></p>
 			<ol style="list-style-type:none">
 				<li>
 					<h2>1. Account Registration and Usage</h2>

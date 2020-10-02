@@ -2,7 +2,7 @@
 	<Default>
 		<div class="container py-3">
 			<h1>Website Terms of Use</h1>
-			<p class="text-info my-4"><a download target="_blank" href="/legal/Stranerd Website Terms of Use.pdf">Download this as a pdf</a> <i class="fas fa-download ml-2"></i></p>
+			<p class="text-info my-4"><a target="_blank" href="/legal/Stranerd Website Terms of Use.pdf">Download this as a pdf</a> <i class="fas fa-download ml-2"></i></p>
 			<p>The Stranerd website located at https://stranerd.com/ is a copyrighted work belonging to Stranerd
 				LLC. Certain features of the Site may be subject to additional guidelines, terms, or rules, which will
 				be posted on the Site in connection with such features.

@@ -3,7 +3,7 @@
 		<div class="container py-3">
 			<h1>Terms and Conditions</h1>
 			<p>For tutors, kindly check out <router-link to="/legal/terms-and-conditions/tutors">Terms and Conditions for Tutors</router-link></p>
-			<p class="text-info my-4"><a download target="_blank" href="/legal/Stranerd Terms and Conditions.pdf">Download this as a pdf</a> <i class="fas fa-download ml-2"></i></p>
+			<p class="text-info my-4"><a target="_blank" href="/legal/Stranerd Terms and Conditions.pdf">Download this as a pdf</a> <i class="fas fa-download ml-2"></i></p>
 			<p>Welcome to STRANERD!
 				These terms and conditions outline the rules and regulations for the use of STRANERD’s
 				Website, located at https://stranerd.com/.
