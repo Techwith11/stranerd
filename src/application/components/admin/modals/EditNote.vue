@@ -8,7 +8,7 @@
 					<a @click.prevent="closeEditModal"><i class="fas fa-times text-danger"></i></a>
 				</div>
 			</template>
-			<template slot="buttonText">Update Note</template>
+			<template slot="buttonText">Save Note</template>
 		</note-form>
 	</div>
 </template>
