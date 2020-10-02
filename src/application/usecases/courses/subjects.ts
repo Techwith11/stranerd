@@ -32,7 +32,7 @@ const fetchSubject = async (id: string) => {
 	if(subject){
 		const index = globalState.subjects.findIndex((s) => s.id === subject.id)
 		if(index === -1) globalState.subjects.push(subject)
-		else globalState.subjects[index] = subject
+		else globalState.subjects.splice(index, 1, subject)
 	}
 	globalState.loading = false
 }

@@ -27,12 +27,12 @@ const globalState = reactive({
 
 const setArticle = (article: ArticleEntity) => {
 	const index = globalState.articles.findIndex((p) => p.id === article.id)
-	if(index !== -1) globalState.articles[index] = article
+	if(index !== -1) globalState.articles.splice(index, 1, article)
 	else globalState.articles.push(article)
 }
 const unshiftArticle = (article: ArticleEntity) => {
 	const index = globalState.articles.findIndex((p) => p.id === article.id)
-	if(index !== -1) globalState.articles[index] = article
+	if(index !== -1) globalState.articles.splice(index, 1, article)
 	else globalState.articles.unshift(article)
 }
 const fetchArticles = async () => {

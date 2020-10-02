@@ -20,12 +20,12 @@ const globalState = reactive({
 
 const setPost = (post: PostEntity) => {
 	const index = globalState.posts.findIndex((p) => p.id === post.id)
-	if(index !== -1) globalState.posts[index] = post
+	if(index !== -1) globalState.posts.splice(index, 1, post)
 	else globalState.posts.push(post)
 }
 const unshiftPost = (post: PostEntity) => {
 	const index = globalState.posts.findIndex((p) => p.id === post.id)
-	if(index !== -1) globalState.posts[index] = post
+	if(index !== -1) globalState.posts.splice(index, 1, post)
 	else globalState.posts.unshift(post)
 }
 const fetchPosts = async () => {

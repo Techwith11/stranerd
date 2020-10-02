@@ -34,14 +34,14 @@ const setCourse = (subject: string, module: string, course: CourseEntity) => {
 	const key = getKey(subject, module)
 	if(!globalState[key]) globalState[key] = getNewState()
 	const index = globalState[key].courses.findIndex((p) => p.id === course.id)
-	if(index !== -1) globalState[key].courses[index] = course
+	if(index !== -1) globalState[key].courses.splice(index, 1, course)
 	else globalState[key].courses.push(course)
 }
 const unshiftCourse = (subject: string, module: string, course: CourseEntity) => {
 	const key = getKey(subject, module)
 	if(!globalState[key]) globalState[key] = getNewState()
 	const index = globalState[getKey(subject, module)].courses.findIndex((p) => p.id === course.id)
-	if(index !== -1) globalState[getKey(subject, module)].courses[index] = course
+	if(index !== -1) globalState[getKey(subject, module)].courses.splice(index, 1, course)
 	else globalState[getKey(subject, module)].courses.unshift(course)
 }
 const fetchCourses = async (subject: string, module: string) => {

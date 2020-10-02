@@ -16,7 +16,7 @@ const globalState = reactive({
 const addToUsersList = (user: UserEntity) => {
 	const index = users.findIndex((u) => u.id === user.id)
 	if(index === -1) users.push(user)
-	else users[index] = user
+	else users.splice(index, 1, user)
 }
 
 const fetchTutors = async () => {

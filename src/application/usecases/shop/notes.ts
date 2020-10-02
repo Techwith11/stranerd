@@ -17,12 +17,12 @@ const globalState = reactive({
 
 const setNote = (note: NoteEntity) => {
 	const index = globalState.notes.findIndex((n) => n.id === note.id)
-	if(index !== -1) globalState.notes[index] = note
+	if(index !== -1) globalState.notes.splice(index, 1, note)
 	else globalState.notes.push(note)
 }
 const unshiftNote = (note: NoteEntity) => {
 	const index = globalState.notes.findIndex((n) => n.id === note.id)
-	if(index !== -1) globalState.notes[index] = note
+	if(index !== -1) globalState.notes.splice(index, 1, note)
 	else globalState.notes.unshift(note)
 }
 const fetchNotes = async () => {
