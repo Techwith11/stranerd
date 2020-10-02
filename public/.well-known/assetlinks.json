@@ -1,0 +1,5 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target" : { "namespace": "android_app", "package_name": "com.stranerd.twa",
+                   "sha256_cert_fingerprints": ["37:E8:38:A8:4B:4A:C7:A1:E7:BD:FC:00:F8:5A:A6:48:B4:8D:9B:BE:A1:CC:99:04:A5:73:D8:A3:ED:06:72:B5"] }
+    }]
