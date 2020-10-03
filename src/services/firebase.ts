@@ -7,7 +7,7 @@ import 'firebase/storage'
 
 const config = {
 	apiKey: 'AIzaSyCk6CnAF1mcdp9jOh2r1zDQS67-cHVpqZY',
-	authDomain: 'stranerd.com',
+	authDomain: 'stranerd-13084.firebaseapp.com',
 	databaseURL: process.env.NODE_ENV === 'production' ? 'https://stranerd-13084.firebaseio.com' : 'http://localhost:5003/?ns=stranerd-13084',
 	projectId: 'stranerd-13084',
 	storageBucket: 'stranerd-13084.appspot.com',
