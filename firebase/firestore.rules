@@ -75,15 +75,15 @@ service cloud.firestore {
 		}
 
 		function isAuthenticated() {
-			return true//request.auth != null;
+			return request.auth != null;
 		}
 
 		function isAdmin() {
-			return true//request.auth.token.isAdmin == true;
+			return request.auth.token.isAdmin == true;
 		}
 
 		function isMine(id) {
-			return true//request.auth.uid == id;
+			return request.auth.uid == id;
 		}
 	}
 }
