@@ -10,13 +10,6 @@ const globalState = reactive({
 	error: ''
 })
 
-export const resetTransactions = () => {
-	globalState.transactions = []
-	globalState.fetched = false
-	globalState.loading = false
-	globalState.error = ''
-}
-
 const fetchTransactions = async () => {
 	globalState.loading = true
 	globalState.transactions = await GetTransactions.call(useStore().auth.getId.value)

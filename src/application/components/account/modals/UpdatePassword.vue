@@ -6,6 +6,11 @@
 			<a @click.prevent="closeAccountModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
 		<div class="form-group">
+			<input type="password" id="oldPassword" class="form-control" placeholder="Current Password" v-model="factory.oldPassword"
+				:class="{'is-invalid': factory.errors.oldPassword, 'is-valid': factory.isValid('oldPassword')}" autocomplete="oldPassword">
+			<span class="small" v-if="factory.errors.oldPassword">{{ factory.errors.oldPassword }}</span>
+		</div>
+		<div class="form-group">
 			<input type="password" id="password" class="form-control" placeholder="New Password" v-model="factory.password"
 				:class="{'is-invalid': factory.errors.password, 'is-valid': factory.isValid('password')}" autocomplete="password">
 			<span class="small" v-if="factory.errors.password">{{ factory.errors.password }}</span>

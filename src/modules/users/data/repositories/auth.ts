@@ -35,7 +35,7 @@ export class AuthRepository implements IAuthRepository {
 		return await this.dataSource.resetPassword(user)
 	}
 
-	public async updatePassword(user: { password: string }): Promise<void> {
+	public async updatePassword(user: { email: string, oldPassword: string, password: string }): Promise<void> {
 		return await this.dataSource.updatePassword(user)
 	}
 

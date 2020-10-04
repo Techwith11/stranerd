@@ -40,7 +40,12 @@ export class AuthFirebaseDataSource implements AuthBaseDataSource{
 		return await auth.sendPasswordResetEmail(user.email)
 	}
 
-	public async updatePassword(user: { password: string }): Promise<void> {
+	public async updatePassword(user: { email: string, oldPassword: string, password: string }): Promise<void> {
+		try{
+			await auth.signInWithEmailAndPassword(user.email, user.oldPassword)
+		}catch(error){
+			throw Error('Invalid login credentials')
+		}
 		await auth.currentUser?.updatePassword(user.password)
 		//TODO: catch possible errors
 	}

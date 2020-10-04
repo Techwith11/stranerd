@@ -1,6 +1,6 @@
 import router from '@/router'
 import { Notify } from '@/config/notifications'
-import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
+import { closeNavbar } from '@/config'
 import {
 	GetLoginFactory, GetRegisterFactory, GetResetPasswordFactory, GetUpdatePasswordFactory, GetUpdateProfileFactory,
 	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword, UpdatePassword, UpdateProfile
@@ -8,9 +8,6 @@ import {
 import { computed, reactive } from '@vue/composition-api'
 import { getIntendedRoute } from '@/usecases/core/router'
 import { useStore } from '@/usecases/store'
-import { resetPaymentMethods } from '@/usecases/payments/paymentMethods'
-import { clearCart } from '@/usecases/shop/cart'
-import { resetTransactions } from '@/usecases/payments/transactions'
 
 const afterAuthHook = async () => {
 	const route = getIntendedRoute()
@@ -53,14 +50,9 @@ export const useLogout = () => {
 		state.loading = true
 		if(useStore().auth.isTutor.value) await useStore().sessions.closeTutorSessionsListener()
 		await useStore().auth.setId(null)
-		if(router.currentRoute.meta.requiresAuth) await router.push('/')
+		if(router.currentRoute.meta.requiresAuth) window.location.assign('/')
+		else window.location.reload()
 		await Logout.call()
-		closeNavbar()
-		closeAccountDropdown()
-		closeAdminDropdown()
-		resetPaymentMethods()
-		resetTransactions()
-		clearCart()
 		state.loading = false
 	}
 
@@ -167,6 +159,7 @@ export const useUpdatePasswordForm = () => {
 		loading: false,
 		factory: GetUpdatePasswordFactory.call(),
 	})
+	state.factory.email = useStore().auth.getUser.value.bio.email
 	const updatePassword = async () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
