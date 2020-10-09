@@ -2,7 +2,7 @@
   "name": "functions",
   "description": "Cloud Functions for Firebase",
   "scripts": {
-    "lint": "eslint ./ --fix",
+    "lint": "eslint src/ --ext .ts,.js --fix",
     "watch": "tsc --watch",
     "build": "tsc",
     "serve": "npm run build && firebase emulators:start --only functions",
@@ -11,6 +11,7 @@
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
+  "main": "lib/index.js",
   "engines": {
     "node": "10"
   },
