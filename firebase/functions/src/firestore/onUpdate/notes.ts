@@ -7,9 +7,9 @@ export const firestoreNoteUpdated = functions.firestore.document('/notes/{id}').
 	await saveToAlgolia('notes', snap.after.id, snap.after.data())
 
 	if(!equal(snap.before.data().document, snap.after.data().document)){
-		await deleteFromStorage(snap.before.data().document.link)
+		await deleteFromStorage(snap.before.data().document?.link)
 	}
 	if(!equal(snap.before.data().image, snap.after.data().image)){
-		await deleteFromStorage(snap.before.data().image.link)
+		await deleteFromStorage(snap.before.data().image?.link)
 	}
 })

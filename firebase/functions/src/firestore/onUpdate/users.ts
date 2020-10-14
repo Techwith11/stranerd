@@ -13,6 +13,6 @@ export const firestoreUserUpdated = functions.firestore.document('/users/{id}').
 	}
 
 	if(!equal(snap.before.data().bio.image, snap.after.data().bio.image)){
-		await deleteFromStorage(snap.before.data().bio.image?.link)
+		await deleteFromStorage(snap.before.data().bio?.image?.link)
 	}
 })

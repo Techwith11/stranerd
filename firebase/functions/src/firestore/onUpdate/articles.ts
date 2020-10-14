@@ -7,6 +7,6 @@ export const firestoreArticleUpdated = functions.firestore.document('/blog/{id}'
 	await saveToAlgolia('articles', snap.after.id, snap.after.data())
 
 	if(!equal(snap.before.data().image, snap.after.data().image)){
-		await deleteFromStorage(snap.before.data().image.link)
+		await deleteFromStorage(snap.before.data().image?.link)
 	}
 })

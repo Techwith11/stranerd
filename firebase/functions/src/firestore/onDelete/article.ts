@@ -5,5 +5,5 @@ import { deleteFromStorage } from '../../helpers/storage'
 export const firestoreArticleDeleted = functions.firestore.document('/blog/{id}').onDelete(async (snap) => {
 	await deleteFromAlgolia('articles', snap.id)
 
-	await deleteFromStorage(snap.data().image.link)
+	await deleteFromStorage(snap.data().image?.link)
 })
