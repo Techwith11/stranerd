@@ -19,11 +19,17 @@ const addToUsersList = (user: UserEntity) => {
 	else users.splice(index, 1, user)
 }
 
+const addToTutorsList = (tutor: UserEntity) => {
+	const index = globalState.tutors.findIndex((t) => t.id === tutor.id)
+	if(index === -1) globalState.tutors.push(tutor)
+	else globalState.tutors.splice(index, 1, tutor)
+}
+
 const fetchTutors = async () => {
 	globalState.loading = true
 	const tutors = await GetTutors.call()
 	tutors.forEach((tutor) => {
-		globalState.tutors.push(tutor)
+		addToTutorsList(tutor)
 		addToUsersList(tutor)
 	})
 	globalState.loading = false
