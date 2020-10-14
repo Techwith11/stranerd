@@ -42,10 +42,10 @@
 		</div>
 		<p class="text-center small text-muted mt-4 mb-0">Or sign up with other options</p>
 		<div class="form-group d-flex flex-column my-3">
-			<button @click="googleLogin" :disabled="anyLoading">
+			<button @click="googleLogin" class="btn btn-danger" :disabled="anyLoading">
 				<i class="fas fa-spinner fa-spin" v-if="googleLoading"></i>
-				<i class="fab fa-google" v-else></i>
-				Sign Up with Google
+				<i class="fab fa-google text-white mr-2" v-else></i>
+				Sign In with Google
 			</button>
 		</div>
 	</div>
