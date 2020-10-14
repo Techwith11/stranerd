@@ -49,15 +49,16 @@ const uploadToMockServer = async (path: string, file: File) => {
 }
 export const uploadFile = async (path: string, file: File) => {
 	try{
-		let link = `${path}/${Date.now()}_${file.name}`
+		path = `${path}/${Date.now()}_${file.name}`
+		let link: string
 		if(process.env.NODE_ENV === 'production'){
-			await storage.ref(link).put(file)
-			link = await storage.ref(link).getDownloadURL()
+			await storage.ref(path).put(file)
+			link = await storage.ref(path).getDownloadURL()
 		}else{
-			link = `stranerd/${link}`
-			await uploadToMockServer(link, file)
-			link = `http://localhost:3000/${link}`
+			path = `stranerd/${path}`
+			await uploadToMockServer(path, file)
+			link = `http://localhost:3000/${path}`
 		}
-		return { name: file.name, link, type: file.type }
+		return { name: file.name, path, link, type: file.type }
 	}catch{ throw new Error(`Error uploading ${file.name}`) }
 }

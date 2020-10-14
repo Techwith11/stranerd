@@ -36,21 +36,21 @@
 		</form>
 		<p class="text-center small text-muted mt-4 mb-0">Or sign in with other options</p>
 		<div class="form-group d-flex flex-column my-3">
-			<button @click="googleLogin" :disabled="anyLoading">
+			<button @click="googleLogin" class="btn btn-danger" :disabled="anyLoading">
 				<i class="fas fa-spinner fa-spin" v-if="googleLoading"></i>
-				<i class="fab fa-google" v-else></i>
+				<i class="fab fa-google text-white mr-2" v-else></i>
 				Sign In with Google
 			</button>
 		</div>
 		<div v-if="isDev" class="my-4">
 			<div class="d-flex justify-content-center">
-					<span class="mr-2" v-for="dev in devs" :key="dev">
-						<input type="radio" v-model="devId" :value="dev" class="mr-1">
-						<label class="text-capitalize">{{ dev }}</label>
-					</span>
+				<span class="mr-2" v-for="dev in devs" :key="dev">
+					<input type="radio" v-model="devId" :value="dev" class="mr-1">
+					<label class="text-capitalize">{{ dev }}</label>
+				</span>
 			</div>
-			<button @click="devLogin" :disabled="!devId" class="w-100">
-				<i class="fas fa-user-cog text-info"></i>
+			<button @click="devLogin" :disabled="!devId" class="btn btn-info w-100">
+				<i class="fas fa-user-cog"></i>
 				Sign In as dev user
 			</button>
 		</div>
