@@ -65,7 +65,7 @@ export class SubjectFactory extends BaseFactory<SubjectEntity, SubjectToModel> {
 
 	public toModel = async () => {
 		if(this.valid){
-			if(this.image instanceof File) this.image = await this.uploadFile('subjects/', this.image)
+			if(this.image instanceof File) this.image = await this.uploadFile('subjects', this.image)
 			const modules = await Promise.all(this.validValues.modules.map(async (m) => {
 				if(m.image instanceof File) m.image = await this.uploadFile(`subjects/${this.validValues.name}/modules`, m.image)
 				return m as Module
