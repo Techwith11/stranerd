@@ -9,7 +9,7 @@
 			</h4>
 			<p class="small text-capitalize">{{ course.subject }}, {{ course.module }}</p>
 			<router-link :to="`/courses/${course.subject}/${course.module}/${course.id}`">
-				<p>{{ course.trimmedDescription }}</p>
+				<p v-html="course.trimmedDescription"></p>
 			</router-link>
 			<div class="d-flex align-items-center">
 				<span class="small">Posted {{ course.createdDate }}</span>

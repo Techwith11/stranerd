@@ -45,9 +45,9 @@ export const useTutorsList = () => {
 		course, name,
 
 		filteredTutors: computed(() => {
-			let filtered = globalState.tutors
-			if(course.value !== '') filtered = filtered.filter((tutor: UserEntity) => tutor.tutor?.courses.includes(course.value) && tutor.tutor.levels[course.value] > 0)
-			return filtered.filter((tutor: UserEntity) => tutor.name.toLowerCase().includes(name.value.toLowerCase()))
+			let tutors = globalState.tutors
+			if(course.value !== '') tutors = tutors.filter((tutor) => tutor.tutor?.courses.includes(course.value) && tutor.tutor.levels[course.value] > 0)
+			return tutors.filter((tutor) => tutor.name.toLowerCase().includes(name.value.toLowerCase()))
 		})
 	}
 }
