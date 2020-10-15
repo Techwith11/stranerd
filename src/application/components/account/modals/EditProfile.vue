@@ -36,9 +36,9 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
-import { useUpdateProfileForm } from '@/usecases/users/auth'
-import { useStore } from '@/usecases/store'
-import { useFileInputs } from '@/usecases/core/forms'
+import { useUpdateProfileForm } from '@application/usecases/users/auth'
+import { useStore } from '@application/usecases/store'
+import { useFileInputs } from '@application/usecases/core/forms'
 export default defineComponent({
 	setup(){
 		const link = useStore().auth.getUser.value?.bio?.image?.link ?? useStore().auth.getDefaultImage.value

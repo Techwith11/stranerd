@@ -4,35 +4,35 @@
             <div class="d-flex flex-wrap row justify-content-center">
                 <div class="col-sm-6 col-md-4 mb-7">
                     <div class="icons">
-                        <img src="@/assets/images/icons/Unlimited Access.svg" alt="" />
+                        <img src="@application/assets/images/icons/Unlimited Access.svg" alt="" />
                     </div>
                     <h3 class="icon-title">Unlimited Access</h3>
                     <p class="icon-subtitle">One subscription, unlimited access.</p>
                 </div>
                 <div class="col-sm-6 col-md-4 mb-7">
                     <div class="icons">
-                        <img src="@/assets/images/icons/Expert Teacher.svg" alt="" />
+                        <img src="@application/assets/images/icons/Expert Teacher.svg" alt="" />
                     </div>
                     <h3 class="icon-title">Expert Teachers</h3>
                     <p class="icon-subtitle">Learn from expert teachers who are passionate about teaching.</p>
                 </div>
                 <div class="col-sm-6 col-md-4 mb-7">
                     <div class="icons">
-                        <img src="@/assets/images/icons/Study Anywhere.svg" alt="" />
+                        <img src="@application/assets/images/icons/Study Anywhere.svg" alt="" />
                     </div>
                     <h3 class="icon-title">Study Anywhere</h3>
                     <p class="icon-subtitle">Improve your academic performance with on-the-spot access to course materials no matter your location.</p>
                 </div>
                 <div class="col-sm-6 col-md-4 mb-7">
                     <div class="icons">
-                        <img src="@/assets/images/icons/Test Preps.svg" alt="" />
+                        <img src="@application/assets/images/icons/Test Preps.svg" alt="" />
                     </div>
                     <h3 class="icon-title">Test Preps</h3>
                     <p class="icon-subtitle">Identify your strengths and improve your weaknesses with our concise tests.</p>
                 </div>
                 <div class="col-sm-6 col-md-4 mb-7">
                     <div class="icons">
-                        <img src="@/assets/images/icons/Post Questions.svg" alt="" />
+                        <img src="@application/assets/images/icons/Post Questions.svg" alt="" />
                     </div>
                     <h3 class="icon-title">Ask questions</h3>
                     <p class="icon-subtitle">Asks questions for free and get answers from our expert tutors.</p>

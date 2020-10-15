@@ -5,11 +5,11 @@ import VueInstantSearch from 'vue-instantsearch'
 // @ts-ignore
 import VueChatScroll from 'vue-chat-scroll'
 import SweetAlert from 'sweetalert2'
-import '@/config/components'
-import '@/config/registerServiceWorker'
-import '@/style/index.scss'
+import '@application/config/components'
+import '@application/config/registerServiceWorker'
+import '@application/style/index.scss'
 import 'bootstrap'
-import { acceptUpdate, addWaitingListener } from '@/config/registerServiceWorker'
+import { acceptUpdate, addWaitingListener } from '@application/config/registerServiceWorker'
 
 export const setup = () => {
 	Vue.use(VueMeta, { keyName: 'meta', refreshOnceOnNavigation: true })

@@ -17,8 +17,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { functions } from '@/config/firebase'
-import Question from '@/components/tests/tutors/Question'
+import { functions } from '@application/config/firebase'
+import Question from '@application/components/tests/tutors/Question'
 export default {
 	data: () => ({
 		timer: 120,

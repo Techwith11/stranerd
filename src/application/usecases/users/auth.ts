@@ -1,13 +1,13 @@
-import router from '@/router'
-import { Notify } from '@/config/notifications'
-import { closeNavbar } from '@/config'
+import router from '@application/router'
+import { Notify } from '@application/config/notifications'
+import { closeNavbar } from '@application/config'
 import {
 	GetLoginFactory, GetRegisterFactory, GetResetPasswordFactory, GetUpdatePasswordFactory, GetUpdateProfileFactory,
 	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword, UpdatePassword, UpdateProfile
 } from '@modules/users'
 import { computed, reactive } from '@vue/composition-api'
-import { getIntendedRoute } from '@/usecases/core/router'
-import { useStore } from '@/usecases/store'
+import { getIntendedRoute } from '@application/usecases/core/router'
+import { useStore } from '@application/usecases/store'
 
 const afterAuthHook = async () => {
 	const route = getIntendedRoute()

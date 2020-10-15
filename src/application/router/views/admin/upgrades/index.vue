@@ -9,8 +9,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import UpgradeUserToAdmin from '@/components/admin/upgrades/UpgradeUserToAdmin.vue'
-import UpgradeUserToTutor from '@/components/admin/upgrades/UpgradeUserToTutor.vue'
+import UpgradeUserToAdmin from '@application/components/admin/upgrades/UpgradeUserToAdmin.vue'
+import UpgradeUserToTutor from '@application/components/admin/upgrades/UpgradeUserToTutor.vue'
 export default defineComponent({
 	name: 'Upgrades',
 	components: {

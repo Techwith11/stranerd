@@ -14,8 +14,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import CourseCard from '@/components/courses/list/CourseCard.vue'
-import { useRecentCourses } from '@/usecases/courses/courses'
+import CourseCard from '@application/components/courses/list/CourseCard.vue'
+import { useRecentCourses } from '@application/usecases/courses/courses'
 export default defineComponent({
 	setup(){
 		const { loading, error, courses } = useRecentCourses()

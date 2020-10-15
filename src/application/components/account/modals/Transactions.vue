@@ -17,9 +17,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import TransactionCard from '@/components/account/single/TransactionCard.vue'
-import { useStore } from '@/usecases/store'
-import { useTransactionsList } from '@/usecases/payments/transactions'
+import TransactionCard from '@application/components/account/single/TransactionCard.vue'
+import { useStore } from '@application/usecases/store'
+import { useTransactionsList } from '@application/usecases/payments/transactions'
 export default defineComponent({
 	setup(){
 		const { loading, transactions, error } = useTransactionsList()

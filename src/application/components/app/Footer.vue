@@ -84,7 +84,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useMailingList } from '@/usecases/users/role'
+import { useMailingList } from '@application/usecases/users/role'
 export default defineComponent({
 	setup(){
 		const { loading, factory, subscribeToMailingList } = useMailingList()

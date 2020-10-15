@@ -13,9 +13,9 @@
 </template>
 
 <script>
-import { firestore } from '@/config/firebase'
+import { firestore } from '@application/config/firebase'
 import { mapGetters } from 'vuex'
-import RatingStars from '@/components/helpers/RatingStars'
+import RatingStars from '@application/components/helpers/RatingStars'
 export default {
 	data: () => ({
 		student: {}

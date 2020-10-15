@@ -37,9 +37,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import RatingStars from '@/components/helpers/RatingStars.vue'
-import TestsList from '@/components/account/single/TestsList.vue'
-import { useStore } from '@/usecases/store'
+import RatingStars from '@application/components/helpers/RatingStars.vue'
+import TestsList from '@application/components/account/single/TestsList.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	setup(){
 		return {

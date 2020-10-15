@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, ref } from '@vue/composition-api'
-import { useSubscriptionPlansList } from '@/usecases/payments/subscription'
+import { useSubscriptionPlansList } from '@application/usecases/payments/subscription'
 export default defineComponent({
 	setup(){
 		const colors = ['danger','info','success']

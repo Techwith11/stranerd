@@ -18,8 +18,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { firestore } from '@/config/firebase'
-import SessionCard from '@/components/sessions/list/SessionCard'
+import { firestore } from '@application/config/firebase'
+import SessionCard from '@application/components/sessions/list/SessionCard'
 export default {
 	data: () => ({
 		sessions: [],

@@ -9,9 +9,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import ArticleInfo from '@/components/blog/single/ArticleInfo.vue'
-import { useSingleArticle } from '@/usecases/blog/articles'
-import router from '@/router'
+import ArticleInfo from '@application/components/blog/single/ArticleInfo.vue'
+import { useSingleArticle } from '@application/usecases/blog/articles'
+import router from '@application/router'
 export default defineComponent({
 	name: 'Article',
 	setup(){

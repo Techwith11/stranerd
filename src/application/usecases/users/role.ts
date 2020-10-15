@@ -3,7 +3,7 @@ import {
 	FindUsersByEmail, GetMailingListFactory, SubscribeToMailingList,
 	MakeAdmin, RemoveAdmin, MakeTutor
 } from '@modules/users'
-import { Notify } from '@/config/notifications'
+import { Notify } from '@application/config/notifications'
 import { UserEntity } from '@modules/users/domain/entities/user'
 
 export const useMailingList = () => {

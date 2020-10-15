@@ -34,7 +34,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useAdminRoles } from '@/usecases/users/role'
+import { useAdminRoles } from '@application/usecases/users/role'
 export default defineComponent({
 	setup(){
 		const { loading, fetched, upgrading, email, users, getUsersByEmail, adminUser, deAdminUser, reset } = useAdminRoles()

@@ -4,9 +4,9 @@ import {
 	AddCourse, DeleteCourse, FindCourse,
 	GetCourseFactory, GetCoursesByModule, GetRecentCourses, UpdateCourse
 } from '@modules/courses'
-import { Alert, Notify } from '@/config/notifications'
-import router from '@/router'
-import { useStore } from '@/usecases/store'
+import { Alert, Notify } from '@application/config/notifications'
+import router from '@application/router'
+import { useStore } from '@application/usecases/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const getKey = (subject: string, module: string) => `${subject}_${module}`

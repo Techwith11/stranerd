@@ -45,7 +45,7 @@
 				<a class="text-info d-block my-4" @click.prevent="showFormFields">Add another card or payment method</a>
 			</template>
 			<div class="d-flex justify-content-center mb-3">
-				<img src="@/assets/images/braintree.png" alt="" width="250px">
+				<img src="@application/assets/images/braintree.png" alt="" width="250px">
 			</div>
 		</template>
 	</div>
@@ -53,8 +53,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive, computed, PropType } from '@vue/composition-api'
-import AddPaymentMethod from '@/components/helpers/payments/AddPaymentMethod.vue'
-import { usePaymentMethodsList } from '@/usecases/payments/paymentMethods'
+import AddPaymentMethod from '@application/components/helpers/payments/AddPaymentMethod.vue'
+import { usePaymentMethodsList } from '@application/usecases/payments/paymentMethods'
 export default defineComponent({
 	setup(props){
 		const state = reactive({

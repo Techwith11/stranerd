@@ -1,5 +1,5 @@
 import { computed, ComputedRef } from '@vue/composition-api'
-import { Store } from '@/store'
+import { Store } from '@application/store'
 import { UserFromModel } from '@modules/users/data/models/user'
 
 const getters = {

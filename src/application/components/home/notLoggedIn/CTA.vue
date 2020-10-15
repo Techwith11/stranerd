@@ -8,7 +8,7 @@
             </ol>
             <div class="carousel-inner">
                 <div class="carousel-item active" data-interval="3000">
-                    <img src="@/assets/images/slides_1.jpg" class="d-block w-100" alt="">
+                    <img src="@application/assets/images/slides_1.jpg" class="d-block w-100" alt="">
                     <div class="carousel-caption">
                         <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Anywhere, Anytime!</h1>
                         <p class="subhead">Premium access to loads of resources ranging from courses, materials, tests and more.</p>
@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="carousel-item" data-interval="3000">
-                    <img src="@/assets/images/slides_2.jpg" class="d-block w-100" alt="">
+                    <img src="@application/assets/images/slides_2.jpg" class="d-block w-100" alt="">
                     <div class="carousel-caption">
                         <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Anywhere, Anytime!</h1>
                         <p class="subhead">Premium access to loads of resources ranging from courses, materials, tests and more.</p>
@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="carousel-item" data-interval="3000">
-                    <img src="@/assets/images/slides_3.jpg" class="d-block w-100" alt="">
+                    <img src="@application/assets/images/slides_3.jpg" class="d-block w-100" alt="">
                     <div class="carousel-caption">
                         <h1 class="font-weight-bold cta">Get Access to Unlimited Educational Resources. Anywhere, Anytime!</h1>
                         <p class="subhead">Premium access to loads of resources ranging from courses, materials, tests and more.</p>

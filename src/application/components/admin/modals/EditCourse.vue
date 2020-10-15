@@ -15,9 +15,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useEditCourse } from '@/usecases/courses/courses'
-import CourseForm from '@/components/courses/CourseForm.vue'
-import { useStore } from '@/usecases/store'
+import { useEditCourse } from '@application/usecases/courses/courses'
+import CourseForm from '@application/components/courses/CourseForm.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	name: 'EditCourse',
 	components: {

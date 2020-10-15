@@ -21,9 +21,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useStore } from '@/usecases/store'
+import { useStore } from '@application/usecases/store'
 import { QuestionEntity } from '@modules/tests/domain/entities/question'
-import { setCurrentEditingTutorQuestion, useDeleteTutorQuestion } from '@/usecases/tests/tutorQuestions'
+import { setCurrentEditingTutorQuestion, useDeleteTutorQuestion } from '@application/usecases/tests/tutorQuestions'
 export default defineComponent({
 	props: {
 		question: {

@@ -25,10 +25,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import QuestionCard from '@/components/admin/questions/list/QuestionCard.vue'
-import router from '@/router'
-import { useTutorQuestionsList } from '@/usecases/tests/tutorQuestions'
-import Question from '@/components/tests/tutors/Question.vue'
+import QuestionCard from '@application/components/admin/questions/list/QuestionCard.vue'
+import router from '@application/router'
+import { useTutorQuestionsList } from '@application/usecases/tests/tutorQuestions'
+import Question from '@application/components/tests/tutors/Question.vue'
 export default defineComponent({
 	name: 'Questions',
 	components: {

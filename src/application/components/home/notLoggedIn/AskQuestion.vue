@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import CreatePost from '@/components/posts/PostForm'
+import CreatePost from '@application/components/posts/PostForm'
 export default {
 	components: {
 		'create-post': CreatePost

@@ -8,8 +8,8 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { CourseEntity } from '@modules/courses/domain/entities/course'
-import DiscussionList from '@/components/courses/single/DiscussionList.vue'
-import DiscussionForm from '@/components/courses/single/DiscussionForm.vue'
+import DiscussionList from '@application/components/courses/single/DiscussionList.vue'
+import DiscussionForm from '@application/components/courses/single/DiscussionForm.vue'
 export default defineComponent({
 	components: {
 		'discussion-list': DiscussionList,

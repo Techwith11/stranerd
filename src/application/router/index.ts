@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import routes from '@/router/routes'
-import { Notify } from '@/config/notifications'
-import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
+import routes from '@application/router/routes'
+import { Notify } from '@application/config/notifications'
+import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@application/config'
 
-import { addToCachedScrolls, getCachedScroll, saveIntendedRoute } from '@/usecases/core/router'
-import { useStore } from '@/usecases/store'
+import { addToCachedScrolls, getCachedScroll, saveIntendedRoute } from '@application/usecases/core/router'
+import { useStore } from '@application/usecases/store'
 
 Vue.use(VueRouter)
 

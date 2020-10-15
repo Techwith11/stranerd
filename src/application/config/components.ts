@@ -1,14 +1,14 @@
 import Vue from 'vue'
 
-import Default from '@/router/layouts/Default.vue'
+import Default from '@application/router/layouts/Default.vue'
 
-import Editor from '@/components/helpers/Editor.vue'
-import Spinner from '@/components/helpers/Spinner.vue'
-import Message from '@/components/helpers/Message.vue'
-import MakePayment from '@/components/helpers/payments/MakePayment.vue'
-import Banner from '@/components/helpers/Banner.vue'
-import Search from '@/components/helpers/search/Search.vue'
-import RatingStars from '@/components/helpers/RatingStars.vue'
+import Editor from '@application/components/helpers/Editor.vue'
+import Spinner from '@application/components/helpers/Spinner.vue'
+import Message from '@application/components/helpers/Message.vue'
+import MakePayment from '@application/components/helpers/payments/MakePayment.vue'
+import Banner from '@application/components/helpers/Banner.vue'
+import Search from '@application/components/helpers/search/Search.vue'
+import RatingStars from '@application/components/helpers/RatingStars.vue'
 
 Vue.component('Default', Default)
 

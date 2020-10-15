@@ -16,7 +16,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useStore } from '@/usecases/store'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	name: 'CreateOverview',
 	setup(){

@@ -1,8 +1,8 @@
 import { computed, reactive, ref } from '@vue/composition-api'
 import { UserEntity } from '@modules/users/domain/entities/user'
 import { FindUser, GetTutors } from '@modules/users'
-import router from '@/router'
-import { Notify } from '@/config/notifications'
+import router from '@application/router'
+import { Notify } from '@application/config/notifications'
 import { firestore } from '@root/services/firebase'
 
 const users: UserEntity[] = reactive([])

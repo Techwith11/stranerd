@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
-import { useStore } from '@/usecases/store'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	setup(){
 		const getUser = useStore().auth.getUser

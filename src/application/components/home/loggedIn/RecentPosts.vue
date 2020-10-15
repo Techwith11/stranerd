@@ -18,8 +18,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useRecentPostsList } from '@/usecases/posts/posts'
-import PostCard from '@/components/posts/list/PostCard.vue'
+import { useRecentPostsList } from '@application/usecases/posts/posts'
+import PostCard from '@application/components/posts/list/PostCard.vue'
 export default defineComponent({
 	components: {
 		'post-card': PostCard

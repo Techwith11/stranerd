@@ -84,9 +84,9 @@
 
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
-import { useFileInputs, useMultipleFileInputs } from '@/usecases/core/forms'
+import { useFileInputs, useMultipleFileInputs } from '@application/usecases/core/forms'
 import { CourseFactory } from '@modules/courses/domain/factories/course'
-import { useSubjects } from '@/usecases/courses/subjects'
+import { useSubjects } from '@application/usecases/courses/subjects'
 export default defineComponent({
 	name: 'ArticleForm',
 	props: {

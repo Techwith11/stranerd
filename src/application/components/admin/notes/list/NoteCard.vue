@@ -25,8 +25,8 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { NoteEntity } from '@modules/shop/domain/entities/note'
-import { setCurrentEditingNote, useDeleteNote } from '@/usecases/shop/notes'
-import { useStore } from '@/usecases/store'
+import { setCurrentEditingNote, useDeleteNote } from '@application/usecases/shop/notes'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	props: {
 		note: {

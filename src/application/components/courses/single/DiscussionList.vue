@@ -10,9 +10,9 @@
 
 <script lang="ts">
 import { defineComponent, onUnmounted } from '@vue/composition-api'
-import { useDiscussions } from '@/usecases/courses/discussion'
+import { useDiscussions } from '@application/usecases/courses/discussion'
 import { CourseEntity } from '@modules/courses/domain/entities/course'
-import { useStore } from '@/usecases/store'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	props: {
 		course: {

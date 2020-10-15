@@ -10,10 +10,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import CartOverview from '@/components/shop/modals/CartOverview.vue'
-import SelectPayment from '@/components/shop/modals/SelectPayment.vue'
-import EmailConfirmation from '@/components/shop/modals/EmailConfirmation.vue'
-import { useStore } from '@/usecases/store'
+import CartOverview from '@application/components/shop/modals/CartOverview.vue'
+import SelectPayment from '@application/components/shop/modals/SelectPayment.vue'
+import EmailConfirmation from '@application/components/shop/modals/EmailConfirmation.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	components: {
 		'cart-overview': CartOverview,

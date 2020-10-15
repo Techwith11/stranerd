@@ -28,10 +28,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import TutorCard from '@/components/users/list/TutorCard.vue'
-import TutorSearch from '@/components/helpers/search/TutorSearch.vue'
-import { useTutorsList } from '@/usecases/users/users'
-import { useSubjects } from '@/usecases/courses/subjects'
+import TutorCard from '@application/components/users/list/TutorCard.vue'
+import TutorSearch from '@application/components/helpers/search/TutorSearch.vue'
+import { useTutorsList } from '@application/usecases/users/users'
+import { useSubjects } from '@application/usecases/courses/subjects'
 export default defineComponent({
 	name: 'Tutors',
 	setup(){

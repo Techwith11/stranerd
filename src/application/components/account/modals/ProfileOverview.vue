@@ -19,9 +19,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCancelSubscription } from '@/usecases/payments/subscription'
-import { useStore } from '@/usecases/store'
-import router from '@/router'
+import { useCancelSubscription } from '@application/usecases/payments/subscription'
+import { useStore } from '@application/usecases/store'
+import router from '@application/router'
 export default defineComponent({
 	setup(){
 		const { loading, cancelSubscription } = useCancelSubscription()

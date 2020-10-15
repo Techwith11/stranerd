@@ -59,9 +59,9 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
-import { useCreatePost } from '@/usecases/posts/posts'
-import { useTags } from '@/usecases/core/forms'
-import { useSubjects } from '@/usecases/courses/subjects'
+import { useCreatePost } from '@application/usecases/posts/posts'
+import { useTags } from '@application/usecases/core/forms'
+import { useSubjects } from '@application/usecases/courses/subjects'
 export default defineComponent({
 	name: 'PostForm',
 	setup(){

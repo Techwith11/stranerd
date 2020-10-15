@@ -12,10 +12,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import ProfileInfo from '@/components/account/single/ProfileInfo.vue'
-import TutorInfo from '@/components/account/single/TutorInfo.vue'
-import PaymentInfo from '@/components/account/single/PaymentInfo.vue'
-import { useStore } from '@/usecases/store'
+import ProfileInfo from '@application/components/account/single/ProfileInfo.vue'
+import TutorInfo from '@application/components/account/single/TutorInfo.vue'
+import PaymentInfo from '@application/components/account/single/PaymentInfo.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	components: {
 		'profile-info': ProfileInfo,

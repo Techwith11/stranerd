@@ -31,8 +31,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useUpdatePasswordForm } from '@/usecases/users/auth'
-import { useStore } from '@/usecases/store'
+import { useUpdatePasswordForm } from '@application/usecases/users/auth'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	setup(){
 		const { loading, factory, updatePassword } = useUpdatePasswordForm()

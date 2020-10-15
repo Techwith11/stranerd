@@ -10,8 +10,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@vue/composition-api'
-import SelectPaymentMethod from '@/components/helpers/payments/SelectPaymentMethod.vue'
-import { usePayment } from '@/usecases/payments/payment'
+import SelectPaymentMethod from '@application/components/helpers/payments/SelectPaymentMethod.vue'
+import { usePayment } from '@application/usecases/payments/payment'
 export default defineComponent({
 	props: {
 		amount: {

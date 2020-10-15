@@ -34,7 +34,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { checkForUnfinishedTests, startTest } from '@/config/tests'
+import { checkForUnfinishedTests, startTest } from '@application/config/tests'
 export default {
 	name: 'TestsTutors',
 	data: () => ({

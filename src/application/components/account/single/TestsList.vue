@@ -18,8 +18,8 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { firestore } from '@/config/firebase'
-import TestCard from '@/components/account/single/TestCard'
+import { firestore } from '@application/config/firebase'
+import TestCard from '@application/components/account/single/TestCard'
 export default {
 	data: () => ({
 		isLoading: true,

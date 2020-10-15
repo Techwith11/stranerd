@@ -16,13 +16,13 @@
 
 <script lang="ts">
 import { defineComponent, computed, reactive } from '@vue/composition-api'
-import SingleVideo from '@/components/courses/single/SingleVideo.vue'
-import SingleNav from '@/components/courses/single/SingleNav.vue'
-import SingleOverview from '@/components/courses/single/SingleOverview.vue'
-import SingleDiscussions from '@/components/courses/single/SingleDiscussions.vue'
-import SingleDocuments from '@/components/courses/single/SingleDocuments.vue'
-import { useSingleCourse } from '@/usecases/courses/courses'
-import router from '@/router'
+import SingleVideo from '@application/components/courses/single/SingleVideo.vue'
+import SingleNav from '@application/components/courses/single/SingleNav.vue'
+import SingleOverview from '@application/components/courses/single/SingleOverview.vue'
+import SingleDiscussions from '@application/components/courses/single/SingleDiscussions.vue'
+import SingleDocuments from '@application/components/courses/single/SingleDocuments.vue'
+import { useSingleCourse } from '@application/usecases/courses/courses'
+import router from '@application/router'
 export default defineComponent({
 	name: 'Course',
 	setup(){

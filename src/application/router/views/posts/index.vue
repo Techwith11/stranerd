@@ -27,9 +27,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import PostCard from '@/components/posts/list/PostCard.vue'
-import { usePostsList } from '@/usecases/posts/posts'
-import PostSearch from '@/components/helpers/search/PostSearch.vue'
+import PostCard from '@application/components/posts/list/PostCard.vue'
+import { usePostsList } from '@application/usecases/posts/posts'
+import PostSearch from '@application/components/helpers/search/PostSearch.vue'
 export default defineComponent({
 	name: 'Posts',
 	components: {

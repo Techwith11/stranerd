@@ -1,10 +1,10 @@
 import { ReplyEntity } from '@modules/posts/domain/entities/reply'
 import { computed, reactive, watch } from '@vue/composition-api'
 import { AddReply, DownvoteReply, GetReplyFactory, ListenToReplies, UpvoteReply } from '@modules/posts'
-import { Notify } from '@/config/notifications'
-import { fetchUser } from '@/usecases/users/users'
+import { Notify } from '@application/config/notifications'
+import { fetchUser } from '@application/usecases/users/users'
 import { UserEntity } from '@modules/users/domain/entities/user'
-import { useStore } from '@/usecases/store'
+import { useStore } from '@application/usecases/store'
 
 const repliesGlobalState: { [key: string]: {
 	loading: boolean,

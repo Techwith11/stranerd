@@ -42,7 +42,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useSubscriptionPlansList } from '@/usecases/payments/subscription'
+import { useSubscriptionPlansList } from '@application/usecases/payments/subscription'
 export default defineComponent({
 	setup(){
 		const { loading, plans } = useSubscriptionPlansList()

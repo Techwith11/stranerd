@@ -15,9 +15,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCreateNote } from '@/usecases/shop/notes'
-import NoteForm from '@/components/admin/notes/NoteForm.vue'
-import { useStore } from '@/usecases/store'
+import { useCreateNote } from '@application/usecases/shop/notes'
+import NoteForm from '@application/components/admin/notes/NoteForm.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	name: 'CreateNote',
 	components: {

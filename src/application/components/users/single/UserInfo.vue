@@ -19,9 +19,9 @@
 
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
-import RatingStars from '@/components/helpers/RatingStars.vue'
+import RatingStars from '@application/components/helpers/RatingStars.vue'
 import { UserEntity } from '@modules/users/domain/entities/user'
-import { useStore } from '@/usecases/store'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	props: {
 		user: {

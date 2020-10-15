@@ -13,13 +13,13 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import CreateOverview from '@/components/admin/modals/CreateOverview.vue'
-import CreateCourse from '@/components/admin/modals/CreateCourse.vue'
-import CreateQuestion from '@/components/admin/modals/CreateQuestion.vue'
-import CreateNote from '@/components/admin/modals/CreateNote.vue'
-import CreateArticle from '@/components/admin/modals/CreateArticle.vue'
-import CreateSubject from '@/components/admin/modals/CreateSubject.vue'
-import { useStore } from '@/usecases/store'
+import CreateOverview from '@application/components/admin/modals/CreateOverview.vue'
+import CreateCourse from '@application/components/admin/modals/CreateCourse.vue'
+import CreateQuestion from '@application/components/admin/modals/CreateQuestion.vue'
+import CreateNote from '@application/components/admin/modals/CreateNote.vue'
+import CreateArticle from '@application/components/admin/modals/CreateArticle.vue'
+import CreateSubject from '@application/components/admin/modals/CreateSubject.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	components: {
 		'create-overview': CreateOverview,

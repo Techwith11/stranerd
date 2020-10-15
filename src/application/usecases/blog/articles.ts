@@ -8,11 +8,11 @@ import {
 	AddArticle,
 	UpdateArticle
 } from '@modules/blog'
-import { Alert, Notify } from '@/config/notifications'
+import { Alert, Notify } from '@application/config/notifications'
 import { UserEntity } from '@modules/users/domain/entities/user'
-import { fetchUser } from '@/usecases/users/users'
-import router from '@/router'
-import { useStore } from '@/usecases/store'
+import { fetchUser } from '@application/usecases/users/users'
+import router from '@application/router'
+import { useStore } from '@application/usecases/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 

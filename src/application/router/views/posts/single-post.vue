@@ -27,12 +27,12 @@
 
 <script lang="ts">
 import { defineComponent, onUnmounted } from '@vue/composition-api'
-import PostInfo from '@/components/posts/single/PostInfo.vue'
-import ReplyForm from '@/components/posts/single/ReplyForm.vue'
-import ReplyCard from '@/components/posts/single/ReplyCard.vue'
-import router from '@/router'
-import { usePost } from '@/usecases/posts/posts'
-import { useReplies } from '@/usecases/posts/replies'
+import PostInfo from '@application/components/posts/single/PostInfo.vue'
+import ReplyForm from '@application/components/posts/single/ReplyForm.vue'
+import ReplyCard from '@application/components/posts/single/ReplyCard.vue'
+import router from '@application/router'
+import { usePost } from '@application/usecases/posts/posts'
+import { useReplies } from '@application/usecases/posts/replies'
 export default defineComponent({
 	name: 'Post',
 	setup(){

@@ -21,7 +21,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useSubjects } from '@/usecases/courses/subjects'
+import { useSubjects } from '@application/usecases/courses/subjects'
 export default defineComponent({
 	setup(){
 		const { subjects, error, loading, modules } = useSubjects()

@@ -27,10 +27,10 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { firestore } from '@/config/firebase'
-import SessionChatForm from '@/components/sessions/single/SessionChatForm'
-import SessionChatMessage from '@/components/sessions/single/SessionChatMessage'
-import SessionNav from '@/components/sessions/single/SessionNav'
+import { firestore } from '@application/config/firebase'
+import SessionChatForm from '@application/components/sessions/single/SessionChatForm'
+import SessionChatMessage from '@application/components/sessions/single/SessionChatMessage'
+import SessionNav from '@application/components/sessions/single/SessionNav'
 export default {
 	name: 'SingleSession',
 	data: () => ({

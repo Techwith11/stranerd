@@ -1,7 +1,7 @@
 <template>
     <header class="bg-white shadow">
         <nav class="navbar container bg-white navbar-light d-flex justify-content-between flex-row-reverse" :class="isLoggedIn ? 'navbar-expand-lg flex-lg-row' : 'navbar-expand-md flex-md-row'">
-            <router-link class="navbar-brand" to="/"><img src="@/assets/images/stranerd_logo.png" alt="STRANERD" height="50px"></router-link>
+            <router-link class="navbar-brand" to="/"><img src="@application/assets/images/stranerd_logo.png" alt="STRANERD" height="50px"></router-link>
             <button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -121,10 +121,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
-import { useLogout } from '@/usecases/users/auth'
-import { useCart } from '@/usecases/shop/cart'
-import { useStore } from '@/usecases/store'
+import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@application/config'
+import { useLogout } from '@application/usecases/users/auth'
+import { useCart } from '@application/usecases/shop/cart'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	setup(){
 		const { loading, logout } = useLogout()

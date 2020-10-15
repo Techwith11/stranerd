@@ -55,9 +55,9 @@
 
 <script lang="ts">
 import { defineComponent, reactive, watch, computed } from '@vue/composition-api'
-import SelectPaymentMethod from '@/components/helpers/payments/SelectPaymentMethod.vue'
-import { useCreateSubscription, useSubscriptionPlansList } from '@/usecases/payments/subscription'
-import { useStore } from '@/usecases/store'
+import SelectPaymentMethod from '@application/components/helpers/payments/SelectPaymentMethod.vue'
+import { useCreateSubscription, useSubscriptionPlansList } from '@application/usecases/payments/subscription'
+import { useStore } from '@application/usecases/store'
 import { PlanEntity } from '@modules/payments/domain/entities/plan'
 export default defineComponent({
 	setup(){

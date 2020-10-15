@@ -34,8 +34,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCart } from '@/usecases/shop/cart'
-import { useStore } from '@/usecases/store'
+import { useCart } from '@application/usecases/shop/cart'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	setup(){
 		const { cart, removeFromCart, cartPrice } = useCart()

@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, PropType } from '@vue/composition-api'
-import { useCreatePaymentMethods, usePaymentForm } from '@/usecases/payments/paymentForm'
+import { useCreatePaymentMethods, usePaymentForm } from '@application/usecases/payments/paymentForm'
 export default defineComponent({
 	props: {
 		onAddMethodSuccessful: {

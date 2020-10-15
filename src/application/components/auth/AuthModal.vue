@@ -10,10 +10,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import Login from '@/components/auth/Login.vue'
-import ForgotPassword from '@/components/auth/ForgotPassword.vue'
-import Register from '@/components/auth/Register.vue'
-import { useStore } from '@/usecases/store'
+import Login from '@application/components/auth/Login.vue'
+import ForgotPassword from '@application/components/auth/ForgotPassword.vue'
+import Register from '@application/components/auth/Register.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	components: {
 		'login': Login,

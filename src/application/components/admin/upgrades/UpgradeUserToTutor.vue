@@ -42,8 +42,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useSubjects } from '@/usecases/courses/subjects'
-import { useTutorRoles } from '@/usecases/users/role'
+import { useSubjects } from '@application/usecases/courses/subjects'
+import { useTutorRoles } from '@application/usecases/users/role'
 export default defineComponent({
 	setup(){
 		const { subjects, loading: subjectLoading } = useSubjects()

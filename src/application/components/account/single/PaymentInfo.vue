@@ -61,10 +61,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCancelSubscription } from '@/usecases/payments/subscription'
-import { useStore } from '@/usecases/store'
-import PaymentMethodCard from '@/components/account/single/PaymentMethodCard.vue'
-import { usePaymentMethodsList } from '@/usecases/payments/paymentMethods'
+import { useCancelSubscription } from '@application/usecases/payments/subscription'
+import { useStore } from '@application/usecases/store'
+import PaymentMethodCard from '@application/components/account/single/PaymentMethodCard.vue'
+import { usePaymentMethodsList } from '@application/usecases/payments/paymentMethods'
 export default defineComponent({
 	setup(){
 		const { loading, cancelSubscription } = useCancelSubscription()

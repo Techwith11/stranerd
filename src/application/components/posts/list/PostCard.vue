@@ -20,7 +20,7 @@
 <script lang="ts">
 import { PostEntity } from '@modules/posts/domain/entities/post'
 import { defineComponent, reactive, computed } from '@vue/composition-api'
-import { fetchUser } from '@/usecases/users/users'
+import { fetchUser } from '@application/usecases/users/users'
 export default defineComponent({
 	props: {
 		post: {

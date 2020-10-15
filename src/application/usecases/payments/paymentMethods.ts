@@ -1,8 +1,8 @@
 import { computed, reactive } from '@vue/composition-api'
 import { MethodEntity } from '@modules/payments/domain/entities/method'
 import { GetPaymentMethods, RemovePaymentMethod } from '@modules/payments'
-import { useStore } from '@/usecases/store'
-import { Alert, Notify } from '@/config/notifications'
+import { useStore } from '@application/usecases/store'
+import { Alert, Notify } from '@application/config/notifications'
 
 const globalState = reactive({
 	methods: [] as MethodEntity[],

@@ -1,8 +1,8 @@
 import { computed, reactive } from '@vue/composition-api'
 import { QuestionEntity } from '@modules/tests/domain/entities/question'
 import { DeleteTutorQuestion, GetTutorQuestionsByModule, FindTutorQuestion, AddTutorQuestion, GetQuestionFactory, UpdateTutorQuestion } from '@modules/tests'
-import { Alert, Notify } from '@/config/notifications'
-import { useStore } from '@/usecases/store'
+import { Alert, Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const getKey = (subject: string, module: string) => `${subject}_${module}`

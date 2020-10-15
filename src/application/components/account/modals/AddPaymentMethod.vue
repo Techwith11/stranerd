@@ -11,9 +11,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import AddPaymentMethod from '@/components/helpers/payments/AddPaymentMethod.vue'
-import { Notify } from '@/config/notifications'
-import { useStore } from '@/usecases/store'
+import AddPaymentMethod from '@application/components/helpers/payments/AddPaymentMethod.vue'
+import { Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	components: {
 		'add-payment-method': AddPaymentMethod

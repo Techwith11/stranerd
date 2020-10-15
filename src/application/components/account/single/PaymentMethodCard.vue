@@ -18,7 +18,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { MethodEntity } from '@modules/payments/domain/entities/method'
-import { useDeletePaymentMethod } from '@/usecases/payments/paymentMethods'
+import { useDeletePaymentMethod } from '@application/usecases/payments/paymentMethods'
 export default defineComponent({
 	props: {
 		method: {

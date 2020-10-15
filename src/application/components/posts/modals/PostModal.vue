@@ -9,9 +9,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import QuestionsLeftNotify from '@/components/posts/modals/QuestionsLeftNotify.vue'
-import BuyMoreQuestions from '@/components/posts/modals/BuyMoreQuestions.vue'
-import { useStore } from '@/usecases/store'
+import QuestionsLeftNotify from '@application/components/posts/modals/QuestionsLeftNotify.vue'
+import BuyMoreQuestions from '@application/components/posts/modals/BuyMoreQuestions.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	components: {
 		'questions-left-notify': QuestionsLeftNotify,

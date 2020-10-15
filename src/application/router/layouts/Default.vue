@@ -21,10 +21,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import Navbar from '@/components/app/Navbar.vue'
-import Sidebar from '@/components/app/Sidebar.vue'
-import Footer from '@/components/app/Footer.vue'
-import { useStore } from '@/usecases/store'
+import Navbar from '@application/components/app/Navbar.vue'
+import Sidebar from '@application/components/app/Sidebar.vue'
+import Footer from '@application/components/app/Footer.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	components: {
 		'app-navbar': Navbar,

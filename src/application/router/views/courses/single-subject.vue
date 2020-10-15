@@ -30,9 +30,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useSingleSubject } from '@/usecases/courses/subjects'
-import router from '@/router'
-import CourseSearch from '@/components/helpers/search/CourseSearch.vue'
+import { useSingleSubject } from '@application/usecases/courses/subjects'
+import router from '@application/router'
+import CourseSearch from '@application/components/helpers/search/CourseSearch.vue'
 export default defineComponent({
 	components: {
 		'course-search': CourseSearch

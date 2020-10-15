@@ -1,7 +1,7 @@
 import { computed, reactive } from '@vue/composition-api'
 import { TransactionEntity } from '@modules/payments/domain/entities/transaction'
 import { GetTransactions } from '@modules/payments'
-import { useStore } from '@/usecases/store'
+import { useStore } from '@application/usecases/store'
 
 const globalState = reactive({
 	transactions: [] as TransactionEntity[],

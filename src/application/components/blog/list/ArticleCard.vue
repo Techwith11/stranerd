@@ -25,9 +25,9 @@
 <script lang="ts">
 import { computed, defineComponent, reactive } from '@vue/composition-api'
 import { ArticleEntity } from '@modules/blog/domain/entities/article'
-import { setCurrentEditingArticle, useDeleteArticle } from '@/usecases/blog/articles'
-import { fetchUser } from '@/usecases/users/users'
-import { useStore } from '@/usecases/store'
+import { setCurrentEditingArticle, useDeleteArticle } from '@application/usecases/blog/articles'
+import { fetchUser } from '@application/usecases/users/users'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	props: {
 		article: {

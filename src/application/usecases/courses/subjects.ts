@@ -8,9 +8,9 @@ import {
 	GetSubjects,
 	UpdateSubject
 } from '@modules/courses'
-import router from '@/router'
-import { Alert, Notify } from '@/config/notifications'
-import { useStore } from '@/usecases/store'
+import router from '@application/router'
+import { Alert, Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
 
 const globalState = reactive({
 	subjects: reactive([]) as SubjectEntity[],

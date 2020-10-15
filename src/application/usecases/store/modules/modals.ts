@@ -1,4 +1,4 @@
-import { Store } from '@/store'
+import { Store } from '@application/store'
 import { computed, ComputedRef } from '@vue/composition-api'
 
 const getters = {

@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import Question from '@/components/tests/tutors/Question'
-import { firestore } from '@/config/firebase'
+import Question from '@application/components/tests/tutors/Question'
+import { firestore } from '@application/config/firebase'
 import { mapGetters } from 'vuex'
-import { submitTest } from '@/config/tests'
+import { submitTest } from '@application/config/tests'
 export default {
 	name: 'SingleTutorTest',
 	data: () => ({

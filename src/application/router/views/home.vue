@@ -34,19 +34,19 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import CTA from '@/components/home/notLoggedIn/CTA.vue'
-import WhyUs from '@/components/home/notLoggedIn/WhyUs.vue'
-import AskQuestion from '@/components/home/notLoggedIn/AskQuestion.vue'
-import StudentsSay from '@/components/home/notLoggedIn/StudentsSay.vue'
-import WhatMakesUsDifferent from '@/components/home/notLoggedIn/WhatMakesUsDifferent.vue'
-import Mckenwin from '@/components/home/notLoggedIn/Mckenwin.vue'
-import ShowAskQuestion from '@/components/home/loggedIn/AskQuestion.vue'
-import RecentPosts from '@/components/home/loggedIn/RecentPosts.vue'
-import RecentSessions from '@/components/home/loggedIn/RecentSessions.vue'
-import TopTutors from '@/components/home/loggedIn/TopTutors.vue'
-import SubscribeCard from '@/components/home/loggedIn/SubscribeCard.vue'
-import { useStore } from '@/usecases/store'
-import PostSearch from '@/components/helpers/search/PostSearch.vue'
+import CTA from '@application/components/home/notLoggedIn/CTA.vue'
+import WhyUs from '@application/components/home/notLoggedIn/WhyUs.vue'
+import AskQuestion from '@application/components/home/notLoggedIn/AskQuestion.vue'
+import StudentsSay from '@application/components/home/notLoggedIn/StudentsSay.vue'
+import WhatMakesUsDifferent from '@application/components/home/notLoggedIn/WhatMakesUsDifferent.vue'
+import Mckenwin from '@application/components/home/notLoggedIn/Mckenwin.vue'
+import ShowAskQuestion from '@application/components/home/loggedIn/AskQuestion.vue'
+import RecentPosts from '@application/components/home/loggedIn/RecentPosts.vue'
+import RecentSessions from '@application/components/home/loggedIn/RecentSessions.vue'
+import TopTutors from '@application/components/home/loggedIn/TopTutors.vue'
+import SubscribeCard from '@application/components/home/loggedIn/SubscribeCard.vue'
+import { useStore } from '@application/usecases/store'
+import PostSearch from '@application/components/helpers/search/PostSearch.vue'
 export default defineComponent({
 	name: 'Home',
 	components: {

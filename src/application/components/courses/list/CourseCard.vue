@@ -28,8 +28,8 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { CourseEntity } from '@modules/courses/domain/entities/course'
-import { setCurrentEditingCourse, useDeleteCourse } from '@/usecases/courses/courses'
-import { useStore } from '@/usecases/store'
+import { setCurrentEditingCourse, useDeleteCourse } from '@application/usecases/courses/courses'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	props: {
 		course: {

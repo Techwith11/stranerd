@@ -15,9 +15,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import SubjectForm from '@/components/admin/subjects/SubjectForm.vue'
-import { useEditSubject } from '@/usecases/courses/subjects'
-import { useStore } from '@/usecases/store'
+import SubjectForm from '@application/components/admin/subjects/SubjectForm.vue'
+import { useEditSubject } from '@application/usecases/courses/subjects'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	name: 'EditSubject',
 	components: {

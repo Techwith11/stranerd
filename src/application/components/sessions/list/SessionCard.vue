@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import { firestore } from '@/config/firebase'
-import RatingStars from '@/components/helpers/RatingStars'
+import { firestore } from '@application/config/firebase'
+import RatingStars from '@application/components/helpers/RatingStars'
 import { mapGetters } from 'vuex'
 export default {
 	data: () => ({

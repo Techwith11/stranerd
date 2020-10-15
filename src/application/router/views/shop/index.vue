@@ -27,11 +27,11 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import NoteCard from '@/components/shop/list/NoteCard.vue'
-import { useNotesList } from '@/usecases/shop/notes'
-import { useCart } from '@/usecases/shop/cart'
-import { useStore } from '@/usecases/store'
-import NoteSearch from '@/components/helpers/search/NoteSearch.vue'
+import NoteCard from '@application/components/shop/list/NoteCard.vue'
+import { useNotesList } from '@application/usecases/shop/notes'
+import { useCart } from '@application/usecases/shop/cart'
+import { useStore } from '@application/usecases/store'
+import NoteSearch from '@application/components/helpers/search/NoteSearch.vue'
 export default defineComponent({
 	name: 'Shop',
 	setup(){

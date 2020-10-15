@@ -13,9 +13,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCart, useCheckout } from '@/usecases/shop/cart'
-import { Notify } from '@/config/notifications'
-import { useStore } from '@/usecases/store'
+import { useCart, useCheckout } from '@application/usecases/shop/cart'
+import { Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	setup(){
 		const { cartLength, cartPrice } = useCart()

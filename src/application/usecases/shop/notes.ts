@@ -1,8 +1,8 @@
 import { computed, reactive } from '@vue/composition-api'
 import { NoteEntity } from '@modules/shop/domain/entities/note'
 import { FindNote, GetNotes, AddNote, GetNoteFactory, UpdateNote, DeleteNote } from '@modules/shop'
-import { Alert, Notify } from '@/config/notifications'
-import { useStore } from '@/usecases/store'
+import { Alert, Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 

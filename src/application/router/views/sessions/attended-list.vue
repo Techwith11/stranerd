@@ -21,9 +21,9 @@
 </template>
 
 <script>
-import SessionCard from '@/components/sessions/list/SessionCard'
-import SessionNav from '@/components/sessions/list/SessionNav'
-import { firestore } from '@/config/firebase'
+import SessionCard from '@application/components/sessions/list/SessionCard'
+import SessionNav from '@application/components/sessions/list/SessionNav'
+import { firestore } from '@application/config/firebase'
 import { mapGetters } from 'vuex'
 export default {
 	data: () => ({

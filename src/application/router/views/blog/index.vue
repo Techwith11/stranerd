@@ -29,10 +29,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import ArticleCard from '@/components/blog/list/ArticleCard.vue'
-import { useArticlesList } from '@/usecases/blog/articles'
-import { useStore } from '@/usecases/store'
-import ArticleSearch from '@/components/helpers/search/ArticleSearch.vue'
+import ArticleCard from '@application/components/blog/list/ArticleCard.vue'
+import { useArticlesList } from '@application/usecases/blog/articles'
+import { useStore } from '@application/usecases/store'
+import ArticleSearch from '@application/components/helpers/search/ArticleSearch.vue'
 export default defineComponent({
 	name: 'Posts',
 	components: {

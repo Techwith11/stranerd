@@ -11,11 +11,11 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import EditProfile from '@/components/account/modals/EditProfile.vue'
-import UpdatePassword from '@/components/account/modals/UpdatePassword.vue'
-import AddPaymentMethod from '@/components/account/modals/AddPaymentMethod.vue'
-import Transactions from '@/components/account/modals/Transactions.vue'
-import { useStore } from '@/usecases/store'
+import EditProfile from '@application/components/account/modals/EditProfile.vue'
+import UpdatePassword from '@application/components/account/modals/UpdatePassword.vue'
+import AddPaymentMethod from '@application/components/account/modals/AddPaymentMethod.vue'
+import Transactions from '@application/components/account/modals/Transactions.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	components: {
 		'edit-profile': EditProfile,

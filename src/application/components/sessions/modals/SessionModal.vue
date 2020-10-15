@@ -15,14 +15,14 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import DurationForm from '@/components/sessions/modals/DurationForm'
-import TutorAccept from '@/components/sessions/modals/TutorAccept'
-import StudentWaiting from '@/components/sessions/modals/StudentWaiting'
-import TutorCancelled from '@/components/sessions/modals/TutorCancelled'
-import StudentCancelled from '@/components/sessions/modals/StudentCancelled'
-import StudentPays from '@/components/sessions/modals/StudentPays'
-import TutorWaiting from '@/components/sessions/modals/TutorWaiting'
-import SessionRatings from '@/components/sessions/modals/SessionRatings'
+import DurationForm from '@application/components/sessions/modals/DurationForm'
+import TutorAccept from '@application/components/sessions/modals/TutorAccept'
+import StudentWaiting from '@application/components/sessions/modals/StudentWaiting'
+import TutorCancelled from '@application/components/sessions/modals/TutorCancelled'
+import StudentCancelled from '@application/components/sessions/modals/StudentCancelled'
+import StudentPays from '@application/components/sessions/modals/StudentPays'
+import TutorWaiting from '@application/components/sessions/modals/TutorWaiting'
+import SessionRatings from '@application/components/sessions/modals/SessionRatings'
 export default {
 	computed: {
 		...mapGetters([

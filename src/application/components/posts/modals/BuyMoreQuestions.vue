@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useMoreQuestions } from '@/usecases/shop/cart'
-import { useStore } from '@/usecases/store'
+import { useMoreQuestions } from '@application/usecases/shop/cart'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	setup(){
 		const { loading, price, quantity, addQuestions } = useMoreQuestions()

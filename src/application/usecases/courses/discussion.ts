@@ -1,8 +1,8 @@
 import { DiscussionEntity } from '@modules/courses/domain/entities/discussion'
 import { computed, reactive, watch } from '@vue/composition-api'
 import { AddDiscussion, GetDiscussionFactory, ListenToDiscussions } from '@modules/courses'
-import { Notify } from '@/config/notifications'
-import { useStore } from '@/usecases/store'
+import { Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
 
 const discussionsGlobalState: { [key: string]: {
 	loading: boolean,

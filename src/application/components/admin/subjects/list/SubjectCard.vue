@@ -24,9 +24,9 @@
 
 <script lang="ts">
 import { defineComponent, ref } from '@vue/composition-api'
-import { setCurrentEditingSubject, useDeleteSubject } from '@/usecases/courses/subjects'
+import { setCurrentEditingSubject, useDeleteSubject } from '@application/usecases/courses/subjects'
 import { SubjectEntity } from '@modules/courses/domain/entities/subject'
-import { useStore } from '@/usecases/store'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	props: {
 		subject: {

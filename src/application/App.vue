@@ -7,7 +7,7 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import Modals from '@/components/helpers/Modals'
+import Modals from '@application/components/helpers/Modals'
 export default {
 	name: 'App',
 	computed: mapGetters(['isLoggedIn','isTutor']),

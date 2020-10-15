@@ -27,8 +27,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useSingleSubject } from '@/usecases/courses/subjects'
-import router from '@/router'
+import { useSingleSubject } from '@application/usecases/courses/subjects'
+import router from '@application/router'
 export default defineComponent({
 	setup(){
 		const { subject } = router.currentRoute.params

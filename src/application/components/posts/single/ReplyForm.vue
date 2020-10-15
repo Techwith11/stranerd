@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCreateReply } from '@/usecases/posts/replies'
-import router from '@/router/'
+import { useCreateReply } from '@application/usecases/posts/replies'
+import router from '@application/router/'
 export default defineComponent({
 	setup(){
 		const { id } = router.currentRoute.params

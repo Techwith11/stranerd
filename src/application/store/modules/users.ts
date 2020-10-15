@@ -1,7 +1,7 @@
 // @ts-nocheck
-import { firestore, uploadFile } from '@/config/firebase'
-import { Store } from '@/store'
-import { checkForUnfinishedTests } from '@/config/tests'
+import { firestore, uploadFile } from '@application/config/firebase'
+import { Store } from '@application/store'
+import { checkForUnfinishedTests } from '@application/config/tests'
 
 const state = {
 	id: window.localStorage.getItem('user_id') ?? null,

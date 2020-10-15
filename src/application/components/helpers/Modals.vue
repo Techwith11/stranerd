@@ -12,14 +12,14 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import AuthModal from '@/components/auth/AuthModal.vue'
-import CreateModal from '@/components/admin/modals/CreateModal.vue'
-import EditModal from '@/components/admin/modals/EditModal.vue'
-import SessionModal from '@/components/sessions/modals/SessionModal.vue'
-import PostModal from '@/components/posts/modals/PostModal.vue'
-import CartModal from '@/components/shop/modals/CartModal.vue'
-import AccountModal from '@/components/account/modals/AccountModal.vue'
-import { useStore } from '@/usecases/store'
+import AuthModal from '@application/components/auth/AuthModal.vue'
+import CreateModal from '@application/components/admin/modals/CreateModal.vue'
+import EditModal from '@application/components/admin/modals/EditModal.vue'
+import SessionModal from '@application/components/sessions/modals/SessionModal.vue'
+import PostModal from '@application/components/posts/modals/PostModal.vue'
+import CartModal from '@application/components/shop/modals/CartModal.vue'
+import AccountModal from '@application/components/account/modals/AccountModal.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	components: {
 		'auth-modal': AuthModal,

@@ -19,7 +19,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { NoteFromModel } from '@modules/shop/data/models/note'
-import { useCart } from '@/usecases/shop/cart'
+import { useCart } from '@application/usecases/shop/cart'
 export default defineComponent({
 	setup(){
 		const { isInCart, addToCart, removeFromCart } = useCart()
