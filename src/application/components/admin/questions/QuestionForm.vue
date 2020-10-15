@@ -80,7 +80,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
-import { QuestionFactory } from '@root/modules/tests/domain/factories/question'
+import { QuestionFactory } from '@modules/tests/domain/factories/question'
 import { useSubjects } from '@/usecases/courses/subjects'
 export default defineComponent({
 	props: {

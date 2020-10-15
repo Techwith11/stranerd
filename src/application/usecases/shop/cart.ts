@@ -1,7 +1,7 @@
 import { computed, reactive } from '@vue/composition-api'
-import { NoteEntity } from '@root/modules/shop/domain/entities/note'
+import { NoteEntity } from '@modules/shop/domain/entities/note'
 import { useStore } from '@/usecases/store'
-import { BuyMoreQuestions, SendCartToEmail } from '@root/modules/shop'
+import { BuyMoreQuestions, SendCartToEmail } from '@modules/shop'
 import { Notify } from '@/config/notifications'
 
 const globalState = reactive({

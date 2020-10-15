@@ -1,8 +1,8 @@
-import { IArticleRepository } from '@root/modules/blog/domain/irepositories/iarticle'
-import { ArticleBaseDataSource } from '@root/modules/blog/data/datasources/article-base'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { ArticleTransformer } from '@root/modules/blog/data/transformers/article'
-import { ArticleFromModel, ArticleToModel } from '@root/modules/blog/data/models/article'
+import { IArticleRepository } from '@modules/blog/domain/irepositories/iarticle'
+import { ArticleBaseDataSource } from '@modules/blog/data/datasources/article-base'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { ArticleTransformer } from '@modules/blog/data/transformers/article'
+import { ArticleFromModel, ArticleToModel } from '@modules/blog/data/models/article'
 
 export class ArticleRepository implements IArticleRepository{
 	private dataSource: ArticleBaseDataSource

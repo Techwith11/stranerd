@@ -16,8 +16,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { extractTextFromHTML, trimToLength } from '@root/modules/core/validations/sanitizers'
-import { ArticleFromModel } from '@root/modules/blog/data/models/article'
+import { extractTextFromHTML, trimToLength } from '@modules/core/validations/sanitizers'
+import { ArticleFromModel } from '@modules/blog/data/models/article'
 export default defineComponent({
 	setup(){
 		return {

@@ -1,4 +1,4 @@
-import { IAuthRepository } from '@root/modules/users/domain/irepositories/iauth'
+import { IAuthRepository } from '@modules/users/domain/irepositories/iauth'
 
 export class LogoutUseCase {
 	private repository: IAuthRepository

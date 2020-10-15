@@ -1,6 +1,6 @@
-import { DiscussionEntity } from '@root/modules/courses/domain/entities/discussion'
+import { DiscussionEntity } from '@modules/courses/domain/entities/discussion'
 import { computed, reactive, watch } from '@vue/composition-api'
-import { AddDiscussion, GetDiscussionFactory, ListenToDiscussions } from '@root/modules/courses'
+import { AddDiscussion, GetDiscussionFactory, ListenToDiscussions } from '@modules/courses'
 import { Notify } from '@/config/notifications'
 import { useStore } from '@/usecases/store'
 

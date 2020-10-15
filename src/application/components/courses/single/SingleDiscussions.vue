@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { CourseEntity } from '@root/modules/courses/domain/entities/course'
+import { CourseEntity } from '@modules/courses/domain/entities/course'
 import DiscussionList from '@/components/courses/single/DiscussionList.vue'
 import DiscussionForm from '@/components/courses/single/DiscussionForm.vue'
 export default defineComponent({

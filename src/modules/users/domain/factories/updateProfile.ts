@@ -1,7 +1,7 @@
-import { BaseFactory } from '@root/modules/core/domains/factories/base'
-import { isRequired, isLongerThan } from '@root/modules/core/validations/rules'
-import { Media } from '@root/modules/core/data/models/base'
-import { UserFromModel } from '@root/modules/users/data/models/user'
+import { BaseFactory } from '@modules/core/domains/factories/base'
+import { isRequired, isLongerThan } from '@modules/core/validations/rules'
+import { Media } from '@modules/core/data/models/base'
+import { UserFromModel } from '@modules/users/data/models/user'
 
 type Profile = { name: string, bio: string, image?: Media }
 type MediaContent = File | Media

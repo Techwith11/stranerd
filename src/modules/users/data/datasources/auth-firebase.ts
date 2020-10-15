@@ -1,8 +1,8 @@
-import { AuthBaseDataSource } from '@root/modules/users/data/datasources/auth-base'
-import { AuthUser } from '@root/modules/users/domain/entities/auth'
+import { AuthBaseDataSource } from '@modules/users/data/datasources/auth-base'
+import { AuthUser } from '@modules/users/domain/entities/auth'
 import firebase, { auth } from '@root/services/firebase'
-import { FirestoreService } from '@root/modules/core/services/firebase'
-import { Media } from '@root/modules/core/data/models/base'
+import { FirestoreService } from '@modules/core/services/firebase'
+import { Media } from '@modules/core/data/models/base'
 
 export class AuthFirebaseDataSource implements AuthBaseDataSource{
 	public async loginWithEmail({ email, password }: AuthUser): Promise<string> {

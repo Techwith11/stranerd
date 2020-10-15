@@ -1,7 +1,7 @@
-import { BaseFactory } from '@root/modules/core/domains/factories/base'
-import { isExtractedHTMLLongerThan, isRequired } from '@root/modules/core/validations/rules'
-import { ReplyToModel } from '@root/modules/posts/data/models/reply'
-import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
+import { BaseFactory } from '@modules/core/domains/factories/base'
+import { isExtractedHTMLLongerThan, isRequired } from '@modules/core/validations/rules'
+import { ReplyToModel } from '@modules/posts/data/models/reply'
+import { ReplyEntity } from '@modules/posts/domain/entities/reply'
 
 const isExtractedHTMLLongerThan3 = (value: string) => isExtractedHTMLLongerThan(3, value)
 export class ReplyFactory extends BaseFactory<ReplyEntity, ReplyToModel> {

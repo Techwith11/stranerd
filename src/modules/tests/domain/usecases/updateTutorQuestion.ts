@@ -1,5 +1,5 @@
-import { IQuestionRepository } from '@root/modules/tests/domain/irepositories/iquestion'
-import { QuestionFactory } from '@root/modules/tests/domain/factories/question'
+import { IQuestionRepository } from '@modules/tests/domain/irepositories/iquestion'
+import { QuestionFactory } from '@modules/tests/domain/factories/question'
 
 export class UpdateTutorQuestionUseCase {
 	private repository: IQuestionRepository

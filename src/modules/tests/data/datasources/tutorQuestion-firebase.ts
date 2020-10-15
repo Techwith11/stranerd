@@ -1,7 +1,7 @@
-import { FirestoreService } from '@root/modules/core/services/firebase'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { QuestionBaseDataSource } from '@root/modules/tests/data/datasources/question-base'
-import { QuestionFromModel, QuestionToModel } from '@root/modules/tests/data/models/question'
+import { FirestoreService } from '@modules/core/services/firebase'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { QuestionBaseDataSource } from '@modules/tests/data/datasources/question-base'
+import { QuestionFromModel, QuestionToModel } from '@modules/tests/data/models/question'
 
 export class TutorQuestionFirebaseDataSource implements QuestionBaseDataSource{
 

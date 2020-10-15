@@ -1,6 +1,6 @@
 import { computed, reactive } from '@vue/composition-api'
 import { Notify } from '@/config/notifications'
-import { MakePayment } from '@root/modules/payments'
+import { MakePayment } from '@modules/payments'
 import { useStore } from '@/usecases/store'
 
 export const usePayment = () => {

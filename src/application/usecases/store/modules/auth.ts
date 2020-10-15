@@ -1,6 +1,6 @@
 import { computed, ComputedRef } from '@vue/composition-api'
 import { Store } from '@/store'
-import { UserFromModel } from '@root/modules/users/data/models/user'
+import { UserFromModel } from '@modules/users/data/models/user'
 
 const getters = {
 	isLoggedIn: computed(() => Store.getters.isLoggedIn) as ComputedRef<boolean>,

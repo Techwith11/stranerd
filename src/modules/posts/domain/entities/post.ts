@@ -1,4 +1,4 @@
-import { trimToLength, extractTextFromHTML, extractDate } from '@root/modules/core/validations/sanitizers'
+import { trimToLength, extractTextFromHTML, extractDate } from '@modules/core/validations/sanitizers'
 
 export class PostEntity{
 	public readonly id: string

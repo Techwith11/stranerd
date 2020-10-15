@@ -1,6 +1,6 @@
-import { PostEntity } from '@root/modules/posts/domain/entities/post'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { PostToModel } from '@root/modules/posts/data/models/post'
+import { PostEntity } from '@modules/posts/domain/entities/post'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { PostToModel } from '@modules/posts/data/models/post'
 
 export interface IPostRepository {
     add: (data: PostToModel) => Promise<string>,

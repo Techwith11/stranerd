@@ -20,7 +20,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import RatingStars from '@/components/helpers/RatingStars.vue'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
+import { UserEntity } from '@modules/users/domain/entities/user'
 export default defineComponent({
 	props: {
 		user: {

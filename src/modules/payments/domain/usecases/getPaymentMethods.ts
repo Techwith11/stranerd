@@ -1,5 +1,5 @@
-import { IMethodRepository } from '@root/modules/payments/domain/irepositories/imethod'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
+import { IMethodRepository } from '@modules/payments/domain/irepositories/imethod'
+import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetPaymentMethodsUsecase {
 	private readonly repository: IMethodRepository

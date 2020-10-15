@@ -1,5 +1,5 @@
-import { BaseFactory } from '@root/modules/core/domains/factories/base'
-import { isRequired, isEqualTo, isLongerThan, isNotLongerThan, isEmail } from '@root/modules/core/validations/rules'
+import { BaseFactory } from '@modules/core/domains/factories/base'
+import { isRequired, isEqualTo, isLongerThan, isNotLongerThan, isEmail } from '@modules/core/validations/rules'
 
 const isLongerThan6 = (value:string) => isLongerThan(6, value)
 const isNotLongerThan16 = (value:string) => isNotLongerThan(16, value)

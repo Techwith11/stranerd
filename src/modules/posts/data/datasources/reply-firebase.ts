@@ -1,7 +1,7 @@
-import { DatabaseService, FunctionsService } from '@root/modules/core/services/firebase'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { ReplyBaseDataSource } from '@root/modules/posts/data/datasources/reply-base'
-import { ReplyFromModel, ReplyToModel } from '@root/modules/posts/data/models/reply'
+import { DatabaseService, FunctionsService } from '@modules/core/services/firebase'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { ReplyBaseDataSource } from '@modules/posts/data/datasources/reply-base'
+import { ReplyFromModel, ReplyToModel } from '@modules/posts/data/models/reply'
 
 export class ReplyFirebaseDataSource implements ReplyBaseDataSource{
 

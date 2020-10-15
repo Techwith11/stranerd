@@ -25,8 +25,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { DEFAULT_IMAGE_URL } from '@root/modules/core/services/uploader'
-import { UserFromModel } from '@root/modules/users/data/models/user'
+import { DEFAULT_IMAGE_URL } from '@modules/core/services/uploader'
+import { UserFromModel } from '@modules/users/data/models/user'
 export default defineComponent({
 	setup(){
 		return {

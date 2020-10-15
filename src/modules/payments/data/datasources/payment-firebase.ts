@@ -1,5 +1,5 @@
-import { PaymentBaseDataSource } from '@root/modules/payments/data/datasources/payment-base'
-import { FunctionsService } from '@root/modules/core/services/firebase'
+import { PaymentBaseDataSource } from '@modules/payments/data/datasources/payment-base'
+import { FunctionsService } from '@modules/core/services/firebase'
 
 export class PaymentFirebaseDataSource implements PaymentBaseDataSource{
 	public async getClientToken(): Promise<{ braintree: string; paypal: string }> {

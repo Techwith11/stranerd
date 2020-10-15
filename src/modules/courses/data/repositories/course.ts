@@ -1,8 +1,8 @@
-import { ICourseRepository } from '@root/modules/courses/domain/irepositories/icourse'
-import { CourseBaseDataSource } from '@root/modules/courses/data/datasources/course-base'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { CourseTransformer } from '@root/modules/courses/data/transformers/course'
-import { CourseToModel } from '@root/modules/courses/data/models/course'
+import { ICourseRepository } from '@modules/courses/domain/irepositories/icourse'
+import { CourseBaseDataSource } from '@modules/courses/data/datasources/course-base'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { CourseTransformer } from '@modules/courses/data/transformers/course'
+import { CourseToModel } from '@modules/courses/data/models/course'
 
 export class CourseRepository implements ICourseRepository{
 	private dataSource: CourseBaseDataSource

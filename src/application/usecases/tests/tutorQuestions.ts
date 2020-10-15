@@ -1,6 +1,6 @@
 import { computed, reactive } from '@vue/composition-api'
-import { QuestionEntity } from '@root/modules/tests/domain/entities/question'
-import { DeleteTutorQuestion, GetTutorQuestionsByModule, FindTutorQuestion, AddTutorQuestion, GetQuestionFactory, UpdateTutorQuestion } from '@root/modules/tests'
+import { QuestionEntity } from '@modules/tests/domain/entities/question'
+import { DeleteTutorQuestion, GetTutorQuestionsByModule, FindTutorQuestion, AddTutorQuestion, GetQuestionFactory, UpdateTutorQuestion } from '@modules/tests'
 import { Alert, Notify } from '@/config/notifications'
 import { useStore } from '@/usecases/store'
 

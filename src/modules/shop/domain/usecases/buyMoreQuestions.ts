@@ -1,4 +1,4 @@
-import { ICartRepository } from '@root/modules/shop/domain/irepositories/icart'
+import { ICartRepository } from '@modules/shop/domain/irepositories/icart'
 
 export class BuyMoreQuestionsUseCase {
 	private repository: ICartRepository

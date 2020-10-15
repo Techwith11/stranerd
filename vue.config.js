@@ -4,6 +4,7 @@ module.exports = {
 	chainWebpack: (config) => {
 		config.resolve.alias
 			.set('@root', path.join(__dirname, 'src'))
+			.set('@modules', path.join(__dirname, 'src/modules'))
 			.set('@', path.join(__dirname, 'src/application'))
 	},
 	css: {

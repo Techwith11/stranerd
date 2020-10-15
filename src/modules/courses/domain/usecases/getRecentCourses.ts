@@ -1,6 +1,6 @@
-import { ICourseRepository } from '@root/modules/courses/domain/irepositories/icourse'
-import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
+import { ICourseRepository } from '@modules/courses/domain/irepositories/icourse'
+import { CourseEntity } from '@modules/courses/domain/entities/course'
+import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetRecentCoursesUsecase {
 	private repository: ICourseRepository

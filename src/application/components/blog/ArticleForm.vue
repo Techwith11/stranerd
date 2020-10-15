@@ -44,7 +44,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { ArticleFactory } from '@root/modules/blog/domain/factories/article'
+import { ArticleFactory } from '@modules/blog/domain/factories/article'
 import { useFileInputs, useTags } from '@/usecases/core/forms'
 export default defineComponent({
 	name: 'ArticleForm',

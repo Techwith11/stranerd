@@ -1,6 +1,6 @@
-import { Media } from '@root/modules/core/data/models/base'
+import { Media } from '@modules/core/data/models/base'
 import firebase from '@root/services/firebase'
-import { DEFAULT_IMAGE_URL } from '@root/modules/core/services/uploader'
+import { DEFAULT_IMAGE_URL } from '@modules/core/services/uploader'
 
 export class UserEntity{
 	public readonly id: string

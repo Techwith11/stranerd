@@ -1,5 +1,5 @@
-import { IPaymentRepository } from '@root/modules/payments/domain/irepositories/ipayment'
-import { PaymentBaseDataSource } from '@root/modules/payments/data/datasources/payment-base'
+import { IPaymentRepository } from '@modules/payments/domain/irepositories/ipayment'
+import { PaymentBaseDataSource } from '@modules/payments/data/datasources/payment-base'
 
 export class PaymentRepository implements IPaymentRepository {
 	private readonly dataSource: PaymentBaseDataSource

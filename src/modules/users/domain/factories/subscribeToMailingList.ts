@@ -1,5 +1,5 @@
-import { BaseFactory } from '@root/modules/core/domains/factories/base'
-import { isRequired, isEmail } from '@root/modules/core/validations/rules'
+import { BaseFactory } from '@modules/core/domains/factories/base'
+import { isRequired, isEmail } from '@modules/core/validations/rules'
 
 export class SubscribeToMailingListFactory extends BaseFactory<null, { email: string }> {
 	public readonly rules = {

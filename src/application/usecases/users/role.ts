@@ -2,9 +2,9 @@ import { computed, reactive } from '@vue/composition-api'
 import {
 	FindUsersByEmail, GetMailingListFactory, SubscribeToMailingList,
 	MakeAdmin, RemoveAdmin, MakeTutor
-} from '@root/modules/users'
+} from '@modules/users'
 import { Notify } from '@/config/notifications'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
+import { UserEntity } from '@modules/users/domain/entities/user'
 
 export const useMailingList = () => {
 	const state = reactive({

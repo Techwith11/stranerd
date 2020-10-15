@@ -1,6 +1,6 @@
-import { IQuestionRepository } from '@root/modules/tests/domain/irepositories/iquestion'
-import { QuestionEntity } from '@root/modules/tests/domain/entities/question'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
+import { IQuestionRepository } from '@modules/tests/domain/irepositories/iquestion'
+import { QuestionEntity } from '@modules/tests/domain/entities/question'
+import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetTutorQuestionsByModuleUseCase {
 	private repository: IQuestionRepository

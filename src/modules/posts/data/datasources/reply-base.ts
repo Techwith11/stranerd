@@ -1,5 +1,5 @@
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { ReplyFromModel, ReplyToModel } from '@root/modules/posts/data/models/reply'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { ReplyFromModel, ReplyToModel } from '@modules/posts/data/models/reply'
 
 export abstract class ReplyBaseDataSource {
     public abstract create: (postId: string, data: ReplyToModel) => Promise<string>

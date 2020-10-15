@@ -1,5 +1,5 @@
-import { FunctionsService } from '@root/modules/core/services/firebase'
-import { RoleBaseDataSource } from '@root/modules/users/data/datasources/role-base'
+import { FunctionsService } from '@modules/core/services/firebase'
+import { RoleBaseDataSource } from '@modules/users/data/datasources/role-base'
 
 export class RoleFirebaseDataSource implements RoleBaseDataSource{
 	public async makeAdmin(data: { id: string }) {

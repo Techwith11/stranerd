@@ -1,9 +1,9 @@
 import { computed, reactive } from '@vue/composition-api'
-import { CourseEntity } from '@root/modules/courses/domain/entities/course'
+import { CourseEntity } from '@modules/courses/domain/entities/course'
 import {
 	AddCourse, DeleteCourse, FindCourse,
 	GetCourseFactory, GetCoursesByModule, GetRecentCourses, UpdateCourse
-} from '@root/modules/courses'
+} from '@modules/courses'
 import { Alert, Notify } from '@/config/notifications'
 import router from '@/router'
 import { useStore } from '@/usecases/store'

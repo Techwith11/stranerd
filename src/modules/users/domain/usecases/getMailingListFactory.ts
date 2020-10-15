@@ -1,4 +1,4 @@
-import { SubscribeToMailingListFactory } from '@root/modules/users/domain/factories/subscribeToMailingList'
+import { SubscribeToMailingListFactory } from '@modules/users/domain/factories/subscribeToMailingList'
 
 export class GetMailingListFactoryUsecase {
 	public call () :SubscribeToMailingListFactory {

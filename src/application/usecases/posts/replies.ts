@@ -1,9 +1,9 @@
-import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
+import { ReplyEntity } from '@modules/posts/domain/entities/reply'
 import { computed, reactive, watch } from '@vue/composition-api'
-import { AddReply, DownvoteReply, GetReplyFactory, ListenToReplies, UpvoteReply } from '@root/modules/posts'
+import { AddReply, DownvoteReply, GetReplyFactory, ListenToReplies, UpvoteReply } from '@modules/posts'
 import { Notify } from '@/config/notifications'
 import { fetchUser } from '@/usecases/users/users'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
+import { UserEntity } from '@modules/users/domain/entities/user'
 import { useStore } from '@/usecases/store'
 
 const repliesGlobalState: { [key: string]: {

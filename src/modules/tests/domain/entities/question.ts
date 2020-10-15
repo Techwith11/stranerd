@@ -1,4 +1,4 @@
-import { trimToLength, extractTextFromHTML } from '@root/modules/core/validations/sanitizers'
+import { trimToLength, extractTextFromHTML } from '@modules/core/validations/sanitizers'
 
 export class QuestionEntity{
 	public readonly id: string

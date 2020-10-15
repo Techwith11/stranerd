@@ -1,8 +1,8 @@
-import { IAuthRepository } from '@root/modules/users/domain/irepositories/iauth'
-import { AuthBaseDataSource } from '@root/modules/users/data/datasources/auth-base'
-import { AuthUser } from '@root/modules/users/domain/entities/auth'
+import { IAuthRepository } from '@modules/users/domain/irepositories/iauth'
+import { AuthBaseDataSource } from '@modules/users/data/datasources/auth-base'
+import { AuthUser } from '@modules/users/domain/entities/auth'
 import firebase from '@root/services/firebase'
-import { Media } from '@root/modules/core/data/models/base'
+import { Media } from '@modules/core/data/models/base'
 
 export class AuthRepository implements IAuthRepository {
 	private dataSource: AuthBaseDataSource

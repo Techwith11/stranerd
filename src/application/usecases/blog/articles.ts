@@ -1,5 +1,5 @@
 import { computed, reactive } from '@vue/composition-api'
-import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
+import { ArticleEntity } from '@modules/blog/domain/entities/article'
 import {
 	DeleteArticle,
 	GetArticles,
@@ -7,9 +7,9 @@ import {
 	GetArticleFactory,
 	AddArticle,
 	UpdateArticle
-} from '@root/modules/blog'
+} from '@modules/blog'
 import { Alert, Notify } from '@/config/notifications'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
+import { UserEntity } from '@modules/users/domain/entities/user'
 import { fetchUser } from '@/usecases/users/users'
 import router from '@/router'
 import { useStore } from '@/usecases/store'

@@ -13,7 +13,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { TransactionEntity } from '@root/modules/payments/domain/entities/transaction'
+import { TransactionEntity } from '@modules/payments/domain/entities/transaction'
 export default defineComponent({
 	props: {
 		transaction: {

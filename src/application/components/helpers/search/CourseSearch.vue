@@ -16,8 +16,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { CourseFromModel } from '@root/modules/courses/data/models/course'
-import { extractTextFromHTML, trimToLength } from '@root/modules/core/validations/sanitizers'
+import { CourseFromModel } from '@modules/courses/data/models/course'
+import { extractTextFromHTML, trimToLength } from '@modules/core/validations/sanitizers'
 export default defineComponent({
 	setup(){
 		return {

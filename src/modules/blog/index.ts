@@ -1,12 +1,12 @@
-import { ArticleFirebaseDataSource } from '@root/modules/blog/data/datasources/article-firebase'
-import { ArticleTransformer } from '@root/modules/blog/data/transformers/article'
-import { ArticleRepository } from '@root/modules/blog/data/repositories/article'
-import { GetArticlesUseCase } from '@root/modules/blog/domain/usecases/getArticles'
-import { FindArticleUseCase } from '@root/modules/blog/domain/usecases/findArticle'
-import { DeleteArticleUseCase } from '@root/modules/blog/domain/usecases/deleteArticle'
-import { AddArticleUseCase } from '@root/modules/blog/domain/usecases/addArticle'
-import { GetArticleFactoryUseCase } from '@root/modules/blog/domain/usecases/getArticleFactory'
-import { UpdateArticleUseCase } from '@root/modules/blog/domain/usecases/updateArticle'
+import { ArticleFirebaseDataSource } from '@modules/blog/data/datasources/article-firebase'
+import { ArticleTransformer } from '@modules/blog/data/transformers/article'
+import { ArticleRepository } from '@modules/blog/data/repositories/article'
+import { GetArticlesUseCase } from '@modules/blog/domain/usecases/getArticles'
+import { FindArticleUseCase } from '@modules/blog/domain/usecases/findArticle'
+import { DeleteArticleUseCase } from '@modules/blog/domain/usecases/deleteArticle'
+import { AddArticleUseCase } from '@modules/blog/domain/usecases/addArticle'
+import { GetArticleFactoryUseCase } from '@modules/blog/domain/usecases/getArticleFactory'
+import { UpdateArticleUseCase } from '@modules/blog/domain/usecases/updateArticle'
 
 const articleDataSource = new ArticleFirebaseDataSource()
 const articleTransformer = new ArticleTransformer()

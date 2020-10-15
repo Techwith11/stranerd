@@ -1,6 +1,6 @@
 import { computed, reactive } from '@vue/composition-api'
-import { MethodEntity } from '@root/modules/payments/domain/entities/method'
-import { GetPaymentMethods, RemovePaymentMethod } from '@root/modules/payments'
+import { MethodEntity } from '@modules/payments/domain/entities/method'
+import { GetPaymentMethods, RemovePaymentMethod } from '@modules/payments'
 import { useStore } from '@/usecases/store'
 import { Alert, Notify } from '@/config/notifications'
 

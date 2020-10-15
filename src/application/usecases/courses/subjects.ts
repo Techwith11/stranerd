@@ -1,5 +1,5 @@
 import { computed, reactive } from '@vue/composition-api'
-import { ModuleEntity, SubjectEntity } from '@root/modules/courses/domain/entities/subject'
+import { ModuleEntity, SubjectEntity } from '@modules/courses/domain/entities/subject'
 import {
 	AddSubject,
 	DeleteSubject,
@@ -7,7 +7,7 @@ import {
 	GetSubjectFactory,
 	GetSubjects,
 	UpdateSubject
-} from '@root/modules/courses'
+} from '@modules/courses'
 import router from '@/router'
 import { Alert, Notify } from '@/config/notifications'
 import { useStore } from '@/usecases/store'

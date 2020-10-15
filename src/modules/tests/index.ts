@@ -1,12 +1,12 @@
-import { TutorQuestionFirebaseDataSource } from '@root/modules/tests/data/datasources/tutorQuestion-firebase'
-import { QuestionTransformer } from '@root/modules/tests/data/transformers/question'
-import { QuestionRepository } from '@root/modules/tests/data/repositories/question'
-import { GetTutorQuestionsByModuleUseCase } from '@root/modules/tests/domain/usecases/getTutorQuestionsByModule'
-import { DeleteTutorQuestionUseCase } from '@root/modules/tests/domain/usecases/deleteTutorQuestion'
-import { GetQuestionFactoryUseCase } from '@root/modules/tests/domain/usecases/getQuestionFactory'
-import { AddTutorQuestionUseCase } from '@root/modules/tests/domain/usecases/addTutorQuestion'
-import { UpdateTutorQuestionUseCase } from '@root/modules/tests/domain/usecases/updateTutorQuestion'
-import { FindTutorQuestionUsecase } from '@root/modules/tests/domain/usecases/findTutorQuestion'
+import { TutorQuestionFirebaseDataSource } from '@modules/tests/data/datasources/tutorQuestion-firebase'
+import { QuestionTransformer } from '@modules/tests/data/transformers/question'
+import { QuestionRepository } from '@modules/tests/data/repositories/question'
+import { GetTutorQuestionsByModuleUseCase } from '@modules/tests/domain/usecases/getTutorQuestionsByModule'
+import { DeleteTutorQuestionUseCase } from '@modules/tests/domain/usecases/deleteTutorQuestion'
+import { GetQuestionFactoryUseCase } from '@modules/tests/domain/usecases/getQuestionFactory'
+import { AddTutorQuestionUseCase } from '@modules/tests/domain/usecases/addTutorQuestion'
+import { UpdateTutorQuestionUseCase } from '@modules/tests/domain/usecases/updateTutorQuestion'
+import { FindTutorQuestionUsecase } from '@modules/tests/domain/usecases/findTutorQuestion'
 
 const tutorQuestionDataSource = new TutorQuestionFirebaseDataSource()
 

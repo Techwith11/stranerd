@@ -1,5 +1,5 @@
-import { IRoleRepository } from '@root/modules/users/domain/irepositories/irole'
-import { RoleBaseDataSource } from '@root/modules/users/data/datasources/role-base'
+import { IRoleRepository } from '@modules/users/domain/irepositories/irole'
+import { RoleBaseDataSource } from '@modules/users/data/datasources/role-base'
 
 export class RoleRepository implements IRoleRepository{
 	private dataSource: RoleBaseDataSource

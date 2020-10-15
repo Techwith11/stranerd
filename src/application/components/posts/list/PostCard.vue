@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { PostEntity } from '@root/modules/posts/domain/entities/post'
+import { PostEntity } from '@modules/posts/domain/entities/post'
 import { defineComponent, reactive, computed } from '@vue/composition-api'
 import { fetchUser } from '@/usecases/users/users'
 export default defineComponent({

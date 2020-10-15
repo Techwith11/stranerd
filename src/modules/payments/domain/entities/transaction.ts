@@ -1,4 +1,4 @@
-import { extractDate } from '@root/modules/core/validations/sanitizers'
+import { extractDate } from '@modules/core/validations/sanitizers'
 
 export class TransactionEntity {
 	public readonly id: string

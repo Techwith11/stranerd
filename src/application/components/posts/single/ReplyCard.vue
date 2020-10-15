@@ -21,8 +21,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { PostEntity } from '@root/modules/posts/domain/entities/post'
-import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
+import { PostEntity } from '@modules/posts/domain/entities/post'
+import { ReplyEntity } from '@modules/posts/domain/entities/reply'
 import { useSingleReply } from '@/usecases/posts/replies'
 import { useStore } from '@/usecases/store'
 export default defineComponent({

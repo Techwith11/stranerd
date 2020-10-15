@@ -1,5 +1,5 @@
-import { ITransactionRepository } from '@root/modules/payments/domain/irepositories/itransaction'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
+import { ITransactionRepository } from '@modules/payments/domain/irepositories/itransaction'
+import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetTransactionsUsecase {
 	private readonly repository: ITransactionRepository

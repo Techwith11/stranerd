@@ -1,5 +1,5 @@
 import firebase, { database, firestore, functions } from '@root/services/firebase'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
+import { GetClauses } from '@modules/core/data/datasources/base'
 
 const buildFirestoreQuery = (query: firebase.firestore.Query, conditions?: GetClauses) => {
 	if(conditions) {

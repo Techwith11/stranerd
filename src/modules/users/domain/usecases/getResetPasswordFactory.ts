@@ -1,4 +1,4 @@
-import { ResetPasswordFactory } from '@root/modules/users/domain/factories/resetPassword'
+import { ResetPasswordFactory } from '@modules/users/domain/factories/resetPassword'
 
 export class GetResetPasswordFactoryUseCase {
 	public call () :ResetPasswordFactory {

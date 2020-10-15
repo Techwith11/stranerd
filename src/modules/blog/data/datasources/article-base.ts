@@ -1,5 +1,5 @@
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { ArticleFromModel, ArticleToModel } from '@root/modules/blog/data/models/article'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { ArticleFromModel, ArticleToModel } from '@modules/blog/data/models/article'
 
 export abstract class ArticleBaseDataSource {
 	public abstract create: (data: ArticleToModel) => Promise<string>

@@ -1,8 +1,8 @@
-import { BaseFactory } from '@root/modules/core/domains/factories/base'
-import { Module, SubjectEntity } from '@root/modules/courses/domain/entities/subject'
-import { SubjectToModel } from '@root/modules/courses/data/models/subject'
-import { hasMoreThan, isImageOrMedia, isLongerThan, isRequired } from '@root/modules/core/validations/rules'
-import { Media } from '@root/modules/core/data/models/base'
+import { BaseFactory } from '@modules/core/domains/factories/base'
+import { Module, SubjectEntity } from '@modules/courses/domain/entities/subject'
+import { SubjectToModel } from '@modules/courses/data/models/subject'
+import { hasMoreThan, isImageOrMedia, isLongerThan, isRequired } from '@modules/core/validations/rules'
+import { Media } from '@modules/core/data/models/base'
 
 type Content = File | Media
 const isLongerThan3 = (value: string) => isLongerThan(3, value)

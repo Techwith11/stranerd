@@ -1,9 +1,9 @@
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { DiscussionBaseDataSource } from '@root/modules/courses/data/datasources/discussion-base'
-import { DiscussionTransformer } from '@root/modules/courses/data/transformers/discussion'
-import { IDiscussionRepository } from '@root/modules/courses/domain/irepositories/idiscussion'
-import { DiscussionFromModel, DiscussionToModel } from '@root/modules/courses/data/models/discussion'
-import { DiscussionEntity } from '@root/modules/courses/domain/entities/discussion'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { DiscussionBaseDataSource } from '@modules/courses/data/datasources/discussion-base'
+import { DiscussionTransformer } from '@modules/courses/data/transformers/discussion'
+import { IDiscussionRepository } from '@modules/courses/domain/irepositories/idiscussion'
+import { DiscussionFromModel, DiscussionToModel } from '@modules/courses/data/models/discussion'
+import { DiscussionEntity } from '@modules/courses/domain/entities/discussion'
 
 export class DiscussionRepository implements IDiscussionRepository {
 	private dataSource: DiscussionBaseDataSource

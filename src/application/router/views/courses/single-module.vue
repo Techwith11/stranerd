@@ -31,7 +31,7 @@ import { defineComponent } from '@vue/composition-api'
 import CourseCard from '@/components/courses/list/CourseCard.vue'
 import { useCoursesList } from '@/usecases/courses/courses'
 import router from '@/router'
-import { capitalizeText } from '@root/modules/core/validations/sanitizers'
+import { capitalizeText } from '@modules/core/validations/sanitizers'
 import CourseSearch from '@/components/helpers/search/CourseSearch.vue'
 export default defineComponent({
 	name: 'Courses',

@@ -1,5 +1,5 @@
-import { IAuthRepository } from '@root/modules/users/domain/irepositories/iauth'
-import { ResetPasswordFactory } from '@root/modules/users/domain/factories/resetPassword'
+import { IAuthRepository } from '@modules/users/domain/irepositories/iauth'
+import { ResetPasswordFactory } from '@modules/users/domain/factories/resetPassword'
 
 export class ResetPasswordUseCase {
 	private repository: IAuthRepository

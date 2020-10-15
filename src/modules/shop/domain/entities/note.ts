@@ -1,5 +1,5 @@
-import { Media } from '@root/modules/core/data/models/base'
-import { extractDate } from '@root/modules/core/validations/sanitizers'
+import { Media } from '@modules/core/data/models/base'
+import { extractDate } from '@modules/core/validations/sanitizers'
 
 export class NoteEntity {
 	public readonly id: string

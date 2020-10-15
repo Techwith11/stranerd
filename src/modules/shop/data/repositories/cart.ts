@@ -1,7 +1,7 @@
-import { ICartRepository } from '@root/modules/shop/domain/irepositories/icart'
-import { CartBaseDataSource } from '@root/modules/shop/data/datasources/cart-base'
-import { NoteTransformer } from '@root/modules/shop/data/transformers/note'
-import { NoteEntity } from '@root/modules/shop/domain/entities/note'
+import { ICartRepository } from '@modules/shop/domain/irepositories/icart'
+import { CartBaseDataSource } from '@modules/shop/data/datasources/cart-base'
+import { NoteTransformer } from '@modules/shop/data/transformers/note'
+import { NoteEntity } from '@modules/shop/domain/entities/note'
 
 export class CartRepository implements ICartRepository{
 	private dataSource: CartBaseDataSource

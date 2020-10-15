@@ -12,7 +12,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { CourseEntity } from '@root/modules/courses/domain/entities/course'
+import { CourseEntity } from '@modules/courses/domain/entities/course'
 export default defineComponent({
 	props: {
 		course: {

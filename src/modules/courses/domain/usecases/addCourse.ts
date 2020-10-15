@@ -1,5 +1,5 @@
-import { ICourseRepository } from '@root/modules/courses/domain/irepositories/icourse'
-import { CourseFactory } from '@root/modules/courses/domain/factories/course'
+import { ICourseRepository } from '@modules/courses/domain/irepositories/icourse'
+import { CourseFactory } from '@modules/courses/domain/factories/course'
 
 export class AddCourseUsecase {
 	private repository: ICourseRepository

@@ -11,7 +11,7 @@
 <script lang="ts">
 import { defineComponent, onUnmounted } from '@vue/composition-api'
 import { useDiscussions } from '@/usecases/courses/discussion'
-import { CourseEntity } from '@root/modules/courses/domain/entities/course'
+import { CourseEntity } from '@modules/courses/domain/entities/course'
 import { useStore } from '@/usecases/store'
 export default defineComponent({
 	props: {

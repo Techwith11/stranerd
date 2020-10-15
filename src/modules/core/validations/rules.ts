@@ -1,4 +1,4 @@
-import { extractTextFromHTML } from '@root/modules/core/validations/sanitizers'
+import { extractTextFromHTML } from '@modules/core/validations/sanitizers'
 
 export const isRequired = (value: any) => {
 	if(value === undefined || value === null || value === '') return { valid: false, error: 'is required' }

@@ -18,7 +18,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { NoteFromModel } from '@root/modules/shop/data/models/note'
+import { NoteFromModel } from '@modules/shop/data/models/note'
 import { useCart } from '@/usecases/shop/cart'
 export default defineComponent({
 	setup(){

@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { NoteEntity } from '@root/modules/shop/domain/entities/note'
+import { NoteEntity } from '@modules/shop/domain/entities/note'
 import { useCart } from '@/usecases/shop/cart'
 export default defineComponent({
 	props: {

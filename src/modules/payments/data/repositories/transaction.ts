@@ -1,8 +1,8 @@
-import { ITransactionRepository } from '@root/modules/payments/domain/irepositories/itransaction'
-import { TransactionBaseDataSource } from '@root/modules/payments/data/datasources/transaction-base'
-import { TransactionTransformer } from '@root/modules/payments/data/transformers/transaction'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { TransactionEntity } from '@root/modules/payments/domain/entities/transaction'
+import { ITransactionRepository } from '@modules/payments/domain/irepositories/itransaction'
+import { TransactionBaseDataSource } from '@modules/payments/data/datasources/transaction-base'
+import { TransactionTransformer } from '@modules/payments/data/transformers/transaction'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { TransactionEntity } from '@modules/payments/domain/entities/transaction'
 
 export class TransactionRepository implements ITransactionRepository {
 	private readonly dataSource: TransactionBaseDataSource

@@ -2,7 +2,7 @@ import { computed, reactive, Ref, ref } from '@vue/composition-api'
 import braintree, { client, hostedFields, paypalCheckout } from 'braintree-web'
 //@ts-ignore
 import { AuthorizationData, Button } from 'paypal-checkout'
-import { CreatePaymentMethod, GetClientToken } from '@root/modules/payments'
+import { CreatePaymentMethod, GetClientToken } from '@modules/payments'
 import { Notify } from '@/config/notifications'
 import { useStore } from '@/usecases/store'
 

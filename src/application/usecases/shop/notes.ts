@@ -1,6 +1,6 @@
 import { computed, reactive } from '@vue/composition-api'
-import { NoteEntity } from '@root/modules/shop/domain/entities/note'
-import { FindNote, GetNotes, AddNote, GetNoteFactory, UpdateNote, DeleteNote } from '@root/modules/shop'
+import { NoteEntity } from '@modules/shop/domain/entities/note'
+import { FindNote, GetNotes, AddNote, GetNoteFactory, UpdateNote, DeleteNote } from '@modules/shop'
 import { Alert, Notify } from '@/config/notifications'
 import { useStore } from '@/usecases/store'
 

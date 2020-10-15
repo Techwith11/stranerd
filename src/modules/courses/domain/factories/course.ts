@@ -1,11 +1,11 @@
-import { BaseFactory } from '@root/modules/core/domains/factories/base'
-import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-import { CourseToModel } from '@root/modules/courses/data/models/course'
+import { BaseFactory } from '@modules/core/domains/factories/base'
+import { CourseEntity } from '@modules/courses/domain/entities/course'
+import { CourseToModel } from '@modules/courses/data/models/course'
 import {
 	containsOnlyMedia, isImageOrMedia, isLongerThan, isRequired,
 	isVideoOrMediaOrUndefined, hasMoreThan, isExtractedHTMLLongerThan, isRequiredIf
-} from '@root/modules/core/validations/rules'
-import { Media } from '@root/modules/core/data/models/base'
+} from '@modules/core/validations/rules'
+import { Media } from '@modules/core/data/models/base'
 
 type Content = File | Media
 const isLongerThan3 = (value: string) => isLongerThan(3, value)

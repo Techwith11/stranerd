@@ -1,6 +1,6 @@
-import { CourseFromModel, CourseToModel } from '@root/modules/courses/data/models/course'
-import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-import { timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
+import { CourseFromModel, CourseToModel } from '@modules/courses/data/models/course'
+import { CourseEntity } from '@modules/courses/domain/entities/course'
+import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
 
 export class CourseTransformer {
 	public fromJSON(model: CourseFromModel) :CourseEntity {

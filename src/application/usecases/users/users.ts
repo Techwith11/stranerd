@@ -1,6 +1,6 @@
 import { computed, reactive, ref } from '@vue/composition-api'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
-import { FindUser, GetTutors } from '@root/modules/users'
+import { UserEntity } from '@modules/users/domain/entities/user'
+import { FindUser, GetTutors } from '@modules/users'
 import router from '@/router'
 import { Notify } from '@/config/notifications'
 import { firestore } from '@root/services/firebase'

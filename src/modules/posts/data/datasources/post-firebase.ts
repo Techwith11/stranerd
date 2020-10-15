@@ -1,7 +1,7 @@
-import { FirestoreService, FunctionsService } from '@root/modules/core/services/firebase'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { PostBaseDataSource } from '@root/modules/posts/data/datasources/post-base'
-import { PostFromModel, PostToModel } from '@root/modules/posts/data/models/post'
+import { FirestoreService, FunctionsService } from '@modules/core/services/firebase'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { PostBaseDataSource } from '@modules/posts/data/datasources/post-base'
+import { PostFromModel, PostToModel } from '@modules/posts/data/models/post'
 
 export class PostFirebaseDataSource implements PostBaseDataSource{
 

@@ -1,5 +1,5 @@
-import { SubjectFromModel, SubjectToModel } from '@root/modules/courses/data/models/subject'
-import { SubjectEntity } from '@root/modules/courses/domain/entities/subject'
+import { SubjectFromModel, SubjectToModel } from '@modules/courses/data/models/subject'
+import { SubjectEntity } from '@modules/courses/domain/entities/subject'
 
 export class SubjectTransformer {
 	public fromJSON(model: SubjectFromModel) {

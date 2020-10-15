@@ -56,7 +56,7 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { useFileInputs } from '@/usecases/core/forms'
-import { NoteFactory } from '@root/modules/shop/domain/factories/note'
+import { NoteFactory } from '@modules/shop/domain/factories/note'
 export default defineComponent({
 	props: {
 		factory: {

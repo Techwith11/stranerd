@@ -12,7 +12,7 @@
 import { defineComponent } from '@vue/composition-api'
 import { VueEditor } from 'vue2-editor'
 import { Notify } from '@root/application/config/notifications'
-import { UploaderService } from '@root/modules/core/services/uploader'
+import { UploaderService } from '@modules/core/services/uploader'
 
 const customToolBar = [
 	[{size:['small',false,'large','huge']}],

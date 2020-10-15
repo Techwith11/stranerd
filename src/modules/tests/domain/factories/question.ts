@@ -1,7 +1,7 @@
-import { BaseFactory } from '@root/modules/core/domains/factories/base'
-import { isExtractedHTMLLongerThan, isMoreThan, isRequired } from '@root/modules/core/validations/rules'
-import { QuestionToModel } from '@root/modules/tests/data/models/question'
-import { QuestionEntity } from '@root/modules/tests/domain/entities/question'
+import { BaseFactory } from '@modules/core/domains/factories/base'
+import { isExtractedHTMLLongerThan, isMoreThan, isRequired } from '@modules/core/validations/rules'
+import { QuestionToModel } from '@modules/tests/data/models/question'
+import { QuestionEntity } from '@modules/tests/domain/entities/question'
 
 export class QuestionFactory extends BaseFactory<QuestionEntity, QuestionToModel> {
 	public rules = {

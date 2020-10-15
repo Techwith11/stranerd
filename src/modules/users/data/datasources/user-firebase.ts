@@ -1,7 +1,7 @@
-import { FirestoreService } from '@root/modules/core/services/firebase'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { UserBaseDataSource } from '@root/modules/users/data/datasources/user-base'
-import { UserFromModel } from '@root/modules/users/data/models/user'
+import { FirestoreService } from '@modules/core/services/firebase'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { UserBaseDataSource } from '@modules/users/data/datasources/user-base'
+import { UserFromModel } from '@modules/users/data/models/user'
 
 export class UserFirebaseDataSource implements UserBaseDataSource{
 

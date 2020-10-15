@@ -1,13 +1,13 @@
-import { BaseFactory } from '@root/modules/core/domains/factories/base'
+import { BaseFactory } from '@modules/core/domains/factories/base'
 import {
 	hasLessThan,
 	hasMoreThan,
 	isExtractedHTMLLongerThan,
 	isLongerThan,
 	isRequired
-} from '@root/modules/core/validations/rules'
-import { PostToModel } from '@root/modules/posts/data/models/post'
-import { PostEntity } from '@root/modules/posts/domain/entities/post'
+} from '@modules/core/validations/rules'
+import { PostToModel } from '@modules/posts/data/models/post'
+import { PostEntity } from '@modules/posts/domain/entities/post'
 
 const isLongerThan3 = (value: string) => isLongerThan(3, value)
 const hasMoreThan3 = (value: string[]) => hasMoreThan(3, value)
