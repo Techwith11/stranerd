@@ -1,6 +1,6 @@
-import { ArticleEntity } from '@modules/blog/domain/entities/article'
+import { ArticleEntity } from '../entities/article'
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { ArticleToModel } from '@modules/blog/data/models/article'
+import { ArticleToModel } from '../../data/models/article'
 
 export interface IArticleRepository {
 	add: (data: ArticleToModel) => Promise<string>,

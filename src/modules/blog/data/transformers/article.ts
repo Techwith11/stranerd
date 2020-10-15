@@ -1,5 +1,5 @@
-import { ArticleFromModel, ArticleToModel } from '@modules/blog/data/models/article'
-import { ArticleEntity } from '@modules/blog/domain/entities/article'
+import { ArticleFromModel, ArticleToModel } from '../models/article'
+import { ArticleEntity } from '../../domain/entities/article'
 import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
 
 export class ArticleTransformer {

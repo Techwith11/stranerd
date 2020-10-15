@@ -3,9 +3,9 @@ import {
 	hasLessThan, hasMoreThan, isExtractedHTMLLongerThan,
 	isLongerThan, isImageOrMedia, isRequired
 } from '@modules/core/validations/rules'
-import { ArticleToModel } from '@modules/blog/data/models/article'
+import { ArticleToModel } from '../../data/models/article'
 import { Media } from '@modules/core/data/models/base'
-import { ArticleEntity } from '@modules/blog/domain/entities/article'
+import { ArticleEntity } from '../entities/article'
 
 type MediaContent = File | Media
 const isLongerThan3 = (value: string) => isLongerThan(3, value)

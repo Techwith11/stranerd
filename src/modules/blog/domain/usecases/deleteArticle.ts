@@ -1,4 +1,4 @@
-import { IArticleRepository } from '@modules/blog/domain/irepositories/iarticle'
+import { IArticleRepository } from '../irepositories/iarticle'
 
 export class DeleteArticleUseCase {
 	private repository: IArticleRepository

@@ -1,12 +1,12 @@
-import { ArticleFirebaseDataSource } from '@modules/blog/data/datasources/article-firebase'
-import { ArticleTransformer } from '@modules/blog/data/transformers/article'
-import { ArticleRepository } from '@modules/blog/data/repositories/article'
-import { GetArticlesUseCase } from '@modules/blog/domain/usecases/getArticles'
-import { FindArticleUseCase } from '@modules/blog/domain/usecases/findArticle'
-import { DeleteArticleUseCase } from '@modules/blog/domain/usecases/deleteArticle'
-import { AddArticleUseCase } from '@modules/blog/domain/usecases/addArticle'
-import { GetArticleFactoryUseCase } from '@modules/blog/domain/usecases/getArticleFactory'
-import { UpdateArticleUseCase } from '@modules/blog/domain/usecases/updateArticle'
+import { ArticleFirebaseDataSource } from './data/datasources/article-firebase'
+import { ArticleTransformer } from './data/transformers/article'
+import { ArticleRepository } from './data/repositories/article'
+import { GetArticlesUseCase } from './domain/usecases/getArticles'
+import { FindArticleUseCase } from './domain/usecases/findArticle'
+import { DeleteArticleUseCase } from './domain/usecases/deleteArticle'
+import { AddArticleUseCase } from './domain/usecases/addArticle'
+import { GetArticleFactoryUseCase } from './domain/usecases/getArticleFactory'
+import { UpdateArticleUseCase } from './domain/usecases/updateArticle'
 
 const articleDataSource = new ArticleFirebaseDataSource()
 const articleTransformer = new ArticleTransformer()
