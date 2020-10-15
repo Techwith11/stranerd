@@ -1,5 +1,5 @@
-import { IPostRepository } from '@modules/posts/domain/irepositories/ipost'
-import { PostFactory } from '@modules/posts/domain/factories/post'
+import { IPostRepository } from '../irepositories/ipost'
+import { PostFactory } from '../factories/post'
 
 export class AddPostUseCase {
     private repository: IPostRepository

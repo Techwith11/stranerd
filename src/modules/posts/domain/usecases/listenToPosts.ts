@@ -1,5 +1,5 @@
-import { IPostRepository } from '@modules/posts/domain/irepositories/ipost'
-import { PostEntity } from '@modules/posts/domain/entities/post'
+import { IPostRepository } from '../irepositories/ipost'
+import { PostEntity } from '../entities/post'
 import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class ListenToPostsUseCase {

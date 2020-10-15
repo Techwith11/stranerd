@@ -1,6 +1,6 @@
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { ReplyToModel } from '@modules/posts/data/models/reply'
-import { ReplyEntity } from '@modules/posts/domain/entities/reply'
+import { ReplyToModel } from '../../data/models/reply'
+import { ReplyEntity } from '../entities/reply'
 
 export interface IReplyRepository {
     add: (postId: string, data: ReplyToModel) => Promise<string>,

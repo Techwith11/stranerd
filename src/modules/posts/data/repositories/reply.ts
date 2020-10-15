@@ -1,9 +1,9 @@
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { ReplyBaseDataSource } from '@modules/posts/data/datasources/reply-base'
-import { ReplyTransformer } from '@modules/posts/data/transformers/reply'
-import { IReplyRepository } from '@modules/posts/domain/irepositories/ireply'
-import { ReplyFromModel, ReplyToModel } from '@modules/posts/data/models/reply'
-import { ReplyEntity } from '@modules/posts/domain/entities/reply'
+import { ReplyBaseDataSource } from '../datasources/reply-base'
+import { ReplyTransformer } from '../transformers/reply'
+import { IReplyRepository } from '../../domain/irepositories/ireply'
+import { ReplyFromModel, ReplyToModel } from '../models/reply'
+import { ReplyEntity } from '../../domain/entities/reply'
 
 export class ReplyRepository implements IReplyRepository {
 	private dataSource: ReplyBaseDataSource

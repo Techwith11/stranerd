@@ -1,5 +1,5 @@
-import { IReplyRepository } from '@modules/posts/domain/irepositories/ireply'
-import { ReplyEntity } from '@modules/posts/domain/entities/reply'
+import { IReplyRepository } from '../irepositories/ireply'
+import { ReplyEntity } from '../entities/reply'
 
 export class ListenToRepliesUseCase {
     private repository: IReplyRepository

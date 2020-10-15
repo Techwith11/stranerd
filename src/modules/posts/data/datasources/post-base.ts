@@ -1,5 +1,5 @@
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { PostFromModel, PostToModel } from '@modules/posts/data/models/post'
+import { PostFromModel, PostToModel } from '../models/post'
 
 export abstract class PostBaseDataSource {
     public abstract create: (data: PostToModel) => Promise<string>

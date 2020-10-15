@@ -1,4 +1,4 @@
-import { TransactionFromModel } from '@modules/payments/data/models/transaction'
+import { TransactionFromModel } from '../models/transaction'
 import { GetClauses } from '@modules/core/data/datasources/base'
 
 export abstract class TransactionBaseDataSource {

@@ -1,4 +1,4 @@
-import { MethodFromModel } from '@modules/payments/data/models/method'
+import { MethodFromModel } from '../models/method'
 import { GetClauses } from '@modules/core/data/datasources/base'
 
 export abstract class MethodBaseDataSource {

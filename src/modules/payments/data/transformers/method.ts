@@ -1,5 +1,5 @@
-import { MethodFromModel } from '@modules/payments/data/models/method'
-import { MethodEntity } from '@modules/payments/domain/entities/method'
+import { MethodFromModel } from '../models/method'
+import { MethodEntity } from '../../domain/entities/method'
 import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
 
 export class MethodTransformer {

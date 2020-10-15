@@ -1,5 +1,5 @@
-import { PlanBaseDataSource } from '@modules/payments/data/datasources/plan-base'
-import { PlanFromModel } from '@modules/payments/data/models/plan'
+import { PlanBaseDataSource } from '../datasources/plan-base'
+import { PlanFromModel } from '../models/plan'
 import { FirestoreService } from '@modules/core/services/firebase'
 import { GetClauses } from '@modules/core/data/datasources/base'
 

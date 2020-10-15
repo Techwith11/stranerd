@@ -1,5 +1,5 @@
-import { IReplyRepository } from '@modules/posts/domain/irepositories/ireply'
-import { ReplyFactory } from '@modules/posts/domain/factories/reply'
+import { IReplyRepository } from '../irepositories/ireply'
+import { ReplyFactory } from '../factories/reply'
 
 export class AddReplyUseCase {
 	private repository: IReplyRepository

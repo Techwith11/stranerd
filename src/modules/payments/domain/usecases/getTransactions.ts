@@ -1,4 +1,4 @@
-import { ITransactionRepository } from '@modules/payments/domain/irepositories/itransaction'
+import { ITransactionRepository } from '../irepositories/itransaction'
 import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetTransactionsUsecase {

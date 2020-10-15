@@ -6,8 +6,8 @@ import {
 	isLongerThan,
 	isRequired
 } from '@modules/core/validations/rules'
-import { PostToModel } from '@modules/posts/data/models/post'
-import { PostEntity } from '@modules/posts/domain/entities/post'
+import { PostToModel } from '../../data/models/post'
+import { PostEntity } from '../entities/post'
 
 const isLongerThan3 = (value: string) => isLongerThan(3, value)
 const hasMoreThan3 = (value: string[]) => hasMoreThan(3, value)

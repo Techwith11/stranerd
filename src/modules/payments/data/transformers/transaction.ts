@@ -1,5 +1,5 @@
-import { TransactionFromModel } from '@modules/payments/data/models/transaction'
-import { TransactionEntity } from '@modules/payments/domain/entities/transaction'
+import { TransactionFromModel } from '../models/transaction'
+import { TransactionEntity } from '../../domain/entities/transaction'
 import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
 
 export class TransactionTransformer {

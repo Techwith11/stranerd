@@ -1,5 +1,5 @@
-import { MethodBaseDataSource } from '@modules/payments/data/datasources/method-base'
-import { MethodFromModel } from '@modules/payments/data/models/method'
+import { MethodBaseDataSource } from '../datasources/method-base'
+import { MethodFromModel } from '../models/method'
 import { FirestoreService } from '@modules/core/services/firebase'
 import { GetClauses } from '@modules/core/data/datasources/base'
 

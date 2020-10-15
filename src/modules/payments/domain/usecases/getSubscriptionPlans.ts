@@ -1,4 +1,4 @@
-import { IPlanRepository } from '@modules/payments/domain/irepositories/iplan'
+import { IPlanRepository } from '../irepositories/iplan'
 
 export class GetSubscriptionPlansUsecase {
 	private readonly repository: IPlanRepository

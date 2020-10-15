@@ -1,5 +1,5 @@
-import { TransactionBaseDataSource } from '@modules/payments/data/datasources/transaction-base'
-import { TransactionFromModel } from '@modules/payments/data/models/transaction'
+import { TransactionBaseDataSource } from '../datasources/transaction-base'
+import { TransactionFromModel } from '../models/transaction'
 import { FirestoreService } from '@modules/core/services/firebase'
 import { GetClauses } from '@modules/core/data/datasources/base'
 

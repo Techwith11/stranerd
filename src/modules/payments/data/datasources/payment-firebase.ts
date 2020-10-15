@@ -1,4 +1,4 @@
-import { PaymentBaseDataSource } from '@modules/payments/data/datasources/payment-base'
+import { PaymentBaseDataSource } from '../datasources/payment-base'
 import { FunctionsService } from '@modules/core/services/firebase'
 
 export class PaymentFirebaseDataSource implements PaymentBaseDataSource{

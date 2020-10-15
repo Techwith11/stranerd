@@ -1,4 +1,4 @@
-import { IMethodRepository } from '@modules/payments/domain/irepositories/imethod'
+import { IMethodRepository } from '../irepositories/imethod'
 import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetPaymentMethodsUsecase {
