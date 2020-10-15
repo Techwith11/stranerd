@@ -188,16 +188,19 @@ export default [
 		path: '/auth/signin',
 		name: 'Sign In',
 		component: () => import(/* webpackChunkName: "signin" */ '@application/router/views/auth/signin.vue'),
+		meta: { requiresNoAuth: true }
 	},
 	{
 		path: '/auth/signup',
 		name: 'Sign Up',
 		component: () => import(/* webpackChunkName: "signup" */ '@application/router/views/auth/signup.vue'),
+		meta: { requiresNoAuth: true }
 	},
 	{
-		path: '/auth/forgot-password',
+		path: '/auth/forgot',
 		name: 'Forgot Password',
-		component: () => import(/* webpackChunkName: "forgot-password" */ '@application/router/views/auth/forgot.vue'),
+		component: () => import(/* webpackChunkName: "forgot" */ '@application/router/views/auth/forgot.vue'),
+		meta: { requiresNoAuth: true }
 	},
 	{
 		path: '*',
