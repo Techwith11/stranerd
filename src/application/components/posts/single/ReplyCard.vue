@@ -8,12 +8,15 @@
 			</div>
 		</div>
 		<div v-html="reply.body" class="editor-container"></div>
-		<div class="mt-2 d-flex align-items-center small">
-			<span class="mr-3">{{ reply.votesCount }} {{ reply.votesCount === 1 ? 'vote' : 'votes' }}</span>
-			<i class="fas fa-spinner fa-spin text-info mr-2" v-if="voting"></i>
-			<div v-if="canVote">
-				<a v-if="reply.votes[getId]" @click.prevent="downvoteReply" class="text-secondary"><i class="fas fa-thumbs-down mr-1"></i>Remove vote</a>
-				<a v-else @click.prevent="upvoteReply" class="text-success"><i class="fas fa-thumbs-up mr-1"></i>Upvote answer</a>
+		<div class="small">
+			<div class="my-2 d-flex align-items-center">
+				<button class="btn btn-success flex-grow-1" @click.prevent="likeReply" :disabled="cannotLike">Like</button>
+				<button class="btn btn-danger flex-grow-1" @click.prevent="dislikeReply" :disabled="cannotDislike">Dislike</button>
+			</div>
+			<div>
+				<span class="mr-2" v-if="reply.likesCount">{{ reply.likesCount }} {{ reply.likesCount === 1 ? 'like' : 'likes' }}</span>
+				<span class="mr-2" v-if="reply.dislikesCount">{{ reply.dislikesCount }} {{ reply.dislikesCount === 1 ? 'dislike' : 'dislikes' }}</span>
+				<i class="fas fa-spinner fa-spin text-info mr-2" v-if="liking"></i>
 			</div>
 		</div>
 	</div>
@@ -24,7 +27,6 @@ import { defineComponent } from '@vue/composition-api'
 import { PostEntity } from '@modules/posts/domain/entities/post'
 import { ReplyEntity } from '@modules/posts/domain/entities/reply'
 import { useSingleReply } from '@application/usecases/posts/replies'
-import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	props: {
 		reply: {
@@ -38,12 +40,12 @@ export default defineComponent({
 	},
 	setup(props){
 		const {
-			loading, voting, user, canVote,
-			upvoteReply, downvoteReply
+			loading, user, liking, cannotLike, cannotDislike,
+			likeReply, dislikeReply
 		} = useSingleReply(props.post.id, props.reply)
 		return {
-			loading, voting, user, upvoteReply, downvoteReply, canVote,
-			getId: useStore().auth.getId
+			loading, user, liking, likeReply, dislikeReply,
+			cannotLike, cannotDislike
 		}
 	}
 })

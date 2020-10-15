@@ -22,6 +22,10 @@ export class ReplyEntity{
 	get createdDate(){return extractDate(this.createdAt) }
 
 	get votesCount(){ return Object.values(this.votes).filter((v) => v).length }
+
+	get likesCount(){ return Object.values(this.likes).filter((v) => v).length }
+
+	get dislikesCount(){ return Object.values(this.dislikes).filter((v) => v).length }
 }
 
 type ReplyConstructorArgs = {

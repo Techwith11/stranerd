@@ -39,11 +39,17 @@ export class ReplyFirebaseDataSource implements ReplyBaseDataSource{
 	}
 
 	public async like(postId: string, replyId: string, userId: string) {
-		await DatabaseService.update(`posts/${postId}/replies/${replyId}/likes/${userId}`, true)
+		await DatabaseService.update(`posts/${postId}/replies/${replyId}`, {
+			[`likes/${userId}`]: true,
+			[`dislikes/${userId}`]: false
+		})
 	}
 
 	public async dislike(postId: string, replyId: string, userId: string) {
-		await DatabaseService.update(`posts/${postId}/replies/${replyId}/dislikes/${userId}`, true)
+		await DatabaseService.update(`posts/${postId}/replies/${replyId}`, {
+			[`likes/${userId}`]: false,
+			[`dislikes/${userId}`]: true
+		})
 	}
 
 }
