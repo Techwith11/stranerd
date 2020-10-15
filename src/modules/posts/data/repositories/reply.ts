@@ -39,4 +39,12 @@ export class ReplyRepository implements IReplyRepository {
 		return await this.dataSource.downvote(postId, reply.id, reply.userId, id)
 	}
 
+	public async like(postId: string, reply: ReplyEntity, id: string){
+		return await this.dataSource.like(postId, reply.id, id)
+	}
+
+	public async dislike(postId: string, reply: ReplyEntity, id: string){
+		return await this.dataSource.dislike(postId, reply.id, id)
+	}
+
 }

@@ -38,4 +38,12 @@ export class ReplyFirebaseDataSource implements ReplyBaseDataSource{
 		return await FunctionsService.call('downvoteReply', dependencies)
 	}
 
+	public async like(postId: string, replyId: string, userId: string) {
+		await DatabaseService.update(`posts/${postId}/replies/${replyId}/likes/${userId}`, true)
+	}
+
+	public async dislike(postId: string, replyId: string, userId: string) {
+		await DatabaseService.update(`posts/${postId}/replies/${replyId}/dislikes/${userId}`, true)
+	}
+
 }
