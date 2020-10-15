@@ -5,13 +5,15 @@
 			<p class="small mb-4 text-center">Sign in to gain authorization access to restricted content.</p>
 			<form @submit.prevent="emailLogin">
 				<div class="form-group">
+					<label for="email">Email Address</label>
 					<input type="email" id="email" class="form-control" placeholder="Email address" v-model="emailFactory.email"
 						:class="{'is-invalid': emailFactory.errors.email, 'is-valid': emailFactory.isValid('email')}" autocomplete="email">
 					<span class="small text-danger" v-if="emailFactory.errors.email">{{ emailFactory.errors.email }}</span>
 				</div>
 				<div class="form-group">
+					<label for="password">Password</label>
 					<input type="password" id="password" class="form-control" placeholder="Password" v-model="emailFactory.password"
-						:class="{'is-invalid': emailFactory.errors.password, 'is-valid': emailFactory.isValid('password')}" autocomplete="password">
+						:class="{'is-invalid': emailFactory.errors.password, 'is-valid': emailFactory.isValid('password')}" autocomplete="current-password">
 					<span class="small text-danger" v-if="emailFactory.errors.password">{{ emailFactory.errors.password }}</span>
 				</div>
 				<div class="d-flex flex-column">

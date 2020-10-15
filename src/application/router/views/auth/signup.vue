@@ -5,23 +5,27 @@
 			<p class="small mb-4 text-center">Create an account to gain authorization access to restricted content.</p>
 			<form @submit.prevent="register">
 				<div class="form-group">
+					<label for="name">Full Name</label>
 					<input type="text" id="name" class="form-control" placeholder="Name" v-model="factory.name"
 						:class="{'is-invalid': factory.errors.name, 'is-valid': factory.isValid('name')}" autocomplete="name">
 					<span class="small text-danger" v-if="factory.errors.name">{{ factory.errors.name }}</span>
 				</div>
 				<div class="form-group">
+					<label for="email">Email Address</label>
 					<input type="email" id="email" class="form-control" placeholder="Email address" v-model="factory.email"
 						:class="{'is-invalid': factory.errors.email, 'is-valid': factory.isValid('email')}" autocomplete="email">
 					<span class="small text-danger" v-if="factory.errors.email">{{ factory.errors.email }}</span>
 				</div>
 				<div class="form-group">
+					<label for="password">Password</label>
 					<input type="password" id="password" class="form-control" placeholder="Password" v-model="factory.password"
-						:class="{'is-invalid': factory.errors.password, 'is-valid': factory.isValid('password')}" autocomplete="password">
+						:class="{'is-invalid': factory.errors.password, 'is-valid': factory.isValid('password')}" autocomplete="new-password">
 					<span class="small text-danger" v-if="factory.errors.password">{{ factory.errors.password }}</span>
 				</div>
 				<div class="form-group">
+					<label for="c_password">Confirm Password</label>
 					<input type="password" id="c_password" class="form-control" placeholder="Confirm Password" v-model="factory.c_password"
-						:class="{'is-invalid': factory.errors.c_password, 'is-valid': factory.isValid('c_password')}" autocomplete="password">
+						:class="{'is-invalid': factory.errors.c_password, 'is-valid': factory.isValid('c_password')}" autocomplete="new-password">
 					<span class="small text-danger" v-if="factory.errors.c_password">passwords don't match</span>
 				</div>
 				<div class="d-flex flex-column">
