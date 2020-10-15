@@ -17,14 +17,20 @@
 					<span class="small text-danger" v-if="factory.errors.email">{{ factory.errors.email }}</span>
 				</div>
 				<div class="form-group">
-					<label for="password">Password</label>
-					<input type="password" id="password" class="form-control" placeholder="Password" v-model="factory.password"
+					<label for="password" class="d-flex align-items-end">
+						<span>Password</span>
+						<a class="small text-muted ml-auto" @click.prevent="toggle">{{ show ? 'Hide' : 'Show' }} password</a>
+					</label>
+					<input :type="show ? 'text' : 'password'" id="password" class="form-control" placeholder="Password" v-model="factory.password"
 						:class="{'is-invalid': factory.errors.password, 'is-valid': factory.isValid('password')}" autocomplete="new-password">
 					<span class="small text-danger" v-if="factory.errors.password">{{ factory.errors.password }}</span>
 				</div>
 				<div class="form-group">
-					<label for="c_password">Confirm Password</label>
-					<input type="password" id="c_password" class="form-control" placeholder="Confirm Password" v-model="factory.c_password"
+					<label for="c_password" class="d-flex align-items-end">
+						<span>Confirm Password</span>
+						<a class="small text-muted ml-auto" @click.prevent="toggle">{{ show ? 'Hide' : 'Show' }} password</a>
+					</label>
+					<input :type="show ? 'text' : 'password'" id="c_password" class="form-control" placeholder="Confirm Password" v-model="factory.c_password"
 						:class="{'is-invalid': factory.errors.c_password, 'is-valid': factory.isValid('c_password')}" autocomplete="new-password">
 					<span class="small text-danger" v-if="factory.errors.c_password">passwords don't match</span>
 				</div>
@@ -56,12 +62,15 @@
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
 import { useGoogleLogin, useRegisterForm } from '@application/usecases/users/auth'
+import { usePassword } from '@/usecases/core/forms'
 export default defineComponent({
 	name: 'Signup',
 	setup(){
+		const { show, toggle } = usePassword()
 		const { loading: googleLoading, login: googleLogin } = useGoogleLogin()
 		const { loading: regLoading, register, factory: factory } = useRegisterForm()
 		return {
+			show, toggle,
 			googleLoading, googleLogin,
 			regLoading, register, factory,
 			anyLoading: computed(() => googleLoading.value || regLoading.value),

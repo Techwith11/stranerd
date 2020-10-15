@@ -11,8 +11,11 @@
 					<span class="small text-danger" v-if="emailFactory.errors.email">{{ emailFactory.errors.email }}</span>
 				</div>
 				<div class="form-group">
-					<label for="password">Password</label>
-					<input type="password" id="password" class="form-control" placeholder="Password" v-model="emailFactory.password"
+					<label for="password" class="d-flex align-items-end">
+						<span>Password</span>
+						<a class="small text-muted ml-auto" @click.prevent="toggle">{{ show ? 'Hide' : 'Show' }} password</a>
+					</label>
+					<input :type="show ? 'text' : 'password'" id="password" class="form-control" placeholder="Password" v-model="emailFactory.password"
 						:class="{'is-invalid': emailFactory.errors.password, 'is-valid': emailFactory.isValid('password')}" autocomplete="current-password">
 					<span class="small text-danger" v-if="emailFactory.errors.password">{{ emailFactory.errors.password }}</span>
 				</div>
@@ -61,13 +64,16 @@
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
 import { useDevLogin, useGoogleLogin, useLoginForm } from '@application/usecases/users/auth'
+import { usePassword } from '@/usecases/core/forms'
 export default defineComponent({
 	name: 'Signin',
 	setup(){
+		const { show, toggle } = usePassword()
 		const { loading: emailLoading, login: emailLogin, factory: emailFactory } = useLoginForm()
 		const { loading: googleLoading, login: googleLogin } = useGoogleLogin()
 		const { loading: devLoading, login: devLogin, id: devId, devs, isDev } = useDevLogin()
 		return {
+			show, toggle,
 			emailLoading, emailLogin, emailFactory,
 			googleLoading, googleLogin,
 			devLoading, devLogin, devId, devs, isDev,
