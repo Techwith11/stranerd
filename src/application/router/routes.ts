@@ -185,6 +185,21 @@ export default [
 		component: () => import(/* webpackChunkName: "terms-of-conditions-tutors" */ '@application/router/views/legal/terms-and-conditions/tutors.vue'),
 	},
 	{
+		path: '/auth/signin',
+		name: 'Sign In',
+		component: () => import(/* webpackChunkName: "signin" */ '@application/router/views/auth/signin.vue'),
+	},
+	{
+		path: '/auth/signup',
+		name: 'Sign Up',
+		component: () => import(/* webpackChunkName: "signup" */ '@application/router/views/auth/signup.vue'),
+	},
+	{
+		path: '/auth/forgot-password',
+		name: 'Forgot Password',
+		component: () => import(/* webpackChunkName: "forgot-password" */ '@application/router/views/auth/forgot.vue'),
+	},
+	{
 		path: '*',
 		name: 'Not Found',
 		redirect: '/'
