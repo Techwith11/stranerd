@@ -1,8 +1,8 @@
 <template>
 	<Default>
-    <banner>
-      <h1>Create, Modify & Delete Shop Notes</h1>
-    </banner>
+		<banner>
+			<h1>Create, Modify & Delete Shop Notes</h1>
+		</banner>
 		<helper-spinner v-if="loading"/>
 		<div v-else>
 			<helper-message :message="error" v-if="error" />

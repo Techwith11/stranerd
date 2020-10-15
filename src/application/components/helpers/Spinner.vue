@@ -1,9 +1,9 @@
 <template>
-  <div class="position-relative">
-    <div class="center">
-      <i class="fas fa-3x fa-spinner fa-spin text-info"></i>
-    </div>
-  </div>
+	<div class="position-relative">
+		<div class="center">
+			<i class="fas fa-3x fa-spinner fa-spin text-info"></i>
+		</div>
+	</div>
 </template>
 
 <style lang="scss" scoped>

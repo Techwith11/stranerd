@@ -2,9 +2,9 @@
 	<ais-instant-search :search-client="searchClient" :index-name="collection">
 		<ais-search-box>
 			<div slot="default" class="form-group mb-2 d-flex align-items-center"
-			     slot-scope="{ currentRefinement, isSearchStalled, refine }">
+				slot-scope="{ currentRefinement, isSearchStalled, refine }">
 				<input placeholder="Search" type="search" class="form-control"
-				       :value="currentRefinement" @input="refine($event.currentTarget.value)">
+					:value="currentRefinement" @input="refine($event.currentTarget.value)">
 				<i class="fas fa-spin fa-spinner fa-spin ml-2 text-info" :class="isSearchStalled ? 'opacity-100' : 'opacity-0'"></i>
 			</div>
 			<div slot="submit-icon"><i class="fas fa-search text-dark"></i></div>

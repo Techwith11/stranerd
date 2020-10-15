@@ -15,12 +15,12 @@
 			</div>
 			<div class="form-group my-3">
 				<input type="text" class="form-control" placeholder="Your full name" v-model="factory.name"
-				       :class="{'is-invalid': factory.errors.name,'is-valid': factory.isValid('name') }">
+					:class="{'is-invalid': factory.errors.name,'is-valid': factory.isValid('name') }">
 				<small class="small text-danger d-block" v-if="factory.errors.name">{{ factory.errors.name }}</small>
 			</div>
 			<div class="form-group my-3">
-			<textarea class="form-control" placeholder="Tell us a little about yourself" v-model="factory.bio"
-			          :class="{'is-invalid': factory.errors.bio,'is-valid': factory.isValid('bio') }" rows="5">
+				<textarea class="form-control" placeholder="Tell us a little about yourself" v-model="factory.bio"
+					:class="{'is-invalid': factory.errors.bio,'is-valid': factory.isValid('bio') }" rows="5">
 			</textarea>
 				<small class="small text-danger d-block" v-if="factory.errors.bio">{{ factory.errors.bio }}</small>
 			</div>

@@ -1,26 +1,26 @@
 <template>
-    <div id="background">
-        <div class="container">
-            <h2 class="text-center text-gold-dark mb-md-3">What Students Say</h2>
-            <p class="small mx-auto">Let us see what some of our favourite students have to say about us</p>
-            <div class="row mt-3 justify-content-center">
-                <div class="col-md-6 col-lg-4 mt-2" v-for="(testimonial,index) in testimonials" :key="index">
-                    <div class="card rounded-xl shadow-sm">
-                        <div class="card-body">
-                            <p class="mb-2 text-gold">
-                                <i class="fas fa-2x fa-quote-left"></i>
-                            </p>
-                            <p class="card-text">{{ testimonial.testimonial }}</p>
-                            <div class="bg-gold mx-auto my-2" style="height: 4px; width: 50%"></div>
-                            <div class="d-flex justify-content-center align-items-center">
-                                <span class="font-weight-bold">{{ testimonial.name }}</span><br/>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div id="background">
+		<div class="container">
+			<h2 class="text-center text-gold-dark mb-md-3">What Students Say</h2>
+			<p class="small mx-auto">Let us see what some of our favourite students have to say about us</p>
+			<div class="row mt-3 justify-content-center">
+				<div class="col-md-6 col-lg-4 mt-2" v-for="(testimonial,index) in testimonials" :key="index">
+					<div class="card rounded-xl shadow-sm">
+						<div class="card-body">
+							<p class="mb-2 text-gold">
+								<i class="fas fa-2x fa-quote-left"></i>
+							</p>
+							<p class="card-text">{{ testimonial.testimonial }}</p>
+							<div class="bg-gold mx-auto my-2" style="height: 4px; width: 50%"></div>
+							<div class="d-flex justify-content-center align-items-center">
+								<span class="font-weight-bold">{{ testimonial.name }}</span><br/>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </template>
 
 <script lang="ts">

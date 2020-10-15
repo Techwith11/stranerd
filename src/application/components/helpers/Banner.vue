@@ -1,12 +1,12 @@
- <template>
-   <div class="head">
-     <div>
-       <slot>
-         <h1>Strive For <span class="font-weight-bold">Progress</span> Not <span class="font-weight-bold">Perfection</span></h1>
-       </slot>
-     </div>
-   </div>
- </template>
+<template>
+	<div class="head">
+		<div>
+			<slot>
+				<h1>Strive For <span class="font-weight-bold">Progress</span> Not <span class="font-weight-bold">Perfection</span></h1>
+			</slot>
+		</div>
+	</div>
+</template>
 
  <style lang="scss" scoped>
  .head{

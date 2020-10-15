@@ -1,14 +1,14 @@
 <template>
 	<Default>
-    <banner>
-      <h1 class="text-capitalize">All modules under {{ subject.name }}</h1>
-    </banner>
+		<banner>
+			<h1 class="text-capitalize">All modules under {{ subject.name }}</h1>
+		</banner>
 		<div class="container-fluid py-3">
 			<helper-spinner v-if="loading" />
 			<div class="grid" v-else>
 				<router-link class="text-dark h4 text-decoration-none mt-3 text-capitalize"
-				             :to="`/admins/questions/${subject.name.toLowerCase()}/${module.name.toLowerCase()}`"
-				             v-for="module in subject.modules" :key="module.name">
+					:to="`/admins/questions/${subject.name.toLowerCase()}/${module.name.toLowerCase()}`"
+					v-for="module in subject.modules" :key="module.name">
 					<img :src="module.image" alt="" class="w-100" height="180">
 					<div class="bg-gold-light text-center">
 						<h4>{{ module.name }}</h4>

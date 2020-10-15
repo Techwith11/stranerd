@@ -4,14 +4,14 @@
 			<img :src="user.image" alt="" class="profile-image">
 			<div class="flex-grow-1 d-flex flex-column">
 				<div class="mb-2">
-			<h5 class="font-weight-bold mb-0 text-truncate">
-				<router-link :to="`/users/${user.id}`" class="card-link">{{ user.name }}</router-link>
-			</h5>
-            <rating-stars class="small mt-0" :rating="user.tutor.rating"/>
-	        </div>
-		        <p class="card-text">
-		          <span class="text-capitalize d-block" v-for="course in user.teachableCourses" :key="course">{{ course }}</span>
-		        </p>
+					<h5 class="font-weight-bold mb-0 text-truncate">
+						<router-link :to="`/users/${user.id}`" class="card-link">{{ user.name }}</router-link>
+					</h5>
+					<rating-stars class="small mt-0" :rating="user.tutor.rating"/>
+				</div>
+				<p class="card-text">
+					<span class="text-capitalize d-block" v-for="course in user.teachableCourses" :key="course">{{ course }}</span>
+				</p>
 			</div>
 		</div>
 	</div>

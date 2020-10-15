@@ -10,8 +10,8 @@
 			<helper-spinner v-if="loading" />
 			<div class="grid" v-else>
 				<router-link class="text-dark h4 text-decoration-none mt-3 text-capitalize"
-		             :to="`/courses/${subject.name.toLowerCase()}`"
-		             v-for="subject in subjects" :key="subject.id">
+					:to="`/courses/${subject.name.toLowerCase()}`"
+					v-for="subject in subjects" :key="subject.id">
 					<img :src="subject.image" alt="" class="w-100" height="180">
 					<div class="bg-gold-light text-center">
 						<h4>{{ subject.name }}</h4>

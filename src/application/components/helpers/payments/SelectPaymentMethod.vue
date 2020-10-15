@@ -15,7 +15,7 @@
 					<h5>Saved Cards</h5>
 					<div class="d-flex flex-wrap align-items-center">
 						<div class="p-3 m-2 rounded" v-for="card in cards" :key="card.id" @click="selectMethod(card.token)"
-						     :class="token === card.token ? 'bg-info text-white' : 'bg-light'" style="max-width:180px">
+							:class="token === card.token ? 'bg-info text-white' : 'bg-light'" style="max-width:180px">
 							<p class="text-capitalize font-weight-500 mb-0">
 								<img :src="card.image" alt="" width="50px">
 								<span class="ml-2">{{ card.type }}</span>
@@ -33,7 +33,7 @@
 					<h5>Saved Accounts</h5>
 					<div class="d-flex flex-wrap align-items-center">
 						<div class="p-3 m-2 rounded" v-for="account in accounts" :key="account.id" @click="selectMethod(account.token)"
-						     :class="token === account.token ? 'bg-info text-white' : 'bg-light'" style="width:180px">
+							:class="token === account.token ? 'bg-info text-white' : 'bg-light'" style="width:180px">
 							<p class="text-capitalize font-weight-500 mb-0">
 								<img :src="account.image" alt="" width="50px">
 								<span class="ml-2">{{ account.type }}</span>

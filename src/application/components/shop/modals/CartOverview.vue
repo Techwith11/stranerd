@@ -19,11 +19,11 @@
 					<td>{{ note.title }}</td>
 					<td>{{ note.price }}</td>
 				</tr>
-        <tr>
-          <th scope="row"></th>
-          <td>Total</td>
-          <td>{{ cartPrice }}</td>
-        </tr>
+				<tr>
+					<th scope="row"></th>
+					<td>Total</td>
+					<td>{{ cartPrice }}</td>
+				</tr>
 			</tbody>
 		</table>
 		<div class="d-flex justify-content-end">
