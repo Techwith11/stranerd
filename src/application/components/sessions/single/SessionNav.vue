@@ -1,13 +1,13 @@
 <template>
 	<div class="bg-accent p-3 d-flex flex-lg-column align-items-center justify-content-center text-white">
-    <div class="mb-lg-3 text-center d-none d-lg-block">
-      <p class="mb-0">Chat Session <br> with</p>
-    </div>
-    <div class="d-flex flex-column align-items-center mb-lg-4">
-      <img class="profile-image" :src="getImageLink" alt="" />
-      <router-link :to="`/users/${user['.key']}`" class="text-truncate text-white">{{ user.bio ? user.bio.name : '' }}</router-link>
-    </div>
-    <h4 class="my-0 text-nowrap" v-if="timer > 0" :class="timer < 300 ? 'text-danger' : 'text-white'">{{ getTime }}</h4>
+		<div class="mb-lg-3 text-center d-none d-lg-block">
+			<p class="mb-0">Chat Session <br> with</p>
+		</div>
+		<div class="d-flex flex-column align-items-center mb-lg-4">
+			<img class="profile-image" :src="getImageLink" alt="" />
+			<router-link :to="`/users/${user['.key']}`" class="text-truncate text-white">{{ user.bio ? user.bio.name : '' }}</router-link>
+		</div>
+		<h4 class="my-0 text-nowrap" v-if="timer > 0" :class="timer < 300 ? 'text-danger' : 'text-white'">{{ getTime }}</h4>
 	</div>
 </template>
 

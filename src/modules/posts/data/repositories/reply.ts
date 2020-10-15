@@ -31,12 +31,12 @@ export class ReplyRepository implements IReplyRepository {
 		return await this.dataSource.listen(postId, listenCB, conditions)
 	}
 
-	public async upvote(postId: string, reply: ReplyEntity, id: string){
-		return await this.dataSource.upvote(postId, reply.id, reply.userId, id)
+	public async like(postId: string, reply: ReplyEntity, id: string){
+		return await this.dataSource.like(postId, reply.id, id)
 	}
 
-	public async downvote(postId: string, reply: ReplyEntity, id: string){
-		return await this.dataSource.downvote(postId, reply.id, reply.userId, id)
+	public async dislike(postId: string, reply: ReplyEntity, id: string){
+		return await this.dataSource.dislike(postId, reply.id, id)
 	}
 
 }

@@ -1,7 +1,7 @@
 <template>
 	<ul class="list-group list-unstyled" id="scroller" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}">
 		<li class="alert alert-warning py-1 border my-1" v-for="discussion in discussions" :key="discussion.id"
-		    :class="discussion.userId === getId ? 'ml-auto' : 'mr-auto'">
+			:class="discussion.userId === getId ? 'ml-auto' : 'mr-auto'">
 			<span class="d-block">{{ discussion.body }}</span>
 			<small class="small text-dark">{{ discussion.createdDate }}</small>
 		</li>

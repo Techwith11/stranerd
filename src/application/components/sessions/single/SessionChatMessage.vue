@@ -12,7 +12,7 @@
 				<span class="mr-2" :class="{'d-none':!isByMe, 'text-primary': !isChatRead, 'text-success': isChatRead }">
 					<i class="fas fa-check"></i><i class="fas fa-check ml-n2"></i>
 				</span>
-                <span>{{ getChatTime }}</span>
+				<span>{{ getChatTime }}</span>
 			</div>
 		</div>
 	</li>

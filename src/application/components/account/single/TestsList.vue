@@ -11,7 +11,7 @@
 						<span>Fetch More</span>
 					</button>
 				</div>
-		    </div>
+			</div>
 		</div>
 	</div>
 </template>

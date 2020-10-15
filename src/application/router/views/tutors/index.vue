@@ -1,28 +1,28 @@
 <template>
 	<Default>
-	    <banner>
+		<banner>
 			<h1>Find Certified Tutors</h1>
 			<div class="row my-2">
 				<div class="col-8 pl-0 pr-2">
-				    <tutor-search></tutor-search>
+					<tutor-search></tutor-search>
 				</div>
 				<div class="col-4 px-0">
 					<select class="form-control text-capitalize" v-model="course">
-					    <option value="">All</option>
-					    <option :value="subject.name" v-for="subject in subjects" :key="subject.id">{{ subject.name }}</option>
+						<option value="">All</option>
+						<option :value="subject.name" v-for="subject in subjects" :key="subject.id">{{ subject.name }}</option>
 					</select>
 				</div>
 			</div>
-	    </banner>
+		</banner>
 		<div class="container">
 			<helper-spinner v-if="tutorLoading || subjectLoading" />
 			<div v-else class="grid my-4">
-		        <div v-for="tutor in filteredTutors" :key="tutor.id" class="shadow-sm p-3" >
+				<div v-for="tutor in filteredTutors" :key="tutor.id" class="shadow-sm p-3" >
 					<tutor-card :user="tutor" />
-		        </div>
+				</div>
 			</div>
-	        <helper-message :message="error" v-if="error" />
-	    </div>
+			<helper-message :message="error" v-if="error" />
+		</div>
 	</Default>
 </template>
 

@@ -1,6 +1,6 @@
 <template>
 	<Default>
-    <banner />
+		<banner />
 		<helper-spinner v-if="plansLoading" />
 		<div class="container py-5" v-else>
 			<div v-if="page === 1">
@@ -13,33 +13,33 @@
 				</div>
 				<div class="my-3 d-flex flex-column flex-lg-row justify-content-center align-items-center">
 					<div class="cards p-3 p-lg-4 mb-3 shadow-sm rounded-lg" v-for="plan in plans" :key="plan.id" @click="setId(plan)"
-               :class="{'selected': (id === plan.yearlyId && annual) || (!annual && id === plan.monthlyId) }">
-            <h5 class="text-capitalize text-center font-weight-500 mb-4 plan-title">{{ plan.title }}</h5>
-            <div class="d-flex justify-content-center align-items-start">
-              <h1 class="display-4 font-weight-500 mb-1">&dollar;{{ annual ? plan.yearlyPrice : plan.monthlyPrice }}</h1>
-              <p v-if="annual" class="small text-success">save 16%</p>
-            </div>
-            <p class="plan-range text-center">per {{ annual ? 'year' : 'month' }}</p>
-            <p class="mx-auto w-75">{{ plan.description }}</p>
-            <hr class="my-4 w-75 mx-auto">
-            <div class="small w-75 mx-auto">
-              <div class="p-2"><i class="fas fa-circle mr-2"></i>{{ plan.questions }} questions per month</div>
-              <div class="p-2"><i class="fas fa-circle mr-2"></i>Unlimited access to resources</div>
-              <div class="p-2"><i class="fas fa-circle mr-2"></i>Unlimited tutors</div>
-              <div class="p-2"><i class="fas fa-circle mr-2"></i>Discounted prices on sessions</div>
-              <div class="p-2"><i class="fas fa-circle mr-2"></i>24/7 support</div>
-            </div>
-            <div class="d-flex justify-content-center mt-3" v-if="(annual && plan.yearlyId === id) || (!annual && plan.monthlyId === id)">
-              <p v-if="(annual && plan.yearlyId === planId) || (!annual && plan.monthlyId === planId)" class="text-danger">Currently on this plan</p>
-              <button class="btn btn-success rounded-pill shadow-sm" v-else @click="continueToPay">Continue</button>
-            </div>
-          </div>
-        </div>
-      </div>
+						:class="{'selected': (id === plan.yearlyId && annual) || (!annual && id === plan.monthlyId) }">
+						<h5 class="text-capitalize text-center font-weight-500 mb-4 plan-title">{{ plan.title }}</h5>
+						<div class="d-flex justify-content-center align-items-start">
+							<h1 class="display-4 font-weight-500 mb-1">&dollar;{{ annual ? plan.yearlyPrice : plan.monthlyPrice }}</h1>
+							<p v-if="annual" class="small text-success">save 16%</p>
+						</div>
+						<p class="plan-range text-center">per {{ annual ? 'year' : 'month' }}</p>
+						<p class="mx-auto w-75">{{ plan.description }}</p>
+						<hr class="my-4 w-75 mx-auto">
+						<div class="small w-75 mx-auto">
+							<div class="p-2"><i class="fas fa-circle mr-2"></i>{{ plan.questions }} questions per month</div>
+							<div class="p-2"><i class="fas fa-circle mr-2"></i>Unlimited access to resources</div>
+							<div class="p-2"><i class="fas fa-circle mr-2"></i>Unlimited tutors</div>
+							<div class="p-2"><i class="fas fa-circle mr-2"></i>Discounted prices on sessions</div>
+							<div class="p-2"><i class="fas fa-circle mr-2"></i>24/7 support</div>
+						</div>
+						<div class="d-flex justify-content-center mt-3" v-if="(annual && plan.yearlyId === id) || (!annual && plan.monthlyId === id)">
+							<p v-if="(annual && plan.yearlyId === planId) || (!annual && plan.monthlyId === planId)" class="text-danger">Currently on this plan</p>
+							<button class="btn btn-success rounded-pill shadow-sm" v-else @click="continueToPay">Continue</button>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div v-else>
-        <a class="small text-muted" @click.prevent="goBack">
-          i.fas.fa-arrow-left
-        </a>
+				<a class="small text-muted" @click.prevent="goBack">
+					i.fas.fa-arrow-left
+				</a>
 				<h5 class="mb-5 text-center">Select payment method to use to pay for subscription</h5>
 				<select-payment-method :onMethodSelected="setToken" :loading="loading" />
 				<div class="d-flex justify-content-end">

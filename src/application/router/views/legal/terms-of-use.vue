@@ -27,7 +27,7 @@
 			<p>
 				<b>Certain Restrictions.</b>
 				<span>
-					 The rights approved to you in these Terms are subject to the following
+					The rights approved to you in these Terms are subject to the following
 					restrictions: (a) you shall not sell, rent, lease, transfer, assign, distribute, host, or otherwise
 					commercially exploit the Site; (b) you shall not change, make derivative works of, disassemble,
 					reverse compile or reverse engineer any part of the Site; (c) you shall not access the Site in order to
@@ -58,7 +58,7 @@
 			<p>
 				<b>User Content.</b>
 				<span>
-					 "User Content" means any and all information and content that a user submits to the
+					"User Content" means any and all information and content that a user submits to the
 					Site. You are exclusively responsible for your User Content. You bear all risks associated with use of
 					your User Content. You hereby certify that your User Content does not violate our Acceptable Use
 					Policy. You may not represent or imply to others that your User Content is in any way provided,
@@ -77,7 +77,7 @@
 			<p>
 				<b>Acceptable Use Policy</b>
 				<span>
-					 The following terms constitute our "Acceptable Use Policy": You agree not
+					The following terms constitute our "Acceptable Use Policy": You agree not
 					to use the Site to collect, upload, transmit, display, or distribute any User Content (i) that violates any
 					third-party right or any intellectual property or proprietary right; (ii) that is unlawful, harassing,
 					abusive, tortious, threatening, harmful, invasive of another’s privacy, vulgar, defamatory, false,
@@ -118,7 +118,7 @@
 			<p>
 				<b>Third-Party Links & Ads. </b>
 				<span>
-					 The Site may contain links to third-party websites and services, and/or
+					The Site may contain links to third-party websites and services, and/or
 					display advertisements for third-parties. Such Third-Party Links & Ads are not under the control of
 					Company, and Company is not responsible for any Third-Party Links & Ads. Company provides
 					access to these Third-Party Links & Ads only as a convenience to you, and does not review,
@@ -132,7 +132,7 @@
 			<p>
 				<b>Other Users.</b>
 				<span>
-					 Each Site user is solely responsible for any and all of its own User Content. Because
+					Each Site user is solely responsible for any and all of its own User Content. Because
 					we do not control User Content, you acknowledge and agree that we are not responsible for any
 					User Content, whether provided by you or by others. You agree that the Company will not be
 					responsible for any loss or damage incurred as the result of any such interactions. If there is a
@@ -151,7 +151,7 @@
 			<p>
 				<b>Cookies and Web Beacons. </b>
 				<span>
-					 Like any other website, Stranerd uses ‘cookies’. These cookies are
+					Like any other website, Stranerd uses ‘cookies’. These cookies are
 					used to store information including visitors’ preferences, and the pages on the website that the visitor
 					accessed or visited. The information is used to optimize the users’ experience by customizing our
 					web page content based on visitors’ browser type and/or other information

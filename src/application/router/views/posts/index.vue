@@ -1,21 +1,21 @@
 <template>
 	<Default>
-        <banner>
-	        <div class="w-75 mx-auto">
-		        <h1>Strive For <span class="font-weight-bold">Progress</span> Not <span class="font-weight-bold">Perfection</span></h1>
-		        <post-search class="my-2" />
-	        </div>
-        </banner>
+		<banner>
+			<div class="w-75 mx-auto">
+				<h1>Strive For <span class="font-weight-bold">Progress</span> Not <span class="font-weight-bold">Perfection</span></h1>
+				<post-search class="my-2" />
+			</div>
+		</banner>
 		<helper-spinner v-if="loading"/>
 		<div class="container-fluid py-3" v-else>
 			<helper-message :message=error v-if="error" />
 			<div v-else>
-		        <div class="grid my-4">
+				<div class="grid my-4">
 					<div v-for="post in posts" :key="post.id" class="shadow-sm p-3" >
 						<post-card :post="post" />
 					</div>
-		        </div>
-	            <router-link class="floating-button text-white" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
+				</div>
+				<router-link class="floating-button text-white" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
 				<div class="text-center small text-muted mb-2" v-if="hasMore">
 					<i class="fas text-info fa-spinner fa-spin mr-1" v-if="olderPostsLoading"></i>
 					<span @click="fetchOlderPosts">Fetch Older</span>

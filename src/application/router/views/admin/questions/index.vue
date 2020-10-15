@@ -1,14 +1,14 @@
 <template>
 	<Default>
-    <banner>
-      <h1 class="text-capitalize">Modify questions under each subject</h1>
-    </banner>
+		<banner>
+			<h1 class="text-capitalize">Modify questions under each subject</h1>
+		</banner>
 		<div class="container-fluid py-3">
 			<helper-spinner v-if="loading" />
 			<div class="grid" v-else>
 				<router-link class="text-dark h4 text-decoration-none mt-3 text-capitalize"
-				             :to="`/admins/questions/${subject.name.toLowerCase()}`"
-				             v-for="subject in subjects" :key="subject.id">
+					:to="`/admins/questions/${subject.name.toLowerCase()}`"
+					v-for="subject in subjects" :key="subject.id">
 					<img :src="subject.image" alt="" class="w-100" height="180">
 					<div class="bg-gold-light text-center">
 						<h4>{{ subject.name }}</h4>

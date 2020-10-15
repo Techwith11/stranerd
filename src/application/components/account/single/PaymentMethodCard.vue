@@ -11,7 +11,7 @@
 				<span>Remove</span>
 			</a>
 			<p class="mb-2" v-if="method.isCard">{{ method.expired ? 'Expired' : 'Expires' }} {{ method.expirationDate }}</p>
-        </div>
+		</div>
 	</div>
 </template>
 

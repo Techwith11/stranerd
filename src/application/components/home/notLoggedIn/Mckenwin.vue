@@ -1,6 +1,6 @@
 <template>
-    <div>
-	    <div class="bg-gold" style="height: 1rem;"></div>
+	<div>
+		<div class="bg-gold" style="height: 1rem;"></div>
 		<div id="background">
 			<div id="overlay">
 				<div class="container text-white">
@@ -19,7 +19,7 @@
 				</p>
 			</div>
 		</div>
-	    <div class="bg-gold" style="height: 1rem;"></div>
+		<div class="bg-gold" style="height: 1rem;"></div>
 	</div>
 </template>
 

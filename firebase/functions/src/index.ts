@@ -43,9 +43,7 @@ import { removeAdmin } from './onCall/roles/removeAdmin'
 export { makeTutor, makeAdmin, removeAdmin }
 
 import { createPost } from './onCall/contents/createPost'
-import { upvoteReply } from './onCall/contents/upvoteReply'
-import { downvoteReply } from './onCall/contents/downvoteReply'
-export { createPost, upvoteReply, downvoteReply }
+export { createPost }
 
 import { sendEmailAfterPurchase } from './onCall/shop/sendEmailAfterPurchase'
 import { subscribeToMailingList } from './onCall/mailing/subscribeToMailingList'

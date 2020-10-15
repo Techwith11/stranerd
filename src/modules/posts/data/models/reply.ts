@@ -7,15 +7,13 @@ export interface ReplyFromModel {
     dates: {
         createdAt: firebase.firestore.Timestamp
     }
-    votes: {
-        [key: string]: boolean
-    }
+    likes: { [key: string]: boolean }
+    dislikes: { [key: string]: boolean }
 }
 
 export interface ReplyToModel {
     body: string
     userId: string
-    votes: {
-        [key: string]: boolean
-    }
+    likes: { [key: string]: boolean }
+    dislikes: { [key: string]: boolean }
 }
