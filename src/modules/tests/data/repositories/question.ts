@@ -1,8 +1,8 @@
-import { IQuestionRepository } from '@modules/tests/domain/irepositories/iquestion'
-import { QuestionBaseDataSource } from '@modules/tests/data/datasources/question-base'
+import { IQuestionRepository } from '../../domain/irepositories/iquestion'
+import { QuestionBaseDataSource } from '../datasources/question-base'
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { QuestionTransformer } from '@modules/tests/data/transformers/question'
-import { QuestionFromModel, QuestionToModel } from '@modules/tests/data/models/question'
+import { QuestionTransformer } from '../transformers/question'
+import { QuestionFromModel, QuestionToModel } from '../models/question'
 
 export class QuestionRepository implements IQuestionRepository{
 	private dataSource: QuestionBaseDataSource

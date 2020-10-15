@@ -1,5 +1,5 @@
-import { QuestionFromModel, QuestionToModel } from '@modules/tests/data/models/question'
-import { QuestionEntity } from '@modules/tests/domain/entities/question'
+import { QuestionFromModel, QuestionToModel } from '../models/question'
+import { QuestionEntity } from '../../domain/entities/question'
 import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
 
 export class QuestionTransformer {

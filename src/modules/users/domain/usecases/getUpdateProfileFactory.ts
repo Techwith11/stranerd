@@ -1,4 +1,4 @@
-import { UpdateProfileFactory } from '@modules/users/domain/factories/updateProfile'
+import { UpdateProfileFactory } from '../factories/updateProfile'
 
 export class GetUpdateProfileFactoryUseCase {
 	public call () :UpdateProfileFactory {

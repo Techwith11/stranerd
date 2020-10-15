@@ -1,5 +1,5 @@
-import { IAuthRepository } from '@modules/users/domain/irepositories/iauth'
-import { LoginFactory } from '@modules/users/domain/factories/login'
+import { IAuthRepository } from '../irepositories/iauth'
+import { LoginFactory } from '../factories/login'
 
 export class LoginWithEmailUseCase {
 	private repository: IAuthRepository

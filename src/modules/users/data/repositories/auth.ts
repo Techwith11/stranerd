@@ -1,6 +1,6 @@
-import { IAuthRepository } from '@modules/users/domain/irepositories/iauth'
-import { AuthBaseDataSource } from '@modules/users/data/datasources/auth-base'
-import { AuthUser } from '@modules/users/domain/entities/auth'
+import { IAuthRepository } from '../../domain/irepositories/iauth'
+import { AuthBaseDataSource } from '../datasources/auth-base'
+import { AuthUser } from '../../domain/entities/auth'
 import firebase from '@root/services/firebase'
 import { Media } from '@modules/core/data/models/base'
 

@@ -1,5 +1,5 @@
 import firebase from '@root/services/firebase'
-import { TutorInfo, UserAccount, UserBio, UserRoles } from '@modules/users/domain/entities/user'
+import { TutorInfo, UserAccount, UserBio, UserRoles } from '../../domain/entities/user'
 
 export interface UserFromModel {
 	id: string

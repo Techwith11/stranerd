@@ -1,4 +1,4 @@
-import { RegisterFactory } from '@modules/users/domain/factories/register'
+import { RegisterFactory } from '../factories/register'
 
 export class GetRegisterFactoryUseCase {
 	public call () :RegisterFactory {

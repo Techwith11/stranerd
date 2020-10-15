@@ -1,6 +1,6 @@
-import { QuestionEntity } from '@modules/tests/domain/entities/question'
+import { QuestionEntity } from '../entities/question'
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { QuestionToModel } from '@modules/tests/data/models/question'
+import { QuestionToModel } from '../../data/models/question'
 
 export interface IQuestionRepository {
 	add: (data: QuestionToModel) => Promise<string>,

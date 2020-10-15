@@ -1,4 +1,4 @@
-import { AuthUser } from '@modules/users/domain/entities/auth'
+import { AuthUser } from '../entities/auth'
 import firebase from '@root/services/firebase'
 import { Media } from '@modules/core/data/models/base'
 

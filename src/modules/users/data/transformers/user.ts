@@ -1,5 +1,5 @@
-import { UserFromModel, UserToModel } from '@modules/users/data/models/user'
-import { UserEntity } from '@modules/users/domain/entities/user'
+import { UserFromModel, UserToModel } from '../models/user'
+import { UserEntity } from '../../domain/entities/user'
 import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
 
 export class UserTransformer {

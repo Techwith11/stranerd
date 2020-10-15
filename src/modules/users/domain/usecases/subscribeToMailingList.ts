@@ -1,5 +1,5 @@
-import { IRoleRepository } from '@modules/users/domain/irepositories/irole'
-import { SubscribeToMailingListFactory } from '@modules/users/domain/factories/subscribeToMailingList'
+import { IRoleRepository } from '../irepositories/irole'
+import { SubscribeToMailingListFactory } from '../factories/subscribeToMailingList'
 
 export class SubscribeToMailingListUsecase {
 	private repository: IRoleRepository

@@ -1,5 +1,5 @@
-import { NoteFromModel, NoteToModel } from '@modules/shop/data/models/note'
-import { NoteEntity } from '@modules/shop/domain/entities/note'
+import { NoteFromModel, NoteToModel } from '../models/note'
+import { NoteEntity } from '../../domain/entities/note'
 import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
 
 export class NoteTransformer {

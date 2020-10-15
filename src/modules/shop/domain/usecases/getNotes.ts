@@ -1,5 +1,5 @@
-import { INoteRepository } from '@modules/shop/domain/irepositories/inote'
-import { NoteEntity } from '@modules/shop/domain/entities/note'
+import { INoteRepository } from '../irepositories/inote'
+import { NoteEntity } from '../entities/note'
 import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetNotesUseCase {

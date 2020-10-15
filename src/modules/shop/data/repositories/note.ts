@@ -1,8 +1,8 @@
-import { INoteRepository } from '@modules/shop/domain/irepositories/inote'
-import { NoteBaseDataSource } from '@modules/shop/data/datasources/note-base'
+import { INoteRepository } from '../../domain/irepositories/inote'
+import { NoteBaseDataSource } from '../datasources/note-base'
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { NoteTransformer } from '@modules/shop/data/transformers/note'
-import { NoteToModel } from '@modules/shop/data/models/note'
+import { NoteTransformer } from '../transformers/note'
+import { NoteToModel } from '../models/note'
 
 export class NoteRepository implements INoteRepository{
 	private dataSource: NoteBaseDataSource

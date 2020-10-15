@@ -1,7 +1,7 @@
 import { FirestoreService } from '@modules/core/services/firebase'
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { NoteBaseDataSource } from '@modules/shop/data/datasources/note-base'
-import { NoteFromModel, NoteToModel } from '@modules/shop/data/models/note'
+import { NoteBaseDataSource } from '../datasources/note-base'
+import { NoteFromModel, NoteToModel } from '../models/note'
 
 export class NoteFirebaseDataSource implements NoteBaseDataSource{
 

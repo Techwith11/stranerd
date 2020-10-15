@@ -1,5 +1,5 @@
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { NoteFromModel, NoteToModel } from '@modules/shop/data/models/note'
+import { NoteFromModel, NoteToModel } from '../models/note'
 
 export abstract class NoteBaseDataSource {
 	public abstract add: (data: NoteToModel) => Promise<string>

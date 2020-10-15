@@ -1,5 +1,5 @@
-import { IUserRepository } from '@modules/users/domain/irepositories/iuser'
-import { UserEntity } from '@modules/users/domain/entities/user'
+import { IUserRepository } from '../irepositories/iuser'
+import { UserEntity } from '../entities/user'
 import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class FindUsersByEmailUseCase {

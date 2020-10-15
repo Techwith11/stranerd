@@ -1,5 +1,5 @@
-import { AuthBaseDataSource } from '@modules/users/data/datasources/auth-base'
-import { AuthUser } from '@modules/users/domain/entities/auth'
+import { AuthBaseDataSource } from '../datasources/auth-base'
+import { AuthUser } from '../../domain/entities/auth'
 import firebase, { auth } from '@root/services/firebase'
 import { FirestoreService } from '@modules/core/services/firebase'
 import { Media } from '@modules/core/data/models/base'

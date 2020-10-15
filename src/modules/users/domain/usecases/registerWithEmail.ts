@@ -1,5 +1,5 @@
-import { IAuthRepository } from '@modules/users/domain/irepositories/iauth'
-import { RegisterFactory } from '@modules/users/domain/factories/register'
+import { IAuthRepository } from '../irepositories/iauth'
+import { RegisterFactory } from '../factories/register'
 
 export class RegisterWithEmailUseCase {
 	private repository: IAuthRepository

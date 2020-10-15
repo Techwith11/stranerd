@@ -1,5 +1,5 @@
-import { IQuestionRepository } from '@modules/tests/domain/irepositories/iquestion'
-import { QuestionEntity } from '@modules/tests/domain/entities/question'
+import { IQuestionRepository } from '../irepositories/iquestion'
+import { QuestionEntity } from '../entities/question'
 import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetTutorQuestionsByModuleUseCase {

@@ -1,5 +1,5 @@
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { QuestionFromModel, QuestionToModel } from '@modules/tests/data/models/question'
+import { QuestionFromModel, QuestionToModel } from '../models/question'
 
 export abstract class QuestionBaseDataSource {
 	public abstract create: (data: QuestionToModel) => Promise<string>

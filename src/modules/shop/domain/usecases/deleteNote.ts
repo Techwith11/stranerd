@@ -1,4 +1,4 @@
-import { INoteRepository } from '@modules/shop/domain/irepositories/inote'
+import { INoteRepository } from '../irepositories/inote'
 
 export class DeleteNoteUsecase {
 	private repository: INoteRepository

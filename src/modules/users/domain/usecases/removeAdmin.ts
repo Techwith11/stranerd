@@ -1,4 +1,4 @@
-import { IRoleRepository } from '@modules/users/domain/irepositories/irole'
+import { IRoleRepository } from '../irepositories/irole'
 
 export class RemoveAdminUsecase {
 	private repository: IRoleRepository

@@ -1,5 +1,5 @@
-import { INoteRepository } from '@modules/shop/domain/irepositories/inote'
-import { NoteFactory } from '@modules/shop/domain/factories/note'
+import { INoteRepository } from '../irepositories/inote'
+import { NoteFactory } from '../factories/note'
 
 export class UpdateNoteUseCase {
 	private repository: INoteRepository

@@ -1,5 +1,5 @@
 import { BaseFactory } from '@modules/core/domains/factories/base'
-import { AuthUser } from '@modules/users/domain/entities/auth'
+import { AuthUser } from '../entities/auth'
 import { isLongerThan, isNotLongerThan, isRequired, isEmail, isEqualTo } from '@modules/core/validations/rules'
 
 const isLongerThan3 = (value:string) => isLongerThan(3, value)

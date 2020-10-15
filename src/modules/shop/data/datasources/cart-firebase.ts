@@ -1,6 +1,6 @@
 import { FirestoreService, FunctionsService } from '@modules/core/services/firebase'
-import { CartBaseDataSource } from '@modules/shop/data/datasources/cart-base'
-import { NoteToModel } from '@modules/shop/data/models/note'
+import { CartBaseDataSource } from '../datasources/cart-base'
+import { NoteToModel } from '../models/note'
 
 export class CartFirebaseDataSource implements CartBaseDataSource{
 

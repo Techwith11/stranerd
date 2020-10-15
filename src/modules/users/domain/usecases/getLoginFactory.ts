@@ -1,4 +1,4 @@
-import { LoginFactory } from '@modules/users/domain/factories/login'
+import { LoginFactory } from '../factories/login'
 
 export class GetLoginFactoryUseCase {
 	public call () :LoginFactory {

@@ -1,4 +1,4 @@
-import { UserEntity } from '@modules/users/domain/entities/user'
+import { UserEntity } from '../entities/user'
 import { GetClauses } from '@modules/core/data/datasources/base'
 
 export interface IUserRepository {

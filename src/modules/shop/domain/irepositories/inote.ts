@@ -1,6 +1,6 @@
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { NoteEntity } from '@modules/shop/domain/entities/note'
-import { NoteToModel } from '@modules/shop/data/models/note'
+import { NoteEntity } from '../entities/note'
+import { NoteToModel } from '../../data/models/note'
 
 export interface INoteRepository {
 	add: (data: NoteToModel) => Promise<string>
