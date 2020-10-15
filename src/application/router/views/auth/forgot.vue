@@ -16,6 +16,9 @@
 						<span>Retrieve Password</span>
 					</button>
 				</div>
+				<div class="small mt-2">
+					<router-link class="text-info" to="/auth/signin">Back to sign in</router-link>
+				</div>
 			</form>
 		</div>
 	</Auth>

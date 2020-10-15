@@ -26,8 +26,8 @@
 					</button>
 				</div>
 				<div class="d-flex justify-content-between text-wrap align-items-center small mt-2">
-					<router-link class="text-info mr-3" to="/auth/signup">Sign Up With New Account</router-link>
-					<router-link class="text-info" to="/auth/forgot">Retrieve Forgotten Password</router-link>
+					<router-link class="text-info mr-3" to="/auth/signup">Sign up with new account</router-link>
+					<router-link class="text-info" to="/auth/forgot">Retrieve forgotten password</router-link>
 				</div>
 			</form>
 			<p class="text-center small text-muted mt-4 mb-2">Or sign in with other options</p>

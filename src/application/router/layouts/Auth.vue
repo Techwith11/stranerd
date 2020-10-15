@@ -1,6 +1,6 @@
 <template>
 	<div class="body w-100 d-flex justify-content-center align-items-center flex-wrap p-md-6">
-		<div class="content p-3 p-md-5 shadow-sm">
+		<div class="content p-3 p-sm-4 p-md-5 shadow-sm">
 			<slot></slot>
 		</div>
 	</div>
