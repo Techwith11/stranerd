@@ -26,14 +26,8 @@
 					</button>
 				</div>
 				<div class="d-flex justify-content-between text-wrap align-items-center small mt-2">
-					<span class="mr-2">
-						Don't have an account?
-						<router-link class="text-info" to="/auth/signup">Sign Up</router-link>
-					</span>
-					<span>
-						Forgot Password?
-						<router-link class="text-info" to="/auth/forgot-password">Retrieve Now</router-link>
-					</span>
+					<router-link class="text-info mr-3" to="/auth/signup">Sign Up With New Account</router-link>
+					<router-link class="text-info" to="/auth/forgot-password">Retrieve Forgotten Password</router-link>
 				</div>
 			</form>
 			<p class="text-center small text-muted mt-4 mb-2">Or sign in with other options</p>

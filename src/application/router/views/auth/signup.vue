@@ -41,10 +41,7 @@
 					</button>
 				</div>
 				<div class="small mt-2">
-					<span>
-						Already have an account?
-						<router-link class="text-info" to="/auth/signin">Sign in</router-link>
-					</span>
+					<router-link class="text-info" to="/auth/signin">Sign in with existing account</router-link>
 				</div>
 			</form>
 			<p class="text-center small text-muted mt-4 mb-2">Or sign up with other options</p>
