@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<div class="container pt-3 pb-5">
-			<helper-spinner v-if="isLoading"/>
+			<page-loading v-if="isLoading"/>
 			<div v-else>
 				<div v-if="isTutor">
 					<select class="form-control text-capitalize mb-3" v-model="course">

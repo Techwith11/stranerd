@@ -6,7 +6,7 @@
 				<post-search class="my-2" />
 			</div>
 		</banner>
-		<helper-spinner v-if="loading"/>
+		<page-loading v-if="loading"/>
 		<div class="container-fluid py-3" v-else>
 			<helper-message :message=error v-if="error" />
 			<div v-else>

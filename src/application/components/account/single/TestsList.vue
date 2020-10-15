@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<helper-spinner v-if="isLoading"/>
+		<page-loading v-if="isLoading"/>
 		<div v-else>
 			<helper-message message="You have not taken any tests yet." v-if="tests.length === 0" />
 			<div v-else>

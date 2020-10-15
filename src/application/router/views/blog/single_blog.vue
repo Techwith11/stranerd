@@ -1,6 +1,6 @@
 <template>
 	<Default>
-		<helper-spinner v-if="loading"/>
+		<page-loading v-if="loading"/>
 		<div v-else>
 			<article-info :article="article" :user="user" />
 		</div>

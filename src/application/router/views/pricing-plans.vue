@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<banner />
-		<helper-spinner v-if="plansLoading" />
+		<page-loading v-if="plansLoading" />
 		<div class="container py-5" v-else>
 			<div v-if="page === 1">
 				<div class="d-flex justify-content-center align-items-center mb-5">

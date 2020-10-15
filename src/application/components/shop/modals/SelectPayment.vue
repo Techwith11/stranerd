@@ -1,6 +1,6 @@
 <template>
 	<div class="m-md-5">
-		<helper-spinner v-if="loading" />
+		<page-loading v-if="loading" />
 		<div class="d-flex align-items-center justify-content-between my-3">
 			<a @click.prevent="setCartModalOverview"><i class="fas fa-arrow-left"></i></a>
 			<h4 class="mb-0">Select Payment Method</h4>

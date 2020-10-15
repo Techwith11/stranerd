@@ -3,7 +3,7 @@
 		<banner>
 			<h1 class="text-capitalize">Modify questions under {{ $route.params.module }}</h1>
 		</banner>
-		<helper-spinner v-if="loading"/>
+		<page-loading v-if="loading"/>
 		<div class="container-fluid py-3" v-else>
 			<helper-message :message="error" v-if="error" />
 			<div v-else>

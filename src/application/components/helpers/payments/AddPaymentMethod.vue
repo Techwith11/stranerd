@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<helper-spinner v-if="loading"/>
+		<page-loading v-if="loading"/>
 		<form>
 			<div class="form-group">
 				<label>Credit Card Number</label>

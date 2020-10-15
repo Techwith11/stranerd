@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<helper-spinner v-if="subjectLoading" />
+		<page-loading v-if="subjectLoading" />
 		<div class="my-5 bg-white p-4 shadow-sm rounded-lg">
 			<h4 class="text-muted mb-3">Upgrade User to Tutor</h4>
 			<div class="d-flex align-items-center">

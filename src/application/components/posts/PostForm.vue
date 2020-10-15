@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<helper-spinner v-if="subjectLoading" />
+		<page-loading v-if="subjectLoading" />
 		<form v-else class="my-3" @submit.prevent="createPost">
 			<div class="form-group my-3">
 				<h6>Title</h6>

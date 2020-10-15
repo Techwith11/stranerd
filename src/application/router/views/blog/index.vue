@@ -6,7 +6,7 @@
 				<article-search class="my-2" />
 			</div>
 		</banner>
-		<helper-spinner v-if="loading"/>
+		<page-loading v-if="loading"/>
 		<div v-else class="px-2 my-4">
 			<helper-message :message="error" v-if="error" />
 			<div v-else>

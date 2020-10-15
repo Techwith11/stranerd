@@ -1,6 +1,6 @@
 <template>
 	<Default>
-		<helper-spinner v-if="loading || replyLoading"/>
+		<page-loading v-if="loading || replyLoading"/>
 		<div v-else>
 			<banner>
 				<post-info :post="post" :user="user" />

@@ -4,7 +4,7 @@
 			<div class="my-3 bg-white rounded-lg shadow-sm p-3">
 				<p class="text-center font-weight-500 mb-4 text-muted">Payment Methods</p>
 				<div>
-					<helper-spinner v-if="methodsLoading"/>
+					<page-loading v-if="methodsLoading"/>
 					<div class="position-relative">
 						<helper-message :message="methodsError" v-if="methodsError" />
 						<payment-method-card :method="method" v-for="method in methods" :key="method.id"/>

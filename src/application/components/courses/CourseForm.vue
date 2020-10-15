@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<helper-spinner v-if="subjectLoading" />
+		<page-loading v-if="subjectLoading" />
 		<template v-else>
 			<slot name="title"><h4>Title</h4></slot>
 			<form class="mx-2" @submit.prevent="submit">

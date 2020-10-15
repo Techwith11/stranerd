@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<div class="container py-3">
-			<helper-spinner v-if="loading"/>
+			<page-loading v-if="loading"/>
 			<div v-else>
 				<user-info :user="user" />
 				<div v-if="user.roles.isTutor && user.tutor.canTeach" class="mt-5">

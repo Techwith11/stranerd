@@ -4,7 +4,7 @@
 			<h1 class="text-capitalize">All modules under {{ subject.name }}</h1>
 		</banner>
 		<div class="container-fluid py-3">
-			<helper-spinner v-if="loading" />
+			<page-loading v-if="loading" />
 			<div class="grid" v-else>
 				<router-link class="text-dark h4 text-decoration-none mt-3 text-capitalize"
 					:to="`/admins/questions/${subject.name.toLowerCase()}/${module.name.toLowerCase()}`"

@@ -1,6 +1,6 @@
 <template>
 	<div class="my-3 py-4 shadow white">
-		<helper-spinner v-if="loading" />
+		<page-loading v-if="loading" />
 		<div class="d-flex flex-column align-items-center" v-else>
 			<div class="d-flex w-100 px-4 align-items-center justify-content-between">
 				<a>

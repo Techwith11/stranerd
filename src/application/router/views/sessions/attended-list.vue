@@ -1,6 +1,6 @@
 <template>
 	<Default>
-		<helper-spinner v-if="isLoading" />
+		<page-loading v-if="isLoading" />
 		<div class="container" v-else>
 			<session-nav />
 			<div v-if="sessions.length === 0">

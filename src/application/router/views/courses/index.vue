@@ -7,7 +7,7 @@
 			</div>
 		</banner>
 		<div class="container-fluid py-3">
-			<helper-spinner v-if="loading" />
+			<page-loading v-if="loading" />
 			<div class="grid" v-else>
 				<router-link class="text-dark h4 text-decoration-none mt-3 text-capitalize"
 					:to="`/courses/${subject.name.toLowerCase()}`"

@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<div class="h-100">
-			<helper-spinner v-if="isLoading"/>
+			<page-loading v-if="isLoading"/>
 			<div v-else class="d-flex flex-column flex-lg-row h-100">
 				<div class="flex-grow-1">
 					<session-nav class="h-100" :user="otherPerson" :timer="timer" />

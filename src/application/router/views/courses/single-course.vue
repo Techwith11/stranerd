@@ -1,6 +1,6 @@
 <template>
 	<Default>
-		<helper-spinner v-if="loading"/>
+		<page-loading v-if="loading"/>
 		<template v-else>
 			<helper-message v-if="error" :message="error" />
 			<template v-else>

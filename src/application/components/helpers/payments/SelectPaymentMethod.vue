@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<helper-spinner v-if="methodLoading"/>
+		<page-loading v-if="methodLoading"/>
 		<template v-if="showForm">
 			<a class="text-info d-block my-3 small" @click.prevent="backToPaymentMethods"><i class="fas fa-arrow-left mr-2"></i>Back to payment methods</a>
 			<add-payment-method :onAddMethodSuccessful="refreshPaymentMethods"/>

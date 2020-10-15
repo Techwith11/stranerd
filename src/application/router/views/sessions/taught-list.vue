@@ -1,6 +1,6 @@
 <template>
 	<Default>
-		<helper-spinner v-if="isLoading" />
+		<page-loading v-if="isLoading" />
 		<div class="container" v-else>
 			<session-nav />
 			<helper-message message="You haven’t taught any session yet. " v-if="sessions.length === 0" />

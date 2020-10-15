@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<div class="container py-3">
-			<helper-spinner v-if="isLoading"/>
+			<page-loading v-if="isLoading"/>
 			<div v-else>
 				<h3 class="position-sticky sticky-top text-right" :class="{'text-danger': timer <= 120}" v-if="!isMarked">{{ getTime }}</h3>
 				<div>

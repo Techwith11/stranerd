@@ -3,7 +3,8 @@ import Vue from 'vue'
 import Default from '@application/router/layouts/Default.vue'
 
 import Editor from '@application/components/helpers/Editor.vue'
-import Spinner from '@application/components/helpers/Spinner.vue'
+import Loading from '@application/components/helpers/Loading.vue'
+import PageLoading from '@/components/helpers/PageLoading.vue'
 import Message from '@application/components/helpers/Message.vue'
 import MakePayment from '@application/components/helpers/payments/MakePayment.vue'
 import Banner from '@application/components/helpers/Banner.vue'
@@ -13,7 +14,8 @@ import RatingStars from '@application/components/helpers/RatingStars.vue'
 Vue.component('Default', Default)
 
 Vue.component('editor', Editor)
-Vue.component('helper-spinner', Spinner)
+Vue.component('loading', Loading)
+Vue.component('page-loading', PageLoading)
 Vue.component('helper-message', Message)
 Vue.component('make-payment', MakePayment)
 Vue.component('banner', Banner)

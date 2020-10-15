@@ -15,7 +15,7 @@
 			</div>
 		</banner>
 		<div class="container">
-			<helper-spinner v-if="tutorLoading || subjectLoading" />
+			<page-loading v-if="tutorLoading || subjectLoading" />
 			<div v-else class="grid my-4">
 				<div v-for="tutor in filteredTutors" :key="tutor.id" class="shadow-sm p-3" >
 					<tutor-card :user="tutor" />
