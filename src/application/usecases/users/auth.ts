@@ -14,7 +14,6 @@ const afterAuthHook = async () => {
 	if(route) await router.push(route)
 	else await router.push('/')
 	closeNavbar()
-	await useStore().modals.closeAuthModal()
 }
 
 export const useRegisterForm = () => {

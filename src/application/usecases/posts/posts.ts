@@ -6,6 +6,7 @@ import { Notify } from '@application/config/notifications'
 import { fetchUser } from '@application/usecases/users/users'
 import { UserEntity } from '@modules/users/domain/entities/user'
 import { useStore } from '@application/usecases/store'
+import { saveIntendedRoute } from '@/usecases/core/router'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const globalState = reactive({
@@ -144,8 +145,8 @@ export const useCreatePost = () => {
 
 	watch(() => useStore().auth.getId, () => state.factory.userId = useStore().auth.getId.value)
 	const login = async () => {
-		await useStore().modals.setAuthModalLogin()
-		await router.push('/ask-a-question')
+		saveIntendedRoute('/ask-a-question')
+		await router.push('/auth/signin')
 	}
 
 	return {

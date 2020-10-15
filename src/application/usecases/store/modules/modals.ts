@@ -2,11 +2,6 @@ import { Store } from '@application/store'
 import { computed, ComputedRef } from '@vue/composition-api'
 
 const getters = {
-	isAuthModalOpen: computed(() => Store.getters.isAuthModalOpen) as ComputedRef<boolean>,
-	isAuthModalLogin: computed(() => Store.getters.isAuthModalLogin) as ComputedRef<boolean>,
-	isAuthModalForgotPassword: computed(() => Store.getters.isAuthModalForgotPassword) as ComputedRef<boolean>,
-	isAuthModalRegister: computed(() => Store.getters.isAuthModalRegister) as ComputedRef<boolean>,
-
 	isCreateModalOpen: computed(() => Store.getters.isCreateModalOpen) as ComputedRef<boolean>,
 	isCreateModalOverview: computed(() => Store.getters.isCreateModalOverview) as ComputedRef<boolean>,
 	isCreateModalCourse: computed(() => Store.getters.isCreateModalCourse) as ComputedRef<boolean>,
@@ -46,11 +41,6 @@ const actions = {
 	setAccountModalEditProfile: () => Store.dispatch('setAccountModalEditProfile'),
 	setAccountModalUpdatePassword: () => Store.dispatch('setAccountModalUpdatePassword'),
 	closeAccountModal: () => Store.dispatch('closeAccountModal'),
-
-	setAuthModalLogin: () => Store.dispatch('setAuthModalLogin'),
-	setAuthModalRegister: () => Store.dispatch('setAuthModalRegister'),
-	setAuthModalForgotPassword: () => Store.dispatch('setAuthModalForgotPassword'),
-	closeAuthModal: () => Store.dispatch('closeAuthModal'),
 
 	setCartModalPay: () => Store.dispatch('setCartModalPay'),
 	setCartModalOverview: () => Store.dispatch('setCartModalOverview'),
