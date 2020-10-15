@@ -8,29 +8,35 @@ export class ReplyFactory extends BaseFactory<ReplyEntity, ReplyToModel> {
 	readonly rules = {
 		body: [isRequired,isExtractedHTMLLongerThan3],
 		userId: [isRequired],
-		votes: []
+		likes: [],
+		dislikes: []
 	}
 	public values = {
-		body: '', userId: '', votes: {}
+		body: '', userId: '', likes: {}, dislikes: {}
 	}
 	public validValues = {
-		body: '', userId: '', votes: {}
+		body: '', userId: '', likes: {}, dislikes: {}
 	}
 	public errors = {
-		body: undefined, userId: undefined, votes: undefined
+		body: undefined, userId: undefined, likes: undefined, dislikes: undefined
 	}
 
 	get body(){ return this.values.body }
 	set body(value: string){ this.set('body', value) }
 	get userId(){ return this.values.userId }
 	set userId(value: string){ this.set('userId', value) }
+	get likes(){ return this.values.likes }
+	set likes(value: any){ this.set('likes', value) }
+	get dislikes(){ return this.values.dislikes }
+	set dislikes(value: any){ this.set('dislikes', value) }
 
 	public toModel = async () => {
 		if(this.valid){
 			return {
 				body: this.validValues.body,
 				userId: this.validValues.userId,
-				votes: this.validValues.votes,
+				likes: this.validValues.likes,
+				dislikes: this.validValues.dislikes,
 			}
 		}else{
 			throw new Error('Validation errors')
@@ -45,9 +51,12 @@ export class ReplyFactory extends BaseFactory<ReplyEntity, ReplyToModel> {
 		this.values.body = ''
 		this.validValues.body = ''
 		this.errors.body = undefined
-		this.values.votes = {}
-		this.validValues.votes = {}
-		this.errors.votes = undefined
+		this.values.likes = {}
+		this.validValues.likes = {}
+		this.errors.likes = undefined
+		this.values.dislikes = {}
+		this.validValues.dislikes = {}
+		this.errors.dislikes = undefined
 	}
 
 }

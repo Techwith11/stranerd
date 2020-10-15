@@ -12,8 +12,6 @@ import { AddReplyUseCase } from './domain/usecases/addReply'
 import { GetReplyFactoryUseCase } from './domain/usecases/getReplyFactory'
 import { ListenToPostsUseCase } from './domain/usecases/listenToPosts'
 import { ListenToRepliesUseCase } from './domain/usecases/listenToReplies'
-import { UpvoteReplyUseCase } from './domain/usecases/upvoteReply'
-import { DownvoteReplyUseCase } from './domain/usecases/downvoteReply'
 import { DislikeReplyUseCase } from '@modules/posts/domain/usecases/dislikeReply'
 import { LikeReplyUseCase } from '@modules/posts/domain/usecases/likeReply'
 
@@ -34,8 +32,6 @@ export const GetPostFactory = new GetPostFactoryUseCase()
 
 export const AddReply = new AddReplyUseCase(replyRepository)
 export const ListenToReplies = new ListenToRepliesUseCase(replyRepository)
-export const UpvoteReply = new UpvoteReplyUseCase(replyRepository)
-export const DownvoteReply = new DownvoteReplyUseCase(replyRepository)
 export const LikeReply = new LikeReplyUseCase(replyRepository)
 export const DislikeReply = new DislikeReplyUseCase(replyRepository)
 export const GetReplyFactory = new GetReplyFactoryUseCase()

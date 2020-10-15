@@ -8,9 +8,9 @@
 			</div>
 		</div>
 		<div v-html="reply.body" class="editor-container"></div>
-		<div class="small">
-			<div class="my-2 d-flex align-items-center">
-				<button class="btn btn-success flex-grow-1" @click.prevent="likeReply" :disabled="cannotLike">Like</button>
+		<div>
+			<div class="my-2 d-flex align-items-center small">
+				<button class="btn btn-success flex-grow-1 mr-2" @click.prevent="likeReply" :disabled="cannotLike">Like</button>
 				<button class="btn btn-danger flex-grow-1" @click.prevent="dislikeReply" :disabled="cannotDislike">Dislike</button>
 			</div>
 			<div>
