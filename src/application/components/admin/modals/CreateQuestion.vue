@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCreateTutorQuestion } from '@root/application/usecases/tests/tutorQuestions'
+import { useCreateTutorQuestion } from '@/usecases/tests/tutorQuestions'
 import { useStore } from '@/usecases/store'
 import QuestionForm from '@/components/admin/questions/QuestionForm.vue'
 export default defineComponent({

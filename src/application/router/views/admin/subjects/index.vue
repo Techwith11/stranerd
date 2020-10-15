@@ -19,7 +19,7 @@
 import { defineComponent } from '@vue/composition-api'
 import SubjectCard from '@/components/admin/subjects/list/SubjectCard.vue'
 import { useSubjects } from '@/usecases/courses/subjects'
-import { useStore } from '@root/application/usecases/store'
+import { useStore } from '@/usecases/store'
 export default defineComponent({
 	name: 'Subjects',
 	components: {
