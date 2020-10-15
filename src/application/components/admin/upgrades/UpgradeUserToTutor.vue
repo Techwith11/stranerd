@@ -8,7 +8,7 @@
 				<a @click.prevent="reset"><i class="fas fa-trash mx-3 text-danger"></i></a>
 			</div>
 			<button class="btn mx-0 px-3 btn-primary my-3" @click="getUsersByEmail" :disabled="!email">
-				<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+				<loading class="mr-2" v-if="loading" />
 				<span>Find User</span>
 			</button>
 			<template v-if="fetched && !loading">
@@ -28,7 +28,7 @@
 							</div>
 							<a class="text-info" v-if="user.roles.isTutor && user.tutor.courses.includes(course)" @click.prevent="() => {}">Already a {{ course }} tutor</a>
 							<button class="btn-sm mx-0 btn-success" @click="makeTutor(user)" :disabled="!course || upgrading" v-else>
-								<i class="fas fa-spinner fa-spin mr-1" v-if="upgrading"></i>
+								<loading class="mr-1" v-if="upgrading" />
 								<span>Make tutor</span>
 							</button>
 						</div>

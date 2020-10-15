@@ -6,7 +6,7 @@
 			<a @click.prevent="reset"><i class="fas fa-trash mx-3 text-danger"></i></a>
 		</div>
 		<button class="btn mx-0 px-3 btn-primary my-3" @click="getUsersByEmail" :disabled="!email">
-			<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+			<loading class="mr-2" v-if="loading" />
 			<span>Find User</span>
 		</button>
 		<div class="mt-2" v-if="fetched && !loading">
@@ -18,11 +18,11 @@
 						<p class="small mb-0 text-wrap">{{ user.email }}</p>
 					</div>
 					<button class="btn-sm mx-0 text-nowrap btn-danger" v-if="user.roles.isAdmin" @click="deAdminUser(user)" :disabled="upgrading">
-						<i class="fas fa-spinner mr-1 fa-spin" v-if="upgrading"></i>
+						<loading class="mr-1" v-if="upgrading" />
 						<span>Remove admin</span>
 					</button>
 					<button class="btn-sm mx-0 text-nowrap btn-success" v-else @click="adminUser(user)" :disabled="upgrading">
-						<i class="fas fa-spinner mr-1 fa-spin" v-if="upgrading"></i>
+						<loading class="mr-1" v-if="upgrading" />
 						<span>Make admin</span>
 					</button>
 				</div>

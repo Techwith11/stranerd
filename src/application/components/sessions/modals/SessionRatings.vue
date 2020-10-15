@@ -13,7 +13,7 @@
 		</div>
 		<div class="d-flex justify-content-end my-3">
 			<button class="btn-success" :disabled="isLoading" @click="submitRating">
-				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading"></i>
+				<loading class="mr-2" v-if="isLoading" />
 				<span>Continue</span>
 			</button>
 		</div>

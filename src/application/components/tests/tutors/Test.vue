@@ -8,7 +8,7 @@
 		</div>
 		<div class="d-flex justify-content-end mb-5">
 			<button class="btn-success" @click="submitTest" :disabled="isLoading || isMarked">
-				<i class="fas fa-spinner fa-spin mr-2" v-if="isLoading"></i>
+				<loading class="mr-2" v-if="isLoading" />
 				<span>Submit</span>
 			</button>
 		</div>

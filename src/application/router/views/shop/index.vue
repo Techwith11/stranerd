@@ -16,7 +16,7 @@
 			</div>
 			<div class="d-flex justify-content-end my-3" v-if="hasMore">
 				<button class="btn-success" @click="fetchOlderNotes">
-					<i class="fas fa-spinner fa-spin mr-2" v-if="olderNotesLoading"></i>
+					<loading class="mr-2" v-if="olderNotesLoading" />
 					<span>Fetch More</span>
 				</button>
 			</div>

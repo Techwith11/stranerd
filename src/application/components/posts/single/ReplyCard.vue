@@ -19,7 +19,7 @@
 							{{ reply.dislikesCount }} {{ reply.dislikesCount === 1 ? 'Unlike' : 'Unlikes' }}
 						</button>
 					</div>
-					<i class="fas fa-spinner fa-spin text-info mr-2" v-if="liking"></i>
+					<loading class="mr-2" v-if="liking" />
 				</div>
 			</div>
 		</div>

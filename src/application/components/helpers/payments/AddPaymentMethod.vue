@@ -20,7 +20,7 @@
 			</div>
 			<div class="text-center">
 				<button class="btn btn-primary btn-block" :disabled="!isThereAHoistedFieldInstance || createLoading" @click.prevent="addCard">
-					<i class="fas fa-spinner fa-spin mr-2" v-if="createLoading"></i>
+					<loading class="mr-2" v-if="createLoading" />
 					<span>Add Credit Card</span>
 				</button>
 			</div>

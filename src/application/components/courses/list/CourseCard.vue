@@ -16,7 +16,8 @@
 				<div class="ml-auto" v-if="isAdmin">
 					<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
 					<a class="text-danger" @click.prevent="deleteCourse">
-						<i class="fas mr-1" :class="delLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+						<loading class="mr-1" v-if="delLoading" />
+						<i class="fas mr-1 fa-trash" v-else></i>
 						<span>Delete</span>
 					</a>
 				</div>

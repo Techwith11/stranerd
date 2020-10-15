@@ -12,7 +12,8 @@
 						<span>Edit</span>
 					</button>
 					<button class="my-1 btn btn-outline-danger" @click.prevent="deleteNote">
-						<i class="fas mr-1" :class="loading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+						<loading class="mr-1" v-if="loading" />
+						<i class="fas mr-1 fa-trash" v-else></i>
 						<span>Delete</span>
 					</button>
 				</div>

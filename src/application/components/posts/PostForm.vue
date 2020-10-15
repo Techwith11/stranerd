@@ -46,7 +46,7 @@
 			</div>
 			<div class="d-flex justify-content-end">
 				<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid" v-if="isLoggedIn">
-					<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+					<loading class="mr-2" v-if="loading" />
 					<span>Post question</span>
 				</button>
 				<button class="btn-success" @click="login" v-else>

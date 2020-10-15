@@ -5,7 +5,7 @@
 			<small class="small text-danger" v-if="factory.errors.body">{{ factory.errors.body }}</small>
 		</div>
 		<button class="btn-success ml-lg-2" type="submit" :disabled="!factory.valid|| loading">
-			<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+			<loading class="mr-2" v-if="loading" />
 			<span>Send</span>
 		</button>
 	</form>

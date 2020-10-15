@@ -10,7 +10,7 @@
 			<button class="btn mx-0 btn-warning text-white" @click="setAccountModalUpdatePassword">Update Password</button>
 			<!--<button class="btn mx-0 btn-success" @click="goToPricing">{{ isSubscribed ? 'Change subscription' : 'Subscribe now' }}</button>
 			<button class="btn mx-0 btn-danger" @click="cancelSubscription" v-if="isSubscribed" :disabled="loading">
-				<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+				<loading class="mr-2" v-if="loading" />
 				<span>Cancel subscription</span>
 			</button>-->
 		</div>

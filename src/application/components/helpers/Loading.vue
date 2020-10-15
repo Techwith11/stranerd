@@ -10,7 +10,7 @@ export default defineComponent({
 	props: {
 		size: {
 			type: Number,
-			default: () => 1
+			default: () => 1.25
 		}
 	}
 })

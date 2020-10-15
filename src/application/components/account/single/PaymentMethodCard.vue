@@ -7,7 +7,7 @@
 		</div>
 		<div class="d-flex justify-content-between flex-wrap small">
 			<a class="text-info mb-2" @click.prevent="deleteMethod">
-				<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+				<loading class="mr-2" v-if="loading" />
 				<span>Remove</span>
 			</a>
 			<p class="mb-2" v-if="method.isCard">{{ method.expired ? 'Expired' : 'Expires' }} {{ method.expirationDate }}</p>

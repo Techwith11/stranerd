@@ -12,7 +12,7 @@
 			<div v-else>
 				<session-card :session="session" v-for="session in sessions" :key="session['.key']" />
 				<div class="text-center small my-3" v-if="hasMore">
-					<i class="fas fa-spin fa-spinner mr-2 text-info" v-if="isOlderSessionsLoading"></i>
+					<loading class="mr-2" v-if="isOlderSessionsLoading" />
 					<span @click="isOlderSessionsLoading ? () => {} : fetchOlderSessions()">Fetch More</span>
 				</div>
 			</div>

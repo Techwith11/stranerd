@@ -42,7 +42,7 @@
 					</div>
 					<div class="col-sm-4 d-flex flex-column justify-content-between mb-3">
 						<a class="text-info" @click.prevent="cancelSubscription">
-							<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+							<loading class="mr-2" v-if="loading" />
 							<span>Cancel subscription</span>
 						</a>
 					</div>

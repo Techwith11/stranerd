@@ -6,7 +6,7 @@
 		<div class="d-flex justify-content-end">
 			<button @click.prevent="createReply" class="mt-3" v-if="isLoggedIn" type="submit"
 				:class="factory.valid ? 'bg-success text-white' : 'btn-gray'" :disabled="loading || !factory.valid">
-				<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+				<loading class="mr-2" v-if="loading" />
 				<span>Submit</span>
 			</button>
 		</div>

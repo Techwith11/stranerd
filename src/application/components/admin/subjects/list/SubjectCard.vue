@@ -5,7 +5,8 @@
 			<div class="d-flex my-2 justify-content-end align-items-center" id="main">
 				<a @click.prevent="openSubjectEditModal" class="mr-3"><i class="fas fa-pen text-warning"></i></a>
 				<a @click.prevent="deleteSubject" class="text-danger mr-3">
-					<i class="fas" :class="deleteLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+					<loading v-if="deleteLoading" />
+					<i class="fas fa-trash" v-else></i>
 				</a>
 				<a @click.prevent="toggleCollapse"><i class="fas" :class="show ? 'fa-angle-up' : 'fa-angle-down'"></i></a>
 			</div>

@@ -22,7 +22,7 @@
 		</div>
 		<div class="d-flex justify-content-end">
 			<button type="submit" class="btn btn-gold" :disabled="loading || !factory.valid">
-				<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+				<loading class="mr-2" v-if="loading" />
 				<span>Update password</span>
 			</button>
 		</div>

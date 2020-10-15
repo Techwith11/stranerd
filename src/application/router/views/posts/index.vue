@@ -17,7 +17,7 @@
 				</div>
 				<router-link class="floating-button text-white" to="/ask-a-question"><i class="fas fa-plus"></i></router-link>
 				<div class="text-center small text-muted mb-2" v-if="hasMore">
-					<i class="fas text-info fa-spinner fa-spin mr-1" v-if="olderPostsLoading"></i>
+					<loading class="mr-1" v-if="olderPostsLoading" />
 					<span @click="fetchOlderPosts">Fetch Older</span>
 				</div>
 			</div>

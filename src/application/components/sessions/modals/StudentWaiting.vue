@@ -1,10 +1,10 @@
 <template>
 	<div class="m-md-5 text-center" id="waiting">
-		<i class="fas fa-spinner fa-spin text-info fa-3x" v-if="!isLoading"></i>
+		<loading :size="3" v-if="!isLoading" />
 		<p class="my-3" v-if="!isLoading">Waiting for {{ getOtherPersonOnSession ? getOtherPersonOnSession.bio.name : 'tutor' }} to accept</p>
 		<p class="my-3" v-if="isLoading">You are attempting to cancel the session</p>
 		<button class="bg-danger text-white my-2 rounded" @click="closeModal" :disabled="isLoading">
-			<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading"></i>
+			<loading class="mr-2" v-if="isLoading" />
 			Cancel Session
 		</button>
 	</div>

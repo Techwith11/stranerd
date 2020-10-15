@@ -2,7 +2,7 @@
 	<div>
 		<select-payment-method :onMethodSelected="setToken" :loading="loading"/>
 		<button class="w-100 btn-success" v-if="token" @click="pay" :disabled="loading">
-			<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+			<loading class="mr-2" v-if="loading" />
 			{{ buttonTitle }}
 		</button>
 	</div>

@@ -26,7 +26,7 @@
 			</div>
 			<div class="d-flex justify-content-end">
 				<button class="btn-success" :disabled="loading || !factory.valid" type="submit">
-					<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+					<loading class="mr-2" v-if="loading" />
 					<span>Update</span>
 				</button>
 			</div>

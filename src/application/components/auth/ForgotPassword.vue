@@ -14,7 +14,7 @@
 			</div>
 			<div class="d-flex flex-column">
 				<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid">
-					<i class="fas fa-spinner fa-spin" v-if="loading"></i>
+					<loading v-if="loading" />
 					<span v-else>Retrieve Password</span>
 				</button>
 			</div>

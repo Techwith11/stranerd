@@ -7,7 +7,7 @@
 				<test-card v-for="test in tests" :key="test['.key']" :test="test" />
 				<div class="d-flex justify-content-end my-3" v-if="hasMore">
 					<button class="btn-success" @click="fetchOlderTests">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="isOlderTestsLoading"></i>
+						<loading class="mr-2" v-if="isOlderTestsLoading" />
 						<span>Fetch More</span>
 					</button>
 				</div>

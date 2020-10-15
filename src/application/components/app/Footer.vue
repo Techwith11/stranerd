@@ -18,7 +18,7 @@
 							<span class="small text-danger" v-if="factory.errors.email">{{ factory.errors.email }}</span>
 						</div>
 						<button class="btn btn-primary mx-0" type="submit" :disabled="loading">
-							<i class="fas fa-spin fa-spinner my-0 mr-1" v-if="loading"></i>
+							<loading class="mr-1" v-if="loading" />
 							<span>Subscribe</span>
 						</button>
 					</form>

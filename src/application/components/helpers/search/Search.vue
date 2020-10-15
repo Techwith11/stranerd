@@ -5,7 +5,7 @@
 				slot-scope="{ currentRefinement, isSearchStalled, refine }">
 				<input placeholder="Search" type="search" class="form-control"
 					:value="currentRefinement" @input="refine($event.currentTarget.value)">
-				<i class="fas fa-spin fa-spinner fa-spin ml-2 text-info" :class="isSearchStalled ? 'opacity-100' : 'opacity-0'"></i>
+				<loading class="ml-2" :class="isSearchStalled ? 'opacity-100' : 'opacity-0'" />
 			</div>
 			<div slot="submit-icon"><i class="fas fa-search text-dark"></i></div>
 			<div slot="reset-icon"><i class="fas fa-trash text-danger"></i></div>

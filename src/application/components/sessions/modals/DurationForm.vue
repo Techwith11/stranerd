@@ -18,7 +18,7 @@
 			</div>
 			<button class="w-100 my-2 rounded" @click="requestSession" :disabled="isLoading"
 				:class="mode ? 'btn-success text-white' : 'btn-secondary'">
-				<i class="fas fa-spin fa-spinner mr-2" v-if="isLoading"></i>
+				<loading class="mr-2" v-if="isLoading" />
 				<span>Start session</span>
 			</button>
 			<small class="small text-muted">You will be directed to pay if the tutor accepts the session. Note that you can cancel the session at any point before you complete payment.</small>

@@ -44,7 +44,7 @@
 				<select-payment-method :onMethodSelected="setToken" :loading="loading" />
 				<div class="d-flex justify-content-end">
 					<button class="btn btn-success" :class="{'opacity-25': !token}" :disabled="!token || loading" @click="createSubscription">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+						<loading class="mr-2" v-if="loading" />
 						<span>Subscribe</span>
 					</button>
 				</div>
