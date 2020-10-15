@@ -1,6 +1,6 @@
 import { BaseFactory } from '@modules/core/domains/factories/base'
-import { Module, SubjectEntity } from '@modules/courses/domain/entities/subject'
-import { SubjectToModel } from '@modules/courses/data/models/subject'
+import { Module, SubjectEntity } from '../entities/subject'
+import { SubjectToModel } from '../../data/models/subject'
 import { hasMoreThan, isImageOrMedia, isLongerThan, isRequired } from '@modules/core/validations/rules'
 import { Media } from '@modules/core/data/models/base'
 

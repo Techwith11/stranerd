@@ -1,4 +1,4 @@
-import { Module } from '@modules/courses/domain/entities/subject'
+import { Module } from '../../domain/entities/subject'
 import { Media } from '@modules/core/data/models/base'
 
 export interface SubjectFromModel {

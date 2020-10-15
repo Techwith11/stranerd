@@ -1,5 +1,5 @@
-import { IDiscussionRepository } from '@modules/courses/domain/irepositories/idiscussion'
-import { DiscussionFactory } from '@modules/courses/domain/factories/discussion'
+import { IDiscussionRepository } from '../irepositories/idiscussion'
+import { DiscussionFactory } from '../factories/discussion'
 
 export class AddDiscussionUsecase {
 	private repository: IDiscussionRepository

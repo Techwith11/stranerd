@@ -1,8 +1,8 @@
-import { ISubjectRepository } from '@modules/courses/domain/irepositories/isubject'
-import { SubjectBaseDataSource } from '@modules/courses/data/datasources/subject-base'
+import { ISubjectRepository } from '../../domain/irepositories/isubject'
+import { SubjectBaseDataSource } from '../datasources/subject-base'
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { SubjectTransformer } from '@modules/courses/data/transformers/subject'
-import { SubjectToModel } from '@modules/courses/data/models/subject'
+import { SubjectTransformer } from '../transformers/subject'
+import { SubjectToModel } from '../models/subject'
 
 export class SubjectRepository implements ISubjectRepository{
 	private dataSource: SubjectBaseDataSource

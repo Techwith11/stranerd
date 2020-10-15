@@ -1,6 +1,6 @@
-import { CourseEntity } from '@modules/courses/domain/entities/course'
+import { CourseEntity } from '../entities/course'
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { CourseToModel } from '@modules/courses/data/models/course'
+import { CourseToModel } from '../../data/models/course'
 
 export interface ICourseRepository {
 	add: (data: CourseToModel) => Promise<string>

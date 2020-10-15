@@ -1,5 +1,5 @@
-import { ICourseRepository } from '@modules/courses/domain/irepositories/icourse'
-import { CourseEntity } from '@modules/courses/domain/entities/course'
+import { ICourseRepository } from '../irepositories/icourse'
+import { CourseEntity } from '../entities/course'
 import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetRecentCoursesUsecase {

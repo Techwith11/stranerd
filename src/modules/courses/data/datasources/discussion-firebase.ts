@@ -1,7 +1,7 @@
 import { DatabaseService } from '@modules/core/services/firebase'
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { DiscussionBaseDataSource } from '@modules/courses/data/datasources/discussion-base'
-import { DiscussionFromModel, DiscussionToModel } from '@modules/courses/data/models/discussion'
+import { DiscussionBaseDataSource } from '../datasources/discussion-base'
+import { DiscussionFromModel, DiscussionToModel } from '../models/discussion'
 
 export class DiscussionFirebaseDataSource implements DiscussionBaseDataSource{
 

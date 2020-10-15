@@ -1,4 +1,4 @@
-import { ISubjectRepository } from '@modules/courses/domain/irepositories/isubject'
+import { ISubjectRepository } from '../irepositories/isubject'
 
 export class DeleteSubjectUseCase {
 	private repository: ISubjectRepository

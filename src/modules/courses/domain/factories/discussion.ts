@@ -1,7 +1,7 @@
 import { BaseFactory } from '@modules/core/domains/factories/base'
 import { isExtractedHTMLLongerThan, isRequired } from '@modules/core/validations/rules'
-import { DiscussionToModel } from '@modules/courses/data/models/discussion'
-import { DiscussionEntity } from '@modules/courses/domain/entities/discussion'
+import { DiscussionToModel } from '../../data/models/discussion'
+import { DiscussionEntity } from '../entities/discussion'
 
 const isExtractedHTMLLongerThan3 = (value: string) => isExtractedHTMLLongerThan(3, value)
 export class DiscussionFactory extends BaseFactory<DiscussionEntity, DiscussionToModel> {

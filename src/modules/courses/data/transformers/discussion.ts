@@ -1,6 +1,6 @@
 import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
-import { DiscussionFromModel, DiscussionToModel } from '@modules/courses/data/models/discussion'
-import { DiscussionEntity } from '@modules/courses/domain/entities/discussion'
+import { DiscussionFromModel, DiscussionToModel } from '../models/discussion'
+import { DiscussionEntity } from '../../domain/entities/discussion'
 
 export class DiscussionTransformer {
 	public fromJSON(model: DiscussionFromModel) {

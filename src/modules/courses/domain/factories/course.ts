@@ -1,6 +1,6 @@
 import { BaseFactory } from '@modules/core/domains/factories/base'
-import { CourseEntity } from '@modules/courses/domain/entities/course'
-import { CourseToModel } from '@modules/courses/data/models/course'
+import { CourseEntity } from '../entities/course'
+import { CourseToModel } from '../../data/models/course'
 import {
 	containsOnlyMedia, isImageOrMedia, isLongerThan, isRequired,
 	isVideoOrMediaOrUndefined, hasMoreThan, isExtractedHTMLLongerThan, isRequiredIf

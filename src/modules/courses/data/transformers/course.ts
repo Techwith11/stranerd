@@ -1,5 +1,5 @@
-import { CourseFromModel, CourseToModel } from '@modules/courses/data/models/course'
-import { CourseEntity } from '@modules/courses/domain/entities/course'
+import { CourseFromModel, CourseToModel } from '../models/course'
+import { CourseEntity } from '../../domain/entities/course'
 import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
 
 export class CourseTransformer {

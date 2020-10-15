@@ -1,6 +1,6 @@
-import { SubjectEntity } from '@modules/courses/domain/entities/subject'
+import { SubjectEntity } from '../entities/subject'
 import { GetClauses } from '@modules/core/data/datasources/base'
-import { SubjectToModel } from '@modules/courses/data/models/subject'
+import { SubjectToModel } from '../../data/models/subject'
 
 export interface ISubjectRepository {
 	add: (data: SubjectToModel) => Promise<string>

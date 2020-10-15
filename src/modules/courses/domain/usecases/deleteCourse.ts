@@ -1,4 +1,4 @@
-import { ICourseRepository } from '@modules/courses/domain/irepositories/icourse'
+import { ICourseRepository } from '../irepositories/icourse'
 
 export class DeleteCourseUseCase {
 	private repository: ICourseRepository

@@ -1,4 +1,4 @@
-import { CourseFactory } from '@modules/courses/domain/factories/course'
+import { CourseFactory } from '../factories/course'
 
 export class GetCourseFactoryUsecase {
 	public call(): CourseFactory {

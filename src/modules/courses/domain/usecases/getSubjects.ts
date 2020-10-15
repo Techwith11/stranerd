@@ -1,5 +1,5 @@
-import { ISubjectRepository } from '@modules/courses/domain/irepositories/isubject'
-import { SubjectEntity } from '@modules/courses/domain/entities/subject'
+import { ISubjectRepository } from '../irepositories/isubject'
+import { SubjectEntity } from '../entities/subject'
 import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetSubjectsUseCase {
