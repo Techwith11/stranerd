@@ -37,8 +37,8 @@
 		<p class="text-center small text-muted mt-4 mb-0">Or sign in with other options</p>
 		<div class="form-group d-flex flex-column my-3">
 			<button @click="googleLogin" class="btn btn-danger" :disabled="anyLoading">
-				<loading class="mr-2" v-if="googleLoading" />
-				<i class="fab fa-google text-white mr-2" v-else></i>
+				<loading class="mr-1" v-if="googleLoading" />
+				<i class="fab fa-google text-white mr-1" v-else></i>
 				Sign In with Google
 			</button>
 		</div>
@@ -50,7 +50,8 @@
 				</span>
 			</div>
 			<button @click="devLogin" :disabled="!devId" class="btn btn-info w-100">
-				<i class="fas fa-user-cog"></i>
+				<loading class="mr-1" v-if="devLoading" />
+				<i class="fas fa-user-cog mr-1" v-else></i>
 				Sign In as dev user
 			</button>
 		</div>

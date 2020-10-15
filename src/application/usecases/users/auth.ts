@@ -50,10 +50,9 @@ export const useLogout = () => {
 		state.loading = true
 		if(useStore().auth.isTutor.value) await useStore().sessions.closeTutorSessionsListener()
 		await useStore().auth.setId(null)
-		if(router.currentRoute.meta.requiresAuth) window.location.assign('/')
-		else window.location.reload()
 		await Logout.call()
 		state.loading = false
+		window.location.reload()
 	}
 
 	return {

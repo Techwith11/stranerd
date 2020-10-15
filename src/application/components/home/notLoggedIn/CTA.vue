@@ -35,7 +35,7 @@
 		</div>
 		<div class="d-sm-none p-4 text-center cta-sm bg-gold-light">
 			<h1 class="header">Get Access to Unlimited Educational Resources. Anywhere, Anytime!</h1>
-			<p class="subhead px-2">Premium access to loads of resources ranging from courses, materials, tests and more.</p>
+			<p class="subhead font-weight-light">Premium access to loads of resources ranging from courses, materials, tests and more.</p>
 			<button class="btn btn-gold-dark px-4"><router-link class="text-decoration-none text-white" to="/courses">Get Access</router-link></button>
 		</div>
 		<div class="bg-gold" style="height: 1rem;"></div>
