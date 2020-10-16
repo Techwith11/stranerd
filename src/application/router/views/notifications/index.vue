@@ -1,9 +1,18 @@
 <template>
 	<Default>
-		<PageLoading v-if="loading" />
-		<div class="container py-3" v-else>
-			<h1>Notifications</h1>
-			{{ notifications }}
+		<banner>
+			<div class="w-75 mx-auto">
+				<h1>Keep Track of All Your Notifications</h1>
+			</div>
+		</banner>
+		<page-loading v-if="loading" />
+		<div class="container-fluid py-3" v-else>
+			<helper-message :message=error v-if="error" />
+			<div>
+				<div v-for="notification in notifications" :key="notification.id" class="shadow-sm p-3" >
+					{{ notification }}
+				</div>
+			</div>
 		</div>
 	</Default>
 </template>
