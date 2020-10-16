@@ -49,7 +49,7 @@
 					<loading class="mr-2" v-if="loading" />
 					<span>Post question</span>
 				</button>
-				<button class="btn-success" @click="login" v-else>
+				<button type="button" class="btn-success" @click="login" v-else>
 					Login to continue
 				</button>
 			</div>
