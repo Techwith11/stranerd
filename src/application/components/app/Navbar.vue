@@ -64,10 +64,10 @@
 						<router-link class="nav-link" to="/blog">Blog</router-link>
 					</li>
 					<li class="nav-item d-inline">
-						<a class="nav-link" @click.prevent="setAuthModalRegister">Sign Up</a>
+						<router-link class="nav-link" to="/auth/signup">Sign Up</router-link>
 					</li>
 					<li class="nav-item d-inline">
-						<a class="nav-link" @click.prevent="setAuthModalLogin">Sign In</a>
+						<router-link class="nav-link" to="/auth/signin">Sign In</router-link>
 					</li>
 				</ul>
 			</div>
@@ -131,12 +131,11 @@ export default defineComponent({
 		const { cartLength } = useCart()
 		const {
 		    auth: { isLoggedIn, isAdmin },
-			modals: { setAuthModalRegister, setAuthModalLogin, setCartModalOverview  }
+			modals: { setCartModalOverview  }
 		} = useStore()
 		return {
 			loading, logout, cartLength,
-			isLoggedIn, isAdmin,
-			setAuthModalRegister, setAuthModalLogin, setCartModalOverview,
+			isLoggedIn, isAdmin, setCartModalOverview,
 			toggleAccountDropDown: closeAdminDropdown, toggleAdminDropDown: closeAccountDropdown,
 			showCartModal: () => {
 				closeNavbar()

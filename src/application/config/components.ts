@@ -1,6 +1,7 @@
 import Vue from 'vue'
 
 import Default from '@application/router/layouts/Default.vue'
+import Auth from '@application/router/layouts/Auth.vue'
 
 import Editor from '@application/components/helpers/Editor.vue'
 import Loading from '@application/components/helpers/Loading.vue'
@@ -12,6 +13,7 @@ import Search from '@application/components/helpers/search/Search.vue'
 import RatingStars from '@application/components/helpers/RatingStars.vue'
 
 Vue.component('Default', Default)
+Vue.component('Auth', Auth)
 
 Vue.component('editor', Editor)
 Vue.component('loading', Loading)
