@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<auth-modal v-if="isAuthModalOpen"/>
 		<create-modal v-if="isCreateModalOpen" />
 		<edit-modal v-if="isEditModalOpen"/>
 		<session-modal v-if="isSessionModalOpen"/>
@@ -12,7 +11,6 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import AuthModal from '@application/components/auth/AuthModal.vue'
 import CreateModal from '@application/components/admin/modals/CreateModal.vue'
 import EditModal from '@application/components/admin/modals/EditModal.vue'
 import SessionModal from '@application/components/sessions/modals/SessionModal.vue'
@@ -22,7 +20,6 @@ import AccountModal from '@application/components/account/modals/AccountModal.vu
 import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	components: {
-		'auth-modal': AuthModal,
 		'create-modal': CreateModal,
 		'edit-modal': EditModal,
 		'session-modal': SessionModal,
@@ -32,7 +29,6 @@ export default defineComponent({
 	},
 	setup(){
 		return {
-			isAuthModalOpen: useStore().modals.isAuthModalOpen,
 			isCreateModalOpen: useStore().modals.isCreateModalOpen,
 			isEditModalOpen: useStore().modals.isEditModalOpen,
 			isSessionModalOpen: useStore().modals.isSessionModalOpen,

@@ -59,6 +59,8 @@ import SelectPaymentMethod from '@application/components/helpers/payments/Select
 import { useCreateSubscription, useSubscriptionPlansList } from '@application/usecases/payments/subscription'
 import { useStore } from '@application/usecases/store'
 import { PlanEntity } from '@modules/payments/domain/entities/plan'
+import router from '@/router'
+import { saveIntendedRoute } from '@/usecases/core/router'
 export default defineComponent({
 	setup(){
 		const { loading: plansLoading, plans } = useSubscriptionPlansList()
@@ -73,8 +75,11 @@ export default defineComponent({
 
 		const setToken = (token: string) => state.token = token
 		const setId = (plan: PlanEntity) => {
-		  state.id = state.annual ? plan.yearlyId : plan.monthlyId
-			if(!isLoggedIn.value) useStore().modals.setAuthModalLogin()
+		    state.id = state.annual ? plan.yearlyId : plan.monthlyId
+			if(!isLoggedIn.value) {
+				saveIntendedRoute(router.currentRoute.path)
+				router.push('/auth/signin')
+			}
 		}
 		const createSubscription = () => state.id && state.token ? subscribe(state.id, state.token) : null
 
