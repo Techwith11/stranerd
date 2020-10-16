@@ -1,12 +1,28 @@
 <template>
 	<header class="bg-white shadow">
-		<nav class="navbar container bg-white navbar-light d-flex justify-content-between flex-row-reverse" :class="isLoggedIn ? 'navbar-expand-lg flex-lg-row' : 'navbar-expand-md flex-md-row'">
+		<nav class="navbar container bg-white navbar-light d-flex justify-content-between flex-row" :class="isLoggedIn ? 'navbar-expand-lg flex-lg-row' : 'navbar-expand-md flex-md-row'">
 			<router-link class="navbar-brand" to="/"><img src="@application/assets/images/stranerd_logo.png" alt="STRANERD" height="50px"></router-link>
-			<button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
+			<div class="d-flex align-items-center">
+				<router-link class="nav-brand mr-5 d-lg-none" to="/notifications">
+					<i class="fas fa-bell position-relative text-warning" style="font-size: 1.5rem;">
+						<i class="position-absolute fas fa-circle blink" style="right:0;font-size: 0.75rem;"
+							v-if="unreadNotifications.length"></i>
+					</i>
+				</router-link>
+				<button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+			</div>
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="navbar-nav ml-auto" v-if="isLoggedIn">
+					<li class="nav-item mr-4 d-none d-lg-inline">
+						<router-link class="nav-link" to="/notifications">
+							<i class="fas fa-bell position-relative text-warning" style="font-size: 1.5rem;">
+								<i class="position-absolute fas fa-circle blink" style="right:0;font-size: 0.75rem;"
+									v-if="unreadNotifications.length"></i>
+							</i>
+						</router-link>
+					</li>
 					<li class="nav-item">
 						<router-link class="nav-link" to="/">Dashboard</router-link>
 					</li>
@@ -107,15 +123,24 @@
     .nav-link:hover{
         color: $link-blue !important;
     }
-    .dropdown{
-        cursor: pointer;
-    }
+    .dropdown{ cursor: pointer; }
     .dropdown-menu{
         border: none;
         padding: 0 1rem;
         .nav-link{
             display: inline-block;
         }
+    }
+    .blink{ animation: blink 1s infinite; }
+    @keyframes blink {
+	    $color: #1eb2d4;
+	    from { color: $color; transform: scale(1); }
+	    50% {
+		    color: darken($color, 10%);
+		    transform: scale(0.85);
+		    box-shadow: inset lighten($color, 50%) 0 -1px 5px;
+	    }
+	    to { color: $color; transform: scale(1); }
     }
 </style>
 
@@ -125,6 +150,7 @@ import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@applicat
 import { useLogout } from '@application/usecases/users/auth'
 import { useCart } from '@application/usecases/shop/cart'
 import { useStore } from '@application/usecases/store'
+import { useNotifications } from '@/usecases/notifications/notifications'
 export default defineComponent({
 	setup(){
 		const { loading, logout } = useLogout()
@@ -133,6 +159,7 @@ export default defineComponent({
 		    auth: { isLoggedIn, isAdmin },
 			modals: { setCartModalOverview  }
 		} = useStore()
+		const { unreadNotifications } = useNotifications()
 		return {
 			loading, logout, cartLength,
 			isLoggedIn, isAdmin, setCartModalOverview,
@@ -141,6 +168,7 @@ export default defineComponent({
 				closeNavbar()
 				setCartModalOverview()
 			},
+			unreadNotifications
 		}
 	}
 })

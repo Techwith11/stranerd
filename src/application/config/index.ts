@@ -12,7 +12,7 @@ import 'bootstrap'
 import { acceptUpdate, addWaitingListener } from '@application/config/registerServiceWorker'
 import { RegisterAuthChangedCB } from '@modules/users'
 import { useStore } from '@/usecases/store'
-import { startNotificationsListener, closeNotificationsListener } from '@/usecases/notifications/notifications'
+import { useNotifications } from '@/usecases/notifications/notifications'
 
 export const setup = () => {
 	Vue.use(VueMeta, { keyName: 'meta', refreshOnceOnNavigation: true })
@@ -33,15 +33,8 @@ export const setup = () => {
 		acceptUpdate(() => true)//confirm('Press OK to load the content or CANCEL to ignore.'))
 	})
 
-	RegisterAuthChangedCB.call(async (user) => {
-		if(user?.uid) {
-			await useStore().auth.setId(user.uid)
-			await startNotificationsListener(user.uid)
-		}else{
-			await useStore().auth.setId(null)
-			closeNotificationsListener()
-		}
-	})
+	useNotifications()
+	if(process.env.NODE_ENV === 'production') RegisterAuthChangedCB.call((user) => useStore().auth.setId(user ? user.uid : null))
 }
 
 export const closeNavbar = () => {
