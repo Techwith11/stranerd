@@ -1,20 +1,20 @@
 import { NotificationEntity } from '@modules/notifications/domain/entities/notification'
-import { computed, ref, watch, Ref } from '@vue/composition-api'
+import { computed, reactive, watch } from '@vue/composition-api'
 import { ListenToNotifications } from '@modules/notifications'
 import { useStore } from '@/usecases/store'
 
-const notificationsGlobalState = {
+const notificationsGlobalState = reactive({
 	loading: false,
 	started: false,
-	notifications: ref([]) as Ref<NotificationEntity[]>,
+	notifications: [] as NotificationEntity[],
 	error: '',
 	listener: () => {},
-}
+})
 
 const startListener = async () => {
 	if(!useStore().auth.getId.value) return
 	try{
-		const addNotifications = (entities: NotificationEntity[]) => notificationsGlobalState.notifications.value = entities
+		const addNotifications = (entities: NotificationEntity[]) => notificationsGlobalState.notifications = entities
 		notificationsGlobalState.listener()
 		notificationsGlobalState.listener = await ListenToNotifications.call(useStore().auth.getId.value, addNotifications)
 		notificationsGlobalState.started = true
@@ -40,7 +40,7 @@ export const useNotifications = () => {
 	return {
 		loading: computed(() => notificationsGlobalState.loading),
 		error: computed(() => notificationsGlobalState.error),
-		notifications: computed(() => notificationsGlobalState.notifications.value),
-		unreadNotifications: computed(() => notificationsGlobalState.notifications.value.filter((n) => !n.seen)),
+		notifications: computed(() => notificationsGlobalState.notifications),
+		unreadNotifications: computed(() => notificationsGlobalState.notifications.filter((n) => !n.seen)),
 	}
 }
