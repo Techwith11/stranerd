@@ -12,7 +12,6 @@ import 'bootstrap'
 import { acceptUpdate, addWaitingListener } from '@application/config/registerServiceWorker'
 import { RegisterAuthChangedCB } from '@modules/users'
 import { useStore } from '@/usecases/store'
-import { useNotifications } from '@/usecases/notifications/notifications'
 
 export const setup = () => {
 	Vue.use(VueMeta, { keyName: 'meta', refreshOnceOnNavigation: true })
@@ -33,25 +32,5 @@ export const setup = () => {
 		acceptUpdate(() => true)//confirm('Press OK to load the content or CANCEL to ignore.'))
 	})
 
-	useNotifications()
 	if(process.env.NODE_ENV === 'production') RegisterAuthChangedCB.call((user) => useStore().auth.setId(user ? user.uid : null))
-}
-
-export const closeNavbar = () => {
-	const collapse = document.getElementById('navbar')
-	collapse ? collapse.classList.remove('show') : null
-}
-
-export const closeAccountDropdown = () => {
-	const collapse = document.getElementById('accountDropdown')
-	collapse ? collapse.classList.remove('show') : null
-	const menu = document.getElementById('accountDropdownMenu')
-	menu ? menu.classList.remove('show') : null
-}
-
-export const closeAdminDropdown = () => {
-	const collapse = document.getElementById('adminDropdown')
-	collapse ? collapse.classList.remove('show') : null
-	const menu = document.getElementById('adminDropdownMenu')
-	menu ? menu.classList.remove('show') : null
 }

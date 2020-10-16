@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from '@application/router/routes'
-import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@application/config'
 import { addToCachedScrolls, getCachedScroll, saveIntendedRoute } from '@application/usecases/core/router'
 import { useStore } from '@application/usecases/store'
 
@@ -36,9 +35,6 @@ router.beforeEach(async (to, from, next) => {
 
 router.afterEach(() => {
 	document.getElementsByTagName('body')[0].scrollIntoView()
-	closeNavbar()
-	closeAccountDropdown()
-	closeAdminDropdown()
 })
 
 export default router

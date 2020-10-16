@@ -18,7 +18,8 @@
 
  <style lang="scss" scoped>
 .head{
-	background: url('../../assets/images/header.jpg') no-repeat center -500px;
+	background: url('../../assets/images/header.jpg') no-repeat center center;
+	background-size: cover;
 	color: $white;
 	display: flex;
 	justify-content: center;
