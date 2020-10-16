@@ -10,6 +10,9 @@ import '@application/config/registerServiceWorker'
 import '@application/style/index.scss'
 import 'bootstrap'
 import { acceptUpdate, addWaitingListener } from '@application/config/registerServiceWorker'
+import { RegisterAuthChangedCB } from '@modules/users'
+import { useStore } from '@/usecases/store'
+import { ListenToNotifications } from '@modules/notifications'
 
 export const setup = () => {
 	Vue.use(VueMeta, { keyName: 'meta', refreshOnceOnNavigation: true })
@@ -29,6 +32,15 @@ export const setup = () => {
 		//alert('New content has been detected.')
 		acceptUpdate(() => true)//confirm('Press OK to load the content or CANCEL to ignore.'))
 	})
+
+	if(process.env.NODE_ENV === 'production') {
+		RegisterAuthChangedCB.call(async (user) => {
+			await useStore().auth.setId(user?.uid ?? null)
+			if(user?.uid){
+				// Call Set Notification Listener
+			}
+		})
+	}
 }
 
 export const closeNavbar = () => {
