@@ -9,9 +9,7 @@
 		<div class="container-fluid py-3" v-else>
 			<helper-message :message=error v-if="error" />
 			<div>
-				<div v-for="notification in notifications" :key="notification.id" class="shadow-sm p-3" >
-					{{ notification }}
-				</div>
+				<LargeNotificationCard v-for="notification in notifications" :key="notification.id" class="shadow-sm p-3" :notification="notification" />
 			</div>
 		</div>
 	</Default>
@@ -20,7 +18,11 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { useNotifications } from '@/usecases/notifications/notifications'
+import LargeNotificationCard from '@application/components/notifications/LargeNotificationCard.vue'
 export default defineComponent({
+	components: {
+		LargeNotificationCard
+	},
 	setup(){
 		const { loading, notifications, error } = useNotifications()
 		return { loading, notifications, error }

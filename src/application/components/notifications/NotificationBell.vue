@@ -11,6 +11,7 @@
 			</i>
 		</a>
 		<div class="dropdown-menu bg-white shadow py-2" aria-labelledby="notificationToggle" id="notificationMenu">
+			<SmallNotificationCard class="py-2" v-for="notification in unreadNotifications" :notification="notification" :key="notification.id" />
 			<hr v-if="unreadNotifications.length">
 			<router-link class="dropdown-item nav-link py-2" to="/notifications">See all notifications</router-link>
 		</div>
@@ -44,7 +45,11 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import { useNotifications } from '@/usecases/notifications/notifications'
+import SmallNotificationCard from '@application/components/notifications/SmallNotificationCard.vue'
 export default defineComponent({
+	components: {
+		SmallNotificationCard
+	},
 	setup(){
 		const { unreadNotifications } = useNotifications()
 		return { unreadNotifications }

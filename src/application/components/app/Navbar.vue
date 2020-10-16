@@ -120,7 +120,7 @@ import { defineComponent } from '@vue/composition-api'
 import { useLogout } from '@application/usecases/users/auth'
 import { useCart } from '@application/usecases/shop/cart'
 import { useStore } from '@application/usecases/store'
-import NotificationBell from '@/components/helpers/NotificationBell.vue'
+import NotificationBell from '@/components/notifications/NotificationBell.vue'
 export default defineComponent({
 	components: {
 		NotificationBell
