@@ -39,20 +39,20 @@ export const sendMailAndCatchErrors = async (to: string, subject: string ,conten
 }
 
 export const sendPurchaseEmail = async (to: string, user: any, cart: any[]) => {
-	const content = await new Template({ message:{} }).render('purchaseEmail/index.pug',
+	const content = await new Template({ message:{} }).render('purchaseEmail.pug',
 		{ user, cart, meta })
 	return await sendMailAndCatchErrors(to, `Recent Purchase at ${domain}`, content)
 }
 
 export const sendSessionRequestEmail = async (to: string, student: any, time: string) => {
-	const content = await new Template({ message:{} }).render('sendSessionRequestEmail/index.pug',
+	const content = await new Template({ message:{} }).render('sendSessionRequestEmail.pug',
 		{ student, meta, time })
 	return await sendMailAndCatchErrors(to, 'Session Request', content)
 }
 
 import { Notification } from './database/notifications'
 export const sendNewNotificationEmail = async (to: string, notification: Notification) => {
-	const content = await new Template({ message:{} }).render('newNotification/index.pug',
+	const content = await new Template({ message:{} }).render('newNotification.pug',
 		{ notification, meta })
 	return await sendMailAndCatchErrors(to, notification.title, content)
 }
