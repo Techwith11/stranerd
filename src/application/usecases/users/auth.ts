@@ -12,8 +12,8 @@ import { useStore } from '@application/usecases/store'
 const afterAuthHook = async () => {
 	const route = getIntendedRoute()
 	if(route) await router.push(route)
+	else await router.push('/')
 	closeNavbar()
-	await useStore().modals.closeAuthModal()
 }
 
 export const useRegisterForm = () => {
@@ -52,7 +52,7 @@ export const useLogout = () => {
 		await useStore().auth.setId(null)
 		await Logout.call()
 		state.loading = false
-		window.location.reload()
+		window.location.assign('/auth/signin')
 	}
 
 	return {
