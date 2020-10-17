@@ -16,7 +16,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-6 d-none">
 			<div class="my-3 bg-white rounded-lg shadow-sm p-3">
 				<p class="text-center font-weight-500 mb-4 text-muted">Subscription</p>
 				<div class="row" v-if="isSubscribed">

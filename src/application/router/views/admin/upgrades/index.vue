@@ -1,5 +1,8 @@
 <template>
 	<Default>
+		<banner>
+			<h1>Manage User Roles</h1>
+		</banner>
 		<div class="container-fluid py-3">
 			<upgrade-user-to-admin />
 			<upgrade-user-to-tutor />
