@@ -6,7 +6,7 @@ import { deleteFromStorage } from '../../helpers/storage'
 export const firestoreUserDeleted = functions.firestore.document('/users/{id}').onDelete(async (snap) => {
 	await deleteFromAlgolia('users', snap.id)
 
-	await deleteFromStorage(snap.data().bio?.image?.link)
+	await deleteFromStorage(snap.data().bio?.image?.path)
 
 	const paymentMethods = await admin.firestore().collection('users').doc(snap.id).collection('paymentMethods').get()
 	paymentMethods.docs.forEach(paymentMethod => paymentMethod.ref.delete())
