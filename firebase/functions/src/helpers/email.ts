@@ -29,10 +29,10 @@ export const sendMailAndCatchErrors = async (to: string, subject: string ,conten
 		await sendMail(to, subject, content)
 		return true
 	}catch(e){
-		await admin.firestore().collection('errors/types/emails').add({
+		await admin.database().ref('errors/emails').push({
 			error: e.message,
 			subject, to, content,
-			dates: { triedAt: admin.firestore.FieldValue.serverTimestamp() }
+			dates: { triedAt: admin.database.ServerValue.TIMESTAMP }
 		})
 		return false
 	}
