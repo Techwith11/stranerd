@@ -12,6 +12,13 @@ export default [
 	},
 
 	{
+		path: '/notifications',
+		name: 'Notifications',
+		component: () => import(/* webpackChunkName: "notifications" */ '@application/router/views/notifications/index.vue'),
+		meta: { requiresAuth: true }
+	},
+
+	{
 		path: '/shop',
 		name: 'Shop',
 		component: () => import(/* webpackChunkName: "shop" */ '@application/router/views/shop/index.vue'),

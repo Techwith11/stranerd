@@ -31,8 +31,7 @@ export const environmentVariables = {
 			email: functions.config().admin[environment()].email['email'],
 			clientId: functions.config().admin[environment()].email['client_id'],
 			clientSecret: functions.config().admin[environment()].email['client_secret'],
-			refreshToken: functions.config().admin[environment()].email['refresh_token'],
-			pass: functions.config().admin[environment()].email['pass'],
+			refreshToken: functions.config().admin[environment()].email['refresh_token']
 		},
 	}
 }

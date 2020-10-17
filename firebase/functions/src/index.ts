@@ -82,3 +82,10 @@ import { firestoreUserDeleted } from './firestore/onDelete/users'
 export {
 	firestoreArticleDeleted, firestoreCourseDeleted, firestoreNoteDeleted, firestorePostDeleted, firestoreUserDeleted
 }
+
+// Database Triggers
+// On Create
+import { databaseNotificationCreated } from './database/onCreate/notifications'
+export {
+	databaseNotificationCreated
+}

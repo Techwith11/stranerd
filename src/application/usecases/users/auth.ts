@@ -1,6 +1,5 @@
 import router from '@application/router'
 import { Notify } from '@application/config/notifications'
-import { closeNavbar } from '@application/config'
 import {
 	GetLoginFactory, GetRegisterFactory, GetResetPasswordFactory, GetUpdatePasswordFactory, GetUpdateProfileFactory,
 	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword, UpdatePassword, UpdateProfile
@@ -13,7 +12,6 @@ const afterAuthHook = async () => {
 	const route = getIntendedRoute()
 	if(route) await router.push(route)
 	else await router.push('/')
-	closeNavbar()
 }
 
 export const useRegisterForm = () => {

@@ -16,6 +16,15 @@
         }
       }
     },
+    "users": {
+      "$id": {
+        "notifications": {
+          ".indexOn": ["dates/createdAt"],
+          ".read": "auth.uid != null",
+          ".write": "auth.uid != null"
+        }
+      }
+    },
     ".read": "false",
     ".write": "false"
   }
