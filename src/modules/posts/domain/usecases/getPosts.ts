@@ -15,7 +15,7 @@ export class GetPostsUseCase {
 				field: 'dates.createdAt',
 				desc: true
 			},
-			limit: parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
+			limit: parseInt(process.env.VUE_APP_PAGINATION_LIMIT) + 1
 		}
 		if(date){
 			conditions.where = [

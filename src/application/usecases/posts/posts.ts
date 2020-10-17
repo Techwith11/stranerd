@@ -32,8 +32,8 @@ const unshiftPost = (post: PostEntity) => {
 const fetchPosts = async () => {
 	const date = globalState.posts[globalState.posts.length - 1]?.createdAt ?? undefined
 	const entities = await GetPosts.call(date)
-	globalState.hasMore = entities.length === PAGINATION_LIMIT
-	entities.forEach(setPost)
+	globalState.hasMore = entities.length === PAGINATION_LIMIT + 1
+	entities.slice(0, PAGINATION_LIMIT).forEach(setPost)
 }
 const startListener = async () => {
 	const date = globalState.posts[0]?.createdAt ?? undefined

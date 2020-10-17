@@ -48,8 +48,8 @@ const fetchCourses = async (subject: string, module: string) => {
 	const key = getKey(subject, module)
 	const date = globalState[key]?.courses[globalState[key]?.courses?.length - 1]?.createdAt ?? undefined
 	const entities: CourseEntity[] = await GetCoursesByModule.call(subject, module, date)
-	globalState[key].hasMore = entities.length === PAGINATION_LIMIT
-	entities.forEach((entity) => setCourse(subject, module, entity))
+	globalState[key].hasMore = entities.length === PAGINATION_LIMIT + 1
+	entities.splice(0, PAGINATION_LIMIT).forEach((entity) => setCourse(subject, module, entity))
 }
 const fetchCoursesOnInit = async (subject: string, module: string) => {
 	globalState[getKey(subject, module)].loading = true
