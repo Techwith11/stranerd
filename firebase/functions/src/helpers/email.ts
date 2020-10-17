@@ -49,3 +49,10 @@ export const sendSessionRequestEmail = async (to: string, student: any, time: st
 		{ student, meta, time })
 	return await sendMailAndCatchErrors(to, 'Session Request', content)
 }
+
+import { Notification } from '../database/onCreate/notifications'
+export const sendNewNotificationEmail = async (to: string, notification: Notification) => {
+	const content = await new Template({ message:{} }).render('newNotification/index.pug',
+		{ notification, meta })
+	return await sendMailAndCatchErrors(to, notification.title, content)
+}
