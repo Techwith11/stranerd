@@ -1,19 +1,25 @@
 <template>
 	<Default>
-		<helper-spinner v-if="isLoading"/>
-		<div v-else>
-			<session-nav :user="otherPerson" :timer="timer" />
-			<div class="container py-3 mb-3" :id="timer > 0 ? 'smaller-height' : 'longer-height'">
-				<helper-message v-if="chats.length < 1" :message="timer > 0 ? 'No messages. Send a message now' : 'Session has ended and no message was sent.'" />
-				<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}" v-if="chats.length > 0">
-					<li class="d-block text-center small text-muted mb-2" v-if="hasMore">
-						<i class="fas text-info fa-spinner fa-spin" v-if="isOlderChatsLoading"></i>
-						<span @click="fetchOlderMessages">Fetch Older</span>
-					</li>
-					<session-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
-				</ul>
-				<ul v-else></ul>
-				<session-chat-form v-if="timer > 0" />
+		<div class="h-100">
+			<page-loading v-if="isLoading"/>
+			<div v-else class="d-flex flex-column flex-lg-row h-100">
+				<div class="flex-grow-1">
+					<session-nav class="h-100" :user="otherPerson" :timer="timer" />
+				</div>
+				<div class="flex-grow-2 h-100 position-relative" id="background">
+					<div class="px-3" :id="timer > 0 ? 'smaller-height' : 'longer-height'">
+						<helper-message v-if="chats.length < 1" :message="timer > 0 ? 'No messages. Send a message now' : 'Session has ended and no message was sent.'" />
+						<ul class="list-group" v-chat-scroll="{smooth: true, notSmoothOnInit: true, always: false}" v-if="chats.length > 0">
+							<li class="d-block text-center small text-muted mb-2" v-if="hasMore">
+								<loading v-if="isOlderChatsLoading" />
+								<span @click="fetchOlderMessages">Fetch Older</span>
+							</li>
+							<session-chat-message :chat="chat" v-for="chat in chats" :key="chat['.key']" />
+						</ul>
+						<ul v-else></ul>
+						<session-chat-form v-if="timer > 0" />
+					</div>
+				</div>
 			</div>
 		</div>
 	</Default>
@@ -21,10 +27,10 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
-import { firestore } from '@/config/firebase'
-import SessionChatForm from '@/components/sessions/single/SessionChatForm'
-import SessionChatMessage from '@/components/sessions/single/SessionChatMessage'
-import SessionNav from '@/components/sessions/single/SessionNav'
+import { firestore } from '@application/config/firebase'
+import SessionChatForm from '@application/components/sessions/single/SessionChatForm'
+import SessionChatMessage from '@application/components/sessions/single/SessionChatMessage'
+import SessionNav from '@application/components/sessions/single/SessionNav'
 export default {
 	name: 'SingleSession',
 	data: () => ({
@@ -138,13 +144,7 @@ export default {
 		this.fetched = true
 		this.isLoading = false
 	},
-	async activated(){
-		if(this.fetched){
-			this.setChatListener()
-			this.setOtherPersonListener()
-		}
-	},
-	deactivated(){
+	beforeDestroy(){
 		this.cleanUp()
 	},
 	computed: {
@@ -172,6 +172,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+	.flex-grow-2{ flex-grow: 2; }
+	#background{
+		background: url('../../../assets/images/sessions/background.svg') center repeat;
+	}
 	ul{
 		overflow: auto;
 		-ms-overflow-style: none;
@@ -180,14 +184,17 @@ export default {
 		}
 	}
 	#smaller-height{
-		height: calc(100vh - 180px + 32px);
-		ul{
-			height: calc(100vh - 218px);
+		height: calc(100vh - 76px - 106px);
+		ul{ height: calc(100vh - 76px - 106px - 50px); }
+		@media (min-width: $lg){
+			height: calc(100vh - 76px);
+			ul{ height: calc(100vh - 76px - 50px) }
 		}
 	}
 	#longer-height{
-		ul{
-			height: calc(100vh - 218px + 32px);
+		ul{ height: calc(100vh - 106px - 76px); }
+		@media (min-width: $lg){
+	        ul{ height: calc(100vh - 76px) }
 		}
 	}
 </style>

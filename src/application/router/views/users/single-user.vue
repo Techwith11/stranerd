@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<div class="container py-3">
-			<helper-spinner v-if="loading"/>
+			<page-loading v-if="loading"/>
 			<div v-else>
 				<user-info :user="user" />
 				<div v-if="user.roles.isTutor && user.tutor.canTeach" class="mt-5">
@@ -19,10 +19,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import UserInfo from '@/components/users/single/UserInfo.vue'
-import UserSessionCard from '@/components/users/single/UserSessionCard.vue'
-import { useUser } from '@/usecases/users/users'
-import router from '@/router'
+import UserInfo from '@application/components/users/single/UserInfo.vue'
+import UserSessionCard from '@application/components/users/single/UserSessionCard.vue'
+import { useUser } from '@application/usecases/users/users'
+import router from '@application/router'
 export default defineComponent({
 	name: 'User',
 	setup(){

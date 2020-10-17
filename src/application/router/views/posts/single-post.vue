@@ -1,31 +1,38 @@
 <template>
 	<Default>
-		<div class="container-fluid py-3">
-			<helper-spinner v-if="loading || replyLoading"/>
-			<div v-else>
+		<page-loading v-if="loading || replyLoading"/>
+		<div v-else>
+			<banner>
 				<post-info :post="post" :user="user" />
-				<div class="my-3">
-					<p class="text-muted" v-if="replies.length === 0">No replies yet. Consider leaving one</p>
-					<div v-else>
-						<div class="pl-4">
+			</banner>
+			<div class="container my-4 ">
+				<div class="mx-auto" style="max-width: 75ch;">
+					<div class="shadow-sm p-3 rounded-xl">
+						<div v-html="post && post.body" class="lead editor-container"></div>
+					</div>
+					<hr class="my-4">
+					<div class="mb-3">
+						<h5 class="text-muted mb-3">Answers</h5>
+						<p class="text-muted" v-if="replies.length === 0">No answers found for this question. Consider leaving one</p>
+						<div v-else>
 							<reply-card v-for="reply in replies" :key="reply.id" :reply="reply" :post="post"/>
 						</div>
 					</div>
+					<reply-form class="mt-auto" />
 				</div>
-				<reply-form class="mt-auto" />
 			</div>
 		</div>
 	</Default>
-</template>
+</template>W
 
 <script lang="ts">
 import { defineComponent, onUnmounted } from '@vue/composition-api'
-import PostInfo from '@/components/posts/single/PostInfo.vue'
-import ReplyForm from '@/components/posts/single/ReplyForm.vue'
-import ReplyCard from '@/components/posts/single/ReplyCard.vue'
-import router from '@/router'
-import { usePost } from '@/usecases/posts/posts'
-import { useReplies } from '@/usecases/posts/replies'
+import PostInfo from '@application/components/posts/single/PostInfo.vue'
+import ReplyForm from '@application/components/posts/single/ReplyForm.vue'
+import ReplyCard from '@application/components/posts/single/ReplyCard.vue'
+import router from '@application/router'
+import { usePost } from '@application/usecases/posts/posts'
+import { useReplies } from '@application/usecases/posts/replies'
 export default defineComponent({
 	name: 'Post',
 	setup(){

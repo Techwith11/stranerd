@@ -1,19 +1,17 @@
-import router from '@/router'
-import { Notify } from '@/config/notifications'
-import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
+import router from '@application/router'
+import { Notify } from '@application/config/notifications'
 import {
-	GetLoginFactory, GetRegisterFactory, GetResetPasswordFactory, GetUpdatePasswordFactory,
-	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword, UpdatePassword
-} from '@root/modules/users'
+	GetLoginFactory, GetRegisterFactory, GetResetPasswordFactory, GetUpdatePasswordFactory, GetUpdateProfileFactory,
+	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, ResetPassword, UpdatePassword, UpdateProfile
+} from '@modules/users'
 import { computed, reactive } from '@vue/composition-api'
-import { getIntendedRoute } from '@/usecases/core/router'
-import { useStore } from '@/usecases/store'
+import { getIntendedRoute } from '@application/usecases/core/router'
+import { useStore } from '@application/usecases/store'
 
 const afterAuthHook = async () => {
 	const route = getIntendedRoute()
 	if(route) await router.push(route)
-	closeNavbar()
-	await useStore().modals.closeAuthModal()
+	else await router.push('/')
 }
 
 export const useRegisterForm = () => {
@@ -47,16 +45,12 @@ export const useLogout = () => {
 		loading: false
 	})
 	const logout = async () => {
-		//TODO: Clear out store of personal information
 		state.loading = true
 		if(useStore().auth.isTutor.value) await useStore().sessions.closeTutorSessionsListener()
 		await useStore().auth.setId(null)
-		if(router.currentRoute.meta.requiresAuth) await router.push('/')
 		await Logout.call()
-		closeNavbar()
-		closeAccountDropdown()
-		closeAdminDropdown()
 		state.loading = false
+		window.location.assign('/auth/signin')
 	}
 
 	return {
@@ -162,6 +156,7 @@ export const useUpdatePasswordForm = () => {
 		loading: false,
 		factory: GetUpdatePasswordFactory.call(),
 	})
+	state.factory.email = useStore().auth.getUser.value.bio.email
 	const updatePassword = async () => {
 		if(state.factory.valid && !state.loading){
 			state.loading = true
@@ -180,5 +175,34 @@ export const useUpdatePasswordForm = () => {
 		loading: computed(() => state.loading),
 		factory: state.factory,
 		updatePassword
+	}
+}
+
+export const useUpdateProfileForm = () => {
+	const state = reactive({
+		loading: false,
+		factory: GetUpdateProfileFactory.call(),
+	})
+
+	state.factory.loadEntity(useStore().auth.getUser.value)
+
+	const updateProfile = async () => {
+		if(state.factory.valid && !state.loading){
+			state.loading = true
+			try{
+				await UpdateProfile.call(useStore().auth.getId.value, state.factory)
+				state.factory.reset()
+				await useStore().modals.closeAccountModal()
+				await Notify({ icon: 'success', title: 'Profile updated successfully' })
+			}catch(error){ await Notify({ icon: 'error', title: error.message }) }
+			state.loading = false
+		}else{
+			state.factory.validateAll()
+		}
+	}
+	return {
+		loading: computed(() => state.loading),
+		factory: state.factory,
+		updateProfile
 	}
 }

@@ -1,7 +1,13 @@
 <template>
 	<Default>
-		<helper-spinner v-if="loading"/>
-		<div v-else class="container py-3">
+		<banner>
+			<div class="w-75 mx-auto">
+				<h1 class="mx-auto my-5" style="max-width: 400px;">Stay up to date with the latest from Stranerd</h1>
+				<article-search class="my-2" />
+			</div>
+		</banner>
+		<page-loading v-if="loading"/>
+		<div v-else class="px-2 my-4">
 			<helper-message :message="error" v-if="error" />
 			<div v-else>
 				<div class="grid">
@@ -9,7 +15,7 @@
 				</div>
 				<div class="d-flex justify-content-end my-3" v-if="hasMore">
 					<button class="btn-success" @click="fetchOlderArticles">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="olderArticlesLoading"></i>
+						<loading class="mr-2" v-if="olderArticlesLoading" />
 						<span>Fetch More</span>
 					</button>
 				</div>
@@ -23,13 +29,15 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import ArticleCard from '@/components/blog/list/ArticleCard.vue'
-import { useArticlesList } from '@/usecases/blog/articles'
-import { useStore } from '@/usecases/store'
+import ArticleCard from '@application/components/blog/list/ArticleCard.vue'
+import { useArticlesList } from '@application/usecases/blog/articles'
+import { useStore } from '@application/usecases/store'
+import ArticleSearch from '@application/components/helpers/search/ArticleSearch.vue'
 export default defineComponent({
 	name: 'Posts',
 	components: {
-		'article-card': ArticleCard
+		'article-card': ArticleCard,
+		'article-search': ArticleSearch,
 	},
 	setup(){
 		const { loading, olderArticlesLoading, hasMore, error, articles, fetchOlderArticles } = useArticlesList()

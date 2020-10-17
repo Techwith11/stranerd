@@ -1,6 +1,6 @@
 <template>
 	<div class="p-3 shadow-sm white">
-		<helper-spinner v-if="loading" />
+		<page-loading v-if="loading" />
 		<p class="text-muted txt-shadow">Recent Courses</p>
 		<div v-if="courses.length > 0">
 			<course-card v-for="course in courses" :key="course.id" :course="course" />
@@ -14,8 +14,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import CourseCard from '@/components/courses/list/CourseCard.vue'
-import { useRecentCourses } from '@/usecases/courses/courses'
+import CourseCard from '@application/components/courses/list/CourseCard.vue'
+import { useRecentCourses } from '@application/usecases/courses/courses'
 export default defineComponent({
 	setup(){
 		const { loading, error, courses } = useRecentCourses()

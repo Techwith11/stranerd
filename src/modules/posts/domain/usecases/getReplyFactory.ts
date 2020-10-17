@@ -1,4 +1,4 @@
-import { ReplyFactory } from '@root/modules/posts/domain/factories/reply'
+import { ReplyFactory } from '../factories/reply'
 
 export class GetReplyFactoryUseCase {
 	public call() :ReplyFactory {

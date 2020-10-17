@@ -1,7 +1,7 @@
-import { FirestoreService } from '@root/modules/core/services/firebase'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { CourseBaseDataSource } from '@root/modules/courses/data/datasources/course-base'
-import { CourseFromModel, CourseToModel } from '@root/modules/courses/data/models/course'
+import { FirestoreService } from '@modules/core/services/firebase'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { CourseBaseDataSource } from './course-base'
+import { CourseFromModel, CourseToModel } from '../models/course'
 
 export class CourseFirebaseDataSource implements CourseBaseDataSource{
 

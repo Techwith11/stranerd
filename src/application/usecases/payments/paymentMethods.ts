@@ -1,8 +1,8 @@
 import { computed, reactive } from '@vue/composition-api'
-import { MethodEntity } from '@root/modules/payments/domain/entities/method'
-import { GetPaymentMethods, RemovePaymentMethod } from '@root/modules/payments'
-import { useStore } from '@/usecases/store'
-import { Alert, Notify } from '@/config/notifications'
+import { MethodEntity } from '@modules/payments/domain/entities/method'
+import { GetPaymentMethods, RemovePaymentMethod } from '@modules/payments'
+import { useStore } from '@application/usecases/store'
+import { Alert, Notify } from '@application/config/notifications'
 
 const globalState = reactive({
 	methods: [] as MethodEntity[],
@@ -17,13 +17,31 @@ const fetchPaymentMethods = async () => {
 	globalState.loading = false
 }
 
+const checkForNewPaymentMethods = async () => {
+	globalState.loading = true
+	const date = globalState.methods[0]?.createdAt ?? undefined
+	const methods = await GetPaymentMethods.call(useStore().auth.getId.value, date)
+	globalState.methods.unshift(...methods)
+	globalState.loading = false
+}
+
 export const usePaymentMethodsList = () => {
-	if(!globalState.fetched) fetchPaymentMethods().then(() => globalState.fetched = true).catch((e) => globalState.error = e.message)
+	if(!globalState.fetched) fetchPaymentMethods()
+		.then(() => {
+			globalState.fetched = true
+			if(globalState.methods.length === 0) globalState.error = 'You do not have any payment method saved. Try adding one now.'
+		})
+		.catch((e) => globalState.error = e.message)
+	else checkForNewPaymentMethods().catch((e) => globalState.error = e.message)
+
+	const validCards = computed(() => globalState.methods.filter((m) => !m.expired && m.isCard))
+	const validAccounts = computed(() => globalState.methods.filter((m) => !m.expired && !m.isCard))
+
 	return {
 		loading: computed(() => globalState.loading),
 		error: computed(() => globalState.error),
 		methods: computed(() => globalState.methods),
-		validMethods: computed(() => globalState.methods/*.filter((m) => !m.expired)*/),//TODO: Reset definition of valid cards
+		validCards, validAccounts,
 		fetchPaymentMethods
 	}
 }

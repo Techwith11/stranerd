@@ -1,12 +1,12 @@
 import { computed, reactive } from '@vue/composition-api'
-import { CourseEntity } from '@root/modules/courses/domain/entities/course'
+import { CourseEntity } from '@modules/courses/domain/entities/course'
 import {
 	AddCourse, DeleteCourse, FindCourse,
 	GetCourseFactory, GetCoursesByModule, GetRecentCourses, UpdateCourse
-} from '@root/modules/courses'
-import { Alert, Notify } from '@/config/notifications'
-import router from '@/router'
-import { useStore } from '@/usecases/store'
+} from '@modules/courses'
+import { Alert, Notify } from '@application/config/notifications'
+import router from '@application/router'
+import { useStore } from '@application/usecases/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const getKey = (subject: string, module: string) => `${subject}_${module}`
@@ -34,14 +34,14 @@ const setCourse = (subject: string, module: string, course: CourseEntity) => {
 	const key = getKey(subject, module)
 	if(!globalState[key]) globalState[key] = getNewState()
 	const index = globalState[key].courses.findIndex((p) => p.id === course.id)
-	if(index !== -1) globalState[key].courses[index] = course
+	if(index !== -1) globalState[key].courses.splice(index, 1, course)
 	else globalState[key].courses.push(course)
 }
 const unshiftCourse = (subject: string, module: string, course: CourseEntity) => {
 	const key = getKey(subject, module)
 	if(!globalState[key]) globalState[key] = getNewState()
 	const index = globalState[getKey(subject, module)].courses.findIndex((p) => p.id === course.id)
-	if(index !== -1) globalState[getKey(subject, module)].courses[index] = course
+	if(index !== -1) globalState[getKey(subject, module)].courses.splice(index, 1, course)
 	else globalState[getKey(subject, module)].courses.unshift(course)
 }
 const fetchCourses = async (subject: string, module: string) => {
@@ -54,7 +54,7 @@ const fetchCourses = async (subject: string, module: string) => {
 const fetchCoursesOnInit = async (subject: string, module: string) => {
 	globalState[getKey(subject, module)].loading = true
 	await fetchCourses(subject, module).catch(() => globalState[getKey(subject, module)].error = 'Failed to fetch courses')
-	if(globalState[getKey(subject, module)].courses.length === 0) globalState[getKey(subject, module)].error = `No courses found for ${module} at the moment. Check again later`
+	if(globalState[getKey(subject, module)].courses.length === 0) globalState[getKey(subject, module)].error = `There were no courses found for ${module} at the moment. Please check again later`
 	globalState[getKey(subject, module)].loading = false
 }
 const fetchOlderCourses = async (subject: string, module: string) => {

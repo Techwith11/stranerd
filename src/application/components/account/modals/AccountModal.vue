@@ -1,30 +1,35 @@
 <template>
 	<div class="modal-background">
 		<div class="modal-inner">
-			<profile-overview v-if="isAccountModalOverview" />
 			<edit-profile v-if="isAccountModalEditProfile" />
 			<update-password v-if="isAccountModalUpdatePassword" />
 			<add-payment-method v-if="isAccountModalAddPaymentMethod" />
-			<select-subscription v-if="isAccountModalSelectSubscription" />
+			<transactions v-if="isAccountModalTransactions" />
 		</div>
 	</div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import ProfileOverview from '@/components/account/modals/ProfileOverview'
-import EditProfile from '@/components/account/modals/EditProfile'
-import UpdatePassword from '@/components/account/modals/UpdatePassword'
-import AddPaymentMethod from '@/components/account/modals/AddPaymentMethod'
-import SelectSubscription from '@/components/account/modals/SelectSubscription'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import EditProfile from '@application/components/account/modals/EditProfile.vue'
+import UpdatePassword from '@application/components/account/modals/UpdatePassword.vue'
+import AddPaymentMethod from '@application/components/account/modals/AddPaymentMethod.vue'
+import Transactions from '@application/components/account/modals/Transactions.vue'
+import { useStore } from '@application/usecases/store'
+export default defineComponent({
 	components: {
-		'profile-overview': ProfileOverview,
 		'edit-profile': EditProfile,
 		'update-password': UpdatePassword,
 		'add-payment-method': AddPaymentMethod,
-		'select-subscription': SelectSubscription
+		'transactions': Transactions,
 	},
-	computed: mapGetters(['isAccountModalOverview','isAccountModalEditProfile','isAccountModalUpdatePassword','isAccountModalAddPaymentMethod','isAccountModalSelectSubscription'])
-}
+	setup(){
+		return {
+			isAccountModalEditProfile: useStore().modals.isAccountModalEditProfile,
+			isAccountModalTransactions: useStore().modals.isAccountModalTransactions,
+			isAccountModalUpdatePassword: useStore().modals.isAccountModalUpdatePassword,
+			isAccountModalAddPaymentMethod: useStore().modals.isAccountModalAddPaymentMethod,
+		}
+	}
+})
 </script>

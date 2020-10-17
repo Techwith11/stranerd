@@ -1,5 +1,6 @@
-import { Media } from '@root/modules/core/data/models/base'
+import { Media } from '@modules/core/data/models/base'
 import firebase from '@root/services/firebase'
+import { DEFAULT_IMAGE_URL } from '@modules/core/services/uploader'
 
 export class UserEntity{
 	public readonly id: string
@@ -25,7 +26,7 @@ export class UserEntity{
 	get name(){ return this.userBio.name }
 	get email(){ return this.userBio.email }
 	get bio(){ return this.userBio.bio }
-	get image(){ return this.userBio.image?.link ?? DEFAULT_IMAGE_URL }
+	get image(){ return this.userBio.image?.link ||  DEFAULT_IMAGE_URL }
 
 	get teachableCourses(){
 		if(!this.roles.isTutor) return []
@@ -83,6 +84,3 @@ export interface Subscription {
 	planId: string
 	status: string
 }
-
-const url = `https://firebasestorage.googleapis.com/v0/b/stranerd-13084.appspot.com/o/${encodeURIComponent('users/images/user_profile.png')}?alt=media`
-const DEFAULT_IMAGE_URL = process.env.NODE_ENV === 'production' ? url : '/img/user_profile.png'

@@ -1,23 +1,23 @@
 <template>
 	<div id="sidebar" class="small bg-gold">
 		<router-link class="d-flex flex-column align-items-center" to="/posts">
-			<img src="@/assets/images/sidebar/posts.svg" alt="">
+			<img src="@application/assets/images/sidebar/posts.svg" alt="">
 			<p>Posts</p>
 		</router-link>
 		<router-link class="d-flex flex-column align-items-center" to="/sessions">
-			<img src="@/assets/images/sidebar/sessions.svg" alt="">
+			<img src="@application/assets/images/sidebar/sessions.svg" alt="">
 			<p>Sessions</p>
 		</router-link>
 		<router-link class="d-flex flex-column align-items-center" to="/courses">
-			<img src="@/assets/images/sidebar/courses.svg" alt="">
+			<img src="@application/assets/images/sidebar/courses.svg" alt="">
 			<p>Courses</p>
 		</router-link>
 		<router-link class="d-flex flex-column align-items-center" to="/tutors">
-			<img src="@/assets/images/sidebar/tutors.svg" alt="">
+			<img src="@application/assets/images/sidebar/tutors.svg" alt="">
 			<p>Tutors</p>
 		</router-link>
 		<router-link class="d-flex flex-column align-items-center" to="/shop">
-			<img src="@/assets/images/sidebar/shop.svg" alt="">
+			<img src="@application/assets/images/sidebar/shop.svg" alt="">
 			<p>Shop</p>
 		</router-link>
 	</div>

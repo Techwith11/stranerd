@@ -1,11 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import routes from '@/router/routes'
-import { Notify } from '@/config/notifications'
-import { closeNavbar, closeAccountDropdown, closeAdminDropdown } from '@/config'
-
-import { addToCachedScrolls, getCachedScroll, saveIntendedRoute } from '@/usecases/core/router'
-import { useStore } from '@/usecases/store'
+import routes from '@application/router/routes'
+import { addToCachedScrolls, getCachedScroll, saveIntendedRoute } from '@application/usecases/core/router'
+import { useStore } from '@application/usecases/store'
 
 Vue.use(VueRouter)
 
@@ -21,26 +18,23 @@ const router: VueRouter = new VueRouter({
 router.beforeEach(async (to, from, next) => {
 	addToCachedScrolls(from.fullPath, document.documentElement.scrollTop)
 	const requiresAuth = to.matched.some((route) => route.meta.requiresAuth)
+	const requiresNoAuth = to.matched.some((route) => route.meta.requiresNoAuth)
 	const requiresAdmin = to.matched.some((route) => route.meta.requiresAdmin)
 	const isLoggedIn = useStore().auth.isLoggedIn.value
 	const isAdmin = useStore().auth.isAdmin.value
+
 	if (requiresAuth && !isLoggedIn) {
-		await useStore().modals.setAuthModalLogin()
 		saveIntendedRoute(to.fullPath)
-		await Notify({ icon: 'error', 'title': 'Login to continue' })
-		return next('/')
+		return next('/auth/signin')
 	}
-	if(requiresAdmin && !isAdmin){
-		return next('/')
-	}
+	if(requiresNoAuth && isLoggedIn) return next('/')
+	if(requiresAdmin && !isAdmin) return next('/')
+
 	return next()
 })
 
 router.afterEach(() => {
 	document.getElementsByTagName('body')[0].scrollIntoView()
-	closeNavbar()
-	closeAccountDropdown()
-	closeAdminDropdown()
 })
 
 export default router

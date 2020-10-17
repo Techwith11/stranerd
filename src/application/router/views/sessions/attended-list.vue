@@ -1,13 +1,18 @@
 <template>
 	<Default>
-		<helper-spinner v-if="isLoading" />
+		<page-loading v-if="isLoading" />
 		<div class="container" v-else>
 			<session-nav />
-			<helper-message message="No sessions attended yet." v-if="sessions.length === 0" />
+			<div v-if="sessions.length === 0">
+				<helper-message message="You haven’t attended any session yet."  />
+				<button class="floating-button btn-success">
+					<router-link to="/tutors" class="text-white"><i class="fas fa-plus"></i></router-link>
+				</button>
+			</div>
 			<div v-else>
 				<session-card :session="session" v-for="session in sessions" :key="session['.key']" />
 				<div class="text-center small my-3" v-if="hasMore">
-					<i class="fas fa-spin fa-spinner mr-2 text-info" v-if="isOlderSessionsLoading"></i>
+					<loading class="mr-2" v-if="isOlderSessionsLoading" />
 					<span @click="isOlderSessionsLoading ? () => {} : fetchOlderSessions()">Fetch More</span>
 				</div>
 			</div>
@@ -16,9 +21,9 @@
 </template>
 
 <script>
-import SessionCard from '@/components/sessions/list/SessionCard'
-import SessionNav from '@/components/sessions/list/SessionNav'
-import { firestore } from '@/config/firebase'
+import SessionCard from '@application/components/sessions/list/SessionCard'
+import SessionNav from '@application/components/sessions/list/SessionNav'
+import { firestore } from '@application/config/firebase'
 import { mapGetters } from 'vuex'
 export default {
 	data: () => ({
@@ -38,14 +43,10 @@ export default {
 	async mounted(){
 		await this.getSessions()
 		this.fetched = true
+		await this.setSessionsListeners()
 		this.isLoading = false
 	},
-	async activated(){
-		if(this.fetched){
-			await this.setSessionsListeners()
-		}
-	},
-	deactivated(){
+	beforeDestroy(){
 		this.listener()
 	},
 	methods: {

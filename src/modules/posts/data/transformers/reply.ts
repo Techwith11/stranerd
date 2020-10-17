@@ -1,12 +1,12 @@
-import { timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
-import { ReplyFromModel, ReplyToModel } from '@root/modules/posts/data/models/reply'
-import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
+import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
+import { ReplyFromModel, ReplyToModel } from '../models/reply'
+import { ReplyEntity } from '../../domain/entities/reply'
 
 export class ReplyTransformer {
 	public fromJSON(model: ReplyFromModel) {
-		const { id, body, dates: { createdAt }, votes, userId } = model
+		const { id, body, dates: { createdAt }, likes, dislikes, userId } = model
 		return new ReplyEntity({
-			id, body, userId, votes,
+			id, body, userId, likes, dislikes,
 			createdAt: timestampToDate(createdAt)!
 		})
 	}
@@ -15,7 +15,8 @@ export class ReplyTransformer {
 		return {
 			body: entity.body,
 			userId: entity.userId,
-			votes: entity.votes
+			likes: entity.likes,
+			dislikes: entity.dislikes,
 		}
 	}
 

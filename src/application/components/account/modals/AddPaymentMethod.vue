@@ -5,22 +5,26 @@
 			<h4 class="mb-0">Add Method</h4>
 			<a @click.prevent="closeAccountModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
-		<add-payment-method  :onAddMethodSuccessful="onAddMethodSuccessful"/>
+		<add-payment-method :onAddMethodSuccessful="onAddMethodSuccessful"/>
 	</div>
 </template>
 
-<script>
-import AddPaymentMethod from '@/components/helpers/payments/AddPaymentMethod'
-import { mapActions } from 'vuex'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import AddPaymentMethod from '@application/components/helpers/payments/AddPaymentMethod.vue'
+import { Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
+export default defineComponent({
 	components: {
 		'add-payment-method': AddPaymentMethod
 	},
-	methods: {
-		...mapActions(['closeAccountModal']),
-		onAddMethodSuccessful(){
-			new window.Toast({ icon: 'success', title: 'Refresh to see payment method details' })
+	setup(){
+		return {
+			closeAccountModal: useStore().modals.closeAccountModal,
+			onAddMethodSuccessful: async () => {
+				await Notify({ icon: 'success', title: 'Refresh to see payment method details' })
+			}
 		}
 	}
-}
+})
 </script>

@@ -8,16 +8,16 @@
 					<a @click.prevent="closeEditModal"><i class="fas fa-times text-danger"></i></a>
 				</div>
 			</template>
-			<template slot="buttonText">Edit Article</template>
+			<template slot="buttonText">Save Article</template>
 		</article-form>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useEditArticle } from '@/usecases/blog/articles'
-import ArticleForm from '@/components/blog/ArticleForm.vue'
-import { useStore } from '@/usecases/store'
+import { useEditArticle } from '@application/usecases/blog/articles'
+import ArticleForm from '@application/components/blog/ArticleForm.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	name: 'EditArticle',
 	components: {

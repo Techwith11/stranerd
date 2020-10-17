@@ -1,7 +1,7 @@
-import { FirestoreService } from '@root/modules/core/services/firebase'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { ArticleBaseDataSource } from '@root/modules/blog/data/datasources/article-base'
-import { ArticleFromModel, ArticleToModel } from '@root/modules/blog/data/models/article'
+import { FirestoreService } from '@modules/core/services/firebase'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { ArticleBaseDataSource } from './article-base'
+import { ArticleFromModel, ArticleToModel } from '../models/article'
 
 export class ArticleFirebaseDataSource implements ArticleBaseDataSource{
 

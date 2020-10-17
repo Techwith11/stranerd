@@ -1,7 +1,7 @@
 // @ts-nocheck
-import { firestore, uploadFile } from '@/config/firebase'
-import { Store } from '@/store'
-import { checkForUnfinishedTests } from '@/config/tests'
+import { firestore, uploadFile } from '@application/config/firebase'
+import { Store } from '@application/store'
+import { checkForUnfinishedTests } from '@application/config/tests'
 
 const state = {
 	id: window.localStorage.getItem('user_id') ?? null,
@@ -16,7 +16,7 @@ const getters = {
 	isLoggedIn: (state) => !!(state.id && state.user.bio),
 	isAdmin: (state) => state.user?.roles?.isAdmin ?? false,
 	isTutor: (state) => state.user?.roles?.isTutor ?? false,
-	isSubscribed: (state) => (state.user?.account?.subscription?.id && state.user.account?.subscription?.status === 'Active') ?? false,
+	isSubscribed: () => false,//(state) => (state.user?.account?.subscription?.id && state.user.account?.subscription?.status === 'Active') ?? false,
 	questionsLeft: (state) => state.user?.account?.questions ?? 0
 }
 

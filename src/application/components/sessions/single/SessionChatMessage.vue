@@ -1,18 +1,18 @@
 <template>
-	<li class="d-flex" :class="{'justify-content-end': isByMe}" v-if="chat['.key']">
-		<div class="alert alert-warning" role="alert">
+	<li class="d-flex small" :class="{'justify-content-end': isByMe}" v-if="chat['.key']">
+		<div class="chat" :class="isByMe ? 'mine' : 'not-mine'">
 			<p class="m-0" v-if="!chat.media">{{ chat.content }}</p>
 			<div class="d-flex justify-content-between align-items-center" v-if="chat.media">
 				<span class="mr-3 d-block text-truncate">{{ chat.media.name }}</span>
-				<a :href="chat.media.link" download>
+				<a :href="chat.media.link" target="__blank">
 					<i class="fas fa-download text-info"></i>
 				</a>
 			</div>
-			<div class="d-flex justify-content-between small">
-				<span class="mr-5 text-black-50">{{ getChatTime }}</span>
-				<span :class="{'d-none':!isByMe, 'text-primary': !isChatRead, 'text-success': isChatRead }">
+			<div class="d-flex justify-content-between small mt-1">
+				<span class="mr-2" :class="{'d-none':!isByMe, 'text-primary': !isChatRead, 'text-success': isChatRead }">
 					<i class="fas fa-check"></i><i class="fas fa-check ml-n2"></i>
 				</span>
+				<span>{{ getChatTime }}</span>
 			</div>
 		</div>
 	</li>
@@ -65,7 +65,42 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-	.alert{
+	.chat{
+		min-width: 6rem;
 		max-width: 75%;
+	    padding: 1rem;
+	    margin: 0.25rem 0;
+	}
+	.mine{
+		border-radius: 1.5rem 1.5rem 0 1.5rem;
+		background: $primary-light;
+		color: $text-black;
+		position: relative;
+		&::after{
+		    content: '';
+			top: 100%;
+			right:0;
+		    position: absolute;
+			width: 2.5rem;
+			height: 2.5rem;
+			border-top-right-radius: 50%;
+			box-shadow: 0 -1.25rem 0 0 $primary-light;
+		}
+	}
+	.not-mine{
+		border-radius: 1.5rem 1.5rem 1.5rem 0;
+		background: #707070;
+		color: $white;
+		position: relative;
+		&::after{
+			content: '';
+			top: 100%;
+			left: 0;
+			position: absolute;
+			width: 2.5rem;
+			height: 2.5rem;
+			border-top-left-radius: 50%;
+			box-shadow: -1.25rem 0 0 #707070;
+		}
 	}
 </style>

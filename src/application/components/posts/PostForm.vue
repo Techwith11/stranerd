@@ -1,20 +1,20 @@
 <template>
 	<div>
-		<helper-spinner v-if="subjectLoading" />
+		<page-loading v-if="subjectLoading" />
 		<form v-else class="my-3" @submit.prevent="createPost">
 			<div class="form-group my-3">
 				<h6>Title</h6>
 				<input type="text" class="form-control" placeholder="eg What is the result of integrating 2x" v-model="factory.title"
 					:class="{'is-invalid': factory.errors.title,'is-valid': factory.isValid('title')}">
 				<small class="small text-danger d-block" v-if="factory.errors.title">{{ factory.errors.title }}</small>
-				<small class="small text-muted">One quick sentence summary of your question</small>
+				<small class="small text-muted">One sentence title of your question</small>
 			</div>
 			<div class="form-group my-3">
 				<h6>Body</h6>
 				<editor :model.sync="factory.body" path='posts/body'
 					:valid="factory.isValid('body')" :error="factory.errors.body" placeholder=""
 				/>
-				<small class="small text-muted">Include all information necessary for someone to answer your question</small>
+				<small class="small text-muted">Please include all necessary information for proper understanding and response to your question</small>
 			</div>
 			<div class="form-group my-3">
 				<h6>Related Subject</h6>
@@ -46,10 +46,10 @@
 			</div>
 			<div class="d-flex justify-content-end">
 				<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid" v-if="isLoggedIn">
-					<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+					<loading class="mr-2" v-if="loading" />
 					<span>Post question</span>
 				</button>
-				<button class="btn-success" @click="login" v-else>
+				<button type="button" class="btn-success" @click="login" v-else>
 					Login to continue
 				</button>
 			</div>
@@ -59,9 +59,9 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
-import { useCreatePost } from '@/usecases/posts/posts'
-import { useTags } from '@/usecases/core/forms'
-import { useSubjects } from '@/usecases/courses/subjects'
+import { useCreatePost } from '@application/usecases/posts/posts'
+import { useTags } from '@application/usecases/core/forms'
+import { useSubjects } from '@application/usecases/courses/subjects'
 export default defineComponent({
 	name: 'PostForm',
 	setup(){

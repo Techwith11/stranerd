@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<div class="container pt-3 pb-5">
-			<helper-spinner v-if="isLoading"/>
+			<page-loading v-if="isLoading"/>
 			<div v-else>
 				<div v-if="isTutor">
 					<select class="form-control text-capitalize mb-3" v-model="course">
@@ -34,7 +34,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { checkForUnfinishedTests, startTest } from '@/config/tests'
+import { checkForUnfinishedTests, startTest } from '@application/config/tests'
 export default {
 	name: 'TestsTutors',
 	data: () => ({
@@ -84,7 +84,7 @@ export default {
 		const course = this.$route.query.course?.toLowerCase()
 		this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]
 	},
-	async activated(){
+	async mounted(){
 		if(!this.isTutor){ await this.$router.push('/') }
 		const course = this.$route.query.course?.toLowerCase()
 		this.course = this.tutor.courses.includes(course) ? course : this.tutor.courses[0]

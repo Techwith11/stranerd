@@ -1,8 +1,8 @@
 import { computed, reactive, ref } from '@vue/composition-api'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
-import { FindUser, GetTutors } from '@root/modules/users'
-import router from '@/router'
-import { Notify } from '@/config/notifications'
+import { UserEntity } from '@modules/users/domain/entities/user'
+import { FindUser, GetTutors } from '@modules/users'
+import router from '@application/router'
+import { Notify } from '@application/config/notifications'
 import { firestore } from '@root/services/firebase'
 
 const users: UserEntity[] = reactive([])
@@ -16,14 +16,20 @@ const globalState = reactive({
 const addToUsersList = (user: UserEntity) => {
 	const index = users.findIndex((u) => u.id === user.id)
 	if(index === -1) users.push(user)
-	else users[index] = user
+	else users.splice(index, 1, user)
+}
+
+const addToTutorsList = (tutor: UserEntity) => {
+	const index = globalState.tutors.findIndex((t) => t.id === tutor.id)
+	if(index === -1) globalState.tutors.push(tutor)
+	else globalState.tutors.splice(index, 1, tutor)
 }
 
 const fetchTutors = async () => {
 	globalState.loading = true
 	const tutors = await GetTutors.call()
 	tutors.forEach((tutor) => {
-		globalState.tutors.push(tutor)
+		addToTutorsList(tutor)
 		addToUsersList(tutor)
 	})
 	globalState.loading = false
@@ -45,9 +51,9 @@ export const useTutorsList = () => {
 		course, name,
 
 		filteredTutors: computed(() => {
-			let filtered = globalState.tutors
-			if(course.value !== '') filtered = filtered.filter((tutor: UserEntity) => tutor.tutor?.courses.includes(course.value) && tutor.tutor.levels[course.value] > 0)
-			return filtered.filter((tutor: UserEntity) => tutor.name.toLowerCase().includes(name.value.toLowerCase()))
+			let tutors = globalState.tutors
+			if(course.value !== '') tutors = tutors.filter((tutor) => tutor.tutor?.courses.includes(course.value) && tutor.tutor.levels[course.value] > 0)
+			return tutors.filter((tutor) => tutor.name.toLowerCase().includes(name.value.toLowerCase()))
 		})
 	}
 }
@@ -72,7 +78,7 @@ export const fetchUser = async (id: string) => {
 		const user = await FindUser.call(id)
 		if(user) addToUsersList(user)
 	}
-	return computed(() => users.find((user) => user.id === id)).value
+	return users.find((user) => user.id === id)
 }
 
 const userStates: {[key:string]: {loading:boolean,error:string, user: UserEntity | undefined, sessions: object[]}} = {}

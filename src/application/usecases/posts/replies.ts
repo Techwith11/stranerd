@@ -1,10 +1,12 @@
-import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
+import { ReplyEntity } from '@modules/posts/domain/entities/reply'
 import { computed, reactive, watch } from '@vue/composition-api'
-import { AddReply, DownvoteReply, GetReplyFactory, ListenToReplies, UpvoteReply } from '@root/modules/posts'
-import { Notify } from '@/config/notifications'
-import { fetchUser } from '@/usecases/users/users'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
-import { useStore } from '@/usecases/store'
+import {
+	AddReply, DislikeReply, GetReplyFactory, LikeReply, ListenToReplies,
+} from '@modules/posts'
+import { Notify } from '@application/config/notifications'
+import { fetchUser } from '@application/usecases/users/users'
+import { UserEntity } from '@modules/users/domain/entities/user'
+import { useStore } from '@application/usecases/store'
 
 const repliesGlobalState: { [key: string]: {
 	loading: boolean,
@@ -14,7 +16,7 @@ const repliesGlobalState: { [key: string]: {
 } } = {}
 const singleReplyGlobalState: { [key: string]: {
 	loading: boolean,
-	voting: boolean,
+	liking: boolean,
 	user: UserEntity | undefined
 }} = {}
 
@@ -26,12 +28,9 @@ const startListener = async (postId: string) => {
 export const useReplies = (postId: string) => {
 	if(repliesGlobalState[postId] === undefined){
 		repliesGlobalState[postId] = reactive({
-			fetched: false,
 			loading: false,
 			replies: [] as ReplyEntity[],
 			error: '',
-			hasMore: false,
-			olderRepliesLoading: false,
 			listener: () => {},
 		})
 	}
@@ -52,7 +51,9 @@ export const useReplies = (postId: string) => {
 	}
 }
 
-export const useSingleReply = (postId: string,reply: ReplyEntity) => {
+export const useSingleReply = (postId: string, reply: ReplyEntity) => {
+	reply = repliesGlobalState[postId].replies.find((r) => r.id === reply.id)!
+
 	const fetchReplyUser = async () => {
 		singleReplyGlobalState[reply.id].loading = true
 		singleReplyGlobalState[reply.id].user = await fetchUser(reply.userId)
@@ -61,35 +62,37 @@ export const useSingleReply = (postId: string,reply: ReplyEntity) => {
 	if(singleReplyGlobalState[reply.id] === undefined){
 		singleReplyGlobalState[reply.id] = reactive({
 			loading: false,
-			voting: false,
-			votes: [],
+			liking: false,
 			user: undefined
 		})
 		fetchReplyUser()
 	}
 
-	const upvoteReply = async () => {
+	const likeReply = async () => {
 		const id = useStore().auth.getId.value
-		singleReplyGlobalState[reply.id].voting = true
-		await UpvoteReply.call(postId, reply, id)
-		repliesGlobalState[postId].replies.find((r) => r.id === reply.id)!.votes[id] = true
-		singleReplyGlobalState[reply.id].voting = false
+		singleReplyGlobalState[reply.id].liking = true
+		await LikeReply.call(postId, reply, id)
+		reply.likes[id] = true
+		reply.dislikes[id] = false
+		singleReplyGlobalState[reply.id].liking = false
 	}
 
-	const downvoteReply = async () => {
+	const dislikeReply = async () => {
 		const id = useStore().auth.getId.value
-		singleReplyGlobalState[reply.id].voting = true
-		await DownvoteReply.call(postId, reply, id)
-		repliesGlobalState[postId].replies.find((r) => r.id === reply.id)!.votes[id] = false
-		singleReplyGlobalState[reply.id].voting = false
+		singleReplyGlobalState[reply.id].liking = true
+		await DislikeReply.call(postId, reply, id)
+		reply.dislikes[id] = true
+		reply.likes[id] = false
+		singleReplyGlobalState[reply.id].liking = false
 	}
 
 	return {
 		loading: computed(() => singleReplyGlobalState[reply.id].loading),
-		voting: computed(() => singleReplyGlobalState[reply.id].voting),
+		liking: computed(() => singleReplyGlobalState[reply.id].liking),
 		user: computed(() => singleReplyGlobalState[reply.id].user),
-		canVote: computed(() => reply.userId !== useStore().auth.getId.value && !singleReplyGlobalState[reply.id].voting),
-		upvoteReply, downvoteReply
+		cannotLike: computed(() => reply.likes[useStore().auth.getId.value] || singleReplyGlobalState[reply.id].liking),
+		cannotDislike: computed(() => reply.dislikes[useStore().auth.getId.value] || singleReplyGlobalState[reply.id].liking),
+		likeReply, dislikeReply
 	}
 }
 

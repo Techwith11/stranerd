@@ -1,8 +1,8 @@
 import { computed, reactive } from '@vue/composition-api'
-import { NoteEntity } from '@root/modules/shop/domain/entities/note'
-import { FindNote, GetNotes, AddNote, GetNoteFactory, UpdateNote, DeleteNote } from '@root/modules/shop'
-import { Alert, Notify } from '@/config/notifications'
-import { useStore } from '@/usecases/store'
+import { NoteEntity } from '@modules/shop/domain/entities/note'
+import { FindNote, GetNotes, AddNote, GetNoteFactory, UpdateNote, DeleteNote } from '@modules/shop'
+import { Alert, Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 
@@ -17,12 +17,12 @@ const globalState = reactive({
 
 const setNote = (note: NoteEntity) => {
 	const index = globalState.notes.findIndex((n) => n.id === note.id)
-	if(index !== -1) globalState.notes[index] = note
+	if(index !== -1) globalState.notes.splice(index, 1, note)
 	else globalState.notes.push(note)
 }
 const unshiftNote = (note: NoteEntity) => {
 	const index = globalState.notes.findIndex((n) => n.id === note.id)
-	if(index !== -1) globalState.notes[index] = note
+	if(index !== -1) globalState.notes.splice(index, 1, note)
 	else globalState.notes.unshift(note)
 }
 const fetchNotes = async () => {

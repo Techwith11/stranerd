@@ -6,31 +6,35 @@
 			<a @click.prevent="closeAccountModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
 		<div class="d-flex flex-column">
-			<button class="btn btn-warning text-white" @click="setAccountModalEditProfile">Edit Profile</button>
-			<button class="btn btn-warning text-white" @click="setAccountModalUpdatePassword">Update Password</button>
-			<button class="btn btn-success" @click="setAccountModalSelectSubscription">{{ isSubscribed ? 'Change subscription' : 'Subscribe now' }}</button>
-			<button class="btn btn-danger" @click="cancelSubscription" v-if="isSubscribed" :disabled="loading">
-				<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+			<button class="btn mx-0 btn-warning text-white" @click="setAccountModalEditProfile">Edit Profile</button>
+			<button class="btn mx-0 btn-warning text-white" @click="setAccountModalUpdatePassword">Update Password</button>
+			<!--<button class="btn mx-0 btn-success" @click="goToPricing">{{ isSubscribed ? 'Change subscription' : 'Subscribe now' }}</button>
+			<button class="btn mx-0 btn-danger" @click="cancelSubscription" v-if="isSubscribed" :disabled="loading">
+				<loading class="mr-2" v-if="loading" />
 				<span>Cancel subscription</span>
-			</button>
+			</button>-->
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCancelSubscription } from '@/usecases/payments/subscription'
-import { useStore } from '@/usecases/store'
+import { useCancelSubscription } from '@application/usecases/payments/subscription'
+import { useStore } from '@application/usecases/store'
+import router from '@application/router'
 export default defineComponent({
 	setup(){
 		const { loading, cancelSubscription } = useCancelSubscription()
+		const closeAccountModal = useStore().modals.closeAccountModal
+		const goToPricing = () => {
+			router.push('/pricing-plans')
+			closeAccountModal()
+		}
 		return {
-			loading, cancelSubscription,
+			loading, cancelSubscription, closeAccountModal, goToPricing,
 			isSubscribed: useStore().auth.isSubscribed,
-			closeAccountModal: useStore().modals.closeAccountModal,
 			setAccountModalEditProfile: useStore().modals.setAccountModalEditProfile,
 			setAccountModalUpdatePassword: useStore().modals.setAccountModalUpdatePassword,
-			setAccountModalSelectSubscription: useStore().modals.setAccountModalSelectSubscription,
 		}
 	}
 })

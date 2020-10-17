@@ -7,10 +7,11 @@
 	</Default>
 </template>
 
-<script>
-import UpgradeUserToAdmin from '@/components/admin/upgrades/UpgradeUserToAdmin'
-import UpgradeUserToTutor from '@/components/admin/upgrades/UpgradeUserToTutor'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import UpgradeUserToAdmin from '@application/components/admin/upgrades/UpgradeUserToAdmin.vue'
+import UpgradeUserToTutor from '@application/components/admin/upgrades/UpgradeUserToTutor.vue'
+export default defineComponent({
 	name: 'Upgrades',
 	components: {
 		'upgrade-user-to-admin': UpgradeUserToAdmin,
@@ -28,5 +29,5 @@ export default {
 			]
 		}
 	}
-}
+})
 </script>

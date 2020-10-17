@@ -10,7 +10,8 @@
 					<span v-if="isAdmin" class="d-inline-block">
 						<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
 						<a class="text-danger" @click.prevent="deleteArticle" :disabled="delLoading">
-							<i class="fas mr-1" :class="delLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+							<loading class="mr-1" v-if="delLoading" />
+							<i class="fas mr-1 fa-trash" v-else></i>
 							<span>Delete</span>
 						</a>
 					</span>
@@ -26,11 +27,11 @@
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
-import { setCurrentEditingArticle, useDeleteArticle } from '@/usecases/blog/articles'
-import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
-import { capitalizeText } from '@root/modules/core/validations/sanitizers'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
-import { useStore } from '@/usecases/store'
+import { setCurrentEditingArticle, useDeleteArticle } from '@application/usecases/blog/articles'
+import { ArticleEntity } from '@modules/blog/domain/entities/article'
+import { capitalizeText } from '@modules/core/validations/sanitizers'
+import { UserEntity } from '@modules/users/domain/entities/user'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	props: {
 		article: {

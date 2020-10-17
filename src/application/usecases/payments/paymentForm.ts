@@ -1,13 +1,14 @@
 import { computed, reactive, Ref, ref } from '@vue/composition-api'
-import braintree, { client, hostedFields } from 'braintree-web'
-import { CreatePaymentMethod, GetClientToken } from '@root/modules/payments'
-import { Notify } from '@/config/notifications'
-import { useStore } from '@/usecases/store'
+import braintree, { client, hostedFields, paypalCheckout } from 'braintree-web'
+//@ts-ignore
+import { AuthorizationData, Button } from 'paypal-checkout'
+import { CreatePaymentMethod, GetClientToken } from '@modules/payments'
+import { Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
 
 const hostedFieldsInstance: Ref<braintree.HostedFields | undefined> = ref(undefined)
-
-const initializeFields = async () => {
-	const { braintree: braintreeToken } = await GetClientToken.call()
+const initializeFields = async (onPayPalAuthorization: (token: string | undefined) => void) => {
+	const { braintree: braintreeToken, paypal: paypalToken } = await GetClientToken.call()
 	const clientInstance = await client.create({ authorization: braintreeToken })
 	const month = new Date().getMonth() + 1 < 10 ? `0${new Date().getMonth() + 1}` : new Date().getMonth() + 1
 	const year = new Date().getFullYear()
@@ -21,15 +22,38 @@ const initializeFields = async () => {
 		}
 	}
 	hostedFieldsInstance.value = await hostedFields.create(options)
+	const paypalInstance = await paypalCheckout.create({ client: clientInstance, authorization: paypalToken })
+	Button.render({
+		env: process.env.NODE_ENV === 'production' ? 'production' : 'sandbox',
+		style: {
+			label: 'paypal', size: 'large', shape: 'rect',
+			color: 'gold', tagline: true
+		},
+		//@ts-ignore
+		payment: () => paypalInstance.createPayment({ flow: 'vault', displayName: 'Stranerd', currency: 'USD' }),
+		onAuthorize: async (info: AuthorizationData) => {
+			const response = await paypalInstance.tokenizePayment(info)
+			const result = await CreatePaymentMethod.call(useStore().auth.getId.value, response.nonce)
+			if(result.success){
+				await Notify({ icon: 'success', title: 'Paypal account added successfully' })
+				onPayPalAuthorization(result.token)
+			}else {
+				await Notify({ icon: 'error', title: 'Error adding paypal account' })
+			}
+			return response
+		},
+		onCancel: () => Notify({ icon: 'warning', title: 'Account addition cancelled.' }),
+		onError: (error: string) => Notify({ icon: 'error', title: error })
+	}, '#paypalButton')
 }
 
-export const usePaymentForm = () => {
+export const usePaymentForm = (onPayPalAuthorization: (token: string | undefined) => void) => {
 	const state = reactive({
 		loading: false
 	})
 	const initializeHostedFields = async () => {
 		state.loading = true
-		await initializeFields().catch(async (e) => await Notify({ title: e.message, icon: 'error' }))
+		await initializeFields(onPayPalAuthorization).catch(async (e) => await Notify({ title: e.message, icon: 'error' }))
 		state.loading = false
 	}
 	return {
@@ -48,7 +72,7 @@ export const useCreatePaymentMethods = () => {
 			state.loading = true
 			const { nonce } = await hostedFieldsInstance.value.tokenize()
 			const res = await CreatePaymentMethod.call(useStore().auth.getId.value, nonce)
-			if(res) await Notify({ title: 'Payment method saved', icon: 'success' })
+			if(res.success) await Notify({ title: 'Payment method saved', icon: 'success' })
 			else await Notify({ title: 'Error saving payment method', icon: 'error' })
 			state.loading = false
 			return res
@@ -59,30 +83,3 @@ export const useCreatePaymentMethods = () => {
 		createPaymentMethod
 	}
 }
-
-/*let paypalInstance = await paypalCheckout.create({ client: clientInstance, client_id: tokens.paypal })
-			paypal.Button.render({
-				env: 'sandbox',
-				style: { label: 'paypal', size: 'large', shape: 'rect' },
-				payment: () => paypalInstance.createPayment({
-					flow: 'vault',
-					displayName: 'Stranerd',
-					currency: 'USD'
-				}),
-				onAuthorize: async (info, options) => {
-					let payload = await paypalInstance.tokenizePayment(options)
-					let result = await helpers.createPaymentMethod({
-						id: getters.getId,
-						nonce: payload.nonce
-					})
-					if(result === true){
-						new window.Toast({ icon: 'success', title: 'Paypal account added successfully' })
-						data.onPayPalAuthorization(result)
-					}else {
-						new window.Toast({icon: 'error', title: 'Error adding paypal account'})
-					}
-					data.onPayPalAuthorization(result)
-				},
-				onCancel: () => new window.Toast({ icon: 'warning', title: 'Account addition cancelled.' }),
-				onError: error => new window.Toast({ icon: 'error', title: error.message })
-			}, '#paypalButton')*/

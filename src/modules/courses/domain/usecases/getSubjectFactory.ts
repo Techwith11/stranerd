@@ -1,4 +1,4 @@
-import { SubjectFactory } from '@root/modules/courses/domain/factories/subject'
+import { SubjectFactory } from '../factories/subject'
 
 export class GetSubjectFactoryUsecase {
 	public call(): SubjectFactory {

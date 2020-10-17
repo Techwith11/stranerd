@@ -1,5 +1,5 @@
-import { IPaymentRepository } from '@root/modules/payments/domain/irepositories/ipayment'
-import { PaymentBaseDataSource } from '@root/modules/payments/data/datasources/payment-base'
+import { IPaymentRepository } from '../../domain/irepositories/ipayment'
+import { PaymentBaseDataSource } from '../datasources/payment-base'
 
 export class PaymentRepository implements IPaymentRepository {
 	private readonly dataSource: PaymentBaseDataSource
@@ -12,7 +12,7 @@ export class PaymentRepository implements IPaymentRepository {
 		return await this.dataSource.cancelSubscription({ id: userId })
 	}
 
-	public async createMethod(userId: string, nonce: string): Promise<boolean> {
+	public async createMethod(userId: string, nonce: string): Promise<{ success: boolean, token: string | undefined }> {
 		return await this.dataSource.createMethod({ id: userId, nonce })
 	}
 

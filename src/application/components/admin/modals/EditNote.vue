@@ -8,16 +8,16 @@
 					<a @click.prevent="closeEditModal"><i class="fas fa-times text-danger"></i></a>
 				</div>
 			</template>
-			<template slot="buttonText">Update Note</template>
+			<template slot="buttonText">Save Note</template>
 		</note-form>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useEditNote } from '@/usecases/shop/notes'
-import NoteForm from '@/components/admin/notes/NoteForm.vue'
-import { useStore } from '@/usecases/store'
+import { useEditNote } from '@application/usecases/shop/notes'
+import NoteForm from '@application/components/admin/notes/NoteForm.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	name: 'EditNote',
 	components: {

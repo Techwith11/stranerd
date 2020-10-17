@@ -8,7 +8,7 @@
 		<p class="lead font-weight-bold">{{ user.name }}</p>
 		<p class="text-center w-75">{{ user.bio }}</p>
 		<div v-if="isTutor">
-			<p class="text-capitalize">Courses: {{ user.teachableCourses.join(',') }}</p>
+			<p class="text-capitalize">Courses: {{ user.teachableCourses.join(', ') }}</p>
 			<p class="text-center">
 				<rating-stars class="d-inline ml-1" :rating="user.tutor.rating"/>
 			</p>
@@ -19,9 +19,9 @@
 
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
-import RatingStars from '@/components/helpers/RatingStars.vue'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
-import { useStore } from '@/usecases/store'
+import RatingStars from '@application/components/helpers/RatingStars.vue'
+import { UserEntity } from '@modules/users/domain/entities/user'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	props: {
 		user: {

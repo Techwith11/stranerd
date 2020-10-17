@@ -1,5 +1,5 @@
 import { computed, reactive } from '@vue/composition-api'
-import { ModuleEntity, SubjectEntity } from '@root/modules/courses/domain/entities/subject'
+import { ModuleEntity, SubjectEntity } from '@modules/courses/domain/entities/subject'
 import {
 	AddSubject,
 	DeleteSubject,
@@ -7,10 +7,10 @@ import {
 	GetSubjectFactory,
 	GetSubjects,
 	UpdateSubject
-} from '@root/modules/courses'
-import router from '@/router'
-import { Alert, Notify } from '@/config/notifications'
-import { useStore } from '@/usecases/store'
+} from '@modules/courses'
+import router from '@application/router'
+import { Alert, Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
 
 const globalState = reactive({
 	subjects: reactive([]) as SubjectEntity[],
@@ -32,7 +32,7 @@ const fetchSubject = async (id: string) => {
 	if(subject){
 		const index = globalState.subjects.findIndex((s) => s.id === subject.id)
 		if(index === -1) globalState.subjects.push(subject)
-		else globalState.subjects[index] = subject
+		else globalState.subjects.splice(index, 1, subject)
 	}
 	globalState.loading = false
 }

@@ -1,4 +1,4 @@
-import { ArticleFactory } from '@root/modules/blog/domain/factories/article'
+import { ArticleFactory } from '../factories/article'
 
 export class GetArticleFactoryUseCase {
 	public call () :ArticleFactory {

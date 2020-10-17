@@ -1,7 +1,9 @@
 <template>
 	<Default>
-		<div class="container py-5">
-			<h3 class="text-center mb-4">Ask A Question</h3>
+		<banner>
+			<h1>Post a Question</h1>
+		</banner>
+		<div class="shadow-sm rounded-xl p-3 mx-auto my-4" style="max-width: 600px">
 			<create-post />
 		</div>
 	</Default>
@@ -10,7 +12,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import CreatePost from '@/components/posts/PostForm.vue'
+import CreatePost from '@application/components/posts/PostForm.vue'
 export default defineComponent({
 	name: 'AskAQuestion',
 	components: {

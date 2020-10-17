@@ -1,18 +1,22 @@
 import Vue from 'vue'
 import VueMeta from 'vue-meta'
-import Vuelidate from 'vuelidate'
+// @ts-ignore
+import VueInstantSearch from 'vue-instantsearch'
 // @ts-ignore
 import VueChatScroll from 'vue-chat-scroll'
 import SweetAlert from 'sweetalert2'
-import '@/config/components'
-import '@/config/registerServiceWorker'
-import '@/style/index.scss'
+import '@application/config/components'
+import '@application/config/registerServiceWorker'
+import '@application/style/index.scss'
 import 'bootstrap'
+import { acceptUpdate, addWaitingListener } from '@application/config/registerServiceWorker'
+import { RegisterAuthChangedCB } from '@modules/users'
+import { useStore } from '@/usecases/store'
 
 export const setup = () => {
 	Vue.use(VueMeta, { keyName: 'meta', refreshOnceOnNavigation: true })
-	Vue.use(Vuelidate)
 	Vue.use(VueChatScroll)
+	Vue.use(VueInstantSearch)
 
 	// @ts-ignore
 	window.SweetAlert = SweetAlert
@@ -23,23 +27,10 @@ export const setup = () => {
 		showConfirmButton: false,
 		timer: 3000
 	})
-}
+	addWaitingListener(() => {
+		//alert('New content has been detected.')
+		acceptUpdate(() => true)//confirm('Press OK to load the content or CANCEL to ignore.'))
+	})
 
-export const closeNavbar = () => {
-	const collapse = document.getElementById('navbar')
-	collapse ? collapse.classList.remove('show') : null
-}
-
-export const closeAccountDropdown = () => {
-	const collapse = document.getElementById('accountDropdown')
-	collapse ? collapse.classList.remove('show') : null
-	const menu = document.getElementById('accountDropdownMenu')
-	menu ? menu.classList.remove('show') : null
-}
-
-export const closeAdminDropdown = () => {
-	const collapse = document.getElementById('adminDropdown')
-	collapse ? collapse.classList.remove('show') : null
-	const menu = document.getElementById('adminDropdownMenu')
-	menu ? menu.classList.remove('show') : null
+	if(process.env.NODE_ENV === 'production') RegisterAuthChangedCB.call((user) => useStore().auth.setId(user ? user.uid : null))
 }

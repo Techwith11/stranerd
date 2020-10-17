@@ -1,6 +1,6 @@
-import { IArticleRepository } from '@root/modules/blog/domain/irepositories/iarticle'
-import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
+import { IArticleRepository } from '../irepositories/iarticle'
+import { ArticleEntity } from '../entities/article'
+import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetArticlesUseCase {
 	private repository: IArticleRepository

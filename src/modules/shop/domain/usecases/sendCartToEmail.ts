@@ -1,5 +1,5 @@
-import { NoteEntity } from '@root/modules/shop/domain/entities/note'
-import { ICartRepository } from '@root/modules/shop/domain/irepositories/icart'
+import { NoteEntity } from '../entities/note'
+import { ICartRepository } from '../irepositories/icart'
 
 export class SendCartToEmailUseCase {
 	private repository: ICartRepository

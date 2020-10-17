@@ -1,6 +1,6 @@
 <template>
 	<div class="m-md-5">
-		<helper-spinner v-if="loading" />
+		<page-loading v-if="loading" />
 		<div class="d-flex align-items-center justify-content-between my-3">
 			<a @click.prevent="setCartModalOverview"><i class="fas fa-arrow-left"></i></a>
 			<h4 class="mb-0">Select Payment Method</h4>
@@ -13,9 +13,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCart, useCheckout } from '@/usecases/shop/cart'
-import { Notify } from '@/config/notifications'
-import { useStore } from '@/usecases/store'
+import { useCart, useCheckout } from '@application/usecases/shop/cart'
+import { Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	setup(){
 		const { cartLength, cartPrice } = useCart()

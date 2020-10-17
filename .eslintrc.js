@@ -21,7 +21,14 @@ module.exports = {
 		'semi': ['error', 'never'],
 		'quotes': ['error', 'single'],
 		'prefer-const': ['error'],
-		'arrow-parens': ['error', 'always']
+		'arrow-parens': ['error', 'always'],
+		'vue/html-indent': ['warn', 'tab', {
+			'attribute': 1,
+			'baseIndent': 1,
+			'closeBracket': 0,
+			'alignAttributesVertically': true,
+			'ignores': []
+		}]
 	},
 	overrides: [
 		{

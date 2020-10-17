@@ -1,41 +1,31 @@
 <template>
 	<Default>
-		<div id="background">
-			<div class="p-3">
-				<account-nav />
-				<router-view />
-			</div>
+		<div class="container py-3">
+			<template v-if="isLoggedIn">
+				<profile-info />
+				<payment-info />
+				<tutor-info />
+			</template>
 		</div>
 	</Default>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import AccountNav from '@/components/account/single/AccountNav.vue'
-import { useStore } from '@/usecases/store'
+import ProfileInfo from '@application/components/account/single/ProfileInfo.vue'
+import TutorInfo from '@application/components/account/single/TutorInfo.vue'
+import PaymentInfo from '@application/components/account/single/PaymentInfo.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
-	name: 'Account',
 	components: {
-		'account-nav': AccountNav
+		'profile-info': ProfileInfo,
+		'tutor-info': TutorInfo,
+		'payment-info': PaymentInfo
 	},
 	setup(){
-		return { getUser: useStore().auth.getUser }
-	},
-	meta(){
 		return {
-			title: `${(this.getUser as any).bio?.name ?? 'User'} Profile`,
-			meta: [
-				{
-					vmid: 'robots',
-					name: 'robots',
-					content: 'none'
-				}
-			]
+			isLoggedIn: useStore().auth.isLoggedIn
 		}
-	}
+	},
 })
 </script>
-
-<style lang="scss" scoped>
-	#background{ background: $primary-light; min-height: 100vh; }
-</style>

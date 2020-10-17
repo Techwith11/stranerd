@@ -1,5 +1,5 @@
-import { IPostRepository } from '@root/modules/posts/domain/irepositories/ipost'
-import { PostEntity } from '@root/modules/posts/domain/entities/post'
+import { IPostRepository } from '../irepositories/ipost'
+import { PostEntity } from '../entities/post'
 
 export class FindPostUseCase {
 	private repository: IPostRepository

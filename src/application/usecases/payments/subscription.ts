@@ -1,9 +1,9 @@
 import { computed, reactive } from '@vue/composition-api'
-import { PlanEntity } from '@root/modules/payments/domain/entities/plan'
-import { CancelSubscription, GetSubscriptionPlans, SubscribeToPlan } from '@root/modules/payments'
-import { useStore } from '@/usecases/store'
-import { Alert, Notify } from '@/config/notifications'
-import router from '@/router'
+import { PlanEntity } from '@modules/payments/domain/entities/plan'
+import { CancelSubscription, GetSubscriptionPlans, SubscribeToPlan } from '@modules/payments'
+import { useStore } from '@application/usecases/store'
+import { Alert, Notify } from '@application/config/notifications'
+import router from '@application/router'
 
 const globalState = reactive({
 	plans: [] as PlanEntity[],

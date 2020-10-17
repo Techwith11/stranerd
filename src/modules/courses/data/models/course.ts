@@ -1,4 +1,4 @@
-import { Media } from '@root/modules/core/data/models/base'
+import { Media } from '@modules/core/data/models/base'
 import firebase from '@root/services/firebase'
 
 export interface CourseFromModel {

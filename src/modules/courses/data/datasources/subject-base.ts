@@ -1,5 +1,5 @@
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { SubjectFromModel, SubjectToModel } from '@root/modules/courses/data/models/subject'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { SubjectFromModel, SubjectToModel } from '../models/subject'
 
 export abstract class SubjectBaseDataSource {
 	public abstract add: (data: SubjectToModel) => Promise<string>

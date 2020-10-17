@@ -1,5 +1,5 @@
 <template>
-	<div class="card rounded-xl shadow">
+	<div class="card rounded-xl shadow-sm">
 		<img :src="article.image" class="card-img-top" alt="">
 		<div class="card-body">
 			<p class="small">Published {{ article.createdDate }}</p>
@@ -8,12 +8,13 @@
 			<p v-if="user.id" class="d-flex align-items-center">
 				<span>
 					<img :src="user.image" alt="" class="mr-2 border border-dark rounded-circle" width="40" height="40">
-					<router-link :to="`/users/${user.id}`" class="bolder text-black">by {{ user.name }}</router-link>
+					<router-link :to="`/users/${user.id}`" class="bolder text-dark">by {{ user.name }}</router-link>
 				</span>
 				<span v-if="isAdmin" class="ml-auto d-inline-block">
 					<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
 					<a class="text-danger" @click.prevent="deleteArticle" :disabled="delLoading">
-						<i class="fas mr-1" :class="delLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+						<loading class="mr-1" v-if="delLoading" />
+						<i class="fas mr-1 fa-trash" v-else></i>
 						<span>Delete</span>
 					</a>
 				</span>
@@ -24,10 +25,10 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive } from '@vue/composition-api'
-import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
-import { setCurrentEditingArticle, useDeleteArticle } from '@/usecases/blog/articles'
-import { fetchUser } from '@root/application/usecases/users/users'
-import { useStore } from '@/usecases/store'
+import { ArticleEntity } from '@modules/blog/domain/entities/article'
+import { setCurrentEditingArticle, useDeleteArticle } from '@application/usecases/blog/articles'
+import { fetchUser } from '@application/usecases/users/users'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	props: {
 		article: {

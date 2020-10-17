@@ -1,7 +1,7 @@
-import { DatabaseService, FunctionsService } from '@root/modules/core/services/firebase'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { ReplyBaseDataSource } from '@root/modules/posts/data/datasources/reply-base'
-import { ReplyFromModel, ReplyToModel } from '@root/modules/posts/data/models/reply'
+import { DatabaseService } from '@modules/core/services/firebase'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { ReplyBaseDataSource } from '../datasources/reply-base'
+import { ReplyFromModel, ReplyToModel } from '../models/reply'
 
 export class ReplyFirebaseDataSource implements ReplyBaseDataSource{
 
@@ -22,20 +22,18 @@ export class ReplyFirebaseDataSource implements ReplyBaseDataSource{
 		return await DatabaseService.listen(`posts/${postId}/replies`, cb, conditions)
 	}
 
-	public async upvote(post: string, reply: string, user: string, voterId: string) {
-		const dependencies = {
-			post, id: voterId,
-			user, reply
-		}
-		return await FunctionsService.call('upvoteReply', dependencies)
+	public async like(postId: string, replyId: string, userId: string) {
+		await DatabaseService.update(`posts/${postId}/replies/${replyId}`, {
+			[`likes/${userId}`]: true,
+			[`dislikes/${userId}`]: false
+		})
 	}
 
-	public async downvote(post: string, reply: string, user: string, voterId: string) {
-		const dependencies = {
-			post, id: voterId,
-			user, reply
-		}
-		return await FunctionsService.call('downvoteReply', dependencies)
+	public async dislike(postId: string, replyId: string, userId: string) {
+		await DatabaseService.update(`posts/${postId}/replies/${replyId}`, {
+			[`likes/${userId}`]: false,
+			[`dislikes/${userId}`]: true
+		})
 	}
 
 }

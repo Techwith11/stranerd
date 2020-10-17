@@ -1,5 +1,5 @@
-import { ISubjectRepository } from '@root/modules/courses/domain/irepositories/isubject'
-import { SubjectFactory } from '@root/modules/courses/domain/factories/subject'
+import { ISubjectRepository } from '../irepositories/isubject'
+import { SubjectFactory } from '../factories/subject'
 
 export class AddSubjectUsecase {
 	private repository: ISubjectRepository

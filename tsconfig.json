@@ -12,10 +12,11 @@
     "baseUrl": ".",
     "types": [
       "webpack-env",
-      "jest"
     ],
     "paths": {
       "@root/*": ["src/*"],
+      "@modules/*": ["src/modules/*"],
+      "@application/*": ["src/application/*"],
       "@/*": ["src/application/*"]
     },
     "lib": [

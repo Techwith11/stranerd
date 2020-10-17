@@ -12,7 +12,8 @@
 		<div class="ml-auto" v-if="isAdmin">
 			<a class="mr-3 text-warning" @click.prevent="openEditModal"><i class="fas fa-pen mr-1"></i>Edit</a>
 			<a class="text-danger" @click.prevent="deleteTutorQuestion">
-				<i class="fas mr-1" :class="delLoading ? 'fa-spinner fa-spin' : 'fa-trash'"></i>
+				<loading class="mr-1" v-if="delLoading" />
+				<i class="fas mr-1 fa-trash" v-else></i>
 				<span>Delete</span>
 			</a>
 		</div>
@@ -21,9 +22,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useStore } from '@/usecases/store'
-import { QuestionEntity } from '@root/modules/tests/domain/entities/question'
-import { setCurrentEditingTutorQuestion, useDeleteTutorQuestion } from '@/usecases/tests/tutorQuestions'
+import { useStore } from '@application/usecases/store'
+import { QuestionEntity } from '@modules/tests/domain/entities/question'
+import { setCurrentEditingTutorQuestion, useDeleteTutorQuestion } from '@application/usecases/tests/tutorQuestions'
 export default defineComponent({
 	props: {
 		question: {

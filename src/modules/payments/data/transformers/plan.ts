@@ -1,5 +1,5 @@
-import { PlanFromModel } from '@root/modules/payments/data/models/plan'
-import { PlanEntity } from '@root/modules/payments/domain/entities/plan'
+import { PlanFromModel } from '../models/plan'
+import { PlanEntity } from '../../domain/entities/plan'
 
 export class PlanTransformer {
 	public fromJSON(model: PlanFromModel){

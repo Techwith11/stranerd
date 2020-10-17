@@ -1,5 +1,5 @@
 <template>
-	<div class="p-3 white shadow-sm">
+	<div class="p-3 white shadow">
 		<p class="text-muted">Ask a Question</p>
 		<create-post />
 	</div>
@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import CreatePost from '@/components/posts/PostForm.vue'
+import CreatePost from '@application/components/posts/PostForm.vue'
 export default defineComponent({
 	components: {
 		'create-post': CreatePost

@@ -1,9 +1,9 @@
-import { IPostRepository } from '@root/modules/posts/domain/irepositories/ipost'
-import { PostBaseDataSource } from '@root/modules/posts/data/datasources/post-base'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { PostTransformer } from '@root/modules/posts/data/transformers/post'
-import { PostFromModel, PostToModel } from '@root/modules/posts/data/models/post'
-import { PostEntity } from '@root/modules/posts/domain/entities/post'
+import { IPostRepository } from '../../domain/irepositories/ipost'
+import { PostBaseDataSource } from '../datasources/post-base'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { PostTransformer } from '../transformers/post'
+import { PostFromModel, PostToModel } from '../models/post'
+import { PostEntity } from '../../domain/entities/post'
 
 export class PostRepository implements IPostRepository{
 	private dataSource: PostBaseDataSource

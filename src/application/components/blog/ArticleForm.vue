@@ -10,7 +10,7 @@
 				</a>
 			</div>
 			<div class="form-group my-3">
-				<input class="form-control" placeholder="Title" v-model.trim="factory.title"
+				<input class="form-control" placeholder="Title" v-model="factory.title"
 					:class="{'is-invalid': factory.errors.title, 'is-valid': factory.isValid('title')}">
 				<span class="small" v-if="factory.errors.title">{{ factory.errors.title }}</span>
 			</div>
@@ -32,7 +32,7 @@
 			</div>
 			<div class="d-flex flex-column my-3">
 				<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid">
-					<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+					<loading class="mr-2" v-if="loading" />
 					<span>
 						<slot name="buttonText">Submit</slot>
 					</span>
@@ -44,8 +44,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { ArticleFactory } from '@root/modules/blog/domain/factories/article'
-import { useFileInputs, useTags } from '@/usecases/core/forms'
+import { ArticleFactory } from '@modules/blog/domain/factories/article'
+import { useFileInputs, useTags } from '@application/usecases/core/forms'
 export default defineComponent({
 	name: 'ArticleForm',
 	props: {

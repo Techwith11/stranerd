@@ -1,6 +1,7 @@
 <template>
 	<Default>
-		<helper-spinner v-if="plansLoading" />
+		<banner />
+		<page-loading v-if="plansLoading" />
 		<div class="container py-5" v-else>
 			<div v-if="page === 1">
 				<div class="d-flex justify-content-center align-items-center mb-5">
@@ -10,42 +11,40 @@
 						<label for="toggle" class="custom-control-label">Annually</label>
 					</div>
 				</div>
-				<div class="row my-3">
-					<div class="col-lg-4 mb-5" v-for="(plan,index) in plans" :key="plan.id">
-						<div class="text-center alert mb-3 shadow" :class="`alert-${colors[index]}`">
-							<h5 class="text-capitalize mb-4">{{ plan.title }}</h5>
-							<p v-if="annual">save 16%</p>
-							<h1>&dollar;{{ annual ? plan.yearlyPrice : plan.monthlyPrice }}</h1>
-							<p>per {{ annual ? 'year' : 'month' }}</p>
+				<div class="my-3 d-flex flex-column flex-lg-row justify-content-center align-items-center">
+					<div class="cards p-3 p-lg-4 mb-3 shadow-sm rounded-lg" v-for="plan in plans" :key="plan.id" @click="setId(plan)"
+						:class="{'selected': (id === plan.yearlyId && annual) || (!annual && id === plan.monthlyId) }">
+						<h5 class="text-capitalize text-center font-weight-500 mb-4 plan-title">{{ plan.title }}</h5>
+						<div class="d-flex justify-content-center align-items-start">
+							<h1 class="display-4 font-weight-500 mb-1">&dollar;{{ annual ? plan.yearlyPrice : plan.monthlyPrice }}</h1>
+							<p v-if="annual" class="small text-success">save 16%</p>
 						</div>
-						<div class="alert shadow" :class="`alert-${colors[index]}`">
-							<p class="text-center">{{ plan.description }}</p>
-							<hr class="my-4">
-							<ul class="small list-group">
-								<li class="list-group-item">{{ plan.questions }} questions per month</li>
-								<li class="list-group-item">Unlimited access to resources</li>
-								<li class="list-group-item">Unlimited tutors</li>
-								<li class="list-group-item">Discounted prices on sessions</li>
-								<li class="list-group-item">24/7 support</li>
-							</ul>
+						<p class="plan-range text-center">per {{ annual ? 'year' : 'month' }}</p>
+						<p class="mx-auto w-75">{{ plan.description }}</p>
+						<hr class="my-4 w-75 mx-auto">
+						<div class="small w-75 mx-auto">
+							<div class="p-2"><i class="fas fa-circle mr-2"></i>{{ plan.questions }} questions per month</div>
+							<div class="p-2"><i class="fas fa-circle mr-2"></i>Unlimited access to resources</div>
+							<div class="p-2"><i class="fas fa-circle mr-2"></i>Unlimited tutors</div>
+							<div class="p-2"><i class="fas fa-circle mr-2"></i>Discounted prices on sessions</div>
+							<div class="p-2"><i class="fas fa-circle mr-2"></i>24/7 support</div>
 						</div>
-						<div class="d-flex justify-content-center" v-if="annual">
-							<p v-if="isLoggedIn && plan.yearlyId === planId">Currently on this plan</p>
-							<button class="btn btn-success shadow" @click="setId(plan.yearlyId)" v-else>Select</button>
-						</div>
-						<div class="d-flex justify-content-center" v-else>
-							<p v-if="isLoggedIn && plan.monthlyId === planId">Currently on this plan</p>
-							<button class="btn btn-success shadow" @click="setId(plan.monthlyId)" v-else>Select</button>
+						<div class="d-flex justify-content-center mt-3" v-if="(annual && plan.yearlyId === id) || (!annual && plan.monthlyId === id)">
+							<p v-if="(annual && plan.yearlyId === planId) || (!annual && plan.monthlyId === planId)" class="text-danger">Currently on this plan</p>
+							<button class="btn btn-success rounded-pill shadow-sm" v-else @click="continueToPay">Continue</button>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div v-else>
+				<a class="small text-muted" @click.prevent="goBack">
+					i.fas.fa-arrow-left
+				</a>
 				<h5 class="mb-5 text-center">Select payment method to use to pay for subscription</h5>
 				<select-payment-method :onMethodSelected="setToken" :loading="loading" />
 				<div class="d-flex justify-content-end">
 					<button class="btn btn-success" :class="{'opacity-25': !token}" :disabled="!token || loading" @click="createSubscription">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+						<loading class="mr-2" v-if="loading" />
 						<span>Subscribe</span>
 					</button>
 				</div>
@@ -56,9 +55,12 @@
 
 <script lang="ts">
 import { defineComponent, reactive, watch, computed } from '@vue/composition-api'
-import SelectPaymentMethod from '@/components/helpers/payments/SelectPaymentMethod.vue'
-import { useCreateSubscription, useSubscriptionPlansList } from '@/usecases/payments/subscription'
-import { useStore } from '@root/application/usecases/store'
+import SelectPaymentMethod from '@application/components/helpers/payments/SelectPaymentMethod.vue'
+import { useCreateSubscription, useSubscriptionPlansList } from '@application/usecases/payments/subscription'
+import { useStore } from '@application/usecases/store'
+import { PlanEntity } from '@modules/payments/domain/entities/plan'
+import router from '@/router'
+import { saveIntendedRoute } from '@/usecases/core/router'
 export default defineComponent({
 	setup(){
 		const { loading: plansLoading, plans } = useSubscriptionPlansList()
@@ -67,31 +69,42 @@ export default defineComponent({
 
 		const state = reactive({
 			annual: false, page: 1,
-			id: null as string | null, token: null as string | null
+			id: null as string | null,
+			token: null as string | null
 		})
 
 		const setToken = (token: string) => state.token = token
-		const setId = (id: string) => {
-			if(isLoggedIn.value){
-				state.id = id
-				state.page = 2
-				document.getElementsByTagName('body')[0].scrollIntoView()
-			}else useStore().modals.setAuthModalLogin()
+		const setId = (plan: PlanEntity) => {
+		    state.id = state.annual ? plan.yearlyId : plan.monthlyId
+			if(!isLoggedIn.value) {
+				saveIntendedRoute(router.currentRoute.path)
+				router.push('/auth/signin')
+			}
 		}
 		const createSubscription = () => state.id && state.token ? subscribe(state.id, state.token) : null
 
 		const planId = computed(() => useStore().auth.getUser.value?.account?.subscription?.planId ?? null)
 		watch(() => planId.value, () => state.id = planId.value)
+		const continueToPay = () => {
+			if(state.id && state.id !== planId.value){
+				state.page = 2
+				document.getElementsByTagName('body')[0].scrollIntoView()
+			}
+		}
+		const goBack = () => {
+			state.page = 1
+			document.getElementsByTagName('body')[0].scrollIntoView()
+		}
 
 		return {
 			plansLoading, plans, loading, createSubscription,
-			colors: ['danger','info','success'],
 			isLoggedIn, isSubscribed: useStore().auth.isSubscribed,
 
-			planId, setId, setToken,
-			annual: computed({ get: () => state.annual, set: (val: boolean) => state.annual = val }),
+			planId, setId, setToken, continueToPay, goBack,
+			annual: computed({ get: () => state.annual, set: (val: boolean) => { state.annual = val; state.id = null } }),
 			page: computed(() => state.page),
 			token: computed(() => state.token),
+			id: computed(() => state.id),
 		}
 	},
 	components: {
@@ -99,3 +112,14 @@ export default defineComponent({
 	}
 })
 </script>
+
+<style lang="scss" scoped>
+  .cards{
+    max-width: 500px;
+  }
+  .selected{
+    background: $primary-light;
+    h5.plan-title, p.plan-range, i { color: $accent; }
+    hr { background: $accent; }
+  }
+</style>

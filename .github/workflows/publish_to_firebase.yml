@@ -1,0 +1,29 @@
+name: Publish to Firebase
+
+on:
+  push:
+    branches:
+      master
+
+jobs:
+  publish-fb:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Setup Nodejs
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - name: Install Dependencies
+        run: npm ci
+      - name: Install Functions Dependencies
+        run: cd firebase/functions && npm ci && cd ../../
+      - name: Build app to deploy to hosting
+        run: npm run build
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: "deploy"
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

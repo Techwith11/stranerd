@@ -1,12 +1,12 @@
 <template>
 	<div>
-		<helper-spinner v-if="subjectLoading" />
+		<page-loading v-if="subjectLoading" />
 		<template v-else>
 			<slot name="title"><h4>Title</h4></slot>
 			<form class="mx-2" @submit.prevent="submit">
 				<div class="form-group my-3">
 					<h6 class="font-weight-bold">Course Title</h6>
-					<input class="form-control" placeholder="Title" v-model.trim="factory.title"
+					<input class="form-control" placeholder="Title" v-model="factory.title"
 						:class="{'is-invalid': factory.errors.title, 'is-valid': factory.isValid('title')}">
 					<span class="small" v-if="factory.errors.title">{{ factory.errors.title }}</span>
 				</div>
@@ -71,10 +71,10 @@
 				<hr>
 				<div class="d-flex flex-column my-3">
 					<button class="btn btn-gold" type="submit" :disabled="loading || !factory.valid">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+						<loading class="mr-2" v-if="loading" />
 						<span>
-						<slot name="buttonText">Submit</slot>
-					</span>
+							<slot name="buttonText">Submit</slot>
+						</span>
 					</button>
 				</div>
 			</form>
@@ -84,9 +84,9 @@
 
 <script lang="ts">
 import { computed, defineComponent } from '@vue/composition-api'
-import { useFileInputs, useMultipleFileInputs } from '@/usecases/core/forms'
-import { CourseFactory } from '@root/modules/courses/domain/factories/course'
-import { useSubjects } from '@/usecases/courses/subjects'
+import { useFileInputs, useMultipleFileInputs } from '@application/usecases/core/forms'
+import { CourseFactory } from '@modules/courses/domain/factories/course'
+import { useSubjects } from '@application/usecases/courses/subjects'
 export default defineComponent({
 	name: 'ArticleForm',
 	props: {

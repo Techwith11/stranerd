@@ -1,11 +1,11 @@
 <template>
-	<div class="alert d-flex align-items-center my-2 shadow-sm" role="alert"
-        :class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
+	<div class="alert d-flex align-items-center my-2" role="alert"
+		:class="{'alert-success': isStillInSession, 'alert-danger': wasCancelled, 'alert-info': !wasCancelled && !isStillInSession}">
 		<img :src="getImageLink" class="profile-image" alt="">
 		<div>
 			<p class="mb-0">
 				<span v-if="wasCancelled">{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}</span>
-				<router-link :to="`/sessions/${session['.key']}`" class="text-black" v-else>
+				<router-link :to="`/sessions/${session['.key']}`" class="text-dark" v-else>
 					{{ getLength }} {{ user.bio ? `with ${user.bio.name}` : '' }}
 				</router-link>
 			</p>
@@ -25,8 +25,8 @@
 </template>
 
 <script>
-import { firestore } from '@/config/firebase'
-import RatingStars from '@/components/helpers/RatingStars'
+import { firestore } from '@application/config/firebase'
+import RatingStars from '@application/components/helpers/RatingStars'
 import { mapGetters } from 'vuex'
 export default {
 	data: () => ({

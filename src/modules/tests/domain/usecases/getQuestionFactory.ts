@@ -1,4 +1,4 @@
-import { QuestionFactory } from '@root/modules/tests/domain/factories/question'
+import { QuestionFactory } from '../factories/question'
 
 export class GetQuestionFactoryUseCase {
 	public call () :QuestionFactory {

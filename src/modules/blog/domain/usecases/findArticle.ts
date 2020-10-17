@@ -1,5 +1,5 @@
-import { IArticleRepository } from '@root/modules/blog/domain/irepositories/iarticle'
-import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
+import { IArticleRepository } from '../irepositories/iarticle'
+import { ArticleEntity } from '../entities/article'
 
 export class FindArticleUseCase {
 	private repository: IArticleRepository

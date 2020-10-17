@@ -1,11 +1,11 @@
 $primary-dark: #FF8A00;
 $primary-gold: #FFC000;
-$primary-light: #FFF7DF;
-$accent: #22DD77;
+$primary-light: #FEE7C3;
+$accent: #3c925a;
 $white: #FFFFFF;
 $text-black: #131313;
 $link-blue: #007BFF;
-$blackTransparent: #00000088;
+$blackTransparent: #000000AA;
 
 $gradient: linear-gradient(to right, $primary-dark, $primary-gold);
 $gradient-reversed: linear-gradient(to left, $primary-dark, $primary-gold);
@@ -20,7 +20,8 @@ $xl: 1200px;
 $theme-colors: (
 	'gold': $primary-gold,
 	'gold-light': $primary-light,
-	'black': $text-black
+	'gold-dark': $primary-dark,
+	'accent': $accent
 );
 
 $spacers: (

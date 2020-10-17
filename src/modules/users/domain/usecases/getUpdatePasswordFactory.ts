@@ -1,4 +1,4 @@
-import { UpdatePasswordFactory } from '@root/modules/users/domain/factories/updatePassword'
+import { UpdatePasswordFactory } from '../factories/updatePassword'
 
 export class GetUpdatePasswordFactoryUseCase {
 	public call () :UpdatePasswordFactory {

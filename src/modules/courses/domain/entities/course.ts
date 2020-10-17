@@ -1,5 +1,5 @@
-import { Media } from '@root/modules/core/data/models/base'
-import { extractDate, extractTextFromHTML, trimToLength } from '@root/modules/core/validations/sanitizers'
+import { Media } from '@modules/core/data/models/base'
+import { extractDate, extractTextFromHTML, trimToLength } from '@modules/core/validations/sanitizers'
 
 export class CourseEntity {
 	public readonly id: string

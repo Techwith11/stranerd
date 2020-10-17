@@ -1,5 +1,4 @@
-import validate from 'validate.js'
-import { extractTextFromHTML } from '@root/modules/core/validations/sanitizers'
+import { extractTextFromHTML } from '@modules/core/validations/sanitizers'
 
 export const isRequired = (value: any) => {
 	if(value === undefined || value === null || value === '') return { valid: false, error: 'is required' }
@@ -18,9 +17,10 @@ export const isRequiredIf = (value: any, condition: boolean) => {
 }
 
 export const isEmail = (value: string) => {
-	const invalid = validate.single(value, { presence: true, email: true })
-	if(invalid) return { valid: false, error: 'is not a valid email' }
-	return { valid: true, error: undefined }
+	const emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+	const valid = emailRegex.test(value)
+	if(valid) return { valid: true, error: undefined }
+	return { valid: false, error: 'is not a valid email' }
 }
 
 export const isLongerThan = (length: number, value: string) => {

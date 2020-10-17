@@ -1,6 +1,9 @@
 <template>
 	<Default>
-		<helper-spinner v-if="loading"/>
+		<banner>
+			<h1 class="text-capitalize">Modify questions under {{ $route.params.module }}</h1>
+		</banner>
+		<page-loading v-if="loading"/>
 		<div class="container-fluid py-3" v-else>
 			<helper-message :message="error" v-if="error" />
 			<div v-else>
@@ -11,7 +14,7 @@
 				</div>
 				<div class="d-flex justify-content-end my-3" v-if="hasMore">
 					<button class="btn-success" @click="fetchOlderQuestions">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="olderQuestionsLoading"></i>
+						<loading class="mr-2" v-if="olderQuestionsLoading" />
 						<span>Fetch More</span>
 					</button>
 				</div>
@@ -22,10 +25,10 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import QuestionCard from '@/components/admin/questions/list/QuestionCard.vue'
-import router from '@/router'
-import { useTutorQuestionsList } from '@/usecases/tests/tutorQuestions'
-import Question from '@/components/tests/tutors/Question.vue'
+import QuestionCard from '@application/components/admin/questions/list/QuestionCard.vue'
+import router from '@application/router'
+import { useTutorQuestionsList } from '@application/usecases/tests/tutorQuestions'
+import Question from '@application/components/tests/tutors/Question.vue'
 export default defineComponent({
 	name: 'Questions',
 	components: {

@@ -1,5 +1,5 @@
 import firebase from '@root/services/firebase'
-import { Media } from '@root/modules/core/data/models/base'
+import { Media } from '@modules/core/data/models/base'
 
 export interface ArticleFromModel {
 	id: string

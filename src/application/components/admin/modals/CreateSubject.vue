@@ -15,9 +15,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCreateSubject } from '@/usecases/courses/subjects'
-import SubjectForm from '@/components/admin/subjects/SubjectForm.vue'
-import { useStore } from '@/usecases/store'
+import { useCreateSubject } from '@application/usecases/courses/subjects'
+import SubjectForm from '@application/components/admin/subjects/SubjectForm.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	name: 'CreateSubject',
 	components: {

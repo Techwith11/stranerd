@@ -1,15 +1,17 @@
 <template>
-	<div class="p-3 white shadow-sm">
-		<div class="d-flex align-items-center">
+	<div class="p-3 white">
+		<div class="d-flex align-items-start">
 			<img :src="user.image" alt="" class="profile-image">
-			<div>
-				<h5 class="font-weight-bold">
-					<router-link :to="`/users/${user.id}`" class="card-link">{{ user.name }}</router-link>
-				</h5>
-				<p class="card-text mb-0">
-					<span class="text-capitalize" v-for="course in user.teachableCourses" :key="course">{{ course }}</span>
+			<div class="flex-grow-1 d-flex flex-column">
+				<div class="mb-2">
+					<h5 class="font-weight-bold mb-0 text-truncate">
+						<router-link :to="`/users/${user.id}`" class="card-link">{{ user.name }}</router-link>
+					</h5>
+					<rating-stars class="small mt-0" :rating="user.tutor.rating"/>
+				</div>
+				<p class="card-text">
+					<span class="text-capitalize d-block" v-for="course in user.teachableCourses" :key="course">{{ course }}</span>
 				</p>
-				<rating-stars class="small d-inline" :rating="user.tutor.rating"/>
 			</div>
 		</div>
 	</div>
@@ -17,8 +19,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import RatingStars from '@/components/helpers/RatingStars.vue'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
+import RatingStars from '@application/components/helpers/RatingStars.vue'
+import { UserEntity } from '@modules/users/domain/entities/user'
 export default defineComponent({
 	props: {
 		user: {

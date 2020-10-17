@@ -1,4 +1,4 @@
-import { DiscussionFactory } from '@root/modules/courses/domain/factories/discussion'
+import { DiscussionFactory } from '../factories/discussion'
 
 export class GetDiscussionFactoryUsecase {
 	public call() :DiscussionFactory {

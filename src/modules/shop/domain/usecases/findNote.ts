@@ -1,5 +1,5 @@
-import { INoteRepository } from '@root/modules/shop/domain/irepositories/inote'
-import { NoteEntity } from '@root/modules/shop/domain/entities/note'
+import { INoteRepository } from '../irepositories/inote'
+import { NoteEntity } from '../entities/note'
 
 export class FindNoteUsecase {
 	private repository: INoteRepository

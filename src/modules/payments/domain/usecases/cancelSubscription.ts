@@ -1,4 +1,4 @@
-import { IPaymentRepository } from '@root/modules/payments/domain/irepositories/ipayment'
+import { IPaymentRepository } from '../irepositories/ipayment'
 
 export class CancelSubscriptionUsecase {
 	private readonly repository: IPaymentRepository

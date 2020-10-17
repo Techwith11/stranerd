@@ -1,4 +1,4 @@
-import { IQuestionRepository } from '@root/modules/tests/domain/irepositories/iquestion'
+import { IQuestionRepository } from '../irepositories/iquestion'
 
 export class FindTutorQuestionUsecase {
 	private repository: IQuestionRepository

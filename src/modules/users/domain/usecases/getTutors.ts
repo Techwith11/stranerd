@@ -1,6 +1,6 @@
-import { IUserRepository } from '@root/modules/users/domain/irepositories/iuser'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
+import { IUserRepository } from '../irepositories/iuser'
+import { UserEntity } from '../entities/user'
+import { GetClauses } from '@modules/core/data/datasources/base'
 
 export class GetTutorsUseCase {
 	private repository: IUserRepository

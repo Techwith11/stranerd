@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<helper-spinner v-if="loading"/>
+		<page-loading v-if="loading"/>
 		<form>
 			<div class="form-group">
 				<label>Credit Card Number</label>
@@ -20,16 +20,16 @@
 			</div>
 			<div class="text-center">
 				<button class="btn btn-primary btn-block" :disabled="!isThereAHoistedFieldInstance || createLoading" @click.prevent="addCard">
-					<i class="fas fa-spinner fa-spin mr-2" v-if="createLoading"></i>
+					<loading class="mr-2" v-if="createLoading" />
 					<span>Add Credit Card</span>
 				</button>
 			</div>
 			<hr />
-			<div class="d-flex justify-content-center">
-				<img src="../../../assets/images/4_cards.png" alt="" width="200px">
-			</div>
 			<div class="form-group text-center">
 				<div id="paypalButton"></div>
+			</div>
+			<div class="d-flex mt-3 justify-content-center">
+				<img src="../../../assets/images/4_cards.png" alt="" width="200px">
 			</div>
 		</form>
 	</div>
@@ -37,20 +37,20 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, PropType } from '@vue/composition-api'
-import { useCreatePaymentMethods, usePaymentForm } from '@/usecases/payments/paymentForm'
+import { useCreatePaymentMethods, usePaymentForm } from '@application/usecases/payments/paymentForm'
 export default defineComponent({
 	props: {
 		onAddMethodSuccessful: {
-			type: Function as PropType<() => void>,
+			type: Function as PropType<(token: string | undefined) => void>,
 			required: true
 		}
 	},
 	setup(props){
-		const { loading, isThereAHoistedFieldInstance, initializeHostedFields } = usePaymentForm()
+		const { loading, isThereAHoistedFieldInstance, initializeHostedFields } = usePaymentForm(props.onAddMethodSuccessful)
 		const { loading: createLoading, createPaymentMethod } = useCreatePaymentMethods()
 		const addCard = async () => {
-			const successful = await createPaymentMethod()
-			if(successful) props.onAddMethodSuccessful()
+			const res = await createPaymentMethod()
+			if(res?.success) props.onAddMethodSuccessful(res?.token)
 		}
 		onMounted(() => initializeHostedFields())
 		return { loading, isThereAHoistedFieldInstance, createLoading, addCard }

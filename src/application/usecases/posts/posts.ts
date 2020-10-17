@@ -1,11 +1,12 @@
 import { computed, reactive, watch } from '@vue/composition-api'
-import { PostEntity } from '@root/modules/posts/domain/entities/post'
-import { GetPosts, FindPost, ListenToPosts, GetPostFactory, AddPost } from '@root/modules/posts/'
-import router from '@/router'
-import { Notify } from '@/config/notifications'
-import { fetchUser } from '@/usecases/users/users'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
-import { useStore } from '@/usecases/store'
+import { PostEntity } from '@modules/posts/domain/entities/post'
+import { GetPosts, FindPost, ListenToPosts, GetPostFactory, AddPost } from '@modules/posts/'
+import router from '@application/router'
+import { Notify } from '@application/config/notifications'
+import { fetchUser } from '@application/usecases/users/users'
+import { UserEntity } from '@modules/users/domain/entities/user'
+import { useStore } from '@application/usecases/store'
+import { saveIntendedRoute } from '@/usecases/core/router'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 const globalState = reactive({
@@ -20,12 +21,12 @@ const globalState = reactive({
 
 const setPost = (post: PostEntity) => {
 	const index = globalState.posts.findIndex((p) => p.id === post.id)
-	if(index !== -1) globalState.posts[index] = post
+	if(index !== -1) globalState.posts.splice(index, 1, post)
 	else globalState.posts.push(post)
 }
 const unshiftPost = (post: PostEntity) => {
 	const index = globalState.posts.findIndex((p) => p.id === post.id)
-	if(index !== -1) globalState.posts[index] = post
+	if(index !== -1) globalState.posts.splice(index, 1, post)
 	else globalState.posts.unshift(post)
 }
 const fetchPosts = async () => {
@@ -123,6 +124,9 @@ export const useCreatePost = () => {
 	})
 
 	state.factory.userId = useStore().auth.getId.value
+	watch(() => useStore().auth.getId.value, () => {
+		state.factory.userId = useStore().auth.getId.value
+	})
 
 	const createPost = async () => {
 		if(state.factory.valid && !state.loading){
@@ -141,8 +145,8 @@ export const useCreatePost = () => {
 
 	watch(() => useStore().auth.getId, () => state.factory.userId = useStore().auth.getId.value)
 	const login = async () => {
-		await useStore().modals.setAuthModalLogin()
-		await router.push('/ask-a-question')
+		saveIntendedRoute('/ask-a-question')
+		await router.push('/auth/signin')
 	}
 
 	return {

@@ -1,68 +1,62 @@
-import Bottle from 'bottlejs'
-import { UserFirebaseDataSource } from '@root/modules/users/data/datasources/user-firebase'
-import { UserTransformer } from '@root/modules/users/data/transformers/user'
-import { UserRepository } from '@root/modules/users/data/repositories/user'
-import { FindUserUseCase } from '@root/modules/users/domain/usecases/findUser'
-import { GetTutorsUseCase } from '@root/modules/users/domain/usecases/getTutors'
-import { AuthFirebaseDataSource } from '@root/modules/users/data/datasources/auth-firebase'
-import { AuthRepository } from '@root/modules/users/data/repositories/auth'
-import { LoginWithEmailUseCase } from '@root/modules/users/domain/usecases/loginWithEmail'
-import { LoginWithGoogleUseCase } from '@root/modules/users/domain/usecases/loginWithGoogle'
-import { LogoutUseCase } from '@root/modules/users/domain/usecases/logout'
-import { RegisterWithEmailUseCase } from '@root/modules/users/domain/usecases/registerWithEmail'
-import { RegisterAuthChangedCallbackUseCase } from '@root/modules/users/domain/usecases/registerOnAuthChangedCallback'
-import { GetLoginFactoryUseCase } from '@root/modules/users/domain/usecases/getLoginFactory'
-import { GetRegisterFactoryUseCase } from '@root/modules/users/domain/usecases/getRegisterFactory'
-import { GetResetPasswordFactoryUseCase } from '@root/modules/users/domain/usecases/getResetPasswordFactory'
-import { ResetPasswordUseCase } from '@root/modules/users/domain/usecases/resetPassword'
-import { UpdatePasswordUseCase } from '@root/modules/users/domain/usecases/updatePassword'
-import { GetUpdatePasswordFactoryUseCase } from '@root/modules/users/domain/usecases/getUpdatePasswordFactory'
+import { UserFirebaseDataSource } from './data/datasources/user-firebase'
+import { UserTransformer } from './data/transformers/user'
+import { UserRepository } from './data/repositories/user'
+import { FindUserUseCase } from './domain/usecases/findUser'
+import { GetTutorsUseCase } from './domain/usecases/getTutors'
+import { AuthFirebaseDataSource } from './data/datasources/auth-firebase'
+import { AuthRepository } from './data/repositories/auth'
+import { LoginWithEmailUseCase } from './domain/usecases/loginWithEmail'
+import { LoginWithGoogleUseCase } from './domain/usecases/loginWithGoogle'
+import { LogoutUseCase } from './domain/usecases/logout'
+import { RegisterWithEmailUseCase } from './domain/usecases/registerWithEmail'
+import { RegisterAuthChangedCallbackUseCase } from './domain/usecases/registerOnAuthChangedCallback'
+import { GetLoginFactoryUseCase } from './domain/usecases/getLoginFactory'
+import { GetRegisterFactoryUseCase } from './domain/usecases/getRegisterFactory'
+import { GetResetPasswordFactoryUseCase } from './domain/usecases/getResetPasswordFactory'
+import { ResetPasswordUseCase } from './domain/usecases/resetPassword'
+import { UpdatePasswordUseCase } from './domain/usecases/updatePassword'
+import { GetUpdatePasswordFactoryUseCase } from './domain/usecases/getUpdatePasswordFactory'
+import { RoleFirebaseDataSource } from './data/datasources/role-firebase'
+import { RoleRepository } from './data/repositories/role'
+import { MakeAdminUsecase } from './domain/usecases/makeAdmin'
+import { MakeTutorUsecase } from './domain/usecases/makeTutor'
+import { RemoveAdminUsecase } from './domain/usecases/removeAdmin'
+import { GetMailingListFactoryUsecase } from './domain/usecases/getMailingListFactory'
+import { SubscribeToMailingListUsecase } from './domain/usecases/subscribeToMailingList'
+import { FindUsersByEmailUseCase } from './domain/usecases/findUsersByEmail'
+import { UpdateProfileUseCase } from './domain/usecases/updateProfile'
+import { GetUpdateProfileFactoryUseCase } from './domain/usecases/getUpdateProfileFactory'
 
-const bottle = new Bottle()
+const userDataSource = new UserFirebaseDataSource()
+const authDataSource = new AuthFirebaseDataSource()
+const roleDataSource = new RoleFirebaseDataSource()
 
-bottle.service('DataSources.User', UserFirebaseDataSource)
-bottle.service('DataSources.Auth', AuthFirebaseDataSource)
+const userTransformer = new UserTransformer()
 
-bottle.service('Transformers.User', UserTransformer)
+const userRepository = new UserRepository(userDataSource, userTransformer)
+const authRepository = new AuthRepository(authDataSource)
+const roleRepository = new RoleRepository(roleDataSource)
 
-bottle.service('Repositories.User', UserRepository, 'DataSources.User', 'Transformers.User')
-bottle.service('Repositories.Auth', AuthRepository, 'DataSources.Auth')
+export const FindUser = new FindUserUseCase(userRepository)
+export const FindUsersByEmail = new FindUsersByEmailUseCase(userRepository)
+export const GetTutors = new GetTutorsUseCase(userRepository)
 
-bottle.service('Usecases.User.Find', FindUserUseCase, 'Repositories.User')
-bottle.service('Usecases.User.GetTutors', GetTutorsUseCase, 'Repositories.User')
-bottle.service('Usecases.Auth.LoginWithEmail', LoginWithEmailUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.LoginWithGoogle', LoginWithGoogleUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.Logout', LogoutUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.RegisterWithEmail', RegisterWithEmailUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.RegisterAuthChangedCB', RegisterAuthChangedCallbackUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.ResetPassword', ResetPasswordUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.UpdatePassword', UpdatePasswordUseCase, 'Repositories.Auth')
-bottle.service('Usecases.Auth.GetLoginFactory', GetLoginFactoryUseCase)
-bottle.service('Usecases.Auth.GetRegisterFactory', GetRegisterFactoryUseCase)
-bottle.service('Usecases.Auth.GetResetPasswordFactory', GetResetPasswordFactoryUseCase)
-bottle.service('Usecases.Auth.GetUpdatePasswordFactory', GetUpdatePasswordFactoryUseCase)
+export const LoginWithEmail = new LoginWithEmailUseCase(authRepository)
+export const LoginWithGoogle = new LoginWithGoogleUseCase(authRepository)
+export const Logout = new LogoutUseCase(authRepository)
+export const RegisterWithEmail = new RegisterWithEmailUseCase(authRepository)
+export const RegisterAuthChangedCB = new RegisterAuthChangedCallbackUseCase(authRepository)
+export const ResetPassword = new ResetPasswordUseCase(authRepository)
+export const UpdatePassword = new UpdatePasswordUseCase(authRepository)
+export const UpdateProfile = new UpdateProfileUseCase(authRepository)
+export const GetLoginFactory = new GetLoginFactoryUseCase()
+export const GetRegisterFactory = new GetRegisterFactoryUseCase()
+export const GetResetPasswordFactory = new GetResetPasswordFactoryUseCase()
+export const GetUpdatePasswordFactory = new GetUpdatePasswordFactoryUseCase()
+export const GetUpdateProfileFactory = new GetUpdateProfileFactoryUseCase()
 
-const { Find: FindUser, GetTutors } = bottle.container.Usecases.User as {
-	Find: FindUserUseCase, GetTutors: GetTutorsUseCase
-}
-
-const {
-	LoginWithEmail, LoginWithGoogle, Logout,
-	RegisterWithEmail, RegisterAuthChangedCB,
-	GetLoginFactory, GetRegisterFactory,
-	ResetPassword, GetResetPasswordFactory,
-	UpdatePassword, GetUpdatePasswordFactory,
-} = bottle.container.Usecases.Auth as {
-	LoginWithEmail: LoginWithEmailUseCase, LoginWithGoogle: LoginWithGoogleUseCase, Logout: LogoutUseCase,
-	RegisterWithEmail: RegisterWithEmailUseCase, RegisterAuthChangedCB: RegisterAuthChangedCallbackUseCase
-	GetLoginFactory: GetLoginFactoryUseCase, GetRegisterFactory: GetRegisterFactoryUseCase,
-	ResetPassword: ResetPasswordUseCase, GetResetPasswordFactory: GetResetPasswordFactoryUseCase,
-	UpdatePassword: UpdatePasswordUseCase, GetUpdatePasswordFactory: GetUpdatePasswordFactoryUseCase,
-}
-
-export {
-	FindUser, GetTutors,
-	LoginWithEmail, LoginWithGoogle, Logout, RegisterWithEmail, RegisterAuthChangedCB,
-	GetLoginFactory, GetRegisterFactory, ResetPassword, GetResetPasswordFactory,
-	UpdatePassword, GetUpdatePasswordFactory,
-}
+export const MakeAdmin = new MakeAdminUsecase(roleRepository)
+export const RemoveAdmin = new RemoveAdminUsecase(roleRepository)
+export const MakeTutor = new MakeTutorUsecase(roleRepository)
+export const SubscribeToMailingList = new SubscribeToMailingListUsecase(roleRepository)
+export const GetMailingListFactory = new GetMailingListFactoryUsecase()

@@ -1,5 +1,5 @@
 import { computed, reactive } from '@vue/composition-api'
-import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
+import { ArticleEntity } from '@modules/blog/domain/entities/article'
 import {
 	DeleteArticle,
 	GetArticles,
@@ -7,12 +7,12 @@ import {
 	GetArticleFactory,
 	AddArticle,
 	UpdateArticle
-} from '@root/modules/blog'
-import { Alert, Notify } from '@/config/notifications'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
-import { fetchUser } from '@/usecases/users/users'
-import router from '@/router'
-import { useStore } from '@/usecases/store'
+} from '@modules/blog'
+import { Alert, Notify } from '@application/config/notifications'
+import { UserEntity } from '@modules/users/domain/entities/user'
+import { fetchUser } from '@application/usecases/users/users'
+import router from '@application/router'
+import { useStore } from '@application/usecases/store'
 
 const PAGINATION_LIMIT = parseInt(process.env.VUE_APP_PAGINATION_LIMIT)
 
@@ -27,12 +27,12 @@ const globalState = reactive({
 
 const setArticle = (article: ArticleEntity) => {
 	const index = globalState.articles.findIndex((p) => p.id === article.id)
-	if(index !== -1) globalState.articles[index] = article
+	if(index !== -1) globalState.articles.splice(index, 1, article)
 	else globalState.articles.push(article)
 }
 const unshiftArticle = (article: ArticleEntity) => {
 	const index = globalState.articles.findIndex((p) => p.id === article.id)
-	if(index !== -1) globalState.articles[index] = article
+	if(index !== -1) globalState.articles.splice(index, 1, article)
 	else globalState.articles.unshift(article)
 }
 const fetchArticles = async () => {

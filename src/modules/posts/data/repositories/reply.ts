@@ -1,9 +1,9 @@
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { ReplyBaseDataSource } from '@root/modules/posts/data/datasources/reply-base'
-import { ReplyTransformer } from '@root/modules/posts/data/transformers/reply'
-import { IReplyRepository } from '@root/modules/posts/domain/irepositories/ireply'
-import { ReplyFromModel, ReplyToModel } from '@root/modules/posts/data/models/reply'
-import { ReplyEntity } from '@root/modules/posts/domain/entities/reply'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { ReplyBaseDataSource } from '../datasources/reply-base'
+import { ReplyTransformer } from '../transformers/reply'
+import { IReplyRepository } from '../../domain/irepositories/ireply'
+import { ReplyFromModel, ReplyToModel } from '../models/reply'
+import { ReplyEntity } from '../../domain/entities/reply'
 
 export class ReplyRepository implements IReplyRepository {
 	private dataSource: ReplyBaseDataSource
@@ -31,12 +31,12 @@ export class ReplyRepository implements IReplyRepository {
 		return await this.dataSource.listen(postId, listenCB, conditions)
 	}
 
-	public async upvote(postId: string, reply: ReplyEntity, id: string){
-		return await this.dataSource.upvote(postId, reply.id, reply.userId, id)
+	public async like(postId: string, reply: ReplyEntity, id: string){
+		return await this.dataSource.like(postId, reply.id, id)
 	}
 
-	public async downvote(postId: string, reply: ReplyEntity, id: string){
-		return await this.dataSource.downvote(postId, reply.id, reply.userId, id)
+	public async dislike(postId: string, reply: ReplyEntity, id: string){
+		return await this.dataSource.dislike(postId, reply.id, id)
 	}
 
 }

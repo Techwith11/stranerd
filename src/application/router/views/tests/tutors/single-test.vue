@@ -1,7 +1,7 @@
 <template>
 	<Default>
 		<div class="container py-3">
-			<helper-spinner v-if="isLoading"/>
+			<page-loading v-if="isLoading"/>
 			<div v-else>
 				<h3 class="position-sticky sticky-top text-right" :class="{'text-danger': timer <= 120}" v-if="!isMarked">{{ getTime }}</h3>
 				<div>
@@ -10,7 +10,7 @@
 				</div>
 				<div class="d-flex justify-content-end mb-5">
 					<button class="btn-success" @click="submit" :disabled="isMarked">
-						<i class="fas fa-spinner fa-spin mr-2" v-if="isMarked"></i>
+						<loading class="mr-2" v-if="isMarked" />
 						<span>Submit</span>
 					</button>
 				</div>
@@ -20,10 +20,10 @@
 </template>
 
 <script>
-import Question from '@/components/tests/tutors/Question'
-import { firestore } from '@/config/firebase'
+import Question from '@application/components/tests/tutors/Question'
+import { firestore } from '@application/config/firebase'
 import { mapGetters } from 'vuex'
-import { submitTest } from '@/config/tests'
+import { submitTest } from '@application/config/tests'
 export default {
 	name: 'SingleTutorTest',
 	data: () => ({
@@ -100,13 +100,8 @@ export default {
 	async mounted(){
 		await this.fetchTest()
 		await this.validateTest()
+		window.addEventListener('beforeunload', () => window.clearInterval(this.interval))
 		this.isLoading = false
-	},
-	async activated(){
-		if(this.test['.key']){
-			await this.validateTest()
-			window.addEventListener('beforeunload', () => window.clearInterval(this.interval))
-		}
 	},
 	components: {
 		'question': Question,
@@ -116,7 +111,7 @@ export default {
 			if(Math.floor(this.timer) === 0){ this.endTest() }
 		}
 	},
-	deactivated(){ window.clearInterval(this.interval) },
+	beforeDestroy(){ window.clearInterval(this.interval) },
 	meta(){
 		return {
 			title: `Level ${this.test.level} ${this.test.course}`,

@@ -1,22 +1,15 @@
 <template>
 	<div class="container small p-2 p-lg-4">
-		<div v-if="isSubscribed">
-			<discussion-list :course="course" />
-			<discussion-form :course="course" />
-		</div>
-		<p v-else>
-			<span>You need an active subscription to gain access to this course's discussions. </span>
-			<router-link to="/pricing-plans">Subscribe Now</router-link>
-		</p>
+		<discussion-list :course="course" />
+		<discussion-form :course="course" />
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { CourseEntity } from '@root/modules/courses/domain/entities/course'
-import DiscussionList from '@/components/courses/single/DiscussionList.vue'
-import DiscussionForm from '@/components/courses/single/DiscussionForm.vue'
-import { useStore } from '@/usecases/store'
+import { CourseEntity } from '@modules/courses/domain/entities/course'
+import DiscussionList from '@application/components/courses/single/DiscussionList.vue'
+import DiscussionForm from '@application/components/courses/single/DiscussionForm.vue'
 export default defineComponent({
 	components: {
 		'discussion-list': DiscussionList,
@@ -26,11 +19,6 @@ export default defineComponent({
 		course: {
 			required: true,
 			type: CourseEntity
-		}
-	},
-	setup(){
-		return {
-			isSubscribed: useStore().auth.isSubscribed
 		}
 	}
 })

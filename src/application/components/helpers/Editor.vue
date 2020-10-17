@@ -10,10 +10,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-//@ts-ignore
 import { VueEditor } from 'vue2-editor'
-import { Notify } from '@root/application/config/notifications'
-import { Uploader } from '@root/modules/core/services/uploader'
+import { Notify } from '@application/config/notifications'
+import { UploaderService } from '@modules/core/services/uploader'
 
 const customToolBar = [
 	[{size:['small',false,'large','huge']}],
@@ -51,7 +50,7 @@ export default defineComponent({
 			customToolBar,
 			handleImageUpload: async (file: File, editor: any, cursorLocation: any, resetUploader: any) => {
 				try{
-					const res = await Uploader.call(props.path, file)
+					const res = await UploaderService.call(props.path, file)
 					editor.insertEmbed(cursorLocation, 'image', res.link)
 					resetUploader()
 				}catch(e){ await Notify({ title: e, icon: 'error' }) }

@@ -1,5 +1,5 @@
 // @ts-nocheck
-import firebase, { firestore, functions, uploadFile } from '@/config/firebase'
+import firebase, { firestore, functions, uploadFile } from '@application/config/firebase'
 
 const helpers = {
 	createNewChatCollection: async (from, to) => {

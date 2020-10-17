@@ -1,6 +1,6 @@
-import { NoteFromModel, NoteToModel } from '@root/modules/shop/data/models/note'
-import { NoteEntity } from '@root/modules/shop/domain/entities/note'
-import { timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
+import { NoteFromModel, NoteToModel } from '../models/note'
+import { NoteEntity } from '../../domain/entities/note'
+import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
 
 export class NoteTransformer {
 	public fromJSON(model: NoteFromModel) :NoteEntity {

@@ -1,12 +1,15 @@
 <template>
 	<Default>
+		<banner>
+			<h1>Create, Modify & Delete Subjects</h1>
+		</banner>
 		<div class="container-fluid py-3">
-			<helper-spinner v-if="loading" />
+			<page-loading v-if="loading" />
 			<template v-else>
-				<div class="d-flex justify-content-end">
-					<button class="btn btn-success my-3" @click="setCreateModalSubject">Add New Subject</button>
-				</div>
 				<subject-card :subject="subject" v-for="subject in subjects" :key="subject.id" />
+				<div class="d-flex justify-content-end mt-5">
+					<button class="btn btn-success" @click="setCreateModalSubject">Add New Subject</button>
+				</div>
 			</template>
 		</div>
 	</Default>
@@ -14,9 +17,9 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import SubjectCard from '@/components/admin/subjects/list/SubjectCard.vue'
-import { useSubjects } from '@/usecases/courses/subjects'
-import { useStore } from '@root/application/usecases/store'
+import SubjectCard from '@application/components/admin/subjects/list/SubjectCard.vue'
+import { useSubjects } from '@application/usecases/courses/subjects'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	name: 'Subjects',
 	components: {

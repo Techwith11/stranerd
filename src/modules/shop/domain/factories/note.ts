@@ -1,10 +1,10 @@
-import { BaseFactory } from '@root/modules/core/domains/factories/base'
+import { BaseFactory } from '@modules/core/domains/factories/base'
 import {
 	isExtractedHTMLLongerThan, isLongerThan, isImageOrMedia, isRequired, isMoreThan, isMedia
-} from '@root/modules/core/validations/rules'
-import { NoteToModel } from '@root/modules/shop/data/models/note'
-import { Media } from '@root/modules/core/data/models/base'
-import { NoteEntity } from '@root/modules/shop/domain/entities/note'
+} from '@modules/core/validations/rules'
+import { NoteToModel } from '../../data/models/note'
+import { Media } from '@modules/core/data/models/base'
+import { NoteEntity } from '../entities/note'
 
 type MediaContent = File | Media
 const isLongerThan3 = (value: string) => isLongerThan(3, value)

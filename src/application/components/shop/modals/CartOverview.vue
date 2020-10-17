@@ -5,19 +5,24 @@
 			<h4 class="mb-0">My Cart</h4>
 			<a @click.prevent="closeCartModal"><i class="fas fa-times text-danger"></i></a>
 		</div>
-		<table class="table table-striped table-bordered rounded w-100">
-			<thead>
+		<table class="table rounded w-100">
+			<thead class="thead-dark">
 				<tr>
-					<th></th>
-					<th>Item</th>
-					<th>Price</th>
+					<th scope="col"></th>
+					<th scope="col">Item</th>
+					<th scope="col">Price</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr v-for="note in cart" :key="note.id">
-					<td class="text-center"><i class="fas fa-times text-danger" @click="removeFromCart(note)"></i></td>
+					<th scope="row" class="text-center"><i class="fas fa-times text-danger" @click="removeFromCart(note)"></i></th>
 					<td>{{ note.title }}</td>
 					<td>{{ note.price }}</td>
+				</tr>
+				<tr>
+					<th scope="row"></th>
+					<td>Total</td>
+					<td>{{ cartPrice }}</td>
 				</tr>
 			</tbody>
 		</table>
@@ -29,13 +34,13 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useCart } from '@/usecases/shop/cart'
-import { useStore } from '@/usecases/store'
+import { useCart } from '@application/usecases/shop/cart'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	setup(){
-		const { cart, removeFromCart } = useCart()
+		const { cart, removeFromCart, cartPrice } = useCart()
 		return {
-			cart, removeFromCart,
+			cart, removeFromCart, cartPrice,
 			closeCartModal: useStore().modals.closeCartModal,
 			setCartModalPay: useStore().modals.setCartModalPay,
 		}

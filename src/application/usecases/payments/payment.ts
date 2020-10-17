@@ -1,7 +1,7 @@
 import { computed, reactive } from '@vue/composition-api'
-import { Notify } from '@/config/notifications'
-import { MakePayment } from '@root/modules/payments'
-import { useStore } from '@/usecases/store'
+import { Notify } from '@application/config/notifications'
+import { MakePayment } from '@modules/payments'
+import { useStore } from '@application/usecases/store'
 
 export const usePayment = () => {
 	const state = reactive({

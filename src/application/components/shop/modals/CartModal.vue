@@ -8,17 +8,24 @@
 	</div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import CartOverview from '@/components/shop/modals/CartOverview'
-import SelectPayment from '@/components/shop/modals/SelectPayment'
-import EmailConfirmation from '@/components/shop/modals/EmailConfirmation'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import CartOverview from '@application/components/shop/modals/CartOverview.vue'
+import SelectPayment from '@application/components/shop/modals/SelectPayment.vue'
+import EmailConfirmation from '@application/components/shop/modals/EmailConfirmation.vue'
+import { useStore } from '@application/usecases/store'
+export default defineComponent({
 	components: {
 		'cart-overview': CartOverview,
 		'select-payment': SelectPayment,
 		'email-confirmation': EmailConfirmation,
 	},
-	computed: mapGetters(['isCartModalOverview','isCartModalSelectPayment','isCartModalEmailConfirmation'])
-}
+	setup(){
+		return {
+			isCartModalOverview: useStore().modals.isCartModalOverview,
+			isCartModalSelectPayment: useStore().modals.isCartModalSelectPayment,
+			isCartModalEmailConfirmation: useStore().modals.isCartModalEmailConfirmation,
+		}
+	}
+})
 </script>

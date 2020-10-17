@@ -6,21 +6,9 @@ service cloud.firestore {
 		    allow write: if isAdmin();
 		}
 
-		match /chats/{path}/chats/{id} {
-			allow read, update: if hasAccessToChat(path);
-			allow create: if isMine(request.resource.data.from);
-			allow delete: if isMine(resource.data.from);
-		}
-
 		match /courses/{id} {
 			allow read: if isAuthenticated();
 			allow write: if isAdmin();
-		}
-
-		match /courses/{course}/discussions/{id} {
-			allow read, create: if isAuthenticated();
-			allow update: if isMine(resource.data.userId);
-			allow delete: if isAdmin();
 		}
 
 		match /errors/types/emails/{id} {
@@ -39,12 +27,12 @@ service cloud.firestore {
 
 		match /sessions/{id} {
 			allow read, create: if isAuthenticated();
-			allow update: if hasAccessToSession(id);
+			allow update: if request.auth.uid == resource.data.tutor || request.auth.uid == resource.data.student;
 			allow delete: if isAdmin();
 		}
 
 		match /sessions/{session}/chats/{id} {
-			allow read, create, update: if hasAccessToSession(session);
+			allow read, create, update: if isAuthenticated();
 			allow delete: if isAdmin();
 		}
 
@@ -87,24 +75,15 @@ service cloud.firestore {
 		}
 
 		function isAuthenticated() {
-			return true//request.auth != null;
+			return request.auth != null;
 		}
 
 		function isAdmin() {
-			return true//request.auth.token.isAdmin == true;
+			return request.auth.token.isAdmin == true;
 		}
 
 		function isMine(id) {
-			return true//request.auth.uid == id;
-		}
-
-		function hasAccessToSession(session) {
-			let sessionData = get(/databases/$(database)/documents/sessions/$(session)).data;
-			return true//request.auth.uid == sessionData.tutor || request.auth.uid == sessionData.student;
-		}
-
-		function hasAccessToChat(path) {
-			return true//request.auth.uid in path.split('_');
+			return request.auth.uid == id;
 		}
 	}
 }

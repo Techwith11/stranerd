@@ -14,20 +14,21 @@
 	</div>
 </template>
 
-<script>
-import { useStore } from '@/usecases/store'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import { useStore } from '@application/usecases/store'
+export default defineComponent({
 	name: 'CreateOverview',
 	setup(){
 		return {
-			closeCreateModal: useStore().modals.closeEditModal,
+			closeCreateModal: useStore().modals.closeCreateModal,
 			setCreateModalQuestion: useStore().modals.setCreateModalQuestion,
 			setCreateModalCourse: useStore().modals.setCreateModalCourse,
 			setCreateModalNote: useStore().modals.setCreateModalNote,
 			setCreateModalArticle: useStore().modals.setCreateModalArticle
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>

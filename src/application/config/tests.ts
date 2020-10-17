@@ -1,7 +1,7 @@
-import { firestore, functions } from '@/config/firebase'
-import router from '@/router/index'
-import { Notify } from '@/config/notifications'
-import { useStore } from '@/usecases/store'
+import { firestore, functions } from '@application/config/firebase'
+import router from '@application/router/index'
+import { Notify } from '@application/config/notifications'
+import { useStore } from '@application/usecases/store'
 
 export const checkForUnfinishedTests = async () => {
 	const tests = await firestore.collection('tests/tutors/tests')

@@ -1,6 +1,6 @@
 // @ts-nocheck
-import { firestore, functions } from '@/config/firebase'
-import router from '@/router/index'
+import { firestore, functions } from '@application/config/firebase'
+import router from '@application/router/index'
 
 const setSessionListener = (id, commit, userId) => {
 	const listener = firestore.collection('sessions').doc(id).onSnapshot((snapshot) => {

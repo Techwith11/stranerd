@@ -1,4 +1,4 @@
-import { IAuthRepository } from '@root/modules/users/domain/irepositories/iauth'
+import { IAuthRepository } from '../irepositories/iauth'
 import firebase from '@root/services/firebase'
 
 export class RegisterAuthChangedCallbackUseCase {

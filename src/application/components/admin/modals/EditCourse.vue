@@ -8,16 +8,16 @@
 					<a @click.prevent="closeEditModal"><i class="fas fa-times text-danger"></i></a>
 				</div>
 			</template>
-			<template slot="buttonText">Update Course</template>
+			<template slot="buttonText">Save Course</template>
 		</course-form>
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useEditCourse } from '@/usecases/courses/courses'
-import CourseForm from '@/components/courses/CourseForm.vue'
-import { useStore } from '@/usecases/store'
+import { useEditCourse } from '@application/usecases/courses/courses'
+import CourseForm from '@application/components/courses/CourseForm.vue'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	name: 'EditCourse',
 	components: {

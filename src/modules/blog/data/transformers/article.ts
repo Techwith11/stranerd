@@ -1,6 +1,6 @@
-import { ArticleFromModel, ArticleToModel } from '@root/modules/blog/data/models/article'
-import { ArticleEntity } from '@root/modules/blog/domain/entities/article'
-import { timestampToDate } from '@root/modules/core/data/transformers/converters/getFirestoreDate'
+import { ArticleFromModel, ArticleToModel } from '../models/article'
+import { ArticleEntity } from '../../domain/entities/article'
+import { timestampToDate } from '@modules/core/data/transformers/converters/getFirestoreDate'
 
 export class ArticleTransformer {
 	public fromJSON(model: ArticleFromModel) {

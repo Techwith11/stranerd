@@ -1,5 +1,5 @@
-import { IArticleRepository } from '@root/modules/blog/domain/irepositories/iarticle'
-import { ArticleFactory } from '@root/modules/blog/domain/factories/article'
+import { IArticleRepository } from '../irepositories/iarticle'
+import { ArticleFactory } from '../factories/article'
 
 export class UpdateArticleUseCase {
 	private repository: IArticleRepository

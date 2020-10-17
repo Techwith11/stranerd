@@ -7,15 +7,21 @@
 	</div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import QuestionsLeftNotify from '@/components/posts/modals/QuestionsLeftNotify'
-import BuyMoreQuestions from '@/components/posts/modals/BuyMoreQuestions'
-export default {
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import QuestionsLeftNotify from '@application/components/posts/modals/QuestionsLeftNotify.vue'
+import BuyMoreQuestions from '@application/components/posts/modals/BuyMoreQuestions.vue'
+import { useStore } from '@application/usecases/store'
+export default defineComponent({
 	components: {
 		'questions-left-notify': QuestionsLeftNotify,
 		'buy-more-questions': BuyMoreQuestions
 	},
-	computed: mapGetters(['isPostModalCreate','isPostModalNotify','isPostModalBuyMore'])
-}
+	setup(){
+		return {
+			isPostModalNotify: useStore().modals.isPostModalNotify,
+			isPostModalBuyMore: useStore().modals.isPostModalBuyMore,
+		}
+	}
+})
 </script>

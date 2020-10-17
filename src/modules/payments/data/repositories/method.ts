@@ -1,8 +1,8 @@
-import { IMethodRepository } from '@root/modules/payments/domain/irepositories/imethod'
-import { MethodBaseDataSource } from '@root/modules/payments/data/datasources/method-base'
-import { MethodTransformer } from '@root/modules/payments/data/transformers/method'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { MethodEntity } from '@root/modules/payments/domain/entities/method'
+import { IMethodRepository } from '../../domain/irepositories/imethod'
+import { MethodBaseDataSource } from '../datasources/method-base'
+import { MethodTransformer } from '../transformers/method'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { MethodEntity } from '../../domain/entities/method'
 
 export class MethodRepository implements IMethodRepository {
 	private readonly dataSource: MethodBaseDataSource

@@ -2,7 +2,7 @@
 	<div>
 		<select-payment-method :onMethodSelected="setToken" :loading="loading"/>
 		<button class="w-100 btn-success" v-if="token" @click="pay" :disabled="loading">
-			<i class="fas fa-spinner fa-spin mr-2" v-if="loading"></i>
+			<loading class="mr-2" v-if="loading" />
 			{{ buttonTitle }}
 		</button>
 	</div>
@@ -10,8 +10,8 @@
 
 <script lang="ts">
 import { defineComponent, PropType, ref } from '@vue/composition-api'
-import SelectPaymentMethod from '@/components/helpers/payments/SelectPaymentMethod.vue'
-import { usePayment } from '@/usecases/payments/payment'
+import SelectPaymentMethod from '@application/components/helpers/payments/SelectPaymentMethod.vue'
+import { usePayment } from '@application/usecases/payments/payment'
 export default defineComponent({
 	props: {
 		amount: {

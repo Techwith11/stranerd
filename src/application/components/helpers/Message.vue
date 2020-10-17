@@ -1,5 +1,5 @@
 <template>
-	<div class="center">
+	<div class="center my-5">
 		<p>{{ message }}</p>
 		<p class="mt-3 small">{{ optional ? optional : '' }}</p>
 	</div>
@@ -23,10 +23,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 	.center{
-		position: absolute;
+		/*position: absolute;
 		left: 50%;
-		top: 50%;
+		top: 50%;*/
 		text-align: center;
-		transform: translate(-50%,-50%);
+		//transform: translate(-50%,-50%);
 	}
 </style>

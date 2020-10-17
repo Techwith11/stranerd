@@ -4,6 +4,8 @@ module.exports = {
 	chainWebpack: (config) => {
 		config.resolve.alias
 			.set('@root', path.join(__dirname, 'src'))
+			.set('@modules', path.join(__dirname, 'src/modules'))
+			.set('@application', path.join(__dirname, 'src/application'))
 			.set('@', path.join(__dirname, 'src/application'))
 	},
 	css: {
@@ -16,7 +18,7 @@ module.exports = {
 	pwa: {
 		workboxPluginMode: 'InjectManifest',
 		workboxOptions: {
-			swSrc: './src/application/config/service_worker.js',
+			swSrc: './src/application/config/service-worker.js',
 			importWorkboxFrom: 'local'
 		},
 		msTileColor: '#FFFFFF',

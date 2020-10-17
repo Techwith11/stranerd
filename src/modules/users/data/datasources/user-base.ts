@@ -1,5 +1,5 @@
-import { UserFromModel } from '@root/modules/users/data/models/user'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
+import { UserFromModel } from '../models/user'
+import { GetClauses } from '@modules/core/data/datasources/base'
 
 export abstract class UserBaseDataSource {
 	public abstract get: (condition?: GetClauses) => Promise<UserFromModel[]>

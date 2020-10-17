@@ -1,9 +1,9 @@
-import { IUserRepository } from '@root/modules/users/domain/irepositories/iuser'
-import { UserBaseDataSource } from '@root/modules/users/data/datasources/user-base'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { UserTransformer } from '@root/modules/users/data/transformers/user'
-import { UserFromModel } from '@root/modules/users/data/models/user'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
+import { IUserRepository } from '../../domain/irepositories/iuser'
+import { UserBaseDataSource } from '../datasources/user-base'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { UserTransformer } from '../transformers/user'
+import { UserFromModel } from '../models/user'
+import { UserEntity } from '../../domain/entities/user'
 
 export class UserRepository implements IUserRepository{
 	private dataSource: UserBaseDataSource

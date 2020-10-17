@@ -1,5 +1,5 @@
-import { IUserRepository } from '@root/modules/users/domain/irepositories/iuser'
-import { UserEntity } from '@root/modules/users/domain/entities/user'
+import { IUserRepository } from '../irepositories/iuser'
+import { UserEntity } from '../entities/user'
 
 export class FindUserUseCase {
 	private repository: IUserRepository

@@ -1,6 +1,6 @@
 <template>
 	<div class="m-md-5">
-		<helper-spinner v-if="loading" />
+		<page-loading v-if="loading" />
 		<div class="d-flex align-items-center justify-content-between my-3">
 			<i></i>
 			<h4 class="mb-0">Buy More Questions</h4>
@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
-import { useMoreQuestions } from '@/usecases/shop/cart'
-import { useStore } from '@/usecases/store'
+import { useMoreQuestions } from '@application/usecases/shop/cart'
+import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	setup(){
 		const { loading, price, quantity, addQuestions } = useMoreQuestions()

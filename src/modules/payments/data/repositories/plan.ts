@@ -1,8 +1,8 @@
-import { IPlanRepository } from '@root/modules/payments/domain/irepositories/iplan'
-import { PlanBaseDataSource } from '@root/modules/payments/data/datasources/plan-base'
-import { PlanTransformer } from '@root/modules/payments/data/transformers/plan'
-import { GetClauses } from '@root/modules/core/data/datasources/base'
-import { PlanEntity } from '@root/modules/payments/domain/entities/plan'
+import { IPlanRepository } from '../../domain/irepositories/iplan'
+import { PlanBaseDataSource } from '../datasources/plan-base'
+import { PlanTransformer } from '../transformers/plan'
+import { GetClauses } from '@modules/core/data/datasources/base'
+import { PlanEntity } from '../../domain/entities/plan'
 
 export class PlanRepository implements IPlanRepository {
 	private readonly dataSource: PlanBaseDataSource
