@@ -1,10 +1,20 @@
-export const deleteFromStorage = async (url: string | undefined) => {
+import * as admin from 'firebase-admin'
+import axios from 'axios'
+import { isProduction } from './environment'
+
+export const deleteFromStorage = async (path: string | undefined) => {
 	try{
-		//TODO: Figure out how to delete from storage in admin sdk
-		//const ref = admin.storage().refFromURL(url ?? '')
-		//if(ref.exists) await ref.delete()
-		console.log(`Delete ${url}`)
+		if(!path) return
+
+		if(isProduction()){
+			const file = admin.storage().bucket().file(path)
+			const exists = (await file.exists())[0]
+			if(exists) await file.delete()
+		}else{
+			await axios.delete('http://localhost:3000/file', { data: { path } })
+		}
+
 	}catch(error){
-		console.warn(error)
+		console.warn(`Failed to delete file at ${path}`)
 	}
 }
