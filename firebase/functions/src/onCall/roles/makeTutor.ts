@@ -1,6 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as admin from'firebase-admin'
 import { isProduction } from '../../helpers/environment'
+import { addToTutorsList } from '../../helpers/database/tutorsList'
 
 export const makeTutor = functions.https.onCall(async ({ id, course }, context) => {
 	if (isProduction() && !context.auth) {
@@ -26,6 +27,8 @@ export const makeTutor = functions.https.onCall(async ({ id, course }, context) 
 				roles: { isTutor: true },
 				tutor: { upgrade, levels, reviews, rating, canTeach, courses }
 			}, { merge: true })
+
+			await addToTutorsList(id, { email: user.bio.email, courses  })
 		}else{
 			throw new functions.https.HttpsError('unknown', `${user.bio.name} is already a ${course} tutor`)
 		}
