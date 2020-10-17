@@ -1,14 +1,7 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
 import { sendNewNotificationEmail } from '../../helpers/email'
-
-export type Notification = {
-	title: string
-	description: string
-	seen: boolean
-	type: string
-	action: string
-}
+import { Notification } from '../../helpers/database/notifications'
 
 export const databaseNotificationCreated = functions.database.ref('users/{userId}/notifications/{id}').onCreate(async (snap, context) => {
 	const notification = snap.val() as Notification

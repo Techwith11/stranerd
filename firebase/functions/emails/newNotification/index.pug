@@ -6,7 +6,7 @@ html(lang="en")
     body(style="font-family: Roboto;margin:0;padding:1rem;width:100vw;min-height:100vh;box-sizing: border-box;")
         img(src=meta.logo, alt="", style="height:50px;")
         h1(style='color: #22DD77') #{notification.title}
-        h4 Type - #{notification.type}
-        p #{notification.description}
+        div(style='max-width: 100vw')
+            #{notification.description}
         button(style=`padding: 0.5rem 1.5rem; border-radius: 0.5rem; margin: 1rem 0; background: #22DD77;`)
             a(href=meta.domain + notification.action, style="text-decoration:none;color: #FFFFFF;", target="__blank") Click to view
