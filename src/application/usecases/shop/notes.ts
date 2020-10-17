@@ -28,8 +28,8 @@ const unshiftNote = (note: NoteEntity) => {
 const fetchNotes = async () => {
 	const date = globalState.notes[globalState.notes.length - 1]?.createdAt ?? undefined
 	const entities = await GetNotes.call(date)
-	globalState.hasMore = entities.length === PAGINATION_LIMIT
-	entities.forEach(setNote)
+	globalState.hasMore = entities.length === PAGINATION_LIMIT + 1
+	entities.slice(0, PAGINATION_LIMIT).forEach(setNote)
 }
 const fetchNotesOnInit = async () => {
 	globalState.loading = true
