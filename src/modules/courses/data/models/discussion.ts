@@ -1,11 +1,9 @@
-import firebase from '@root/services/firebase'
-
 export interface DiscussionFromModel {
 	id: string
 	body: string
 	userId: string
 	dates: {
-		createdAt: firebase.firestore.Timestamp
+		createdAt: number
 	}
 }
 

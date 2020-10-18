@@ -68,6 +68,11 @@ export const isMedia = (file: any) => {
 	return { valid: false, error: 'is not a valid file' }
 }
 
+export const isMediaOrUndefined = (file: any) => {
+	if(file === undefined || file?.type) return { valid: true, error: undefined }
+	return { valid: false, error: 'is not a media' }
+}
+
 export const containsOnlyMedia = (files: any[]) => {
 	if(files.every((file) => file?.type)) return { valid: true, error: undefined }
 	return { valid: false, error: 'contains invalid files' }
