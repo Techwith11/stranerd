@@ -15,7 +15,10 @@ const globalState = reactive({
 const startListener = async () => {
 	if(!useStore().auth.getId.value) return
 	try{
-		const addNotifications = (entities: NotificationEntity[]) => globalState.notifications = entities
+		const addNotifications = (entities: NotificationEntity[]) => {
+			if(entities.length === 0) globalState.error = 'No notifications found.'
+			globalState.notifications = entities
+		}
 		globalState.listener()
 		globalState.listener = await ListenToNotifications.call(useStore().auth.getId.value, addNotifications)
 		globalState.started = true
