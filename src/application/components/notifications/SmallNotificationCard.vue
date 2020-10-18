@@ -12,7 +12,7 @@
 </style>
 
 <script lang="ts">
-import { defineComponent, computed } from '@vue/composition-api'
+import { defineComponent } from '@vue/composition-api'
 import { NotificationEntity } from '@root/modules/notifications/domain/entities/notification'
 import router from '@/router'
 import { useSingleNotification } from '@/usecases/notifications/notifications'
@@ -32,7 +32,7 @@ export default defineComponent({
 			success: 'text-success fas fa-check-circle'
 		}
 		return {
-			icon: computed(() => icons[props.notification.type]),
+			icon: icons[props.notification.type],
 			proceedToRoute: () => {
 				markSeen()
 				router.push(props.notification.action)

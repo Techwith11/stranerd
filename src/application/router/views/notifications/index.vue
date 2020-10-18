@@ -9,7 +9,7 @@
 		<div class="container-fluid py-3" v-else>
 			<helper-message :message=error v-if="error" />
 			<div>
-				<LargeNotificationCard v-for="notification in notifications" :key="notification.id" class="shadow-sm p-3" :notification="notification" />
+				<LargeNotificationCard v-for="notification in notifications" :key="notification.id" :notification="notification" />
 			</div>
 		</div>
 	</Default>

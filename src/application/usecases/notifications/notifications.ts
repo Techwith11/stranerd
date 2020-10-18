@@ -77,7 +77,7 @@ export const useSingleNotification = (id: string) => {
 	}
 
 	const markUnseen = async () => {
-		if(state.notification?.seen) return
+		if(!state.notification?.seen) return
 		try{
 			await ChangeNotificationSeen.call(useStore().auth.getId.value, id, false)
 		}catch(e){ state.error = '' }
