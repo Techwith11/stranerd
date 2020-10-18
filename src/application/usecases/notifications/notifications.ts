@@ -1,6 +1,6 @@
 import { NotificationEntity } from '@modules/notifications/domain/entities/notification'
 import { computed, reactive, watch } from '@vue/composition-api'
-import { DeleteNotification, FindNotification, ListenToNotifications } from '@modules/notifications'
+import { DeleteNotification, FindNotification, ListenToNotifications, ChangeNotificationSeen } from '@modules/notifications'
 import { useStore } from '@/usecases/store'
 import { Alert, Notify } from '@/config/notifications'
 
@@ -69,9 +69,18 @@ export const useSingleNotification = (id: string) => {
 
 	findNotification().catch(() => state.error = 'Error fetching notification')
 
-	const markSeen = () => {
+	const markSeen = async () => {
 		if(state.notification?.seen) return
+		try{
+			await ChangeNotificationSeen.call(useStore().auth.getId.value, id, true)
+		}catch(e){ state.error = '' }
+	}
 
+	const markUnseen = async () => {
+		if(state.notification?.seen) return
+		try{
+			await ChangeNotificationSeen.call(useStore().auth.getId.value, id, false)
+		}catch(e){ state.error = '' }
 	}
 
 	const deleteNotification = async () => {
@@ -102,7 +111,7 @@ export const useSingleNotification = (id: string) => {
 		loading: computed(() => state.loading),
 		error: computed(() => state.error),
 		notification: computed(() => state.notification),
-		markSeen, deleteNotification
+		markSeen, markUnseen, deleteNotification
 	}
 
 }

@@ -37,7 +37,7 @@ export class NotificationRepository implements INotificationRepository {
 		return await this.dataSource.listen(userId, listenCB, conditions)
 	}
 
-	public async update(userId: string, id: string, data: NotificationToModel) {
+	public async update(userId: string, id: string, data: Partial<NotificationToModel>) {
 		return await this.dataSource.update(userId, id, data)
 	}
 
