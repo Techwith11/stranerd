@@ -26,7 +26,10 @@ export class ChatFactory extends BaseFactory<ChatEntity, ChatToModel> {
 	}
 
 	get content(){ return this.values.content }
-	set content(value: string | undefined){ this.set('content', value) }
+	set content(value: string | undefined){
+		this.set('media', undefined)
+		this.set('content', value)
+	}
 	get from(){ return this.values.from }
 	set from(value: string){ this.set('media', value) }
 	get media(){ return this.values.media }
