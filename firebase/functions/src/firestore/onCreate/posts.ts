@@ -8,15 +8,13 @@ export const firestorePostCreated = functions.firestore.document('/posts/{id}').
 
 	await saveToAlgolia('posts', snap.id, post)
 
-	const notification = {
+	const tutors = await fetchTutorsList()
+	const allPromises = tutors.map(async (tutor) => await createNotification(tutor.id, {
 		title: `New ${post.subject} question: ${post.title}`,
 		description: post.body,
 		action: `/posts/${snap.id}`,
 		type: 'info'
-	}
-
-	const tutors = await fetchTutorsList()
-	const allPromises = tutors.map(async (tutor) => await createNotification(tutor.id, notification))
+	}))
 	await Promise.all(allPromises)
 
 })

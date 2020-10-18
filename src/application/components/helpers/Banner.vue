@@ -7,7 +7,7 @@
 					<h1>Strive For <span class="font-weight-bold">Progress</span> Not <span class="font-weight-bold">Perfection</span></h1>
 				</slot>
 			</div>
-			<div class="custom-divider">
+			<div class="custom-divider d-none">
 				<svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
 					<path d="M1200 0L0 0 892.25 114.72 1200 0z" class="shape-fill"></path>
 				</svg>
@@ -24,10 +24,12 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 5rem 2rem;
-	min-height: 300px;
+	padding: 4rem;
+	min-height: 200px;
 	position: relative;
 }
+@media (min-width: $sm){ .head{ min-height: 250px; } }
+@media (min-width: $md){ .head{ min-height: 300px; } }
 .overlay{
 	position: absolute;
 	right: 0;
