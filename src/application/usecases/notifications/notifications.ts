@@ -1,6 +1,6 @@
 import { NotificationEntity } from '@modules/notifications/domain/entities/notification'
 import { computed, reactive, watch } from '@vue/composition-api'
-import { DeleteNotification, ListenToNotifications } from '@modules/notifications'
+import { DeleteNotification, FindNotification, ListenToNotifications } from '@modules/notifications'
 import { useStore } from '@/usecases/store'
 import { Alert, Notify } from '@/config/notifications'
 
@@ -46,9 +46,35 @@ export const useNotifications = () => {
 	}
 }
 
-export const useDeleteNotification = (notification: NotificationEntity) => {
-	const state = reactive({ loading: false })
-	const deleteNotification = async () :Promise<boolean> => {
+const fetchNotifications = async (id: string) => {
+	let notification = globalState.notifications.find((n) => n.id === id)
+	if(notification) return notification
+	notification = await FindNotification.call(useStore().auth.getId.value, id)
+	if(notification) globalState.notifications.unshift(notification)
+	return notification
+}
+
+export const useSingleNotification = (id: string) => {
+	const state = reactive({
+		loading: false,
+		error: '',
+		notification: undefined as NotificationEntity | undefined,
+	})
+
+	const findNotification = async () => {
+		state.loading = true
+		state.notification = await fetchNotifications(id)
+		state.loading = false
+	}
+
+	findNotification().catch(() => state.error = 'Error fetching notification')
+
+	const markSeen = () => {
+		if(state.notification?.seen) return
+
+	}
+
+	const deleteNotification = async () => {
 		try {
 			const result = await Alert({
 				title: 'Delete notification',
@@ -58,19 +84,25 @@ export const useDeleteNotification = (notification: NotificationEntity) => {
 			})
 			if(result.value) {
 				state.loading = true
-				await DeleteNotification.call(useStore().auth.getId.value, notification.id)
-				globalState.notifications = globalState.notifications.filter((a) => a.id !== notification.id)
+				await DeleteNotification.call(useStore().auth.getId.value, id)
+				globalState.notifications = globalState.notifications.filter((n) => n.id !== id)
 				state.loading = false
 				await Notify({ icon: 'success', title: 'Notification deleted successfully' })
 			}
 			return result.value
 		} catch(error) {
 			await Notify({ icon: 'error', title: error.message })
+			state.error = error.message
+			state.loading = false
 			return false
 		}
 	}
+
 	return {
 		loading: computed(() => state.loading),
-		deleteNotification
+		error: computed(() => state.error),
+		notification: computed(() => state.notification),
+		markSeen, deleteNotification
 	}
+
 }
