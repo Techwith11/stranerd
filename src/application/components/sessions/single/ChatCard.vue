@@ -22,30 +22,33 @@
 import { defineComponent, computed, onUnmounted, onMounted } from '@vue/composition-api'
 import { ChatEntity } from '@modules/sessions/domain/entities/chat'
 import { useStore } from '@/usecases/store'
+import { useSingleChat } from '@/usecases/sessions/chats'
 export default defineComponent({
 	props: {
 		chat: {
 			required: true,
 			type: ChatEntity
+		},
+		session: {
+			required: true,
+			type: String
 		}
 	},
 	setup(props){
+		const { loading, error, markRead } = useSingleChat(props.session, props.chat.id)
 		const isByMe = computed(() => props.chat.from === useStore().auth.getId.value)
 		onMounted(() => {
 			if(!isByMe.value && !props.chat.isRead){
-				if(document.visibilityState === 'visible'){
-					// Make request to make chat read
-				}else{
-					document.onvisibilitychange = async () => {
-						if(document.visibilityState === 'visible'){
-							// Make request to make chat read
-						}
+				if(document.visibilityState === 'visible') markRead()
+				else{
+					document.onvisibilitychange = () => {
+						if(document.visibilityState === 'visible') markRead()
 					}
 				}
 			}
 		})
 		onUnmounted(() => document.onvisibilitychange = null)
-		return { isByMe }
+		return { isByMe, loading, error, markRead }
 	}
 })
 </script>

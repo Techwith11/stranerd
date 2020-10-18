@@ -1,4 +1,4 @@
-import { ChatFactory } from '@modules/sessions/domain/factories/chat'
+import { ChatFactory } from '../factories/chat'
 
 export class GetChatFactoryUseCase {
 	public call () :ChatFactory {

@@ -23,6 +23,11 @@ export class ChatRepository implements IChatRepository {
 		return models.map((model: ChatFromModel) => this.transformer.fromJSON(model))
 	}
 
+	public async find(sessionId: string, id: string) {
+		const model = await this.dataSource.find(sessionId, id)
+		return model ? this.transformer.fromJSON(model) : model
+	}
+
 	public async listen(sessionId: string, callback: (entities: ChatEntity[]) => void, conditions?: GetClauses) {
 		const listenCB = (documents: ChatFromModel[]) => {
 			const entities = documents.map((doc) => this.transformer.fromJSON(doc))

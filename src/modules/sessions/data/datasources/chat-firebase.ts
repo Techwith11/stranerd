@@ -14,6 +14,10 @@ export class ChatFirebaseDataSource implements ChatBaseDataSource{
 		return Object.entries(docs ?? {}).map((e) => ({ ...e[1], id: e[0] }))
 	}
 
+	public async find(sessionId: string, id: string): Promise<ChatFromModel | undefined> {
+		return await DatabaseService.get(`sessions/${sessionId}/chats/${id}`)
+	}
+
 	public async listen(sessionId: string, callback: (documents: ChatFromModel[]) => void, conditions?: GetClauses): Promise<() => void> {
 		const cb = (documents: { [key: string]: ChatFromModel } ) => {
 			const models = Object.entries(documents ?? {}).map((e) => ({ ...e[1], id: e[0] }))

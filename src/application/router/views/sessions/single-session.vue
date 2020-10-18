@@ -8,7 +8,7 @@
 				</div>
 				<div class="flex-grow-2 h-100 position-relative" id="background">
 					<div class="px-3" :id="timer > 0 ? 'smaller-height' : 'longer-height'">
-						<ChatList :session="session" :timer="timer" />
+						<ChatList :session="session['.key']" :timer="timer" />
 						<session-chat-form v-if="timer > 0" />
 					</div>
 				</div>

@@ -9,7 +9,7 @@
 					<loading v-if="isOlderChatsLoading" />
 					<span @click="fetchOlderMessages">Fetch Older</span>
 				</li>-->
-				<ChatCard :chat="chat" v-for="chat in chats" :key="chat.id" />
+				<ChatCard :chat="chat" :session="session" v-for="chat in chats" :key="chat.id" />
 			</ul>
 			<ul v-else></ul>
 		</template>
@@ -27,7 +27,7 @@ export default defineComponent({
 	props: {
 		session: {
 			required: true,
-			type: Object
+			type: String
 		},
 		timer: {
 			required: true,
@@ -35,7 +35,7 @@ export default defineComponent({
 		}
 	},
 	setup(props) {
-		const { loading, chats, closeListener, error } = useChats(props.session.id || props.session['.key'])
+		const { loading, chats, closeListener, error } = useChats(props.session)
 		onUnmounted(closeListener)
 		return { loading, chats, error }
 	}

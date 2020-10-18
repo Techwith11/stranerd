@@ -1,6 +1,6 @@
 import { ChatEntity } from '@modules/sessions/domain/entities/chat'
 import { computed, reactive, watch } from '@vue/composition-api'
-import { AddChat, GetChatFactory, ListenToChats } from '@modules/sessions'
+import { AddChat, FindChat, GetChatFactory, ListenToChats, MarkChatRead } from '@modules/sessions'
 import { Notify } from '@application/config/notifications'
 import { useStore } from '@application/usecases/store'
 
@@ -68,5 +68,33 @@ export const useCreateChat = (sessionId: string) => {
 		factory: state.factory,
 		loading: computed(() => state.loading),
 		createChat
+	}
+}
+
+export const useSingleChat = (sessionId: string, id: string) => {
+	const state = reactive({
+		loading: false,
+		chat: undefined as ChatEntity | undefined,
+		error: ''
+	})
+
+	const fetchChat = async () => {
+		const chat = chatsGlobalState[sessionId].chats.find((c) => c.id === id)
+		if(chat) state.chat = chat
+		else state.chat = await FindChat.call(sessionId, id)
+	}
+
+	fetchChat().catch(() => state.error = 'An error occurred')
+
+	const markRead = async () => {
+		state.loading = true
+		if(state.chat?.isRead === false) await MarkChatRead.call(sessionId, id)
+		state.loading = false
+	}
+
+	return {
+		loading: computed(() => state.loading),
+		error: computed(() => state.error),
+		markRead
 	}
 }

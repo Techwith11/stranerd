@@ -1,5 +1,5 @@
 import { IChatRepository } from '../irepositories/ichat'
-import { ChatFactory } from '@modules/sessions/domain/factories/chat'
+import { ChatFactory } from '../factories/chat'
 
 export class AddChatUseCase {
 	private repository: IChatRepository
