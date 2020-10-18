@@ -1,9 +1,7 @@
 <template>
-	<a class="small text-dark" :href="notification.action" @click.prevent="proceedToRoute" :to="notification.action" :id="notification.id">
+	<a class="small text-dark alert alert-info shadow-sm mb-2" :href="notification.action" @click.prevent="proceedToRoute" :to="notification.action" :id="notification.id">
 		<h6><i class="mr-1" :class="icon"></i> {{ notification.title }}</h6>
-		<p class="mb-2">{{ notification.trimmedDescription }}</p>
 		<small class="small">{{ notification.createdDate }}</small>
-		<hr class="mb-2">
 	</a>
 </template>
 

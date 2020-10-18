@@ -23,7 +23,7 @@ export class NotificationEntity{
 
 	get createdDate(){return extractDate(this.createdAt) }
 
-	get trimmedDescription(){ return trimToLength(extractTextFromHTML(this.description), 50) }
+	get trimmedDescription(){ return trimToLength(extractTextFromHTML(this.description), 150) }
 }
 
 type NotificationConstructorArgs = {
