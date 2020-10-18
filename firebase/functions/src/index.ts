@@ -86,6 +86,5 @@ export {
 // Database Triggers
 // On Create
 import { databaseNotificationCreated } from './database/onCreate/notifications'
-export {
-	databaseNotificationCreated
-}
+import { databaseReplyCreated } from './database/onCreate/replies'
+export { databaseNotificationCreated, databaseReplyCreated }
