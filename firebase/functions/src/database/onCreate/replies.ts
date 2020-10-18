@@ -8,12 +8,10 @@ export const databaseReplyCreated = functions.database.ref('posts/{postId}/repli
 	const postRef = await admin.firestore().collection('posts').doc(context.params.postId).get()
 	const post = postRef.data()!
 
-	const notification = {
+	await createNotification(post.userId, {
 		title: `New Reply: ${post.title}`,
 		description: reply.body,
 		action: `/posts/${context.params.postId}#${snap.key}`,
 		type: 'info'
-	}
-
-	await createNotification(post.userId, notification)
+	})
 })

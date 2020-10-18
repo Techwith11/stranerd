@@ -11,8 +11,7 @@
 			</i>
 		</a>
 		<div class="dropdown-menu bg-white shadow py-2" aria-labelledby="notificationToggle" id="notificationMenu">
-			<SmallNotificationCard class="py-2" v-for="notification in unreadNotifications.slice(0, 5)" :notification="notification" :key="notification.id" />
-			<hr v-if="unreadNotifications.length">
+			<SmallNotificationCard class="text-wrap dropdown-item nav-link" v-for="notification in unreadNotifications.slice(0, 5)" :notification="notification" :key="notification.id" />
 			<router-link class="dropdown-item nav-link py-2" to="/notifications">See all notifications</router-link>
 		</div>
 	</div>
@@ -24,8 +23,9 @@
 .dropdown-menu{
 	right: 0;
 	left: unset;
+	width: clamp(240px, 70vw, 400px)
 }
-@media (min-width: $lg){
+@media (min-width: $md){
 	.dropdown-menu{ display: none; }
 	.nav-item:hover .dropdown-menu{ display: block; }
 }
