@@ -19,6 +19,10 @@ export class ChatEntity{
 	}
 
 	get createdDate(){return extractDate(this.createdAt) }
+
+	get isMedia(){ return !!this.media }
+
+	get isRead(){ return !!this.readAt }
 }
 
 type ChatConstructorArgs = {

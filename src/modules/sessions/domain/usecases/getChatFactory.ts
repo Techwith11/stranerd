@@ -1,7 +1,7 @@
 import { ChatFactory } from '@modules/sessions/domain/factories/chat'
 
 export class GetChatFactoryUseCase {
-	public async call () :Promise<ChatFactory> {
+	public call () :ChatFactory {
 		return new ChatFactory()
 	}
 
