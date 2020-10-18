@@ -7,7 +7,10 @@
 			<page-loading v-if="loading"></page-loading>
 		</a>
 		<div class="mx-3 mb-3 d-flex" v-if="notification.seen">
-			<a @click.prevent="deleteNotification" class="ml-auto text-danger">
+			<a @click.prevent="markUnseen" class="ml-auto mr-3 text-warning">
+				Mark Unseen <i class="fas fa-eye-slash ml-1"></i>
+			</a>
+			<a @click.prevent="deleteNotification" class="text-danger">
 				Trash <i class="fas fa-trash ml-1"></i>
 			</a>
 		</div>
