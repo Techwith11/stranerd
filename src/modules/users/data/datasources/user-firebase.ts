@@ -14,7 +14,7 @@ export class UserFirebaseDataSource implements UserBaseDataSource{
 	}
 
 	public async listen(callback: (documents: UserFromModel[]) => void, conditions?: GetClauses): Promise<() => void> {
-		return await FirestoreService.listen(callback, 'users', conditions)
+		return await FirestoreService.listenToMany(callback, 'users', conditions)
 	}
 
 }

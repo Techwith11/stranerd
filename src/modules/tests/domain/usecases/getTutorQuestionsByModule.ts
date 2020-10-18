@@ -11,7 +11,7 @@ export class GetTutorQuestionsByModuleUseCase {
 
 	public async call (subject: string, module: string, date?: Date) :Promise<QuestionEntity[]> {
 		const conditions: GetClauses = {
-			limit: parseInt(process.env.VUE_APP_PAGINATION_LIMIT),
+			limit: parseInt(process.env.VUE_APP_PAGINATION_LIMIT) + 1,
 			order: {
 				field: 'dates.createdAt',
 				desc: true

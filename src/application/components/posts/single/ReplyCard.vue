@@ -1,5 +1,5 @@
 <template>
-	<div class="mb-5" v-if="!loading">
+	<div class="mb-5" :id="reply.id" v-if="!loading">
 		<div class="d-flex align-items-start mb-2">
 			<img :src="user.image" class="profile-image" id="ownerImage" alt="">
 			<div class="flex-grow-1">

@@ -37,7 +37,12 @@ export const FirestoreService =  {
 		const docs = await query.get()
 		return docs.docs.map((doc) => ({ id: doc.id, ...doc.data() }))
 	},
-	listen: async (callback: (documents: any[]) => void, collection: string, conditions?: GetClauses) => {
+	listenToOne: async (callback: (document: any) => void, collection: string, id: string) => {
+		return firestore.collection(collection).doc(id).onSnapshot((snapshot) => {
+			callback(snapshot.exists ? { id: snapshot.id, ...snapshot.data() } : undefined)
+		})
+	},
+	listenToMany: async (callback: (documents: any[]) => void, collection: string, conditions?: GetClauses) => {
 		let query: firebase.firestore.Query = firestore.collection(collection)
 		query = buildFirestoreQuery(query, conditions)
 		return query.onSnapshot((snapshot) => {

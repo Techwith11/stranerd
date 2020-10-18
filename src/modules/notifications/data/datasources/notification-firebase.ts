@@ -25,7 +25,7 @@ export class NotificationFirebaseDataSource implements NotificationBaseDataSourc
 		return await DatabaseService.listen(`users/${userId}/notifications`, cb, conditions)
 	}
 
-	public async update(userId: string, id: string, data: NotificationToModel): Promise<string> {
+	public async update(userId: string, id: string, data: Partial<NotificationToModel>): Promise<string> {
 		await DatabaseService.update(`users/${userId}/notifications/${id}`, data)
 		return id
 	}

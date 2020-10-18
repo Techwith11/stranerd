@@ -38,8 +38,8 @@ const unshiftArticle = (article: ArticleEntity) => {
 const fetchArticles = async () => {
 	const date = globalState.articles[globalState.articles.length - 1]?.createdAt ?? undefined
 	const entities = await GetArticles.call(date)
-	globalState.hasMore = entities.length === PAGINATION_LIMIT
-	entities.forEach(setArticle)
+	globalState.hasMore = entities.length === PAGINATION_LIMIT + 1
+	entities.splice(0, PAGINATION_LIMIT).forEach(setArticle)
 }
 const fetchArticlesOnInit = async () => {
 	globalState.loading = true
