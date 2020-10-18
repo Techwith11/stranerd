@@ -11,7 +11,7 @@ export const databaseReplyCreated = functions.database.ref('posts/{postId}/repli
 	const notification = {
 		title: `New Reply: ${post.title}`,
 		description: reply.body,
-		action: `/posts/${context.params.postId}`,
+		action: `/posts/${context.params.postId}#${snap.key}`,
 		type: 'info'
 	}
 
