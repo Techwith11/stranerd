@@ -16,6 +16,16 @@
 	</div>
 </template>
 
+<style lang="scss" scoped>
+ul{
+	overflow: auto;
+	-ms-overflow-style: none;
+	&::-webkit-scrollbar{
+		 display: none;
+	 }
+}
+</style>
+
 <script lang="ts">
 import { defineComponent, onUnmounted } from '@vue/composition-api'
 import { useChats } from '@application/usecases/sessions/chats'

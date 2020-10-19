@@ -3,7 +3,7 @@
 		<page-loading v-if="loading" />
 		<form class="d-flex align-items-center mt-1" @submit.prevent="null">
 			<textarea rows="1" class="form-control" placeholder="Enter message" v-model="factory.content"></textarea>
-			<a @click.prevent="createTextChat" class="p-0 border-none" v-if="factory.valid">
+			<a @click.prevent="createTextChat" v-if="factory.valid">
 				<i class="fas fa-paper-plane ml-3 text-success"></i>
 			</a>
 			<a v-else @click.prevent="() => { $refs.mediaInput.value= ''; $refs.mediaInput.click() }">

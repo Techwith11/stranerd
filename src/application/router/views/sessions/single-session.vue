@@ -20,7 +20,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import { firestore } from '@application/config/firebase'
-import SessionChatForm from '@application/components/sessions/single/SessionChatForm'
+import SessionChatForm from '@/components/sessions/single/ChatForm'
 import SessionNav from '@application/components/sessions/single/SessionNav'
 import ChatList from '@/components/sessions/single/ChatList.vue'
 export default {
@@ -120,13 +120,6 @@ export default {
 	.flex-grow-2{ flex-grow: 2; }
 	#background{
 		background: url('../../../assets/images/sessions/background.svg') center repeat;
-	}
-	/deep/ ul{
-		overflow: auto;
-		-ms-overflow-style: none;
-		&::-webkit-scrollbar{
-			display: none;
-		}
 	}
 	/deep/ #smaller-height{
 		height: calc(100vh - 76px - 106px);
