@@ -38,7 +38,7 @@
 			</div>
 			<div v-else>
 				<a class="small text-muted" @click.prevent="goBack">
-					i.fas.fa-arrow-left
+					<i class="fas fa-arrow-left"></i>
 				</a>
 				<h5 class="mb-5 text-center">Select payment method to use to pay for subscription</h5>
 				<select-payment-method :onMethodSelected="setToken" :loading="loading" />

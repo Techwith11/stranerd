@@ -24,6 +24,10 @@
         }
       }
     },
+    "subscriptions": {
+      ".read": "true",
+      ".write": "true"
+    },
     "users": {
       "$id": {
         "notifications": {
