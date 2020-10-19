@@ -14,7 +14,8 @@ export class NotificationFirebaseDataSource implements NotificationBaseDataSourc
 	}
 
 	public async get(userId: string, conditions?: GetClauses): Promise<NotificationFromModel[]> {
-		return await DatabaseService.get(`users/${userId}/notifications`, conditions) as NotificationFromModel[]
+		const docs = await DatabaseService.get(`users/${userId}/notifications`, conditions) as { [key: string]: NotificationFromModel } ?? {}
+		return Object.entries(docs ?? {}).map((e) => ({ ...e[1], id: e[0] }))
 	}
 
 	public async listen(userId: string, callback: (documents: NotificationFromModel[]) => void, conditions?: GetClauses): Promise<() => void> {

@@ -61,9 +61,9 @@ export default defineComponent({
 			token: '' as string,
 			showForm: false
 		})
-		const { loading: methodLoading, error, validCards: cards, validAccounts: accounts, fetchPaymentMethods } = usePaymentMethodsList()
+		const { loading: methodLoading, error, validCards: cards, validAccounts: accounts } = usePaymentMethodsList()
 		return {
-			methodLoading, error, cards, accounts, fetchPaymentMethods,
+			methodLoading, error, cards, accounts,
 			token: computed(() => state.token),
 			showForm: computed(() => state.showForm),
 			selectMethod: (token: string) => {
@@ -75,7 +75,6 @@ export default defineComponent({
 			refreshPaymentMethods: async (token: string | undefined) => {
 				state.showForm = false
 				state.token = token ?? ''
-				await fetchPaymentMethods()
 				if(token){
 					const isTokenValid = [...cards.value, ...accounts.value].some((c) => c.token === token)
 					isTokenValid ? props.onMethodSelected(token) : null

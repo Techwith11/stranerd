@@ -12,7 +12,6 @@
 <script lang="ts">
 import { defineComponent } from '@vue/composition-api'
 import AddPaymentMethod from '@application/components/helpers/payments/AddPaymentMethod.vue'
-import { Notify } from '@application/config/notifications'
 import { useStore } from '@application/usecases/store'
 export default defineComponent({
 	components: {
@@ -22,7 +21,7 @@ export default defineComponent({
 		return {
 			closeAccountModal: useStore().modals.closeAccountModal,
 			onAddMethodSuccessful: async () => {
-				await Notify({ icon: 'success', title: 'Refresh to see payment method details' })
+				await useStore().modals.closeAccountModal()
 			}
 		}
 	}

@@ -5,6 +5,7 @@ import { AuthorizationData, Button } from 'paypal-checkout'
 import { CreatePaymentMethod, GetClientToken } from '@modules/payments'
 import { Notify } from '@application/config/notifications'
 import { useStore } from '@application/usecases/store'
+import { fetchPaymentMethods } from '@/usecases/payments/paymentMethods'
 
 const hostedFieldsInstance: Ref<braintree.HostedFields | undefined> = ref(undefined)
 const initializeFields = async (onPayPalAuthorization: (token: string | undefined) => void) => {
@@ -68,14 +69,22 @@ export const useCreatePaymentMethods = () => {
 		loading: false
 	})
 	const createPaymentMethod = async () => {
-		if(hostedFieldsInstance.value !== undefined){
-			state.loading = true
-			const { nonce } = await hostedFieldsInstance.value.tokenize()
-			const res = await CreatePaymentMethod.call(useStore().auth.getId.value, nonce)
-			if(res.success) await Notify({ title: 'Payment method saved', icon: 'success' })
-			else await Notify({ title: 'Error saving payment method', icon: 'error' })
+		state.loading = true
+		try{
+			if(hostedFieldsInstance.value !== undefined){
+				const { nonce } = await hostedFieldsInstance.value.tokenize()
+				const res = await CreatePaymentMethod.call(useStore().auth.getId.value, nonce)
+				if(res.success) {
+					await fetchPaymentMethods()
+					await Notify({ title: 'Payment method saved', icon: 'success' })
+				}
+				else await Notify({ title: 'Error saving payment method', icon: 'error' })
+				state.loading = false
+				return res
+			}
+		}catch(e) {
 			state.loading = false
-			return res
+			await Notify({ title: e.message, icon: 'error' })
 		}
 	}
 	return {

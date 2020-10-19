@@ -8,17 +8,12 @@ export class GetPaymentMethodsUsecase {
 		this.repository = repository
 	}
 
-	public async call(id: string, date?: Date){
+	public async call(id: string){
 		const conditions: GetClauses = {
 			order: {
-				field: 'dates.createdAt',
+				field: 'dates/createdAt',
 				desc: true
 			}
-		}
-		if(date) {
-			conditions.where = [
-				{ field: 'dates.createdAt', condition: '>', value: date }
-			]
 		}
 		return this.repository.get(id, conditions)
 	}
