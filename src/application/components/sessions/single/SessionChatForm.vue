@@ -1,72 +1,47 @@
 <template>
-	<div class="mt-auto mb-3">
-		<div class="d-flex align-items-center mt-1">
-			<textarea rows="1" class="form-control" placeholder="Enter message" v-model="message"></textarea>
-			<a v-if="message" @click.prevent="sendMessage"><i class="fas fa-paper-plane ml-3 text-success"></i></a>
-			<a v-else @click.prevent="() => { $refs.mediaInput.value= ''; $refs.mediaInput.click() }"><i class="fas fa-paperclip ml-3 text-success"></i></a>
-			<input type="file" multiple @change="captureFiles" class="d-none" ref="mediaInput">
-		</div>
+	<div class="mb-3">
+		<page-loading v-if="loading" />
+		<form class="d-flex align-items-center mt-1" @submit.prevent="null">
+			<textarea rows="1" class="form-control" placeholder="Enter message" v-model="factory.content"></textarea>
+			<a @click.prevent="createTextChat" class="p-0 border-none" v-if="factory.valid">
+				<i class="fas fa-paper-plane ml-3 text-success"></i>
+			</a>
+			<a v-else @click.prevent="() => { $refs.mediaInput.value= ''; $refs.mediaInput.click() }">
+				<i class="fas fa-paperclip ml-3 text-success"></i>
+			</a>
+			<input type="file" multiple @change.prevent="catchMultipleFiles" class="d-none" ref="mediaInput">
+		</form>
 	</div>
 </template>
 
-<script>
-import { mapActions, mapGetters} from 'vuex'
-export default {
-	data: () => ({
-		message: '',
-		media: []
-	}),
-	computed: {
-		...mapGetters(['getId']),
-		getChatPath(){ return [this.getId, this.$route.params.id].sort().join('_') }
+<script lang="ts">
+import { defineComponent } from '@vue/composition-api'
+import { useCreateChat } from '@application/usecases/sessions/chats'
+import { useMultipleFileInputs } from '@/usecases/core/forms'
+export default defineComponent({
+	props: {
+		session: {
+			type: String,
+			required: true
+		}
 	},
-	methods:{
-		...mapActions(['sendSessionChat','sendSessionMedia']),
-		async sendMessage(){
-			const message = this.message
-			this.message = ''
-			try{
-				await this.sendSessionChat({ id: this.$route.params.id, content: message })
-			}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-		},
-		captureFiles(e){
-			this.media = [ ...e.target.files ]
-			this.uploadFiles()
-		},
-		async uploadFiles(){
-			const result = await new window.SweetAlert({
-				title: 'Send Files',
-				text: 'Are you sure you want to send these files',
-				icon: 'info',
-				showCancelButton: true,
-				confirmButtonColor: '#3085d6',
-				cancelButtonColor: '#d33',
-				confirmButtonText: 'Send'
-			})
-			if (result.value) {
-				for (const file of this.media) {
-					try{
-						await this.sendSessionMedia({ id: this.$route.params.id, media: file })
-					}catch(error){ new window.Toast({ icon: 'error', title: error.message }) }
-				}
-			}
+	setup(props){
+		const { createMediaChat, createTextChat, loading, textFactory } = useCreateChat(props.session)
+		const { catchMultipleFiles } = useMultipleFileInputs(createMediaChat)
+		return {
+			factory: textFactory, createTextChat, loading,
+			catchMultipleFiles
 		}
 	}
-}
+})
 </script>
 
 <style lang="scss" scoped>
-	i{
-		font-size: 1.5rem;
-	}
+	i{ font-size: 1.5rem; }
 	@media screen and (min-width: 768px){
-		i{
-			font-size: 1.75rem;
-		}
+		i{ font-size: 1.75rem; }
 	}
 	@media screen and (min-width: 992px){
-		i{
-			font-size: 2.0rem;
-		}
+		i{ font-size: 2.0rem; }
 	}
 </style>

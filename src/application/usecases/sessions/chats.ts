@@ -11,7 +11,6 @@ const chatsGlobalState: { [key: string]: {
 	listener: () => void
 }} = {}
 
-
 const startListener = async (sessionId: string) => {
 	const addChats = (entities: ChatEntity[]) => chatsGlobalState[sessionId].chats = entities
 	chatsGlobalState[sessionId].listener = await ListenToChats.call(sessionId, addChats)
@@ -46,28 +45,46 @@ export const useChats = (sessionId: string) => {
 export const useCreateChat = (sessionId: string) => {
 	const state = reactive({
 		loading: false,
-		factory: GetChatFactory.call()
+		textFactory: GetChatFactory.call()
 	})
-	state.factory.from = useStore().auth.getId.value
+	state.textFactory.from = useStore().auth.getId.value
 
-	const createChat = async () => {
-		if(state.factory.valid && !state.loading){
+	const createTextChat = async () => {
+		if(state.textFactory.valid && !state.loading){
 			state.loading = true
-			state.factory.from = useStore().auth.getId.value
+			state.textFactory.from = useStore().auth.getId.value
 			try {
-				await AddChat.call(sessionId, state.factory)
-				state.factory.reset()
+				await AddChat.call(sessionId, state.textFactory)
+				state.textFactory.reset()
 			}catch(error){ await Notify({ title: error, icon: 'error' }) }
 			state.loading = false
-		}else state.factory.validateAll()
+		}else state.textFactory.validateAll()
 	}
 
-	watch(() => useStore().auth.getId, () => state.factory.from = useStore().auth.getId.value)
+	const createMediaChat = async (files: File[]) => {
+		if(!state.loading){
+			state.loading = true
+
+			const promises = files.map(async (file) => {
+				const mediaFactory = GetChatFactory.call()
+				mediaFactory.from = useStore().auth.getId.value
+				mediaFactory.media = file
+				try {
+					await AddChat.call(sessionId, mediaFactory)
+				}catch(error){ await Notify({ title: error, icon: 'error' }) }
+			})
+			await Promise.all(promises)
+
+			state.loading = false
+		}
+	}
+
+	watch(() => useStore().auth.getId, () => state.textFactory.from = useStore().auth.getId.value)
 
 	return {
-		factory: state.factory,
+		textFactory: computed(() => state.textFactory),
 		loading: computed(() => state.loading),
-		createChat
+		createTextChat, createMediaChat
 	}
 }
 
