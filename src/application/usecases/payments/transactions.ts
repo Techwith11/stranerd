@@ -16,21 +16,13 @@ const fetchTransactions = async () => {
 	globalState.loading = false
 }
 
-const checkForNewTransactions = async () => {
-	globalState.loading = true
-	const date = globalState.transactions[0]?.createdAt ?? undefined
-	const transactions = await GetTransactions.call(useStore().auth.getId.value, date)
-	globalState.transactions.unshift(...transactions)
-	globalState.loading = false
-}
-
+//TODO: Implement caching strategy for fetched transactions or move to listeners
 export const useTransactionsList = () => {
-	if(!globalState.fetched) fetchTransactions()
-		.then(() => {
-			globalState.fetched = true
-			if(globalState.transactions.length === 0) globalState.error = 'No transactions made at the moment'
-		}).catch((e) => globalState.error = e.message)
-	else checkForNewTransactions()
+	fetchTransactions().then(() => {
+		globalState.fetched = true
+		if(globalState.transactions.length === 0) globalState.error = 'No transactions made at the moment'
+	}).catch((e) => globalState.error = e.message)
+
 	return {
 		loading: computed(() => globalState.loading),
 		error: computed(() => globalState.error),

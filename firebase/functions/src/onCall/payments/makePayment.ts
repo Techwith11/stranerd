@@ -12,9 +12,9 @@ export const makePayment = functions.https.onCall(async ({ id, amount, token }, 
 
 		if(result.success) {
 			const transaction = JSON.parse(JSON.stringify(result.transaction))
-			await admin.firestore().collection(`users/${id}/transactions`).add({
+			await admin.database().ref(`users/${id}/transactions`).push({
 				...transaction,
-				dates: { createdAt: admin.firestore.FieldValue.serverTimestamp() }
+				dates: { createdAt: admin.database.ServerValue.TIMESTAMP }
 			})
 		}
 		return result.success

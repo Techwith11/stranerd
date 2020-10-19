@@ -34,6 +34,10 @@
           ".indexOn": ["dates/createdAt"],
           ".read": "auth.uid != null",
           ".write": "auth.uid != null"
+        },
+        "transactions": {
+          ".read": "auth.uid != null",
+          ".write": "auth.uid != null"
         }
       }
     },
