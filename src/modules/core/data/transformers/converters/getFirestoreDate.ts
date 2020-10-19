@@ -9,6 +9,8 @@ export const dateToTimestamp = (date: Date) :firebase.firestore.Timestamp => {
 	return firebase.firestore.Timestamp.fromDate(date)
 }
 
+export const dateToMilliseconds = (date: Date) => date.getTime()
+
 export const serverTimeStamp = () => {
 	return firebase.firestore.FieldValue.serverTimestamp()
 }

@@ -16,6 +16,14 @@
         }
       }
     },
+    "sessions": {
+      "$id": {
+        "chats": {
+          ".read": "auth.uid != null",
+          ".write": "auth.uid != null"
+        }
+      }
+    },
     "users": {
       "$id": {
         "notifications": {

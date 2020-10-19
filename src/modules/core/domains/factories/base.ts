@@ -40,7 +40,8 @@ export abstract class BaseFactory<E, T> {
 	}
 
 	public reset(){
-		Object.keys(this.values).filter((key) => key !== 'userId').forEach((key) => {
+		const reserved = ['user','userId', 'from']
+		Object.keys(this.values).filter((key) => !reserved.includes(key) ).forEach((key) => {
 			this.values[key] = undefined
 			this.validValues[key] = undefined
 			this.errors[key] = undefined

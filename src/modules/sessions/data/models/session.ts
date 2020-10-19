@@ -12,6 +12,10 @@ export interface SessionFromModel {
 		tutor: boolean
 		student: boolean
 	}
+	reviews: {
+		student: { rating?: number, comment?: string }
+		tutor: { rating?: number, comment?: string }
+	}
 	dates: {
 		createdAt: firebase.firestore.Timestamp
 	}
@@ -24,6 +28,10 @@ export interface SessionToModel {
 	price?: number
 	paid?: boolean
 	accepted?: boolean
+	reviews?: {
+		student?: { rating?: number, comment?: string }
+		tutor?: { rating?: number, comment?: string }
+	}
 	cancelled?: {
 		tutor?: boolean
 		student?: boolean
