@@ -10,12 +10,12 @@ export const removePaymentMethod = functions.https.onCall(async ({ user, id }, c
 	if (isProduction && context.auth?.uid !== user) {
 		throw new functions.https.HttpsError('permission-denied', 'You can only delete your own payment methods')
 	}
-	const method = await admin.firestore().collection(`users/${user}/paymentMethods`).doc(id).get()
+	const method = await admin.database().ref(`users/${user}/paymentMethods`).child(id).once('value')
 	if(!method.exists){ throw new functions.https.HttpsError('invalid-argument', 'Method doesn\'t exist') }
-	const token = method.data()?.token ?? ''
+	const token = method.val()?.token ?? ''
 	try{
 		await braintree.removePaymentMethod(token)
-		await method.ref.delete()
+		await method.ref.remove()
 		return true
 
 	}catch(error){

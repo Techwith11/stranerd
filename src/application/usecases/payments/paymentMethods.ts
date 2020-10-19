@@ -17,22 +17,12 @@ const fetchPaymentMethods = async () => {
 	globalState.loading = false
 }
 
-const checkForNewPaymentMethods = async () => {
-	globalState.loading = true
-	const date = globalState.methods[0]?.createdAt ?? undefined
-	const methods = await GetPaymentMethods.call(useStore().auth.getId.value, date)
-	globalState.methods.unshift(...methods)
-	globalState.loading = false
-}
-
+//TODO: Figure out how to implement caching here
 export const usePaymentMethodsList = () => {
-	if(!globalState.fetched) fetchPaymentMethods()
-		.then(() => {
-			globalState.fetched = true
-			if(globalState.methods.length === 0) globalState.error = 'You do not have any payment method saved. Try adding one now.'
-		})
-		.catch((e) => globalState.error = e.message)
-	else checkForNewPaymentMethods().catch((e) => globalState.error = e.message)
+	fetchPaymentMethods().then(() => {
+		globalState.fetched = true
+		if(globalState.methods.length === 0) globalState.error = 'You do not have any payment method saved. Try adding one now.'
+	}).catch((e) => globalState.error = e.message)
 
 	const validCards = computed(() => globalState.methods.filter((m) => !m.expired && m.isCard))
 	const validAccounts = computed(() => globalState.methods.filter((m) => !m.expired && !m.isCard))

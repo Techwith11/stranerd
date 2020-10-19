@@ -19,11 +19,14 @@ export const createPaymentMethod = functions.https.onCall(async ({ id, nonce }, 
 
 		if(result.success){
 			const details = JSON.parse(JSON.stringify(result.paymentMethod))
-			const methods = await admin.firestore().collection(`users/${id}/paymentMethods`)
-				.where('token','==', result.paymentMethod?.token ?? '')
-				.limit(1).get()
-			if(methods.empty){
-				await admin.firestore().collection(`users/${id}/paymentMethods`).add({
+			const methodsObj = (await admin.database().ref(`users/${id}/paymentMethods`).once('value')).val() as { [key: string]: any }
+			const methods = Object.entries(methodsObj).map((e) => ({ ...e[1], id: e[0] }))
+			const method = methods.find((m) => m.token === result.paymentMethod?.token ?? '')
+			if(method){
+				await admin.database().ref(`users/${id}/paymentMethods/${method.id}`).update({ ...details })
+			}
+			else{
+				await admin.database().ref(`users/${id}/paymentMethods`).push({
 					...details,
 					dates: { createdAt: admin.firestore.FieldValue.serverTimestamp() }
 				})

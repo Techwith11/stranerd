@@ -38,6 +38,10 @@
         "transactions": {
           ".read": "auth.uid != null",
           ".write": "auth.uid != null"
+        },
+        "paymentMethods": {
+          ".read": "auth.uid != null",
+          ".write": "auth.uid != null"
         }
       }
     },
