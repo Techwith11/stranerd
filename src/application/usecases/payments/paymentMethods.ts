@@ -11,7 +11,7 @@ const globalState = reactive({
 	error: ''
 })
 
-const fetchPaymentMethods = async () => {
+export const fetchPaymentMethods = async () => {
 	globalState.loading = true
 	globalState.methods = await GetPaymentMethods.call(useStore().auth.getId.value)
 	globalState.loading = false

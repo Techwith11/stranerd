@@ -11,7 +11,7 @@ export class GetTransactionsUsecase {
 	public async call(id: string){
 		const conditions: GetClauses = {
 			order: {
-				field: 'dates.createdAt',
+				field: 'dates/createdAt',
 				desc: true
 			}
 		}

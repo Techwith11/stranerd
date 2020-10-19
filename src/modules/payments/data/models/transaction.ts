@@ -1,5 +1,3 @@
-import firebase from '@root/services/firebase'
-
 export interface TransactionFromModel {
 	id: string
 	amount: string
@@ -9,6 +7,6 @@ export interface TransactionFromModel {
 		maskedNumber: string
 	}
 	dates: {
-		createdAt: firebase.firestore.Timestamp
+		createdAt: number
 	}
 }
