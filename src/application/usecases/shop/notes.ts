@@ -75,7 +75,7 @@ export const useDeleteNote = (note: NoteEntity) => {
 				state.loading = false
 				await Notify({ icon: 'success', title: 'Note deleted successfully' })
 			}
-			return result.value
+			return !!result.value
 		} catch(error) {
 			await Notify({ icon: 'error', title: error.message })
 			return false

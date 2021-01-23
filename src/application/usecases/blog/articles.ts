@@ -87,7 +87,7 @@ export const useDeleteArticle = (article: ArticleEntity) => {
 				state.loading = false
 				await Notify({ icon: 'success', title: 'Article deleted successfully' })
 			}
-			return result.value
+			return !!result.value
 		} catch(error) {
 			await Notify({ icon: 'error', title: error.message })
 			return false
