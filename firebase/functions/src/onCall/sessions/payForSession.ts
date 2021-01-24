@@ -1,16 +1,15 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-import { isProduction } from '../../helpers/environment'
 
 export const payForSession = functions.https.onCall(async ({ id }, context) => {
-	if (isProduction() && !context.auth) {
+	if (!context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can pay for sessions')
 	}
 	const ref = admin.firestore().collection('sessions').doc(id)
 
 	const session = (await ref.get()).data()
 
-	if (isProduction && context.auth && context.auth.uid !== session?.student) {
+	if (context.auth && context.auth.uid !== session?.student) {
 		throw new functions.https.HttpsError('failed-precondition', 'Only the student of the session can pay for it')
 	}
 	try{

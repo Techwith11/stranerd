@@ -1,10 +1,9 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-import { isProduction } from '../../helpers/environment'
 
 export const markTutorTest = functions.https.onCall(async (data, context) => {
 	try{
-		if (isProduction() && !context.auth) {
+		if (!context.auth) {
 			throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can get their tests marked')
 		}
 

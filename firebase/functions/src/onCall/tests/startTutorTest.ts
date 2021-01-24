@@ -1,6 +1,5 @@
 import * as functions from 'firebase-functions'
 import * as admin from 'firebase-admin'
-import { isProduction } from '../../helpers/environment'
 
 let noOfQuestionsForTest = 30
 
@@ -23,7 +22,7 @@ const getQuestions = async (course: string, level: number) => {
 
 export const startTutorTest = functions.https.onCall(async ({ level, course, user }, context) => {
 	try{
-		if (isProduction() && !context.auth) {
+		if (!context.auth) {
 			throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can take tests')
 		}
 		const questions = await getQuestions(course, level)

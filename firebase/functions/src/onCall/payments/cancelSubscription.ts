@@ -1,10 +1,9 @@
 import * as functions from 'firebase-functions'
 import * as admin from'firebase-admin'
-import { isProduction } from '../../helpers/environment'
 import * as braintree from '../../helpers/braintree'
 
 export const cancelSubscription = functions.https.onCall(async ({ id }, context) => {
-	if (isProduction() && !context.auth) {
+	if (!context.auth) {
 		throw new functions.https.HttpsError('unauthenticated', 'Only authenticated users can cancel subscriptions')
 	}
 	try{
