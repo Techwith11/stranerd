@@ -2,7 +2,7 @@
 	<header class="bg-white shadow">
 		<nav class="navbar container bg-white navbar-light d-flex flex-row align-items-center" :class="isLoggedIn ? 'navbar-expand-lg flex-lg-row' : 'navbar-expand-md flex-md-row'">
 			<router-link class="navbar-brand" to="/"><img src="@application/assets/images/stranerd_logo.png" alt="STRANERD" height="50px"></router-link>
-			<NotificationBell class="nav-brand mr-5 mr-lg-4 ml-auto" />
+			<NotificationBell v-if="isLoggedIn" class="nav-brand mr-5 mr-lg-4 ml-auto" />
 			<button class="navbar-toggler rounded-0" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>

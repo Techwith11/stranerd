@@ -104,28 +104,6 @@ export const useGoogleLogin = () => {
 	}
 }
 
-export const useDevLogin = () => {
-	const devs = ['kevin11','frank','joe','max']
-	const state = reactive({
-		loading: false,
-		id: ''
-	})
-	const login = async () => {
-		state.loading = true
-		if(state.id){
-			await useStore().auth.setId(state.id)
-			await afterAuthHook()
-		}else await Notify({ title: 'Select a dev id first', icon: 'error' })
-		state.loading = false
-	}
-	return {
-		loading: computed(() => state.loading),
-		isDev: computed(() => process.env.NODE_ENV === 'development'),
-		id: computed({ get: () => state.id, set: (value: string) => state.id = value }),
-		devs, login
-	}
-}
-
 export const useResetPasswordForm = () => {
 	const state = reactive({
 		loading: false,

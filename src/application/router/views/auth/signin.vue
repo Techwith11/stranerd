@@ -38,26 +38,13 @@
 					Sign In with Google
 				</button>
 			</div>
-			<div v-if="isDev" class="my-4">
-				<div class="d-flex justify-content-center">
-					<span class="mr-2" v-for="dev in devs" :key="dev">
-						<input type="radio" v-model="devId" :value="dev" class="mr-1">
-						<label class="text-capitalize">{{ dev }}</label>
-					</span>
-				</div>
-				<button @click="devLogin" :disabled="!devId" class="btn btn-info w-100">
-					<loading class="mr-1" v-if="devLoading" />
-					<i class="fas fa-user-cog text-white mr-2" v-else></i>
-					Sign In as dev user
-				</button>
-			</div>
 		</div>
 	</Auth>
 </template>
 
 <script lang="ts">
 import { defineComponent, computed } from '@vue/composition-api'
-import { useDevLogin, useGoogleLogin, useLoginForm } from '@application/usecases/users/auth'
+import { useGoogleLogin, useLoginForm } from '@application/usecases/users/auth'
 import { usePassword } from '@/usecases/core/forms'
 export default defineComponent({
 	name: 'Signin',
@@ -65,13 +52,11 @@ export default defineComponent({
 		const { show, toggle } = usePassword()
 		const { loading: emailLoading, login: emailLogin, factory: emailFactory } = useLoginForm()
 		const { loading: googleLoading, login: googleLogin } = useGoogleLogin()
-		const { loading: devLoading, login: devLogin, id: devId, devs, isDev } = useDevLogin()
 		return {
 			show, toggle,
 			emailLoading, emailLogin, emailFactory,
 			googleLoading, googleLogin,
-			devLoading, devLogin, devId, devs, isDev,
-			anyLoading: computed(() => emailLoading.value || devLoading.value || googleLoading.value),
+			anyLoading: computed(() => emailLoading.value || googleLoading.value),
 		}
 	},
 	meta(){

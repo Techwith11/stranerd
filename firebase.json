@@ -49,6 +49,9 @@
     "hosting": {
       "port": 6000
     },
+    "auth": {
+      "port": 6004
+    },
     "ui": {
       "port": 6500,
       "enabled": true
