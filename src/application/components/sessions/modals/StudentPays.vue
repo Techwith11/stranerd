@@ -28,10 +28,10 @@ export default {
 		},
 	},
 	methods: {
-		...mapActions(['cancelSessionAndCloseModal','payForSession']),
+		...mapActions(['cancelSessionAndCloseModal','acceptSession']),
 		async onPaymentSuccessful(){
 			new window.Toast({ icon: 'success', title: 'Payment successful' })
-			await this.payForSession()
+			await this.acceptSession()
 		}
 	},
 	components: {

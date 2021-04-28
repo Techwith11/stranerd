@@ -10,7 +10,7 @@ const router: VueRouter = new VueRouter({
 	mode: 'history',
 	base: process.env.BASE_URL,
 	routes,
-	scrollBehavior: async (to) => new Promise((resolve) => {
+	scrollBehavior: (to) => new Promise((resolve) => {
 		setTimeout(() => resolve({ x: 0, y: getCachedScroll(to.fullPath) }), 1)
 	})
 })

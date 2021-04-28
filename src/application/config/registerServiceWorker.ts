@@ -10,6 +10,7 @@ if ('serviceWorker' in navigator){
 
 const addWaitingListener = (callback: () => void) => {
 	workbox?.addEventListener('waiting', callback)
+	//@ts-ignore
 	workbox?.addEventListener('externalwaiting', callback)
 }
 

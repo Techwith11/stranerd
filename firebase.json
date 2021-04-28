@@ -38,22 +38,22 @@
   },
   "emulators": {
     "database": {
-      "port": 6003
+      "port": 5003
     },
     "functions": {
-      "port": 6001
+      "port": 5001
     },
     "firestore": {
-      "port": 6002
+      "port": 5002
     },
     "hosting": {
-      "port": 6000
+      "port": 5000
     },
     "auth": {
-      "port": 6004
+      "port": 5004
     },
     "ui": {
-      "port": 6500,
+      "port": 4000,
       "enabled": true
     }
   }
